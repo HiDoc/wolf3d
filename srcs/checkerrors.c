@@ -14,14 +14,20 @@
 
 void  free_env(t_env *env)
 {
-  // if (ftc->mx)
-	//   free(ftc->mx);
-  // if (ftc->pcolors)
-	//   free(ftc->pcolors);
-  // if (ftc->fname)
-  //   free(ftc->fname);
-  // if (ftc->seq)
-  //   free(ftc->seq);
+  int i;
+
+  i = 0;
+  if (env->w_map)
+  {
+    while (i < 24)
+    {
+      free(env->w_map[i]);
+      i++;
+    }
+    free(env->w_map);
+  }
+  if (env->mlx)
+    free(env->mlx);
 	free(env);
 }
 
