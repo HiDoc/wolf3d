@@ -25,23 +25,11 @@ void  free_env(t_env *env)
 	free(env);
 }
 
-// void  checkargs(char *av)
-// {
-// 	if (ft_strcmp("mandelbrot", av) != 0 &&
-// 	ft_strcmp("burningship", av) != 0 &&
-// 	ft_strcmp("julia", av) != 0 &&
-// 	ft_strcmp("julia_4", av) != 0 &&
-//   ft_strcmp("test", av) != 0 &&
-// 	ft_strcmp("lyapunov", av) != 0)
-//     print_error(2, NULL);
-// }
-
 // void  usage(void)
 // {
 //   ft_putstr("\n\n---- USAGE ----\n\n");
-//   ft_putstr("./fractol [mandelbrot, julia, burningship, julia_4, lyapunov]\n\n");
-//   ft_putstr("scroll to zoom\n");
-//   ft_putstr("[LFT][RGT][UP][DWN] to moove\n");
+//   ft_putstr("./wolf3d\n");
+//   ft_putstr("[UP][DOWN][LEFT][RIGHT] to move\n");
 //   ft_putstr("1 to 6 to change colors\n\n");
 // }
 

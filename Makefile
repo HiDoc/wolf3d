@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wolf
+NAME = wolf3d
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = ./libft
 MLX = ./minilibx
 FRK = -framework
@@ -28,6 +28,7 @@ INC_PATH = ./includes/ \
 
 SRC_NAME =	main.c	\
 			hook.c	\
+			raycasting.c	\
 			checkerrors.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

@@ -1,18 +1,5 @@
 #include "wolf.h"
 
-int loop(t_env *env)
-{
-	// (void)key;
-	// (void)env;
-
-	env->oldtime = env->time;
-	env->time = clock();
-	env->frametime = (env->time - env->oldtime) / 1000.0;
-	wolf(env);
-	mlx_put_image_to_window(env->mlx->mptr, env->mlx->wptr, env->mlx->iptr, 0, 0);
-	return(0);
-}
-
 void	exit_wolf(t_env *env)
 {
 	mlx_destroy_image(env->mlx->mptr, env->mlx->iptr);
@@ -21,25 +8,55 @@ void	exit_wolf(t_env *env)
 	exit(0);
 }
 
-// int moove(int key, t_env *env)
-// {
-// 	double	moovespeed;
-// 	double	rotspeed;
+t_xy	rotate(t_xy v, double ang)
+{
+	float	radian;
+	t_xy	r;
 
-// 	moovespeed = env->frametime * 5.0;
-// 	rotspeed = env->frametime * 3.0;
-// 	if (key == KEY_DOWN)
-// 	{
-// 		if ()
-// 	}
-// }
+	radian = ang / 180.0 * 3.141;
+	r.x = v.x * cos(radian) - v.y * sin(radian);
+	r.y = v.x * sin(radian) + v.y * cos(radian);
+	return (r);
+}
+
+int		moove(int key, t_env *env)
+{
+	if (key == KEY_UP)
+	{
+		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
+			env->pos.x += env->dir.x * 0.05;
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
+			env->pos.y += env->dir.y * 0.05;
+	}
+	if (key == KEY_DOWN)
+	{
+		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
+			env->pos.x -= env->dir.x * 0.05;
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
+			env->pos.y -= env->dir.y * 0.05;
+	}
+	if (key == KEY_RGT)
+	{
+		env->dir = rotate(env->dir, -env->ang);
+		env->plane = rotate(env->plane, -env->ang);
+	}
+	if (key == KEY_LFT)
+	{
+		env->dir = rotate(env->dir, env->ang);
+		env->plane = rotate(env->plane, env->ang);
+	}
+	return (0);
+}
 
 int key_hook(int key, t_env *env)
 {
-	// if (key == KEY_UP || key == KEY_DOWN
-	// || key == KEY_LFT || key == KEY_RGT)
-	// 	moove(key, env);
+	if (key == KEY_UP || key == KEY_DOWN
+	|| key == KEY_LFT || key == KEY_RGT)
+		moove(key, env);
 	if (key == 53)
 		exit_wolf(env);
+	mlx_clear_window(env->mlx->mptr, env->mlx->wptr);
+	wolf(env);
+	mlx_put_image_to_window(env->mlx->mptr, env->mlx->wptr, env->mlx->iptr, 0, 0);
 	return (0);
 }

@@ -34,37 +34,27 @@ typedef struct  s_mlx
 	int		endian;
 }               t_mlx;
 
+typedef	struct	s_xy
+{
+	double	x;
+	double	y;
+}				t_xy;
+
 typedef struct  s_env
 {
-	t_mlx   	*mlx;
-	// int     **map;
-	unsigned int	texture[8];
-	// double  ctr_x;
-	// double  ctr_y;
-	// double  dist_cam_proj;
-	// double  ang_b2rays;
-	// double  h_cam;
-	// double  ang_cam;
-	// double  fov;
-	double  posx;
-	double  posy;
-	double  dirx;
-	double  diry;
-	double  planex;
-	double  planey;
-	double  time;
-	double  oldtime;
-	double	frametime;
-	double	camx;
-	double	raydirx;
-	double	raydiry;
+	t_mlx   *mlx;
+	t_xy	pos;
+	t_xy	dir;
+	t_xy	plane;
+	t_xy	sidedist;
+	t_xy	delta;
+	t_xy	raydir;
+	double	cam;
+	double	wdist;
+	double	ang;
+	int		**w_map;
 	int		mapx;
 	int		mapy;
-	double	sidedistx;
-	double	sidedisty;
-	double	deltadistx;
-	double	deltadisty;
-	double	perpwalldist;
 	int		stepx;
 	int		stepy;
 	int		hit;
@@ -72,13 +62,12 @@ typedef struct  s_env
 	int		lineh;
 	int		sdraw;
 	int		edraw;
-	int		**w_map;
 }               t_env;
 
 int		wolf(t_env *env);
 
 void    print_error(int nb, t_env *env);
 void    free_env(t_env *env);
-int		loop(t_env *env);
+
 int		key_hook(int key, t_env *env);
 #endif
