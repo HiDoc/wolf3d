@@ -85,7 +85,6 @@ int		main(int ac, char **av)
 	wolf(env);
 	mlx_do_key_autorepeaton(env->mlx->mptr);
 	mlx_put_image_to_window(env->mlx->mptr, env->mlx->wptr, env->mlx->iptr, 0, 0);
-	// mlx_key_hook(env->mlx->wptr, key_hook, env);
 	mlx_hook(env->mlx->wptr, KeyPress, KeyPressMask, &key_hook, env);
 
 	mlx_loop(env->mlx->mptr);
