@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2018/08/29 11:54:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/08/29 12:36:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,13 @@
 # define KEY_RGT 	124
 # define ESC 		53
 
+# define T_T1		env->thw.t1
+# define T_T2		env->thw.t2
+# define T_T3		env->thw.t3
+# define T_T4		env->thw.t4
+
+# define T_TH1		env->thw.t1.th
+# define T_TH2		env->thw.t2.th
+# define T_TH3		env->thw.t3.th
+# define T_TH4		env->thw.t4.th
 #endif

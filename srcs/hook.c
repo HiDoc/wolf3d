@@ -1,11 +1,12 @@
 #include "wolf.h"
 
-void	exit_wolf(t_env *env)
+int		exit_wolf(t_env *env)
 {
 	mlx_destroy_image(env->mlx->mptr, env->mlx->iptr);
 	mlx_destroy_window(env->mlx->mptr, env->mlx->wptr);
 	free_env(env);
 	exit(0);
+	return (0);
 }
 
 t_xy	rotate(t_xy v, double ang)
