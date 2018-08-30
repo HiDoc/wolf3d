@@ -43,6 +43,7 @@ SRC_NAME 	= main.c \
 			  hook.c \
 			  raycasting.c \
 			  thread.c \
+			  parser.c \
 			  checkerrors.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
