@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf.h                                             :+:      :+:    :+:   */
+/*   img.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/01 17:20:38 by fmadura          ###   ########.fr       */
+/*   Created: 2018/09/01 17:07:53 by fmadura           #+#    #+#             */
+/*   Updated: 2018/09/01 17:52:24 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WOLF_H
-# define WOLF_H
-# include "wolf_define.h"
-# include "wolf_struct.h"
+#include "wolf.h"
 
-int		wolf(t_env *env);
+void	img(t_env *env)
+{
+	void	*img;
+	int		w;
+	int		h;
 
-void	print_error(int nb, t_env *env);
-void	free_env(t_env *env);
-
-int		exit_wolf(t_env *env);
-int		key_hook(int key, t_env *env);
-
-void	img(t_env *env);
-#endif
+	img = mlx_xpm_file_to_image(E_MLX, "./img/wall.XPM", &w, &h);
+	env->wall = (int *)img;
+	mlx_put_image_to_window(E_MLX, E_WIN, img, 0, 0);
+}

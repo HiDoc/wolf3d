@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2018/08/29 12:36:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/01 17:19:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,14 @@
 # define T_TH2		env->thw.t2.th
 # define T_TH3		env->thw.t3.th
 # define T_TH4		env->thw.t4.th
+
+# define E_MLX		env->mlx.mptr
+# define E_WIN		env->mlx.wptr
+# define E_IMG		env->mlx.iptr
+
+# define I_IMG		env->mlx.data
+# define I_END		env->mlx.endian
+# define I_SZL		env->mlx.size_l
+# define I_BPP		env->mlx.bpp
+
 #endif

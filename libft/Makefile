@@ -6,12 +6,12 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/08 16:35:09 by abaille           #+#    #+#              #
-#    Updated: 2018/08/29 11:46:38 by fmadura          ###   ########.fr        #
+#    Updated: 2018/08/31 12:31:27 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 #color
 YELLOW		= "\\033[33m"

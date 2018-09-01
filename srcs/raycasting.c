@@ -92,13 +92,13 @@ int	wolf(t_env *env)
 			env->edraw = HEIGHT - 1;
 		y = -1;
 		while (++y < env->sdraw)
-			env->mlx->data[y * WIDTH + x] = 0x35FF69;
+			env->mlx.data[y * WIDTH + x] = 0x00a088;
 		y--;
 		while (++y <= env->edraw && y < HEIGHT)
-			env->mlx->data[y * WIDTH + x] = 0x645986;
+			env->mlx.data[y * WIDTH + x] = env->wall[(y * WIDTH + x) % 64*64];
 		y--;
 		while (++y < HEIGHT)
-			env->mlx->data[y * WIDTH + x] = 0xFFFD82;
+			env->mlx.data[y * WIDTH + x] = 0xFFFD82;
 		x++;
 	}
 	return (0);

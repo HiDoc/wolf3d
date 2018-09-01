@@ -2,8 +2,8 @@
 
 int		exit_wolf(t_env *env)
 {
-	mlx_destroy_image(env->mlx->mptr, env->mlx->iptr);
-	mlx_destroy_window(env->mlx->mptr, env->mlx->wptr);
+	mlx_destroy_image(E_MLX, E_IMG);
+	mlx_destroy_window(E_MLX, E_WIN);
 	free_env(env);
 	exit(0);
 	return (0);
@@ -56,8 +56,8 @@ int key_hook(int key, t_env *env)
 		moove(key, env);
 	if (key == 53)
 		exit_wolf(env);
-	mlx_clear_window(env->mlx->mptr, env->mlx->wptr);
+	mlx_clear_window(E_MLX, E_WIN);
 	wolf(env);
-	mlx_put_image_to_window(env->mlx->mptr, env->mlx->wptr, env->mlx->iptr, 0, 0);
+	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/08/29 12:30:52 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/01 15:51:55 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,16 @@ SRC_PATH 	= ./srcs/
 OBJ_PATH 	= ./objs/
 INC_PATH 	= ./includes/ \
 			  ./minilibx/ \
-			  ./libft/includes	\
+			  ./libft/includes/	\
 			  /System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/
 
 SRC_NAME 	= main.c \
 			  hook.c \
 			  raycasting.c \
 			  thread.c \
+			  checkerrors.c \
 			  parser.c \
-			  checkerrors.c
+			  img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -81,5 +82,9 @@ clean:
 fclean: clean
 	@make -C $(LIBFT) fclean
 	@rm -f $(NAME)
+
+run: all
+	clear
+	./Wolf3d
 
 re: fclean all

@@ -2,12 +2,10 @@
 
 void	init_mlx(t_env *env)
 {
-	if (!(env->mlx = (t_mlx *)malloc(sizeof(t_mlx))))
-		print_error(1, env);
-	env->mlx->mptr = mlx_init();
-	env->mlx->wptr = mlx_new_window(env->mlx->mptr, WIDTH, HEIGHT, "Wolf 3D");
-	env->mlx->iptr = mlx_new_image(env->mlx->mptr, WIDTH, HEIGHT);
-	env->mlx->data = (int *)mlx_get_data_addr(env->mlx->iptr, &env->mlx->bpp, &env->mlx->size_l, &env->mlx->endian);
+	E_MLX = mlx_init();
+	E_WIN = mlx_new_window(E_MLX, WIDTH, HEIGHT, "Wolf 3D");
+	E_IMG = mlx_new_image(E_MLX, WIDTH, HEIGHT);
+	I_IMG = (int *)mlx_get_data_addr(E_IMG, &I_BPP, &I_SZL, &I_END);
 }
 
 int		fill_tab(t_env *env)
@@ -82,11 +80,12 @@ int		main(int ac, char **av)
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		print_error(1, NULL);
 	init_env(env);
+	img(env);
 	fill_tab(env);
 	wolf(env);
-	mlx_do_key_autorepeaton(env->mlx->mptr);
-	mlx_put_image_to_window(env->mlx->mptr, env->mlx->wptr, env->mlx->iptr, 0, 0);
-	mlx_hook(env->mlx->wptr, KeyPress, KeyPressMask, &key_hook, env);
-	mlx_loop(env->mlx->mptr);
+	mlx_do_key_autorepeaton(E_MLX);
+	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
+	mlx_hook(E_WIN, KeyPress, KeyPressMask, &key_hook, env);
+	mlx_loop(E_MLX);
 	return (0);
 }

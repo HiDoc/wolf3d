@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/08/29 12:29:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/01 17:51:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct					s_thw
 
 struct					s_env
 {
-	t_mlx		*mlx;
+	t_mlx		mlx;
 	t_thw		thw;
 	t_xy		pos;
 	t_xy		dir;
@@ -74,6 +74,7 @@ struct					s_env
 	int			lineh;
 	int			sdraw;
 	int			edraw;
+	int			*wall;
 };
 
 #endif
