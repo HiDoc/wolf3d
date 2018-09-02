@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/02 18:36:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/02 19:40:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		key_hook(int key, t_env *env);
 
 void	img(t_env *env);
 int		line_floor(t_env *env, t_line *line, int y);
+int		line_wall(t_env *env, t_line *line, int y);
 t_line	*line_init(t_env *env, t_line *line, int x);
 t_line	*line_dda(t_env *env, t_line *line);
 t_line	*line_step(t_env *env, t_line *line);
