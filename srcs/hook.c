@@ -9,10 +9,10 @@ int		exit_wolf(t_env *env)
 	return (0);
 }
 
-t_xy	rotate(t_xy v, double ang)
+t_point	rotate(t_point v, double ang)
 {
 	float	radian;
-	t_xy	r;
+	t_point	r;
 
 	radian = ang / 180.0 * 3.141;
 	r.x = v.x * cos(radian) - v.y * sin(radian);

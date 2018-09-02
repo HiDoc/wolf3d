@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/02 15:23:51 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/02 18:26:58 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRC_NAME 	= main.c \
 			  thread.c \
 			  checkerrors.c \
 			  parser.c \
+			  floor.c \
+			  struct_line.c \
 			  struct_img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

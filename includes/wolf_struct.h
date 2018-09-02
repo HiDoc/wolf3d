@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/02 15:24:23 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/02 18:36:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 typedef struct s_img	t_img;
 typedef struct s_mlx	t_mlx;
 typedef struct s_env	t_env;
-typedef struct s_xy		t_xy;
+typedef struct s_point	t_point;
 typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
+typedef struct s_line	t_line;
 
 struct					s_img
 {
@@ -42,7 +43,7 @@ struct					s_mlx
 	int			endian;
 };
 
-struct					s_xy
+struct					s_point
 {
 	double		x;
 	double		y;
@@ -63,30 +64,34 @@ struct					s_thw
 	t_thr		t4;	
 };
 
+struct					s_line
+{
+	t_point		map;
+	t_point		delta;
+	t_point		step;
+	t_point		raydir;	
+	t_point		wall;
+	t_point		side;
+	double		wdist;
+	int			hit;
+	int			sidew;
+	int			lineh;
+	int			sdraw;
+	int			edraw;
+};
+
 struct					s_env
 {
 	t_mlx		mlx;
 	t_thw		thw;
-	t_xy		pos;
-	t_xy		dir;
-	t_xy		plane;
-	t_xy		sidedist;
-	t_xy		delta;
-	t_xy		raydir;
+	t_point		pos;
+	t_point		dir;
+	t_point		plane;
 	double		cam;
-	double		wdist;
 	double		ang;
 	int			**w_map;
-	int			mapx;
-	int			mapy;
-	int			stepx;
-	int			stepy;
-	int			hit;
-	int			side;
-	int			lineh;
-	int			sdraw;
-	int			edraw;
 	t_img		*wall;
+	t_img		*floor;
 };
 
 #endif
