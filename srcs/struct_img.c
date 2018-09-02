@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   img.c                                              :+:      :+:    :+:   */
+/*   struct_img.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/01 17:07:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/01 17:52:24 by fmadura          ###   ########.fr       */
+/*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
+/*   Updated: 2018/09/02 15:25:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+t_img	*img_new(t_env *env, char *filename)
+{
+	t_img	*new;
+
+	if ((new = malloc(sizeof(t_img))) == NULL)
+		return (NULL);
+	new->iptr = mlx_xpm_file_to_image(E_MLX, filename, &new->w, &new->h);
+	new->data = (int *)mlx_get_data_addr(new->iptr, &new->bpp, &new->size_l, &new->endian);
+	return (new);
+}
+
 void	img(t_env *env)
 {
-	void	*img;
-	int		w;
-	int		h;
-
-	img = mlx_xpm_file_to_image(E_MLX, "./img/wall.XPM", &w, &h);
-	env->wall = (int *)img;
-	mlx_put_image_to_window(E_MLX, E_WIN, img, 0, 0);
+	env->wall = img_new(env, "./img/wall.XPM");
 }

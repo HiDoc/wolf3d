@@ -11,9 +11,9 @@ int	init_w(t_env *env, int x)
 	env->raydir.x = env->dir.x + env->plane.x * env->cam;
 	env->raydir.y = env->dir.y + env->plane.y * env->cam;
 	env->delta.x = sqrt(1 + (env->raydir.y * env->raydir.y) /
-		(env->raydir.x * env->raydir.x));
+			(env->raydir.x * env->raydir.x));
 	env->delta.y = sqrt(1 + (env->raydir.x * env->raydir.x) /
-		(env->raydir.y * env->raydir.y));
+			(env->raydir.y * env->raydir.y));
 	return (0);
 }
 
@@ -63,10 +63,10 @@ int	calc_dda(t_env *env)
 			env->hit = 1;
 			if (env->side == 0)
 				env->wdist = (env->mapx - env->pos.x + (1 - env->stepx)
-					/ 2) / env->raydir.x;
+						/ 2) / env->raydir.x;
 			else
 				env->wdist = (env->mapy - env->pos.y + (1 - env->stepy)
-					/ 2) / env->raydir.y;
+						/ 2) / env->raydir.y;
 		}
 	}
 	return (0);
@@ -76,10 +76,14 @@ int	wolf(t_env *env)
 {
 	int	x;
 	int	y;
+	int imgx;
+	int imgy;
 
 	x = 0;
 	while (x < WIDTH)
 	{
+		imgx = 0;
+		imgy = 0;
 		init_w(env, x);
 		calc_step(env);
 		calc_dda(env);
@@ -95,7 +99,25 @@ int	wolf(t_env *env)
 			env->mlx.data[y * WIDTH + x] = 0x00a088;
 		y--;
 		while (++y <= env->edraw && y < HEIGHT)
-			env->mlx.data[y * WIDTH + x] = env->wall[(y * WIDTH + x) % 64*64];
+		{
+			double wallX;
+			int nx;
+			if (env->side == 0)
+				wallX = env->pos.y + env->wdist * env->raydir.y;
+			else
+				wallX = env->pos.x + env->wdist * env->raydir.x;
+			wallX -= floor((wallX));
+			nx = (int)(wallX * 64.0);
+			if(env->side == 0 && env->raydir.x > 0) 
+				nx = 64.0 - nx - 1;
+			if(env->side == 1 && env->raydir.y < 0) 
+				nx = 64.0 - nx - 1;
+			int d = y * 256 - HEIGHT * 128 + env->lineh * 128;
+			int texY = ((d * 64.0) / env->lineh) / 256;
+			env->mlx.data[y * WIDTH + x] = env->wall->data[texY * 64 + nx];
+			imgy++;
+		}
+		x < 64 ? printf("\n") : 0;
 		y--;
 		while (++y < HEIGHT)
 			env->mlx.data[y * WIDTH + x] = 0xFFFD82;
@@ -103,3 +125,4 @@ int	wolf(t_env *env)
 	}
 	return (0);
 }
+

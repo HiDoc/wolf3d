@@ -6,18 +6,30 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/01 17:51:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/02 15:24:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_STRUCT_H
 # define WOLF_STRUCT_H
 
+typedef struct s_img	t_img;
 typedef struct s_mlx	t_mlx;
 typedef struct s_env	t_env;
 typedef struct s_xy		t_xy;
 typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
+
+struct					s_img
+{
+	void		*iptr;
+	int			*data;
+	int			size_l;
+	int			bpp;
+	int			endian;
+	int			w;
+	int			h;
+};
 
 struct					s_mlx
 {
@@ -74,7 +86,7 @@ struct					s_env
 	int			lineh;
 	int			sdraw;
 	int			edraw;
-	int			*wall;
+	t_img		*wall;
 };
 
 #endif
