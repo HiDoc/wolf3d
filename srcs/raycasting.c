@@ -19,7 +19,7 @@ int	wolf(t_env *env)
 		line.edraw >= HEIGHT ? line.edraw = HEIGHT - 1 : 0;
 		y = -1;
 		while (++y < line.sdraw)
-			env->mlx.data[y * WIDTH + x] = 0xaabb088;
+			env->mlx.data[y * WIDTH + x] = env->sky->data[line_floor(env, &line, y)];
 		y--;
 		if (line.sidew == 0)
 			line.wall.x = env->pos.y + line.wdist * line.raydir.y;
@@ -30,9 +30,7 @@ int	wolf(t_env *env)
 			env->mlx.data[y * WIDTH + x] = env->wall->data[line_wall(env, &line, y)];
 		y--;
 		while (++y < HEIGHT)
-		{
 			env->mlx.data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y)];
-		}
 		x++;
 	}
 	return (0);

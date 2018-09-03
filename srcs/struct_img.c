@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/02 17:52:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 13:38:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	img(t_env *env)
 {
 	env->wall = img_new(env, "./img/wall.XPM");
 	env->floor = img_new(env, "./img/floor.XPM");
+	env->sky = img_new(env, "./img/sky.XPM");
 }

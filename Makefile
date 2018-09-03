@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/02 19:40:18 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/03 13:38:50 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC_NAME 	= main.c \
 			  checkerrors.c \
 			  parser.c \
 			  floor.c \
+			  sky.c \
 			  wall.c \
 			  struct_line.c \
 			  struct_img.c

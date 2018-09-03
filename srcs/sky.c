@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floor.c                                            :+:      :+:    :+:   */
+/*   sky.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 17:41:42 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 13:39:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 13:41:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-int	line_floor(t_env *env, t_line *line, int y)
+int	line_sky(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
-	t_point		cfloor;
-	t_point		tfloor;
+	t_point		csky;
+	t_point		tsky;
 	double		weight;
 
 	get_fwall(line, &fwall);
 	if (line->edraw < 0)
 		line->edraw = HEIGHT; 
 	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
-	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
-	tfloor.x = (int)(cfloor.x * 64.0) % 64;
-	tfloor.y = (int)(cfloor.y * 64.0 + 128) % 64;
-	return (tfloor.y * 64 + tfloor.x);
+	csky.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
+	csky.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
+	tsky.x = (int)(csky.x * 800.0) % 800;
+	tsky.y = (int)(csky.y * 440.0) % 440;
+	return (tsky.y * 440 + tsky.x);
 }
