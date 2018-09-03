@@ -9,7 +9,7 @@ int		exit_wolf(t_env *env)
 	return (0);
 }
 
-t_point	rotate(t_point v, double ang)
+t_point	rotate(t_point v, int ang)
 {
 	float	radian;
 	t_point	r;
@@ -35,16 +35,6 @@ int		moove(int key, t_env *env)
 			env->pos.x -= env->dir.x * 0.05;
 		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
 			env->pos.y -= env->dir.y * 0.05;
-	}
-	if (key == KEY_RGT)
-	{
-		env->dir = rotate(env->dir, -env->ang);
-		env->plane = rotate(env->plane, -env->ang);
-	}
-	if (key == KEY_LFT)
-	{
-		env->dir = rotate(env->dir, env->ang);
-		env->plane = rotate(env->plane, env->ang);
 	}
 	return (0);
 }

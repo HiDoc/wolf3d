@@ -30,4 +30,5 @@ int		line_sky(t_env *env, t_line *line, int y);
 t_line	*line_init(t_env *env, t_line *line, int x);
 t_line	*line_dda(t_env *env, t_line *line);
 t_line	*line_step(t_env *env, t_line *line);
+t_point	rotate(t_point v, int ang);
 #endif

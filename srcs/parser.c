@@ -54,6 +54,7 @@ t_env	*parse_line(t_env *env, char *line, int **map, int nline)
 	line = NULL;
 	return (env);
 }
+
  t_env	*parse(t_env *env, char *filename)
 {
 	int		fd;

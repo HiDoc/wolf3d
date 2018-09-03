@@ -71,6 +71,27 @@ int		init_env(t_env *env)
 	return (0);
 }
 
+int		motion_mouse(int x, int y, t_env *env)
+{
+	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+	{
+		if (x < WIDTH / 8)
+		{
+			env->dir = rotate(env->dir, env->ang);
+			env->plane = rotate(env->plane, env->ang);
+		}
+		else if (x > WIDTH - WIDTH / 8)
+		{
+			env->dir = rotate(env->dir, -env->ang);
+			env->plane = rotate(env->plane, -env->ang);
+		}
+		mlx_clear_window(E_MLX, E_WIN);
+		wolf(env);
+		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
+	}
+	return (0);
+}
+
 int		main(int ac, char **av)
 {
 	t_env   *env;
@@ -86,6 +107,7 @@ int		main(int ac, char **av)
 	mlx_do_key_autorepeaton(E_MLX);
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	mlx_hook(E_WIN, KeyPress, KeyPressMask, &key_hook, env);
+	mlx_hook(E_WIN, 6, 3, &motion_mouse, env);
 	mlx_loop(E_MLX);
 	return (0);
 }
