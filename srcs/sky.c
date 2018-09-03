@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 17:41:42 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 13:41:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 14:00:24 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	line_sky(t_env *env, t_line *line, int y)
 	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	csky.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
 	csky.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
-	tsky.x = (int)(csky.x * 800.0) % 800;
-	tsky.y = (int)(csky.y * 440.0) % 440;
-	return (tsky.y * 440 + tsky.x);
+	tsky.x = (int)(csky.x);
+	tsky.y = (int)(csky.y);
+	return (tsky.y * 600 + tsky.x);
 }
