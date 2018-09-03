@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
+/*   Updated: 2018/09/03 17:25:44 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 t_line	*line_init(t_env *env, t_line *line, int x)
@@ -61,13 +73,26 @@ t_line	*line_dda(t_env *env, t_line *line)
 		if (env->w_map[(int)line->map.x][(int)line->map.y] > 0)
 		{
 			line->hit = 1;
-			if (line->sidew == 0)
-				line->wdist = (line->map.x - env->pos.x + (1 - line->step.x)
-						/ 2) / line->raydir.x;
-			else
-				line->wdist = (line->map.y - env->pos.y + (1 - line->step.y)
-						/ 2) / line->raydir.y;
+			(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
+					+ (1 - line->step.x) / 2) / line->raydir.x : 0;
+			(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
+					+ (1 - line->step.y) / 2) / line->raydir.y : 0;
 		}
 	}
+	return (line);
+}
+
+t_line	*line_max(t_env *env, t_line *line)
+{
+	line->lineh = (int)(HEIGHT / line->wdist);
+	line->sdraw = -line->lineh / 2 + HEIGHT / 2;
+	line->sdraw < 0 ? line->sdraw = 0 : 0;
+	line->edraw = line->lineh / 2 + HEIGHT / 2;
+	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
+	if (line->sidew == 0)
+		line->wall.x = env->pos.y + line->wdist * line->raydir.y;
+	else
+		line->wall.x = env->pos.x + line->wdist * line->raydir.x;
+	line->wall.x -= floor((line->wall.x));
 	return (line);
 }
