@@ -15,7 +15,7 @@
 # include "wolf_define.h"
 # include "wolf_struct.h"
 
-int		wolf(t_env *env);
+int		wolf(t_env *env, int col);
 
 void	print_error(int nb, t_env *env);
 void	free_env(t_env *env);
@@ -31,4 +31,5 @@ t_line	*line_init(t_env *env, t_line *line, int x);
 t_line	*line_dda(t_env *env, t_line *line);
 t_line	*line_step(t_env *env, t_line *line);
 int		motion_mouse(int x, int y, t_env *env);
+int		init_thread(t_env *env);
 #endif

@@ -25,16 +25,16 @@ int		moove(int key, t_env *env)
 	if (key == KEY_UP)
 	{
 		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
-			env->pos.x += env->dir.x * 0.05;
+			env->pos.x += env->dir.x * 0.1;
 		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
-			env->pos.y += env->dir.y * 0.05;
+			env->pos.y += env->dir.y * 0.1;
 	}
 	if (key == KEY_DOWN)
 	{
 		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
-			env->pos.x -= env->dir.x * 0.05;
+			env->pos.x -= env->dir.x * 0.1;
 		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
-			env->pos.y -= env->dir.y * 0.05;
+			env->pos.y -= env->dir.y * 0.1;
 	}
 	return (0);
 }
@@ -54,7 +54,8 @@ int		motion_mouse(int x, int y, t_env *env)
 			env->plane = rotate(env->plane, -env->ang);
 		}
 		mlx_clear_window(E_MLX, E_WIN);
-		wolf(env);
+		// wolf(env);
+		init_thread(env);
 		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	}
 	return (0);
@@ -68,7 +69,8 @@ int key_hook(int key, t_env *env)
 	if (key == 53)
 		exit_wolf(env);
 	mlx_clear_window(E_MLX, E_WIN);
-	wolf(env);
+	// wolf(env);
+	init_thread(env);
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	return (0);
 }

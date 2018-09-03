@@ -82,7 +82,8 @@ int		main(int ac, char **av)
 	init_env(env);
 	img(env);
 	fill_tab(env);
-	wolf(env);
+	// wolf(env);
+	init_thread(env);
 	mlx_do_key_autorepeaton(E_MLX);
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	mlx_hook(E_WIN, KeyPress, KeyPressMask, &key_hook, env);

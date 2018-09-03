@@ -1,12 +1,12 @@
 #include "wolf.h"
 
-int	wolf(t_env *env)
+int	wolf(t_env *env, int col)
 {
 	int	x;
 	int	y;
 	t_line	line;
 
-	x = 0;
+	x = col - 1;
 	while (x < WIDTH)
 	{
 		line_init(env, &line, x);
@@ -33,7 +33,7 @@ int	wolf(t_env *env)
 		{
 			env->mlx.data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y)];
 		}
-		x++;
+		x += 8;
 	}
 	return (0);
 }

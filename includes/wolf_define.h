@@ -39,11 +39,19 @@
 # define T_T2		env->thw.t2
 # define T_T3		env->thw.t3
 # define T_T4		env->thw.t4
+# define T_T5		env->thw.t5
+# define T_T6		env->thw.t6
+# define T_T7		env->thw.t7
+# define T_T8		env->thw.t8
 
 # define T_TH1		env->thw.t1.th
 # define T_TH2		env->thw.t2.th
 # define T_TH3		env->thw.t3.th
 # define T_TH4		env->thw.t4.th
+# define T_TH5		env->thw.t5.th
+# define T_TH6		env->thw.t6.th
+# define T_TH7		env->thw.t7.th
+# define T_TH8		env->thw.t8.th
 
 # define E_MLX		env->mlx.mptr
 # define E_WIN		env->mlx.wptr

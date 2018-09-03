@@ -61,7 +61,11 @@ struct					s_thw
 	t_thr		t1;	
 	t_thr		t2;	
 	t_thr		t3;	
-	t_thr		t4;	
+	t_thr		t4;
+	t_thr		t5;
+	t_thr		t6;
+	t_thr		t7;
+	t_thr		t8;
 };
 
 struct					s_line
