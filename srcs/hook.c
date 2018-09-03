@@ -39,6 +39,27 @@ int		moove(int key, t_env *env)
 	return (0);
 }
 
+int		motion_mouse(int x, int y, t_env *env)
+{
+	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+	{
+		if (x < WIDTH / 8)
+		{
+			env->dir = rotate(env->dir, env->ang);
+			env->plane = rotate(env->plane, env->ang);
+		}
+		else if (x > WIDTH - WIDTH / 8)
+		{
+			env->dir = rotate(env->dir, -env->ang);
+			env->plane = rotate(env->plane, -env->ang);
+		}
+		mlx_clear_window(E_MLX, E_WIN);
+		wolf(env);
+		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
+	}
+	return (0);
+}
+
 int key_hook(int key, t_env *env)
 {
 	if (key == KEY_UP || key == KEY_DOWN
