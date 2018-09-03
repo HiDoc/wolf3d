@@ -71,6 +71,38 @@ int		init_env(t_env *env)
 	return (0);
 }
 
+void	put_gun(t_env *env)
+{
+	int x = 0;
+	int y = 0;
+	int pos = 0;
+
+	while (y < 128)
+	{
+		x = 0;
+		while (x < 128)
+		{
+			if (env->gun->data[pos] != 0xFFFFFF)
+				env->mlx.data[572 * 672 + (y * 800 + x) - 50] = env->gun->data[pos]; 
+			x++;
+			pos++;
+		}
+		y++;
+	}
+	y = 0;
+	while (y < 20)
+	{
+		x = 0;
+		while (x < 20)
+		{
+			if ((x == 10 || y == 10) && x != y)
+				env->mlx.data[800 * 300 + (y * 800 + x) + 390] = 0xFF00;
+			x++;
+		}
+		y++;
+	}
+}
+
 int		main(int ac, char **av)
 {
 	t_env   *env;

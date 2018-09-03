@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/08/29 12:37:50 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 19:57:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int		init_thread(t_env *env)
 		return (exit_wolf(env));
 	if (pthread_join(T_TH8, NULL))
 		return (exit_wolf(env));
+	put_gun(env);
 	return (0);
 }

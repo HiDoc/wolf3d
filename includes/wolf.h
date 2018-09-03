@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 17:24:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 20:09:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_env(t_env *env);
 int		exit_wolf(t_env *env);
 int		key_hook(int key, t_env *env);
 
+void	put_gun(t_env *env);
 void	img(t_env *env);
 int		line_floor(t_env *env, t_line *line, int y);
 int		line_wall(t_env *env, t_line *line, int y);

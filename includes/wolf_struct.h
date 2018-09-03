@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 13:37:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/03 19:27:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ struct					s_env
 	t_img		*wall;
 	t_img		*floor;
 	t_img		*sky;
+	t_img		*gun;
 };
 
 #endif
