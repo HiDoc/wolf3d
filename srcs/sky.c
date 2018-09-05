@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 17:41:42 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 10:51:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/05 13:00:24 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,14 @@ int				line_sky(t_env *env, t_line *line, int x, int y)
 	(void)line_ceil;
 	(void)line;
 	(void)env;
-	return ((int)(y * WIDTH + x) % (800 * 600));
+	int pos;
+	double dpos;
+
+	dpos = env->pang * 800.0 / 360.0;
+	if (dpos + x > 800)
+	{
+		x = -x;
+	}
+	pos = (y * WIDTH + x);
+	return (pos);
 }

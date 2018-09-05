@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 11:03:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/05 15:35:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ struct					s_thw
 
 struct					s_line
 {
+	t_img		*text;
 	t_point		map;
 	t_point		delta;
 	t_point		step;
@@ -96,6 +97,7 @@ struct					s_env
 	double		pang;
 	int			**w_map;
 	t_img		*wall;
+	t_img		*walls[10];
 	t_img		*floor;
 	t_img		*sky;
 	t_img		*gun;

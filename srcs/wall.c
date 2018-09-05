@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:13:50 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 17:15:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/05 15:33:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ int	line_wall(t_env *env, t_line *line, int y)
 		x = 64.0 - x - 1;
 	delta = y * 256 - HEIGHT * 128 + line->lineh * 128;
 	yy = ((delta * 64.0) / line->lineh) / 256;
-	return (yy * 64 + x);
+	return (line->text->data[yy * 64 + x]);
 }

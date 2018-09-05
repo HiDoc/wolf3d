@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 18:26:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/05 15:30:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,15 @@ t_img	*img_new(t_env *env, char *filename)
 
 void	img(t_env *env)
 {
-	env->wall = img_new(env, "./img/wall.XPM");
+	env->walls[0] = img_new(env, "./img/wall.XPM");
+	env->walls[1] = img_new(env, "./img/wall_1.XPM");
+	env->walls[2] = img_new(env, "./img/wall_2.XPM");
+	env->walls[3] = img_new(env, "./img/wall_3.XPM");
+	env->walls[4] = img_new(env, "./img/wall_4.XPM");
+	env->walls[5] = img_new(env, "./img/wall_5.XPM");
+	env->walls[6] = img_new(env, "./img/wall_6.XPM");
+	env->walls[7] = img_new(env, "./img/wall_7.XPM");
+	env->wall = env->walls[0];
 	env->floor = img_new(env, "./img/floor.XPM");
 	env->sky = img_new(env, "./img/sky.XPM");
 	env->gun = img_new(env, "./img/gun.XPM");

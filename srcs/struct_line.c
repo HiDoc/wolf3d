@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 10:48:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/05 15:31:34 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 		if (env->w_map[(int)line->map.x][(int)line->map.y] > 0)
 		{
 			line->hit = 1;
+			line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
 			(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
 					+ (1 - line->step.x) / 2) / line->raydir.x : 0;
 			(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y

@@ -59,15 +59,17 @@ int		motion_mouse(int x, int y, t_env *env)
 		{
 			env->dir = rotate(env->dir, env->ang);
 			env->plane = rotate(env->plane, env->ang);
+			env->pang -= 2.0;
 		}
 		else if (x > 400)
 		{
 			env->dir = rotate(env->dir, -env->ang);
 			env->plane = rotate(env->plane, -env->ang);
+			env->pang += 2.0;
 		}
+		env->pang > 358.0 ? env->pang = 0.0 : 0;
 		mlx_clear_window(E_MLX, E_WIN);
 		init_thread(env);
-		printf("%f\n", env->cam);
 		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	}
 	return (0);
@@ -75,13 +77,11 @@ int		motion_mouse(int x, int y, t_env *env)
 
 int key_hook(int key, t_env *env)
 {
-	if (key == KEY_UP || key == KEY_DOWN
-	|| key == KEY_LFT || key == KEY_RGT)
+	if (key == KEY_UP || key == KEY_DOWN || key == KEY_LFT || key == KEY_RGT)
 		moove(key, env);
 	if (key == 53)
 		exit_wolf(env);
 	mlx_clear_window(E_MLX, E_WIN);
-	// wolf(env);
 	init_thread(env);
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	return (0);
