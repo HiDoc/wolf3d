@@ -9,11 +9,23 @@ int		exit_wolf(t_env *env)
 	return (0);
 }
 
+t_point	rotate_up(t_point v, int ang)
+{
+	float	radian;
+	t_point	r;
+
+	radian = ang / 180.0 * 3.141;
+	r.x = v.x * cos(radian) - v.y * sin(radian);
+	r.y = v.x * sin(radian) + v.y * cos(radian);
+	return (r);
+}
+
 t_point	rotate(t_point v, int ang)
 {
 	float	radian;
 	t_point	r;
 
+	(void)rotate_up;
 	radian = ang / 180.0 * 3.141;
 	r.x = v.x * cos(radian) - v.y * sin(radian);
 	r.y = v.x * sin(radian) + v.y * cos(radian);
@@ -43,19 +55,19 @@ int		motion_mouse(int x, int y, t_env *env)
 {
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
-		if (x < WIDTH / 8)
+		if (x < 400)
 		{
 			env->dir = rotate(env->dir, env->ang);
 			env->plane = rotate(env->plane, env->ang);
 		}
-		else if (x > WIDTH - WIDTH / 8)
+		else if (x > 400)
 		{
 			env->dir = rotate(env->dir, -env->ang);
 			env->plane = rotate(env->plane, -env->ang);
 		}
 		mlx_clear_window(E_MLX, E_WIN);
-		// wolf(env);
 		init_thread(env);
+		printf("%f\n", env->cam);
 		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	}
 	return (0);

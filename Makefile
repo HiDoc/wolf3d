@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/03 19:13:26 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/05 11:04:00 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ OBJ_PATH 	= ./objs/
 INC_PATH 	= ./includes/ \
 			  ./minilibx/ \
 			  ./libft/includes/	\
-			  /System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/
+			  /System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/ \
+			  /System/Library/Frameworks/OpenGL.framework/Headers/
 
 SRC_NAME 	= main.c \
 			  hook.c \
@@ -48,7 +49,9 @@ SRC_NAME 	= main.c \
 			  floor.c \
 			  sky.c \
 			  wall.c \
+			  ui.c \
 			  struct_line.c \
+			  struct_env.c \
 			  struct_img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

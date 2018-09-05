@@ -6,11 +6,18 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/03 19:27:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/04 18:39:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_DEFINE_H
+
+# ifdef __APPLE__
+#  include "gl.h"
+#  include "glu.h"
+#  include "gltypes.h"
+# endif
+
 # define WOLF_DEFINE_H
 # include <pthread.h>
 # include <math.h>
@@ -20,9 +27,10 @@
 # include <time.h>
 # include <limits.h>
 # include "mlx.h"
+//# include "mlx_int.h"
 # include "libft.h"
 # include "X.h"
-
+//# include "Xlib.h"
 # define WIDTH 		800
 # define HEIGHT 	600
 

@@ -15,7 +15,7 @@ int	wolf(t_env *env, int col)
 		line_max(env, &line);
 		y = -1;
 		while (++y < line.sdraw)
-			env->mlx.data[y * WIDTH + x] = env->sky->data[((y + 200) * WIDTH + x)];
+			env->mlx.data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y)];
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 			env->mlx.data[y * WIDTH + x] = env->wall->data[line_wall(env, &line, y)];
