@@ -21,9 +21,7 @@ int	wolf(t_env *env, int col)
 			env->mlx.data[y * WIDTH + x] = line_wall(env, &line, y + (-env->is_updn));
 		y--;
 		while (++y < HEIGHT)
-		{
 			env->mlx.data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y + (-env->is_updn))];
-		}
 		x += 8;
 	}
 	return (0);
