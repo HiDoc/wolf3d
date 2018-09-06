@@ -32,35 +32,47 @@ t_point	rotate(t_point v, int ang)
 	return (r);
 }
 
+static int check_pos(t_env *env, t_point mult, float check, char pos)
+{
+	int x;
+	int y;
+
+	if (pos == 'x')
+	{
+		x = env->pos.x + mult.x * check;
+		y = env->pos.y;
+		env->w_map[x][y] == 0 ? env->pos.x += mult.x * (check / 2.0) : 0;
+	}
+	else
+	{
+		x = env->pos.x;	
+		y = env->pos.y + mult.y * check;
+		env->w_map[x][y] == 0 ?  env->pos.y += mult.y * (check / 2.0) : 0;
+	}
+	return (0);
+}
+
 int		moove(int key, t_env *env)
 {
 	if (key == KEY_UP)
 	{
-		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.1)][(int)env->pos.y] == 0)
-			env->pos.x += env->dir.x * 0.1;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.1)] == 0)
-			env->pos.y += env->dir.y * 0.1;
+		check_pos(env, env->dir, 0.2, 'x');
+		check_pos(env, env->dir, 0.2, 'y');
 	}
 	if (key == KEY_DOWN)
 	{
-		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.1)][(int)env->pos.y] == 0)
-			env->pos.x -= env->dir.x * 0.1;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.1)] == 0)
-			env->pos.y -= env->dir.y * 0.1;
+		check_pos(env, env->dir, -0.2, 'x');
+		check_pos(env, env->dir, -0.2, 'y');
 	}
 	if (key == KEY_LFT)
 	{
-		if (env->w_map[(int)(env->pos.x + env->plane.x * 0.2)][(int)env->pos.y] == 0)
-			env->pos.x -= env->plane.x * 0.2;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->plane.y * 0.1)] == 0)
-			env->pos.y -= env->plane.y * 0.2;
+		check_pos(env, env->plane, -0.2, 'x');
+		check_pos(env, env->plane, -0.2, 'y');
 	}
 	if (key == KEY_RGT)
 	{
-		if (env->w_map[(int)(env->pos.x + env->plane.x * 0.2)][(int)env->pos.y] == 0)
-			env->pos.x += env->plane.x * 0.2;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->plane.y * 0.1)] == 0)
-			env->pos.y += env->plane.y * 0.2;
+		check_pos(env, env->plane, 0.2, 'x');
+		check_pos(env, env->plane, 0.2, 'y');
 	}
 	return (0);
 }

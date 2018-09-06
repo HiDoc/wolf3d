@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 15:31:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/06 16:25:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_line	*line_step(t_env *env, t_line *line)
 
 t_line	*line_dda(t_env *env, t_line *line)
 {
-	while (line->hit == 0)
+	while (line->hit == 0 && line->map.x > 0 && line->map.y > 0)
 	{
 		if (line->side.x < line->side.y)
 		{
