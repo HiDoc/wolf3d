@@ -36,17 +36,31 @@ int		moove(int key, t_env *env)
 {
 	if (key == KEY_UP)
 	{
-		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
+		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.1)][(int)env->pos.y] == 0)
 			env->pos.x += env->dir.x * 0.1;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.1)] == 0)
 			env->pos.y += env->dir.y * 0.1;
 	}
 	if (key == KEY_DOWN)
 	{
-		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.05)][(int)env->pos.y] == 0)
+		if (env->w_map[(int)(env->pos.x + env->dir.x * 0.1)][(int)env->pos.y] == 0)
 			env->pos.x -= env->dir.x * 0.1;
-		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.05)] == 0)
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->dir.y * 0.1)] == 0)
 			env->pos.y -= env->dir.y * 0.1;
+	}
+	if (key == KEY_LFT)
+	{
+		if (env->w_map[(int)(env->pos.x + env->plane.x * 0.2)][(int)env->pos.y] == 0)
+			env->pos.x -= env->plane.x * 0.2;
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->plane.y * 0.1)] == 0)
+			env->pos.y -= env->plane.y * 0.2;
+	}
+	if (key == KEY_RGT)
+	{
+		if (env->w_map[(int)(env->pos.x + env->plane.x * 0.2)][(int)env->pos.y] == 0)
+			env->pos.x += env->plane.x * 0.2;
+		if (env->w_map[(int)env->pos.x][(int)(env->pos.y + env->plane.y * 0.1)] == 0)
+			env->pos.y += env->plane.y * 0.2;
 	}
 	return (0);
 }
@@ -70,16 +84,12 @@ int		motion_mouse(int x, int y, t_env *env)
 		env->pang > 358.0 ? env->pang = 0.0 : 0;
 		if (y > 300)
 		{
-			if (env->is_updn < -200)
-				env->is_updn = -200;
-			else
+			if (env->is_updn > -200)
 				env->is_updn -= 10;
 		}
 		else if (y < 300)
 		{
-			if (env->is_updn > 200)
-				env->is_updn = 200;
-			else
+			if (env->is_updn < 300)
 				env->is_updn += 10;
 		}
 		mlx_clear_window(E_MLX, E_WIN);

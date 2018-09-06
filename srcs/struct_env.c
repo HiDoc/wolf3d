@@ -82,8 +82,6 @@ int		init_env(t_env *env)
 	env->plane.y = 0.66;
 	env->w_map = NULL;
 	env->is_updn = 0.0;
-	env->old.x = 0;
-	env->old.y = 0;
 	init_mlx(env);
 	return (0);
 }
