@@ -92,6 +92,8 @@ struct					s_env
 	t_point		pos;
 	t_point		dir;
 	t_point		plane;
+	t_point		old;
+	double		is_updn;
 	double		cam;
 	double		ang;
 	double		pang;

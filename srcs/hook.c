@@ -68,6 +68,20 @@ int		motion_mouse(int x, int y, t_env *env)
 			env->pang += 2.0;
 		}
 		env->pang > 358.0 ? env->pang = 0.0 : 0;
+		if (y > 300)
+		{
+			if (env->is_updn < -200)
+				env->is_updn = -200;
+			else
+				env->is_updn -= 10;
+		}
+		else if (y < 300)
+		{
+			if (env->is_updn > 200)
+				env->is_updn = 200;
+			else
+				env->is_updn += 10;
+		}
 		mlx_clear_window(E_MLX, E_WIN);
 		init_thread(env);
 		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
