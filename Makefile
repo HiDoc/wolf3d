@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/07 12:43:06 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/07 16:35:16 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ SRC_NAME 	= main.c \
 			  utils_maths.c \
 			  struct_line.c \
 			  struct_env.c \
-			  struct_ray.c \
 			  struct_img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
