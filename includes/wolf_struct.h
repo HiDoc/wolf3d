@@ -98,11 +98,18 @@ struct					s_env
 	double		ang;
 	double		pang;
 	int			**w_map;
+	t_img		*portal;
+	t_img		*blackportal;
+	t_point		pos_portal;
 	t_img		*wall;
 	t_img		*walls[10];
 	t_img		*floor;
 	t_img		*sky;
 	t_img		*gun;
+	int			width;
+	int			height;
+	int			outportal;
+	int			inportal;
 };
 
 #endif

@@ -31,8 +31,8 @@
 # include "libft.h"
 # include "X.h"
 //# include "Xlib.h"
-# define WIDTH 		800
-# define HEIGHT 	600
+# define WIDTH 		env->width
+# define HEIGHT 	env->height
 
 # define TEXW 		64
 # define TEXH 		64
@@ -40,6 +40,8 @@
 # define KEY_UP 	126
 # define KEY_DOWN 	125
 # define KEY_LFT 	123
+# define KEY_SPACE  0
+# define KEY_X      7
 # define KEY_RGT 	124
 # define ESC 		53
 
