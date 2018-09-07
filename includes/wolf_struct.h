@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 12:09:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/07 15:32:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,18 @@ struct					s_env
 	double		ang;
 	double		pang;
 	int			**w_map;
+	t_img		*portal;
+	t_img		*blackportal;
+	t_point		pos_portal;
 	t_img		*wall;
 	t_img		*walls[10];
 	t_img		*floor;
 	t_img		*sky;
 	t_img		*gun;
+	int			width;
+	int			height;
+	int			outportal;
+	int			inportal;
 };
 
 #endif

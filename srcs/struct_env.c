@@ -72,6 +72,8 @@ int		fill_tab(t_env *env)
 
 int		init_env(t_env *env)
 {
+	env->width = 800;
+	env->height = 600;
 	env->pos.x = 10;
 	env->pos.y = 10;
 	env->ang = 2.0;
@@ -82,6 +84,8 @@ int		init_env(t_env *env)
 	env->plane.y = 0.66;
 	env->w_map = NULL;
 	env->is_updn = 0.0;
+	env->outportal = 0;
+	env->inportal = 0;
 	init_mlx(env);
 	return (0);
 }
