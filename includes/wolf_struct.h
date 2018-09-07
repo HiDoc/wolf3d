@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 15:35:14 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/07 12:09:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_point	t_point;
 typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
 typedef struct s_line	t_line;
+typedef struct s_ray	t_ray;
 
 struct					s_img
 {
@@ -68,6 +69,22 @@ struct					s_thw
 	t_thr		t8;
 };
 
+struct					s_ray
+{
+	t_img		*text;
+	t_point		map;
+	t_point		delta;
+	t_point		step;
+	t_point		raydir;	
+	t_point		wall;
+	t_point		side;
+	double		wdist;
+	int			sidew;
+	int			lineh;
+	int			sdraw;
+	int			edraw;
+};
+
 struct					s_line
 {
 	t_img		*text;
@@ -78,7 +95,6 @@ struct					s_line
 	t_point		wall;
 	t_point		side;
 	double		wdist;
-	int			hit;
 	int			sidew;
 	int			lineh;
 	int			sdraw;

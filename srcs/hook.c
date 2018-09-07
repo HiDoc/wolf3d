@@ -71,8 +71,8 @@ int		motion_mouse(int x, int y, t_env *env)
 
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
-		mult = (x < 400 ? 1.0 : -1.0);
-		env->dir = rotate(env->dir, mult *env->ang);
+		mult = (x < 400 ? 2.0 : -2.0);
+		env->dir = rotate(env->dir, mult * env->ang);
 		env->plane = rotate(env->plane, mult * env->ang);
 		env->pang += mult * 2.0;
 		env->pang > 358.0 ? env->pang = 0.0 : 0;

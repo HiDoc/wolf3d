@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wall.c                                             :+:      :+:    :+:   */
+/*   utils_maths.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/03 17:13:50 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 12:04:25 by fmadura          ###   ########.fr       */
+/*   Created: 2018/09/07 12:39:11 by fmadura           #+#    #+#             */
+/*   Updated: 2018/09/07 12:41:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int	line_wall(t_env *env, t_line *line, int y)
+int		ft_sqr(int a)
 {
-	int		x;
-	int		yy;
-	int		delta;
+	return (a * a);
+}
 
-	(void)env;
-	x = (int)(line->wall.x * 64.0);
-	if (line->sidew == 0 && line->raydir.x > 0)
-		x = 64.0 - x - 1;
-	if (line->sidew == 1 && line->raydir.y < 0)
-		x = 64.0 - x - 1;
-	delta = y * 256 - HEIGHT * 128 + line->lineh * 128;
-	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	return (line->text->data[yy * 64 + x]);
+int		ft_pyt(int a, int b)
+{
+	return sqrt(ft_sqr(a) + ft_sqr(b));
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/06 16:25:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/07 14:13:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_line	*line_init(t_env *env, t_line *line, int x)
 {
-	line->hit = 0;
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
@@ -56,7 +55,9 @@ t_line	*line_step(t_env *env, t_line *line)
 
 t_line	*line_dda(t_env *env, t_line *line)
 {
-	while (line->hit == 0 && line->map.x > 0 && line->map.y > 0)
+	int i;
+
+	while ((i = env->w_map[(int)line->map.x][(int)line->map.y]) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{
@@ -70,16 +71,12 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->map.y += line->step.y;
 			line->sidew = 1;
 		}
-		if (env->w_map[(int)line->map.x][(int)line->map.y] > 0)
-		{
-			line->hit = 1;
-			line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
-			(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
-					+ (1 - line->step.x) / 2) / line->raydir.x : 0;
-			(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
-					+ (1 - line->step.y) / 2) / line->raydir.y : 0;
-		}
 	}
+	line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
+			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
+	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
+			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
 	return (line);
 }
 
