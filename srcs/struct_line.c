@@ -72,7 +72,6 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-<<<<<<< HEAD
 	if (i == 8)
 		line->text = env->portal.outimg;
 	else if (i == 9)
@@ -84,9 +83,6 @@ t_line	*line_dda(t_env *env, t_line *line)
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
 	return (line);
-=======
-	return (line_max(env, line));
->>>>>>> ad4353bf2af2359fbb8f0f2c26185c8cdf7c26ef
 }
 
 t_line	*line_max(t_env *env, t_line *line)
