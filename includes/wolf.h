@@ -41,7 +41,6 @@ t_line	*line_dda(t_env *env, t_line *line);
 t_line	*line_step(t_env *env, t_line *line);
 t_line	*line_max(t_env *env, t_line *line);
 
-<<<<<<< HEAD
 t_ray	*ray_init(t_env *env, t_ray *ray, int x);
 t_ray	*ray_dda(t_env *env, t_ray *ray);
 t_ray	*ray_step(t_env *env, t_ray *ray);
@@ -49,8 +48,6 @@ t_ray	*ray_max(t_env *env, t_ray *ray);
 
 t_point	portal_pos(t_env *env, t_point pos);
 
-=======
->>>>>>> ad4353bf2af2359fbb8f0f2c26185c8cdf7c26ef
 int		motion_mouse(int x, int y, t_env *env);
 int		init_thread(t_env *env);
 int		init_env(t_env *env);

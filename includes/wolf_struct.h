@@ -20,11 +20,8 @@ typedef struct s_point	t_point;
 typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
 typedef struct s_line	t_line;
-<<<<<<< HEAD
 typedef struct s_ray	t_ray;
 typedef struct s_portal	t_portal;
-=======
->>>>>>> ad4353bf2af2359fbb8f0f2c26185c8cdf7c26ef
 
 struct					s_img
 {
