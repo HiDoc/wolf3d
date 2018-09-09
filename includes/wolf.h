@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 16:35:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/07 12:42:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int		key_hook(int key, t_env *env);
 void	put_gun(t_env *env);
 void	img(t_env *env);
 
-double	ft_sqr(double a);
-double	ft_pyt(double a, double b);
-double	ft_delta(double a, double b);
+int		ft_sqr(int a);
+int		ft_pyt(int a, int b);
 
 int		line_floor(t_env *env, t_line *line, int y);
 int		line_wall(t_env *env, t_line *line, int y);

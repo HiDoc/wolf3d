@@ -1,0 +1,77 @@
+floor.c:	if (line->sidew == 0 && line->raydir.x > 0)
+floor.c:		fwall->x = line->map.x;
+floor.c:		fwall->y = line->map.y + line->wall.x;
+floor.c:	else if (line->sidew == 0 && line->raydir.x < 0)
+floor.c:		fwall->x = line->map.x + 1.0;
+floor.c:		fwall->y = line->map.y + line->wall.x;
+floor.c:	else if (line->sidew == 1 && line->raydir.y > 0)
+floor.c:		fwall->x = line->map.x + line->wall.x;
+floor.c:		fwall->y = line->map.y;
+floor.c:		fwall->x = line->map.x + line->wall.x;
+floor.c:		fwall->y = line->map.y + 1.0;
+floor.c:	if (line->edraw < 0)
+floor.c:		line->edraw = HEIGHT; 
+floor.c:	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
+sky.c:	if (line->sidew == 0 && line->raydir.x > 0)
+sky.c:		fwall->x = line->map.x;
+sky.c:		fwall->y = line->map.y + line->wall.x;
+sky.c:	else if (line->sidew == 0 && line->raydir.x < 0)
+sky.c:		fwall->x = line->map.x + 1.0;
+sky.c:		fwall->y = line->map.y + line->wall.x;
+sky.c:	else if (line->sidew == 1 && line->raydir.y > 0)
+sky.c:		fwall->x = line->map.x + line->wall.x;
+sky.c:		fwall->y = line->map.y;
+sky.c:		fwall->x = line->map.x + line->wall.x;
+sky.c:		fwall->y = line->map.y + 1.0;
+sky.c:	if (line->edraw < 0)
+sky.c:		line->edraw = HEIGHT; 
+sky.c:	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
+struct_line.c:	line->hit = 0;
+struct_line.c:	line->wdist = -1;
+struct_line.c:	line->sidew = -1;
+struct_line.c:	line->map.x = (int)env->pos.x;
+struct_line.c:	line->map.y = (int)env->pos.y;
+struct_line.c:	line->raydir.x = env->dir.x + env->plane.x * env->cam;
+struct_line.c:	line->raydir.y = env->dir.y + env->plane.y * env->cam;
+struct_line.c:	line->delta.x = sqrt(1 + (line->raydir.y * line->raydir.y) /
+struct_line.c:			(line->raydir.x * line->raydir.x));
+struct_line.c:	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
+struct_line.c:			(line->raydir.y * line->raydir.y));
+struct_line.c:	if (line->raydir.x < 0)
+struct_line.c:		line->step.x = -1;
+struct_line.c:		line->side.x = (env->pos.x - line->map.x) * line->delta.x;
+struct_line.c:		line->step.x = 1;
+struct_line.c:		line->side.x = (line->map.x + 1.0 - env->pos.x) * line->delta.x;
+struct_line.c:	if (line->raydir.y < 0)
+struct_line.c:		line->step.y = -1;
+struct_line.c:		line->side.y = (env->pos.y - line->map.y) * line->delta.y;
+struct_line.c:		line->step.y = 1;
+struct_line.c:		line->side.y = (line->map.y + 1.0 - env->pos.y) * line->delta.y;
+struct_line.c:	while ((i = env->w_map[(int)line->map.x][(int)line->map.y]) == 0)
+struct_line.c:		if (line->side.x < line->side.y)
+struct_line.c:			line->side.x += line->delta.x;
+struct_line.c:			line->map.x += line->step.x;
+struct_line.c:			line->sidew = 0;
+struct_line.c:			line->side.y += line->delta.y;
+struct_line.c:			line->map.y += line->step.y;
+struct_line.c:			line->sidew = 1;
+struct_line.c:	line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+struct_line.c:	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
+struct_line.c:			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
+struct_line.c:	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
+struct_line.c:			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
+struct_line.c:	line->lineh = (int)(HEIGHT / line->wdist);
+struct_line.c:	line->sdraw = (-line->lineh / 2 + HEIGHT / 2) + env->is_updn;
+struct_line.c:	line->sdraw < 0 ? line->sdraw = 0 : 0;
+struct_line.c:	line->edraw = (line->lineh / 2 + HEIGHT / 2) + env->is_updn;
+struct_line.c:	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
+struct_line.c:	if (line->sidew == 0)
+struct_line.c:		line->wall.x = env->pos.y + line->wdist * line->raydir.y;
+struct_line.c:		line->wall.x = env->pos.x + line->wdist * line->raydir.x;
+struct_line.c:	line->wall.x -= floor((line->wall.x));
+wall.c:	x = (int)(line->wall.x * 64.0);
+wall.c:	if (line->sidew == 0 && line->raydir.x > 0)
+wall.c:	if (line->sidew == 1 && line->raydir.y < 0)
+wall.c:	delta = y * 256 - HEIGHT * 128 + line->lineh * 128;
+wall.c:	yy = ((delta * 64.0) / (line->lineh)) / 256;
+wall.c:	return (line->text->data[yy * 64 + x]);
