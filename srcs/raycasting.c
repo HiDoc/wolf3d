@@ -5,16 +5,11 @@ int	wolf(t_env *env, int col)
 	int	x;
 	int	y;
 	t_line	line;
-	t_ray	ray;
 
 	x = col - 1;
 	while (x < WIDTH)
 	{
-		ray_init(env, &ray, x);
 		line_init(env, &line, x);
-		line_step(env, &line);
-		line_dda(env, &line);
-		line_max(env, &line);
 		y = -1;
 		while (++y < line.sdraw)
 		{

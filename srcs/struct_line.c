@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 14:13:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/07 16:55:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 t_line	*line_init(t_env *env, t_line *line, int x)
 {
+	double cam;
+
+	cam = 2 * x / (double)WIDTH - 1;
 	line->wdist = -1;
 	line->sidew = -1;
-	env->cam = 2 * x / (double)WIDTH - 1;
 	line->map.x = (int)env->pos.x;
 	line->map.y = (int)env->pos.y;
-	line->raydir.x = env->dir.x + env->plane.x * env->cam;
-	line->raydir.y = env->dir.y + env->plane.y * env->cam;
-	line->delta.x = sqrt(1 + (line->raydir.y * line->raydir.y) /
-			(line->raydir.x * line->raydir.x));
-	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
-			(line->raydir.y * line->raydir.y));
-	return (line);
+	line->raydir.x = env->dir.x + env->plane.x * cam;
+	line->raydir.y = env->dir.y + env->plane.y * cam;
+	line->delta.x = ft_delta(line->raydir.y, line->raydir.x);
+	line->delta.y = ft_delta(line->raydir.x, line->raydir.y);
+	return (line_step(env, line));
 }
 
 t_line	*line_step(t_env *env, t_line *line)
@@ -50,7 +50,7 @@ t_line	*line_step(t_env *env, t_line *line)
 		line->step.y = 1;
 		line->side.y = (line->map.y + 1.0 - env->pos.y) * line->delta.y;
 	}
-	return (line);
+	return (line_dda(env, line));
 }
 
 t_line	*line_dda(t_env *env, t_line *line)
@@ -72,6 +72,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
+<<<<<<< HEAD
 	if (i == 8)
 		line->text = env->portal.outimg;
 	else if (i == 9)
@@ -83,19 +84,30 @@ t_line	*line_dda(t_env *env, t_line *line)
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
 	return (line);
+=======
+	return (line_max(env, line));
+>>>>>>> ad4353bf2af2359fbb8f0f2c26185c8cdf7c26ef
 }
 
 t_line	*line_max(t_env *env, t_line *line)
 {
-	line->lineh = (int)(HEIGHT / line->wdist);
-	line->sdraw = (-line->lineh / 2 + HEIGHT / 2) + env->is_updn;
-	line->sdraw < 0 ? line->sdraw = 0 : 0;
-	line->edraw = (line->lineh / 2 + HEIGHT / 2) + env->is_updn;
-	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
+	double	new_h;
+
+	line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+	if (line->sidew == 0)
+		line->wdist = (line->map.x - env->pos.x
+				+ (1 - line->step.x) / 2) / line->raydir.x;
+	else
+		line->wdist = (line->map.y - env->pos.y
+				+ (1 - line->step.y) / 2) / line->raydir.y;	
+	new_h = (int)(HEIGHT / line->wdist);
+	line->sdraw = ((-new_h + HEIGHT) / 2) + env->is_updn;
+	line->edraw = ((new_h + HEIGHT) / 2) + env->is_updn;
 	if (line->sidew == 0)
 		line->wall.x = env->pos.y + line->wdist * line->raydir.y;
 	else
 		line->wall.x = env->pos.x + line->wdist * line->raydir.x;
 	line->wall.x -= floor((line->wall.x));
+	line->lineh = new_h;
 	return (line);
 }
