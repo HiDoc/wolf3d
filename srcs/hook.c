@@ -64,20 +64,33 @@ int		moove(int key, t_env *env)
 	}
 	if (key == KEY_X)
 	{
-		int i;
-
-		i = 0;
-		env->pos_portal.x = env->pos.x;
-		env->pos_portal.y = env->pos.y;
-		if (!(env->blackportal = malloc(sizeof(t_img))))
-			print_error(1, env);
-		env->blackportal->iptr = mlx_new_image(E_MLX, 200, 100);
-		env->blackportal->data = (int *)mlx_get_data_addr(env->blackportal->iptr, &env->blackportal->bpp, &env->blackportal->size_l, &env->blackportal->endian);
-		// while (i < 20000)
-		// 	env->blackportal->data[i] = 0x000000;
-		env->inportal = 1;
+		if (env->portal.out == 0)
+		{
+			if (!(env->portal.outimg = malloc(sizeof(t_img))))
+				print_error(1, env);
+			env->portal.outimg->iptr = mlx_new_image(E_MLX, 64, 64);
+			env->portal.outimg->data = (int *)mlx_get_data_addr(env->portal.outimg->iptr, &env->portal.outimg->bpp, &env->portal.outimg->size_l, &env->portal.outimg->endian);
+			env->portal.out = 1;
+		}
+		env->portal.outpos = env->pos;
+		env->portal.hit = 0;
+		while (env->portal.hit == 0)
+			env->portal.outpos = portal_pos(env, env->portal.outpos);
+		if (env->portal.hit == 1)
+		{
+			env->portal.outemp.x = env->portal.outpos.x + env->dir.x * 0.2;
+			env->portal.outemp.y = env->portal.outpos.y;
+		}
+		else
+		{
+			env->portal.outemp.y = env->portal.outpos.y + env->dir.y * 0.2;
+			env->portal.outemp.x = env->portal.outpos.x;
+		}
+		env->w_map[(int)env->portal.outemp.x][(int)env->portal.outemp.y] = 8;
+		env->portal.outdir = rotate(env->dir, 180.0);
+		env->portal.outplane = rotate(env->plane, 180.0);
 	}
-	if (key == KEY_SPACE)
+	if (key == KEY_A)
 	{
 		t_point	odir;
 		t_point	oplane;
@@ -85,41 +98,64 @@ int		moove(int key, t_env *env)
 		double	ois_updn;
 		double	opang;
 
-		env->outportal = 1;
-		if (!(env->portal = malloc(sizeof(t_img))))
-			print_error(1, env);
-		env->width = 200;
-		env->height = 100;
-		env->portal->iptr = mlx_new_image(E_MLX, env->width, env->height);
-		env->portal->data = (int *)mlx_get_data_addr(env->portal->iptr, &env->portal->bpp, &env->portal->size_l, &env->portal->endian);
-		odir.x = env->dir.x;
-		odir.y = env->dir.y;
-		oplane.x = env->plane.x;
-		oplane.y = env->plane.y;
+		env->width = 64;
+		env->height = 64;
+		if (env->portal.in == 0)
+		{
+			if (!(env->portal.inimg = malloc(sizeof(t_img))))
+				print_error(1, env);
+			env->portal.inimg->iptr = mlx_new_image(E_MLX, env->width, env->height);
+			env->portal.inimg->data = (int *)mlx_get_data_addr(env->portal.inimg->iptr, &env->portal.inimg->bpp, &env->portal.inimg->size_l, &env->portal.inimg->endian);
+			env->portal.in = 1;
+		}
+		env->portal.inpos = env->pos;
+		env->portal.hit = 0;
+		while (env->portal.hit == 0)
+			env->portal.inpos = portal_pos(env, env->portal.inpos);
+		if (env->portal.hit == 1)
+		{
+			env->portal.inemp.x = env->portal.inpos.x + env->dir.x * 0.2;
+			env->portal.inemp.y = env->portal.inpos.y;
+		}
+		else
+		{
+			env->portal.inemp.y = env->portal.inpos.y + env->dir.y * 0.2;
+			env->portal.inemp.x = env->portal.inpos.x;
+		}
+		env->portal.indir = rotate(env->dir, 180.0);
+		env->portal.inplane = rotate(env->plane, 180.0);
+		odir = env->dir;
+		oplane = env->plane;
 		ois_updn = env->is_updn;
 		opang = env->pang;
-		opos.x = env->pos.x;
-		opos.y = env->pos.y;
+		opos = env->pos;
+	//generation img de sortie
+		env->portal.out = 2;
 		env->pang = 0.0;
-		env->dir.x = -1.0;
-		env->dir.y = 0.0;
-		env->plane.x = 0.0;
-		env->plane.y = 0.66;
 		env->is_updn = 0.0;
-		env->pos.x = env->pos_portal.x;
-		env->pos.y = env->pos_portal.y;
+		env->pos = env->portal.outpos;
+		env->dir = env->portal.outdir;
+		env->plane = env->portal.outplane;
 		init_thread(env);
-		env->outportal = 2;
+	//generation img d entree
+		env->portal.out = 1;
+		env->portal.in = 2;
+		env->pos = env->portal.inpos;
+		env->dir = env->portal.indir;
+		env->plane = env->portal.inplane;
+		init_thread(env);
+	//reinitialisation aux donnees du player
+		env->portal.in = 1;
 		env->width = 800;
 		env->height = 600;
 		env->pang = opang;
-		env->dir.x = odir.x;
-		env->dir.y = odir.y;
-		env->plane.x = oplane.x;
-		env->plane.y = oplane.y;
+		env->dir = odir;
+		env->plane = oplane;
 		env->is_updn = ois_updn;
-		env->pos.x = opos.x;
-		env->pos.y = opos.y;
+		env->pos = opos;
+		env->w_map[(int)env->portal.inemp.x][(int)env->portal.inemp.y] = 8;
+		env->w_map[(int)env->portal.outemp.x][(int)env->portal.outemp.y] = 9;
+		
 	}
 	return (0);
 }
@@ -149,10 +185,6 @@ int		motion_mouse(int x, int y, t_env *env)
 		mlx_clear_window(E_MLX, E_WIN);
 		init_thread(env);
 		mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
-		if (env->inportal == 1)
-			mlx_put_image_to_window(E_MLX, E_WIN, env->blackportal->iptr, 0, 0);
-		if (env->outportal == 2)
-			mlx_put_image_to_window(E_MLX, E_WIN, env->portal->iptr, 210, 0);
 	}
 	return (0);
 }
@@ -165,9 +197,5 @@ int key_hook(int key, t_env *env)
 	mlx_clear_window(E_MLX, E_WIN);
 	init_thread(env);
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
-if (env->inportal == 1)
-			mlx_put_image_to_window(E_MLX, E_WIN, env->blackportal->iptr, 0, 0);
-	if (env->outportal == 2)
-			mlx_put_image_to_window(E_MLX, E_WIN, env->portal->iptr, 210, 0);
 	return (0);
 }

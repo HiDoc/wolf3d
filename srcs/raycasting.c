@@ -18,24 +18,30 @@ int	wolf(t_env *env, int col)
 		y = -1;
 		while (++y < line.sdraw)
 		{
-			if (env->outportal == 1)
-				env->portal->data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
+			if (env->portal.out == 2)
+				env->portal.outimg->data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
+			else if (env->portal.in == 2)
+				env->portal.inimg->data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
 			else
 				env->mlx.data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
-			if (env->outportal == 1)
-				env->portal->data[y * WIDTH + x] = line_wall(env, &line, y -env->is_updn);
+			if (env->portal.out == 2)
+				env->portal.outimg->data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
+			else if (env->portal.in == 2)
+				env->portal.inimg->data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
 			else
-				env->mlx.data[y * WIDTH + x] = line_wall(env, &line, y -env->is_updn);
+				env->mlx.data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
-			if (env->outportal == 1)
-				env->portal->data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
+			if (env->portal.out == 2)
+				env->portal.outimg->data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
+			else if (env->portal.in == 2)
+				env->portal.inimg->data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
 			else
 				env->mlx.data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
 		}

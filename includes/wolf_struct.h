@@ -21,6 +21,7 @@ typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
 typedef struct s_line	t_line;
 typedef struct s_ray	t_ray;
+typedef struct s_portal	t_portal;
 
 struct					s_img
 {
@@ -101,6 +102,23 @@ struct					s_line
 	int			edraw;
 };
 
+struct					s_portal
+{
+	t_img		*inimg;
+	t_img		*outimg;
+	t_point		inplane;
+	t_point		indir;
+	t_point		inpos;
+	t_point		outplane;
+	t_point		outdir;
+	t_point		outpos;
+	t_point		inemp;
+	t_point		outemp;
+	int			in;
+	int			out;
+	int			hit;
+};
+
 struct					s_env
 {
 	t_mlx		mlx;
@@ -108,15 +126,11 @@ struct					s_env
 	t_point		pos;
 	t_point		dir;
 	t_point		plane;
-	t_point		old;
 	double		is_updn;
 	double		cam;
 	double		ang;
 	double		pang;
 	int			**w_map;
-	t_img		*portal;
-	t_img		*blackportal;
-	t_point		pos_portal;
 	t_img		*wall;
 	t_img		*walls[10];
 	t_img		*floor;
@@ -124,8 +138,7 @@ struct					s_env
 	t_img		*gun;
 	int			width;
 	int			height;
-	int			outportal;
-	int			inportal;
+	t_portal	portal;
 };
 
 #endif

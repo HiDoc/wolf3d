@@ -50,6 +50,7 @@ SRC_NAME 	= main.c \
 			  sky.c \
 			  wall.c \
 			  ui.c \
+			  portal.c	\
 			  utils_maths.c \
 			  struct_line.c \
 			  struct_env.c \

@@ -72,7 +72,12 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+	if (i == 8)
+		line->text = env->portal.outimg;
+	else if (i == 9)
+		line->text = env->portal.inimg;
+	else
+		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
 	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
 			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
