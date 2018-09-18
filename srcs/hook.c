@@ -2,6 +2,7 @@
 
 int		exit_wolf(t_env *env)
 {
+
 	mlx_destroy_image(E_MLX, E_IMG);
 	mlx_destroy_window(E_MLX, E_WIN);
 	free_env(env);
