@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/18 19:26:27 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/19 17:25:30 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC_NAME 	= main.c \
 			  portal.c	\
 			  utils_maths.c \
 			  struct_line.c \
+			  struct_sdl.c \
 			  struct_env.c \
 			  struct_ray.c \
 			  surface.c \
@@ -72,7 +73,7 @@ OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC = $(addprefix -I, $(INC_PATH))
 
 .PHONY: all re clean fclean
-
+.SILENT:
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -105,5 +106,11 @@ fclean: clean
 run: all
 	clear
 	./Wolf3d
+
+lldb:
+	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
+		-L$(LIBFT) -lft -L$(MLX) -lmlx
+	lldb ./wolf3d
+
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 15:32:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 13:24:29 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ typedef struct s_thw	t_thw;
 typedef struct s_line	t_line;
 typedef struct s_ray	t_ray;
 typedef struct s_portal	t_portal;
+typedef struct s_sdl	t_sdl;
+
+struct					s_sdl
+{
+	Uint32			pixels[800 * 600];
+	SDL_Window		*window;
+	SDL_Renderer	*renderer;
+	SDL_Texture		*texture;
+	SDL_Surface		*surface;	
+	SDL_Event		event;
+};
 
 struct					s_img
 {
@@ -121,6 +132,7 @@ struct					s_portal
 
 struct					s_env
 {
+	t_sdl		sdl;
 	t_mlx		mlx;
 	t_thw		thw;
 	t_point		pos;

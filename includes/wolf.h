@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/18 19:42:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 17:25:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ t_point		portal_pos(t_env *env, t_point pos);
 int			motion_mouse(int x, int y, t_env *env);
 int			init_thread(t_env *env);
 int			init_env(t_env *env);
+void		init_sdl(t_env *env);
 int			fill_tab(t_env *env);
 
+void		copy_sdl(t_env *env);
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 void		surface_set_pixel(SDL_Surface *s, SDL_Color c, size_t x, size_t y);
 int			sdl_keyhook(t_env *env, SDL_Event event);

@@ -70,26 +70,23 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 {
 	double	mult;
 
-	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+	mult = x < 0 ? 1.0 : -1.0;
+	env->dir = sdl_rotate(env->dir, mult * 3.0);
+	env->plane = sdl_rotate(env->plane, mult * 3.0);
+	env->pang += mult;
+	env->pang > 358.0 ? env->pang = 0.0 : 0;
+	env->pang < 0.0 ? env->pang = 358.0 : 0;
+	if (y > 0)
 	{
-		mult = (x < 400 ? 1.0 : -1.0);
-		env->dir = sdl_rotate(env->dir, mult * env->ang);
-		env->plane = sdl_rotate(env->plane, mult * env->ang);
-		env->pang += mult * 2.0;
-		env->pang > 358.0 ? env->pang = 0.0 : 0;
-		env->pang < 0.0 ? env->pang = 358.0 : 0;
-		if (y > 300)
-		{
-			if (env->is_updn > -300)
-				env->is_updn -= 10;
-		}
-		else if (y < 300)
-		{
-			if (env->is_updn < 300)
-				env->is_updn += 10;
-		}
-		init_thread(env);
+		if (env->is_updn > -300)
+			env->is_updn -= 10;
 	}
+	else if (y < 0)
+	{
+		if (env->is_updn < 300)
+			env->is_updn += 10;
+	}
+	init_thread(env);
 	return (0);
 }
 

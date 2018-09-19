@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/18 18:49:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 17:29:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	init_mlx(t_env *env)
 {
 	E_MLX = mlx_init();
-	//E_WIN = mlx_new_window(E_MLX, WIDTH, HEIGHT, "Wolf 3D");
 	E_IMG = mlx_new_image(E_MLX, WIDTH, HEIGHT);
 	I_IMG = (int *)mlx_get_data_addr(E_IMG, &I_BPP, &I_SZL, &I_END);
 }
@@ -86,5 +85,9 @@ int		init_env(t_env *env)
 	env->portal.out = 0;
 	env->portal.in = 0;
 	init_mlx(env);
+	img(env);
+	fill_tab(env);
+	init_thread(env);
+	init_sdl(env);
 	return (0);
 }
