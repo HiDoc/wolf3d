@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/19 13:24:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 19:25:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ struct					s_ray
 struct					s_line
 {
 	t_img		*text;
+	t_img		*floor;
+	t_img		*sky;
 	t_point		map;
 	t_point		delta;
 	t_point		step;

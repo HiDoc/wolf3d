@@ -1,49 +1,52 @@
 #include "wolf.h"
 
-int	wolf(t_env *env, int col)
+int			wolf(t_env *env, int col)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	int		pos;
+	int		imgpos;
 	t_line	line;
-	t_ray	ray;
 
 	x = col - 1;
 	while (x < WIDTH)
 	{
-		ray_init(env, &ray, x);
 		line_init(env, &line, x);
-		line_step(env, &line);
-		line_dda(env, &line);
-		line_max(env, &line);
 		y = -1;
 		while (++y < line.sdraw)
 		{
+			pos = y * WIDTH + x;
+			imgpos = line_sky(env, &line, y - env->is_updn);
 			if (env->portal.out == 2)
-				env->portal.outimg->data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
+				env->portal.outimg->data[pos] = imgpos;
 			else if (env->portal.in == 2)
-				env->portal.inimg->data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
+			env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[y * WIDTH + x] = env->sky->data[line_sky(env, &line, x, y - env->is_updn)];
+				env->mlx.data[pos] = imgpos;
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
+			pos = y * WIDTH + x;
+			imgpos = line_wall(env, &line, y - env->is_updn);
 			if (env->portal.out == 2)
-				env->portal.outimg->data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
+				env->portal.outimg->data[pos] = imgpos;
 			else if (env->portal.in == 2)
-				env->portal.inimg->data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
+				env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[y * WIDTH + x] = line_wall(env, &line, y - env->is_updn);
+				env->mlx.data[pos] = imgpos;
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
+			pos = y * WIDTH + x;
+			imgpos = line_floor(env, &line, y - env->is_updn);
 			if (env->portal.out == 2)
-				env->portal.outimg->data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
+				env->portal.outimg->data[pos] = imgpos;
 			else if (env->portal.in == 2)
-				env->portal.inimg->data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
+				env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[y * WIDTH + x] = env->floor->data[line_floor(env, &line, y - env->is_updn)];
+				env->mlx.data[pos] = imgpos;
 		}
 		x += 8;
 	}

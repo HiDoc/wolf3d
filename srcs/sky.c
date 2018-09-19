@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 11:05:42 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/19 13:35:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 20:05:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,18 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-static int		line_ceil(t_env *env, t_line *line, int y)
+int		line_sky(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
-	t_point		csky;
-	t_point		tsky;
+	t_point		cfloor;
+	t_point		tfloor;
 	double		weight;
 
 	get_fwall(line, &fwall);
-	if (line->edraw < 0)
-		line->edraw = HEIGHT; 
 	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
-	csky.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
-	csky.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
-	tsky.x = (int)(csky.x * 64.0) % 64;
-	tsky.y = (int)(csky.y * 64.0) % 64;
-	return (tsky.y * 64.0 + tsky.x);
-}
-
-int				line_sky(t_env *env, t_line *line, int x, int y)
-{
-	(void)x;
-	return (line_ceil(env, line, y));
+	cfloor.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
+	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
+	tfloor.x = (int)(cfloor.x * 64) % 64;
+	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
+	return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
 }

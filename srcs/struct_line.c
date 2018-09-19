@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/07 14:13:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/19 18:34:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_line	*line_init(t_env *env, t_line *line, int x)
 {
+	line->floor = env->floor;
+	line->sky = env->sky;
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
@@ -25,7 +27,7 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 			(line->raydir.x * line->raydir.x));
 	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
 			(line->raydir.y * line->raydir.y));
-	return (line);
+	return (line_step(env, line));
 }
 
 t_line	*line_step(t_env *env, t_line *line)
@@ -50,7 +52,7 @@ t_line	*line_step(t_env *env, t_line *line)
 		line->step.y = 1;
 		line->side.y = (line->map.y + 1.0 - env->pos.y) * line->delta.y;
 	}
-	return (line);
+	return (line_dda(env, line));
 }
 
 t_line	*line_dda(t_env *env, t_line *line)
@@ -82,7 +84,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
-	return (line);
+	return (line_max(env, line));
 }
 
 t_line	*line_max(t_env *env, t_line *line)
