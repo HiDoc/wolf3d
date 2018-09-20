@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/19 18:32:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/20 11:43:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int			ft_pyt(int a, int b);
 int			line_floor(t_env *env, t_line *line, int y);
 int			line_wall(t_env *env, t_line *line, int y);
 int			line_sky(t_env *env, t_line *line, int y);
+
+t_line		*objs_init(t_env *env, t_line *line, int x);
+t_line		*objs_dda(t_env *env, t_line *line);
+t_line		*objs_step(t_env *env, t_line *line);
+t_line		*objs_max(t_env *env, t_line *line);
 
 t_line		*line_init(t_env *env, t_line *line, int x);
 t_line		*line_dda(t_env *env, t_line *line);

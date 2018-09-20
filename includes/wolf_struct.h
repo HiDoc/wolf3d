@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/19 19:25:26 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/20 11:48:15 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,10 @@ struct					s_env
 	double		ang;
 	double		pang;
 	int			**w_map;
+	int			**o_map;
 	t_img		*wall;
 	t_img		*walls[10];
+	t_img		*enemy;
 	t_img		*floor;
 	t_img		*sky;
 	t_img		*gun;

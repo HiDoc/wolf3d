@@ -1,5 +1,28 @@
 #include "wolf.h"
 
+int			enemy(t_env *env, int x)
+{
+	int		y;
+	int		pos;
+	int		imgpos;
+	t_line	line;
+
+	if (objs_init(env, &line, x) != NULL)
+	{	
+		y = line.sdraw;
+		while (++y < line.edraw && y < HEIGHT)
+		{
+			pos = y * WIDTH + x;
+			imgpos = line_wall(env, &line, y - env->is_updn);
+			if (imgpos != 0xe0e0e0)
+			{
+				env->mlx.data[pos] = imgpos;
+			}
+		}
+	}
+	return (0);
+}
+
 int			wolf(t_env *env, int col)
 {
 	int		x;
@@ -48,6 +71,7 @@ int			wolf(t_env *env, int col)
 			else
 				env->mlx.data[pos] = imgpos;
 		}
+		enemy(env, x);
 		x += 8;
 	}
 	return (0);

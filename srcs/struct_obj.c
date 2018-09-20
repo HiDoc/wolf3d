@@ -6,13 +6,13 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/20 11:17:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/20 13:26:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_line	*line_init(t_env *env, t_line *line, int x)
+t_line	*objs_init(t_env *env, t_line *line, int x)
 {
 	line->floor = env->floor;
 	line->sky = env->sky;
@@ -27,10 +27,10 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 			(line->raydir.x * line->raydir.x));
 	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
 			(line->raydir.y * line->raydir.y));
-	return (line_step(env, line));
+	return (objs_step(env, line));
 }
 
-t_line	*line_step(t_env *env, t_line *line)
+t_line	*objs_step(t_env *env, t_line *line)
 {
 	if (line->raydir.x < 0)
 	{
@@ -52,14 +52,14 @@ t_line	*line_step(t_env *env, t_line *line)
 		line->step.y = 1;
 		line->side.y = (line->map.y + 1.0 - env->pos.y) * line->delta.y;
 	}
-	return (line_dda(env, line));
+	return (objs_dda(env, line));
 }
 
-t_line	*line_dda(t_env *env, t_line *line)
+t_line	*objs_dda(t_env *env, t_line *line)
 {
 	int i;
 
-	while ((i = env->w_map[(int)line->map.x][(int)line->map.y]) == 0)
+	while ((i = env->o_map[(int)line->map.x][(int)line->map.y]) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{
@@ -74,20 +74,15 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	if (i == 8)
-		line->text = env->portal.outimg;
-	else if (i == 9)
-		line->text = env->portal.inimg;
-	else
-		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+	line->text = env->enemy;
 	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
 			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
-	return (line_max(env, line));
+	return (i == 2 ? objs_max(env, line) : NULL);
 }
 
-t_line	*line_max(t_env *env, t_line *line)
+t_line	*objs_max(t_env *env, t_line *line)
 {
 	line->lineh = (int)(HEIGHT / line->wdist);
 	line->sdraw = (-line->lineh / 2 + HEIGHT / 2) + env->is_updn;
