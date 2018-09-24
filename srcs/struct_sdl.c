@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/19 17:28:50 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/24 13:20:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ void	copy_sdl(t_env *env)
 		i++;
 	}
 	env->sdl.surface = surface_new(env->sdl.pixels, 800, 600);
-	if (env->sdl.surface == NULL) {
+	if (env->sdl.surface == NULL)
+	{
 		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
 		exit(1);
 	}
 	env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->sdl.surface);
-	if (env->sdl.texture == NULL) {
+	if (env->sdl.texture == NULL)
+	{
 		fprintf(stderr, "CreateTextureFromSurface failed: %s\n", SDL_GetError());
 		exit(1);
 	}
