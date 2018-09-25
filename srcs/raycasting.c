@@ -36,31 +36,20 @@ int			enemy(t_env *env, int x)
 	{
 		int bot = line.edraw;
 		tab = tab_copy(env->w_map, tab, 24, 24);
-
-		tab = tab_set(tab, (int)line.map.x, (int)line.map.y + 1, 4);
-		tab = tab_set(tab, (int)line.map.x, (int)line.map.y - 1, 4);
 		if (line.raydir.x < 0)
-		{
 			tab[(int)line.map.x - 1][(int)line.map.y] = 4;
-		}
 		else
-		{
 			tab[(int)line.map.x + 1][(int)line.map.y] = 4;
-		}
 		if (line.raydir.y < 0)
-		{
 			tab[(int)line.map.x][(int)line.map.y - 1] = 4;
-		}
 		else
-		{
 			tab[(int)line.map.x][(int)line.map.y + 1] = 4;
-		}
 		objs_init(env, &line, x, tab);
 		y = line.edraw;
 		while (++y < HEIGHT && y < bot)
 		{
 			pos = y * WIDTH + x;
-			env->mlx.data[pos] = 0xFF00;
+			env->mlx.data[pos] = 0xFF;
 		}
 		tab_free(tab, 24);
 	}
