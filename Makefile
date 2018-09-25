@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/20 11:40:57 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/25 11:20:15 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC_NAME 	= main.c \
 			  struct_env.c \
 			  struct_obj.c \
 			  struct_ray.c \
+			  utils_tab.c \
 			  surface.c \
 			  struct_img.c
 

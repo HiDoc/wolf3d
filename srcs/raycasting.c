@@ -1,24 +1,68 @@
 #include "wolf.h"
 
-int			enemy(t_env *env, int x)
+int			second_floor(t_env *env, int x)
 {
 	int		y;
 	int		pos;
 	int		imgpos;
 	t_line	line;
 
-	if (objs_init(env, &line, x) != NULL)
-	{	
-		y = line.sdraw;
+	if (objs_init(env, &line, x, NULL) != NULL)
+	{
+		y = line.sdraw + (line.sdraw - line.edraw) / 1.55;
+		while (++y < line.edraw && y < HEIGHT)
+		y = line.sdraw + (line.sdraw - line.edraw) / 1.25;
 		while (++y < line.edraw && y < HEIGHT)
 		{
 			pos = y * WIDTH + x;
-			imgpos = line_wall(env, &line, y - env->is_updn);
-			if (imgpos != 0xe0e0e0)
-			{
-				env->mlx.data[pos] = imgpos;
-			}
+			imgpos = line_wall(env, &line, y - env->is_updn);	
+			env->mlx.data[pos] = imgpos;
 		}
+	}
+	return (0);
+}
+
+int			enemy(t_env *env, int x)
+{
+	int		y;
+	int		pos;
+	int		imgpos;
+	t_line	line;
+	int		**tab;
+
+	(void)imgpos;
+	tab = NULL;
+	if (objs_init(env, &line, x, NULL) != NULL)
+	{
+		int bot = line.edraw;
+		tab = tab_copy(env->w_map, tab, 24, 24);
+
+		tab = tab_set(tab, (int)line.map.x, (int)line.map.y + 1, 4);
+		tab = tab_set(tab, (int)line.map.x, (int)line.map.y - 1, 4);
+		if (line.raydir.x < 0)
+		{
+			tab[(int)line.map.x - 1][(int)line.map.y] = 4;
+		}
+		else
+		{
+			tab[(int)line.map.x + 1][(int)line.map.y] = 4;
+		}
+		if (line.raydir.y < 0)
+		{
+			tab[(int)line.map.x][(int)line.map.y - 1] = 4;
+		}
+		else
+		{
+			tab[(int)line.map.x][(int)line.map.y + 1] = 4;
+		}
+		objs_init(env, &line, x, tab);
+		y = line.edraw;
+		while (++y < HEIGHT && y < bot)
+		{
+			pos = y * WIDTH + x;
+			env->mlx.data[pos] = 0xFF00;
+		}
+		tab_free(tab, 24);
 	}
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/20 13:26:53 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/25 11:49:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_line	*objs_init(t_env *env, t_line *line, int x)
+t_line	*objs_init(t_env *env, t_line *line, int x, int **tab)
 {
 	line->floor = env->floor;
 	line->sky = env->sky;
@@ -27,10 +27,10 @@ t_line	*objs_init(t_env *env, t_line *line, int x)
 			(line->raydir.x * line->raydir.x));
 	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
 			(line->raydir.y * line->raydir.y));
-	return (objs_step(env, line));
+	return (objs_step(env, line, tab));
 }
 
-t_line	*objs_step(t_env *env, t_line *line)
+t_line	*objs_step(t_env *env, t_line *line, int **tab)
 {
 	if (line->raydir.x < 0)
 	{
@@ -52,14 +52,19 @@ t_line	*objs_step(t_env *env, t_line *line)
 		line->step.y = 1;
 		line->side.y = (line->map.y + 1.0 - env->pos.y) * line->delta.y;
 	}
-	return (objs_dda(env, line));
+	return (objs_dda(env, line, tab));
 }
 
-t_line	*objs_dda(t_env *env, t_line *line)
+t_line	*objs_dda(t_env *env, t_line *line, int **tab)
 {
-	int i;
+	int		i;
+	int		**iter;
 
-	while ((i = env->o_map[(int)line->map.x][(int)line->map.y]) == 0)
+	if (tab)
+		iter = tab;
+	else
+		iter = env->o_map;
+	while ((i = iter[(int)line->map.x][(int)line->map.y]) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{
@@ -74,12 +79,27 @@ t_line	*objs_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	line->text = env->enemy;
 	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
 			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
 	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
-	return (i == 2 ? objs_max(env, line) : NULL);
+	if (i == 2 && !tab)
+	{
+		line->text = env->enemy;
+		return objs_max(env, line);
+	}
+	else if (i == 3 && !tab)
+	{
+		line->text = env->walls[3];
+		return objs_max(env, line);
+	}
+	else if (tab)
+	{
+		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+		return objs_max(env, line);	
+	}
+	else
+		return (NULL);
 }
 
 t_line	*objs_max(t_env *env, t_line *line)
