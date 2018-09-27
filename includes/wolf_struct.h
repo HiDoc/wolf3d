@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/20 11:48:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/27 12:15:02 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,6 @@ struct					s_thw
 	t_thr		t6;
 	t_thr		t7;
 	t_thr		t8;
-};
-
-struct					s_ray
-{
-	t_img		*text;
-	t_point		map;
-	t_point		delta;
-	t_point		step;
-	t_point		raydir;	
-	t_point		wall;
-	t_point		side;
-	double		wdist;
-	int			sidew;
-	int			lineh;
-	int			sdraw;
-	int			edraw;
 };
 
 struct					s_line

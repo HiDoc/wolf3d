@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/25 11:20:15 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/27 12:08:13 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,33 +38,26 @@ OBJ_PATH 	= ./objs/
 INC_PATH 	= ./includes/ \
 			  ./minilibx/ \
 			  ./libft/includes/	\
-			  /System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/ \
-			  /System/Library/Frameworks/OpenGL.framework/Headers/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
 			  -F -framework Cocoa 
 
 SRC_NAME 	= main.c \
-			  hook.c \
 			  sdl_hook.c \
 			  raycasting.c \
 			  thread.c \
 			  checkerrors.c \
 			  parser.c \
 			  floor.c \
-			  sky.c \
 			  wall.c \
 			  ui.c \
 			  portal.c	\
-			  utils_maths.c \
 			  struct_line.c \
 			  struct_sdl.c \
 			  struct_env.c \
 			  struct_obj.c \
-			  struct_ray.c \
 			  utils_tab.c \
-			  surface.c \
 			  struct_img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

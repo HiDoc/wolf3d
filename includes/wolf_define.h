@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/18 16:45:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/27 11:31:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <stdio.h>
 
 # include "libft.h"
-# include "X.h"
 # define WIDTH 		env->width
 # define HEIGHT 	env->height
 

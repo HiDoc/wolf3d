@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:15 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/24 14:31:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/26 12:25:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int main(int argc, char *argv[])
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
 		if (env->sdl.event.type == SDL_KEYDOWN)
+		{
+			sdl_keyhook(env, env->sdl.event);
+			copy_sdl(env);
+		}
+		if (env->sdl.event.type == SDL_KEYUP)
 		{
 			sdl_keyhook(env, env->sdl.event);
 			copy_sdl(env);

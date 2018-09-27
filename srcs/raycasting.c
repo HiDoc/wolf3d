@@ -22,7 +22,29 @@ int			second_floor(t_env *env, int x)
 	return (0);
 }
 
-int			enemy(t_env *env, int x)
+int			wall_obj(t_env *env, int x)
+{
+	int		y;
+	int		pos;
+	int		imgpos;
+	t_line	line;
+
+	(void)imgpos;
+	if (objs_init(env, &line, x, NULL) != NULL)
+	{
+		int bot = line.edraw;
+		y = line.sdraw + (line.edraw - line.sdraw) / 1.25;
+		while (++y < HEIGHT && y < bot)
+		{
+			pos = y * WIDTH + x;
+			env->mlx.data[pos] = 0xFF00;
+		}
+	}
+	return (0);
+}
+
+
+int			ceil_obj(t_env *env, int x)
 {
 	int		y;
 	int		pos;
@@ -45,10 +67,13 @@ int			enemy(t_env *env, int x)
 		else
 			tab[(int)line.map.x][(int)line.map.y + 1] = 4;
 		objs_init(env, &line, x, tab);
+		int mod = (line.edraw - line.sdraw) * 25.0 / 100.0;
+		if (mod < 0)
+			mod = 0;
 		y = line.edraw;
 		while (++y < HEIGHT && y < bot)
 		{
-			pos = y * WIDTH + x;
+			pos = ((y - mod) * WIDTH + x);
 			env->mlx.data[pos] = 0xFF;
 		}
 		tab_free(tab, 24);
@@ -104,7 +129,8 @@ int			wolf(t_env *env, int col)
 			else
 				env->mlx.data[pos] = imgpos;
 		}
-		enemy(env, x);
+		wall_obj(env, x);
+		ceil_obj(env, x);
 		x += 8;
 	}
 	return (0);

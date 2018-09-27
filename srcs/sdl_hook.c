@@ -1,5 +1,14 @@
 #include "wolf.h"
 
+int		exit_wolf(t_env *env)
+{
+	mlx_destroy_image(E_MLX, E_IMG);
+	mlx_destroy_window(E_MLX, E_WIN);
+	free_env(env);
+	exit(0);
+	return (0);
+}
+
 int		sdl_exit_wolf(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_ESCAPE)
@@ -41,27 +50,27 @@ static int sdl_check_pos(t_env *env, t_point mult, float check, char pos)
 	return (0);
 }
 
-int		sdl_move(t_env *env, Uint8 keycode)
-{
-	if (keycode == SDL_SCANCODE_W)
+int		sdl_move(t_env *env, Uint8 *keycodes)
+{	
+	if (keycodes[SDL_SCANCODE_W])
 	{
 		sdl_check_pos(env, env->dir, 0.2, 'x');
 		sdl_check_pos(env, env->dir, 0.2, 'y');
 	}
-	if (keycode == SDL_SCANCODE_S)
+	if (keycodes[SDL_SCANCODE_S])
 	{
 		sdl_check_pos(env, env->dir, -0.2, 'x');
 		sdl_check_pos(env, env->dir, -0.2, 'y');
 	}
-	if (keycode == SDL_SCANCODE_A)
-	{
-		sdl_check_pos(env, env->plane, -0.2, 'x');
-		sdl_check_pos(env, env->plane, -0.2, 'y');
-	}
-	if (keycode == SDL_SCANCODE_D)
+	if (keycodes[SDL_SCANCODE_D])
 	{
 		sdl_check_pos(env, env->plane, 0.2, 'x');
 		sdl_check_pos(env, env->plane, 0.2, 'y');
+	}
+	if (keycodes[SDL_SCANCODE_A])
+	{
+		sdl_check_pos(env, env->plane, -0.2, 'x');
+		sdl_check_pos(env, env->plane, -0.2, 'y');
 	}
 	return (0);
 }
@@ -93,9 +102,10 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 int sdl_keyhook(t_env *env, SDL_Event event)
 {
 	Uint8	keycode;
+	const Uint8	*keycodes = SDL_GetKeyboardState(NULL);
 
 	keycode = event.key.keysym.scancode;
-	sdl_move(env, keycode);
+	sdl_move(env, (Uint8 *)keycodes);
 	sdl_exit_wolf(env, keycode);
 	init_thread(env);
 	return (0);
