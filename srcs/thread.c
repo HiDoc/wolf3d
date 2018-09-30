@@ -78,5 +78,6 @@ int		init_thread(t_env *env)
 	if (pthread_join(T_TH8, NULL))
 		return (exit_wolf(env));
 	put_gun(env);
+	put_health(env);
 	return (0);
 }

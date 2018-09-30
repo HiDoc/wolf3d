@@ -66,6 +66,7 @@ void	copy_sdl(t_env *env)
 	}
 	SDL_FreeSurface(env->sdl.surface);
 	env->sdl.surface = NULL;
+	health(env);
 }
 
 void	init_sdl(t_env *env)
@@ -77,5 +78,5 @@ void	init_sdl(t_env *env)
 			800, 600,
 			SDL_WINDOW_RESIZABLE);
 	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
-	copy_sdl(env);
+	// copy_sdl(env);
 }

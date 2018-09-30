@@ -21,9 +21,15 @@ int main(int argc, char *argv[])
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		print_error(1, NULL);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
 		return 3;
+	}
+	if (TTF_Init() < 0) 
+	{
+		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
+		exit(1);
 	}
 	init_env(env);
 	while (1)
@@ -52,8 +58,11 @@ int main(int argc, char *argv[])
 				copy_sdl(env);
 			}
 		}
+		launch_screen(env);
+		turn_logo(env);
 		SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 		SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
+		SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 		SDL_RenderPresent(env->sdl.renderer);
 	}
 	SDL_DestroyRenderer(env->sdl.renderer);
