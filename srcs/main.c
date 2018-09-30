@@ -60,12 +60,14 @@ int main(int argc, char *argv[])
 		}
 		launch_screen(env);
 		turn_logo(env);
+		SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255); //alterer couleur ecran
 		SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 		SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 		SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 		SDL_RenderPresent(env->sdl.renderer);
 	}
 	SDL_DestroyRenderer(env->sdl.renderer);
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }

@@ -56,7 +56,7 @@ void	put_health(t_env *env)
 		while (x < 200)
 		{
 			if (env->life.img->data[200 * 199 - pos] != 0)
-				env->mlx.data[800 * 600 - (y * 800 + x) + 200] = env->life.img->data[200 * 199 - pos];
+				env->mlx.data[800 * 500 - (y * 800 + x) + 200] = env->life.img->data[200 * 199 - pos];
 			x++;
 			pos++;
 		}
@@ -77,13 +77,14 @@ void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 	bloc->font = NULL;
 	SDL_FreeSurface(bloc->surface);
 	bloc->surface = NULL;
+	SDL_SetTextureAlphaMod(bloc->texture, 190);//opacity
 }
 
 void	health(t_env *env)
 {
-	env->life.color = (SDL_Color){44, 200, 235, 0};
-	env->life.rect = (SDL_Rect){58, 475, 80, 50};
-	hub_texture(env, &env->life, "100", "font/digital.ttf");
+	env->life.color = (SDL_Color){44, 200, 235, 255};
+	env->life.rect = (SDL_Rect){58, 475, 60, 100};
+	hub_texture(env, &env->life, "90%", "font/yorkbailehill.ttf");
 }
 
 void	launch_screen(t_env *env)
@@ -121,6 +122,8 @@ void	turn_logo(t_env *env)
 	{
 		if (env->logo.img->data[i] != 0xEEEEEE)
 			env->sdl.pixels[i] = (0xFF000000 | env->logo.img->data[i]);
+		else
+			env->sdl.pixels[i] = (0x0 | env->logo.img->data[i]);
 		i++;
 	}
 	if (!(env->logo.surface = surface_new(env->sdl.pixels, 89, 89)))
