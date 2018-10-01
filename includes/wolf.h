@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/25 11:46:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/27 15:17:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 void		surface_set_pixel(SDL_Surface *s, SDL_Color c, size_t x, size_t y);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
+int			sdl_exit_wolf(t_env *env, Uint8 scancode);
 
 int			**tab_copy(int **src, int **dest, int x, int y);
-int			**tab_set(int **src, int x, int y, int val);
 int			**tab_init(int **src, int x, int y);
 int			tab_free(int **tab, int y);
 #endif

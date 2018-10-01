@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/27 12:08:13 by fmadura          ###   ########.fr        #
+#    Updated: 2018/09/27 14:38:41 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,15 +49,15 @@ SRC_NAME 	= main.c \
 			  thread.c \
 			  checkerrors.c \
 			  parser.c \
-			  floor.c \
-			  wall.c \
 			  ui.c \
-			  portal.c	\
+			  portal.c \
+			  enemy.c \
 			  struct_line.c \
 			  struct_sdl.c \
 			  struct_env.c \
 			  struct_obj.c \
 			  utils_tab.c \
+			  utils_textures.c \
 			  struct_img.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

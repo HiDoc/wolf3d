@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/20 11:29:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/27 14:04:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_img	*img_new(t_env *env, char *filename)
 	if ((new = malloc(sizeof(t_img))) == NULL)
 		return (NULL);
 	new->iptr = mlx_xpm_file_to_image(E_MLX, filename, &new->w, &new->h);
-	new->data = (int *)mlx_get_data_addr(new->iptr, &new->bpp, &new->size_l, &new->endian);
+	new->data = (int *)mlx_get_data_addr(
+		new->iptr, &new->bpp, &new->size_l, &new->endian);
 	return (new);
 }
 

@@ -1,14 +1,5 @@
 #include "wolf.h"
 
-int		exit_wolf(t_env *env)
-{
-	mlx_destroy_image(E_MLX, E_IMG);
-	mlx_destroy_window(E_MLX, E_WIN);
-	free_env(env);
-	exit(0);
-	return (0);
-}
-
 int		sdl_exit_wolf(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_ESCAPE)

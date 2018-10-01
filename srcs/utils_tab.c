@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 11:15:01 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/25 12:22:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/09/27 14:06:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,5 @@ int		**tab_init(int **src, int x, int y)
 		}
 		iy++;
 	}
-	return (src);
-}
-
-int		**tab_set(int **src, int nx, int ny, int val)
-{
-	src[ny][nx] = val;
 	return (src);
 }
