@@ -30,13 +30,16 @@ void	img(t_env *env)
 	env->walls[1] = img_new(env, "./img/wall_1.XPM");
 	env->walls[2] = img_new(env, "./img/wall_2.XPM");
 	env->walls[3] = img_new(env, "./img/wall_3.XPM");
-	env->walls[4] = img_new(env, "./img/wall_4.XPM");
+	env->walls[4] = img_new(env, "./img/purplestone.XPM");
 	env->walls[5] = img_new(env, "./img/wall_5.XPM");
-	env->walls[6] = img_new(env, "./img/wall_6.XPM");
-	env->walls[7] = img_new(env, "./img/wall_7.XPM");
+	env->walls[6] = img_new(env, "./img/purplestone.XPM");
+	env->walls[7] = img_new(env, "./img/purplestone.XPM");
 	env->enemy = img_new(env, "./img/enemy.XPM");
 	env->wall = env->walls[0];
 	env->floor = img_new(env, "./img/floor.XPM");
 	env->sky = img_new(env, "./img/floor.XPM");
 	env->gun = img_new(env, "./img/gun.XPM");
+	env->life.img = img_new(env, "./img/health.XPM");
+	env->lscreen.img = img_new(env, "./img/accueil.XPM");
+	env->logo.img = img_new(env, "./img/logo.XPM");
 }

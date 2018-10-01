@@ -23,6 +23,7 @@ typedef struct s_line	t_line;
 typedef struct s_ray	t_ray;
 typedef struct s_portal	t_portal;
 typedef struct s_sdl	t_sdl;
+typedef struct s_hub	t_hub;
 
 struct					s_sdl
 {
@@ -99,6 +100,22 @@ struct					s_line
 	int			edraw;
 };
 
+struct					s_hub
+{
+	SDL_Texture		*texture;
+	SDL_Surface		*surface;
+	SDL_Rect		rect;
+	SDL_Color		color;
+	TTF_Font		*font;
+	t_img			*img;
+	int				size;
+	double			ang;
+	int				w;
+	int				h;
+	t_point			pt;
+
+};
+
 struct					s_portal
 {
 	t_img		*inimg;
@@ -139,6 +156,10 @@ struct					s_env
 	int			width;
 	int			height;
 	t_portal	portal;
+	t_hub		lscreen;
+	t_hub		title;
+	t_hub		life;
+	t_hub		logo;
 };
 
 #endif

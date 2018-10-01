@@ -25,6 +25,7 @@ int			exit_wolf(t_env *env);
 
 int			key_hook(int key, t_env *env);
 
+void        put_health(t_env *env);
 void		put_gun(t_env *env);
 void		img(t_env *env);
 
@@ -58,12 +59,19 @@ int			init_env(t_env *env);
 void		init_sdl(t_env *env);
 int			fill_tab(t_env *env);
 
+void        launch_screen(t_env *env);
+void    	turn_logo(t_env *env);
+
 void		copy_sdl(t_env *env);
+void	    health(t_env *env);
+void    	hub_texture(t_env *env, t_hub *bloc, char *line, char *police);
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 void		surface_set_pixel(SDL_Surface *s, SDL_Color c, size_t x, size_t y);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
 int			sdl_exit_wolf(t_env *env, Uint8 scancode);
+
+t_img       *img_new(t_env *env, char *filename);
 
 int			**tab_copy(int **src, int **dest, int x, int y);
 int			**tab_init(int **src, int x, int y);
