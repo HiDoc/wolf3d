@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/27 13:24:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 15:53:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "mlx.h"
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_ttf.h>
+# include <SDL2/SDL_image.h>
 # include <stdio.h>
 
 # include "libft.h"

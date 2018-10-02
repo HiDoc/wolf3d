@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/09/27 14:38:41 by fmadura          ###   ########.fr        #
+#    Updated: 2018/10/02 16:00:02 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ INC_PATH 	= ./includes/ \
 			  ./minilibx/ \
 			  ./libft/includes/	\
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
+			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
 			  -F -framework Cocoa 
@@ -57,6 +58,9 @@ SRC_NAME 	= main.c \
 			  struct_env.c \
 			  struct_obj.c \
 			  utils_tab.c \
+			  utils_sdl.c \
+			  utils_maths.c \
+			  utils_point.c \
 			  utils_textures.c \
 			  struct_img.c
 

@@ -6,12 +6,11 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:15 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/26 12:25:31 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 15:57:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-
 int main(int argc, char *argv[])
 {
 	t_env   *env;
@@ -23,7 +22,8 @@ int main(int argc, char *argv[])
 		print_error(1, NULL);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) 
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+			"Couldn't initialize SDL: %s", SDL_GetError());
 		return 3;
 	}
 	if (TTF_Init() < 0) 
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		}
 		launch_screen(env);
 		turn_logo(env);
-		SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255); //alterer couleur ecran
+		SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
 		SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 		SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 		SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);

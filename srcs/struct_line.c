@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/25 12:23:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 15:37:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
-	line->map.x = (int)env->pos.x;
-	line->map.y = (int)env->pos.y;
+	line->map = *point_cpy(&line->map, &env->pos);
+	point_ray(&line->raydir, &env->dir, &env->plane, env->cam);
+	point_delta(&line->delta, &line->raydir);
+//	line->map.x = (int)env->pos.x;
+//	line->map.y = (int)env->pos.y;
 	line->raydir.x = env->dir.x + env->plane.x * env->cam;
 	line->raydir.y = env->dir.y + env->plane.y * env->cam;
-	line->delta.x = sqrt(1 + (line->raydir.y * line->raydir.y) /
-			(line->raydir.x * line->raydir.x));
-	line->delta.y = sqrt(1 + (line->raydir.x * line->raydir.x) /
-			(line->raydir.y * line->raydir.y));
+	line->delta.x = delta(line->raydir.y, line->raydir.x);
+	line->delta.y = delta(line->raydir.x, line->raydir.y);
 	return (line_step(env, line));
 }
 
@@ -80,10 +81,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 		line->text = env->portal.inimg;
 	else
 		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
-	(line->sidew == 0) ? line->wdist = (line->map.x - env->pos.x
-			+ (1 - line->step.x) / 2) / line->raydir.x : 0;
-	(line->sidew != 0) ? line->wdist = (line->map.y - env->pos.y
-			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
+	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
 	return (line_max(env, line));
 }
 
