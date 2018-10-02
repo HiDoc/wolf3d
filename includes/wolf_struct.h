@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/27 14:05:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 16:30:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ struct					s_sdl
 
 struct					s_img
 {
-	void		*iptr;
-	int			*data;
+	SDL_Surface	*iptr;
+	Uint32		*data;
 	int			size_l;
 	int			bpp;
 	int			endian;

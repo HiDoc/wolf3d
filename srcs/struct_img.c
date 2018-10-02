@@ -6,21 +6,32 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/27 14:04:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 16:30:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+SDL_Surface	*create_surf(char *path)
+{
+	SDL_Surface* image = IMG_Load(path);
+	if (!image)
+	{
+		printf("Erreur de chargement de l'image : %s", SDL_GetError());
+		return NULL;
+	}
+	return (image);
+}
+
 t_img	*img_new(t_env *env, char *filename)
 {
 	t_img	*new;
 
+	(void)env;
 	if ((new = malloc(sizeof(t_img))) == NULL)
 		return (NULL);
-	new->iptr = mlx_xpm_file_to_image(E_MLX, filename, &new->w, &new->h);
-	new->data = (int *)mlx_get_data_addr(
-		new->iptr, &new->bpp, &new->size_l, &new->endian);
+	new->iptr = create_surf(filename);
+	new->data = (Uint32 *)new->iptr->pixels;
 	return (new);
 }
 
@@ -34,7 +45,7 @@ void	img(t_env *env)
 	env->walls[5] = img_new(env, "./img/wall_5.XPM");
 	env->walls[6] = img_new(env, "./img/purplestone.XPM");
 	env->walls[7] = img_new(env, "./img/purplestone.XPM");
-	env->enemy = img_new(env, "./img/enemy.XPM");
+	env->enemy = img_new(env, "./img/enemy.xpm");
 	env->wall = env->walls[0];
 	env->floor = img_new(env, "./img/floor.XPM");
 	env->sky = img_new(env, "./img/floor.XPM");

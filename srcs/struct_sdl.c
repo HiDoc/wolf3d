@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 16:00:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 16:15:10 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,6 @@ void	copy_sdl(t_env *env)
 	int i;
 
  	i = 0;
-	while (i < 800 * 600)
-	{
-		env->sdl.pixels[i] = (0xFF000000 | env->mlx.data[i]);
-		i++;
-	}
 	env->sdl.surface = surface_new(env->sdl.pixels, 800, 600);
 	if (env->sdl.surface == NULL)
 	{
@@ -78,5 +73,4 @@ void	init_sdl(t_env *env)
 			800, 600,
 			SDL_WINDOW_RESIZABLE);
 	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
-	// copy_sdl(env);
 }

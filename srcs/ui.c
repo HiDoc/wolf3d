@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/05 11:46:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 16:13:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	put_gun(t_env *env)
 		while (x < 128)
 		{
 			if (env->gun->data[128 * 128 - pos] != 0xFFFFFF)
-				env->mlx.data[800 * 600 - (y * 800 + x) - 334] = env->gun->data[128 * 128 - pos]; 
+				env->sdl.pixels[800 * 600 - (y * 800 + x) - 334]
+					= 0xFF000000 | env->gun->data[128 * 128 - pos]; 
 			x++;
 			pos++;
 		}
@@ -37,7 +38,7 @@ void	put_gun(t_env *env)
 		while (x < 20)
 		{
 			if ((x == 10 || y == 10) && x != y)
-				env->mlx.data[800 * 300 + (y * 800 + x) + 390] = 0xFF00;
+				env->sdl.pixels[800 * 300 + (y * 800 + x) + 390] = 0xFF00FF00;
 			x++;
 		}
 		y++;
@@ -56,7 +57,8 @@ void	put_health(t_env *env)
 		while (x < 200)
 		{
 			if (env->life.img->data[200 * 199 - pos] != 0)
-				env->mlx.data[800 * 500 - (y * 800 + x) + 200] = env->life.img->data[200 * 199 - pos];
+				env->sdl.pixels[800 * 500 - (y * 800 + x) + 200]
+					= 0xFF000000 | env->life.img->data[200 * 199 - pos];
 			x++;
 			pos++;
 		}

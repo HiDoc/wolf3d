@@ -16,7 +16,7 @@ int			second_floor(t_env *env, int x)
 		{
 			pos = y * WIDTH + x;
 			imgpos = line_wall(env, &line, y - env->is_updn);	
-			env->mlx.data[pos] = imgpos;
+			env->sdl.pixels[pos] = 0xFF000000 | imgpos;
 		}
 	}
 	return (0);
@@ -37,7 +37,7 @@ int			wall_obj(t_env *env, int x)
 		while (++y < HEIGHT && y < bot)
 		{
 			pos = y * WIDTH + x;
-			env->mlx.data[pos] = 0xFF00;
+			env->sdl.pixels[pos] = 0xFF00FF00;
 		}
 	}
 	return (0);
@@ -74,7 +74,7 @@ int			ceil_obj(t_env *env, int x)
 		while (++y < HEIGHT && y < bot)
 		{
 			pos = ((y - mod) * WIDTH + x);
-			env->mlx.data[pos] = 0xFF;
+			env->sdl.pixels[pos] = 0xFF0000FF;
 		}
 		tab_free(tab, 24);
 	}
@@ -103,7 +103,7 @@ int			wolf(t_env *env, int col)
 			else if (env->portal.in == 2)
 			env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[pos] = imgpos;
+				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
@@ -115,7 +115,7 @@ int			wolf(t_env *env, int col)
 			else if (env->portal.in == 2)
 				env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[pos] = imgpos;
+				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
 		}
 		y--;
 		while (++y < HEIGHT)
@@ -127,7 +127,7 @@ int			wolf(t_env *env, int col)
 			else if (env->portal.in == 2)
 				env->portal.inimg->data[pos] = imgpos;
 			else
-				env->mlx.data[pos] = imgpos;
+				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
 		}
 		wall_obj(env, x);
 		ceil_obj(env, x);
