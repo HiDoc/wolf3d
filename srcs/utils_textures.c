@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 16:27:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 18:25:29 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ Uint32	line_wall(t_env *env, t_line *line, int y)
 	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
 		+ line->lineh * line->text->h * 2;
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	return (getpixel(line->text, yy, x));
+	return (getpixel(line->text, x, yy));
 }

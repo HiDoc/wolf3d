@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 16:40:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 17:43:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ SDL_Surface	*surface_new(Uint32 *pixels, int width, int height)
 			height,
 			32,
 			4 * width,
-			0x00FF0000,
-			0x0000FF00,
 			0x000000FF,
+			0x0000FF00,
+			0x00FF0000,
 			0xFF000000);
 	return (new);
 }
@@ -34,8 +34,7 @@ void		copy_sdl(t_env *env)
 	int			i;
 
 	i = 0;
-	/*env->sdl.surface = surface_new(env->sdl.pixels, 800, 600);
-	*/if (env->sdl.surface == NULL)
+	if (env->sdl.surface == NULL)
 	{
 		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
 		exit(1);

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:01:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 18:16:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	set_thread(t_env *env, int nbr)
 void	set_surface(t_env *env)
 {
 	env->sdl.surface = SDL_CreateRGBSurface(0, 800, 600, 32,
-			0x00FF0000,
-			0x0000FF00,
 			0x000000FF,
+			0x0000FF00,
+			0x00FF0000,
 			0xFF000000);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 16:52:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 17:40:51 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,21 @@
 
 SDL_Surface	*create_surf(char *path)
 {
-	SDL_Surface* image = IMG_Load(path);
-	if (!image)
+	SDL_Surface* new;
+	
+	new = IMG_Load(path);
+	if (!new)
 	{
 		printf("Error : %s\n", SDL_GetError());
 		return NULL;
 	}
-	return (image);
+	printf("h: %d, w: %d, r: %u, g: %u, b: %u, a: %u, pitch : %d\n", new->h, new->w,
+			new->format->Rmask,
+			new->format->Gmask,
+			new->format->Bmask,
+			new->format->Amask,
+			new->pitch);
+	return (new);
 }
 
 SDL_Surface	*img_new(char *filename)
@@ -31,16 +39,16 @@ SDL_Surface	*img_new(char *filename)
 void	img(t_env *env)
 {
 	env->walls[0] = img_new("./img/wall.XPM");
-	env->walls[1] = img_new("./img/wall_1.XPM");
-	env->walls[2] = img_new("./img/wall_2.XPM");
-	env->walls[3] = img_new("./img/wall_3.XPM");
+	env->walls[1] = img_new("./img/wall_1.png");
+	env->walls[2] = img_new("./img/wall_1.png");
+	env->walls[3] = img_new("./img/wall_1.png");
 	env->walls[4] = img_new("./img/purplestone.XPM");
-	env->walls[5] = img_new("./img/wall_5.XPM");
+	env->walls[5] = img_new("./img/wall_1.png");
 	env->walls[6] = img_new("./img/purplestone.XPM");
 	env->walls[7] = img_new("./img/purplestone.XPM");
 	env->enemy = img_new("./img/enemy.png");
 	env->wall = env->walls[0];
-	env->floor = img_new("./img/floor.XPM");
+	env->floor = img_new("./img/floor.png");
 	env->sky = img_new("./img/floor.XPM");
 	env->gun = img_new("./img/gun.png");
 	env->life.img = img_new("./img/thealth.png");

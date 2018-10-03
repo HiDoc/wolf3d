@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/05 11:03:15 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 16:53:05 by fmadura          ###   ########.fr       */
+/*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
+/*   Updated: 2018/10/03 18:27:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
 int main(int argc, char *argv[])
 {
 	t_env   *env;
@@ -66,8 +67,8 @@ int main(int argc, char *argv[])
 			i++;
 		}
 		if (i)
-		{
-			SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
+		{	
+			//SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
 			SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 			SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 			SDL_RenderPresent(env->sdl.renderer);
