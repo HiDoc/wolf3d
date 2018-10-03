@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 16:40:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 17:01:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ int		init_thread(t_env *env)
 		x++;
 	}
 	put_gun(env);
-<<<<<<< HEAD
-=======
 	put_health(env);
->>>>>>> 617158c1a15a0aa3a2bc20c89fe9a7f8c8ca4120
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 15:57:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 16:57:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,25 @@ void	put_gun(t_env *env)
 	}
 }
 
-<<<<<<< HEAD
-=======
 void	put_health(t_env *env)
 {
 	int x = 0;
 	int y = 0;
-	int pos = 0;
 
 	while (y < 141)
 	{
 		x = 0;
 		while (x < 352)
 		{
-			// if (env->life.img->data[352 * 141 - pos] != 0)
-				env->sdl.pixels[800 * 500 - (y * 800 + x) + 360]
-					= env->life.img->data[352 * 141 - pos];
+			Uint32 color = getpixel(env->life.img, x, y);
+			if (color & 0xFF000000)
+				setpixel(env->sdl.surface, x + 22, 600 - 142 + y, color);
 			x++;
-			pos++;
 		}
 		y++;
 	}
 }
 
->>>>>>> 617158c1a15a0aa3a2bc20c89fe9a7f8c8ca4120
 void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 {
 	if(!(bloc->font = TTF_OpenFont(police, 20))
