@@ -51,14 +51,14 @@ void	put_health(t_env *env)
 	int y = 0;
 	int pos = 0;
 
-	while (y < 199)
+	while (y < 141)
 	{
 		x = 0;
-		while (x < 200)
+		while (x < 352)
 		{
-			if (env->life.img->data[200 * 199 - pos] != 0)
-				env->sdl.pixels[800 * 500 - (y * 800 + x) + 200]
-					= 0xFF000000 | env->life.img->data[200 * 199 - pos];
+			// if (env->life.img->data[352 * 141 - pos] != 0)
+				env->sdl.pixels[800 * 500 - (y * 800 + x) + 360]
+					= env->life.img->data[352 * 141 - pos];
 			x++;
 			pos++;
 		}

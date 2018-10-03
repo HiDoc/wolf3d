@@ -52,7 +52,7 @@ void	img(t_env *env)
 	env->floor = img_new(env, "./img/floor.XPM");
 	env->sky = img_new(env, "./img/floor.XPM");
 	env->gun = img_new(env, "./img/gun.png");
-	env->life.img = img_new(env, "./img/health.XPM");
+	env->life.img = img_new(env, "./img/thealth.png");
 	env->lscreen.img = img_new(env, "./img/accueil.XPM");
 	env->logo.img = img_new(env, "./img/logo.XPM");
 }

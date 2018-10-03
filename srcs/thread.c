@@ -57,6 +57,6 @@ int		init_thread(t_env *env)
 		x++;
 	}
 	put_gun(env);
-	// put_health(env);
+	put_health(env);
 	return (0);
 }
