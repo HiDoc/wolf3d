@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 16:13:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 12:23:34 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	put_gun(t_env *env)
 		x = 0;
 		while (x < 128)
 		{
-			if (env->gun->data[128 * 128 - pos] != 0xFFFFFF)
-				env->sdl.pixels[800 * 600 - (y * 800 + x) - 334]
-					= 0xFF000000 | env->gun->data[128 * 128 - pos]; 
+//			if (env->gun->data[128 * 128 - pos] != 0xFFFFFF)
+//				env->sdl.pixels[800 * 600 - (y * 800 + x) - 334]
+//					= 0xFF000000 | env->gun->data[128 * 128 - pos]; 
 			x++;
 			pos++;
 		}
@@ -96,7 +96,7 @@ void	launch_screen(t_env *env)
 	i = 0;
 	while (i < 800 * 600)
 	{
-		env->sdl.pixels[i] = (0xFF000000 | env->lscreen.img->data[i]);
+		//env->sdl.pixels[i] = (0xFF000000 | env->lscreen.img->data[i]);
 		i++;
 	}
 	if (!(env->lscreen.surface = surface_new(env->sdl.pixels, 800, 600)))
@@ -122,10 +122,10 @@ void	turn_logo(t_env *env)
 	env->logo.rect = (SDL_Rect){0, 0, 200, 200};
 	while (i < 89 * 89)
 	{
-		if (env->logo.img->data[i] != 0xEEEEEE)
-			env->sdl.pixels[i] = (0xFF000000 | env->logo.img->data[i]);
+		if (i)//env->logo.img->data[i] != 0xEEEEEE)
+			;//	env->sdl.pixels[i] = (0xFF000000 | env->logo.img->data[i]);
 		else
-			env->sdl.pixels[i] = (0x0 | env->logo.img->data[i]);
+			;//env->sdl.pixels[i] = (0x0 | env->logo.img->data[i]);
 		i++;
 	}
 	if (!(env->logo.surface = surface_new(env->sdl.pixels, 89, 89)))

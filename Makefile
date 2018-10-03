@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/10/02 16:00:02 by fmadura          ###   ########.fr        #
+#    Updated: 2018/10/03 12:19:38 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ SRC_NAME 	= main.c \
 			  parser.c \
 			  ui.c \
 			  portal.c \
-			  enemy.c \
 			  struct_line.c \
 			  struct_sdl.c \
 			  struct_env.c \
@@ -97,6 +96,7 @@ clean:
 	@make -C $(LIBFT) clean
 	@make -C $(MLX) clean
 	@rm -rf $(OBJ_PATH)
+	@rm -rf $(NAME).dSYM/
 
 fclean: clean
 	@make -C $(LIBFT) fclean
@@ -111,5 +111,10 @@ lldb:
 		-L$(LIBFT) -lft -L$(MLX) -lmlx
 	lldb ./wolf3d
 
+fsani:
+	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
+	$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
+	-L$(LIBFT) -lft -L$(MLX) -lmlx
+	./wolf3d
 
 re: fclean all

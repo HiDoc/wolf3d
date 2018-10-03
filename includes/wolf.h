@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 15:51:59 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 18:54:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@
 # include "wolf_struct.h"
 
 int			wolf(t_env *env, int col);
-
 void		print_error(int nb, t_env *env);
-
 void		free_env(t_env *env);
-
 int			exit_wolf(t_env *env);
-
 int			key_hook(int key, t_env *env);
 
 void        put_health(t_env *env);
@@ -33,9 +29,9 @@ double		delta(double x, double y);
 double		dist(double map, double pos, double step, double ray);
 double		ldist(t_env *env, t_line *line, char side);
 
-int			line_floor(t_env *env, t_line *line, int y);
-int			line_wall(t_env *env, t_line *line, int y);
-int			line_sky(t_env *env, t_line *line, int y);
+Uint32		line_floor(t_env *env, t_line *line, int y);
+Uint32		line_wall(t_env *env, t_line *line, int y);
+Uint32		line_sky(t_env *env, t_line *line, int y);
 
 t_line		*objs_init(t_env *env, t_line *line, int x, int **tab);
 t_line		*objs_dda(t_env *env, t_line *line, int **tab);

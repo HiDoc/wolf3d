@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 16:15:59 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 12:19:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-int	line_floor(t_env *env, t_line *line, int y)
+Uint32	line_floor(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
 	t_point		cfloor;
@@ -50,10 +50,11 @@ int	line_floor(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)(cfloor.y * 64) % 64;
+	return (0xff0ff000);
 	return (line->floor->data[(int)(tfloor.y * 64 + tfloor.x)]);
 }
 
-int		infinite_sky(t_env *env, t_line *line, int y)
+Uint32		infinite_sky(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
 	t_point		cfloor;
@@ -66,10 +67,11 @@ int		infinite_sky(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y - weight * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
-	return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
+	return (0xff0ff000);
+	//return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
 }
 
-int		line_sky(t_env *env, t_line *line, int y)
+Uint32		line_sky(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
 	t_point		cfloor;
@@ -82,5 +84,22 @@ int		line_sky(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)(fabs(HEIGHT - cfloor.y) * 64) % 64;
-	return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
+	return (0xff0000ff);
+	//return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
+}
+
+Uint32	line_wall(t_env *env, t_line *line, int y)
+{
+	int		x;
+	int		yy;
+	int		delta;
+
+	(void)env;
+	x = (int)(line->wall.x * line->text->w);
+	x = line->text->w - x - 1;
+	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
+		+ line->lineh * line->text->h * 2;
+	yy = ((delta * 64.0) / (line->lineh)) / 256;
+	return (0xffff00ff);
+	return (line->text->data[yy * line->text->w + x]);
 }
