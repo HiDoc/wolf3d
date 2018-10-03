@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/25 11:49:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 16:54:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_line	*objs_dda(t_env *env, t_line *line, int **tab)
 			+ (1 - line->step.y) / 2) / line->raydir.y : 0;
 	if (i == 2 && !tab)
 	{
-		line->text = env->enemy;
+		line->text = env->walls[0];
 		return objs_max(env, line);
 	}
 	else if (i == 3 && !tab)

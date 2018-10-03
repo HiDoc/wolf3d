@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 16:19:38 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/02 18:47:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
-	line->map = *point_cpy(&line->map, &env->pos);
-	point_ray(&line->raydir, &env->dir, &env->plane, env->cam);
-	point_delta(&line->delta, &line->raydir);
-//	line->map.x = (int)env->pos.x;
-//	line->map.y = (int)env->pos.y;
+//	line->map = *point_cpy(&line->map, &env->pos);
+//	point_ray(&line->raydir, &env->dir, &env->plane, env->cam);
+//	point_delta(&line->delta, &line->raydir);
+	line->map.x = (int)env->pos.x;
+	line->map.y = (int)env->pos.y;
 	line->raydir.x = env->dir.x + env->plane.x * env->cam;
 	line->raydir.y = env->dir.y + env->plane.y * env->cam;
 	line->delta.x = delta(line->raydir.y, line->raydir.x);

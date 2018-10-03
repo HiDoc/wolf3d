@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:15 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 15:57:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 12:20:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	init_env(env);
 	while (1)
 	{
+		int i = 0;
 		SDL_PollEvent(&env->sdl.event);
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
@@ -41,11 +42,13 @@ int main(int argc, char *argv[])
 		{
 			sdl_keyhook(env, env->sdl.event);
 			copy_sdl(env);
+			i++;
 		}
 		if (env->sdl.event.type == SDL_KEYUP)
 		{
 			sdl_keyhook(env, env->sdl.event);
 			copy_sdl(env);
+			i++;
 		}
 		if (env->sdl.event.type == SDL_MOUSEMOTION)
 		{
@@ -57,14 +60,18 @@ int main(int argc, char *argv[])
 				sdl_motion_mouse(env, x, y);
 				copy_sdl(env);
 			}
+			i++;
 		}
-		launch_screen(env);
-		turn_logo(env);
-		SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
-		SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
-		SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
-		SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
-		SDL_RenderPresent(env->sdl.renderer);
+		if (i)
+		{
+			launch_screen(env);
+			turn_logo(env);
+			SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
+			SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
+			SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
+			SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
+			SDL_RenderPresent(env->sdl.renderer);
+		}
 	}
 	SDL_DestroyRenderer(env->sdl.renderer);
 	TTF_Quit();
