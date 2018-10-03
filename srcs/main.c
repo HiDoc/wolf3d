@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:15 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 12:20:59 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 15:37:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	init_env(env);
+	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
+	launch_screen(env);
+//	turn_logo(env);
 	while (1)
 	{
 		int i = 0;
@@ -64,10 +67,7 @@ int main(int argc, char *argv[])
 		}
 		if (i)
 		{
-			launch_screen(env);
-			turn_logo(env);
 			SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
-			SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 			SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 			SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 			SDL_RenderPresent(env->sdl.renderer);

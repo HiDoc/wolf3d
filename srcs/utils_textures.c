@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 12:19:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 16:27:58 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ Uint32	line_floor(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)(cfloor.y * 64) % 64;
-	return (0xff0ff000);
-	return (line->floor->data[(int)(tfloor.y * 64 + tfloor.x)]);
+	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
 Uint32		infinite_sky(t_env *env, t_line *line, int y)
@@ -67,8 +66,7 @@ Uint32		infinite_sky(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y - weight * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
-	return (0xff0ff000);
-	//return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
+	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
 Uint32		line_sky(t_env *env, t_line *line, int y)
@@ -84,8 +82,7 @@ Uint32		line_sky(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)(fabs(HEIGHT - cfloor.y) * 64) % 64;
-	return (0xff0000ff);
-	//return (line->sky->data[(int)((tfloor.y) * 64 + tfloor.x)]);
+	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
 Uint32	line_wall(t_env *env, t_line *line, int y)
@@ -100,6 +97,5 @@ Uint32	line_wall(t_env *env, t_line *line, int y)
 	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
 		+ line->lineh * line->text->h * 2;
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	return (0xffff00ff);
-	return (line->text->data[yy * line->text->w + x]);
+	return (getpixel(line->text, yy, x));
 }

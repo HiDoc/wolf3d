@@ -25,20 +25,14 @@ int			second_floor(t_env *env, int x)
 int			wall_obj(t_env *env, int x)
 {
 	int		y;
-	int		pos;
-	int		imgpos;
 	t_line	line;
 
-	(void)imgpos;
 	if (objs_init(env, &line, x, NULL) != NULL)
 	{
 		int bot = line.edraw;
 		y = line.sdraw + (line.edraw - line.sdraw) / 1.25;
 		while (++y < HEIGHT && y < bot)
-		{
-			pos = y * WIDTH + x;
-			env->sdl.pixels[pos] = 0xFF00FF00;
-		}
+			setpixel(env->sdl.surface, x, y, 0xFF0000FF);
 	}
 	return (0);
 }
@@ -74,7 +68,7 @@ int			ceil_obj(t_env *env, int x)
 		while (++y < HEIGHT && y < bot)
 		{
 			pos = ((y - mod) * WIDTH + x);
-			env->sdl.pixels[pos] = 0xFF0000FF;
+			setpixel(env->sdl.surface, x, y - mod, 0xFF0000FF);
 		}
 		tab_free(tab, 24);
 	}
@@ -85,8 +79,7 @@ int			wolf(t_env *env, int col)
 {
 	int		x;
 	int		y;
-	int		pos;
-	int		imgpos;
+	Uint32	imgpos;
 	t_line	line;
 
 	x = col - 1;
@@ -96,38 +89,20 @@ int			wolf(t_env *env, int col)
 		y = -1;
 		while (++y < line.sdraw)
 		{
-			pos = y * WIDTH + x;
 			imgpos = line_sky(env, &line, y - env->is_updn);
-			if (env->portal.out == 2)
-				env->portal.outimg->data[pos] = imgpos;
-			else if (env->portal.in == 2)
-			env->portal.inimg->data[pos] = imgpos;
-			else
-				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
+			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
-			pos = y * WIDTH + x;
 			imgpos = line_wall(env, &line, y - env->is_updn);
-			if (env->portal.out == 2)
-				env->portal.outimg->data[pos] = imgpos;
-			else if (env->portal.in == 2)
-				env->portal.inimg->data[pos] = imgpos;
-			else
-				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
+			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
-			pos = y * WIDTH + x;
 			imgpos = line_floor(env, &line, y - env->is_updn);
-			if (env->portal.out == 2)
-				env->portal.outimg->data[pos] = imgpos;
-			else if (env->portal.in == 2)
-				env->portal.inimg->data[pos] = imgpos;
-			else
-				env->sdl.pixels[pos] = 0xFF000000 | imgpos;
+			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		wall_obj(env, x);
 		ceil_obj(env, x);

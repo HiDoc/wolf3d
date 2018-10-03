@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 12:23:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 15:57:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,14 @@ void	put_gun(t_env *env)
 {
 	int x = 0;
 	int y = 0;
-	int pos = 0;
 
-	while (y < 128)
+	while (y < env->gun->h && y < 64)
 	{
 		x = 0;
-		while (x < 128)
+		while (x < env->gun->w && x < 64)
 		{
-//			if (env->gun->data[128 * 128 - pos] != 0xFFFFFF)
-//				env->sdl.pixels[800 * 600 - (y * 800 + x) - 334]
-//					= 0xFF000000 | env->gun->data[128 * 128 - pos]; 
+			env->sdl.pixels[y * WIDTH + x] = getpixel(env->gun, x, y); 
 			x++;
-			pos++;
 		}
 		y++;
 	}
@@ -40,27 +36,6 @@ void	put_gun(t_env *env)
 			if ((x == 10 || y == 10) && x != y)
 				env->sdl.pixels[800 * 300 + (y * 800 + x) + 390] = 0xFF00FF00;
 			x++;
-		}
-		y++;
-	}
-}
-
-void	put_health(t_env *env)
-{
-	int x = 0;
-	int y = 0;
-	int pos = 0;
-
-	while (y < 199)
-	{
-		x = 0;
-		while (x < 200)
-		{
-			if (env->life.img->data[200 * 199 - pos] != 0)
-				env->sdl.pixels[800 * 500 - (y * 800 + x) + 200]
-					= 0xFF000000 | env->life.img->data[200 * 199 - pos];
-			x++;
-			pos++;
 		}
 		y++;
 	}
@@ -91,20 +66,8 @@ void	health(t_env *env)
 
 void	launch_screen(t_env *env)
 {
-	int		i;
 
-	i = 0;
-	while (i < 800 * 600)
-	{
-		//env->sdl.pixels[i] = (0xFF000000 | env->lscreen.img->data[i]);
-		i++;
-	}
-	if (!(env->lscreen.surface = surface_new(env->sdl.pixels, 800, 600)))
-	{
-		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
-		exit(1);
-	}
-	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->lscreen.surface)))
+	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->lscreen.img)))
 	{
 		fprintf(stderr, "CreateTextureFromSurface failed: %s\n", SDL_GetError());
 		exit(1);
@@ -112,6 +75,7 @@ void	launch_screen(t_env *env)
 	SDL_FreeSurface(env->lscreen.surface);
 	env->lscreen.surface = NULL;
 	SDL_RenderCopy(env->sdl.renderer, env->lscreen.texture, NULL, NULL);
+	SDL_RenderPresent(env->sdl.renderer);
 }
 
 void	turn_logo(t_env *env)

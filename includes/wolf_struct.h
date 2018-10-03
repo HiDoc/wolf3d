@@ -6,14 +6,13 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 16:30:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 15:00:10 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_STRUCT_H
 # define WOLF_STRUCT_H
 
-typedef struct s_img	t_img;
 typedef struct s_mlx	t_mlx;
 typedef struct s_env	t_env;
 typedef struct s_point	t_point;
@@ -33,17 +32,6 @@ struct					s_sdl
 	SDL_Texture		*texture;
 	SDL_Surface		*surface;	
 	SDL_Event		event;
-};
-
-struct					s_img
-{
-	SDL_Surface	*iptr;
-	Uint32		*data;
-	int			size_l;
-	int			bpp;
-	int			endian;
-	int			w;
-	int			h;
 };
 
 struct					s_mlx
@@ -84,9 +72,9 @@ struct					s_thw
 
 struct					s_line
 {
-	t_img		*text;
-	t_img		*floor;
-	t_img		*sky;
+	SDL_Surface	*text;
+	SDL_Surface	*floor;
+	SDL_Surface	*sky;
 	t_point		map;
 	t_point		delta;
 	t_point		step;
@@ -107,7 +95,7 @@ struct					s_hub
 	SDL_Rect		rect;
 	SDL_Color		color;
 	TTF_Font		*font;
-	t_img			*img;
+	SDL_Surface		*img;
 	int				size;
 	double			ang;
 	int				w;
@@ -118,8 +106,8 @@ struct					s_hub
 
 struct					s_portal
 {
-	t_img		*inimg;
-	t_img		*outimg;
+	SDL_Surface	*inimg;
+	SDL_Surface	*outimg;
 	t_point		inplane;
 	t_point		indir;
 	t_point		inpos;
@@ -147,12 +135,12 @@ struct					s_env
 	double		pang;
 	int			**w_map;
 	int			**o_map;
-	t_img		*wall;
-	t_img		*walls[10];
-	t_img		*enemy;
-	t_img		*floor;
-	t_img		*sky;
-	t_img		*gun;
+	SDL_Surface	*wall;
+	SDL_Surface	*walls[10];
+	SDL_Surface	*enemy;
+	SDL_Surface	*floor;
+	SDL_Surface	*sky;
+	SDL_Surface	*gun;
 	int			width;
 	int			height;
 	t_portal	portal;

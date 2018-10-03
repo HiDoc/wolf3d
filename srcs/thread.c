@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/27 14:15:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 16:40:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,22 @@ void	set_thread(t_env *env, int nbr)
 	}
 }
 
+void	set_surface(t_env *env)
+{
+	env->sdl.surface = SDL_CreateRGBSurface(0, 800, 600, 32,
+			0x00FF0000,
+			0x0000FF00,
+			0x000000FF,
+			0xFF000000);
+}
+
 int		init_thread(t_env *env)
 {
 	int		x;
 
 	x = 0;
 	set_thread(env, x);
+	set_surface(env);
 	while (x < 8)
 	{	
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))
@@ -57,6 +67,5 @@ int		init_thread(t_env *env)
 		x++;
 	}
 	put_gun(env);
-	// put_health(env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 18:54:31 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/03 16:32:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ void    	turn_logo(t_env *env);
 void		copy_sdl(t_env *env);
 void	    health(t_env *env);
 void    	hub_texture(t_env *env, t_hub *bloc, char *line, char *police);
-void		surface_set_pixel(SDL_Surface *s, SDL_Color c, size_t x, size_t y);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
 int			sdl_exit_wolf(t_env *env, Uint8 scancode);
-SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 
-t_img       *img_new(t_env *env, char *filename);
+SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
+SDL_Surface	*img_new(char *filename);
+
+Uint32		getpixel(SDL_Surface *surface, int x, int y);
+void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
 
 int			**tab_copy(int **src, int **dest, int x, int y);
 int			**tab_init(int **src, int x, int y);
