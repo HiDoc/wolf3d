@@ -67,5 +67,9 @@ int		init_thread(t_env *env)
 		x++;
 	}
 	put_gun(env);
+<<<<<<< HEAD
+=======
+	put_health(env);
+>>>>>>> 617158c1a15a0aa3a2bc20c89fe9a7f8c8ca4120
 	return (0);
 }

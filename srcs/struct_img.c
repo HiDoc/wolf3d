@@ -40,10 +40,19 @@ void	img(t_env *env)
 	env->walls[7] = img_new("./img/purplestone.XPM");
 	env->enemy = img_new("./img/enemy.png");
 	env->wall = env->walls[0];
+<<<<<<< HEAD
 	env->floor = img_new("./img/floor.XPM");
 	env->sky = img_new("./img/floor.XPM");
 	env->gun = img_new("./img/gun.png");
 	env->life.img = img_new("./img/health.XPM");
 	env->lscreen.img = img_new("./img/accueil.XPM");
 	env->logo.img = img_new("./img/logo.XPM");
+=======
+	env->floor = img_new(env, "./img/floor.XPM");
+	env->sky = img_new(env, "./img/floor.XPM");
+	env->gun = img_new(env, "./img/gun.png");
+	env->life.img = img_new(env, "./img/thealth.png");
+	env->lscreen.img = img_new(env, "./img/accueil.XPM");
+	env->logo.img = img_new(env, "./img/logo.XPM");
+>>>>>>> 617158c1a15a0aa3a2bc20c89fe9a7f8c8ca4120
 }

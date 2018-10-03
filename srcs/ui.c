@@ -41,6 +41,30 @@ void	put_gun(t_env *env)
 	}
 }
 
+<<<<<<< HEAD
+=======
+void	put_health(t_env *env)
+{
+	int x = 0;
+	int y = 0;
+	int pos = 0;
+
+	while (y < 141)
+	{
+		x = 0;
+		while (x < 352)
+		{
+			// if (env->life.img->data[352 * 141 - pos] != 0)
+				env->sdl.pixels[800 * 500 - (y * 800 + x) + 360]
+					= env->life.img->data[352 * 141 - pos];
+			x++;
+			pos++;
+		}
+		y++;
+	}
+}
+
+>>>>>>> 617158c1a15a0aa3a2bc20c89fe9a7f8c8ca4120
 void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 {
 	if(!(bloc->font = TTF_OpenFont(police, 20))
