@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:40:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/04 16:40:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ SDL_Surface	*create_surf(char *path)
 		printf("Error : %s\n", SDL_GetError());
 		return NULL;
 	}
-	printf("h: %d, w: %d, r: %u, g: %u, b: %u, a: %u, pitch : %d\n", new->h, new->w,
-			new->format->Rmask,
-			new->format->Gmask,
-			new->format->Bmask,
-			new->format->Amask,
-			new->pitch);
 	return (new);
 }
 
@@ -48,7 +42,7 @@ void	img(t_env *env)
 	env->walls[7] = img_new("./img/purplestone.XPM");
 	env->enemy = img_new("./img/enemy.png");
 	env->wall = env->walls[0];
-	env->floor = img_new("./img/floor.png");
+	env->floor = img_new("./img/floor_scifi.png");
 	env->sky = img_new("./img/floor.XPM");
 	env->gun = img_new("./img/gun.png");
 	env->life.img = img_new("./img/thealth.png");

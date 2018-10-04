@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 18:25:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/04 16:47:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ Uint32	line_floor(t_env *env, t_line *line, int y)
 	t_point		tfloor;
 	double		weight;
 
+	int w = line->floor->w;
+	int h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	cfloor.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
 	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
-	tfloor.x = (int)(cfloor.x * 64) % 64;
-	tfloor.y = (int)(cfloor.y * 64) % 64;
+	tfloor.x = (int)(cfloor.x * w) % w;
+	tfloor.y = (int)(cfloor.y * h) % h;
 	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
