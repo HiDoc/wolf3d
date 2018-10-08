@@ -63,6 +63,23 @@ int		sdl_move(t_env *env, Uint8 *keycodes)
 		sdl_check_pos(env, env->plane, -0.2, 'x');
 		sdl_check_pos(env, env->plane, -0.2, 'y');
 	}
+	if (keycodes[SDL_SCANCODE_V])
+	{
+		if (env->hratio <= 1.1)
+			env->is_jump = 1;
+		if (env->is_jump == 1)
+		{
+			env->is_updn += 20;
+			env->hratio += 0.1;
+		}
+		else
+		{
+			env->is_updn -= 20;
+			env->hratio -= 0.1;
+		}
+		if (env->hratio == 2 && env->is_jump == 1)
+			env->is_jump = 0;
+	}
 	return (0);
 }
 

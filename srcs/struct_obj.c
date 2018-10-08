@@ -105,9 +105,9 @@ t_line	*objs_dda(t_env *env, t_line *line, int **tab)
 t_line	*objs_max(t_env *env, t_line *line)
 {
 	line->lineh = (int)(HEIGHT / line->wdist);
-	line->sdraw = (-line->lineh / 2 + HEIGHT / 2) + env->is_updn;
+	line->sdraw = (-line->lineh / 2 + HEIGHT / 1.5) + env->is_updn;
 	line->sdraw < 0 ? line->sdraw = 0 : 0;
-	line->edraw = (line->lineh / 2 + HEIGHT / 2) + env->is_updn;
+	line->edraw = (line->lineh / 2 + HEIGHT / 1.5) + env->is_updn;
 	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
 	if (line->sidew == 0)
 		line->wall.x = env->pos.y + line->wdist * line->raydir.y;

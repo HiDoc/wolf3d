@@ -47,7 +47,7 @@ Uint32	line_floor(t_env *env, t_line *line, int y)
 	int w = line->floor->w;
 	int h = line->floor->h;
 	get_fwall(line, &fwall);
-	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
+	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
 	cfloor.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
 	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * w) % w;
@@ -63,7 +63,7 @@ Uint32		infinite_sky(t_env *env, t_line *line, int y)
 	double		weight;
 
 	get_fwall(line, &fwall);
-	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
+	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
 	cfloor.x = weight * fwall.x - weight * env->pos.x;
 	cfloor.y = weight * fwall.y - weight * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
@@ -79,7 +79,7 @@ Uint32		line_sky(t_env *env, t_line *line, int y)
 	double		weight;
 
 	get_fwall(line, &fwall);
-	weight = (HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
+	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
 	cfloor.x = weight * fwall.x - (1.0 + weight) * env->pos.x;
 	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
