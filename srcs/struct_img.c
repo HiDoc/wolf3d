@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/04 16:40:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/10/04 16:56:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ SDL_Surface	*img_new(char *filename)
 void	img(t_env *env)
 {
 	env->walls[0] = img_new("./img/wall.XPM");
-	env->walls[1] = img_new("./img/wall_1.png");
+	env->walls[1] = img_new("./img/door.png");
 	env->walls[2] = img_new("./img/wall_1.png");
 	env->walls[3] = img_new("./img/wall_1.png");
 	env->walls[4] = img_new("./img/purplestone.XPM");
