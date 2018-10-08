@@ -148,6 +148,8 @@ struct					s_env
 	t_hub		title;
 	t_hub		life;
 	t_hub		logo;
+	double		hratio;
+	int			is_jump;
 };
 
 #endif

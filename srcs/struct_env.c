@@ -135,6 +135,8 @@ int		init_env(t_env *env)
 	env->portal.out = 0;
 	env->portal.in = 0;
 	env->logo.ang = 0.0;
+	env->hratio = 2;
+	env->is_jump = 0;
 	init_mlx(env);
 	img(env);
 	fill_tab(env);
