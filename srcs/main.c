@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		print_error(1, NULL);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) 
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
 			"Couldn't initialize SDL: %s", SDL_GetError());
@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	init_env(env);
+	load_sounds(env);
 	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 	launch_screen(env);
 //	turn_logo(env);
@@ -74,6 +75,8 @@ int main(int argc, char *argv[])
 			SDL_RenderPresent(env->sdl.renderer);
 		}
 	}
+	Mix_FreeChunk(env->sounds.shot);
+	Mix_CloseAudio();
 	SDL_DestroyRenderer(env->sdl.renderer);
 	TTF_Quit();
 	SDL_Quit();

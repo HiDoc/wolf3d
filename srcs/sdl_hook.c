@@ -77,7 +77,7 @@ int		sdl_move(t_env *env, Uint8 *keycodes)
 			env->is_updn -= 20;
 			env->hratio -= 0.1;
 		}
-		if (env->hratio == 2 && env->is_jump == 1)
+		if (env->hratio >= 2 && env->is_jump == 1)
 			env->is_jump = 0;
 	}
 	return (0);
@@ -95,15 +95,24 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 	env->pang < 0.0 ? env->pang = 358.0 : 0;
 	if (y > 0)
 	{
-		if (env->is_updn > -300)
+		if (env->is_updn > -400)
 			env->is_updn -= 10;
 	}
 	else if (y < 0)
 	{
-		if (env->is_updn < 300)
+		if (env->is_updn < 400)
 			env->is_updn += 10;
 	}
 	init_thread(env);
+	return (0);
+}
+
+int	shooter(t_env *env, Uint8 *keycodes)
+{
+	if (keycodes[SDL_SCANCODE_X])
+	{
+		Mix_PlayChannel(-1, env->sounds.shot, 0);
+	}
 	return (0);
 }
 
@@ -114,7 +123,9 @@ int sdl_keyhook(t_env *env, SDL_Event event)
 
 	keycode = event.key.keysym.scancode;
 	sdl_move(env, (Uint8 *)keycodes);
+	shooter(env, (Uint8 *)keycodes);
 	sdl_exit_wolf(env, keycode);
 	init_thread(env);
 	return (0);
+
 }

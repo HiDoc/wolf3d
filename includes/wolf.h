@@ -73,4 +73,6 @@ void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
 int			**tab_copy(int **src, int **dest, int x, int y);
 int			**tab_init(int **src, int x, int y);
 int			tab_free(int **tab, int y);
+
+void        load_sounds(t_env *env);
 #endif

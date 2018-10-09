@@ -23,6 +23,7 @@ typedef struct s_ray	t_ray;
 typedef struct s_portal	t_portal;
 typedef struct s_sdl	t_sdl;
 typedef struct s_hub	t_hub;
+typedef struct s_msc	t_msc;
 
 struct					s_sdl
 {
@@ -121,6 +122,12 @@ struct					s_portal
 	int			hit;
 };
 
+struct					s_msc
+{
+	Mix_Music	*load;
+	Mix_Chunk	*shot;
+};
+
 struct					s_env
 {
 	t_sdl		sdl;
@@ -150,6 +157,7 @@ struct					s_env
 	t_hub		logo;
 	double		hratio;
 	int			is_jump;
+	t_msc		sounds;
 };
 
 #endif

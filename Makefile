@@ -42,6 +42,7 @@ INC_PATH 	= ./includes/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
 			  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
+			  /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/ \
 			  -F -framework Cocoa 
 
 SRC_NAME 	= main.c \
@@ -61,10 +62,11 @@ SRC_NAME 	= main.c \
 			  utils_maths.c \
 			  utils_point.c \
 			  utils_textures.c \
-			  struct_img.c
+			  struct_img.c \
+			  musics.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
-LSDL2 	 =	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image
+LSDL2 	 =	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -85,19 +85,19 @@ int			wolf(t_env *env, int col)
 		y = -1;
 		while (++y < line.sdraw)
 		{
-			imgpos = line_sky(env, &line, y - env->is_updn - env->sk);
+			imgpos = line_sky(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
-			imgpos = line_wall(env, &line, y - env->is_updn - env->sk);
+			imgpos = line_wall(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
-			imgpos = line_floor(env, &line, y - env->is_updn - env->sk);
+			imgpos = line_floor(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		ceil_obj(env, x);

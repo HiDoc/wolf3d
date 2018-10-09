@@ -17,24 +17,25 @@ void	put_gun(t_env *env)
 	int x = 0;
 	int y = 0;
 
-	while (y < env->gun->h && y < 64)
-	{
-		x = 0;
-		while (x < env->gun->w && x < 64)
-		{
-			env->sdl.pixels[y * WIDTH + x] = getpixel(env->gun, x, y); 
-			x++;
-		}
-		y++;
-	}
-	y = 0;
+	// while (y < env->gun->h && y < 64)
+	// {
+	// 	x = 0;
+	// 	while (x < env->gun->w && x < 64)
+	// 	{
+	// 		env->sdl.pixels[y * WIDTH + x] = getpixel(env->gun, x, y); 
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	// y = 0;
 	while (y < 20)
 	{
 		x = 0;
 		while (x < 20)
 		{
 			if ((x == 10 || y == 10) && x != y)
-				env->sdl.pixels[800 * 300 + (y * 800 + x) + 390] = 0xFF00FF00;
+				setpixel(env->sdl.surface, x + 380, y + 280, 0xFF00FF00);
+				// env->sdl.pixels[800 * 300 + (y * 800 + x) + 390] = 0xFF00FF00;
 			x++;
 		}
 		y++;
