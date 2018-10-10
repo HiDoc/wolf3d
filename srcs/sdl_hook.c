@@ -10,17 +10,6 @@ int		sdl_exit_wolf(t_env *env, Uint8 keycode)
 	return (0);
 }
 
-t_point	sdl_rotate(t_point v, int ang)
-{
-	float	radian;
-	t_point	r;
-
-	radian = ang / 180.0 * 3.141;
-	r.x = v.x * cos(radian) - v.y * sin(radian);
-	r.y = v.x * sin(radian) + v.y * cos(radian);
-	return (r);
-}
-
 static int sdl_check_pos(t_env *env, t_point mult, float check, char pos)
 {
 	int x;
@@ -88,8 +77,8 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 	double	mult;
 
 	mult = x < 0 ? 1.0 : -1.0;
-	env->dir = sdl_rotate(env->dir, mult * 3.0);
-	env->plane = sdl_rotate(env->plane, mult * 3.0);
+	env->dir = point_rotate(env->dir, mult * 3.0);
+	env->plane = point_rotate(env->plane, mult * 3.0);
 	env->pang += mult;
 	env->pang > 358.0 ? env->pang = 0.0 : 0;
 	env->pang < 0.0 ? env->pang = 358.0 : 0;

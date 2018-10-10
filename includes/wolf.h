@@ -46,6 +46,7 @@ t_line		*line_max(t_env *env, t_line *line);
 t_point		*point_cpy(t_point *a, t_point *b);
 t_point		*point_delta(t_point *a, t_point *b);
 t_point		*point_ray(t_point *a, t_point *b, t_point *c, double cam);
+t_point     point_rotate(t_point v, int angle);
 t_point		portal_pos(t_env *env, t_point pos);
 
 int			motion_mouse(int x, int y, t_env *env);

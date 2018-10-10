@@ -60,7 +60,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 {
 	int i;
 
-	while ((i = env->w_map[(int)line->map.x][(int)line->map.y]) == 0)
+	while (((i = env->w_map[(int)line->map.x][(int)line->map.y]) & 0x10) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{
@@ -80,7 +80,7 @@ t_line	*line_dda(t_env *env, t_line *line)
 	else if (i == 9)
 		line->text = env->portal.inimg;
 	else
-		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
+		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
 	return (line_max(env, line));
 }

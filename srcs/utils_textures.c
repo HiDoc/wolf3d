@@ -40,6 +40,23 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 Uint32	line_floor(t_env *env, t_line *line, int y)
 {
 	t_point		fwall;
+	double		weight;
+	int			w;
+	int			h;
+	
+	w = line->floor->w;
+	h = line->floor->h;
+	get_fwall(line, &fwall);
+	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
+	int text = (int)(weight * fwall.x + (1.0 - weight) * env->pos.x);
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w) % w;
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h) % h;
+	return (getpixel(line->floor, w, h));
+}
+
+Uint32		line_sky(t_env *env, t_line *line, int y)
+{
+	t_point		fwall;
 	t_point		cfloor;
 	t_point		tfloor;
 	double		weight;
@@ -48,10 +65,10 @@ Uint32	line_floor(t_env *env, t_line *line, int y)
 	int h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x + (1.0 - weight) * env->pos.x;
-	cfloor.y = weight * fwall.y + (1.0 - weight) * env->pos.y;
+	cfloor.x = weight * fwall.x - (1.0 + weight) * env->pos.x;
+	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
 	tfloor.x = (int)(cfloor.x * w) % w;
-	tfloor.y = (int)(cfloor.y * h) % h;
+	tfloor.y = (int)(fabs(HEIGHT - cfloor.y) * h) % h;
 	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
@@ -68,22 +85,6 @@ Uint32		infinite_sky(t_env *env, t_line *line, int y)
 	cfloor.y = weight * fwall.y - weight * env->pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
-	return (getpixel(line->floor, tfloor.x, tfloor.y));
-}
-
-Uint32		line_sky(t_env *env, t_line *line, int y)
-{
-	t_point		fwall;
-	t_point		cfloor;
-	t_point		tfloor;
-	double		weight;
-
-	get_fwall(line, &fwall);
-	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x - (1.0 + weight) * env->pos.x;
-	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
-	tfloor.x = (int)(cfloor.x * 64) % 64;
-	tfloor.y = (int)(fabs(HEIGHT - cfloor.y) * 64) % 64;
 	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 

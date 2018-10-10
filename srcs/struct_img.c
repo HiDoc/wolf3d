@@ -32,20 +32,20 @@ SDL_Surface	*img_new(char *filename)
 
 void	img(t_env *env)
 {
-	env->walls[0] = img_new("./img/wall.XPM");
+	env->walls[0] = img_new("./img/wall_1.png");
 	env->walls[1] = img_new("./img/door.png");
 	env->walls[2] = img_new("./img/wall_1.png");
 	env->walls[3] = img_new("./img/wall_1.png");
-	env->walls[4] = img_new("./img/purplestone.XPM");
+	env->walls[4] = img_new("./img/floor_scifi2.png");
 	env->walls[5] = img_new("./img/wall_1.png");
-	env->walls[6] = img_new("./img/purplestone.XPM");
-	env->walls[7] = img_new("./img/purplestone.XPM");
+	env->walls[6] = img_new("./img/floor_scifi2.png");
+	env->walls[7] = img_new("./img/floor_scifi2.png");
 	env->enemy = img_new("./img/enemy.png");
 	env->wall = env->walls[0];
 	env->floor = img_new("./img/floor_scifi.png");
-	env->sky = img_new("./img/floor.XPM");
+	env->sky = img_new("./img/floor.png");
 	env->gun = img_new("./img/gun.png");
 	env->life.img = img_new("./img/thealth.png");
-	env->lscreen.img = img_new("./img/accueil.XPM");
-	env->logo.img = img_new("./img/logo.XPM");
+	env->lscreen.img = img_new("./img/accueil.jpg");
+	env->logo.img = img_new("./img/logo.png");
 }
