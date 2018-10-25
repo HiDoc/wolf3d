@@ -48,10 +48,9 @@ Uint32	line_floor(t_env *env, t_line *line, int y)
 	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	int text = (int)(weight * fwall.x + (1.0 - weight) * env->pos.x);
-	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w) % w;
-	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h) % h;
-	return (getpixel(line->floor, w, h));
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
+	return (getpixel(line->floor, w % (int)line->floor->w, h % (int)line->floor->h));
 }
 
 Uint32		line_sky(t_env *env, t_line *line, int y)

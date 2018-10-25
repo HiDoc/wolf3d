@@ -101,6 +101,7 @@ int			wolf(t_env *env, int col)
 			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
 		ceil_obj(env, x);
+		(void)ceil_obj;
 		x += 8;
 	}
 	return (0);

@@ -12,13 +12,6 @@
 
 #include "wolf.h"
 
-void	init_mlx(t_env *env)
-{
-	E_MLX = mlx_init();
-	E_IMG = mlx_new_image(E_MLX, WIDTH, HEIGHT);
-	I_IMG = (int *)mlx_get_data_addr(E_IMG, &I_BPP, &I_SZL, &I_END);
-}
-
 int		fill_obj(t_env *env)
 {
 	int	x;
@@ -144,7 +137,6 @@ int		init_env(t_env *env)
 	env->logo.ang = 0.0;
 	env->hratio = 2;
 	env->is_jump = 0;
-	init_mlx(env);
 	img(env);
 	fill_tab(env);
 	init_thread(env);

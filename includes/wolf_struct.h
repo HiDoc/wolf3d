@@ -13,7 +13,6 @@
 #ifndef WOLF_STRUCT_H
 # define WOLF_STRUCT_H
 
-typedef struct s_mlx	t_mlx;
 typedef struct s_env	t_env;
 typedef struct s_point	t_point;
 typedef struct s_thr	t_thr;
@@ -35,17 +34,6 @@ struct					s_sdl
 	SDL_Event		event;
 };
 
-struct					s_mlx
-{
-	void		*mptr;
-	void		*wptr;
-	void		*iptr;
-	int			*data;
-	int			size_l;
-	int			bpp;
-	int			endian;
-};
-
 struct					s_point
 {
 	double		x;
@@ -57,18 +45,6 @@ struct					s_thr
 	pthread_t	th;
 	t_env		*env;
 	int			nbr;
-};
-
-struct					s_thw
-{
-	t_thr		t1;	
-	t_thr		t2;	
-	t_thr		t3;	
-	t_thr		t4;
-	t_thr		t5;
-	t_thr		t6;
-	t_thr		t7;
-	t_thr		t8;
 };
 
 struct					s_line
@@ -131,7 +107,6 @@ struct					s_msc
 struct					s_env
 {
 	t_sdl		sdl;
-	t_mlx		mlx;
 	t_thr		thr[8];
 	t_point		pos;
 	t_point		dir;
