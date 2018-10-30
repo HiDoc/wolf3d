@@ -60,10 +60,10 @@ char	*ft_strfdup(char *line, char **str)
 int		get_next_line(int const fd, char **line)
 {
 	unsigned int	i;
-	static char		*str[OPEN_MAX];
+	static char		*str[FOPEN_MAX];
 	int				ret;
 
-	if (!(line) || fd < 0 || fd > OPEN_MAX)
+	if (!(line) || fd < 0 || fd > FOPEN_MAX)
 		return (-1);
 	str[fd] = read_buf_to_str(str[fd], &ret, fd);
 	if (str[fd] != NULL && ret == 0)

@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 #color
 YELLOW		= "\\033[33m"

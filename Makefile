@@ -14,10 +14,6 @@ NAME 		= wolf3d
 CC 			= gcc
 CFLAGS 		= -Wall -Wextra -Werror -g
 LIBFT 		= ./libft
-MLX 		= ./minilibx
-FRK			= -framework
-OPEN 		= OpenGL
-APPK 		= AppKit
 
 #color
 YELLOW		= "\\033[33m"
@@ -35,15 +31,30 @@ WAIT		= $(RED)WAIT$(WHITE)
 ID_UN 		= $(shell id -un)
 SRC_PATH 	= ./srcs/
 OBJ_PATH 	= ./objs/
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+CC = clang -std=c99
+INC_PATH 	= /usr/include/SDL2/ \
+		./libft/includes \
+		./includes/
+FRK		= 
+OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
+APPK 		= 
+else
 INC_PATH 	= ./includes/ \
-			  ./minilibx/ \
-			  ./libft/includes/	\
-			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
-			  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
-			  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
-			  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
-			  /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/ \
-			  -F -framework Cocoa 
+		  ./libft/includes/	\
+		  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
+		  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
+		  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
+		  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
+		  /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/ \
+		  -F -framework Cocoa 
+
+FRK		= -framework
+OPEN 		= OpenGL
+APPK 		= AppKit
+endif
 
 SRC_NAME 	= main.c \
 			  sdl_hook.c \
@@ -79,9 +90,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@make -C $(MLX)
 	@$(CC) $(CFLAGS) $(OBJ) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft -L$(MLX) -lmlx \
+		-L$(LIBFT) -lft \
 		$(INC) $(LSDL2)
 
 $(OBJ) : | $(OBJ_PATH)
@@ -96,7 +106,6 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 clean:
 	@make -C $(LIBFT) clean
-	@make -C $(MLX) clean
 	@rm -rf $(OBJ_PATH)
 	@rm -rf $(NAME).dSYM/
 
@@ -110,13 +119,13 @@ run: all
 
 lldb:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft -L$(MLX) -lmlx
+		-L$(LIBFT) -lft
 	lldb ./wolf3d
 
 fsani:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
 	$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-	-L$(LIBFT) -lft -L$(MLX) -lmlx
+	-L$(LIBFT) -lft
 	./wolf3d
 
 re: fclean all

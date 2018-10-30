@@ -107,9 +107,13 @@ void	turn_logo(t_env *env)
 	while (i < 89 * 89)
 	{
 		if (i)//env->logo.img->data[i] != 0xEEEEEE)
+		{
 			;//	env->sdl.pixels[i] = (0xFF000000 | env->logo.img->data[i]);
+		}
 		else
+		{
 			;//env->sdl.pixels[i] = (0x0 | env->logo.img->data[i]);
+		}
 		i++;
 	}
 	if (!(env->logo.surface = surface_new(env->sdl.pixels, 89, 89)))
