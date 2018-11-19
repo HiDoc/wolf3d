@@ -62,6 +62,6 @@ void		init_sdl(t_env *env)
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			800, 600,
-			SDL_WINDOW_RESIZABLE);
+			SDL_WINDOW_SHOWN);
 	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
 }

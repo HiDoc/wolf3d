@@ -67,6 +67,36 @@ int main(int argc, char *argv[])
 			}
 			i++;
 		}
+		if (env->sdl.event.type == SDL_MOUSEBUTTONDOWN)
+		{
+			int x;
+			int y;
+			if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+			{
+				if (x || y)
+				{
+					env->mouse.x = x;
+					env->mouse.y = y;
+					sdl_mouse_click(env, x, y);
+					copy_sdl(env);
+				}
+			}
+			i++;
+		}
+		// if (env->sdl.event.type == SDL_MOUSEBUTTONUP)
+		// {
+		// 	int x;
+		// 	int y;
+		// 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+		// 	{
+		// 		if (x || y)
+		// 		{
+		// 			sdl_mouse_click(env, x, y);
+		// 			copy_sdl(env);
+		// 		}
+		// 	}
+		// 	i++;
+		// }
 		if (i)
 		{	
 			//SDL_SetTextureColorMod(env->sdl.texture, 255, 255, 255);
