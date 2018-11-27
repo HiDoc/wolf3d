@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
 	}
 	Mix_FreeChunk(env->sounds.shot);
 	Mix_CloseAudio();
-	SDL_DestroyRenderer(env->sdl.renderer);
 	TTF_Quit();
 	SDL_Quit();
 	env_free(env);
