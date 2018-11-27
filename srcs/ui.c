@@ -81,7 +81,7 @@ void	health(t_env *env)
 {
 	env->life.color = (SDL_Color){44, 200, 235, 255};
 	env->life.rect = (SDL_Rect){58, 475, 60, 100};
-	hub_texture(env, &env->life, "90%", "font/yorkbailehill.ttf");
+	hub_texture(env, &env->life, "90%", "rsrc/font/yorkbailehill.ttf");
 }
 
 void	launch_screen(t_env *env)

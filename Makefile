@@ -25,26 +25,24 @@ GREEN		= "\\033[32m"
 BOLD		= "\\033[1m"
 PINK		= "\\033[95m"
 
-OK			= $(CYAN)OK$(WHITE)
+OK		= $(CYAN)OK$(WHITE)
 WAIT		= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 SRC_PATH 	= ./srcs/
 OBJ_PATH 	= ./objs/
+INC_PATH	= ./includes/ \
+		./libft/includes/ 
+
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
 CC = clang -std=c99
-INC_PATH 	= /usr/include/SDL2/ \
-		./libft/includes \
-		./includes/
-FRK		= 
+INC_PATH 	+= /usr/include/SDL2/ 
+
 OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
-APPK 		= 
 else
-INC_PATH 	= ./includes/ \
-		  ./libft/includes/	\
-		  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
+INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
 		  /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
 		  /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
 		  /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
@@ -57,24 +55,24 @@ APPK 		= AppKit
 endif
 
 SRC_NAME 	= main.c \
-			  sdl_hook.c \
-			  raycasting.c \
-			  thread.c \
-			  checkerrors.c \
-			  parser.c \
-			  ui.c \
-			  portal.c \
-			  struct_line.c \
-			  struct_sdl.c \
-			  struct_env.c \
-			  struct_obj.c \
-			  utils_tab.c \
-			  utils_sdl.c \
-			  utils_maths.c \
-			  utils_point.c \
-			  utils_textures.c \
-			  struct_img.c \
-			  musics.c
+		  sdl_hook.c \
+		  raycasting.c \
+		  thread.c \
+		  checkerrors.c \
+		  parser.c \
+		  ui.c \
+		  portal.c \
+		  struct_line.c \
+		  struct_sdl.c \
+		  struct_env.c \
+		  struct_obj.c \
+		  utils_tab.c \
+		  utils_sdl.c \
+		  utils_maths.c \
+		  utils_point.c \
+		  utils_textures.c \
+		  struct_img.c \
+		  musics.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LSDL2 	 =	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
@@ -115,7 +113,7 @@ fclean: clean
 
 run: all
 	clear
-	./Wolf3d
+	./wolf3d
 
 lldb:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
