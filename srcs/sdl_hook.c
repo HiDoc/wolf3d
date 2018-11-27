@@ -6,10 +6,9 @@ int		sdl_exit_wolf(t_env *env, Uint8 keycode)
 	{
 		Mix_FreeChunk(env->sounds.shot);
 		Mix_CloseAudio();
-		SDL_DestroyRenderer(env->sdl.renderer);
 		TTF_Quit();
-		SDL_Quit();
 		env_free(env);
+		SDL_Quit();
 		exit(0);
 	}
 	return (0);

@@ -78,7 +78,6 @@ struct					s_hub
 	int				w;
 	int				h;
 	t_point			pt;
-
 };
 
 struct					s_portal

@@ -21,6 +21,18 @@ void	hub_free(t_hub hub)
 		SDL_DestroyTexture(hub.texture);
 }
 
+void	sdl_free(t_sdl sdl)
+{
+	if (sdl.surface)
+		SDL_FreeSurface(sdl.surface);
+	if (sdl.texture)
+		SDL_DestroyTexture(sdl.texture);
+	if (sdl.renderer)
+		SDL_DestroyRenderer(sdl.renderer);
+	if (sdl.window)
+		SDL_DestroyWindow(sdl.window);
+}
+
 int		env_free(t_env *env)
 {
 	int i;
@@ -47,6 +59,7 @@ int		env_free(t_env *env)
 	hub_free(env->title);
 	hub_free(env->life);
 	hub_free(env->logo);
+	sdl_free(env->sdl);
 	free(env);
 	return (1);
 }
@@ -160,6 +173,7 @@ int		fill_tab(t_env *env)
 int		init_env(t_env *env)
 {
 	env->width = 800;
+	env->sdl.surface = NULL;
 	env->height = 600;
 	env->pos.x = 10;
 	env->pos.y = 10;
