@@ -86,7 +86,6 @@ void	health(t_env *env)
 
 void	launch_screen(t_env *env)
 {
-
 	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->lscreen.img)))
 	{
 		fprintf(stderr, "CreateTextureFromSurface failed: %s\n", SDL_GetError());

@@ -60,6 +60,10 @@ void		copy_sdl(t_env *env)
 void		init_sdl(t_env *env)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	env->sdl.renderer = NULL;
+	env->sdl.texture = NULL;
+	env->sdl.surface = NULL;
+	env->sdl.window = NULL;
 	env->sdl.window = SDL_CreateWindow("SDL_CreateTexture",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
