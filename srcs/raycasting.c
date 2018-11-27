@@ -100,7 +100,7 @@ int			wolf(t_env *env, int col)
 			imgpos = line_floor(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
 		}
-		ceil_obj(env, x);
+		//ceil_obj(env, x);
 		(void)ceil_obj;
 		x += 8;
 	}

@@ -62,22 +62,28 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 {
 	int				bpp;
 	Uint8			*p;
-
+	Uint32			ret;
+	
+	SDL_LockSurface(surface);
+	x = ft_abs(--x);
+	y = ft_abs(--y);
 	bpp = surface->format->BytesPerPixel;
 	p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 	if (bpp == 1)
-		return *p;
+		ret = *p;
 	else if (bpp == 2)
-		return *(Uint16 *)p;
+		ret = *(Uint16 *)p;
 	else if (bpp == 3)
 	{
 		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-			return p[0] << 16 | p[1] << 8 | p[2];
+			ret = p[0] << 16 | p[1] << 8 | p[2];
 		else
-			return p[0] | p[1] << 8 | p[2] << 16;
+			ret = p[0] | p[1] << 8 | p[2] << 16;
 	}
 	else if (bpp == 4)
-		return *(Uint32 *)p;
+		ret = *(Uint32 *)p;
 	else
-		return 0;
+		ret = 0;
+	SDL_UnlockSurface(surface);
+	return (ret);
 }

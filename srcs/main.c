@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
 	load_sounds(env);
 	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 	launch_screen(env);
-//	turn_logo(env);
 	while (1)
 	{
 		int i = 0;

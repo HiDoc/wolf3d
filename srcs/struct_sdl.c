@@ -40,6 +40,8 @@ void		copy_sdl(t_env *env)
 		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
 		exit(1);
 	}
+	if (env->sdl.texture != NULL)
+		SDL_DestroyTexture(env->sdl.texture);
 	env->sdl.texture = SDL_CreateTextureFromSurface(
 			env->sdl.renderer,
 			env->sdl.surface);
