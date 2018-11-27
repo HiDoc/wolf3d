@@ -17,16 +17,13 @@ int		env_free(t_env *env)
 	int i;
 
 	i = 0;
+	(void)i;
 	if (env->w_map)
 		tab_free(env->w_map, 24);
+	if (env->w_map)
+		tab_free(env->o_map, 24);
 	if (env->wall)
 		SDL_FreeSurface(env->wall);
-	while (i < 10 && env->walls[i])
-	{
-		SDL_FreeSurface(env->walls[i]);
-		i++;
-	}
-	free(env->walls);
 	if (env->enemy)
 		SDL_FreeSurface(env->enemy);
 	if (env->floor)
@@ -41,6 +38,7 @@ int		env_free(t_env *env)
 		SDL_FreeSurface(env->lscreen.img);
 	if (env->logo.img)
 		SDL_FreeSurface(env->logo.img);
+	free(env);
 	return (1);
 }
 
