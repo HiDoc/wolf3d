@@ -35,6 +35,12 @@ int		env_free(t_env *env)
 		SDL_FreeSurface(env->sky);
 	if (env->gun)
 		SDL_FreeSurface(env->gun);
+	if (env->life.img)
+		SDL_FreeSurface(env->life.img);
+	if (env->lscreen.img)
+		SDL_FreeSurface(env->lscreen.img);
+	if (env->logo.img)
+		SDL_FreeSurface(env->logo.img);
 	return (1);
 }
 
