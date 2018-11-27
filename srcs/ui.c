@@ -94,6 +94,7 @@ void	launch_screen(t_env *env)
 	SDL_FreeSurface(env->lscreen.surface);
 	env->lscreen.surface = NULL;
 	SDL_RenderCopy(env->sdl.renderer, env->lscreen.texture, NULL, NULL);
+	SDL_DestroyTexture(env->lscreen.texture);
 	SDL_RenderPresent(env->sdl.renderer);
 }
 

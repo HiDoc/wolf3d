@@ -31,10 +31,6 @@ SDL_Surface	*surface_new(Uint32 *pixels, int width, int height)
 
 void		copy_sdl(t_env *env)
 {
-	int			i;
-
-	i = 0;
-	(void)i;
 	if (env->sdl.surface == NULL)
 	{
 		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());

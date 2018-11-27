@@ -11,19 +11,30 @@
 /* ************************************************************************** */
 
 #include "wolf.h"
+void	hub_free(t_hub hub)
+{
+	if (hub.surface != NULL)
+		SDL_FreeSurface(hub.surface);
+	if (hub.img != NULL)
+		SDL_FreeSurface(hub.img);
+	if (hub.texture != NULL)
+		SDL_DestroyTexture(hub.texture);
+}
 
 int		env_free(t_env *env)
 {
 	int i;
 
 	i = 0;
-	(void)i;
+	while (env->walls[i])
+	{
+		SDL_FreeSurface(env->walls[i]);
+		i++;
+	}
 	if (env->w_map)
 		tab_free(env->w_map, 24);
-	if (env->w_map)
+	if (env->o_map)
 		tab_free(env->o_map, 24);
-	if (env->wall)
-		SDL_FreeSurface(env->wall);
 	if (env->enemy)
 		SDL_FreeSurface(env->enemy);
 	if (env->floor)
@@ -32,12 +43,10 @@ int		env_free(t_env *env)
 		SDL_FreeSurface(env->sky);
 	if (env->gun)
 		SDL_FreeSurface(env->gun);
-	if (env->life.img)
-		SDL_FreeSurface(env->life.img);
-	if (env->lscreen.img)
-		SDL_FreeSurface(env->lscreen.img);
-	if (env->logo.img)
-		SDL_FreeSurface(env->logo.img);
+	hub_free(env->lscreen);
+	hub_free(env->title);
+	hub_free(env->life);
+	hub_free(env->logo);
 	free(env);
 	return (1);
 }
