@@ -12,6 +12,32 @@
 
 #include "wolf.h"
 
+int		env_free(t_env *env)
+{
+	int i;
+
+	i = 0;
+	if (env->w_map)
+		tab_free(env->w_map, 24);
+	if (env->wall)
+		SDL_FreeSurface(env->wall);
+	while (i < 10 && env->walls[i])
+	{
+		SDL_FreeSurface(env->walls[i]);
+		i++;
+	}
+	free(env->walls);
+	if (env->enemy)
+		SDL_FreeSurface(env->enemy);
+	if (env->floor)
+		SDL_FreeSurface(env->floor);
+	if (env->sky)
+		SDL_FreeSurface(env->sky);
+	if (env->gun)
+		SDL_FreeSurface(env->gun);
+	return (1);
+}
+
 int		fill_obj(t_env *env)
 {
 	int	x;

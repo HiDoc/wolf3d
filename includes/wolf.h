@@ -52,6 +52,7 @@ t_point		portal_pos(t_env *env, t_point pos);
 int			motion_mouse(int x, int y, t_env *env);
 int			init_thread(t_env *env);
 int			init_env(t_env *env);
+int		    env_free(t_env *env);
 void		init_sdl(t_env *env);
 int			fill_tab(t_env *env);
 

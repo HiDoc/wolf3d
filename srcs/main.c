@@ -79,5 +79,6 @@ int main(int argc, char *argv[])
 	SDL_DestroyRenderer(env->sdl.renderer);
 	TTF_Quit();
 	SDL_Quit();
-	return 0;
+	env_free(env);
+	return (0);
 }
