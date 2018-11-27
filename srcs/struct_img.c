@@ -99,6 +99,25 @@ void	stitch(t_env *env)
 	env->stitch[17] = img_new("./img/enemies/stitch/frame-18.png");
 }
 
+void	new_bullet_surf(t_env *env)
+{
+	int	i;
+	
+	i = 0;
+	while (i < 4)
+	{
+		env->bul_surf[i] = SDL_CreateRGBSurface(0,
+						564,
+						563,
+						32,
+						0x000000FF,
+						0x0000FF00,
+						0x00FF0000,
+						0xFF000000);
+		i++;
+	}
+}
+
 void	img(t_env *env)
 {
 	env->walls[0] = img_new("./img/wall_1.png");
@@ -125,4 +144,5 @@ void	img(t_env *env)
 	env->wobj.posters[5] = img_new("./img/posters/lildukenukem.png");
 	ak_img(env);
 	stitch(env);
+	new_bullet_surf(env);
 }

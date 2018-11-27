@@ -75,6 +75,8 @@ int main(int argc, char *argv[])
 			{
 				if (x || y)
 				{
+					if (env->wobj.impact < 6)
+						env->wobj.impact++;
 					env->mouse.x = x;
 					env->mouse.y = y;
 					sdl_mouse_click(env, x, y);
@@ -103,6 +105,8 @@ int main(int argc, char *argv[])
 			SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 			SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 			SDL_RenderPresent(env->sdl.renderer);
+			SDL_FlushEvent(env->sdl.event.key.keysym.scancode);
+			SDL_FlushEvent(env->sdl.event.button.type);
 		}
 	}
 	Mix_FreeChunk(env->sounds.shot);

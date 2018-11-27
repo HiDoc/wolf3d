@@ -114,6 +114,7 @@ struct					s_wobj
 	int			impact;
 	SDL_Surface	*posters[8];
 	SDL_Surface	*wposters[8];
+	int			is_bullet;
 };
 
 struct					s_env
@@ -138,6 +139,7 @@ struct					s_env
 	SDL_Surface	*gun_impact;
 	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*stitch[18];
+	SDL_Surface	*bul_surf[5];
 	int			ld_wp;
 	int			width;
 	int			height;
