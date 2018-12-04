@@ -12,37 +12,42 @@
 
 #include "wolf.h"
 
+int render_env(t_env *env)
+{
+	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP | SDL_MOUSEMOTION);
+	SDL_FreeSurface(env->sdl.surface);
+	SDL_RenderClear(env->sdl.renderer);
+	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
+	SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
+	SDL_RenderPresent(env->sdl.renderer);
+	return (0);
+}
+
 int	loop_env(t_env *env)
 {
 	int x;
 	int y;
+	Uint32 time_a;
+	Uint32 time_b;
 
+	time_a = 0;
+	time_b = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
 		if (env->sdl.event.type == SDL_QUIT)
 			return (0);
-		if (env->sdl.event.type == SDL_KEYDOWN
-			|| env->sdl.event.type == SDL_KEYUP
-			|| env->sdl.event.type == SDL_MOUSEMOTION)
+		time_b = SDL_GetTicks();
+		if (time_b - time_a > SCREEN_TIC)
 		{
-			if (env->sdl.event.type == SDL_KEYDOWN
-				|| env->sdl.event.type == SDL_KEYUP)
-				sdl_keyhook(env, env->sdl.event);
-			if (env->sdl.event.type == SDL_MOUSEMOTION)
-			{
-				SDL_GetRelativeMouseState(&x, &y);
-				if (x || y)
-					sdl_motion_mouse(env, x, y);
-			}
+			sdl_keyhook(env, env->sdl.event);
+			SDL_GetRelativeMouseState(&x, &y);
+			if (x || y)
+				sdl_motion_mouse(env, x, y);
 			init_thread(env);
 			copy_sdl(env);
-			SDL_FlushEvent(env->sdl.event.key.keysym.scancode);
-			SDL_FreeSurface(env->sdl.surface);
-			env->sdl.surface = NULL;
-			SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
-			SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
-			SDL_RenderPresent(env->sdl.renderer);
+			render_env(env);
+			time_a = SDL_GetTicks();
 		}
 	}
 	return (1);

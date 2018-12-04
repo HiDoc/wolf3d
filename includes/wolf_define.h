@@ -29,6 +29,9 @@
 # define WIDTH 		env->width
 # define HEIGHT 	env->height
 
+#define SCREEN_FPS  60
+#define SCREEN_TIC  16
+
 # define TEXW 		64
 # define TEXH 		64
 

@@ -1,5 +1,7 @@
 **/*.o
 **/*.a
 **/*.swp
+.DS_Store
+.vscode
 wolf3d
 wolf3d.dSym*
