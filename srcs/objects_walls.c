@@ -71,7 +71,7 @@ int         check_impact(t_line *line, t_env *env)
     if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
     && (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
 	{
-		index = env->w_map[(int)line->map.x][(int)line->map.y] >> 8;
+		index = env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00;
         if (env->wobj.hit != 0)
         {
         //     // rect.w = 0;
@@ -115,6 +115,19 @@ static int  clear_impact(t_env *env)
 	return (0);
 }
 
+int			set_impact(t_env *env)
+{
+	if (env->wobj.impact < 5)
+		return (1);
+	else if (env->wobj.impact < 9)
+		return (2);
+	else if (env->wobj.impact < 13)
+		return (3);
+	else if (env->wobj.impact < 17)
+		return (4);
+	return (5);
+}
+
 int         wall_impact(t_env *env)
 {
 	int	xx;
@@ -144,12 +157,13 @@ int         wall_impact(t_env *env)
 	}
 	// printf("hexa : %x\n", (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) + (env->wobj.impact << 12));
 	if (env->wobj.hit == 1)
-		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
+		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.index << 8);
 	else
-		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = (env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
+		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = (env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.index << 8);
 	// if (env->wobj.hit == 1)
 	// 	env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
 	// else
 	// 	env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] | (1<<010);
+	SDL_Delay(100);
 	return (0);
 }

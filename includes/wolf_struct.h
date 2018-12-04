@@ -112,6 +112,7 @@ struct					s_wobj
 	SDL_Surface	*simpact;
 	int			poster;
 	int			impact;
+	int			index;
 	SDL_Surface	*posters[8];
 	SDL_Surface	*wposters[8];
 	int			is_bullet;
