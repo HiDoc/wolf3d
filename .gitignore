@@ -2,3 +2,4 @@
 **/*.a
 **/*.swp
 wolf3d
+wolf3d.dSym*
