@@ -30,7 +30,7 @@ static int sdl_check_pos(t_env *env, t_point mult, float check, char pos)
 	}
 	else
 	{
-		x = env->pos.x;	
+		x = env->pos.x;
 		y = env->pos.y + mult.y * check;
 		env->w_map[x][y] == 0 ?  env->pos.y += mult.y * (check / 2.0) : 0;
 	}
@@ -38,7 +38,8 @@ static int sdl_check_pos(t_env *env, t_point mult, float check, char pos)
 }
 
 int		sdl_move(t_env *env, Uint8 *keycodes)
-{	
+{
+	printf("scancode : %d\n", keycodes[SDL_SCANCODE_A]);
 	if (keycodes[SDL_SCANCODE_W])
 	{
 		sdl_check_pos(env, env->dir, 0.2, 'x');
@@ -89,17 +90,16 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 	env->pang += mult;
 	env->pang > 358.0 ? env->pang = 0.0 : 0;
 	env->pang < 0.0 ? env->pang = 358.0 : 0;
-	if (y > 0)
+	if (y > 30)
 	{
 		if (env->is_updn > -400)
-			env->is_updn -= 10;
+			env->is_updn -= 20;
 	}
-	else if (y < 0)
+	else if (y < -30)
 	{
 		if (env->is_updn < 400)
-			env->is_updn += 10;
+			env->is_updn += 20;
 	}
-	init_thread(env);
 	return (0);
 }
 
@@ -115,13 +115,13 @@ int	shooter(t_env *env, Uint8 *keycodes)
 int sdl_keyhook(t_env *env, SDL_Event event)
 {
 	Uint8	keycode;
-	const Uint8	*keycodes = SDL_GetKeyboardState(NULL);
+	Uint8	*keycodes;
 
+	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
 	sdl_move(env, (Uint8 *)keycodes);
 	shooter(env, (Uint8 *)keycodes);
 	sdl_exit_wolf(env, keycode);
-	init_thread(env);
 	return (0);
 
 }

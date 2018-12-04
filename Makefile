@@ -130,6 +130,6 @@ valg:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) \
 	$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
 	-L$(LIBFT) -lft
-	valgrind ./wolf3d
+	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
 
 re: fclean all

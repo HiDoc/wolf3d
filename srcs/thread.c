@@ -33,8 +33,7 @@ void	set_thread(t_env *env, int nbr)
 
 void	set_surface(t_env *env)
 {
-	if (env->sdl.surface != NULL)
-		SDL_FreeSurface(env->sdl.surface);
+	SDL_FreeSurface(env->sdl.surface);
 	env->sdl.surface = SDL_CreateRGBSurface(0, 800, 600, 32,
 			0x000000FF,
 			0x0000FF00,

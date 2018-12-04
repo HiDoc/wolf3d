@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "wolf.h"
+
 void	hub_free(t_hub hub)
 {
 	if (hub.surface != NULL)
@@ -23,14 +24,10 @@ void	hub_free(t_hub hub)
 
 void	sdl_free(t_sdl sdl)
 {
-	if (sdl.surface)
-		SDL_FreeSurface(sdl.surface);
-	if (sdl.texture)
-		SDL_DestroyTexture(sdl.texture);
-	if (sdl.renderer)
-		SDL_DestroyRenderer(sdl.renderer);
-	if (sdl.window)
-		SDL_DestroyWindow(sdl.window);
+	SDL_FreeSurface(sdl.surface);
+	SDL_DestroyTexture(sdl.texture);
+	SDL_DestroyRenderer(sdl.renderer);
+	SDL_DestroyWindow(sdl.window);
 }
 
 int		env_free(t_env *env)
@@ -194,5 +191,6 @@ int		init_env(t_env *env)
 	fill_tab(env);
 	init_thread(env);
 	init_sdl(env);
+	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 	return (0);
 }

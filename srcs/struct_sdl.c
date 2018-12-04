@@ -60,7 +60,7 @@ void		init_sdl(t_env *env)
 	env->sdl.texture = NULL;
 	env->sdl.surface = NULL;
 	env->sdl.window = NULL;
-	env->sdl.window = SDL_CreateWindow("SDL_CreateTexture",
+	env->sdl.window = SDL_CreateWindow("Doom Nukem",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			800, 600,
