@@ -43,7 +43,15 @@ int	loop_env(t_env *env)
 			sdl_keyhook(env, env->sdl.event);
 			SDL_GetRelativeMouseState(&x, &y);
 			if (x || y)
+			{
 				sdl_motion_mouse(env, x, y);
+				if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+				{
+					env->mouse.x = x;
+					env->mouse.y = y;
+					sdl_mouse_click(env, x, y);
+				}
+			}
 			init_thread(env);
 			copy_sdl(env);
 			render_env(env);

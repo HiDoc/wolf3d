@@ -64,6 +64,7 @@ void	    health(t_env *env);
 void    	hub_texture(t_env *env, t_hub *bloc, char *line, char *police);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
+int         sdl_mouse_click(t_env *env, int x, int y);
 int			sdl_exit_wolf(t_env *env, Uint8 scancode);
 
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
@@ -77,4 +78,11 @@ int			**tab_init(int **src, int x, int y);
 int			tab_free(int **tab, int y);
 
 void        load_sounds(t_env *env);
+
+int         put_poster(t_env *env);
+int         wall_poster(t_env *env, t_line *line);
+int         wall_impact(t_env *env);
+int         check_impact(t_line *line, t_env *env);
+int         affiche_map(t_env *env, Uint8 keycode);
+int         load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon);
 #endif

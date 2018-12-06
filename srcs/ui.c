@@ -16,29 +16,45 @@ void	put_gun(t_env *env)
 {
 	int x = 0;
 	int y = 0;
+	SDL_Rect rect;
 
-	// while (y < env->gun->h && y < 64)
-	// {
-	// 	x = 0;
-	// 	while (x < env->gun->w && x < 64)
-	// 	{
-	// 		env->sdl.pixels[y * WIDTH + x] = getpixel(env->gun, x, y); 
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
-	// y = 0;
-	while (y < 20)
+	rect.w = 0;
+	rect.h = 0;
+	rect.x = 100;
+	rect.y = 207;
+	if (env->ld_wp != 0)
 	{
-		x = 0;
-		while (x < 20)
+		Uint32 temps = SDL_GetTicks() / 100;
+		SDL_BlitSurface(env->ak_frms[temps % 43], NULL, env->sdl.surface, &rect);
+		env->ld_wp = 0;
+	}
+	else if (env->gun)
+	{
+		while (y < env->gun->h)
 		{
-			if ((x == 10 || y == 10) && x != y)
-				setpixel(env->sdl.surface, x + 380, y + 280, 0xFF00FF00);
-				// env->sdl.pixels[800 * 300 + (y * 800 + x) + 390] = 0xFF00FF00;
-			x++;
+			x = 0;
+			while (x < env->gun->w)
+			{
+				Uint32 color = getpixel(env->gun, x, y);
+				if (color & 0xFF000000)
+					setpixel(env->sdl.surface, x + 100, y + 207, color);
+				x++;
+			}
+			y++;
 		}
-		y++;
+		y = 0;
+		while (y < 20)
+		{
+			x = 0;
+			while (x < 20)
+			{
+				if ((x == 10 || y == 10) && x != y)
+					setpixel(env->sdl.surface, x + 380, y + 280, 0xFF00FF00);
+				x++;
+			}
+			y++;
+		}
+
 	}
 }
 

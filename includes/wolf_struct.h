@@ -23,6 +23,7 @@ typedef struct s_portal	t_portal;
 typedef struct s_sdl	t_sdl;
 typedef struct s_hub	t_hub;
 typedef struct s_msc	t_msc;
+typedef struct s_wobj	t_wobj;
 
 struct					s_sdl
 {
@@ -103,6 +104,17 @@ struct					s_msc
 	Mix_Chunk	*shot;
 };
 
+struct					s_wobj
+{
+	int			hit;
+	t_point		pos;
+	SDL_Surface	*simpact;
+	int			poster;
+	int			impact;
+	SDL_Surface	*posters[8];
+	SDL_Surface	*wposters[8];
+};
+
 struct					s_env
 {
 	t_sdl		sdl;
@@ -122,6 +134,10 @@ struct					s_env
 	SDL_Surface	*floor;
 	SDL_Surface	*sky;
 	SDL_Surface	*gun;
+	SDL_Surface	*gun_impact;
+	SDL_Surface	*ak_frms[43];
+	SDL_Surface	*stitch[18];
+	int			ld_wp;
 	int			width;
 	int			height;
 	t_portal	portal;
@@ -132,6 +148,8 @@ struct					s_env
 	double		hratio;
 	int			is_jump;
 	t_msc		sounds;
+	t_wobj		wobj;
+	t_point		mouse;
 };
 
 #endif

@@ -58,9 +58,7 @@ t_line	*line_step(t_env *env, t_line *line)
 
 t_line	*line_dda(t_env *env, t_line *line)
 {
-	int i;
-
-	while (((i = env->w_map[(int)line->map.x][(int)line->map.y]) & 0x10) == 0)
+	while ((env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{
@@ -75,10 +73,29 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	if (i == 8)
-		line->text = env->portal.outimg;
-	else if (i == 9)
-		line->text = env->portal.inimg;
+	if (wall_poster(env, line) == 1)
+	{
+		if (check_impact(line, env) == 1)
+			line->text = env->wobj.simpact;
+		else
+			line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
+		// else if (env->wobj.poster == 1)
+		// {
+		// 	line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
+		// 	env->wobj.poster = 0;
+		// }
+		// else if (env->wobj.poster == 2)
+		// {
+		// 	// env->wobj.simpact = env->walls[1];
+		// 	SDL_BlitSurface(env->walls[1], NULL, env->wobj.simpact, NULL);
+		// 	Uint32 temps = SDL_GetTicks() / 100;
+		// 	SDL_BlitSurface(env->stitch[temps % 18], NULL, env->wobj.simpact, NULL);
+		// 	env->wobj.poster = 0;
+		// 	line->text = env->wobj.simpact;
+		// }
+	}
+	else if (check_impact(line, env) == 1)
+		line->text = env->wobj.simpact;
 	else
 		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');

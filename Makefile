@@ -72,7 +72,10 @@ SRC_NAME 	= main.c \
 			  utils_point.c \
 			  utils_textures.c \
 			  struct_img.c \
-			  musics.c
+			  musics.c		\
+			  sdl_mouse.c	\
+			  objects_walls.c \
+			  weapons.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LSDL2 	 = -L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
