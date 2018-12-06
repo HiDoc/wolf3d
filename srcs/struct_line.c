@@ -104,9 +104,26 @@ t_line	*line_dda(t_env *env, t_line *line)
 		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
 	if (check_impact(line, env) != 0)
 	{
-		// SDL_BlitSurface(line->text)
-		printf("index : %i\n", env->wobj.index);
+		printf("map : %x\n", env->w_map[(int)line->map.x][(int)line->map.y]);
 		printf("wobj impact : %i\n",env->wobj.impact);
+		env->wobj.is_bullet = 1;
+		// SDL_BlitSurface(line->text, NULL, env->bul_surf[env->wobj.impact], NULL);
+		// int y;
+		// int x;
+
+		// y = 0;
+		// while (y < surface->h)
+		// {
+		// 	x = 0;
+		// 	while (x < surface->w)
+		// 	{
+		// 		Uint32 color = getpixel(surface, x, y);
+		// 		if (color & 0xFF000000)
+		// 			setpixel(env->wobj.simpact, x + px, y + py, color);
+		// 		x++;
+		// 	}
+		// 	y++;
+		// }
 	}
 	// if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0x100) != 0
     // && (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)

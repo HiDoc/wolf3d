@@ -105,7 +105,10 @@ Uint32	line_wall(t_env *env, t_line *line, int y)
 		{
 			Uint32 color = getpixel(env->gun_impact, x - 400, yy - 300);
 			if (color & 0xFF000000)
+			{
 				setpixel(env->bul_surf[env->wobj.impact], x, yy, color);
+				return (getpixel(env->bul_surf[env->wobj.impact], x, yy));
+			}
 		}
 		if (x == env->gun_impact->w + 400 || y == env->gun_impact->h + 300)
 			env->wobj.is_bullet = 0;
