@@ -12,6 +12,20 @@
 
 #include "wolf.h"
 
+void	put_gun_load(t_env *env, int frame)
+{
+	SDL_Rect rect;
+	
+	rect.w = 0;
+	rect.h = 0;
+	rect.x = 100;
+	rect.y = 207;
+	if (frame < 43)
+		SDL_BlitSurface(env->ak_frms[frame], NULL, env->sdl.surface, &rect);
+	else
+		env->ld_wp = 0;
+}
+
 void	put_gun(t_env *env)
 {
 	int x = 0;
@@ -22,13 +36,7 @@ void	put_gun(t_env *env)
 	rect.h = 0;
 	rect.x = 100;
 	rect.y = 207;
-	if (env->ld_wp != 0)
-	{
-		Uint32 temps = SDL_GetTicks() / 100;
-		SDL_BlitSurface(env->ak_frms[temps % 43], NULL, env->sdl.surface, &rect);
-		env->ld_wp = 0;
-	}
-	else if (env->gun)
+	if (env->gun)
 	{
 		while (y < env->gun->h)
 		{

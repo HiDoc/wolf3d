@@ -117,7 +117,8 @@ int sdl_keyhook(t_env *env, SDL_Event event)
 	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
 	sdl_move(env, (Uint8 *)keycodes);
-	load_weapon(env, keycode, env->ak_frms);
+	if (keycodes[SDL_SCANCODE_R])
+		load_weapon(env, SDL_SCANCODE_R, env->ak_frms);
 	affiche_map(env, keycode);
 	sdl_exit_wolf(env, keycode);
 	return (0);

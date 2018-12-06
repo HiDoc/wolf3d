@@ -27,11 +27,13 @@ int	loop_env(t_env *env)
 {
 	int x;
 	int y;
+	int frame;
 	Uint32 time_a;
 	Uint32 time_b;
 
 	time_a = 0;
 	time_b = 0;
+	frame = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
@@ -55,6 +57,16 @@ int	loop_env(t_env *env)
 				}
 			}
 			init_thread(env);
+			if (env->ld_wp)
+			{
+				put_gun_load(env, frame);
+				frame++;
+			}
+			else
+			{
+				put_gun(env);
+				frame = 0;
+			}
 			copy_sdl(env);
 			render_env(env);
 			time_a = SDL_GetTicks();

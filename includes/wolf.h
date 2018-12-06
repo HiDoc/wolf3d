@@ -23,6 +23,7 @@ int			key_hook(int key, t_env *env);
 
 void        put_health(t_env *env);
 void		put_gun(t_env *env);
+void		put_gun_load(t_env *env, int frame);
 void		img(t_env *env);
 
 double		delta(double x, double y);

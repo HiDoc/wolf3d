@@ -70,6 +70,8 @@ SRC_NAME =	ft_atoi.c      \
 			ft_striter.c    \
 			ft_striteri.c   \
 			ft_strjoin.c    \
+			ft_strljoin.c    \
+			ft_strrjoin.c    \
 			ft_strlcat.c    \
 			ft_strlen.c     \
 			ft_strmap.c     \
