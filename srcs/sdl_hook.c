@@ -104,5 +104,4 @@ int sdl_keyhook(t_env *env, SDL_Event event)
 	shooter(env, (Uint8 *)keycodes);
 	sdl_exit_wolf(env, keycode);
 	return (0);
-
 }
