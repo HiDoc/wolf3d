@@ -47,6 +47,8 @@ int	loop_env(t_env *env)
 				sdl_motion_mouse(env, x, y);
 				if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
 				{
+					if (env->wobj.impact < 6)
+						env->wobj.impact++;
 					env->mouse.x = x;
 					env->mouse.y = y;
 					sdl_mouse_click(env, x, y);

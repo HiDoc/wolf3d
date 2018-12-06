@@ -191,6 +191,7 @@ int		init_env(t_env *env)
 	env->wobj.poster = 0;
 	env->wobj.impact = 0;
 	env->ld_wp = 0;
+	env->wobj.is_bullet = 0;
 	env->wobj.simpact = SDL_CreateRGBSurface(0,
 						564,
 						563,
