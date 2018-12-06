@@ -76,15 +76,15 @@ int         check_impact(t_line *line, t_env *env)
             // rect.h = 0;
             // rect.x = env->mouse.x;
             // rect.y = env->mouse.y;
-            if (env->wobj.poster == 1)
-            {
-                SDL_BlitSurface(env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12], NULL, env->wobj.simpact, NULL);
-                env->wobj.poster = 0;
-            }
-            else
-                SDL_BlitSurface(env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF], NULL, env->wobj.simpact, NULL);
+            // if (env->wobj.poster == 1)
+            // {
+            //     SDL_BlitSurface(env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12], NULL, env->wobj.simpact, NULL);
+            //     env->wobj.poster = 0;
+            // }
+            // else
+            //     SDL_BlitSurface(env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF], NULL, env->wobj.simpact, NULL);
         }
-        put_bullet_pxls(env, env->gun_impact, 100, 100);
+        // put_bullet_pxls(env, env->gun_impact, 100, 100);
         env->wobj.hit = 0;
         return (1);
     }
@@ -134,9 +134,20 @@ int         wall_impact(t_env *env)
 		else
 			env->wobj.hit = 2;
 	}
+	if (env->wobj.impact == 6)
+	{
+		clear_impact(env);
+		env->wobj.impact = 1;
+	}
+	// printf("hexa : %x\n", (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) + (env->wobj.impact << 12));
 	if (env->wobj.hit == 1)
-		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
+		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
 	else
-		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] | (1<<010);
+		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = (env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
+	// if (env->wobj.hit == 1)	
+	// 	env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
+	// else
+	// 	env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] | (1<<010);
+	SDL_Delay(100);
 	return (0);
 }
