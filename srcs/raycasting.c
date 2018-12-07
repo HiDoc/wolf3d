@@ -71,6 +71,28 @@ int			ceil_obj(t_env *env, int x)
 	return (0);
 }
 
+unsigned int	add_smog(unsigned int c, double d)
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+	r = c;
+	g = c >> 8;
+	b = c >> 16;
+	d = 7 / (100 / d);
+	if (d > 0.9)
+		d = 0.9;
+	if (r > 0)
+		r = r - (r * d);
+	if (g > 0)
+		g = g - (g * d);
+	if (b > 0)
+		b = b - (b * d);
+	return ((r << 16) + (g << 8) + b);
+}
+
+
 int			wolf(t_env *env, int col)
 {
 	int		x;
@@ -86,13 +108,13 @@ int			wolf(t_env *env, int col)
 		while (++y < line.sdraw)
 		{
 			imgpos = line_sky(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
+			setpixel(env->sdl.surface, x, y, add_smog(0xFF000000 | imgpos, line.wdist));
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
 			imgpos = line_wall(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
+			setpixel(env->sdl.surface, x, y, add_smog(0xFF000000 | imgpos, line.wdist));
 		}
 		y--;
 		while (++y < HEIGHT)
