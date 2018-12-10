@@ -71,25 +71,38 @@ int			ceil_obj(t_env *env, int x)
 	return (0);
 }
 
-unsigned int	add_smog(unsigned int c, double d)
+Uint32	add_fog(t_line *line, Uint32 c, double d, char f)
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
+	Uint8	r;
+	Uint8	g;
+	Uint8	b;
+	Uint8	a;
 
-	r = c;
-	g = c >> 8;
-	b = c >> 16;
+	r = c >> 24;
+	g = c >> 16;
+	b = c >> 8;
+	a = c;
 	d = 7 / (100 / d);
+	if (f == 's')
+	{
+		(void)line;
+		// if (d > 0.6)
+		// {
+		// 	d = 0.6;
+		// 	// printf("c dark\n");
+		// }
+	}
 	if (d > 0.9)
 		d = 0.9;
 	if (r > 0)
-		r = r - (r * d);
+		r = r * ( 1 - d) + ((0x0 >> 24) * d);
 	if (g > 0)
-		g = g - (g * d);
+		g = g * ( 1 - d) + ((0x0 >> 16) * d);
 	if (b > 0)
-		b = b - (b * d);
-	return ((r << 16) + (g << 8) + b);
+		b = b * ( 1 - d) + ((0x0 >> 8) * d);
+	if (a > 0)
+		a = a * (1 - d) + (0x0 * d);
+	return ((r << 24) + (g << 16) + (b << 8) + (a));
 }
 
 
@@ -108,19 +121,19 @@ int			wolf(t_env *env, int col)
 		while (++y < line.sdraw)
 		{
 			imgpos = line_sky(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, add_smog(0xFF000000 | imgpos, line.wdist));
+			setpixel(env->sdl.surface, x, y, add_fog(&line, 0xFF000000 | imgpos, line.wdist, 's'));
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
 			imgpos = line_wall(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, add_smog(0xFF000000 | imgpos, line.wdist));
+			setpixel(env->sdl.surface, x, y, add_fog(&line, 0xFF000000 | imgpos, line.wdist, 'w'));
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
 			imgpos = line_floor(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, 0xFF000000 | imgpos);
+			setpixel(env->sdl.surface, x, y, add_fog(&line, 0xFF000000 | imgpos, line.wdist, 's'));
 		}
 		//ceil_obj(env, x);
 		(void)ceil_obj;
