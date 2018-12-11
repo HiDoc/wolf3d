@@ -20,7 +20,7 @@ SDL_Surface	*create_surf(char *path)
 	if (!new)
 	{
 		printf("Error : %s\n", SDL_GetError());
-		return NULL;
+		return (NULL);
 	}
 	return (new);
 }

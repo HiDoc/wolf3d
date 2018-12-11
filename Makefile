@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/11/27 14:42:22 by fmadura          ###   ########.fr        #
+#    Updated: 2018/12/07 14:42:15 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,10 +48,6 @@ else
 				   /Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
 				   /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/ \
 				   -F -framework Cocoa 
-
-FRK		= -framework
-OPEN 		= OpenGL
-APPK 		= AppKit
 endif
 
 SRC_NAME 	= main.c \
@@ -91,7 +87,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) \
 		-L$(LIBFT) -lft \
 		$(INC) $(LSDL2)
 
