@@ -65,6 +65,10 @@ int	loop_env(t_env *env)
 				put_gun(env);
 				frame = 0;
 			}
+			if (env->is_jump)
+			{
+				player_jump(env);
+			}
 			copy_sdl(env);
 			render_env(env);
 			time_a = SDL_GetTicks();

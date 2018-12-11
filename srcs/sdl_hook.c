@@ -41,25 +41,9 @@ int		sdl_move(t_env *env, Uint8 *keycodes)
 		sdl_check_pos(env, env->plane, 0.1);
 	if (keycodes[SDL_SCANCODE_A])
 		sdl_check_pos(env, env->plane, -0.1);
-	if (keycodes[SDL_SCANCODE_V])
-	{
-		if (env->hratio <= 1.1)
-			env->is_jump = 1;
-		if (env->is_jump == 1)
-		{
-			env->is_updn += 20;
-			env->hratio += 0.1;
-		}
-		else
-		{
-			env->is_updn -= 20;
-			env->hratio -= 0.1;
-		}
-		if (env->hratio >= 2 && env->is_jump == 1)
-			env->is_jump = 0;
-	}
 	return (0);
 }
+
 
 int		sdl_motion_mouse(t_env *env, int x, int y)
 {
@@ -109,6 +93,33 @@ int	affiche_map(t_env *env, Uint8 keycode)
 	return (0);
 }
 
+int		player_jump(t_env *env)
+{
+	if (env->is_jump == 1)
+	{
+		env->is_updn += 20;
+		env->hratio += 0.1;
+	}
+	else
+	{
+		env->is_updn -= 20;
+		env->hratio -= 0.1;
+	}
+	if (env->hratio >= 2 && env->is_jump == 1)
+		env->is_jump = 0;
+	return (0);
+}
+
+int		jumping(t_env *env, Uint8 keycode)
+{
+	if (keycode == SDL_SCANCODE_SPACE)
+	{
+		env->is_jump = 1;
+		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
+	}
+	return (0);
+}
+
 int sdl_keyhook(t_env *env, SDL_Event event)
 {
 	Uint8	keycode;
@@ -119,6 +130,8 @@ int sdl_keyhook(t_env *env, SDL_Event event)
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
 		load_weapon(env, SDL_SCANCODE_R, env->ak_frms);
+	if (keycodes[SDL_SCANCODE_SPACE])
+		jumping(env, SDL_SCANCODE_SPACE);
 	affiche_map(env, keycode);
 	sdl_exit_wolf(env, keycode);
 	return (0);
