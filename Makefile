@@ -54,7 +54,6 @@ SRC_NAME 	= main.c \
 			  sdl_hook.c \
 			  raycasting.c \
 			  thread.c \
-			  checkerrors.c \
 			  parser.c \
 			  ui.c \
 			  portal.c \

@@ -73,20 +73,19 @@ int			ceil_obj(t_env *env, int x)
 	return (0);
 }
 
-Uint32	wall_fog(t_line *line, Uint32 c, double d, int y)
+Uint32	wall_fog(t_line *line, Uint32 c)
 {
 	Uint8	r;
 	Uint8	g;
 	Uint8	b;
 	Uint8	a;
+	double	d;
 
-	(void)line;
-	(void)y;
 	r = c >> 24;
 	g = c >> 16;
 	b = c >> 8;
 	a = c;
-	d = 7 / (100 / d);
+	d = 7 / (100 / line->wdist);
 	if (d > 0.9)
 		d = 0.9;
 	if (r > 0)
@@ -100,24 +99,19 @@ Uint32	wall_fog(t_line *line, Uint32 c, double d, int y)
 	return ((r << 24) + (g << 16) + (b << 8) + (a));
 }
 
-int			fog_sky(t_line *line, Uint32 c, double d, int y)
+int			fog_sky(t_line *line, Uint32 c, int y)
 {
 	Uint8	r;
 	Uint8	g;
 	Uint8	b;
 	Uint8	a;
+	double	d;
 
 	r = c >> 24;
 	g = c >> 16;
 	b = c >> 8;
 	a = c;
-	// if (d < 8)
-	// 	d = 0.3;
-	// else
-	// {
-	d = (double)y * 100 / line->sdraw / 10;
-	d /= 10;
-	// }
+	d = (double)y * 100.0 / line->sdraw / 100.0;
 	if (d > 0.9)
 		d = 0.9;
 	if (r > 0)
@@ -131,21 +125,19 @@ int			fog_sky(t_line *line, Uint32 c, double d, int y)
 	return ((r << 24) + (g << 16) + (b << 8) + (a));
 }
 
-int			floor_fog(t_line *line, Uint32 c, double d, int y)
+int			floor_fog(t_env *env, t_line *line, Uint32 c, int y)
 {
 	Uint8	r;
 	Uint8	g;
 	Uint8	b;
 	Uint8	a;
+	double	d;
 
 	r = c >> 24;
 	g = c >> 16;
 	b = c >> 8;
 	a = c;
-	d = (double)y * 100 / line->edraw / 100;
-	d = (int)d % 10;
-	d /= 10;
-	// printf("%f \n", d);
+	d = (HEIGHT - (double)y) * 100.0 / (HEIGHT - line->edraw) / 100.0;
 	if (d > 0.9)
 		d = 0.9;
 	if (r > 0)
@@ -157,7 +149,6 @@ int			floor_fog(t_line *line, Uint32 c, double d, int y)
 	if (a > 0)
 		a = a * (1 - d) + (0x0 * d);
 	return ((r << 24) + (g << 16) + (b << 8) + (a));
-	return (0);
 }
 
 int			wolf(t_env *env, int col)
@@ -176,21 +167,21 @@ int			wolf(t_env *env, int col)
 		{
 			imgpos = line_sky(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, fog_sky(&line, 0xFF000000
-			| imgpos, line.wdist, y));
+			| imgpos, y));
 		}
 		y--;
 		while (++y <= line.edraw && y < HEIGHT)
 		{
 			imgpos = line_wall(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, wall_fog(&line, 0xFF000000
-			| imgpos, line.wdist, y));
+			| imgpos));
 		}
 		y--;
 		while (++y < HEIGHT)
 		{
 			imgpos = line_floor(env, &line, y - env->is_updn);
-			setpixel(env->sdl.surface, x, y, floor_fog(&line, 0xFF000000
-			| imgpos, line.wdist, y));
+			setpixel(env->sdl.surface, x, y, floor_fog(env, &line, 0xFF000000
+			| imgpos, y));
 		}
 		//ceil_obj(env, x);
 		(void)ceil_obj;

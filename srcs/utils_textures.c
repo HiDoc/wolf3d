@@ -90,7 +90,6 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	int		x;
 	int		yy;
 	int		delta;
-	Uint32	color;
 
 	(void)env;
 	x = (int)(line->wall.x * line->text->w);
@@ -98,18 +97,7 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
 		+ line->lineh * line->text->h * 2;
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	if (env->wobj.is_bullet != 0)
-	{
-		if (x < env->gun_impact->w && yy < env->gun_impact->h)
-		{
-			color = getpixel(env->gun_impact, x, yy);
-			if (color & 0xFF000000)
-				setpixel(env->bul_surf[env->wobj.impact], x, yy, color);
-// SDL_BlitSurface(env->gun_impact, NULL, env->bul_surf[env->wobj.impact], NULL);
-		}
-		else
-			env->wobj.is_bullet = 0;
+	if (env->wobj.is_bullet)
 		return (getpixel(env->bul_surf[env->wobj.impact], x, yy));
-	}
 	return (getpixel(line->text, x, yy));
 }

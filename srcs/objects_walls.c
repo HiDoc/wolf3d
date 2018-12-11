@@ -61,9 +61,8 @@ int			put_bullet_pxls(t_env *env, SDL_Surface *surface, int px, int py)
 int			check_impact(t_line *line, t_env *env)
 {
 	int			index;
-	int			y;
-	int			x;
-	Uint32		color;
+	double		y;
+	double		x;
 
 	if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
 	&& (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
@@ -71,18 +70,18 @@ int			check_impact(t_line *line, t_env *env)
 		index = (env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00);
 		if (env->wobj.hit != 0)
 		{
+			SDL_BlitScaled(line->text, &line->text->clip_rect, env->bul_surf[env->wobj.impact], &env->bul_surf[env->wobj.impact]->clip_rect);
 			y = 0;
-			while (y < 564 && y < line->text->h)
+			x = 0;
+			while (x < 20)
 			{
-				x = 0;
-				while (x < 564 && x < line->text->w)
+				y = 0;
+				while (y < 20)
 				{
-					color = getpixel(line->text, x, y);
-					if (color & 0xFF000000)
-						setpixel(env->bul_surf[env->wobj.impact], x, y, color);
-					x++;
+					setpixel(env->bul_surf[env->wobj.impact], x, y, 0xFF00FF00);
+					y++;
 				}
-				y++;
+				x++;
 			}
 		}
 		env->wobj.hit = 0;
