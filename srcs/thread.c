@@ -21,14 +21,18 @@ void	*launch_thread(void *arg)
 	pthread_exit(NULL);
 }
 
-void	set_thread(t_env *env, int nbr)
+int		set_thread(t_env *env)
 {
+	int nbr;
+
+	nbr = 0;
 	while (nbr < 8)
 	{
 		env->thr[nbr].env = env;
 		env->thr[nbr].nbr = nbr + 1;
 		nbr++;
 	}
+	return (0);
 }
 
 void	set_surface(t_env *env)
@@ -45,24 +49,23 @@ int		init_thread(t_env *env)
 {
 	int		x;
 
-	x = 0;
-	set_thread(env, x);
+	x = set_thread(env);
 	set_surface(env);
 	while (x < 8)
-	{	
+	{
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))
 		{
-			perror("");
+			perror("Error");
 			return (sdl_exit_wolf(env, SDL_SCANCODE_ESCAPE));
 		}
 		x++;
 	}
 	x = 0;
 	while (x < 8)
-	{	
+	{
 		if (pthread_join(env->thr[x].th, NULL))
 		{
-			perror("");
+			perror("Error thread");
 			return (sdl_exit_wolf(env, SDL_SCANCODE_ESCAPE));
 		}
 		x++;

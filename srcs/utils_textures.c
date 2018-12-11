@@ -37,46 +37,44 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-Uint32	line_floor(t_env *env, t_line *line, int y)
+Uint32			line_floor(t_env *env, t_line *line, int y)
 {
-	t_point		fwall;
-	double		weight;
-	int			w;
-	int			h;
-	
+	t_point	fwall;
+	double	weight;
+	int		w;
+	int		h;
+
 	w = line->floor->w;
 	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
-	return (getpixel(line->floor, w % (int)line->floor->w, h % (int)line->floor->h));
+	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 
-Uint32		line_sky(t_env *env, t_line *line, int y)
+Uint32			line_sky(t_env *env, t_line *line, int y)
 {
-	t_point		fwall;
-	t_point		cfloor;
-	t_point		tfloor;
-	double		weight;
+	t_point	fwall;
+	double	weight;
+	int		w;
+	int		h;
 
-	int w = line->floor->w;
-	int h = line->floor->h;
+	w = line->floor->w;
+	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x - (1.0 + weight) * env->pos.x;
-	cfloor.y = weight * fwall.y - (1.0 + weight) * env->pos.y;
-	tfloor.x = (int)(cfloor.x * w) % w;
-	tfloor.y = (int)(fabs(HEIGHT - cfloor.y) * h) % h;
-	return (getpixel(line->floor, tfloor.x, tfloor.y));
+	w = (int)((weight * fwall.x - (1.0 + weight) * env->pos.x) * w);
+	h = (int)((weight * fwall.y - (1.0 + weight) * env->pos.y) * h);
+	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 
-Uint32		infinite_sky(t_env *env, t_line *line, int y)
+Uint32			infinite_sky(t_env *env, t_line *line, int y)
 {
-	t_point		fwall;
-	t_point		cfloor;
-	t_point		tfloor;
-	double		weight;
+	t_point	fwall;
+	t_point	cfloor;
+	t_point	tfloor;
+	double	weight;
 
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
@@ -87,11 +85,12 @@ Uint32		infinite_sky(t_env *env, t_line *line, int y)
 	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
-Uint32	line_wall(t_env *env, t_line *line, int y)
+Uint32			line_wall(t_env *env, t_line *line, int y)
 {
 	int		x;
 	int		yy;
 	int		delta;
+	Uint32	color;
 
 	(void)env;
 	x = (int)(line->wall.x * line->text->w);
@@ -103,10 +102,10 @@ Uint32	line_wall(t_env *env, t_line *line, int y)
 	{
 		if (x < env->gun_impact->w && yy < env->gun_impact->h)
 		{
-			Uint32 color = getpixel(env->gun_impact, x, yy);
+			color = getpixel(env->gun_impact, x, yy);
 			if (color & 0xFF000000)
 				setpixel(env->bul_surf[env->wobj.impact], x, yy, color);
-				// SDL_BlitSurface(env->gun_impact, NULL, env->bul_surf[env->wobj.impact], NULL);
+// SDL_BlitSurface(env->gun_impact, NULL, env->bul_surf[env->wobj.impact], NULL);
 		}
 		else
 			env->wobj.is_bullet = 0;

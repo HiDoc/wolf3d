@@ -26,7 +26,7 @@ t_point	*point_delta(t_point *pdelta, t_point *raydir)
 	return (pdelta);
 }
 
-t_point *point_ray(t_point *ray, t_point *dir, t_point *plane, double cam)
+t_point	*point_ray(t_point *ray, t_point *dir, t_point *plane, double cam)
 {
 	ray->x = dir->x + plane->x * cam;
 	ray->y = dir->y + plane->y * cam;

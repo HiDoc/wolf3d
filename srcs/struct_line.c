@@ -19,9 +19,6 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
-//	line->map = *point_cpy(&line->map, &env->pos);
-//	point_ray(&line->raydir, &env->dir, &env->plane, env->cam);
-//	point_delta(&line->delta, &line->raydir);
 	line->map.x = (int)env->pos.x;
 	line->map.y = (int)env->pos.y;
 	line->raydir.x = env->dir.x + env->plane.x * env->cam;
@@ -73,14 +70,10 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	if (wall_poster(env, line) == 1)
-		line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
-	else
-		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
-	if (check_impact(line, env) != 0)
-		env->wobj.is_bullet = 1;
-	else
-		env->wobj.is_bullet = 0;
+	line->text = (wall_poster(env, line) == 1) ?
+	env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12]
+	: env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
+	env->wobj.is_bullet = (check_impact(line, env) != 0) ? 1 : 0;
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
 	return (line_max(env, line));
 }

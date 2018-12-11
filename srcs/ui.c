@@ -14,8 +14,8 @@
 
 void	put_gun_load(t_env *env, int frame)
 {
-	SDL_Rect rect;
-	
+	SDL_Rect	rect;
+
 	rect.w = 0;
 	rect.h = 0;
 	rect.x = 100;
@@ -28,9 +28,10 @@ void	put_gun_load(t_env *env, int frame)
 
 void	put_gun(t_env *env)
 {
-	int x = 0;
-	int y = 0;
-	SDL_Rect rect;
+	int			x;
+	int			y;
+	SDL_Rect	rect;
+	Uint32		color;
 
 	rect.w = 0;
 	rect.h = 0;
@@ -38,12 +39,13 @@ void	put_gun(t_env *env)
 	rect.y = 207;
 	if (env->gun)
 	{
+		y = 0;
 		while (y < env->gun->h)
 		{
 			x = 0;
 			while (x < env->gun->w)
 			{
-				Uint32 color = getpixel(env->gun, x, y);
+				color = getpixel(env->gun, x, y);
 				if (color & 0xFF000000)
 					setpixel(env->sdl.surface, x + 100, y + 207, color);
 				x++;
@@ -62,21 +64,22 @@ void	put_gun(t_env *env)
 			}
 			y++;
 		}
-
 	}
 }
 
 void	put_health(t_env *env)
 {
-	int x = 0;
-	int y = 0;
+	int			x;
+	int			y;
+	Uint32		color;
 
+	y = 0;
 	while (y < 141)
 	{
 		x = 0;
 		while (x < 352)
 		{
-			Uint32 color = getpixel(env->life.img, x, y);
+			color = getpixel(env->life.img, x, y);
 			if (color & 0xFF000000)
 				setpixel(env->sdl.surface, x + 22, 600 - 142 + y, color);
 			x++;
@@ -87,9 +90,10 @@ void	put_health(t_env *env)
 
 void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 {
-	if(!(bloc->font = TTF_OpenFont(police, 20))
+	if (!(bloc->font = TTF_OpenFont(police, 20))
 	|| !(bloc->surface = TTF_RenderText_Solid(bloc->font, line, bloc->color))
-	|| !(bloc->texture = SDL_CreateTextureFromSurface(env->sdl.renderer, bloc->surface)))
+	|| !(bloc->texture = SDL_CreateTextureFromSurface(
+		env->sdl.renderer, bloc->surface)))
 	{
 		fprintf(stderr, "Police error : %s\n", TTF_GetError());
 		exit(EXIT_FAILURE);
@@ -110,9 +114,11 @@ void	health(t_env *env)
 
 void	launch_screen(t_env *env)
 {
-	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->lscreen.img)))
+	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(
+		env->sdl.renderer, env->lscreen.img)))
 	{
-		fprintf(stderr, "CreateTextureFromSurface failed: %s\n", SDL_GetError());
+		fprintf(stderr, "CreateTextureFromSurface failed: %s\n"
+		, SDL_GetError());
 		exit(1);
 	}
 	SDL_FreeSurface(env->lscreen.surface);
@@ -145,13 +151,16 @@ void	turn_logo(t_env *env)
 		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
 		exit(1);
 	}
-	if (!(env->logo.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->logo.surface)))
+	if (!(env->logo.texture = SDL_CreateTextureFromSurface(
+		env->sdl.renderer, env->logo.surface)))
 	{
-		fprintf(stderr, "CreateTextureFromSurface failed: %s\n", SDL_GetError());
+		fprintf(stderr, "CreateTextureFromSurface failed: %s\n"
+		, SDL_GetError());
 		exit(1);
 	}
 	SDL_FreeSurface(env->logo.surface);
 	env->logo.surface = NULL;
-	SDL_RenderCopyEx(env->sdl.renderer, env->logo.texture, NULL, &env->logo.rect, env->logo.ang, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(env->sdl.renderer, env->logo.texture, NULL
+	, &env->logo.rect, env->logo.ang, NULL, SDL_FLIP_NONE);
 	env->logo.ang += 0.1;
 }

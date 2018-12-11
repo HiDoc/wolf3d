@@ -86,20 +86,19 @@ t_line	*objs_dda(t_env *env, t_line *line, int **tab)
 	if (i == 2 && !tab)
 	{
 		line->text = env->walls[0];
-		return objs_max(env, line);
+		return (objs_max(env, line));
 	}
 	else if (i == 3 && !tab)
 	{
 		line->text = env->walls[3];
-		return objs_max(env, line);
+		return (objs_max(env, line));
 	}
 	else if (tab)
 	{
 		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y]];
-		return objs_max(env, line);	
+		return (objs_max(env, line));
 	}
-	else
-		return (NULL);
+	return (NULL);
 }
 
 t_line	*objs_max(t_env *env, t_line *line)

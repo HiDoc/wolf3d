@@ -34,7 +34,7 @@ double		ldist(t_env *e, t_line *l, char side)
 	return (ret);
 }
 
-t_point	point_rotate(t_point v, int ang)
+t_point		point_rotate(t_point v, int ang)
 {
 	float	radian;
 	t_point	r;

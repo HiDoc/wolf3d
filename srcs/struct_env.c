@@ -93,12 +93,12 @@ int		fill_obj(t_env *env)
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 		};
 	if (!(env->o_map = (int**)malloc(sizeof(int*) * 24)))
-		print_error(1, env);
+		;//print_error(1, env);
 	y = 0;
 	while (y < 24)
 	{
 		if (!(env->o_map[y] = (int*)malloc(sizeof(int) * 24)))
-			print_error(1, env);
+			;//print_error(1, env);
 		x = 0;
 		while (x < 24)
 		{
@@ -109,14 +109,15 @@ int		fill_obj(t_env *env)
 	}
 	return (0);
 }
+
 /*
- * Map for wolf, formatted as follow :
- * 0xabcd
- * a : objects on wall
- * b : bullets impact
- * c : [wall, floor, object]
- * d : texture number
- */
+** Map for wolf, formatted as follow :
+** 0xabcd
+** a : objects on wall
+** b : bullets impact
+** c : [wall, floor, object]
+** d : texture number
+**/
 int		fill_tab(t_env *env)
 {
 	int	x;
@@ -149,12 +150,12 @@ int		fill_tab(t_env *env)
 			{0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017, 0x0017}
 		};
 	if (!(env->w_map = (int**)malloc(sizeof(int*) * 24)))
-		print_error(1, env);
+		;//print_error(1, env);
 	y = 0;
 	while (y < 24)
 	{
 		if (!(env->w_map[y] = (int*)malloc(sizeof(int) * 24)))
-			print_error(1, env);
+			;//print_error(1, env);
 		x = 0;
 		while (x < 24)
 		{

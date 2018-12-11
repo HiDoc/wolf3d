@@ -1,6 +1,6 @@
 #include "wolf.h"
 
-int		sdl_exit_wolf(t_env *env, Uint8 keycode)
+int			sdl_exit_wolf(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_ESCAPE)
 	{
@@ -17,7 +17,7 @@ int		sdl_exit_wolf(t_env *env, Uint8 keycode)
 	return (0);
 }
 
-static int sdl_check_pos(t_env *env, t_point mult, float check)
+static int	sdl_check_pos(t_env *env, t_point mult, float check)
 {
 	int x;
 	int y;
@@ -31,7 +31,7 @@ static int sdl_check_pos(t_env *env, t_point mult, float check)
 	return (1);
 }
 
-int		sdl_move(t_env *env, Uint8 *keycodes)
+int			sdl_move(t_env *env, Uint8 *keycodes)
 {
 	if (keycodes[SDL_SCANCODE_W])
 		sdl_check_pos(env, env->dir, 0.1);
@@ -44,8 +44,7 @@ int		sdl_move(t_env *env, Uint8 *keycodes)
 	return (0);
 }
 
-
-int		sdl_motion_mouse(t_env *env, int x, int y)
+int			sdl_motion_mouse(t_env *env, int x, int y)
 {
 	double	mult;
 
@@ -68,12 +67,12 @@ int		sdl_motion_mouse(t_env *env, int x, int y)
 	return (0);
 }
 
-int	affiche_map(t_env *env, Uint8 keycode)
-{	
+int			affiche_map(t_env *env, Uint8 keycode)
+{
 	int i;
 	int j;
 
-	j= 0;
+	j = 0;
 	i = 0;
 	if (keycode == SDL_SCANCODE_X)
 	{
@@ -93,7 +92,7 @@ int	affiche_map(t_env *env, Uint8 keycode)
 	return (0);
 }
 
-int		player_jump(t_env *env)
+int			player_jump(t_env *env)
 {
 	if (env->is_jump == 1)
 	{
@@ -110,7 +109,7 @@ int		player_jump(t_env *env)
 	return (0);
 }
 
-int		jumping(t_env *env, Uint8 keycode)
+int			jumping(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_SPACE)
 	{
@@ -120,7 +119,7 @@ int		jumping(t_env *env, Uint8 keycode)
 	return (0);
 }
 
-int sdl_keyhook(t_env *env, SDL_Event event)
+int			sdl_keyhook(t_env *env, SDL_Event event)
 {
 	Uint8	keycode;
 	Uint8	*keycodes;

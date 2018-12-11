@@ -12,10 +12,10 @@
 
 #include "wolf.h"
 
-SDL_Surface	*create_surf(char *path)
+SDL_Surface		*create_surf(char *path)
 {
-	SDL_Surface* new;
-	
+	SDL_Surface	*new;
+
 	new = IMG_Load(path);
 	if (!new)
 	{
@@ -25,7 +25,7 @@ SDL_Surface	*create_surf(char *path)
 	return (new);
 }
 
-SDL_Surface	*img_new(char *filename)
+SDL_Surface		*img_new(char *filename)
 {
 	SDL_Surface	*new;
 	char		*path;
@@ -39,7 +39,7 @@ SDL_Surface	*img_new(char *filename)
 	return (new);
 }
 
-void		ak_img(t_env *env)
+void			ak_img(t_env *env)
 {
 	int			count;
 	char		*num;
@@ -57,7 +57,7 @@ void		ak_img(t_env *env)
 	}
 }
 
-void	stitch(t_env *env)
+void			stitch(t_env *env)
 {
 	int			count;
 	char		*num;
@@ -73,26 +73,26 @@ void	stitch(t_env *env)
 	}
 }
 
-void	new_bullet_surf(t_env *env)
+void			new_bullet_surf(t_env *env)
 {
 	int	i;
-	
+
 	i = 1;
 	while (i < 6)
 	{
 		env->bul_surf[i] = SDL_CreateRGBSurface(0,
-						564,
-						564,
-						32,
-						0x000000FF,
-						0x0000FF00,
-						0x00FF0000,
-						0xFF000000);
+		564,
+		564,
+		32,
+		0x000000FF,
+		0x0000FF00,
+		0x00FF0000,
+		0xFF000000);
 		i++;
 	}
 }
 
-void	img(t_env *env)
+void			img(t_env *env)
 {
 	env->walls[0] = img_new("wall_1");
 	env->walls[1] = img_new("door");

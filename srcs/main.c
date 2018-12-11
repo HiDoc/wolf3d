@@ -84,7 +84,7 @@ int	main(int argc, char *argv[])
 	(void)argv;
 	(void)argc;
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		print_error(1, NULL);
+		return (1);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,

@@ -67,7 +67,7 @@ static int	count_lines(int fd, char *line)
 		line = NULL;
 		count++;
 	}
-	ft_strdel(line);
+	ft_strdel(&line);
 	lseek(fd, 0, SEEK_SET);
 	return (count);
 }
