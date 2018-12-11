@@ -138,6 +138,7 @@ struct					s_env
 	SDL_Surface	*gun;
 	SDL_Surface	*gun_impact;
 	SDL_Surface	*ak_frms[43];
+	SDL_Surface	*mitra_frms[36];
 	SDL_Surface	*stitch[18];
 	SDL_Surface	*bul_surf[6];
 	int			ld_wp;

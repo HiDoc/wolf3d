@@ -30,22 +30,17 @@ void	put_gun(t_env *env)
 {
 	int			x;
 	int			y;
-	SDL_Rect	rect;
 	Uint32		color;
 
-	rect.w = 0;
-	rect.h = 0;
-	rect.x = 100;
-	rect.y = 207;
-	if (env->gun)
+	if (env->mitra_frms[0])
 	{
 		y = 0;
-		while (y < env->gun->h)
+		while (y < env->mitra_frms[0]->h)
 		{
 			x = 0;
-			while (x < env->gun->w)
+			while (x < env->mitra_frms[0]->w)
 			{
-				color = getpixel(env->gun, x, y);
+				color = getpixel(env->mitra_frms[0], x, y);
 				if (color & 0xFF000000)
 					setpixel(env->sdl.surface, x + 100, y + 207, color);
 				x++;
