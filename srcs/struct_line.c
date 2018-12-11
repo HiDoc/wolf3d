@@ -74,6 +74,8 @@ t_line	*line_dda(t_env *env, t_line *line)
 	env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12]
 	: env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
 	env->wobj.is_bullet = (check_impact(line, env) != 0) ? 1 : 0;
+	if (env->wobj.is_bullet)
+		line->text = env->bul_surf[env->wobj.impact];
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
 	return (line_max(env, line));
 }

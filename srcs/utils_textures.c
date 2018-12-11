@@ -66,6 +66,8 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x - (1.0 + weight) * env->pos.x) * w);
 	h = (int)((weight * fwall.y - (1.0 + weight) * env->pos.y) * h);
+	w = w % line->floor->w;
+	h = h % line->floor->h;
 	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 
@@ -91,13 +93,10 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	int		yy;
 	int		delta;
 
-	(void)env;
 	x = (int)(line->wall.x * line->text->w);
 	x = line->text->w - x - 1;
 	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
 		+ line->lineh * line->text->h * 2;
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	if (env->wobj.is_bullet)
-		return (getpixel(env->bul_surf[env->wobj.impact], x, yy));
 	return (getpixel(line->text, x, yy));
 }
