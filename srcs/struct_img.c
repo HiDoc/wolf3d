@@ -57,6 +57,22 @@ void			ak_img(t_env *env)
 	}
 }
 
+void			mitrailleur(t_env *env)
+{
+	int			count;
+	char		*num;
+	const char	*path = "weapons/g_mitrailleur/";
+
+	count = 0;
+	while (count < 36)
+	{
+		num = ft_strrjoin((char *)path, ft_itoa(count + 1));
+		env->mitra_frms[count] = img_new(num);
+		free(num);
+		count++;
+	}
+}
+
 void			stitch(t_env *env)
 {
 	int			count;
@@ -106,7 +122,7 @@ void			img(t_env *env)
 	env->wall = env->walls[0];
 	env->floor = img_new("floor_scifi");
 	env->sky = img_new("floor");
-	env->gun = img_new("weapons/ak_decomposee/ak_1");
+	// env->gun = img_new("weapons/ak_decomposee/ak_1");
 	env->life.img = img_new("thealth");
 	env->lscreen.img = img_new("accueil");
 	env->logo.img = img_new("logo");
@@ -117,6 +133,7 @@ void			img(t_env *env)
 	env->wobj.posters[4] = img_new("posters/fuckbisounours");
 	env->wobj.posters[5] = img_new("posters/lildukenukem");
 	ak_img(env);
+	mitrailleur(env);
 	stitch(env);
 	new_bullet_surf(env);
 }
