@@ -32,13 +32,7 @@ int         wall_poster(t_env *env, t_line *line)
 {
     if ((env->w_map[(int)line->map.x][(int)line->map.y] >> 12)
 	&& (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10))
-	{
-        // if ((env->w_map[(int)line->map.x][(int)line->map.y] >> 12) == 7)
-        //     env->wobj.poster = 2;
-        // else
-    		env->wobj.poster = 1;
         return (1);
-	}
     return (0);
 }
 
@@ -65,30 +59,30 @@ int         put_bullet_pxls(t_env *env, SDL_Surface *surface, int px, int py)
 
 int         check_impact(t_line *line, t_env *env)
 {
-	// SDL_Rect	rect;
 	int	index;
 
     if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
     && (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
 	{
-		index = env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00;
-        if (env->wobj.hit != 0)
-        {
-        //     // rect.w = 0;
-        //     // rect.h = 0;
-        //     // rect.x = env->mouse.x;
-        //     // rect.y = env->mouse.y;
-        //     if (env->wobj.poster == 1)
-        //     {
-        //         SDL_BlitSurface(env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12], NULL, env->wobj.simpact, NULL);
-        //         env->wobj.poster = 0;
-        //     }
-        //     else
-        //         SDL_BlitSurface(env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF], NULL, env->wobj.simpact, NULL);
 
+		index = (env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00);
+        if (env->wobj.hit != 0)
+		{
+			int y = 0;
+			while (y < 564 && y < line->text->h)
+			{
+				int x = 0;
+				while (x < 564 && x < line->text->w)
+				{
+					Uint32 color = getpixel(line->text, x, y);
+					if (color & 0xFF000000)
+						setpixel(env->bul_surf[env->wobj.impact], x, y, color);
+					x++;
+				}
+				y++;
+			}
 		}
-        // put_bullet_pxls(env, env->gun_impact, 100, 100);
-        env->wobj.hit = 0;
+        	env->wobj.hit = 0;
         return (index);
     }
 	return (0);
@@ -115,19 +109,6 @@ static int  clear_impact(t_env *env)
 	return (0);
 }
 
-int			set_impact(t_env *env)
-{
-	if (env->wobj.impact < 5)
-		return (1);
-	else if (env->wobj.impact < 9)
-		return (2);
-	else if (env->wobj.impact < 13)
-		return (3);
-	else if (env->wobj.impact < 17)
-		return (4);
-	return (5);
-}
-
 int         wall_impact(t_env *env)
 {
 	int	xx;
@@ -150,16 +131,16 @@ int         wall_impact(t_env *env)
 		else
 			env->wobj.hit = 2;
 	}
-	if (env->wobj.impact == 6)
+	if (env->wobj.impact > 5)
 	{
 		clear_impact(env);
 		env->wobj.impact = 1;
 	}
-	// printf("hexa : %x\n", (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) + (env->wobj.impact << 12));
 	if (env->wobj.hit == 1)
 		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
 	else
 		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = (env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
+	
 	// if (env->wobj.hit == 1)	
 	// 	env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
 	// else

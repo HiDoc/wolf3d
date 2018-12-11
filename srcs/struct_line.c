@@ -73,67 +73,14 @@ t_line	*line_dda(t_env *env, t_line *line)
 			line->sidew = 1;
 		}
 	}
-	// if (wall_poster(env, line) == 1)
-	// {
-	// 	if (check_impact(line, env) == 1)
-	// 		line->text = env->wobj.simpact;
-	// 	else
-	// 		line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
-	// 	// else if (env->wobj.poster == 1)
-	// 	// {
-	// 	// 	line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
-	// 	// 	env->wobj.poster = 0;
-	// 	// }
-	// 	// else if (env->wobj.poster == 2)
-	// 	// {
-	// 	// 	// env->wobj.simpact = env->walls[1];
-	// 	// 	SDL_BlitSurface(env->walls[1], NULL, env->wobj.simpact, NULL);
-	// 	// 	Uint32 temps = SDL_GetTicks() / 100;
-	// 	// 	SDL_BlitSurface(env->stitch[temps % 18], NULL, env->wobj.simpact, NULL);
-	// 	// 	env->wobj.poster = 0;
-	// 	// 	line->text = env->wobj.simpact;
-	// 	// }
-	// }
 	if (wall_poster(env, line) == 1)
-	{
 		line->text = env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12];
-		// printf("hexa : %x\n", (env->w_map[(int)line->map.x][(int)line->map.y] & 0xF0FF) | (2 << 8));
-		// printf("hexa normal : %x\n", env->w_map[(int)line->map.x][(int)line->map.y]);
-	}
 	else
 		line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
 	if (check_impact(line, env) != 0)
-	{
-		printf("map : %x\n", env->w_map[(int)line->map.x][(int)line->map.y]);
-		printf("wobj impact : %i\n",env->wobj.impact);
 		env->wobj.is_bullet = 1;
-		// SDL_BlitSurface(line->text, NULL, env->bul_surf[env->wobj.impact], NULL);
-		// int y;
-		// int x;
-
-		// y = 0;
-		// while (y < surface->h)
-		// {
-		// 	x = 0;
-		// 	while (x < surface->w)
-		// 	{
-		// 		Uint32 color = getpixel(surface, x, y);
-		// 		if (color & 0xFF000000)
-		// 			setpixel(env->wobj.simpact, x + px, y + py, color);
-		// 		x++;
-		// 	}
-		// 	y++;
-		// }
-	}
-	// if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0x100) != 0
-    // && (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
-	// {
-	// 	SDL_BlitSurface(line->text, NULL, env->bul_surf[env->wobj.impact], NULL);
-	// }
-	// else if (check_impact(line, env) == 1)
-	// 	line->text = env->wobj.simpact;
-	// else
-	// 	line->text = env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
+	else
+		env->wobj.is_bullet = 0;
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
 	return (line_max(env, line));
 }

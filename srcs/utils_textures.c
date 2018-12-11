@@ -101,17 +101,16 @@ Uint32	line_wall(t_env *env, t_line *line, int y)
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
 	if (env->wobj.is_bullet != 0)
 	{
-		if (x >= 400 && x < env->gun_impact->w + 400 && yy >= 300 && yy < env->gun_impact->h + 300)
+		if (x < env->gun_impact->w && yy < env->gun_impact->h)
 		{
-			Uint32 color = getpixel(env->gun_impact, x - 400, yy - 300);
+			Uint32 color = getpixel(env->gun_impact, x, yy);
 			if (color & 0xFF000000)
-			{
 				setpixel(env->bul_surf[env->wobj.impact], x, yy, color);
-				return (getpixel(env->bul_surf[env->wobj.impact], x, yy));
-			}
+				// SDL_BlitSurface(env->gun_impact, NULL, env->bul_surf[env->wobj.impact], NULL);
 		}
-		if (x == env->gun_impact->w + 400 || y == env->gun_impact->h + 300)
+		else
 			env->wobj.is_bullet = 0;
+		return (getpixel(env->bul_surf[env->wobj.impact], x, yy));
 	}
 	return (getpixel(line->text, x, yy));
 }

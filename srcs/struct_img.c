@@ -77,12 +77,12 @@ void	new_bullet_surf(t_env *env)
 {
 	int	i;
 	
-	i = 0;
-	while (i < 4)
+	i = 1;
+	while (i < 6)
 	{
 		env->bul_surf[i] = SDL_CreateRGBSurface(0,
 						564,
-						563,
+						564,
 						32,
 						0x000000FF,
 						0x0000FF00,

@@ -112,8 +112,8 @@ int		fill_obj(t_env *env)
 /*
  * Map for wolf, formatted as follow :
  * 0xabcd
- * a : undefined
- * b : undefined
+ * a : objects on wall
+ * b : bullets impact
  * c : [wall, floor, object]
  * d : texture number
  */
