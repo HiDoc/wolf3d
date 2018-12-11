@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-int render_env(t_env *env)
+int	render_env(t_env *env)
 {
 	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP | SDL_MOUSEMOTION);
 	SDL_FreeSurface(env->sdl.surface);
@@ -25,11 +25,11 @@ int render_env(t_env *env)
 
 int	loop_env(t_env *env)
 {
-	int x;
-	int y;
-	int frame;
-	Uint32 time_a;
-	Uint32 time_b;
+	int		x;
+	int		y;
+	int		frame;
+	Uint32	time_a;
+	Uint32	time_b;
 
 	time_a = 0;
 	time_b = 0;
@@ -77,20 +77,19 @@ int	loop_env(t_env *env)
 	return (1);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_env   *env;
+	t_env *env;
 
 	(void)argv;
 	(void)argc;
-
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		print_error(1, NULL);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-			"Couldn't initialize SDL: %s", SDL_GetError());
-		return 3;
+		"Couldn't initialize SDL: %s", SDL_GetError());
+		return (3);
 	}
 	if (TTF_Init() < 0)
 	{

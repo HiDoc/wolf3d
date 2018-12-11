@@ -1,80 +1,83 @@
 #include "wolf.h"
 
-int         put_poster(t_env *env)
+int			put_poster(t_env *env)
 {
-    SDL_Rect    rect;
-    int         i;
+	SDL_Rect	rect;
+	int			i;
 
-    i = 1;
-    rect.w = 0;
-    rect.h = 0;
-
-    while (i < 6)
-    {
-        rect.x = (564 / 2) - (env->wobj.posters[i]->w / 2);
-        rect.y = (564 / 2) - (env->wobj.posters[i]->h / 1.5);
-        env->wobj.wposters[i] = SDL_CreateRGBSurface(0,
-						564,
-						563,
-						32,
-						0x000000FF,
-						0x0000FF00,
-						0x00FF0000,
-						0xFF000000);
-        SDL_BlitSurface(env->walls[1], NULL, env->wobj.wposters[i], NULL);
-        SDL_BlitSurface(env->wobj.posters[i], NULL, env->wobj.wposters[i], &rect);
-        i++;
-    }
-    return (0);
+	i = 1;
+	rect.w = 0;
+	rect.h = 0;
+	while (i < 6)
+	{
+		rect.x = (564 / 2) - (env->wobj.posters[i]->w / 2);
+		rect.y = (564 / 2) - (env->wobj.posters[i]->h / 1.5);
+		env->wobj.wposters[i] = SDL_CreateRGBSurface(0,
+		564,
+		563,
+		32,
+		0x000000FF,
+		0x0000FF00,
+		0x00FF0000,
+		0xFF000000);
+		SDL_BlitSurface(env->walls[1], NULL, env->wobj.wposters[i], NULL);
+		SDL_BlitSurface(env->wobj.posters[i], NULL,
+		env->wobj.wposters[i], &rect);
+		i++;
+	}
+	return (0);
 }
 
-int         wall_poster(t_env *env, t_line *line)
+int			wall_poster(t_env *env, t_line *line)
 {
-    if ((env->w_map[(int)line->map.x][(int)line->map.y] >> 12)
+	if ((env->w_map[(int)line->map.x][(int)line->map.y] >> 12)
 	&& (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10))
-        return (1);
-    return (0);
+		return (1);
+	return (0);
 }
 
-int         put_bullet_pxls(t_env *env, SDL_Surface *surface, int px, int py)
+int			put_bullet_pxls(t_env *env, SDL_Surface *surface, int px, int py)
 {
-    int y;
-    int x;
+	int			y;
+	int			x;
+	Uint32		color;
 
-    y = 0;
-    while (y < surface->h)
-    {
-        x = 0;
-        while (x < surface->w)
-        {
-            Uint32 color = getpixel(surface, x, y);
+	y = 0;
+	while (y < surface->h)
+	{
+		x = 0;
+		while (x < surface->w)
+		{
+			color = getpixel(surface, x, y);
 			if (color & 0xFF000000)
 				setpixel(env->wobj.simpact, x + px, y + py, color);
-            x++;
-        }
-        y++;
-    }
-    return (0);
+			x++;
+		}
+		y++;
+	}
+	return (0);
 }
 
-int         check_impact(t_line *line, t_env *env)
+int			check_impact(t_line *line, t_env *env)
 {
-	int	index;
+	int			index;
+	int			y;
+	int			x;
+	Uint32		color;
 
-    if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
-    && (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
+	if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
+	&& (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)
 	{
-
 		index = (env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00);
-        if (env->wobj.hit != 0)
+		if (env->wobj.hit != 0)
 		{
-			int y = 0;
+			y = 0;
 			while (y < 564 && y < line->text->h)
 			{
-				int x = 0;
+				x = 0;
 				while (x < 564 && x < line->text->w)
 				{
-					Uint32 color = getpixel(line->text, x, y);
+					color = getpixel(line->text, x, y);
 					if (color & 0xFF000000)
 						setpixel(env->bul_surf[env->wobj.impact], x, y, color);
 					x++;
@@ -82,18 +85,18 @@ int         check_impact(t_line *line, t_env *env)
 				y++;
 			}
 		}
-        	env->wobj.hit = 0;
-        return (index);
-    }
+		env->wobj.hit = 0;
+		return (index);
+	}
 	return (0);
 }
 
-static int  clear_impact(t_env *env)
+static int	clear_impact(t_env *env)
 {
-	int i;
-	int j;
+	int			i;
+	int			j;
 
-	j= 0;
+	j = 0;
 	i = 0;
 	while (i < 24)
 	{
@@ -109,12 +112,11 @@ static int  clear_impact(t_env *env)
 	return (0);
 }
 
-int         wall_impact(t_env *env)
+int			wall_impact(t_env *env)
 {
-	int	xx;
-	int	yy;
+	int			xx;
+	int			yy;
 
-	// clear_impact(env);
 	env->wobj.pos = env->pos;
 	while (env->wobj.hit == 0)
 	{
@@ -137,11 +139,12 @@ int         wall_impact(t_env *env)
 		env->wobj.impact = 1;
 	}
 	if (env->wobj.hit == 1)
-		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = (env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
+		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] =
+		(env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
 	else
-		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = (env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
-	
-	// if (env->wobj.hit == 1)	
+		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] =
+		(env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
+	// if (env->wobj.hit == 1)
 	// 	env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
 	// else
 	// 	env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] | (1<<010);

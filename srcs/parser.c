@@ -12,11 +12,12 @@
 
 #include "wolf.h"
 
-int		check_line(char *line, int cnt, int *nbr)
+int			check_line(char *line, int cnt, int *nbr)
 {
 	while (line[cnt])
 	{
-		if (!ft_isdigit(line[cnt]) || !(line[cnt] != '-') || !(line[cnt] != ' '))
+		if (!ft_isdigit(line[cnt]) || !(line[cnt] != '-')
+		|| !(line[cnt] != ' '))
 			return (0);
 		if (line[cnt + 1] && line[cnt] == '-' && !(ft_isdigit(line[cnt + 1])))
 			return (0);
@@ -26,14 +27,14 @@ int		check_line(char *line, int cnt, int *nbr)
 	return (1);
 }
 
-t_env	*parse_line(t_env *env, char *line, int **map, int nline)
+t_env		*parse_line(t_env *env, char *line, int **map, int nline)
 {
 	int		cnt;
 	int		nbr;
-    char    *tmp;
+	char	*tmp;
 
-    tmp = line;
- 	cnt = 0;
+	tmp = line;
+	cnt = 0;
 	nbr = 0;
 	if (!check_line(line, cnt, &nbr))
 		return (NULL);
@@ -55,15 +56,10 @@ t_env	*parse_line(t_env *env, char *line, int **map, int nline)
 	return (env);
 }
 
- t_env	*parse(t_env *env, char *filename)
+static int	count_lines(int fd, char *line)
 {
-	int		fd;
-	char	*line;
-	int		**map;
 	int		count;
- 	if (!(fd = open(filename, S_IROTH)))
-		return (NULL);
-	line = NULL;
+
 	count = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -71,18 +67,31 @@ t_env	*parse_line(t_env *env, char *line, int **map, int nline)
 		line = NULL;
 		count++;
 	}
-	free(line);
-	line = NULL;
+	ft_strdel(line);
 	lseek(fd, 0, SEEK_SET);
+	return (count);
+}
+
+t_env		*parse(t_env *env, char *filename)
+{
+	int		fd;
+	char	*line;
+	int		**map;
+	int		count;
+
+	if (!(fd = open(filename, S_IROTH)))
+		return (NULL);
+	line = NULL;
+	count = count_lines(fd, line);
 	if ((map = (int **)malloc(sizeof(int *) * count)) == NULL)
 		return (NULL);
 	env->w_map = map;
-    count = 0;
+	count = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
 		parse_line(env, line, map, count);
 		++map;
-        count++;
+		count++;
 	}
 	return (env);
 }
