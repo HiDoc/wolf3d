@@ -18,10 +18,10 @@ void	put_gun_load(t_env *env, int frame)
 
 	rect.w = 0;
 	rect.h = 0;
-	rect.x = 100;
-	rect.y = 207;
-	if (frame < 43)
-		SDL_BlitSurface(env->ak_frms[frame], NULL, env->sdl.surface, &rect);
+	rect.x = 200;
+	rect.y = 170;
+	if (frame < 36)
+		SDL_BlitSurface(env->mitra_frms[frame], NULL, env->sdl.surface, &rect);
 	else
 		env->ld_wp = 0;
 }
@@ -42,7 +42,7 @@ void	put_gun(t_env *env)
 			{
 				color = getpixel(env->mitra_frms[0], x, y);
 				if (color & 0xFF000000)
-					setpixel(env->sdl.surface, x + 100, y + 207, color);
+					setpixel(env->sdl.surface, x + 200, y + 170, color);
 				x++;
 			}
 			y++;

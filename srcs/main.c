@@ -55,7 +55,12 @@ int	loop_env(t_env *env)
 				sdl_mouse_click(env, x, y);
 			}
 			init_thread(env);
-			if (env->ld_wp)
+			if (env->is_shootin)
+			{
+				shoot_weapon(env, frame);
+				frame++;
+			}
+			else if (env->ld_wp)
 			{
 				put_gun_load(env, frame);
 				frame++;

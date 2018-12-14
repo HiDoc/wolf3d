@@ -39,24 +39,6 @@ SDL_Surface		*img_new(char *filename)
 	return (new);
 }
 
-void			ak_img(t_env *env)
-{
-	int			count;
-	char		*num;
-	const char	*path = "weapons/ak_decomposee/";
-
-	count = 2;
-	env->ak_frms[0] = img_new("weapons/ak_decomposee/ak_1");
-	env->ak_frms[1] = img_new("weapons/ak_decomposee/ak_02");
-	while (count < 43)
-	{
-		num = ft_strrjoin((char *)path, ft_itoa(count + 1));
-		env->ak_frms[count] = img_new(num);
-		free(num);
-		count++;
-	}
-}
-
 void			mitrailleur(t_env *env)
 {
 	int			count;
@@ -132,7 +114,6 @@ void			img(t_env *env)
 	env->wobj.posters[3] = img_new("posters/lilbisounours");
 	env->wobj.posters[4] = img_new("posters/fuckbisounours");
 	env->wobj.posters[5] = img_new("posters/lildukenukem");
-	ak_img(env);
 	mitrailleur(env);
 	stitch(env);
 	new_bullet_surf(env);

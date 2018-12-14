@@ -86,5 +86,6 @@ int         wall_impact(t_env *env);
 int         check_impact(t_line *line, t_env *env);
 int         affiche_map(t_env *env, Uint8 keycode);
 int         load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon);
+int         shoot_weapon(t_env *env, int frame);
 int		    player_jump(t_env *env);
 #endif

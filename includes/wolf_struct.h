@@ -142,6 +142,7 @@ struct					s_env
 	SDL_Surface	*stitch[18];
 	SDL_Surface	*bul_surf[6];
 	int			ld_wp;
+	int			is_shootin;
 	int			width;
 	int			height;
 	t_portal	portal;
