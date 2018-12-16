@@ -65,6 +65,7 @@ SRC_NAME 	= main.c \
 			  utils_sdl.c \
 			  utils_maths.c \
 			  utils_point.c \
+			  utils_fog.c \
 			  utils_textures.c \
 			  struct_img.c \
 			  musics.c		\

@@ -129,8 +129,8 @@ struct					s_env
 	double		ang;
 	double		pang;
 	int			**w_map;
+	int			**w_map_2;
 	int			**o_map;
-	SDL_Surface	*wall;
 	SDL_Surface	*walls[10];
 	SDL_Surface	*enemy;
 	SDL_Surface	*floor;

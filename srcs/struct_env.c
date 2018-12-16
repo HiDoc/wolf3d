@@ -171,16 +171,13 @@ int		fill_tab(t_env *env)
 int		init_env(t_env *env)
 {
 	env->width = 800;
-	env->sdl.surface = NULL;
 	env->height = 600;
-	env->pos.x = 10;
-	env->pos.y = 10;
+	env->sdl.surface = NULL;
+	point_set(&env->pos, 10.0, 10.0);
+	point_set(&env->plane, 0.0, 0.66);
+	point_set(&env->dir, -1.0, 0.0);
 	env->ang = 2.0;
 	env->pang = 0.0;
-	env->dir.x = -1.0;
-	env->dir.y = 0.0;
-	env->plane.x = 0.0;
-	env->plane.y = 0.66;
 	env->w_map = NULL;
 	env->is_updn = 0.0;
 	env->portal.out = 0;
@@ -204,6 +201,7 @@ int		init_env(t_env *env)
 						0xFF000000);
 	img(env);
 	fill_tab(env);
+	env->w_map_2 = env->w_map;
 	put_poster(env);
 	init_thread(env);
 	init_sdl(env);

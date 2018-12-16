@@ -101,7 +101,6 @@ void			img(t_env *env)
 	env->walls[6] = img_new("floor_scifi2");
 	env->walls[7] = img_new("floor_scifi2");
 	env->enemy = img_new("enemy");
-	env->wall = env->walls[0];
 	env->floor = img_new("floor_scifi");
 	env->sky = img_new("floor");
 	// env->gun = img_new("weapons/ak_decomposee/ak_1");

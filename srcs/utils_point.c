@@ -32,3 +32,15 @@ t_point	*point_ray(t_point *ray, t_point *dir, t_point *plane, double cam)
 	ray->y = dir->y + plane->y * cam;
 	return (ray);
 }
+
+void	point_diff(t_point *a, t_point b, t_point c)
+{
+	a->x = b.x - c.x;
+	a->y = b.y - c.y;
+}
+
+void	point_set(t_point *a, double x, double y)
+{
+	a->x = x;
+	a->y = y;
+}
