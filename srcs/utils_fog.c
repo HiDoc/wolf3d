@@ -27,7 +27,7 @@ int     wall_fog(t_line *line, Uint32 c)
 {
     double  delta;
 
-	delta = 7 / (100 / line->wdist);
+	delta = 15 / (100 / line->wdist);
     return (calc_color(c, delta));
 }
 

@@ -85,7 +85,9 @@ int			wolf(t_env *env, int col)
 	{
 		line_init(env, &line, x);
 		y = -1;
-		while (++y < line.sdraw)
+		int		size;
+		size = line.edraw - line.sdraw;
+		while (++y < line.sdraw - size)
 		{
 			imgpos = line_sky(env, &line, y - env->is_updn);
 			setpixel(env->sdl.surface, x, y, sky_fog(&line, imgpos, y));
