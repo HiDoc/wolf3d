@@ -50,16 +50,12 @@ void		copy_sdl(t_env *env)
 	}
 	SDL_FreeSurface(env->sdl.surface);
 	env->sdl.surface = NULL;
-	health(env);
+	//health(env);
 }
 
 void		init_sdl(t_env *env)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	env->sdl.renderer = NULL;
-	env->sdl.texture = NULL;
-	env->sdl.surface = NULL;
-	env->sdl.window = NULL;
 	env->sdl.window = SDL_CreateWindow("Doom Nukem",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,

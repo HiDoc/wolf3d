@@ -21,8 +21,7 @@ int			put_poster(t_env *env)
 		0x00FF0000,
 		0xFF000000);
 		SDL_BlitSurface(env->walls[1], NULL, env->wobj.wposters[i], NULL);
-		SDL_BlitSurface(env->wobj.posters[i], NULL,
-		env->wobj.wposters[i], &rect);
+		SDL_BlitSurface(env->wobj.posters[i], NULL, env->wobj.wposters[i], &rect);
 		i++;
 	}
 	return (0);

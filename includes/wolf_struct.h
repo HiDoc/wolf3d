@@ -131,12 +131,11 @@ struct					s_env
 	int			**w_map;
 	int			**w_map_2;
 	int			**o_map;
-	SDL_Surface	*walls[10];
 	SDL_Surface	*enemy;
 	SDL_Surface	*floor;
 	SDL_Surface	*sky;
-	SDL_Surface	*gun;
 	SDL_Surface	*gun_impact;
+	SDL_Surface	*walls[10];
 	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*mitra_frms[36];
 	SDL_Surface	*stitch[18];
@@ -145,7 +144,7 @@ struct					s_env
 	int			is_shootin;
 	int			width;
 	int			height;
-	t_portal	portal;
+	//t_portal	portal;
 	t_hub		lscreen;
 	t_hub		title;
 	t_hub		life;

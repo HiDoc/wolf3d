@@ -12,55 +12,6 @@
 
 #include "wolf.h"
 
-void	hub_free(t_hub hub)
-{
-	if (hub.surface != NULL)
-		SDL_FreeSurface(hub.surface);
-	if (hub.img != NULL)
-		SDL_FreeSurface(hub.img);
-	if (hub.texture != NULL)
-		SDL_DestroyTexture(hub.texture);
-}
-
-void	sdl_free(t_sdl sdl)
-{
-	SDL_FreeSurface(sdl.surface);
-	SDL_DestroyTexture(sdl.texture);
-	SDL_DestroyRenderer(sdl.renderer);
-	SDL_DestroyWindow(sdl.window);
-}
-
-int		env_free(t_env *env)
-{
-	int i;
-
-	i = 0;
-	while (env->walls[i])
-	{
-		SDL_FreeSurface(env->walls[i]);
-		i++;
-	}
-	if (env->w_map)
-		tab_free(env->w_map, 24);
-	if (env->o_map)
-		tab_free(env->o_map, 24);
-	if (env->enemy)
-		SDL_FreeSurface(env->enemy);
-	if (env->floor)
-		SDL_FreeSurface(env->floor);
-	if (env->sky)
-		SDL_FreeSurface(env->sky);
-	if (env->gun)
-		SDL_FreeSurface(env->gun);
-	hub_free(env->lscreen);
-	hub_free(env->title);
-	hub_free(env->life);
-	hub_free(env->logo);
-	sdl_free(env->sdl);
-	free(env);
-	return (1);
-}
-
 int		fill_obj(t_env *env)
 {
 	int	x;
@@ -168,40 +119,67 @@ int		fill_tab(t_env *env)
 	return (0);
 }
 
+int		init_wobj(t_env *env)
+{
+	env->wobj.hit = 0;
+	env->wobj.poster = 0;
+	env->wobj.impact = 0;
+	env->wobj.is_bullet = 0;
+	env->wobj.simpact =
+	SDL_CreateRGBSurface(
+	0,
+	564,
+	563,
+	32,
+	0x000000FF,
+	0x0000FF00,
+	0x00FF0000,
+	0xFF000000);
+	return (0);
+}
+
+void	bzero_env(t_env *env)
+{
+	env->is_updn = 0;
+	env->cam = 0;
+	env->ang = 0;
+	env->pang = 0;
+	env->w_map = NULL;
+	env->w_map_2 = NULL;
+	env->o_map = NULL;
+	env->enemy = NULL;
+	env->floor = NULL;
+	env->sky = NULL;
+	env->gun_impact = NULL;
+	env->ld_wp = 0;
+	env->is_shootin = 0;
+	env->width = 0;
+	env->height = 0;
+	env->hratio = 0;
+	env->is_jump = 0;
+}
+
 int		init_env(t_env *env)
 {
+	bzero_env(env);
 	env->width = 800;
 	env->height = 600;
+	env->ang = 2.0;
+	env->pang = 0.0;
 	env->sdl.surface = NULL;
 	point_set(&env->pos, 10.0, 10.0);
 	point_set(&env->plane, 0.0, 0.66);
 	point_set(&env->dir, -1.0, 0.0);
-	env->ang = 2.0;
-	env->pang = 0.0;
 	env->w_map = NULL;
 	env->is_updn = 0.0;
-	env->portal.out = 0;
-	env->portal.in = 0;
 	env->logo.ang = 0.0;
 	env->hratio = 2;
 	env->is_jump = 0;
-	env->wobj.hit = 0;
-	env->wobj.poster = 0;
-	env->wobj.impact = 0;
 	env->ld_wp = 0;
-	env->wobj.is_bullet = 0;
 	env->is_shootin = 0;
-	env->wobj.simpact = SDL_CreateRGBSurface(0,
-						564,
-						563,
-						32,
-						0x000000FF,
-						0x0000FF00,
-						0x00FF0000,
-						0xFF000000);
-	img(env);
 	fill_tab(env);
-	env->w_map_2 = env->w_map;
+	img(env);
+	init_wobj(env);
 	put_poster(env);
 	init_thread(env);
 	init_sdl(env);

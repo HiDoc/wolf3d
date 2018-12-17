@@ -105,10 +105,7 @@ int	main(int argc, char *argv[])
 	load_sounds(env);
 	launch_screen(env);
 	loop_env(env);
-	Mix_FreeChunk(env->sounds.shot);
-	Mix_CloseAudio();
-	TTF_Quit();
-	SDL_Quit();
 	env_free(env);
+	sleep(10);
 	return (0);
 }

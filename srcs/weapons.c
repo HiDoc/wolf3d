@@ -33,7 +33,6 @@ int	shoot_weapon(t_env *env, int frame)
 	rect.y = 170;
 	if (frame < 8)
 	{
-		printf("%d\n", frame);
 		if (SDL_BlitSurface(env->mitra_frms[frame], NULL, env->sdl.surface, &rect) < 0)
 			printf("SDL_blits failed: %s\n", SDL_GetError());
 	}

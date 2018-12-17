@@ -1,9 +1,7 @@
 #include "wolf.h"
-
+/*
 int		exit_wolf(t_env *env)
 {
-	mlx_destroy_image(E_MLX, E_IMG);
-	mlx_destroy_window(E_MLX, E_WIN);
 	free_env(env);
 	exit(0);
 	return (0);
@@ -206,3 +204,4 @@ int key_hook(int key, t_env *env)
 	mlx_put_image_to_window(E_MLX, E_WIN, E_IMG, 0, 0);
 	return (0);
 }
+*/

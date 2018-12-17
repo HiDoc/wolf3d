@@ -68,7 +68,7 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	h = (int)((weight * fwall.y - (1.0 / 3.0 + weight) * env->pos.y) * h);
 	w = w % line->floor->w;
 	h = h % line->floor->h;
-	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
+	return (getpixel(line->floor, w % 128, h % 128));
 }
 
 Uint32			infinite_sky(t_env *env, t_line *line, int y)
@@ -98,5 +98,7 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
 		+ line->lineh * line->text->h * 2;
 	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	return (getpixel(line->text, x, yy));
+	x--;
+	y--;
+	return (getpixel(line->text, x % 64, yy % 64));
 }

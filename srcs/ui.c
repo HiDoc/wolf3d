@@ -42,7 +42,7 @@ void	put_gun(t_env *env)
 			{
 				color = getpixel(env->mitra_frms[0], x, y);
 				if (color & 0xFF000000)
-					setpixel(env->sdl.surface, x + 200, y + 170, color);
+					setpixel(env->sdl.surface, (x + 200) % 800, (y + 170) % 600, color);
 				x++;
 			}
 			y++;
@@ -97,7 +97,7 @@ void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 	bloc->font = NULL;
 	SDL_FreeSurface(bloc->surface);
 	bloc->surface = NULL;
-	SDL_SetTextureAlphaMod(bloc->texture, 190);//opacity
+	SDL_SetTextureAlphaMod(bloc->texture, 190);
 }
 
 void	health(t_env *env)

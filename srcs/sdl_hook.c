@@ -4,14 +4,8 @@ int			sdl_exit_wolf(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_ESCAPE)
 	{
-		Mix_FreeChunk(env->sounds.shot);
-		Mix_FreeMusic(env->sounds.load);
-		Mix_CloseAudio();
-		TTF_Quit();
 		env_free(env);
-		SDL_QuitSubSystem(SDL_INIT_VIDEO);
-		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		SDL_Quit();
+		sleep(10);
 		exit(0);
 	}
 	return (0);

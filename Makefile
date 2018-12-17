@@ -67,6 +67,7 @@ SRC_NAME 	= main.c \
 			  utils_point.c \
 			  utils_fog.c \
 			  utils_textures.c \
+			  utils_free.c \
 			  struct_img.c \
 			  musics.c		\
 			  sdl_mouse.c	\
@@ -87,9 +88,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) \
-		-L$(LIBFT) -lft \
-		$(INC) $(LSDL2)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) -lft $(INC) $(LSDL2)
 
 $(OBJ) : | $(OBJ_PATH)
 
@@ -115,7 +114,7 @@ run: all
 	./wolf3d
 
 lldb:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
+	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
 	lldb ./wolf3d
 
@@ -127,7 +126,7 @@ fsani:
 
 valg:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) \
-	$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
+	$(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 	-L$(LIBFT) -lft
 	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
 
