@@ -37,20 +37,20 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-Uint32			line_floor(t_env *env, t_line *line, int y)
+Uint32			infinite_sky(t_env *env, t_line *line, int y)
 {
 	t_point	fwall;
+	t_point	cfloor;
+	t_point	tfloor;
 	double	weight;
-	int		w;
-	int		h;
 
-	w = line->floor->w;
-	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
-	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
-	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
+	cfloor.x = weight * fwall.x - weight * env->pos.x;
+	cfloor.y = weight * fwall.y - weight * env->pos.y;
+	tfloor.x = (int)(cfloor.x * 64) % 64;
+	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
+	return (getpixel(line->floor, tfloor.x, tfloor.y));
 }
 
 Uint32			line_sky(t_env *env, t_line *line, int y)
@@ -71,20 +71,20 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	return (getpixel(line->floor, w % 128, h % 128));
 }
 
-Uint32			infinite_sky(t_env *env, t_line *line, int y)
+Uint32			line_floor(t_env *env, t_line *line, int y)
 {
 	t_point	fwall;
-	t_point	cfloor;
-	t_point	tfloor;
 	double	weight;
+	int		w;
+	int		h;
 
+	w = line->floor->w;
+	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x - weight * env->pos.x;
-	cfloor.y = weight * fwall.y - weight * env->pos.y;
-	tfloor.x = (int)(cfloor.x * 64) % 64;
-	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
-	return (getpixel(line->floor, tfloor.x, tfloor.y));
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
+	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 
 Uint32			line_wall(t_env *env, t_line *line, int y)
@@ -94,11 +94,9 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	int		delta;
 
 	x = (int)(line->wall.x * line->text->w);
-	x = line->text->w - x - 1;
-	delta = y * line->text->h * 4 - HEIGHT * line->text->h * 2
-		+ line->lineh * line->text->h * 2;
-	yy = ((delta * 64.0) / (line->lineh)) / 256;
-	x--;
-	y--;
-	return (getpixel(line->text, x % 64, yy % 64));
+	x = ft_abs(line->text->w - x - 1);
+	delta = line->text->h * (double)(2.0 * y - (double)HEIGHT + line->lineh);
+	yy = ft_abs(delta * 0.5 / line->lineh);
+	return (0x00ff00);
+	//return (getpixel(line->text, (x % line->text->w), (yy % line->text->h)));
 }

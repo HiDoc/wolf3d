@@ -22,10 +22,10 @@ SDL_Surface	*surface_new(Uint32 *pixels, int width, int height)
 			height,
 			32,
 			4 * width,
-			0x000000FF,
-			0x0000FF00,
+			0xFF000000,
 			0x00FF0000,
-			0xFF000000);
+			0x0000FF00,
+			0x000000FF);
 	return (new);
 }
 
@@ -50,7 +50,6 @@ void		copy_sdl(t_env *env)
 	}
 	SDL_FreeSurface(env->sdl.surface);
 	env->sdl.surface = NULL;
-	//health(env);
 }
 
 void		init_sdl(t_env *env)

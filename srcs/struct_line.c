@@ -70,7 +70,7 @@ t_line	*line_max(t_env *env, t_line *line)
 	line->sdraw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
 	line->sdraw < 0 ? line->sdraw = 0 : 0;
 	
-	line->edraw = (line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
+	line->edraw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->is_updn;
 	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
 	if (line->sidew == 0)
 		line->wall.x = env->pos.y + line->wdist * line->raydir.y;

@@ -20,6 +20,7 @@ void		print_error(int nb, t_env *env);
 void		free_env(t_env *env);
 int			exit_wolf(t_env *env);
 int			key_hook(int key, t_env *env);
+int         render_env(t_env *env);
 
 void        put_health(t_env *env);
 void		put_gun(t_env *env);

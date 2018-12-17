@@ -85,7 +85,7 @@ int			wolf(t_env *env, int col)
 	{
 		line_init(env, &line, x);
 		y = -1;
-		int		size;
+		double		size;
 		size = line.edraw - line.sdraw;
 		while (++y < line.sdraw - size)
 		{

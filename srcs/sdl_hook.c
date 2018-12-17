@@ -5,7 +5,6 @@ int			sdl_exit_wolf(t_env *env, Uint8 keycode)
 	if (keycode == SDL_SCANCODE_ESCAPE)
 	{
 		env_free(env);
-		sleep(10);
 		exit(0);
 	}
 	return (0);

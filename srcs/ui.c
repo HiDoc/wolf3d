@@ -12,75 +12,44 @@
 
 #include "wolf.h"
 
-void	put_gun_load(t_env *env, int frame)
+void	put_img(t_env *env, SDL_Surface *img, int x, int y)
 {
 	SDL_Rect	rect;
 
-	rect.w = 0;
-	rect.h = 0;
-	rect.x = 200;
-	rect.y = 170;
+	rect.w = 128;
+	rect.h = 128;
+	rect.x = x;
+	rect.y = y;
+	if (img)
+		SDL_BlitSurface(img, NULL, env->sdl.surface, &rect);
+}
+
+void	put_gun_load(t_env *env, int frame)
+{
 	if (frame < 36)
-		SDL_BlitSurface(env->mitra_frms[frame], NULL, env->sdl.surface, &rect);
+		put_img(env, env->mitra_frms[frame], 200, 170);
 	else
 		env->ld_wp = 0;
 }
 
 void	put_gun(t_env *env)
 {
-	int			x;
-	int			y;
-	Uint32		color;
+	int x;
+	int y;
 
-	if (env->mitra_frms[0])
-	{
-		y = 0;
-		while (y < env->mitra_frms[0]->h)
-		{
-			x = 0;
-			while (x < env->mitra_frms[0]->w)
-			{
-				color = getpixel(env->mitra_frms[0], x, y);
-				if (color & 0xFF000000)
-					setpixel(env->sdl.surface, (x + 200) % 800, (y + 170) % 600, color);
-				x++;
-			}
-			y++;
-		}
-		y = 0;
-		while (y < 20)
-		{
-			x = 0;
-			while (x < 20)
-			{
-				if ((x == 10 || y == 10) && x != y)
-					setpixel(env->sdl.surface, x + 380, y + 280, 0xFF00FF00);
-				x++;
-			}
-			y++;
-		}
-	}
+	x = 800 - env->mitra_frms[0]->w;
+	y = 600 - env->mitra_frms[0]->h;
+	put_img(env, env->mitra_frms[0], x, y);
 }
 
 void	put_health(t_env *env)
 {
-	int			x;
-	int			y;
-	Uint32		color;
+	int x;
+	int y;
 
-	y = 0;
-	while (y < 141)
-	{
-		x = 0;
-		while (x < 352)
-		{
-			color = getpixel(env->life.img, x, y);
-			if (color & 0xFF000000)
-				setpixel(env->sdl.surface, x + 22, 600 - 142 + y, color);
-			x++;
-		}
-		y++;
-	}
+	x = 22;
+	y = 600 - env->life.img->h;
+	put_img(env, env->life.img, x, y);
 }
 
 void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
@@ -109,18 +78,14 @@ void	health(t_env *env)
 
 void	launch_screen(t_env *env)
 {
-	if (!(env->lscreen.texture = SDL_CreateTextureFromSurface(
-		env->sdl.renderer, env->lscreen.img)))
+	env->sdl.surface = img_new("accueil");
+	copy_sdl(env);
+	render_env(env);
+	while (1)
 	{
-		fprintf(stderr, "CreateTextureFromSurface failed: %s\n"
-		, SDL_GetError());
-		exit(1);
+		if (SDL_PollEvent(&env->sdl.event) > 0)
+			break;
 	}
-	SDL_FreeSurface(env->lscreen.surface);
-	env->lscreen.surface = NULL;
-	SDL_RenderCopy(env->sdl.renderer, env->lscreen.texture, NULL, NULL);
-	SDL_DestroyTexture(env->lscreen.texture);
-	SDL_RenderPresent(env->sdl.renderer);
 }
 
 void	turn_logo(t_env *env)

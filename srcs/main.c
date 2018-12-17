@@ -34,6 +34,7 @@ int	loop_env(t_env *env)
 	time_a = 0;
 	time_b = 0;
 	frame = 0;
+	launch_screen(env);
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
@@ -75,6 +76,7 @@ int	loop_env(t_env *env)
 				player_jump(env);
 			}
 			copy_sdl(env);
+			health(env);
 			render_env(env);
 			time_a = SDL_GetTicks();
 		}
@@ -103,9 +105,7 @@ int	main(int argc, char *argv[])
 	}
 	init_env(env);
 	load_sounds(env);
-	launch_screen(env);
 	loop_env(env);
 	env_free(env);
-	sleep(10);
 	return (0);
 }
