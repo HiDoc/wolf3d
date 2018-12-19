@@ -58,7 +58,7 @@ void		init_sdl(t_env *env)
 	env->sdl.window = SDL_CreateWindow("Doom Nukem",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
-			800, 600,
+			env->width, env->height,
 			SDL_WINDOW_SHOWN);
 	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
 }

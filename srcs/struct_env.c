@@ -181,7 +181,7 @@ int		init_env(t_env *env)
 	img(env);
 	init_wobj(env);
 	put_poster(env);
-	init_thread(env);
+	init_thread(env, 8);
 	init_sdl(env);
 	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 	return (0);

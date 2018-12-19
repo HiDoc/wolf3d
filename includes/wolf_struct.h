@@ -18,6 +18,7 @@ typedef struct s_point	t_point;
 typedef struct s_thr	t_thr;
 typedef struct s_thw	t_thw;
 typedef struct s_line	t_line;
+typedef struct s_iline	t_iline;
 typedef struct s_ray	t_ray;
 typedef struct s_portal	t_portal;
 typedef struct s_sdl	t_sdl;
@@ -31,7 +32,7 @@ struct					s_sdl
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	SDL_Texture		*texture;
-	SDL_Surface		*surface;	
+	SDL_Surface		*surface;
 	SDL_Event		event;
 };
 
@@ -56,7 +57,7 @@ struct					s_line
 	t_point		map;
 	t_point		delta;
 	t_point		step;
-	t_point		raydir;	
+	t_point		raydir;
 	t_point		wall;
 	t_point		side;
 	double		wdist;
@@ -120,7 +121,7 @@ struct					s_wobj
 struct					s_env
 {
 	t_sdl		sdl;
-	t_thr		thr[8];
+	t_thr		thr[THREAD_NBR];
 	t_point		pos;
 	t_point		dir;
 	t_point		plane;
@@ -144,7 +145,6 @@ struct					s_env
 	int			is_shootin;
 	int			width;
 	int			height;
-	//t_portal	portal;
 	t_hub		lscreen;
 	t_hub		title;
 	t_hub		life;
@@ -156,4 +156,12 @@ struct					s_env
 	t_point		mouse;
 };
 
+struct					s_iline
+{
+	int			x;
+	int			y;
+	int			delim;
+	t_line		line;
+	Uint32		color;
+};
 #endif

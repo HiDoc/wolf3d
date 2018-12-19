@@ -37,8 +37,8 @@ void	put_gun(t_env *env)
 	int x;
 	int y;
 
-	x = 800 - env->mitra_frms[0]->w;
-	y = 600 - env->mitra_frms[0]->h;
+	x = env->width - env->mitra_frms[0]->w;
+	y = env->height - env->mitra_frms[0]->h;
 	put_img(env, env->mitra_frms[0], x, y);
 }
 
@@ -48,7 +48,7 @@ void	put_health(t_env *env)
 	int y;
 
 	x = 22;
-	y = 600 - env->life.img->h;
+	y = env->height - env->life.img->h;
 	put_img(env, env->life.img, x, y);
 }
 
@@ -83,7 +83,9 @@ void	launch_screen(t_env *env)
 	render_env(env);
 	while (1)
 	{
-		if (SDL_PollEvent(&env->sdl.event) > 0)
+		if (SDL_PollEvent(&env->sdl.event) > 0
+		&& env->sdl.event.type != 0x1100
+		&& env->sdl.event.type != 0x200)
 			break;
 	}
 }

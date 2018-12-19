@@ -23,19 +23,22 @@ static int  calc_color(Uint32 c, double delta)
 	return ((color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a));
 }
 
-int     wall_fog(t_line *line, Uint32 c)
+int     wall_fog(t_env *env, t_line *line, Uint32 c, int y)
 {
     double  delta;
 
+    (void)y;
+    (void)env;
 	delta = 15 / (100 / line->wdist);
     return (calc_color(c, delta));
 }
 
-int			sky_fog(t_line *line, Uint32 c, int y)
+int			sky_fog(t_env *env, t_line *line, Uint32 c, int y)
 {
     double  delta;
 
-    delta = (double)y * 100.0 / line->sdraw / 100.0;
+    (void)env;
+    delta = (double)y / (double)line->sdraw * 1.2;
     return (calc_color(c, delta));
 }
 
@@ -43,6 +46,7 @@ int			floor_fog(t_env *env, t_line *line, Uint32 c, int y)
 {
     double  delta;
 
-    delta = (HEIGHT - (double)y) * 100.0 / (HEIGHT - line->edraw) / 100.0;
+    (void)env;
+    delta = (HEIGHT - (double)y) / (HEIGHT - line->edraw);
     return (calc_color(c, delta));
 }

@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-int	render_env(t_env *env)
+int					render_env(t_env *env)
 {
 	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP | SDL_MOUSEMOTION);
 	SDL_FreeSurface(env->sdl.surface);
@@ -23,68 +23,72 @@ int	render_env(t_env *env)
 	return (0);
 }
 
-int	loop_env(t_env *env)
+static void inline	loop_mouse(t_env *env)
 {
 	int		x;
 	int		y;
+
+	SDL_GetRelativeMouseState(&x, &y);
+	if (x || y)
+		sdl_motion_mouse(env, x, y);
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+	{
+		if (env->wobj.impact < 6)
+			env->wobj.impact++;
+		env->mouse.x = x;
+		env->mouse.y = y;
+		sdl_mouse_click(env, x, y);
+	}
+}
+
+static void inline	loop_weapons(t_env *env, int *frame)
+{
+	if (env->is_shootin)
+	{
+		shoot_weapon(env, *frame);
+		++(*frame);
+	}
+	else if (env->ld_wp)
+	{
+		put_gun_load(env, *frame);
+		++(*frame);
+	}
+	else
+	{
+		put_gun(env);
+		*frame = 0;
+	}
+	if (env->is_jump)
+		player_jump(env);
+}
+
+void				loop_env(t_env *env)
+{
 	int		frame;
 	Uint32	time_a;
-	Uint32	time_b;
 
 	time_a = 0;
-	time_b = 0;
 	frame = 0;
-	launch_screen(env);
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
 		if (env->sdl.event.type == SDL_QUIT)
-			return (0);
-		time_b = SDL_GetTicks();
-		if (time_b - time_a > SCREEN_TIC)
+			break;
+		if (SDL_GetTicks() - time_a > SCREEN_TIC)
 		{
 			sdl_keyhook(env, env->sdl.event);
-			SDL_GetRelativeMouseState(&x, &y);
-			if (x || y)
-				sdl_motion_mouse(env, x, y);
-			if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
-			{
-				if (env->wobj.impact < 6)
-					env->wobj.impact++;
-				env->mouse.x = x;
-				env->mouse.y = y;
-				sdl_mouse_click(env, x, y);
-			}
-			init_thread(env);
-			if (env->is_shootin)
-			{
-				shoot_weapon(env, frame);
-				frame++;
-			}
-			else if (env->ld_wp)
-			{
-				put_gun_load(env, frame);
-				frame++;
-			}
-			else
-			{
-				put_gun(env);
-				frame = 0;
-			}
-			if (env->is_jump)
-			{
-				player_jump(env);
-			}
+			loop_mouse(env);
+			init_thread(env, 8);
+			loop_weapons(env, &frame);
 			copy_sdl(env);
 			health(env);
 			render_env(env);
 			time_a = SDL_GetTicks();
 		}
 	}
-	return (1);
 }
 
-int	main(int argc, char *argv[])
+int					main(int argc, char *argv[])
 {
 	t_env *env;
 
@@ -105,6 +109,7 @@ int	main(int argc, char *argv[])
 	}
 	init_env(env);
 	load_sounds(env);
+	launch_screen(env);
 	loop_env(env);
 	env_free(env);
 	return (0);

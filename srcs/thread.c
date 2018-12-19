@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 18:16:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/18 14:09:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	*launch_thread(void *arg)
 	pthread_exit(NULL);
 }
 
-int		set_thread(t_env *env)
+int		set_thread(t_env *env, int threads)
 {
 	int nbr;
 
 	nbr = 0;
-	while (nbr < 8)
+	while (nbr < threads && nbr < THREAD_NBR)
 	{
 		env->thr[nbr].env = env;
 		env->thr[nbr].nbr = nbr + 1;
@@ -38,20 +38,20 @@ int		set_thread(t_env *env)
 void	set_surface(t_env *env)
 {
 	SDL_FreeSurface(env->sdl.surface);
-	env->sdl.surface = SDL_CreateRGBSurface(0, 800, 600, 32,
+	env->sdl.surface = SDL_CreateRGBSurface(0, env->width, env->height, 32,
 			0x000000FF,
 			0x0000FF00,
 			0x00FF0000,
 			0xFF000000);
 }
 
-int		init_thread(t_env *env)
+int		init_thread(t_env *env, int threads)
 {
 	int		x;
 
-	x = set_thread(env);
+	x = set_thread(env, threads);
 	set_surface(env);
-	while (x < 8)
+	while (x < threads)
 	{
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))
 		{
@@ -61,7 +61,7 @@ int		init_thread(t_env *env)
 		x++;
 	}
 	x = 0;
-	while (x < 8)
+	while (x < threads)
 	{
 		if (pthread_join(env->thr[x].th, NULL))
 		{
