@@ -26,10 +26,29 @@ int		tab_free(int **tab, int y)
 	return (1);
 }
 
-int		**tab_copy(int **src, int **dest, int x, int y)
+void	tab_copy(int **src, int **dest, int x, int y)
 {
 	int		ix;
 	int		iy;
+
+	iy = 0;
+	while (iy < y)
+	{
+		ix = 0;
+		while (ix < x)
+		{
+			dest[iy][ix] = src[iy][ix];
+			ix++;
+		}
+		iy++;
+	}
+}
+
+int		**tab_copy_alloc(int **src, int x, int y)
+{
+	int		ix;
+	int		iy;
+	int		**dest;
 
 	iy = 0;
 	if ((dest = malloc(sizeof(int *) * y)) == NULL)
@@ -47,6 +66,25 @@ int		**tab_copy(int **src, int **dest, int x, int y)
 		iy++;
 	}
 	return (dest);
+}
+
+void	tab_print(int **tab, int x, int y)
+{
+	int		ix;
+	int		iy;
+
+	iy = 0;
+	while (iy < y)
+	{
+		ix = 0;
+		while (ix < x)
+		{
+			printf("%d ", tab[ix][iy]);
+			ix++;
+		}
+		printf("\n");
+		iy++;
+	}
 }
 
 int		**tab_init(int **src, int x, int y)

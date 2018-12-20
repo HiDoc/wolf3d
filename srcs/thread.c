@@ -17,7 +17,7 @@ void	*launch_thread(void *arg)
 	t_thr	*tmp;
 
 	tmp = (t_thr *)arg;
-	wolf(tmp->env, tmp->nbr);
+	tron(tmp->env, tmp->nbr);
 	pthread_exit(NULL);
 }
 

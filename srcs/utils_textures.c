@@ -85,11 +85,11 @@ Uint32			line_floor_under(t_env *env, t_line *line, int y)
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
 	if (w % line->floor->w < 20 || h % line->floor->h < 20 )
-		return (0xffff00ff);
+		return (0xff00ffff);
 	else
 	{
 		if (weight < 0.2)
-			return (0xff00ffff);
+			return (0xff2010ff);
 		else
 			return (0xff000000);
 	}

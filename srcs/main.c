@@ -65,10 +65,11 @@ static void inline	loop_weapons(t_env *env, int *frame)
 void				loop_env(t_env *env)
 {
 	int		frame;
+	int		fps;
 	Uint32	time_a;
 
 	time_a = 0;
-	frame = 0;
+	fps = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
@@ -80,6 +81,7 @@ void				loop_env(t_env *env)
 			loop_mouse(env);
 			init_thread(env, 8);
 			loop_weapons(env, &frame);
+			ui_put_fps(env, fps);
 			copy_sdl(env);
 			health(env);
 			render_env(env);

@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-t_line	*line_init(t_env *env, t_line *line, int x)
+t_line	*line_init(t_env *env, t_line *line, int **map, int x)
 {
 	line->floor = env->floor;
 	line->sky = env->sky;
@@ -22,10 +22,10 @@ t_line	*line_init(t_env *env, t_line *line, int x)
 	point_set(&line->map, (int)env->pos.x, (int)env->pos.y);
 	point_set(&line->raydir, env->dir.x + env->plane.x * env->cam, env->dir.y + env->plane.y * env->cam);
 	point_set(&line->delta, delta(line->raydir.y, line->raydir.x), delta(line->raydir.x, line->raydir.y));
-	return (line_step(env, line));
+	return (line_step(env, line, map));
 }
 
-t_line	*line_step(t_env *env, t_line *line)
+t_line	*line_step(t_env *env, t_line *line, int **map)
 {
 	line->step.x = line->raydir.x < 0 ? -1 : 1;
 	line->step.y = line->raydir.y < 0 ? -1 : 1;
@@ -34,12 +34,12 @@ t_line	*line_step(t_env *env, t_line *line)
 	(line->raydir.y >= 0) ? line->side.y = 1 - line->side.y : 0;
 	line->side.x *= line->delta.x;
 	line->side.y *= line->delta.y;
-	return (line_dda(env, line));
+	return (line_dda(env, line, map));
 }
 
-t_line	*line_dda(t_env *env, t_line *line)
+t_line	*line_dda(t_env *env, t_line *line, int **map)
 {
-	while ((env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) == 0)
+	while ((map[(int)line->map.x][(int)line->map.y] & 0x10) == 0)
 	{
 		if (line->side.x < line->side.y)
 		{

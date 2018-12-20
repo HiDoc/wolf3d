@@ -26,6 +26,28 @@ static inline void	line_iter(
 	}
 }
 
+int					tron(t_env *env, int col)
+{
+	t_iline	iter;
+
+	iter.x = col - 1;
+	while (iter.x < WIDTH)
+	{
+		iter.y = 0;
+		line_init(env, &iter.line, env->w_map, iter.x);
+		iter.delim = iter.line.sdraw - (iter.line.edraw - iter.line.sdraw);
+		line_iter(env, &iter, &line_tron_floor, &sky_fog);
+		iter.delim = iter.line.sdraw;
+		line_iter(env, &iter, &line_tron_wall, &wall_fog);
+		iter.delim = iter.line.edraw;
+		line_iter(env, &iter, &line_tron_wall, &wall_fog);
+		iter.delim = HEIGHT;
+		line_iter(env, &iter, &line_tron_ceil, &floor_fog);
+		iter.x += 8;
+	}
+	return (0);
+}
+
 int					wolf(t_env *env, int col)
 {
 	t_iline	iter;
@@ -34,15 +56,15 @@ int					wolf(t_env *env, int col)
 	while (iter.x < WIDTH)
 	{
 		iter.y = 0;
-		line_init(env, &iter.line, iter.x);
+		line_init(env, &iter.line, env->w_map, iter.x);
 		iter.delim = iter.line.sdraw - (iter.line.edraw - iter.line.sdraw);
-		line_iter(env, &iter, &line_tron_ceil, &sky_fog);
+		line_iter(env, &iter, &line_sky, &sky_fog);
 		iter.delim = iter.line.sdraw;
-		line_iter(env, &iter, &line_tron_wall, &wall_fog);
+		line_iter(env, &iter, &line_wall, &wall_fog);
 		iter.delim = iter.line.edraw;
-		line_iter(env, &iter, &line_tron_wall, &wall_fog);
+		line_iter(env, &iter, &line_wall, &wall_fog);
 		iter.delim = HEIGHT;
-		line_iter(env, &iter, &line_tron_floor, &floor_fog);
+		line_iter(env, &iter, &line_floor_under, &floor_fog);
 		iter.x += 8;
 	}
 	return (0);

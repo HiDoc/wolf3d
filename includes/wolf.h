@@ -16,6 +16,7 @@
 # include "wolf_struct.h"
 
 int			wolf(t_env *env, int col);
+int			tron(t_env *env, int col);
 void		print_error(int nb, t_env *env);
 void		free_env(t_env *env);
 int			exit_wolf(t_env *env);
@@ -48,9 +49,9 @@ t_line		*objs_dda(t_env *env, t_line *line, int **tab);
 t_line		*objs_step(t_env *env, t_line *line, int **tab);
 t_line		*objs_max(t_env *env, t_line *line);
 
-t_line		*line_init(t_env *env, t_line *line, int x);
-t_line		*line_dda(t_env *env, t_line *line);
-t_line		*line_step(t_env *env, t_line *line);
+t_line		*line_init(t_env *env, t_line *line, int **map, int x);
+t_line		*line_dda(t_env *env, t_line *line, int **map);
+t_line		*line_step(t_env *env, t_line *line, int **map);
 t_line		*line_max(t_env *env, t_line *line);
 
 t_point		*point_cpy(t_point *a, t_point *b);
@@ -71,6 +72,7 @@ int			init_env(t_env *env);
 int			env_free(t_env *env);
 void		init_sdl(t_env *env);
 int			fill_tab(t_env *env);
+void		tab_print(int **tab, int x, int y);
 
 void		launch_screen(t_env *env);
 void		turn_logo(t_env *env);
@@ -82,6 +84,9 @@ int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
 int			sdl_mouse_click(t_env *env, int x, int y);
 int			sdl_exit_wolf(t_env *env, Uint8 scancode);
+void        ui_put_string(t_env *env, char *str, int x, int y);
+void        ui_put_fps(t_env *env, int fps);
+void	    put_img(t_env *env, SDL_Surface *img, int x, int y);
 
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 SDL_Surface	*img_new(char *filename);
@@ -89,7 +94,8 @@ SDL_Surface	*img_new(char *filename);
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
 
-int			**tab_copy(int **src, int **dest, int x, int y);
+void		tab_copy(int **src, int **dest, int x, int y);
+int			**tab_copy_alloc(int **src, int x, int y);
 int			**tab_init(int **src, int x, int y);
 int			tab_free(int **tab, int y);
 

@@ -69,6 +69,7 @@ SRC_NAME 	= main.c \
 			  utils_textures.c \
 			  utils_tron.c \
 			  utils_free.c \
+			  utils_ui.c \
 			  struct_img.c \
 			  musics.c		\
 			  sdl_mouse.c	\
@@ -87,28 +88,28 @@ INC = $(addprefix -I, $(INC_PATH))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "\nSources are ready to be used !\n"
-	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) -lft $(INC) $(LSDL2)
+	printf "\nSources are ready to be used !\n"
+	make -C $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) -lft $(INC) $(LSDL2)
 
 $(OBJ) : | $(OBJ_PATH)
 
 $(OBJ_PATH) :
-	@mkdir objs
+	mkdir objs
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@printf "\rCompiling $< into object file.. $(WAIT)          "
-	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
-	@printf "\rCompiling $< into object file.. $(OK)            "
+	printf "\rCompiling $< into object file.. $(WAIT)          "
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+	printf "\rCompiling $< into object file.. $(OK)            "
 
 clean:
-	@make -C $(LIBFT) clean
-	@rm -rf $(OBJ_PATH)
-	@rm -rf $(NAME).dSYM/
+	make -C $(LIBFT) clean
+	rm -rf $(OBJ_PATH)
+	rm -rf $(NAME).dSYM/
 
 fclean: clean
-	@make -C $(LIBFT) fclean
-	@rm -f $(NAME)
+	make -C $(LIBFT) fclean
+	rm -f $(NAME)
 
 run: all
 	clear
