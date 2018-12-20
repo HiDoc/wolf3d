@@ -35,11 +35,13 @@ Uint32		line_floor(t_env *env, t_line *line, int y);
 Uint32		line_floor_under(t_env *env, t_line *line, int y);
 Uint32		line_wall(t_env *env, t_line *line, int y);
 Uint32		line_wall_2(t_env *env, t_line *line, int y);
-Uint32		line_tron_floor(t_env *env, t_line *line, int y);
-Uint32		line_tron_wall(t_env *env, t_line *line, int y);
 Uint32		line_sky(t_env *env, t_line *line, int y);
 Uint32		line_sky_infinite(t_env *env, t_line *line, int y);
 t_point		*get_fwall(t_line *line, t_point *fwall);
+
+Uint32		line_tron_floor(t_env *env, t_line *line, int y);
+Uint32		line_tron_wall(t_env *env, t_line *line, int y);
+Uint32		line_tron_ceil(t_env *env, t_line *line, int y);
 
 t_line		*objs_init(t_env *env, t_line *line, int x, int **tab);
 t_line		*objs_dda(t_env *env, t_line *line, int **tab);
