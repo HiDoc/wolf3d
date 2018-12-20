@@ -11,6 +11,7 @@ static int  calc_color(Uint32 c, double delta)
 
     delta > 0.9 ? delta = 0.9 : 0;
     delta /= 1.50;
+    return (c | 0xFF000000);
     c |= 0xFF000000;
 	color.r = c >> 24;
 	color.g = c >> 16;

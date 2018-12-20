@@ -36,13 +36,13 @@ int					wolf(t_env *env, int col)
 		iter.y = 0;
 		line_init(env, &iter.line, iter.x);
 		iter.delim = iter.line.sdraw - (iter.line.edraw - iter.line.sdraw);
-		line_iter(env, &iter, &line_sky, &sky_fog);
+		line_iter(env, &iter, &line_tron_floor, &sky_fog);
 		iter.delim = iter.line.sdraw;
-		line_iter(env, &iter, &line_wall_2, &wall_fog);
+		line_iter(env, &iter, &line_tron_wall, &wall_fog);
 		iter.delim = iter.line.edraw;
-		line_iter(env, &iter, &line_wall, &wall_fog);
+		line_iter(env, &iter, &line_tron_wall, &wall_fog);
 		iter.delim = HEIGHT;
-		line_iter(env, &iter, &line_floor_under, &floor_fog);
+		line_iter(env, &iter, &line_tron_floor, &floor_fog);
 		iter.x += 8;
 	}
 	return (0);

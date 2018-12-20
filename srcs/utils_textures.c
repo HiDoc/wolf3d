@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-static t_point	*get_fwall(t_line *line, t_point *fwall)
+t_point			*get_fwall(t_line *line, t_point *fwall)
 {
 	if (line->sidew == 0 && line->raydir.x > 0)
 	{
