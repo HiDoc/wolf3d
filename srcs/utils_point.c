@@ -12,11 +12,11 @@
 
 #include "wolf.h"
 
-t_point	*point_cpy(t_point *a, t_point *b)
+t_point	*point_cpy(t_point *src, t_point *dst)
 {
-	a->x = (int)b->x;
-	a->y = (int)b->y;
-	return (a);
+	dst->x = src->x;
+	dst->y = src->y;
+	return (dst);
 }
 
 t_point	*point_delta(t_point *pdelta, t_point *raydir)

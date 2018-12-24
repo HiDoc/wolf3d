@@ -14,6 +14,7 @@
 
 t_line	*line_init(t_env *env, t_line *line, int **map, int x)
 {
+	line->nb_objs = 0;
 	line->floor = env->floor;
 	line->sky = env->sky;
 	line->wdist = -1;
@@ -41,6 +42,9 @@ t_line	*line_dda(t_env *env, t_line *line, int **map)
 {
 	while ((map[(int)line->map.x][(int)line->map.y] & 0x10) == 0)
 	{
+		if ((map[(int)line->map.x][(int)line->map.y] & 0x20) == 0x20)
+			if (line->nb_objs == 0 && obj_init(env, line) != NULL)
+				line->nb_objs++;
 		if (line->side.x < line->side.y)
 		{
 			line->side.x += line->delta.x;
@@ -69,7 +73,6 @@ t_line	*line_max(t_env *env, t_line *line)
 	line->lineh = (int)(HEIGHT / line->wdist);
 	line->sdraw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
 	line->sdraw < 0 ? line->sdraw = 0 : 0;
-	
 	line->edraw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->is_updn;
 	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
 	if (line->sidew == 0)

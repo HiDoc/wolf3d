@@ -15,15 +15,6 @@ Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
 	if (w % 512 < 20 || h % 512 < 20)
 		return (0xFFc7ff00);
-    double dist = line->wdist - HEIGHT / (HEIGHT - y + 1);
-    if (dist > 4)
-        return (0xffc70000);
-    if (dist > 3)
-        return (0xffc700ff);
-    if (dist > 2)
-        return (0xff00ffc7);
-    if (dist > 1)
-        return (0xffc7c700);
     return (0xff000000);
 }
 

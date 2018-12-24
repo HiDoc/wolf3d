@@ -25,6 +25,7 @@ typedef struct s_sdl	t_sdl;
 typedef struct s_hub	t_hub;
 typedef struct s_msc	t_msc;
 typedef struct s_wobj	t_wobj;
+typedef struct s_obj	t_obj;
 
 struct					s_sdl
 {
@@ -49,7 +50,7 @@ struct					s_thr
 	int			nbr;
 };
 
-struct					s_line
+struct					s_obj
 {
 	SDL_Surface	*text;
 	SDL_Surface	*floor;
@@ -65,6 +66,26 @@ struct					s_line
 	int			lineh;
 	int			sdraw;
 	int			edraw;
+};
+
+struct					s_line
+{
+	SDL_Surface	*text;
+	SDL_Surface	*floor;
+	SDL_Surface	*sky;
+	t_point		map;
+	t_point		delta;
+	t_point		step;
+	t_point		raydir;
+	t_point		wall;
+	t_point		side;
+	int			nb_objs;
+	double		wdist;
+	int			sidew;
+	int			lineh;
+	int			sdraw;
+	int			edraw;
+	t_line		*objs;
 };
 
 struct					s_hub

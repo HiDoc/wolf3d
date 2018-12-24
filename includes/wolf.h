@@ -44,10 +44,7 @@ Uint32		line_tron_floor(t_env *env, t_line *line, int y);
 Uint32		line_tron_wall(t_env *env, t_line *line, int y);
 Uint32		line_tron_ceil(t_env *env, t_line *line, int y);
 
-t_line		*objs_init(t_env *env, t_line *line, int x, int **tab);
-t_line		*objs_dda(t_env *env, t_line *line, int **tab);
-t_line		*objs_step(t_env *env, t_line *line, int **tab);
-t_line		*objs_max(t_env *env, t_line *line);
+t_line		*obj_init(t_env *env, t_line *line);
 
 t_line		*line_init(t_env *env, t_line *line, int **map, int x);
 t_line		*line_dda(t_env *env, t_line *line, int **map);
