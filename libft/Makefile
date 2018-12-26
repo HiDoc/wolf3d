@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/08 16:35:09 by abaille           #+#    #+#              #
-#    Updated: 2018/08/31 12:31:27 by fmadura          ###   ########.fr        #
+#    Updated: 2018/12/26 11:06:01 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@printf "\nLibft.a $(GREEN)created !$(WHITE)\n"
+	@printf "\nLibft.a $(GREEN)compiled !$(WHITE)\n"
 	@ranlib $(NAME)
 
 $(OBJ) : | $(OBJ_PATH)

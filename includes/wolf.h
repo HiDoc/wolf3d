@@ -84,12 +84,14 @@ int			sdl_exit_wolf(t_env *env, Uint8 scancode);
 void        ui_put_string(t_env *env, char *str, int x, int y);
 void        ui_put_fps(t_env *env, int fps);
 void	    put_img(t_env *env, SDL_Surface *img, int x, int y);
+void	    put_enemy(t_env *env);
 
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 SDL_Surface	*img_new(char *filename);
 
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
+void	    surface_drawline(SDL_Surface *surface, t_point start, t_point end);
 
 void		tab_copy(int **src, int **dest, int x, int y);
 int			**tab_copy_alloc(int **src, int x, int y);

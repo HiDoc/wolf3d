@@ -17,12 +17,37 @@ static inline void	obj_iter(
 	Uint32 (*f)(t_env*, t_line*, int),
 	int (*fog)(t_env *, t_line *, Uint32, int))
 {
-	while (iter->y < iter->delim && iter->y < HEIGHT)
+	int		x;
+	int		y;
+	int		prop;
+
+	x = iter->line.objs->map.x;
+	y = iter->line.objs->map.y;
+	if (env->w_map[x][y] == 0x60)
 	{
-		iter->color = f(env, iter->line.objs, iter->y - env->is_updn);
-		setpixel(env->sdl.surface, iter->x, iter->y,
-		fog(env, iter->line.objs, iter->color, iter->y));
-		++(iter->y);
+		prop = iter->delim - iter->y;
+		while (iter->y < iter->delim && iter->y < HEIGHT)
+		{
+			int new_y = ((prop - (iter->delim - iter->y)) * env->enemies[0].texture->h / prop);
+			int new_x = (int)(iter->line.objs->wall.x * env->enemies[0].texture->w);
+			iter->color = getpixel(env->enemies[0].texture, 
+			new_x % env->enemies[0].texture->w,
+			new_y % env->enemies[0].texture->h);
+			if (iter->color & 0xff000000)
+				setpixel(env->sdl.surface, iter->x, iter->y, iter->color);
+			++(iter->y);
+		}
+	}
+	else
+	{
+		while (iter->y < iter->delim && iter->y < HEIGHT)
+		{
+			iter->color = f(env, iter->line.objs, iter->y - env->is_updn);
+			setpixel(env->sdl.surface, iter->x, iter->y,
+			fog(env, iter->line.objs, iter->color, iter->y));
+			++(iter->y);
+
+		}
 	}
 }
 
@@ -51,18 +76,18 @@ int					tron(t_env *env, int col)
 	{
 		iter.y = 0;
 		line_init(env, &iter.line, env->w_map, iter.x);
-		iter.delim = iter.line.sdraw - (iter.line.edraw - iter.line.sdraw);
+		iter.delim = iter.line.start_draw - (iter.line.end_draw - iter.line.start_draw);
 		line_iter(env, &iter, &line_tron_floor, &sky_fog);
-		iter.delim = iter.line.sdraw;
+		iter.delim = iter.line.start_draw;
 		line_iter(env, &iter, &line_tron_wall, &wall_fog);
-		iter.delim = iter.line.edraw;
+		iter.delim = iter.line.end_draw;
 		line_iter(env, &iter, &line_tron_wall, &wall_fog);
 		iter.delim = HEIGHT;
 		line_iter(env, &iter, &line_tron_ceil, &floor_fog);
 		if (iter.line.nb_objs > 0)
 		{
-			iter.y = iter.line.objs->sdraw;
-			iter.delim = iter.line.objs->edraw;
+			iter.y = iter.line.objs->start_draw;
+			iter.delim = iter.line.objs->end_draw;
 			obj_iter(env, &iter, &line_tron_wall, &wall_fog);
 		}
 		iter.x += 8;
@@ -79,11 +104,11 @@ int					wolf(t_env *env, int col)
 	{
 		iter.y = 0;
 		line_init(env, &iter.line, env->w_map, iter.x);
-		iter.delim = iter.line.sdraw - (iter.line.edraw - iter.line.sdraw);
+		iter.delim = iter.line.start_draw - (iter.line.end_draw - iter.line.start_draw);
 		line_iter(env, &iter, &line_sky, &sky_fog);
-		iter.delim = iter.line.sdraw;
+		iter.delim = iter.line.start_draw;
 		line_iter(env, &iter, &line_wall, &wall_fog);
-		iter.delim = iter.line.edraw;
+		iter.delim = iter.line.end_draw;
 		line_iter(env, &iter, &line_wall, &wall_fog);
 		iter.delim = HEIGHT;
 		line_iter(env, &iter, &line_floor_under, &floor_fog);

@@ -39,7 +39,7 @@ int			sky_fog(t_env *env, t_line *line, Uint32 c, int y)
     double  delta;
 
     (void)env;
-    delta = (double)y / (double)line->sdraw * 1.2;
+    delta = (double)y / (double)line->start_draw * 1.2;
     return (calc_color(c, delta));
 }
 
@@ -48,6 +48,6 @@ int			floor_fog(t_env *env, t_line *line, Uint32 c, int y)
     double  delta;
 
     (void)env;
-    delta = (HEIGHT - (double)y) / (HEIGHT - line->edraw);
+    delta = (HEIGHT - (double)y) / (HEIGHT - line->end_draw);
     return (calc_color(c, delta));
 }

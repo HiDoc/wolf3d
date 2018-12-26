@@ -6,26 +6,28 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/04 14:42:01 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/24 11:45:15 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_STRUCT_H
 # define WOLF_STRUCT_H
 
-typedef struct s_env	t_env;
-typedef struct s_point	t_point;
-typedef struct s_thr	t_thr;
-typedef struct s_thw	t_thw;
-typedef struct s_line	t_line;
-typedef struct s_iline	t_iline;
-typedef struct s_ray	t_ray;
-typedef struct s_portal	t_portal;
-typedef struct s_sdl	t_sdl;
-typedef struct s_hub	t_hub;
-typedef struct s_msc	t_msc;
-typedef struct s_wobj	t_wobj;
-typedef struct s_obj	t_obj;
+typedef struct s_env		t_env;
+typedef struct s_enemy		t_enemy;
+typedef struct s_minimap	t_minimap;
+typedef struct s_point		t_point;
+typedef struct s_thr		t_thr;
+typedef struct s_thw		t_thw;
+typedef struct s_line		t_line;
+typedef struct s_iline		t_iline;
+typedef struct s_ray		t_ray;
+typedef struct s_portal		t_portal;
+typedef struct s_sdl		t_sdl;
+typedef struct s_hub		t_hub;
+typedef struct s_msc		t_msc;
+typedef struct s_wobj		t_wobj;
+typedef struct s_obj		t_obj;
 
 struct					s_sdl
 {
@@ -64,8 +66,8 @@ struct					s_obj
 	double		wdist;
 	int			sidew;
 	int			lineh;
-	int			sdraw;
-	int			edraw;
+	int			start_draw;
+	int			end_draw;
 };
 
 struct					s_line
@@ -83,8 +85,8 @@ struct					s_line
 	double		wdist;
 	int			sidew;
 	int			lineh;
-	int			sdraw;
-	int			edraw;
+	int			start_draw;
+	int			end_draw;
 	t_line		*objs;
 };
 
@@ -139,42 +141,63 @@ struct					s_wobj
 	int			is_bullet;
 };
 
+struct					s_minimap
+{
+	t_point		origin;
+	t_point		centre;
+	t_point		map_size;
+	t_point		pos_play;
+	t_point		diff;
+	t_point		limit_h;
+	t_point		limit_w;
+};
+
+struct					s_enemy
+{
+	int			is_active;
+	int			health;
+	t_point		pos;
+	SDL_Surface	*texture;
+};
+
 struct					s_env
 {
-	t_sdl		sdl;
-	t_thr		thr[THREAD_NBR];
-	t_point		pos;
-	t_point		dir;
-	t_point		plane;
-	double		is_updn;
-	double		cam;
+	SDL_Surface	*ak_frms[43];
+	SDL_Surface	*bul_surf[6];
+	SDL_Surface	*floor;
+	SDL_Surface	*gun_impact;
+	SDL_Surface	*mitra_frms[36];
+	SDL_Surface	*sky;
+	SDL_Surface	*stitch[18];
+	SDL_Surface	*walls[10];
 	double		ang;
-	double		pang;
+	double		cam;
+	double		hratio;
+	double		is_updn;
+	double		angle_d;
+	double		angle_r;
+	int			**o_map;
 	int			**w_map;
 	int			**w_map_2;
-	int			**o_map;
-	SDL_Surface	*enemy;
-	SDL_Surface	*floor;
-	SDL_Surface	*sky;
-	SDL_Surface	*gun_impact;
-	SDL_Surface	*walls[10];
-	SDL_Surface	*ak_frms[43];
-	SDL_Surface	*mitra_frms[36];
-	SDL_Surface	*stitch[18];
-	SDL_Surface	*bul_surf[6];
-	int			ld_wp;
-	int			is_shootin;
-	int			width;
 	int			height;
-	t_hub		lscreen;
-	t_hub		title;
+	int			is_jump;
+	int			is_shootin;
+	int			ld_wp;
+	int			width;
+	t_enemy		enemies[10];
+	t_minimap	minimap;
 	t_hub		life;
 	t_hub		logo;
-	double		hratio;
-	int			is_jump;
+	t_hub		lscreen;
+	t_hub		title;
 	t_msc		sounds;
-	t_wobj		wobj;
+	t_point		dir;
 	t_point		mouse;
+	t_point		plane;
+	t_point		pos;
+	t_sdl		sdl;
+	t_thr		thr[THREAD_NBR];
+	t_wobj		wobj;
 };
 
 struct					s_iline

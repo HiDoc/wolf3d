@@ -42,8 +42,8 @@ t_line	*line_dda(t_env *env, t_line *line, int **map)
 {
 	while ((map[(int)line->map.x][(int)line->map.y] & 0x10) == 0)
 	{
-		if ((map[(int)line->map.x][(int)line->map.y] & 0x20) == 0x20)
-			if (line->nb_objs == 0 && obj_init(env, line) != NULL)
+		if ((map[(int)line->map.x][(int)line->map.y] & 0x20) == 0x20
+			&& line->nb_objs == 0 && obj_init(env, line) != NULL)
 				line->nb_objs++;
 		if (line->side.x < line->side.y)
 		{
@@ -71,10 +71,10 @@ t_line	*line_dda(t_env *env, t_line *line, int **map)
 t_line	*line_max(t_env *env, t_line *line)
 {
 	line->lineh = (int)(HEIGHT / line->wdist);
-	line->sdraw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
-	line->sdraw < 0 ? line->sdraw = 0 : 0;
-	line->edraw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->is_updn;
-	line->edraw >= HEIGHT ? line->edraw = HEIGHT - 1 : 0;
+	line->start_draw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
+	line->start_draw < 0 ? line->start_draw = 0 : 0;
+	line->end_draw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->is_updn;
+	line->end_draw >= HEIGHT ? line->end_draw = HEIGHT - 1 : 0;
 	if (line->sidew == 0)
 		line->wall.x = env->pos.y + line->wdist * line->raydir.y;
 	else

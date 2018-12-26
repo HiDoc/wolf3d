@@ -94,6 +94,7 @@ void			new_bullet_surf(t_env *env)
 
 void			img(t_env *env)
 {
+	env->enemies[0].texture = img_new("enemies/enemytest");
 	env->walls[0] = img_new("wall_1");
 	env->walls[1] = img_new("door");
 	env->walls[2] = img_new("wall_1");
@@ -102,7 +103,6 @@ void			img(t_env *env)
 	env->walls[5] = img_new("wall_1");
 	env->walls[6] = img_new("floor_scifi2");
 	env->walls[7] = img_new("floor_scifi2");
-	env->enemy = img_new("enemy");
 	env->floor = img_new("floor_scifi");
 	env->sky = img_new("floor");
 	env->life.img = img_new("thealth");

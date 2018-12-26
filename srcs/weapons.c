@@ -26,6 +26,8 @@ int	load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon)
 int	shoot_weapon(t_env *env, int frame)
 {
 	SDL_Rect	rect;
+	t_point		start;
+	t_point		end;
 
 	rect.w = 0;
 	rect.h = 0;
@@ -33,8 +35,13 @@ int	shoot_weapon(t_env *env, int frame)
 	rect.y = 170;
 	if (frame < 8)
 	{
-		if (SDL_BlitSurface(env->mitra_frms[frame], NULL, env->sdl.surface, &rect) < 0)
-			printf("SDL_blits failed: %s\n", SDL_GetError());
+		//if (SDL_BlitSurface(env->mitra_frms[frame], NULL, env->sdl.surface, &rect) < 0)
+		//	printf("SDL_blits failed: %s\n", SDL_GetError());
+		start.x = 520;
+		start.y = 430;
+		end.x = 400;
+		end.y = 300;
+		surface_drawline(env->sdl.surface, start, end);
 	}
 	else
 		env->is_shootin = 0;

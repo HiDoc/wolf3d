@@ -70,6 +70,7 @@ int		init_thread(t_env *env, int threads)
 		}
 		x++;
 	}
+	put_enemy(env);
 	put_health(env);
 	return (0);
 }

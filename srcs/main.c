@@ -45,7 +45,7 @@ static void inline	loop_weapons(t_env *env, int *frame)
 {
 	if (env->is_shootin)
 	{
-		shoot_weapon(env, *frame);
+		//shoot_weapon(env, *frame);
 		++(*frame);
 	}
 	else if (env->ld_wp)
