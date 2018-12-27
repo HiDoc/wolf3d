@@ -117,6 +117,7 @@ Uint32			line_wall_2(t_env *env, t_line *line, int y)
 	int		yy;
 	int		delta;
 
+	(void)env;
 	x = (int)(line->wall.x * line->text->w);
 	x = ft_abs(line->text->w - x - 1);
 	delta = line->text->h * (2.0 * y - HEIGHT + line->lineh);
@@ -130,6 +131,7 @@ Uint32			line_wall(t_env *env, t_line *line, int y)
 	int		yy;
 	int		delta;
 
+	(void)env;
 	x = (int)(line->wall.x * line->text->w);
 	x = ft_abs(line->text->w - x - 1);
 	delta = line->text->h * (2.0 * y - HEIGHT + line->lineh);

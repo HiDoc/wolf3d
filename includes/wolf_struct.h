@@ -32,7 +32,7 @@ typedef struct s_limit		t_limit;
 
 struct					s_sdl
 {
-	Uint32			pixels[800 * 600];
+	Uint32			pixels[WIDTH * HEIGHT];
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	SDL_Texture		*texture;
@@ -169,6 +169,15 @@ struct					s_enemy
 	SDL_Surface	*texture;
 };
 
+struct					s_iline
+{
+	int			x;
+	int			y;
+	int			delim;
+	t_line		line;
+	Uint32		color;
+};
+
 struct					s_env
 {
 	SDL_Surface	*ak_frms[43];
@@ -207,14 +216,7 @@ struct					s_env
 	t_sdl		sdl;
 	t_thr		thr[THREAD_NBR];
 	t_wobj		wobj;
+	t_iline		rays[WIDTH];
 };
 
-struct					s_iline
-{
-	int			x;
-	int			y;
-	int			delim;
-	t_line		line;
-	Uint32		color;
-};
 #endif

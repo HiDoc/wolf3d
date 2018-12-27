@@ -42,6 +42,7 @@ Uint32			line_tron_wall(t_env *env, t_line *line, int y)
 	double		yy;
 	double		delta;
 
+	(void)env;
 	x = (line->wall.x * 512);
 	delta = 256 * (2.0 * y - (HEIGHT + line->lineh));
 	yy = ft_abs(delta / line->lineh);
