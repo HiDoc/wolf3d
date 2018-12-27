@@ -26,8 +26,8 @@
 # include <stdio.h>
 
 # include "libft.h"
-# define WIDTH          env->width
-# define HEIGHT 	    env->height
+# define WIDTH          800
+# define HEIGHT 	    600
 # define THREAD_NBR     200
 # define SCREEN_FPS     60
 # define SCREEN_TIC     16

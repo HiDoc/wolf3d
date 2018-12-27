@@ -67,30 +67,31 @@ static inline void	line_iter(
 
 int					tron(t_env *env, int col)
 {
-	t_iline	iter;
+	t_iline	*iter;
 	t_line	objs;
 
-	iter.x = col - 1;
-	iter.line.objs = &objs;
-	while (iter.x < WIDTH)
+	iter = &env->rays[col - 1];
+	iter->x = col - 1;
+	iter->line.objs = &objs;
+	while (iter->x < WIDTH)
 	{
-		iter.y = 0;
-		line_init(env, &iter.line, env->w_map, iter.x);
-		iter.delim = iter.line.start_draw - (iter.line.end_draw - iter.line.start_draw);
-		line_iter(env, &iter, &line_tron_floor, &sky_fog);
-		iter.delim = iter.line.start_draw;
-		line_iter(env, &iter, &line_tron_wall, &wall_fog);
-		iter.delim = iter.line.end_draw;
-		line_iter(env, &iter, &line_tron_wall, &wall_fog);
-		iter.delim = HEIGHT;
-		line_iter(env, &iter, &line_tron_ceil, &floor_fog);
-		if (iter.line.nb_objs > 0)
+		iter->y = 0;
+		line_init(env, &iter->line, env->w_map, iter->x);
+		iter->delim = iter->line.start_draw - (iter->line.end_draw - iter->line.start_draw);
+		line_iter(env, iter, &line_tron_floor, &sky_fog);
+		iter->delim = iter->line.start_draw;
+		line_iter(env, iter, &line_tron_wall, &wall_fog);
+		iter->delim = iter->line.end_draw;
+		line_iter(env, iter, &line_tron_wall, &wall_fog);
+		iter->delim = HEIGHT;
+		line_iter(env, iter, &line_tron_ceil, &floor_fog);
+		if (iter->line.nb_objs > 0)
 		{
-			iter.y = iter.line.objs->start_draw;
-			iter.delim = iter.line.objs->end_draw;
-			obj_iter(env, &iter, &line_tron_wall, &wall_fog);
+			iter->y = iter->line.objs->start_draw;
+			iter->delim = iter->line.objs->end_draw;
+			obj_iter(env, iter, &line_tron_wall, &wall_fog);
 		}
-		iter.x += 8;
+		iter->x += 8;
 	}
 	return (0);
 }

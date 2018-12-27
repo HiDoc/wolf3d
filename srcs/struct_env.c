@@ -161,8 +161,8 @@ void	bzero_env(t_env *env)
 int		init_env(t_env *env)
 {
 	bzero_env(env);
-	env->width = 800;
-	env->height = 600;
+	env->width = WIDTH;
+	env->height = HEIGHT;
 	env->ang = 2.0;
 	env->sdl.surface = NULL;
 	point_set(&env->pos, 10.0, 10.0);
@@ -171,8 +171,7 @@ int		init_env(t_env *env)
 	env->logo.ang = 0.0;
 	env->hratio = 2;
 	fill_tab(env);
-	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);
-	env->w_map_2[3][2] = 0x0000;
+	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);;
 	img(env);
 	init_wobj(env);
 	put_poster(env);
