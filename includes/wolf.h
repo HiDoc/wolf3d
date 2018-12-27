@@ -92,6 +92,7 @@ SDL_Surface	*img_new(char *filename);
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
 void	    surface_drawline(SDL_Surface *surface, t_point start, t_point end);
+void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
 
 void		tab_copy(int **src, int **dest, int x, int y);
 int			**tab_copy_alloc(int **src, int x, int y);
