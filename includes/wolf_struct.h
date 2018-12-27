@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 13:04:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2018/12/27 19:32:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,11 @@ struct					s_enemy
 
 struct					s_iline
 {
-	int			x;
-	int			y;
-	int			delim;
+	int			x; // sg : je m'en sert pas
+	int			y; // sg : je m'en sert pas 
+	int			delim; // sg : je m'en sert pas
 	t_line		line;
-	Uint32		color;
+	Uint32		color; // sg : je m'en sert pas
 };
 
 struct					s_env

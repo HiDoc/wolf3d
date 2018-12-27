@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 13:06:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2018/12/27 19:43:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ SDL_Surface	*img_new(char *filename);
 
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
-void	    surface_drawline(SDL_Surface *surface, t_point start, t_point end);
-void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
+void	    surface_drawline(SDL_Surface *surface,
+			t_point start, t_point end, Uint32 color);
+void		surface_drawrect(SDL_Surface *surface,
+			SDL_Rect rect, t_limit *limit, Uint32 color);
 
 void		tab_copy(int **src, int **dest, int x, int y);
 int			**tab_copy_alloc(int **src, int x, int y);

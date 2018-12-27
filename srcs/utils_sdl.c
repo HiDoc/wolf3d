@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 15:55:08 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:42:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/27 19:44:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 	return (ret);
 }
 
-void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
+void		surface_drawrect(SDL_Surface *surface,
+			SDL_Rect rect, t_limit *limit, Uint32 color)
 {
 	int		i;
 	int		j;
@@ -91,7 +92,8 @@ void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
 		j = 0;
 		while (j < rect.w)
 		{
-			if (rect.x + j < surface->w && rect.x + j < surface->h)
+			if (!limit || (rect.x + j > limit->xmin && rect.x + j < limit->xmax
+			&& rect.y + i > limit->ymin && rect.y + i < limit->ymax))
 				setpixel(surface, rect.x + j, rect.y + i, color);
 			j++;
 		}
@@ -99,7 +101,8 @@ void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
 	}
 }
 
-void	surface_drawline(SDL_Surface *surface, t_point start, t_point end)
+void	surface_drawline(SDL_Surface *surface,
+		t_point start, t_point end, Uint32 color)
 {
 	
 	int x0 = start.x;
@@ -116,7 +119,7 @@ void	surface_drawline(SDL_Surface *surface, t_point start, t_point end)
 	
 	while (x0 != x1 || y0 != y1)
 	{
-		setpixel(surface, x0, y0, 0xFF00FF00);
+		setpixel(surface, x0, y0, color);
 		e2 = err;
 		if (e2 >-dx)
 		{ 

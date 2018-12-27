@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 16:18:20 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/11 16:19:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/27 19:45:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	shoot_weapon(t_env *env, int frame)
 		start.y = 430;
 		end.x = 400;
 		end.y = 300;
-		surface_drawline(env->sdl.surface, start, end);
+		surface_drawline(env->sdl.surface, start, end, 0xFF000000);
 	}
 	else
 		env->is_shootin = 0;

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 12:06:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2018/12/27 19:14:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void				loop_env(t_env *env)
 			loop_mouse(env);
 			init_thread(env, 8);
 			loop_weapons(env, &frame);
+			struct_minimap(env);
 			ui_put_fps(env, fps);
 			copy_sdl(env);
 			health(env);
-			struct_minimap(env);
 			render_env(env);
 			time_a = SDL_GetTicks();
 		}
@@ -111,6 +111,7 @@ int					main(int argc, char *argv[])
 		exit(1);
 	}
 	init_env(env);
+	env->minimap.mnp_size = 20; // a mettre la ou il faut
 	load_sounds(env);
 	launch_screen(env);
 	loop_env(env);
