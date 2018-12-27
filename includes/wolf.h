@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 11:55:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2018/12/27 13:06:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,11 @@ int			affiche_map(t_env *env, Uint8 keycode);
 int			load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon);
 int			shoot_weapon(t_env *env, int frame);
 int			player_jump(t_env *env);
+
+/*
+** display minimap
+*/
+
+void		struct_minimap(t_env *env);
 
 #endif

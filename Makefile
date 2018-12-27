@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/12/27 11:56:26 by sgalasso         ###   ########.fr        #
+#    Updated: 2018/12/27 12:26:03 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC_NAME 	= main.c \
 			  struct_env.c \
 			  struct_enemy.c \
 			  struct_obj.c \
+			  struct_minimap.c \
 			  utils_tab.c \
 			  utils_sdl.c \
 			  utils_maths.c \

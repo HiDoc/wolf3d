@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/24 11:45:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/27 13:04:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_hub		t_hub;
 typedef struct s_msc		t_msc;
 typedef struct s_wobj		t_wobj;
 typedef struct s_obj		t_obj;
+typedef struct s_limit		t_limit;
 
 struct					s_sdl
 {
@@ -141,15 +142,23 @@ struct					s_wobj
 	int			is_bullet;
 };
 
+struct					s_limit
+{
+	int				xmin;
+	int				xmax;
+	int				ymin;
+	int				ymax;
+};
+
 struct					s_minimap
 {
 	t_point		origin;
 	t_point		centre;
 	t_point		map_size;
+	double		mnp_size;
 	t_point		pos_play;
+	t_limit		limit;
 	t_point		diff;
-	t_point		limit_h;
-	t_point		limit_w;
 };
 
 struct					s_enemy
