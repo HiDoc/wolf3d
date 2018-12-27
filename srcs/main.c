@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 18:27:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/27 11:58:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void				loop_env(t_env *env)
 			ui_put_fps(env, fps);
 			copy_sdl(env);
 			health(env);
+			struct_minimap(env);
 			render_env(env);
 			time_a = SDL_GetTicks();
 		}
