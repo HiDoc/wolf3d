@@ -88,7 +88,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) -lft $(INC) $(LSDL2)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft $(INC) $(LSDL2)
 
 $(OBJ) : | $(OBJ_PATH)
 
