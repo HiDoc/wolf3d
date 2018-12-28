@@ -44,15 +44,15 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 	mult = x < 0 ? 4.0 : -4.0;
 	env->dir = point_rotate(env->dir, mult);
 	env->plane = point_rotate(env->plane, mult);
-	env->pang += mult;
-	env->pang > 358.0 ? env->pang = 0.0 : 0;
-	env->pang < 0.0 ? env->pang = 358.0 : 0;
-	if (y > 20)
+	env->angle_d += mult;
+	env->angle_d > 358.0 ? env->angle_d = 0.0 : 0;
+	env->angle_d < 0.0 ? env->angle_d = 358.0 : 0;
+	if (y > 10)
 	{
 		if (env->is_updn > -400)
 			env->is_updn -= 20;
 	}
-	else if (y < -20)
+	else if (y < -10)
 	{
 		if (env->is_updn < 400)
 			env->is_updn += 20;

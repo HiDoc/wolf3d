@@ -6,13 +6,13 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/04 16:50:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2018/12/18 14:07:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static t_point	*get_fwall(t_line *line, t_point *fwall)
+t_point			*get_fwall(t_line *line, t_point *fwall)
 {
 	if (line->sidew == 0 && line->raydir.x > 0)
 	{
@@ -37,7 +37,7 @@ static t_point	*get_fwall(t_line *line, t_point *fwall)
 	return (fwall);
 }
 
-Uint32			infinite_sky(t_env *env, t_line *line, int y)
+Uint32			line_sky_infinite(t_env *env, t_line *line, int y)
 {
 	t_point	fwall;
 	t_point	cfloor;
@@ -60,8 +60,8 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	int		w;
 	int		h;
 
-	w = line->floor->w * 2;
-	h = line->floor->h * 2;
+	w = line->floor->w << 1;
+	h = line->floor->h << 1;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x - (1.0 / 3.0 + weight) * env->pos.x) * w);
@@ -69,6 +69,30 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	w = w % line->floor->w;
 	h = h % line->floor->h;
 	return (getpixel(line->floor, w % 128, h % 128));
+}
+
+Uint32			line_floor_under(t_env *env, t_line *line, int y)
+{
+	t_point	fwall;
+	double	weight;
+	int		w;
+	int		h;
+
+	w = line->floor->w;
+	h = line->floor->h;
+	get_fwall(line, &fwall);
+	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
+	if (w % line->floor->w < 20 || h % line->floor->h < 20 )
+		return (0xff00ffff);
+	else
+	{
+		if (weight < 0.2)
+			return (0xff2010ff);
+		else
+			return (0xff000000);
+	}
 }
 
 Uint32			line_floor(t_env *env, t_line *line, int y)
@@ -87,16 +111,30 @@ Uint32			line_floor(t_env *env, t_line *line, int y)
 	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 
+Uint32			line_wall_2(t_env *env, t_line *line, int y)
+{
+	int		x;
+	int		yy;
+	int		delta;
+
+	(void)env;
+	x = (int)(line->wall.x * line->text->w);
+	x = ft_abs(line->text->w - x - 1);
+	delta = line->text->h * (2.0 * y - HEIGHT + line->lineh);
+	yy = ft_abs(delta * 0.5 / line->lineh);
+	return (getpixel(line->text, (x % line->text->w), (yy % line->text->h)));
+}
+
 Uint32			line_wall(t_env *env, t_line *line, int y)
 {
 	int		x;
 	int		yy;
 	int		delta;
 
+	(void)env;
 	x = (int)(line->wall.x * line->text->w);
 	x = ft_abs(line->text->w - x - 1);
-	delta = line->text->h * (double)(2.0 * y - (double)HEIGHT + line->lineh);
+	delta = line->text->h * (2.0 * y - HEIGHT + line->lineh);
 	yy = ft_abs(delta * 0.5 / line->lineh);
-	return (0x00ff00);
-	//return (getpixel(line->text, (x % line->text->w), (yy % line->text->h)));
+	return (getpixel(line->text, (x % line->text->w), (yy % line->text->h)));
 }

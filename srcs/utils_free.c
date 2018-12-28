@@ -57,8 +57,6 @@ int		env_free(t_env *env)
 		tab_free(env->w_map, 24);
 	if (env->o_map)
 		tab_free(env->o_map, 24);
-	if (env->enemy)
-		SDL_FreeSurface(env->enemy);
 	if (env->floor)
 		SDL_FreeSurface(env->floor);
 	if (env->sky)

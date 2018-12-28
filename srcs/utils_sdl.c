@@ -79,3 +79,54 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 	SDL_UnlockSurface(surface);
 	return (ret);
 }
+
+void		surface_drawrect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < rect.h)
+	{
+		j = 0;
+		while (j < rect.w)
+		{
+			if (rect.x + j < surface->w && rect.x + j < surface->h)
+				setpixel(surface, rect.x + j, rect.y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	surface_drawline(SDL_Surface *surface, t_point start, t_point end)
+{
+	
+	int x0 = start.x;
+	int y0 = start.y;
+	int x1 = end.x;
+	int y1 = end.y;
+ 
+	int dx = abs(x1 - x0);
+	int sx = x0 < x1 ? 1 : -1;
+	int dy = abs(y1 - y0);
+	int sy = y0 < y1 ? 1 : -1; 
+	int err = (dx > dy ? dx : -dy) / 2;
+	int e2 = 0;
+	
+	while (x0 != x1 || y0 != y1)
+	{
+		setpixel(surface, x0, y0, 0xFF00FF00);
+		e2 = err;
+		if (e2 >-dx)
+		{ 
+			err -= dy; 
+			x0 += sx; 		
+		}
+		if (e2 < dy) 
+		{ 
+			err += dx; 
+			y0 += sy; 
+		}
+	}
+}
