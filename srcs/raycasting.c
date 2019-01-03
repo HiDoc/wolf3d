@@ -69,12 +69,14 @@ int					tron(t_env *env, int col)
 {
 	t_iline	*iter;
 	t_line	objs;
+	int		x;
 
-	iter = &env->rays[col - 1];
-	iter->x = col - 1;
-	iter->line.objs = &objs;
-	while (iter->x < WIDTH)
+	x = col - 1;
+	while (x < WIDTH)
 	{
+		iter = &env->rays[x];
+		iter->line.objs = &objs;
+		iter->x = x;
 		iter->y = 0;
 		line_init(env, &iter->line, env->w_map, iter->x);
 		iter->delim = iter->line.start_draw - (iter->line.end_draw - iter->line.start_draw);
@@ -91,7 +93,7 @@ int					tron(t_env *env, int col)
 			iter->delim = iter->line.objs->end_draw;
 			obj_iter(env, iter, &line_tron_wall, &wall_fog);
 		}
-		iter->x += 8;
+		x += 8;
 	}
 	return (0);
 }
