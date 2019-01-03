@@ -101,6 +101,24 @@ void		surface_drawrect(SDL_Surface *surface,
 	}
 }
 
+void		surface_drawborder(SDL_Surface *surface,
+			SDL_Rect rect, Uint32 color)
+{
+	t_point		a;
+	t_point		b;
+
+	a = (t_point){rect.x, rect.y};
+	b = (t_point){rect.x + rect.w, rect.y};
+	surface_drawline(surface, a, b, color);
+	b = (t_point){rect.x, rect.y + rect.h};
+	surface_drawline(surface, a, b, color);
+	a = (t_point){rect.x + rect.w, rect.y + rect.h};
+	b = (t_point){rect.x + rect.w, rect.y};
+	surface_drawline(surface, a, b, color);
+	b = (t_point){rect.x, rect.y + rect.h};
+	surface_drawline(surface, a, b, color);
+}
+
 void	surface_drawline(SDL_Surface *surface,
 		t_point start, t_point end, Uint32 color)
 {

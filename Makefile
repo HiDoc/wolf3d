@@ -44,11 +44,11 @@ ifeq ($(UNAME), Linux)
 
 OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
 else
-INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
+INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.9/include/ \
+				/Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.9/include/SDL2/ \
 				/Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/
+				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.4/include/ \
+				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.4/include/
 endif
 
 SRC_NAME 	= main.c \

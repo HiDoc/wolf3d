@@ -36,8 +36,8 @@ static void		ft_draw_background(t_env *env)
 
 	rect = (SDL_Rect){env->minimap.origin.x,
 	env->minimap.origin.y, env->width / 4, env->height / 4};
-	//ft_draw_border(rect, 0xFFFFFFFF, env);
 	surface_drawrect(env->sdl.surface, rect, 0, 0xFF000000);
+	surface_drawborder(env->sdl.surface, rect, 0xFFFFFFFF);
 }
 
 static void		ft_draw_ray(int i, t_env *env)
@@ -47,9 +47,12 @@ static void		ft_draw_ray(int i, t_env *env)
 	/*double		angle_r;
 	t_point		step;
 	t_point		a;
-	t_point		b;
+	t_point		b;*/
 
-	angle_r = (env->rays[i].line.sidew) * M_PI / 180;
+	if (i % 25 == 0)
+		printf("ray[%d] : dist : %f\n", i, env->rays[i].line.wdist);
+
+	/*angle_r = (env->rays[i].line.sidew) * M_PI / 180;
 
 	step.x = -cos(angle_r) * env->rays[i].line.wdist
 	* env->minimap.mnp_size / 50;
