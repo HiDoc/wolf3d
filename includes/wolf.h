@@ -93,6 +93,8 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
 void	    surface_drawline(SDL_Surface *surface,
 			t_point start, t_point end, Uint32 color);
+void		surface_drawline_limit(SDL_Surface *surface,
+			t_point start, t_point end, t_limit limit, Uint32 color);
 void		surface_drawrect(SDL_Surface *surface,
 			SDL_Rect rect, t_limit *limit, Uint32 color);
 void        surface_drawborder(SDL_Surface *surface,

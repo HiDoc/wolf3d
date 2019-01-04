@@ -42,28 +42,18 @@ static void		ft_draw_background(t_env *env)
 
 static void		ft_draw_ray(int i, t_env *env)
 {
-	(void)i;
-	(void)env;
-	/*double		angle_r;
-	t_point		step;
 	t_point		a;
-	t_point		b;*/
+	t_point		b;
 
-	if (i % 25 == 0)
-		printf("ray[%d] : dist : %f\n", i, env->rays[i].line.wdist);
-
-	/*angle_r = (env->rays[i].line.sidew) * M_PI / 180;
-
-	step.x = -cos(angle_r) * env->rays[i].line.wdist
-	* env->minimap.mnp_size / 50;
-	step.y = -sin(angle_r) * env->rays[i].line.wdist
-	* env->minimap.mnp_size / 50;
-
+	// calcul des points
 	a = (t_point){env->minimap.centre.x, env->minimap.centre.y};
-	b.x = env->minimap.centre.x + env->rays[i].line.sidew;
-	b.y = env->minimap.centre.y + env->rays[i].line.lineh;
+	b.x = env->minimap.centre.x
+	+ (env->rays[i].line.raydir.y * env->rays[i].line.wdist * 20);
+	b.y = env->minimap.centre.y
+	+ (env->rays[i].line.raydir.x * env->rays[i].line.wdist * 20);
 
-	surface_drawline(env->sdl.surface, a, b, 0xFFBFFCFF);*/
+	// affichage rayon
+	surface_drawline_limit(env->sdl.surface, a, b, env->minimap.limit, 0xFFBFFCFF);
 }
 
 static void		ft_draw_player(t_env *env)

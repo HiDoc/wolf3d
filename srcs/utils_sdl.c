@@ -151,3 +151,36 @@ void	surface_drawline(SDL_Surface *surface,
 		}
 	}
 }
+
+void	surface_drawline_limit(SDL_Surface *surface,
+		t_point start, t_point end, t_limit limit, Uint32 color)
+{
+	int x0 = start.x;
+	int y0 = start.y;
+	int x1 = end.x;
+	int y1 = end.y;
+ 
+	int dx = abs(x1 - x0);
+	int sx = x0 < x1 ? 1 : -1;
+	int dy = abs(y1 - y0);
+	int sy = y0 < y1 ? 1 : -1; 
+	int err = (dx > dy ? dx : -dy) / 2;
+	int e2 = 0;
+	
+	while (x0 != x1 || y0 != y1)
+	{
+		if (x0 > limit.xmin && x0 < limit.xmax && y0 > limit.ymin && y0 < limit.ymax)
+			setpixel(surface, x0, y0, color);
+		e2 = err;
+		if (e2 >-dx)
+		{ 
+			err -= dy; 
+			x0 += sx; 		
+		}
+		if (e2 < dy) 
+		{ 
+			err += dx; 
+			y0 += sy; 
+		}
+	}
+}
