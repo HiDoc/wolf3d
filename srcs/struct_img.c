@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_img.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/04 16:56:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:03:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void			img(t_env *env)
 	env->sky = img_new("floor");
 	env->life.img = img_new("thealth");
 	env->lscreen.img = img_new("accueil");
-	env->logo.img = img_new("logo");
 	env->gun_impact = img_new("lilbullet");
 	env->wobj.posters[1] = img_new("posters/lilstrangerthings");
 	env->wobj.posters[2] = img_new("posters/lilstarwars");

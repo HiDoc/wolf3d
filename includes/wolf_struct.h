@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 17:49:42 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 18:52:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ typedef struct s_wobj		t_wobj;
 typedef struct s_limit		t_limit;
 
 /*
-**
-**	Gameplay Structures	
-**
+**	Gameplay Structure
 */
 
-typedef struct s_object		t_object; 
+typedef struct s_object		t_object;
 typedef struct s_weapon		t_weapon;
 typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
@@ -174,9 +172,8 @@ struct					s_minimap
 };
 
 /*
-** 
 ** Gameplay structures
-** 1 - Objects 
+** 1 - Objects
 ** 2 - Weapons
 ** 3 - Actions
 ** 4 - Inventory
@@ -240,11 +237,11 @@ struct					s_character
 
 struct					s_iline
 {
-	int			x; // sg : je m'en sert pas
-	int			y; // sg : je m'en sert pas 
-	int			delim; // sg : je m'en sert pas
+	int			x;
+	int			y;
+	int			delim;
 	t_line		line;
-	Uint32		color; // sg : je m'en sert pas
+	Uint32		color;
 };
 
 struct					s_env
@@ -257,31 +254,33 @@ struct					s_env
 	SDL_Surface	*sky;
 	SDL_Surface	*stitch[18];
 	SDL_Surface	*walls[10];
+
 	double		ang;
 	double		cam;
 	double		hratio;
 	double		is_updn;
 	double		angle_d;
 	double		angle_r;
-	int			**o_map;
+
 	int			**w_map;
 	int			**w_map_2;
 	int			height;
 	int			width;
+
 	t_character	enemies[10];
 	t_minimap	minimap;
 	t_hub		life;
-	t_hub		logo;
 	t_hub		lscreen;
 	t_hub		title;
 	t_msc		sounds;
 
 	t_character player;
+	t_point		pos;
+
 	int			is_jump;
 	int			is_shootin;
 	int			ld_wp;
-	t_point		pos;
-	
+
 	t_point		mouse;
 	t_sdl		sdl;
 	t_thr		thr[THREAD_NBR];

@@ -13,7 +13,7 @@ Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
-	if (w % 512 < 20 || h % 512 < 20)
+	if (w % 512 < 5 || h % 512 < 5 || h % 512 > 507 || w % 512 > 507)
 		return (0xFFc7ff00);
     return (0xff000000);
 }
@@ -46,7 +46,7 @@ Uint32			line_tron_wall(t_env *env, t_line *line, int y)
 	x = (line->wall.x * 512);
 	delta = 256 * (2.0 * y - (HEIGHT + line->lineh));
 	yy = ft_abs(delta / line->lineh);
-    if ((int)x % 512 < 10 || (int)yy % 512 < 10)
+    if ((int)x % 512 < 5 || (int)yy % 512 < 5 || (int)x % 512 > 507 || (int)yy % 512 > 507)
 		return (0xffc7ff00);
     return (0xff000000);
 }

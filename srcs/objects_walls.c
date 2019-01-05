@@ -60,8 +60,6 @@ int			put_bullet_pxls(t_env *env, SDL_Surface *surface, int px, int py)
 int			check_impact(t_line *line, t_env *env)
 {
 	int			index;
-	/*double		y;
-	double		x;*/
 
 	if ((env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00) != 0
 	&& (env->w_map[(int)line->map.x][(int)line->map.y] & 0x10) != 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_maths.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 13:46:01 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/02 14:06:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 18:52:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_point		point_rotate(t_point v, int ang)
 	float	radian;
 	t_point	r;
 
-	radian = ang / 180.0 * 3.141;
+	radian = ang / 180.0 * PI;
 	r.x = v.x * cos(radian) - v.y * sin(radian);
 	r.y = v.x * sin(radian) + v.y * cos(radian);
 	return (r);

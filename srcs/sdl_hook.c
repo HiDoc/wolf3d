@@ -60,31 +60,6 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 	return (0);
 }
 
-int			affiche_map(t_env *env, Uint8 keycode)
-{
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;
-	if (keycode == SDL_SCANCODE_X)
-	{
-		while (i < 24)
-		{
-			j = 0;
-			printf("wmap ligne %i \n", i);
-			while (j < 24)
-			{
-				printf("%x ", env->w_map[i][j]);
-				j++;
-			}
-			printf(" \n");
-			i++;
-		}
-	}
-	return (0);
-}
-
 int			player_jump(t_env *env)
 {
 	if (env->is_jump == 1)
@@ -124,7 +99,6 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 		load_weapon(env, SDL_SCANCODE_R, env->ak_frms);
 	if (keycodes[SDL_SCANCODE_SPACE])
 		jumping(env, SDL_SCANCODE_SPACE);
-	affiche_map(env, keycode);
 	sdl_exit_wolf(env, keycode);
 	return (0);
 }

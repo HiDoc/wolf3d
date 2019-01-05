@@ -55,8 +55,6 @@ int		env_free(t_env *env)
 	wobj_free(&env->wobj);
 	if (env->w_map)
 		tab_free(env->w_map, 24);
-	if (env->o_map)
-		tab_free(env->o_map, 24);
 	if (env->floor)
 		SDL_FreeSurface(env->floor);
 	if (env->sky)
@@ -69,7 +67,6 @@ int		env_free(t_env *env)
 	hub_free(&env->lscreen);
 	hub_free(&env->title);
 	hub_free(&env->life);
-	hub_free(&env->logo);
 	sdl_free(&env->sdl);
 	return (1);
 }

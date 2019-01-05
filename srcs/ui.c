@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:03:31 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 18:52:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,41 +88,4 @@ void	launch_screen(t_env *env)
 		&& env->sdl.event.type != 0x200)
 			break;
 	}
-}
-
-void	turn_logo(t_env *env)
-{
-	int		i;
-
-	i = 0;
-	env->logo.rect = (SDL_Rect){0, 0, 200, 200};
-	while (i < 89 * 89)
-	{
-		if (i)//env->logo.img->data[i] != 0xEEEEEE)
-		{
-			;//	env->sdl.pixels[i] = (0xFF000000 | env->logo.img->data[i]);
-		}
-		else
-		{
-			;//env->sdl.pixels[i] = (0x0 | env->logo.img->data[i]);
-		}
-		i++;
-	}
-	if (!(env->logo.surface = surface_new(env->sdl.pixels, 89, 89)))
-	{
-		fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
-		exit(1);
-	}
-	if (!(env->logo.texture = SDL_CreateTextureFromSurface(
-		env->sdl.renderer, env->logo.surface)))
-	{
-		fprintf(stderr, "CreateTextureFromSurface failed: %s\n"
-		, SDL_GetError());
-		exit(1);
-	}
-	SDL_FreeSurface(env->logo.surface);
-	env->logo.surface = NULL;
-	SDL_RenderCopyEx(env->sdl.renderer, env->logo.texture, NULL
-	, &env->logo.rect, env->logo.ang, NULL, SDL_FLIP_NONE);
-	env->logo.ang += 0.1;
 }
