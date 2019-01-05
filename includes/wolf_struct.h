@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 19:32:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/05 17:49:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,33 @@
 # define WOLF_STRUCT_H
 
 typedef struct s_env		t_env;
-typedef struct s_enemy		t_enemy;
+typedef struct s_sdl		t_sdl;
 typedef struct s_minimap	t_minimap;
+
 typedef struct s_point		t_point;
 typedef struct s_thr		t_thr;
-typedef struct s_thw		t_thw;
+
 typedef struct s_line		t_line;
+typedef struct s_obj		t_obj;
 typedef struct s_iline		t_iline;
-typedef struct s_ray		t_ray;
+
 typedef struct s_portal		t_portal;
-typedef struct s_sdl		t_sdl;
 typedef struct s_hub		t_hub;
 typedef struct s_msc		t_msc;
 typedef struct s_wobj		t_wobj;
-typedef struct s_obj		t_obj;
 typedef struct s_limit		t_limit;
+
+/*
+**
+**	Gameplay Structures	
+**
+*/
+
+typedef struct s_object		t_object; 
+typedef struct s_weapon		t_weapon;
+typedef struct s_action		t_action;
+typedef struct s_inventory	t_inventory;
+typedef struct s_character	t_character;
 
 struct					s_sdl
 {
@@ -161,12 +173,69 @@ struct					s_minimap
 	t_point		diff;
 };
 
-struct					s_enemy
+/*
+** 
+** Gameplay structures
+** 1 - Objects 
+** 2 - Weapons
+** 3 - Actions
+** 4 - Inventory
+** 5 - Character
+*/
+
+struct					s_object
 {
-	int			is_active;
+	SDL_Surface	*sprite;
+	int			is_consumable;
+	int			nb_use;
+};
+
+struct					s_weapon
+{
+	SDL_Surface	*sprite;
+	SDL_Surface	*sprite_bullet;
+	SDL_Surface	**sprite_reload;
+	SDL_Surface	**sprite_shoot;
+	int			time_reload;
+	int			time_shoot;
+	double		time_shoot_between;
+	int			ammo_current;
+	int			ammo_magazine;
+	int			ammo_max;
+	int			damage;
+};
+
+struct					s_action
+{
+	int			is_shooting;
+	int			is_loading;
+	int			is_swimming;
+	int			is_flying;
+	int			is_jumping;
+	int			is_up_down;
+};
+
+struct					s_inventory
+{
+	t_weapon	*current;
+	t_weapon	weapons[15];
+	t_object	objects[15];
+};
+
+struct					s_character
+{
 	int			health;
+	int			shield;
+	int			max_health;
+	int			max_shield;
+	int			max_weapons;
+	int			max_objects;
 	t_point		pos;
-	SDL_Surface	*texture;
+	t_point		plane;
+	t_point		dir;
+	t_action	actions;
+	t_inventory	inventory;
+	SDL_Surface	*sprite;
 };
 
 struct					s_iline
@@ -198,21 +267,22 @@ struct					s_env
 	int			**w_map;
 	int			**w_map_2;
 	int			height;
-	int			is_jump;
-	int			is_shootin;
-	int			ld_wp;
 	int			width;
-	t_enemy		enemies[10];
+	t_character	enemies[10];
 	t_minimap	minimap;
 	t_hub		life;
 	t_hub		logo;
 	t_hub		lscreen;
 	t_hub		title;
 	t_msc		sounds;
-	t_point		dir;
-	t_point		mouse;
-	t_point		plane;
+
+	t_character player;
+	int			is_jump;
+	int			is_shootin;
+	int			ld_wp;
 	t_point		pos;
+	
+	t_point		mouse;
 	t_sdl		sdl;
 	t_thr		thr[THREAD_NBR];
 	t_wobj		wobj;

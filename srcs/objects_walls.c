@@ -104,16 +104,16 @@ int			wall_impact(t_env *env)
 	env->wobj.pos = env->pos;
 	while (env->wobj.hit == 0)
 	{
-		xx = env->wobj.pos.x + env->dir.x * 0.2;
+		xx = env->wobj.pos.x + env->player.dir.x * 0.2;
 		yy = env->wobj.pos.y;
 		if ((env->w_map[xx][yy] & 0x10) == 0)
-			env->wobj.pos.x += env->dir.x * (0.2 / 2.0);
+			env->wobj.pos.x += env->player.dir.x * (0.2 / 2.0);
 		else
 			env->wobj.hit = 1;
 		xx = env->wobj.pos.x;
-		yy = env->wobj.pos.y + env->dir.y * 0.2;
+		yy = env->wobj.pos.y + env->player.dir.y * 0.2;
 		if ((env->w_map[xx][yy] & 0x10) == 0)
-			env->wobj.pos.y += env->dir.y * (0.2 / 2.0);
+			env->wobj.pos.y += env->player.dir.y * (0.2 / 2.0);
 		else
 			env->wobj.hit = 2;
 	}
@@ -123,15 +123,15 @@ int			wall_impact(t_env *env)
 		env->wobj.impact = 1;
 	}
 	if (env->wobj.hit == 1)
-		env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] =
-		(env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
+		env->w_map[(int)(env->wobj.pos.x + env->player.dir.x * 0.2)][(int)(env->wobj.pos.y)] =
+		(env->w_map[(int)(env->wobj.pos.x + env->player.dir.x * 0.2)][(int)(env->wobj.pos.y)] & 0xF0FF) | (env->wobj.impact << 8);
 	else
-		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] =
-		(env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
+		env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->player.dir.y * 0.2)] =
+		(env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->player.dir.y * 0.2)] & 0xF0FF) | (env->wobj.impact << 8);
 	// if (env->wobj.hit == 1)
-	// 	env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
+	// 	env->w_map[(int)(env->wobj.pos.x + env->player.dir.x * 0.2)][(int)(env->wobj.pos.y)] = env->w_map[(int)(env->wobj.pos.x + env->player.dir.x * 0.2)][(int)(env->wobj.pos.y)] | (1<<010);
 	// else
-	// 	env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->dir.y * 0.2)] | (1<<010);
+	// 	env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->player.dir.y * 0.2)] = env->w_map[(int)(env->wobj.pos.x)][(int)(env->wobj.pos.y + env->player.dir.y * 0.2)] | (1<<010);
 	SDL_Delay(100);
 	return (0);
 }

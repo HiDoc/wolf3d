@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/10 14:32:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 17:57:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int		init_wobj(t_env *env)
 void	bzero_env(t_env *env)
 {
 	env->is_updn = 0;
+	env->width = 0;
+	env->height = 0;
 	env->cam = 0;
 	env->ang = 0;
 	env->angle_d = 0;
@@ -158,6 +160,14 @@ void	bzero_env(t_env *env)
 	env->is_jump = 0;
 }
 
+int		init_player(t_env *env)
+{
+	point_set(&env->pos, 10.0, 10.0);
+	point_set(&env->player.plane, 0.0, 0.66);
+	point_set(&env->player.dir, -1.0, 0.0);
+	return (0);
+}
+
 int		init_env(t_env *env)
 {
 	bzero_env(env);
@@ -166,14 +176,15 @@ int		init_env(t_env *env)
 	env->ang = 2.0;
 	env->sdl.surface = NULL;
 	point_set(&env->pos, 10.0, 10.0);
-	point_set(&env->plane, 0.0, 0.66);
-	point_set(&env->dir, -1.0, 0.0);
+	point_set(&env->player.plane, 0.0, 0.66);
+	point_set(&env->player.dir, -1.0, 0.0);
 	env->logo.ang = 0.0;
-	env->hratio = 2;
+	env->hratio = 2.0;
 	fill_tab(env);
-	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);;
+	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);
 	img(env);
 	init_wobj(env);
+	init_player(env);
 	put_poster(env);
 	init_thread(env, 8);
 	init_sdl(env);

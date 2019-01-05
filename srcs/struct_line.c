@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:04:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/05 17:57:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_line	*line_init(t_env *env, t_line *line, int **map, int x)
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
 	point_set(&line->map, (int)env->pos.x, (int)env->pos.y);
-	point_set(&line->raydir, env->dir.x + env->plane.x * env->cam, env->dir.y + env->plane.y * env->cam);
+	point_set(&line->raydir, env->player.dir.x + env->player.plane.x * env->cam, env->player.dir.y + env->player.plane.y * env->cam);
 	point_set(&line->delta, delta(line->raydir.y, line->raydir.x), delta(line->raydir.x, line->raydir.y));
 	return (line_step(env, line, map));
 }

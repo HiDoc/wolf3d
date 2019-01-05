@@ -28,11 +28,11 @@ static inline void	obj_iter(
 		prop = iter->delim - iter->y;
 		while (iter->y < iter->delim && iter->y < HEIGHT)
 		{
-			int new_y = ((prop - (iter->delim - iter->y)) * env->enemies[0].texture->h / prop);
-			int new_x = (int)(iter->line.objs->wall.x * env->enemies[0].texture->w);
-			iter->color = getpixel(env->enemies[0].texture, 
-			new_x % env->enemies[0].texture->w,
-			new_y % env->enemies[0].texture->h);
+			int new_y = ((prop - (iter->delim - iter->y)) * env->enemies[0].sprite->h / prop);
+			int new_x = (int)(iter->line.objs->wall.x * env->enemies[0].sprite->w);
+			iter->color = getpixel(env->enemies[0].sprite, 
+			new_x % env->enemies[0].sprite->w,
+			new_y % env->enemies[0].sprite->h);
 			if (iter->color & 0xff000000)
 				setpixel(env->sdl.surface, iter->x, iter->y, iter->color);
 			++(iter->y);

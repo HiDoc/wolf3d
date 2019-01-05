@@ -27,13 +27,13 @@ static int	sdl_check_pos(t_env *env, t_point mult, float check)
 int			sdl_move(t_env *env, Uint8 *keycodes)
 {
 	if (keycodes[SDL_SCANCODE_W])
-		sdl_check_pos(env, env->dir, 0.1);
+		sdl_check_pos(env, env->player.dir, 0.1);
 	if (keycodes[SDL_SCANCODE_S])
-		sdl_check_pos(env, env->dir, -0.1);
+		sdl_check_pos(env, env->player.dir, -0.1);
 	if (keycodes[SDL_SCANCODE_D])
-		sdl_check_pos(env, env->plane, 0.1);
+		sdl_check_pos(env, env->player.plane, 0.1);
 	if (keycodes[SDL_SCANCODE_A])
-		sdl_check_pos(env, env->plane, -0.1);
+		sdl_check_pos(env, env->player.plane, -0.1);
 	return (0);
 }
 
@@ -42,8 +42,8 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 	double	mult;
 
 	mult = x < 0 ? 4.0 : -4.0;
-	env->dir = point_rotate(env->dir, mult);
-	env->plane = point_rotate(env->plane, mult);
+	env->player.dir = point_rotate(env->player.dir, mult);
+	env->player.plane = point_rotate(env->player.plane, mult);
 	env->angle_d += mult;
 	env->angle_d > 358.0 ? env->angle_d = 0.0 : 0;
 	env->angle_d < 0.0 ? env->angle_d = 358.0 : 0;
