@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:52:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 10:57:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,27 +88,6 @@ int		init_wobj(t_env *env)
 	return (0);
 }
 
-void	bzero_env(t_env *env)
-{
-	env->is_updn = 0;
-	env->width = 0;
-	env->height = 0;
-	env->cam = 0;
-	env->ang = 0;
-	env->angle_d = 0;
-	env->w_map = NULL;
-	env->w_map_2 = NULL;
-	env->floor = NULL;
-	env->sky = NULL;
-	env->gun_impact = NULL;
-	env->ld_wp = 0;
-	env->is_shootin = 0;
-	env->width = 0;
-	env->height = 0;
-	env->hratio = 0;
-	env->is_jump = 0;
-}
-
 int		init_player(t_env *env)
 {
 	point_set(&env->player.pos, 10.0, 10.0);
@@ -119,7 +98,7 @@ int		init_player(t_env *env)
 
 int		init_env(t_env *env)
 {
-	bzero_env(env);
+	ft_bzero(env, sizeof(env));
 	env->width = WIDTH;
 	env->height = HEIGHT;
 	env->ang = 2.0;

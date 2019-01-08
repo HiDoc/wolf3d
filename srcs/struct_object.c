@@ -12,19 +12,12 @@
 
 #include "wolf.h"
 
-void        object_bzero(t_object *new)
-{
-    new->sprite = NULL;
-    new->is_consumable = 0;
-    new->nb_use = 0;
-}
-
 t_object *object_new(void)
 {
     t_objects *new;
 
     if ((t_object *)(malloc(sizeof(t_object))) == NULL)
         return (NULL);
-    object_bzero(new);
+    ft_bzero(new, sizeof(new));
     return (new);
 }
