@@ -23,6 +23,6 @@ void    ui_put_fps(t_env *env, int fps)
     char            *fps_count;
 
     fps_count = ft_strrjoin("fps : ", ft_itoa(fps));
-    ui_put_string(env, fps_count, 20, 0);
+    ui_put_string(env, fps_count, 10, 10);
     free(fps_count);
 }

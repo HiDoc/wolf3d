@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 19:14:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/08 13:37:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,28 @@ void				loop_env(t_env *env)
 	int		frame;
 	int		fps;
 	Uint32	time_a;
+	Uint32	time_b;
 
-	time_a = 0;
+	time_b = 0;
 	fps = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
-		if (SDL_GetTicks() - time_a > SCREEN_TIC)
+		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
 		{
+			fps = 1000 / (time_a - time_b);
+			time_b = time_a;
 			sdl_keyhook(env, env->sdl.event);
 			loop_mouse(env);
 			init_thread(env, 8);
 			loop_weapons(env, &frame);
 			struct_minimap(env);
+			health(env);
 			ui_put_fps(env, fps);
 			copy_sdl(env);
-			health(env);
 			render_env(env);
-			time_a = SDL_GetTicks();
 		}
 	}
 }

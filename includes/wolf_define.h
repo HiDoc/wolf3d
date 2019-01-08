@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 17:53:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 13:50:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,9 @@
 # define SCREEN_FPS     60
 # define SCREEN_TIC     16
 # define PI             3.141592
+
+#define WORLD_NB_WEAPONS 15
+#define WORLD_NB_OBJECTS 15
+#define WORLD_NB_WALLS 15
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 10:57:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 13:44:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int		init_env(t_env *env)
 	point_set(&env->pos, 10.0, 10.0);
 	env->hratio = 2.0;
 	fill_tab(env);
-	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);
 	img(env);
 	init_wobj(env);
 	put_poster(env);

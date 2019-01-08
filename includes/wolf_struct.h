@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:52:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 13:52:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_limit		t_limit;
 */
 
 typedef struct s_object		t_object;
+typedef struct s_world		t_world;
+typedef struct s_wall		t_wall;
 typedef struct s_weapon		t_weapon;
 typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
@@ -187,12 +189,22 @@ struct					s_object
 	int			nb_use;
 };
 
+struct					s_wall
+{
+	SDL_Surface	*sprite;
+	int			health;
+	int			height;
+	int			width;
+	double		angle;
+};
+
 struct					s_weapon
 {
 	SDL_Surface	*sprite;
 	SDL_Surface	*sprite_bullet;
 	SDL_Surface	**sprite_reload;
 	SDL_Surface	**sprite_shoot;
+	int			type;
 	int			time_reload;
 	int			time_shoot;
 	double		time_shoot_between;
@@ -200,6 +212,13 @@ struct					s_weapon
 	int			ammo_magazine;
 	int			ammo_max;
 	int			damage;
+};
+
+struct					s_world
+{
+	t_weapon	armory[WORLD_NB_WEAPONS];
+	t_object	objects[WORLD_NB_OBJECTS];
+	t_wall		walls[WORLD_NB_WALLS];
 };
 
 struct					s_action
