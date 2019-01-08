@@ -23,25 +23,20 @@ int					render_env(t_env *env)
 	return (0);
 }
 
-static void inline	loop_mouse(t_env *env)
+static void inline	loop_mouse(t_env *env, int mx, int my)
 {
-	int		x;
-	int		y;
-
-	SDL_GetRelativeMouseState(&x, &y);
-	if (x || y)
-		sdl_motion_mouse(env, x, y);
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+	sdl_motion_mouse(env, mx, my);
+	/*if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
 	{
 		if (env->wobj.impact < 6)
 			env->wobj.impact++;
 		env->mouse.x = x;
 		env->mouse.y = y;
 		sdl_mouse_click(env, x, y);
-	}
+	}*/
 }
 
-static void inline	loop_weapons(t_env *env, int *frame)
+/*static void inline	loop_weapons(t_env *env, int *frame)
 {
 	if (env->is_shootin)
 	{
@@ -60,34 +55,36 @@ static void inline	loop_weapons(t_env *env, int *frame)
 	}
 	if (env->is_jump)
 		player_jump(env);
-}
+}*/
 
 void				loop_env(t_env *env)
 {
 	int		frame;
 	int		fps;
 	Uint32	time_a;
+	int		mx;
+	int		my;
 
+	(void)frame;
 	time_a = 0;
 	fps = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
+		SDL_GetRelativeMouseState(&mx, &my);
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
-		if (SDL_GetTicks() - time_a > SCREEN_TIC)
-		{
-			sdl_keyhook(env, env->sdl.event);
-			loop_mouse(env);
-			init_thread(env, 8);
-			loop_weapons(env, &frame);
-			struct_minimap(env);
-			ui_put_fps(env, fps);
-			copy_sdl(env);
-			health(env);
-			render_env(env);
-			time_a = SDL_GetTicks();
-		}
+		sdl_keyhook(env, env->sdl.event);
+		if (mx || my)
+			loop_mouse(env, mx, my);
+		init_thread(env, 8);
+		//loop_weapons(env, &frame);
+		struct_minimap(env);
+		ui_put_fps(env, fps);
+		copy_sdl(env);
+		health(env);
+		render_env(env);
+		time_a = SDL_GetTicks();
 	}
 }
 
