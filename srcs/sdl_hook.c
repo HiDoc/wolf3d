@@ -41,7 +41,6 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 {
 	double	mult;
 
-	(void)y;
 	mult = -x / 4;
 	env->player.dir = point_rotate(env->player.dir, mult);
 	env->player.plane = point_rotate(env->player.plane, mult);
@@ -49,16 +48,6 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 	env->angle_d > 358.0 ? env->angle_d = 0.0 : 0;
 	env->angle_d < 0.0 ? env->angle_d = 358.0 : 0;
 	env->is_updn += -y;
-	/*if (y > 10)
-	{
-		if (env->is_updn > -400)
-			env->is_updn -= 20;
-	}
-	else if (y < -10)
-	{
-		if (env->is_updn < 400)
-			env->is_updn += 20;
-	}*/
 	return (0);
 }
 
