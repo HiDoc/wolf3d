@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_sdl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2018/10/03 17:43:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		init_sdl(t_env *env)
 	env->sdl.window = SDL_CreateWindow("Doom Nukem",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
-			env->width, env->height,
+			env->sdl.width, env->sdl.height,
 			SDL_WINDOW_SHOWN);
 	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
 }

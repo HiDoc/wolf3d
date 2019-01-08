@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/12/27 19:08:53 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/01/08 14:32:53 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ SRC_NAME 	= main.c \
 			  thread.c \
 			  parser.c \
 			  ui.c \
-			  portal.c \
 			  struct_line.c \
 			  struct_sdl.c \
 			  struct_env.c \

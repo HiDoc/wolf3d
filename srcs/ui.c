@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:52:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	put_gun_load(t_env *env, int frame)
 	if (frame < 36)
 		put_img(env, env->mitra_frms[frame], 200, 170);
 	else
-		env->ld_wp = 0;
+		env->player.actions.is_loading = 0;
 }
 
 void	put_gun(t_env *env)
@@ -37,8 +37,8 @@ void	put_gun(t_env *env)
 	int x;
 	int y;
 
-	x = env->width - env->mitra_frms[0]->w;
-	y = env->height - env->mitra_frms[0]->h;
+	x = env->sdl.width - env->mitra_frms[0]->w;
+	y = env->sdl.height - env->mitra_frms[0]->h;
 	put_img(env, env->mitra_frms[0], x, y);
 }
 
@@ -48,7 +48,7 @@ void	put_health(t_env *env)
 	int y;
 
 	x = 22;
-	y = env->height - env->life.img->h;
+	y = env->sdl.height - env->life.img->h;
 	put_img(env, env->life.img, x, y);
 }
 

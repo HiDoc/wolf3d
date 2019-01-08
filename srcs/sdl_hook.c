@@ -15,12 +15,12 @@ static int	sdl_check_pos(t_env *env, t_point mult, float check)
 	int x;
 	int y;
 
-	x = env->pos.x + mult.x * check;
-	y = env->pos.y;
-	env->w_map[x][y] == 0 ? env->pos.x += mult.x * check : 0;
-	x = env->pos.x;
-	y = env->pos.y + mult.y * check;
-	env->w_map[x][y] == 0 ? env->pos.y += mult.y * check : 0;
+	x = env->player.pos.x + mult.x * check;
+	y = env->player.pos.y;
+	env->w_map[x][y] == 0 ? env->player.pos.x += mult.x * check : 0;
+	x = env->player.pos.x;
+	y = env->player.pos.y + mult.y * check;
+	env->w_map[x][y] == 0 ? env->player.pos.y += mult.y * check : 0;
 	return (1);
 }
 
@@ -62,7 +62,7 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 
 int			player_jump(t_env *env)
 {
-	if (env->is_jump == 1)
+	if (env->player.actions.is_jumping == 1)
 	{
 		env->is_updn += 20;
 		env->hratio += 0.1;
@@ -72,8 +72,8 @@ int			player_jump(t_env *env)
 		env->is_updn -= 20;
 		env->hratio -= 0.1;
 	}
-	if (env->hratio >= 2 && env->is_jump == 1)
-		env->is_jump = 0;
+	if (env->hratio >= 2 && env->player.actions.is_jumping == 1)
+		env->player.actions.is_jumping = 0;
 	return (0);
 }
 
@@ -81,7 +81,7 @@ int			jumping(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_SPACE)
 	{
-		env->is_jump = 1;
+		env->player.actions.is_jumping = 1;
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	}
 	return (0);

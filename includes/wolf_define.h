@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:50:50 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 15:00:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@
 
 #define WORLD_NB_WEAPONS 15
 #define WORLD_NB_OBJECTS 15
-#define WORLD_NB_WALLS 15
+#define WORLD_NB_SURFACE 15
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:52:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 15:02:37 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_limit		t_limit;
 
 typedef struct s_object		t_object;
 typedef struct s_world		t_world;
-typedef struct s_wall		t_wall;
+typedef struct s_surface	t_surface;
 typedef struct s_weapon		t_weapon;
 typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
@@ -45,6 +45,8 @@ typedef struct s_character	t_character;
 struct					s_sdl
 {
 	Uint32			pixels[WIDTH * HEIGHT];
+	int				width;
+	int				height;
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	SDL_Texture		*texture;
@@ -189,15 +191,6 @@ struct					s_object
 	int			nb_use;
 };
 
-struct					s_wall
-{
-	SDL_Surface	*sprite;
-	int			health;
-	int			height;
-	int			width;
-	double		angle;
-};
-
 struct					s_weapon
 {
 	SDL_Surface	*sprite;
@@ -214,11 +207,27 @@ struct					s_weapon
 	int			damage;
 };
 
+struct					s_surface
+{
+	SDL_Surface	*sprite;
+	int			health;
+	int			height;
+	int			width;
+	double		angle;
+};
+
+struct					s_container
+{
+	t_surface	walls[30];
+	t_surface	floors[30];
+	t_surface	ceils[30];
+};
+
 struct					s_world
 {
 	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
-	t_wall		walls[WORLD_NB_WALLS];
+	t_container	surfaces[WORLD_NB_SURFACE];
 };
 
 struct					s_action
@@ -282,9 +291,6 @@ struct					s_env
 	double		angle_r;
 
 	int			**w_map;
-	int			**w_map_2;
-	int			height;
-	int			width;
 
 	t_character	enemies[10];
 	t_minimap	minimap;
@@ -294,11 +300,6 @@ struct					s_env
 	t_msc		sounds;
 
 	t_character player;
-	t_point		pos;
-
-	int			is_jump;
-	int			is_shootin;
-	int			ld_wp;
 
 	t_point		mouse;
 	t_sdl		sdl;

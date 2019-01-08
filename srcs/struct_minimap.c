@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/05 17:57:01 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 static void		ft_init_minimap(t_env *env)
 {
-	env->minimap.origin.x = env->width - (env->width / 4) - 10;
+	env->minimap.origin.x = env->sdl.width - (env->sdl.width / 4) - 10;
 	env->minimap.origin.y = 10;
-	env->minimap.centre.x = (env->width - (env->width / 4) / 2) - 10;
-	env->minimap.centre.y = (env->height / 4) / 2 + 10;
+	env->minimap.centre.x = (env->sdl.width - (env->sdl.width / 4) / 2) - 10;
+	env->minimap.centre.y = (env->sdl.height / 4) / 2 + 10;
 	env->minimap.map_size.x = env->minimap.mnp_size * 24; // to set relative
 	env->minimap.map_size.y = env->minimap.mnp_size * 24; // tp set relative
-	env->minimap.pos_play.x = env->pos.y * env->minimap.mnp_size;
-	env->minimap.pos_play.y = env->pos.x * env->minimap.mnp_size;
+	env->minimap.pos_play.x = env->player.pos.y * env->minimap.mnp_size;
+	env->minimap.pos_play.y = env->player.pos.x * env->minimap.mnp_size;
 	env->minimap.diff.x = env->minimap.centre.x - env->minimap.pos_play.x;
 	env->minimap.diff.y = env->minimap.centre.y - env->minimap.pos_play.y;
 	env->minimap.limit.xmin = env->minimap.origin.x;
-	env->minimap.limit.xmax = env->width - env->minimap.origin.y;
+	env->minimap.limit.xmax = env->sdl.width - env->minimap.origin.y;
 	env->minimap.limit.ymin = 10;
-	env->minimap.limit.ymax = env->height / 4 + 10;
+	env->minimap.limit.ymax = env->sdl.height / 4 + 10;
 }
 
 static void		ft_draw_background(t_env *env)
@@ -35,7 +35,7 @@ static void		ft_draw_background(t_env *env)
 	SDL_Rect	rect;
 
 	rect = (SDL_Rect){env->minimap.origin.x,
-	env->minimap.origin.y, env->width / 4, env->height / 4};
+	env->minimap.origin.y, env->sdl.width / 4, env->sdl.height / 4};
 	surface_drawrect(env->sdl.surface, rect, 0, 0xFF000000);
 	surface_drawborder(env->sdl.surface, rect, 0xFFFFFFFF);
 }

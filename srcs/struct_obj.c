@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:07:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:33:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_line	*obj_init(t_env *env, t_line *previous)
 	line->map.x = previous->map.x;
 	line->map.y = previous->map.y;
 	if (line->sidew == 0)
-		line->wall.x = env->pos.y + line->wdist * previous->raydir.y;
+		line->wall.x = env->player.pos.y + line->wdist * previous->raydir.y;
 	else
-		line->wall.x = env->pos.x + line->wdist * previous->raydir.x;
+		line->wall.x = env->player.pos.x + line->wdist * previous->raydir.x;
 	line->wall.x -= floor((line->wall.x));
 	return (line);
 }

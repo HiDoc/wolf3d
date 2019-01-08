@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:46:14 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:39:28 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_line		*line_max(t_env *env, t_line *line);
 ** Toolbox functions for t_point structure
 */
 
-t_point		*point_cpy(t_point *a, t_point *b);
+t_point		*point_cpy(t_point *src, t_point *dest);
 t_point		*point_delta(t_point *a, t_point *b);
 t_point		*point_ray(t_point *a, t_point *b, t_point *c, double cam);
 t_point		point_rotate(t_point v, int angle);

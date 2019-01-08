@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:44:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,11 @@ int		init_player(t_env *env)
 int		init_env(t_env *env)
 {
 	ft_bzero(env, sizeof(env));
-	env->width = WIDTH;
-	env->height = HEIGHT;
+	env->sdl.width = WIDTH;
+	env->sdl.height = HEIGHT;
 	env->ang = 2.0;
 	env->sdl.surface = NULL;
 	init_player(env);
-	point_set(&env->pos, 10.0, 10.0);
 	env->hratio = 2.0;
 	fill_tab(env);
 	img(env);
