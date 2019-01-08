@@ -41,6 +41,7 @@ typedef struct s_weapon		t_weapon;
 typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
 typedef struct s_character	t_character;
+typedef struct s_bot		t_bot; // fusionner avec t_character
 
 struct					s_sdl
 {
@@ -254,6 +255,18 @@ struct					s_character
 	SDL_Surface	*sprite;
 };
 
+struct					s_bot // a fusionner avec s_character/ennemies
+{
+	int         bot_type;
+	t_point     init_pos;
+	int         init_dir;
+	t_point     position;
+	int         direction;
+	int         health;
+	int         detected;
+	int         heard;
+};
+
 struct					s_iline
 {
 	int			x;
@@ -287,6 +300,7 @@ struct					s_env
 	int			width;
 
 	t_character	enemies[10];
+	t_bot		**bots; // a fusionner plus tard avec t_character
 	t_minimap	minimap;
 	t_hub		life;
 	t_hub		lscreen;

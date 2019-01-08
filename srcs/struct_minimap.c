@@ -53,7 +53,27 @@ static void		ft_draw_ray(int i, t_env *env)
 	+ (env->rays[i].line.raydir.x * env->rays[i].line.wdist * 20);
 
 	// affichage rayon
-	surface_drawline_limit(env->sdl.surface, a, b, env->minimap.limit, 0xFFBFFCFF);
+	surface_drawline_limit(env->sdl.surface, a, b,
+	env->minimap.limit, 0xFFBFFCFF);
+}
+
+static void		ft_draw_bots(t_env *env)
+{
+	SDL_Rect	rect;
+	int			i;
+
+	i = 0;
+	while (i < 1) // to set relative (nb of bots)
+	{
+		rect = (SDL_Rect)
+		{env->minimap.diff.x
+		+ (env->bots[i]->position.x * env->minimap.mnp_size),
+		env->minimap.diff.y
+		+ (env->bots[i]->position.y * env->minimap.mnp_size),
+		10, 10};
+		surface_drawrect(env->sdl.surface, rect, &(env->minimap.limit), 0x0);
+		i++;
+	}
 }
 
 static void		ft_draw_player(t_env *env)
@@ -69,7 +89,7 @@ static void		ft_draw_player(t_env *env)
 	}
 	player = (SDL_Rect){env->minimap.centre.x - 5,
 	env->minimap.centre.y - 5, 10, 10};
-	surface_drawrect(env->sdl.surface, player, 0, 0x0);
+	surface_drawrect(env->sdl.surface, player, 0, 0x00000000);
 }
 
 void	struct_minimap(t_env *env)
@@ -100,4 +120,5 @@ void	struct_minimap(t_env *env)
 		i++;
 	}
 	ft_draw_player(env);
+	ft_draw_bots(env);
 }

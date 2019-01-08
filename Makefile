@@ -12,7 +12,7 @@
 
 NAME 		= wolf3d
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -O3 -g
+CFLAGS 		= -Wall -Wextra -Werror -O3 -g -fsanitize=address
 LIBFT 		= ./libft
 LEN_NAME	=	`printf "%s" $(NAME) |wc -c`
 DELTA		=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -57,7 +57,6 @@ SRC_NAME 	= main.c \
 			  thread.c \
 			  parser.c \
 			  ui.c \
-			  portal.c \
 			  struct_line.c \
 			  struct_sdl.c \
 			  struct_env.c \
