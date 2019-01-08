@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:48:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 16:31:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ int					render_env(t_env *env)
 	SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (0);
-}
-
-static void inline	loop_mouse(t_env *env)
-{
-	int		x;
-	int		y;
-
-	SDL_GetRelativeMouseState(&x, &y);
-	if (x || y)
-		sdl_motion_mouse(env, x, y);
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
-	{
-		if (env->wobj.impact < 6)
-			env->wobj.impact++;
-		env->mouse.x = x;
-		env->mouse.y = y;
-		sdl_mouse_click(env, x, y);
-	}
 }
 
 static void inline	loop_weapons(t_env *env, int *frame)
@@ -68,12 +50,15 @@ void				loop_env(t_env *env)
 	int		fps;
 	Uint32	time_a;
 	Uint32	time_b;
+	int		mx;
+	int		my;
 
 	time_b = 0;
 	fps = 0;
 	while (1)
 	{
 		SDL_PollEvent(&env->sdl.event);
+		SDL_GetRelativeMouseState(&mx, &my);
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
 		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
