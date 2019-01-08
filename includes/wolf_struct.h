@@ -171,15 +171,18 @@ struct					s_enemy
 
 struct					s_iline
 {
-	int			x; // sg : je m'en sert pas
-	int			y; // sg : je m'en sert pas 
-	int			delim; // sg : je m'en sert pas
+	int			x; // sgalasso : je m'en sert pas
+	int			y; // sgalasso : je m'en sert pas 
+	int			delim; // sgalasso : je m'en sert pas
 	t_line		line;
-	Uint32		color; // sg : je m'en sert pas
+	Uint32		color; // sgalasso : je m'en sert pas
 };
 
 struct					s_env
 {
+	int			map_w; // largeur map (sgalasso - parsing)
+	int			map_h; // hauteur map (sgalasso - parsing)
+	int			**map; // map parsee en hexa (sgalasso - parsing)
 	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*bul_surf[6];
 	SDL_Surface	*floor;

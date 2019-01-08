@@ -15,6 +15,8 @@
 # include "wolf_define.h"
 # include "wolf_struct.h"
 
+void		parse_map(t_env * env, char *filename);
+
 int			wolf(t_env *env, int col);
 int			tron(t_env *env, int col);
 void		print_error(int nb, t_env *env);
@@ -65,7 +67,7 @@ int			floor_fog(t_env *env, t_line *line, Uint32 c, int y);
 
 int			motion_mouse(int x, int y, t_env *env);
 int			init_thread(t_env *env, int threads);
-int			init_env(t_env *env);
+int			init_env(t_env *env, char *filename);
 int			env_free(t_env *env);
 void		init_sdl(t_env *env);
 int			fill_tab(t_env *env);

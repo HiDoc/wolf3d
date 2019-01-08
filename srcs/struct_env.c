@@ -138,7 +138,7 @@ int		init_wobj(t_env *env)
 	return (0);
 }
 
-void	bzero_env(t_env *env)
+void	bzero_env(t_env *env) // Hummm, pourquoi ?
 {
 	env->is_updn = 0;
 	env->cam = 0;
@@ -158,9 +158,10 @@ void	bzero_env(t_env *env)
 	env->is_jump = 0;
 }
 
-int		init_env(t_env *env)
+int		init_env(t_env *env, char *filename)
 {
 	bzero_env(env);
+	env->minimap.mnp_size = 20;
 	env->width = WIDTH;
 	env->height = HEIGHT;
 	env->ang = 2.0;
@@ -170,8 +171,29 @@ int		init_env(t_env *env)
 	point_set(&env->dir, -1.0, 0.0);
 	env->logo.ang = 0.0;
 	env->hratio = 2;
-	fill_tab(env);
-	env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24);;
+	fill_tab(env); // to remove, du coup
+
+	parse_map(env, filename);
+	env->w_map = env->map;
+
+	// this is to previsualize the map ------------
+	int	i = 0;
+	int	j;
+	while (i < env->map_h)
+	{
+		j = 0;
+		while (j < env->map_w)
+		{
+			printf("0x%x ", env->map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	//exit(EXIT_FAILURE); // to try only the parsing
+	// ---------------------------------------------
+
+	//env->w_map_2 = tab_copy_alloc(env->w_map, 24, 24); // why ?
 	img(env);
 	init_wobj(env);
 	put_poster(env);

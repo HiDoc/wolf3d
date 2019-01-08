@@ -79,7 +79,8 @@ int					tron(t_env *env, int col)
 		iter->x = x;
 		iter->y = 0;
 		line_init(env, &iter->line, env->w_map, iter->x);
-		iter->delim = iter->line.start_draw - (iter->line.end_draw - iter->line.start_draw);
+		iter->delim = iter->line.start_draw
+		- (iter->line.end_draw - iter->line.start_draw);
 		line_iter(env, iter, &line_tron_floor, &sky_fog);
 		iter->delim = iter->line.start_draw;
 		line_iter(env, iter, &line_tron_wall, &wall_fog);
@@ -107,7 +108,8 @@ int					wolf(t_env *env, int col)
 	{
 		iter.y = 0;
 		line_init(env, &iter.line, env->w_map, iter.x);
-		iter.delim = iter.line.start_draw - (iter.line.end_draw - iter.line.start_draw);
+		iter.delim = iter.line.start_draw
+		- (iter.line.end_draw - iter.line.start_draw);
 		line_iter(env, &iter, &line_sky, &sky_fog);
 		iter.delim = iter.line.start_draw;
 		line_iter(env, &iter, &line_wall, &wall_fog);

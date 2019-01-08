@@ -21,8 +21,10 @@ t_line	*line_init(t_env *env, t_line *line, int **map, int x)
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
 	point_set(&line->map, (int)env->pos.x, (int)env->pos.y);
-	point_set(&line->raydir, env->dir.x + env->plane.x * env->cam, env->dir.y + env->plane.y * env->cam);
-	point_set(&line->delta, delta(line->raydir.y, line->raydir.x), delta(line->raydir.x, line->raydir.y));
+	point_set(&line->raydir, env->dir.x + env->plane.x * env->cam,
+	env->dir.y + env->plane.y * env->cam);
+	point_set(&line->delta, delta(line->raydir.y, line->raydir.x),
+	delta(line->raydir.x, line->raydir.y));
 	return (line_step(env, line, map));
 }
 
