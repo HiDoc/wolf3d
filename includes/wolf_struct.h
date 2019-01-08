@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 15:02:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 16:45:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_surface	t_surface;
 typedef struct s_weapon		t_weapon;
 typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
+typedef struct s_container	t_container;
 typedef struct s_character	t_character;
 
 struct					s_sdl
