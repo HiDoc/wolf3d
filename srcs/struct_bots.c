@@ -1,23 +1,15 @@
 #include "wolf.h"
 
-static void		player_near_bot(t_env *env)
+double			ft_pythagore(double a, double b)
 {
-	// code
+	return (sqrt(a * a + b * b));
 }
 
-static int		is_player_ahead(t_env *env, int bot)
+static void		get_player_dist(t_env *env, int bot)
 {
-	// code
-}
-
-static void		rotate_bot(t_env *env, int bot, int direction)
-{
-	// code
-}
-
-static void		move_bot(t_env *env, int bot, t_point position)
-{
-	// code
+	env->bots[bot]->player_dist = (int)ft_pythagore(
+	fabs(env->bots[bot]->position.x - env->pos.x),
+	fabs(env->bots[bot]->position.y - env->pos.y));
 }
 
 void			handle_bots(t_env *env)
@@ -26,10 +18,11 @@ void			handle_bots(t_env *env)
 	int			i;
 
 	i = 0;
-	ft_bzero(last_pos, sizeof(t_point));
-	player_near_bot(env);
+	ft_bzero(&last_pos, sizeof(t_point));
 	while (env->bots[i])
 	{
+		get_player_dist(env, i);
+		// get_player_angl();
 		/*if (is_player_ahead(env, i))
 		{
 			move_bot(env, i, env->pos);
@@ -53,10 +46,19 @@ void			handle_bots(t_env *env)
 				move_bot(env, i, env->bots[i]->init_pos);
 			}
 		}*/
-		if (env->bots[i]->heard == 1)
-			rotate_bot(env, i, /* to player */);
-		else
-			rotate_bot(env, i, env->bots[i]->init_dir);
+		if (env->bots[i]->player_dist < 5)
+		// 5 arbitraire, peut servir de niveau de difficulte
+		{
+			env->bots[i]->direction = tan(
+			((env->bots[i]->position.y - env->pos.y)
+			/ (env->bots[i]->position.x - env->pos.x)));
+			env->bots[i]->alerted = 1;
+		}
+		else if (env->bots[i]->alerted == 1)
+		{
+			env->bots[i]->direction = env->bots[i]->init_dir;
+			env->bots[i]->alerted = 0;
+		}
 		i++;
 	}
 }

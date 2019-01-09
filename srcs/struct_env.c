@@ -109,20 +109,15 @@ int		init_env(t_env *env)
 	fill_tab(env);
 
 	// a laisser tant que parsing non implemente
-	if (!(env->bots = (t_bot **)ft_memalloc(sizeof(t_bot *))))
+	if (!(env->bots = (t_bot **)ft_memalloc(sizeof(t_bot *) * (1/*tosetrelative*/ + 1))))
 		exit(EXIT_FAILURE); // to exit properly
-	if (!(env->bots[0] = (t_bot *)ft_memalloc(sizeof(t_bot)
-	* (1/*set relative*/ + 1))))
+	if (!(env->bots[0] = (t_bot *)ft_memalloc(sizeof(t_bot))))
 		exit(EXIT_FAILURE); // to exit properly
-	env->bots[0]->bot_type = 0;
 	env->bots[0]->init_pos.x = 2;
 	env->bots[0]->init_pos.y = 2;
-	env->bots[0]->init_dir = 0;
 	env->bots[0]->position.x = 2;
 	env->bots[0]->position.y = 2;
-	env->bots[0]->direction = 0;
-	env->bots[0]->detected = 0;
-	env->bots[0]->heard = 0;
+	env->bots[0]->health = 100;
 	// -----------------------------------------
 
 	img(env);

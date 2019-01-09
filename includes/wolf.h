@@ -155,4 +155,10 @@ int			player_jump(t_env *env);
 
 void		struct_minimap(t_env *env);
 
+/*
+** ia/bots
+*/
+
+void		handle_bots(t_env *env);
+
 #endif

@@ -61,6 +61,7 @@ SRC_NAME 	= main.c \
 			  struct_sdl.c \
 			  struct_env.c \
 			  struct_enemy.c \
+			  struct_bots.c \
 			  struct_obj.c \
 			  struct_minimap.c \
 			  utils_tab.c \
