@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:47:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:27:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,18 @@ SDL_Surface		*img_new(char *filename)
 	return (new);
 }
 
-void			mitrailleur(t_env *env)
+SDL_Surface		*img_wpn(char *filename)
 {
-	int			count;
-	char		*num;
-	const char	*path = "weapons/g_mitrailleur/";
+	SDL_Surface	*new;
+	char		*path;
+	const char	*png = ".png";
 
-	count = 0;
-	while (count < 36)
-	{
-		num = ft_strrjoin((char *)path, ft_itoa(count + 1));
-		env->mitra_frms[count] = img_new(num);
-		free(num);
-		num = NULL;
-		count++;
-	}
+	path = ft_strjoin("./rsrc/img/weapons/", filename);
+	path = ft_strljoin(path, (char *)png);
+	new = create_surf(path);
+	free(path);
+	path = NULL;
+	return (new);
 }
 
 void			stitch(t_env *env)
@@ -113,6 +110,5 @@ void			img(t_env *env)
 	env->wobj.posters[3] = img_new("posters/lilbisounours");
 	env->wobj.posters[4] = img_new("posters/fuckbisounours");
 	env->wobj.posters[5] = img_new("posters/lildukenukem");
-	mitrailleur(env);
 	new_bullet_surf(env);
 }

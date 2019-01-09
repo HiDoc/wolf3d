@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:33:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:19:55 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ t_line	*line_dda(t_env *env, t_line *line, int **map)
 t_line	*line_max(t_env *env, t_line *line)
 {
 	line->lineh = (int)(HEIGHT / line->wdist);
-	line->start_draw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->is_updn;
+	line->start_draw = (-line->lineh / 2 + HEIGHT / env->hratio) + env->player.actions.is_up_down;
 	line->start_draw < 0 ? line->start_draw = 0 : 0;
-	line->end_draw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->is_updn;
+	line->end_draw = (line->lineh / 2.0 + (double)HEIGHT / env->hratio) + env->player.actions.is_up_down;
 	line->end_draw >= HEIGHT ? line->end_draw = HEIGHT - 1 : 0;
 	if (line->sidew == 0)
 		line->wall.x = env->player.pos.y + line->wdist * line->raydir.y;

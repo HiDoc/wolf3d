@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_weapons.c                                   :+:      :+:    :+:   */
+/*   struct_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/05 17:36:33 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 10:57:49 by fmadura          ###   ########.fr       */
+/*   Created: 2019/01/09 12:23:48 by fmadura           #+#    #+#             */
+/*   Updated: 2019/01/09 13:02:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "wolf.h"
 
-t_weapon *weapon_new(void)
+t_action	*action_new(void)
 {
-    t_weapon *new;
+	t_action *new;
 
-    if ((t_weapon *)(malloc(sizeof(t_weapon))) == NULL)
-        return (NULL);
-    ft_bzero(new, sizeof(new));
-    return (new);
+	if ((new =(t_action *)(malloc(sizeof(t_action)))) == NULL)
+		return (NULL);
+	ft_bzero(new, sizeof(t_action));
+	return (new);
 }

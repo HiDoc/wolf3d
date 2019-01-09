@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:39:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 13:08:51 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ int			sky_fog(t_env *env, t_line *line, Uint32 c, int y);
 int			floor_fog(t_env *env, t_line *line, Uint32 c, int y);
 
 int			motion_mouse(int x, int y, t_env *env);
+
+/*
+** Function for filling weapons
+*/
+
+void        weapon_set(t_weapon *weapon, char *name);
+/*
+** Initialisation of wolf
+*/
+
 int			init_thread(t_env *env, int threads);
 int			init_env(t_env *env);
 void		init_sdl(t_env *env);
@@ -118,6 +128,7 @@ void		put_gun_load(t_env *env, int frame);
 
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 SDL_Surface	*img_new(char *filename);
+SDL_Surface	*img_wpn(char *filename);
 
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);

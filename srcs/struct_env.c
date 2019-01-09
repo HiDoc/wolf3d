@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:17:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,23 @@ int		init_player(t_env *env)
 	point_set(&env->player.pos, 10.0, 10.0);
 	point_set(&env->player.plane, 0.0, 0.66);
 	point_set(&env->player.dir, -1.0, 0.0);
+	env->player.inventory.weapons[0] = &env->world.armory[0];
+	return (0);
+}
+
+int		init_weapon(t_env *env)
+{
+	env->world.armory[0].ref = 0xaFF2000061A1;
+	weapon_set(&env->world.armory[0], "ak47");
 	return (0);
 }
 
 int		init_env(t_env *env)
 {
-	ft_bzero(env, sizeof(env));
+	ft_bzero(env, sizeof(t_env));
 	env->sdl.width = WIDTH;
 	env->sdl.height = HEIGHT;
-	env->ang = 2.0;
-	env->sdl.surface = NULL;
+	init_weapon(env);
 	init_player(env);
 	env->hratio = 2.0;
 	fill_tab(env);

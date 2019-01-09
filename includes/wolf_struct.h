@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 16:45:26 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:32:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,12 @@ struct					s_minimap
 ** Gameplay structures
 ** 1 - Objects
 ** 2 - Weapons
-** 3 - Actions
-** 4 - Inventory
-** 5 - Character
+** 3 - Surface
+** 4 - Container
+** 5 - World
+** 6 - Actions
+** 7 - Inventory
+** 8 - Character
 */
 
 struct					s_object
@@ -192,12 +195,17 @@ struct					s_object
 	int			nb_use;
 };
 
+/*
+** Weapon struct
+*/
+
 struct					s_weapon
 {
 	SDL_Surface	*sprite;
 	SDL_Surface	*sprite_bullet;
 	SDL_Surface	**sprite_reload;
 	SDL_Surface	**sprite_shoot;
+	long		ref;
 	int			type;
 	int			time_reload;
 	int			time_shoot;
@@ -244,8 +252,8 @@ struct					s_action
 struct					s_inventory
 {
 	t_weapon	*current;
-	t_weapon	weapons[15];
-	t_object	objects[15];
+	t_weapon	*weapons[15];
+	t_object	*objects[15];
 };
 
 struct					s_character
@@ -256,6 +264,8 @@ struct					s_character
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
+	double		angle_d;
+	double		angle_r;
 	t_point		pos;
 	t_point		plane;
 	t_point		dir;
@@ -275,21 +285,15 @@ struct					s_iline
 
 struct					s_env
 {
-	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*bul_surf[6];
 	SDL_Surface	*floor;
 	SDL_Surface	*gun_impact;
-	SDL_Surface	*mitra_frms[36];
 	SDL_Surface	*sky;
 	SDL_Surface	*stitch[18];
 	SDL_Surface	*walls[10];
 
-	double		ang;
 	double		cam;
 	double		hratio;
-	double		is_updn;
-	double		angle_d;
-	double		angle_r;
 
 	int			**w_map;
 
@@ -301,6 +305,7 @@ struct					s_env
 	t_msc		sounds;
 
 	t_character player;
+	t_world		world;
 
 	t_point		mouse;
 	t_sdl		sdl;
