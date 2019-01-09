@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_actions.c                                   :+:      :+:    :+:   */
+/*   struct_world.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/05 17:32:04 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 10:59:43 by fmadura          ###   ########.fr       */
+/*   Created: 2019/01/09 15:33:08 by fmadura           #+#    #+#             */
+/*   Updated: 2019/01/09 15:35:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_action	*action_new(void)
+void    init_container(t_container *container[WORLD_NB_SURFACE])
 {
-	t_actions *new;
 
-	if ((t_action *)(malloc(sizeof(t_action))) == NULL)
-		return (NULL);
-	ft_bzero(new, sizeof(new));
-	return (new);
+}
+
+void    init_world(t_env *env)
+{
+    t_world *world;
+
+    world = &env->world;
 }

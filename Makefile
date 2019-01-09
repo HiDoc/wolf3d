@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2018/12/27 19:08:53 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/01/09 13:01:47 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,13 @@ SRC_NAME 	= main.c \
 			  struct_sdl.c \
 			  struct_env.c \
 			  struct_enemy.c \
+			  struct_weapon.c \
+			  struct_action.c \
+			  struct_character.c \
+			  struct_object.c \
 			  struct_bots.c \
 			  struct_obj.c \
+			  struct_img.c \
 			  struct_minimap.c \
 			  utils_tab.c \
 			  utils_sdl.c \
@@ -73,7 +78,6 @@ SRC_NAME 	= main.c \
 			  utils_tron.c \
 			  utils_free.c \
 			  utils_ui.c \
-			  struct_img.c \
 			  musics.c		\
 			  sdl_mouse.c	\
 			  objects_walls.c \

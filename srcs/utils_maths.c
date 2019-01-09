@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 13:46:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:52:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:44:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ double		ldist(t_env *e, t_line *l, char side)
 
 	ret = 0;
 	if (side == 'x')
-		ret = dist(l->map.x, e->pos.x, l->step.x, l->raydir.x);
+		ret = dist(l->map.x, e->player.pos.x, l->step.x, l->raydir.x);
 	else
-		ret = dist(l->map.y, e->pos.y, l->step.y, l->raydir.y);
+		ret = dist(l->map.y, e->player.pos.y, l->step.y, l->raydir.y);
 	return (ret);
 }
 

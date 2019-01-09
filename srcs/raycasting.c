@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 19:19:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:19:55 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 	{
 		while (iter->y < iter->delim && iter->y < HEIGHT)
 		{
-			iter->color = f(env, iter->line.objs, iter->y - env->is_updn);
+			iter->color = f(env, iter->line.objs, iter->y - env->player.actions.is_up_down);
 			setpixel(env->sdl.surface, iter->x, iter->y,
 			fog(env, iter->line.objs, iter->color, iter->y));
 			++(iter->y);
@@ -53,7 +53,7 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 {
 	while (iter->y < iter->delim && iter->y < HEIGHT)
 	{
-		iter->color = f(env, &iter->line, iter->y - env->is_updn);
+		iter->color = f(env, &iter->line, iter->y - env->player.actions.is_up_down);
 		setpixel(env->sdl.surface, iter->x, iter->y,
 		fog(env, &iter->line, iter->color, iter->y));
 		++(iter->y);

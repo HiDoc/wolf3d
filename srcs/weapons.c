@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   weapons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 16:18:20 by fmadura           #+#    #+#             */
-/*   Updated: 2018/12/27 19:45:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/08 14:48:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon)
 	(void)weapon;
 	if (keycode == SDL_SCANCODE_R)
 	{
-		env->ld_wp = 1;
+		env->player.actions.is_loading = 1;
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	}
 	return (0);
@@ -44,6 +44,6 @@ int	shoot_weapon(t_env *env, int frame)
 		surface_drawline(env->sdl.surface, start, end, 0xFF000000);
 	}
 	else
-		env->is_shootin = 0;
+		env->player.actions.is_shooting = 0;
 	return (0);
 }

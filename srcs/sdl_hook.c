@@ -15,12 +15,12 @@ static int	sdl_check_pos(t_env *env, t_point mult, float check)
 	int x;
 	int y;
 
-	x = env->pos.x + mult.x * check;
-	y = env->pos.y;
-	env->w_map[x][y] == 0 ? env->pos.x += mult.x * check : 0;
-	x = env->pos.x;
-	y = env->pos.y + mult.y * check;
-	env->w_map[x][y] == 0 ? env->pos.y += mult.y * check : 0;
+	x = env->player.pos.x + mult.x * check;
+	y = env->player.pos.y;
+	env->w_map[x][y] == 0 ? env->player.pos.x += mult.x * check : 0;
+	x = env->player.pos.x;
+	y = env->player.pos.y + mult.y * check;
+	env->w_map[x][y] == 0 ? env->player.pos.y += mult.y * check : 0;
 	return (1);
 }
 
@@ -41,39 +41,30 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 {
 	double	mult;
 
-	mult = x < 0 ? 4.0 : -4.0;
+	mult = -x / 4.0;
 	env->player.dir = point_rotate(env->player.dir, mult);
 	env->player.plane = point_rotate(env->player.plane, mult);
-	env->angle_d += mult;
-	env->angle_d > 358.0 ? env->angle_d = 0.0 : 0;
-	env->angle_d < 0.0 ? env->angle_d = 358.0 : 0;
-	if (y > 10)
-	{
-		if (env->is_updn > -400)
-			env->is_updn -= 20;
-	}
-	else if (y < -10)
-	{
-		if (env->is_updn < 400)
-			env->is_updn += 20;
-	}
+	env->player.angle_d += mult;
+	env->player.angle_d > 358.0 ? env->player.angle_d = 0.0 : 0;
+	env->player.angle_d < 0.0 ? env->player.angle_d = 358.0 : 0;
+	env->player.actions.is_up_down += -y;
 	return (0);
 }
 
 int			player_jump(t_env *env)
 {
-	if (env->is_jump == 1)
+	if (env->player.actions.is_jumping == 1)
 	{
-		env->is_updn += 20;
+		env->player.actions.is_up_down += 20;
 		env->hratio += 0.1;
 	}
 	else
 	{
-		env->is_updn -= 20;
+		env->player.actions.is_up_down -= 20;
 		env->hratio -= 0.1;
 	}
-	if (env->hratio >= 2 && env->is_jump == 1)
-		env->is_jump = 0;
+	if (env->hratio >= 2 && env->player.actions.is_jumping == 1)
+		env->player.actions.is_jumping = 0;
 	return (0);
 }
 
@@ -81,7 +72,7 @@ int			jumping(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_SPACE)
 	{
-		env->is_jump = 1;
+		env->player.actions.is_jumping = 1;
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	}
 	return (0);
@@ -96,7 +87,7 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 	keycode = event.key.keysym.scancode;
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
-		load_weapon(env, SDL_SCANCODE_R, env->ak_frms);
+		load_weapon(env, SDL_SCANCODE_R, env->player.inventory.weapons[0]->sprite_reload);
 	if (keycodes[SDL_SCANCODE_SPACE])
 		jumping(env, SDL_SCANCODE_SPACE);
 	sdl_exit_wolf(env, keycode);

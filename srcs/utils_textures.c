@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 17:52:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 14:33:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ Uint32			line_sky_infinite(t_env *env, t_line *line, int y)
 
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	cfloor.x = weight * fwall.x - weight * env->pos.x;
-	cfloor.y = weight * fwall.y - weight * env->pos.y;
+	cfloor.x = weight * fwall.x - weight * env->player.pos.x;
+	cfloor.y = weight * fwall.y - weight * env->player.pos.y;
 	tfloor.x = (int)(cfloor.x * 64) % 64;
 	tfloor.y = (int)((HEIGHT - cfloor.y) * 64) % 64;
 	return (getpixel(line->floor, tfloor.x, tfloor.y));
@@ -64,8 +64,8 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	h = line->floor->h << 1;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
-	w = (int)((weight * fwall.x - (1.0 / 3.0 + weight) * env->pos.x) * w);
-	h = (int)((weight * fwall.y - (1.0 / 3.0 + weight) * env->pos.y) * h);
+	w = (int)((weight * fwall.x - (1.0 / 3.0 + weight) * env->player.pos.x) * w);
+	h = (int)((weight * fwall.y - (1.0 / 3.0 + weight) * env->player.pos.y) * h);
 	w = w % line->floor->w;
 	h = h % line->floor->h;
 	return (getpixel(line->floor, w % 128, h % 128));
@@ -82,8 +82,8 @@ Uint32			line_floor_under(t_env *env, t_line *line, int y)
 	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
-	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->player.pos.y) * h);
 	if (w % line->floor->w < 20 || h % line->floor->h < 20 )
 		return (0xff00ffff);
 	else
@@ -106,8 +106,8 @@ Uint32			line_floor(t_env *env, t_line *line, int y)
 	h = line->floor->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
-	w = (int)((weight * fwall.x + (1.0 - weight) * env->pos.x) * w);
-	h = (int)((weight * fwall.y + (1.0 - weight) * env->pos.y) * h);
+	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
+	h = (int)((weight * fwall.y + (1.0 - weight) * env->player.pos.y) * h);
 	return (getpixel(line->floor, w % line->floor->w, h % line->floor->h));
 }
 

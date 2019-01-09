@@ -49,7 +49,6 @@ int		env_free(t_env *env)
 
 	i = 0;
 	env_surface_free((SDL_Surface **)env->walls);
-	env_surface_free((SDL_Surface **)env->ak_frms);
 	env_surface_free((SDL_Surface **)env->bul_surf);
 	env_surface_free((SDL_Surface **)env->stitch);
 	wobj_free(&env->wobj);

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:23:49 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 10:59:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 13:02:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_character *character_new(void)
 {
     t_character *new;
 
-    if ((t_character *)(malloc(sizeof(t_character))) == NULL)
+    if ((new = (t_character *)(malloc(sizeof(t_character)))) == NULL)
         return (NULL);
-    ft_bzero(new, sizeof(new));
+    ft_bzero(new, sizeof(t_character));
     character_set(new);
     return (new);
 }

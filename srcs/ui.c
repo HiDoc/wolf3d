@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/05 18:52:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/09 15:30:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,25 @@ void	put_img(t_env *env, SDL_Surface *img, int x, int y)
 
 void	put_gun_load(t_env *env, int frame)
 {
-	if (frame < 36)
-		put_img(env, env->mitra_frms[frame], 200, 170);
+	t_weapon	*weapon;
+
+	weapon = env->player.inventory.weapons[0];
+	if (frame < weapon->time_reload)
+		put_img(env, weapon->sprite_reload[frame], 200, 170);
 	else
-		env->ld_wp = 0;
+		env->player.actions.is_loading = 0;
 }
 
 void	put_gun(t_env *env)
 {
 	int x;
 	int y;
+	SDL_Surface	*sprite;
 
-	x = env->width - env->mitra_frms[0]->w;
-	y = env->height - env->mitra_frms[0]->h;
-	put_img(env, env->mitra_frms[0], x, y);
+	sprite = env->player.inventory.weapons[0]->sprite;
+	x = env->sdl.width - sprite->w;
+	y = env->sdl.height - sprite->h;
+	put_img(env, sprite, x, y);
 }
 
 void	put_health(t_env *env)
@@ -48,7 +53,7 @@ void	put_health(t_env *env)
 	int y;
 
 	x = 22;
-	y = env->height - env->life.img->h;
+	y = env->sdl.height - env->life.img->h;
 	put_img(env, env->life.img, x, y);
 }
 

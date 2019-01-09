@@ -99,7 +99,7 @@ int			wall_impact(t_env *env)
 	int			xx;
 	int			yy;
 
-	env->wobj.pos = env->pos;
+	env->wobj.pos = env->player.pos;
 	while (env->wobj.hit == 0)
 	{
 		xx = env->wobj.pos.x + env->player.dir.x * 0.2;

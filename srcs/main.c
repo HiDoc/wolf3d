@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:37:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/08 16:58:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,27 @@ int					render_env(t_env *env)
 	SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (0);
+}
+
+static void inline	loop_weapons(t_env *env, int *frame)
+{
+	if (env->player.actions.is_shooting)
+	{
+		shoot_weapon(env, *frame);
+		++(*frame);
+	}
+	else if (env->player.actions.is_loading)
+	{
+		put_gun_load(env, *frame);
+		++(*frame);
+	}
+	else
+	{
+		put_gun(env);
+		*frame = 0;
+	}
+	if (env->player.actions.is_jumping)
+		player_jump(env);
 }
 
 static void inline	loop_mouse(t_env *env)
@@ -39,27 +60,6 @@ static void inline	loop_mouse(t_env *env)
 		env->mouse.y = y;
 		sdl_mouse_click(env, x, y);
 	}
-}
-
-static void inline	loop_weapons(t_env *env, int *frame)
-{
-	if (env->is_shootin)
-	{
-		shoot_weapon(env, *frame);
-		++(*frame);
-	}
-	else if (env->ld_wp)
-	{
-		put_gun_load(env, *frame);
-		++(*frame);
-	}
-	else
-	{
-		put_gun(env);
-		*frame = 0;
-	}
-	if (env->is_jump)
-		player_jump(env);
 }
 
 void				loop_env(t_env *env)

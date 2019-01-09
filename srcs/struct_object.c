@@ -14,10 +14,10 @@
 
 t_object *object_new(void)
 {
-    t_objects *new;
+    t_object *new;
 
-    if ((t_object *)(malloc(sizeof(t_object))) == NULL)
+    if ((new = (t_object *)(malloc(sizeof(t_object)))) == NULL)
         return (NULL);
-    ft_bzero(new, sizeof(new));
+    ft_bzero(new, sizeof(t_object));
     return (new);
 }
