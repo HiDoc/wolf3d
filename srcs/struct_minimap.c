@@ -69,9 +69,9 @@ static void		ft_draw_bots(t_env *env)
 	while (i < 1) // to set relative (nb of bots)
 	{
 		calcpos.x = env->minimap.diff.x
-		+ (env->bots[i]->position.x * env->minimap.mnp_size) + 5;
+		+ (env->bots[i]->position.x * env->minimap.mnp_size) - 5;
 		calcpos.y = env->minimap.diff.y
-		+ (env->bots[i]->position.y * env->minimap.mnp_size) + 5;
+		+ (env->bots[i]->position.y * env->minimap.mnp_size) - 5;
 
 		rect = (SDL_Rect){calcpos.x, calcpos.y, 10, 10};
 		if (env->bots[i]->alerted == 1)
@@ -83,8 +83,10 @@ static void		ft_draw_bots(t_env *env)
 		surface_drawrect(env->sdl.surface, rect, &(env->minimap.limit), color);
 
 		// monster direction
-		end.x = calcpos.x + cos(env->bots[i]->direction) * 25;
-		end.y = calcpos.y + sin(env->bots[i]->direction) * 25;
+		calcpos.x += 5;
+		calcpos.y += 5;
+		end.x = calcpos.x + cos(env->bots[i]->direction * M_PI / 180) * 25;
+		end.y = calcpos.y + sin(env->bots[i]->direction * M_PI / 180) * 25;
 		surface_drawline_limit(env->sdl.surface, calcpos, end,
 		env->minimap.limit, color);
 		i++;
