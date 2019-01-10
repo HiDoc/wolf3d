@@ -74,8 +74,10 @@ static void		ft_draw_bots(t_env *env)
 		+ (env->bots[i]->position.y * env->minimap.mnp_size) - 5;
 
 		rect = (SDL_Rect){calcpos.x, calcpos.y, 10, 10};
-		if (env->bots[i]->alerted == 1)
+		if (env->bots[i]->detected == 1)
 			color = 0xFF0000FF;
+		else if (env->bots[i]->alerted == 1)
+			color = 0xFF3399FF;
 		else
 			color = 0xFF000000;
 

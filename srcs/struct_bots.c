@@ -12,7 +12,7 @@ static void		get_player_dist(t_env *env, int bot)
 	fabs(env->bots[bot]->position.y - env->player.pos.y));
 }
 
-static int		calc_angle(t_env *env, int bot)
+static void		get_player_angl(t_env *env, int bot)
 {
 	double		step_x;
 	double		res;
@@ -22,8 +22,17 @@ static int		calc_angle(t_env *env, int bot)
 		res = acos(step_x / env->bots[bot]->player_dist);
 	else
 		res = -acos(step_x / env->bots[bot]->player_dist);
-	res = res * 180 / M_PI;
-	return (res);
+	env->bots[bot]->player_angl = (int)(res * 180 / M_PI);
+}
+
+static int		is_player_ahead(t_env *env, int bot)
+{
+	if (abs(env->bots[bot]->player_angl - env->bots[bot]->direction) < 30)
+	{
+		// if (no wall between)
+		return (1);
+	}
+	return (0);
 }
 
 void			handle_bots(t_env *env)
@@ -36,15 +45,15 @@ void			handle_bots(t_env *env)
 	while (env->bots[i])
 	{
 		get_player_dist(env, i);
-		// get_player_angl();
-		/*if (is_player_ahead(env, i))
+		get_player_angl(env, i);
+		if (is_player_ahead(env, i))
 		{
-			move_bot(env, i, env->pos);
-			last_pos.x = env->pos.x;
-			last_pos.y = env->pos.y;
+			//move_bot(env, i, env->pos);
+			//last_pos.x = env->pos.x;
+			//last_pos.y = env->pos.y;
 			env->bots[i]->detected = 1;
 		}
-		else if (env->bots[i]->detected == 1)
+		/*else if (env->bots[i]->detected == 1)
 		{
 			move_bot(env, i, last_pos);
 			if (env->pos_x == last_pos.x
@@ -63,7 +72,7 @@ void			handle_bots(t_env *env)
 		if (env->bots[i]->player_dist < 4)
 		// 4 arbitraire, peut servir de niveau de difficulte
 		{
-			env->bots[i]->direction = calc_angle(env, i);
+			env->bots[i]->direction = env->bots[i]->player_angl;
 			env->bots[i]->alerted = 1;
 		}
 		else if (env->bots[i]->alerted == 1)
