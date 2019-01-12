@@ -91,6 +91,13 @@ static void		ft_draw_bots(t_env *env)
 		end.y = calcpos.y + sin(env->bots[i]->direction * M_PI / 180) * 25;
 		surface_drawline_limit(env->sdl.surface, calcpos, end,
 		env->minimap.limit, color);
+
+		//debug
+		end.x = calcpos.x + env->bots[i]->debug.x;
+		end.y = calcpos.y + env->bots[i]->debug.y;
+		surface_drawline_limit(env->sdl.surface, calcpos, end,
+		env->minimap.limit, color);
+
 		i++;
 	}
 }
