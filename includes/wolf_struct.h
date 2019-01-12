@@ -279,14 +279,16 @@ struct					s_bot // a fusionner avec s_character/ennemies
 {
 	int         bot_type;
 	t_point     init_pos;
-	int         init_dir;
+	double		init_dir;
 	t_point     position;
-	int         direction;
+	double		direction;
 	double		player_dist;
-	int			player_angl;
+	double		player_angl;
 	int         detected;	// if it saw player
 	int			alerted;	// if it heard player
 	int         health;
+
+	t_point		debug;
 };
 
 struct					s_iline
