@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/09 13:01:47 by fmadura          ###   ########.fr        #
+#    Updated: 2019/01/14 14:30:07 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= wolf3d
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -O3 -g -fsanitize=address
+CFLAGS 		= -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT 		= ./libft
 LEN_NAME	=	`printf "%s" $(NAME) |wc -c`
 DELTA		=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -44,11 +44,11 @@ ifeq ($(UNAME), Linux)
 
 OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
 else
-INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.9/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.9/include/SDL2/ \
+INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
+				/Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
 				/Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.4/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.4/include/
+				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
+				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/
 endif
 
 SRC_NAME 	= main.c \

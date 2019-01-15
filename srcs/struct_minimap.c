@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:47:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,16 @@ static void		ft_draw_bots(t_env *env)
 		// monster direction
 		calcpos.x += 5;
 		calcpos.y += 5;
-		end.x = calcpos.x + cos(env->bots[i]->direction * M_PI / 180) * 25;
-		end.y = calcpos.y + sin(env->bots[i]->direction * M_PI / 180) * 25;
+		/*end.x = calcpos.x + cos(env->bots[i]->direction * M_PI / 180)
+		* env->bots[i]->player_dist * env->minimap.mnp_size;
+		end.y = calcpos.y + sin(env->bots[i]->direction * M_PI / 180)
+		* env->bots[i]->player_dist * env->minimap.mnp_size;
 		surface_drawline_limit(env->sdl.surface, calcpos, end,
-		env->minimap.limit, color);
+		env->minimap.limit, color);*/
 
-		//debug
-		end.x = calcpos.x + env->bots[i]->debug.x;
-		end.y = calcpos.y + env->bots[i]->debug.y;
+		// debug
+		end.x = calcpos.x + env->bots[i]->debug.x * env->minimap.mnp_size;
+		end.y = calcpos.y + env->bots[i]->debug.y * env->minimap.mnp_size;
 		surface_drawline_limit(env->sdl.surface, calcpos, end,
 		env->minimap.limit, color);
 
