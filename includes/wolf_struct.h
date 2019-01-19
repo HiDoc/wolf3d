@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:32:00 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/14 15:04:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_action		t_action;
 typedef struct s_inventory	t_inventory;
 typedef struct s_container	t_container;
 typedef struct s_character	t_character;
+typedef struct s_bot		t_bot; // fusionner avec t_character
 
 struct					s_sdl
 {
@@ -274,6 +275,22 @@ struct					s_character
 	SDL_Surface	*sprite;
 };
 
+struct					s_bot // a fusionner avec s_character/ennemies
+{
+	int         bot_type;
+	t_point     init_pos;
+	double		init_dir;
+	t_point     position;
+	double		direction;
+	double		player_dist;
+	double		player_angl;
+	int         detected;	// if it saw player
+	int			alerted;	// if it heard player
+	int         health;
+
+	t_point		debug;
+};
+
 struct					s_iline
 {
 	int			x;
@@ -298,6 +315,7 @@ struct					s_env
 	int			**w_map;
 
 	t_character	enemies[10];
+	t_bot		**bots; // a fusionner plus tard avec t_character
 	t_minimap	minimap;
 	t_hub		life;
 	t_hub		lscreen;

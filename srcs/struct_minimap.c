@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:47:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,55 @@ static void		ft_draw_ray(int i, t_env *env)
 	+ (env->rays[i].line.raydir.x * env->rays[i].line.wdist * 20);
 
 	// affichage rayon
-	surface_drawline_limit(env->sdl.surface, a, b, env->minimap.limit, 0xFFBFFCFF);
+	surface_drawline_limit(env->sdl.surface, a, b,
+	env->minimap.limit, 0xFFBFFCFF);
+}
+
+static void		ft_draw_bots(t_env *env)
+{
+	t_point		calcpos;
+	Uint32		color;
+	SDL_Rect	rect;
+	t_point		end;
+	int			i;
+
+	i = 0;
+	while (i < 1) // to set relative (nb of bots)
+	{
+		calcpos.x = env->minimap.diff.x
+		+ (env->bots[i]->position.x * env->minimap.mnp_size) - 5;
+		calcpos.y = env->minimap.diff.y
+		+ (env->bots[i]->position.y * env->minimap.mnp_size) - 5;
+
+		rect = (SDL_Rect){calcpos.x, calcpos.y, 10, 10};
+		if (env->bots[i]->detected == 1)
+			color = 0xFF0000FF;
+		else if (env->bots[i]->alerted == 1)
+			color = 0xFF3399FF;
+		else
+			color = 0xFF000000;
+
+		// monster
+		surface_drawrect(env->sdl.surface, rect, &(env->minimap.limit), color);
+
+		// monster direction
+		calcpos.x += 5;
+		calcpos.y += 5;
+		/*end.x = calcpos.x + cos(env->bots[i]->direction * M_PI / 180)
+		* env->bots[i]->player_dist * env->minimap.mnp_size;
+		end.y = calcpos.y + sin(env->bots[i]->direction * M_PI / 180)
+		* env->bots[i]->player_dist * env->minimap.mnp_size;
+		surface_drawline_limit(env->sdl.surface, calcpos, end,
+		env->minimap.limit, color);*/
+
+		// debug
+		end.x = calcpos.x + env->bots[i]->debug.x * env->minimap.mnp_size;
+		end.y = calcpos.y + env->bots[i]->debug.y * env->minimap.mnp_size;
+		surface_drawline_limit(env->sdl.surface, calcpos, end,
+		env->minimap.limit, color);
+
+		i++;
+	}
 }
 
 static void		ft_draw_player(t_env *env)
@@ -69,7 +117,7 @@ static void		ft_draw_player(t_env *env)
 	}
 	player = (SDL_Rect){env->minimap.centre.x - 5,
 	env->minimap.centre.y - 5, 10, 10};
-	surface_drawrect(env->sdl.surface, player, 0, 0x0);
+	surface_drawrect(env->sdl.surface, player, 0, 0x00000000);
 }
 
 void	struct_minimap(t_env *env)
@@ -100,4 +148,5 @@ void	struct_minimap(t_env *env)
 		i++;
 	}
 	ft_draw_player(env);
+	ft_draw_bots(env);
 }

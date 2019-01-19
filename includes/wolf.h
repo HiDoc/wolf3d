@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 13:08:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:24:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,11 @@ int			player_jump(t_env *env);
 */
 
 void		struct_minimap(t_env *env);
+
+/*
+** ia/bots
+*/
+
+void		handle_bots(t_env *env);
 
 #endif

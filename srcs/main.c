@@ -83,6 +83,7 @@ void				loop_env(t_env *env)
 			sdl_keyhook(env, env->sdl.event);
 			loop_mouse(env);
 			init_thread(env, 8);
+			handle_bots(env);
 			loop_weapons(env, &frame);
 			struct_minimap(env);
 			health(env);
