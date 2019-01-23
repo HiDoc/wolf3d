@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/15 17:24:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 15:31:26 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ int			key_hook(int key, t_env *env);
 int			render_env(t_env *env);
 
 void		img(t_env *env);
+
+//menu
+
+int		display_button_menu(t_env *env);
+int		move_button_menu(t_env *env, Uint8 keycodes);
+int		select_button_menu(t_env * env, Uint8 keycodes);
+int		sdl_menu(t_env *env, Uint8 keycode);
 
 /*
 ** Math helpers
@@ -93,6 +100,7 @@ void        weapon_set(t_weapon *weapon, char *name);
 int			init_thread(t_env *env, int threads);
 int			init_env(t_env *env);
 void		init_sdl(t_env *env);
+int			init_menu_surface(t_env *env);
 
 int			env_free(t_env *env);
 int			fill_tab(t_env *env);
@@ -107,7 +115,7 @@ void		hub_texture(t_env *env, t_hub *bloc, char *line, char *police);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
 int			sdl_mouse_click(t_env *env, int x, int y);
-int			sdl_exit_wolf(t_env *env, Uint8 scancode);
+int			sdl_exit_wolf(t_env *env);
 
 void		ui_put_string(t_env *env, char *str, int x, int y);
 void		ui_put_fps(t_env *env, int fps);
@@ -125,7 +133,7 @@ void		put_gun_load(t_env *env, int frame);
 /*
 ** Functions to manipulate surfaces
 */
-
+SDL_Surface	*create_surf(char *path);
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 SDL_Surface	*img_new(char *filename);
 SDL_Surface	*img_wpn(char *filename);

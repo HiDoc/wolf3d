@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/14 14:30:07 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/01/22 17:16:43 by jsauron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= wolf3d
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS 		= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT 		= ./libft
 LEN_NAME	=	`printf "%s" $(NAME) |wc -c`
 DELTA		=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -81,7 +81,8 @@ SRC_NAME 	= main.c \
 			  musics.c		\
 			  sdl_mouse.c	\
 			  objects_walls.c \
-			  weapons.c
+			  weapons.c \
+			  menu.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
