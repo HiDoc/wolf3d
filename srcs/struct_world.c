@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 15:33:08 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:35:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/22 16:36:53 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    init_container(t_container *container[WORLD_NB_SURFACE])
 {
-
+	(void)container;
 }
 
 void    init_world(t_env *env)

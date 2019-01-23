@@ -1,15 +1,24 @@
 #include "wolf.h"
 
-int			sdl_exit_wolf(t_env *env, Uint8 keycode)
+int			sdl_exit_wolf(t_env *env)
+{
+	env_free(env);
+	exit(0);
+}
+
+int			sdl_menu(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_ESCAPE)
 	{
-		env_free(env);
-		exit(0);
+		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
+		if (env->menu.is_active)
+			env->menu.is_active = 0;
+		else
+			env->menu.is_active = 1;
+		return (1);
 	}
 	return (0);
 }
-
 static int	sdl_check_pos(t_env *env, t_point mult, float check)
 {
 	int x;
@@ -85,11 +94,17 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 
 	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
+
+	if (sdl_exit_wolf(env, keycode))
+		return (0);
+	if (keycodes[SDL_SCANCODE_DOWN] || keycodes[SDL_SCANCODE_UP])
+		move_button_menu(env, keycode);
+	if (keycode[SDL_SCANCODE_ENTER])
+		select_button_menu(env, keycode);
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
 		load_weapon(env, SDL_SCANCODE_R, env->player.inventory.weapons[0]->sprite_reload);
 	if (keycodes[SDL_SCANCODE_SPACE])
 		jumping(env, SDL_SCANCODE_SPACE);
-	sdl_exit_wolf(env, keycode);
 	return (0);
 }

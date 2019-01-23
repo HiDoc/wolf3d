@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/14 14:55:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/22 17:21:08 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int		init_env(t_env *env)
 	put_poster(env);
 	init_thread(env, 8);
 	init_sdl(env);
+	init_menu_surface(env);
 	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
 	return (0);
 }

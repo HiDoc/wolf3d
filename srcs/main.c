@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 16:58:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/23 14:21:09 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int					render_env(t_env *env)
 	SDL_FreeSurface(env->sdl.surface);
 	SDL_RenderClear(env->sdl.renderer);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
-	SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
+	//SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (0);
 }
@@ -88,6 +88,11 @@ void				loop_env(t_env *env)
 			struct_minimap(env);
 			health(env);
 			ui_put_fps(env, fps);
+			if (env->menu.is_active)
+			{
+				put_img(env, env->menu.sprite, 0, 0);
+				display_button_menu(env);
+			}
 			copy_sdl(env);
 			render_env(env);
 		}
