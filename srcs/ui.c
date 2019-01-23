@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:30:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/23 20:43:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,24 @@ void	put_img(t_env *env, SDL_Surface *img, int x, int y)
 		SDL_BlitSurface(img, NULL, env->sdl.surface, &rect);
 }
 
+void	put_gun_shoot(t_env *env, int frame)
+{
+	t_weapon	*weapon;
+
+	weapon = env->player.inventory.weapons[0];
+	frame /= 2.5;
+	if (frame < weapon->time_shoot)
+		put_img(env, weapon->sprite_shoot[frame], 200, 170);
+	else
+		env->player.actions.is_shooting = 0;
+}
+
 void	put_gun_load(t_env *env, int frame)
 {
 	t_weapon	*weapon;
 
 	weapon = env->player.inventory.weapons[0];
+	frame /= 2.5;
 	if (frame < weapon->time_reload)
 		put_img(env, weapon->sprite_reload[frame], 200, 170);
 	else
@@ -45,16 +58,6 @@ void	put_gun(t_env *env)
 	x = env->sdl.width - sprite->w;
 	y = env->sdl.height - sprite->h;
 	put_img(env, sprite, x, y);
-}
-
-void	put_health(t_env *env)
-{
-	int x;
-	int y;
-
-	x = 22;
-	y = env->sdl.height - env->life.img->h;
-	put_img(env, env->life.img, x, y);
 }
 
 void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
@@ -76,9 +79,22 @@ void	hub_texture(t_env *env, t_hub *bloc, char *line, char *police)
 
 void	health(t_env *env)
 {
-	env->life.color = (SDL_Color){44, 200, 235, 255};
-	env->life.rect = (SDL_Rect){58, 475, 60, 100};
-	hub_texture(env, &env->life, "90%", "rsrc/font/yorkbailehill.ttf");
+	char	life[6];
+	int		count;
+	int		curr_life;
+
+	curr_life = env->player.health;
+	life[5] = '\0';
+	life[4] = '%';
+	life[3] = ' ';
+	count = 3;
+	while (count > 0)
+	{
+		count--;
+		life[count] = (curr_life % 10) + 48;
+		curr_life /= 10;
+	}
+	ui_put_string(env, life, 65, 450);
 }
 
 void	launch_screen(t_env *env)

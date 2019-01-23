@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/15 17:47:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:59:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static void		ft_draw_player(t_env *env)
 	surface_drawrect(env->sdl.surface, player, 0, 0x00000000);
 }
 
-void	struct_minimap(t_env *env)
+void	ui_put_minimap(t_env *env)
 {
 	SDL_Rect	rect;
 	int			i;

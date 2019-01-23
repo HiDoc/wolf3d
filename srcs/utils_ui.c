@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_ui.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/23 19:49:34 by fmadura           #+#    #+#             */
+/*   Updated: 2019/01/23 20:32:06 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 void    ui_put_string(t_env *env, char *str, int x, int y)
@@ -25,4 +37,10 @@ void    ui_put_fps(t_env *env, int fps)
     fps_count = ft_strrjoin("fps : ", ft_itoa(fps));
     ui_put_string(env, fps_count, 10, 10);
     free(fps_count);
+}
+
+void    ui_put_health(t_env *env)
+{
+    health(env);
+    put_img(env, env->life.img, 20, 400);
 }

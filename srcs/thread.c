@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/23 19:57:02 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ int		init_thread(t_env *env, int threads)
 		}
 		x++;
 	}
-	put_health(env);
 	return (0);
 }

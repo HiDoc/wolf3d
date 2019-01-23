@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/15 17:24:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:41:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			sdl_exit_wolf(t_env *env, Uint8 scancode);
 
 void		ui_put_string(t_env *env, char *str, int x, int y);
 void		ui_put_fps(t_env *env, int fps);
+void		ui_put_health(t_env *env);
 
 /*
 ** Functions to add image to final surface
@@ -121,6 +122,7 @@ void		put_enemy(t_env *env);
 void		put_health(t_env *env);
 void		put_gun(t_env *env);
 void		put_gun_load(t_env *env, int frame);
+void		put_gun_shoot(t_env *env, int frame);
 
 /*
 ** Functions to manipulate surfaces
@@ -164,7 +166,7 @@ int			player_jump(t_env *env);
 ** display minimap
 */
 
-void		struct_minimap(t_env *env);
+void		ui_put_minimap(t_env *env);
 
 /*
 ** ia/bots

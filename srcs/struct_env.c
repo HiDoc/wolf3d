@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/14 14:55:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:36:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		init_player(t_env *env)
 
 int		init_weapon(t_env *env)
 {
-	env->world.armory[0].ref = 0xaFF2000061A1;
+	env->world.armory[0].ref = 0xa1e0502061A1;
 	weapon_set(&env->world.armory[0], "ak47");
 	return (0);
 }
@@ -111,6 +111,7 @@ int		init_env(t_env *env)
 	env->sdl.height = HEIGHT;
 	init_weapon(env);
 	init_player(env);
+	env->player.health = 100;
 	env->hratio = 2.0;
 	fill_tab(env);
 

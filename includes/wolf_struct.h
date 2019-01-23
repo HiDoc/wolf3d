@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/14 15:04:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:09:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,14 @@ struct					s_object
 
 /*
 ** Weapon struct
+** ref : 0xgffeeddccbba
+** weapon->type = a
+** weapon->time_reload = bb
+** weapon->time_shoot = cc
+** weapon->time_shoot_between = dd
+** weapon->ammo_current = ee
+** weapon->ammo_magazine = ff
+** weapon->damage = g
 */
 
 struct					s_weapon
@@ -220,10 +228,10 @@ struct					s_weapon
 struct					s_surface
 {
 	SDL_Surface	*sprite;
-	int			health;
-	int			height;
-	int			width;
-	double		angle;
+	int					health;
+	int					height;
+	int					width;
+	double			angle;
 };
 
 struct					s_container
@@ -313,7 +321,7 @@ struct					s_env
 	double		hratio;
 
 	int			**w_map;
-
+	int			is_menu_active;
 	t_character	enemies[10];
 	t_bot		**bots; // a fusionner plus tard avec t_character
 	t_minimap	minimap;

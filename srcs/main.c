@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 16:58:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/23 20:41:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int					render_env(t_env *env)
 	SDL_FreeSurface(env->sdl.surface);
 	SDL_RenderClear(env->sdl.renderer);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
-	SDL_RenderCopy(env->sdl.renderer, env->life.texture, NULL, &env->life.rect);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (0);
 }
@@ -27,7 +26,7 @@ static void inline	loop_weapons(t_env *env, int *frame)
 {
 	if (env->player.actions.is_shooting)
 	{
-		shoot_weapon(env, *frame);
+		put_gun_shoot(env, *frame);
 		++(*frame);
 	}
 	else if (env->player.actions.is_loading)
@@ -85,8 +84,8 @@ void				loop_env(t_env *env)
 			init_thread(env, 8);
 			handle_bots(env);
 			loop_weapons(env, &frame);
-			struct_minimap(env);
-			health(env);
+			ui_put_minimap(env);
+			ui_put_health(env);
 			ui_put_fps(env, fps);
 			copy_sdl(env);
 			render_env(env);

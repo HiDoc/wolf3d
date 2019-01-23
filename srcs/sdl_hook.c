@@ -17,6 +17,7 @@ static int	sdl_check_pos(t_env *env, t_point mult, float check)
 
 	x = env->player.pos.x + mult.x * check;
 	y = env->player.pos.y;
+	// Verify if pos not overstack map
 	env->w_map[x][y] == 0 ? env->player.pos.x += mult.x * check : 0;
 	x = env->player.pos.x;
 	y = env->player.pos.y + mult.y * check;

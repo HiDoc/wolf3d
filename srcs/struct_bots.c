@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_bots.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 14:27:24 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/15 17:48:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:51:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ static int		is_player_ahead(t_env *env, int bot)
 
 			pos.x = cos(env->bots[bot]->player_angl * M_PI / 180) * try;
 			pos.y = sin(env->bots[bot]->player_angl * M_PI / 180) * try;
-
-			printf("pos.x : %f\n", pos.x);
-			printf("pos.y : %f\n", pos.y);
 
 			env->bots[bot]->debug.x = pos.x;
 			env->bots[bot]->debug.y = pos.y;
