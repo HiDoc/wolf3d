@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 14:05:08 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:27:35 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ struct					s_menu
 	int				is_active;
 	int				button;
 	t_menu			*sub;
+	int				sub_menu;
 	int				nb_sub;
 	SDL_Surface		*sprite;
 };

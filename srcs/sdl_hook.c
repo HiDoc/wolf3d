@@ -12,7 +12,10 @@ int			sdl_menu(t_env *env, Uint8 keycode)
 	{
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 		if (env->menu.is_active)
+		{
 			env->menu.is_active = 0;
+			env->menu.sub_menu = 0;
+		}
 		else
 			env->menu.is_active = 1;
 		return (1);
@@ -95,11 +98,11 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
 
-	if (sdl_exit_wolf(env, keycode))
+	if (sdl_menu(env, keycode))
 		return (0);
 	if (keycodes[SDL_SCANCODE_DOWN] || keycodes[SDL_SCANCODE_UP])
 		move_button_menu(env, keycode);
-	if (keycode[SDL_SCANCODE_ENTER])
+	if (keycodes[SDL_SCANCODE_RETURN])
 		select_button_menu(env, keycode);
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 14:21:09 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:30:46 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,7 @@ void				loop_env(t_env *env)
 			struct_minimap(env);
 			health(env);
 			ui_put_fps(env, fps);
-			if (env->menu.is_active)
-			{
-				put_img(env, env->menu.sprite, 0, 0);
-				display_button_menu(env);
-			}
+			menu(env);
 			copy_sdl(env);
 			render_env(env);
 		}

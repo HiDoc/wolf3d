@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 15:31:26 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:30:44 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ void		img(t_env *env);
 
 //menu
 
+int		menu(t_env *env);
 int		display_button_menu(t_env *env);
 int		move_button_menu(t_env *env, Uint8 keycodes);
-int		select_button_menu(t_env * env, Uint8 keycodes);
+int		select_button_menu(t_env *env, Uint8 keycodes);
 int		sdl_menu(t_env *env, Uint8 keycode);
-
+int		display_sub_menu(t_env *env, int i);
 /*
 ** Math helpers
 */
