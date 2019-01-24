@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 16:51:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 17:34:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,18 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 static void	line_iter(t_env *env, t_iline *iter,
 Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 {
+	(void)fog;
 	while (iter->y < iter->delim && iter->y < HEIGHT)
-	{
-		iter->color = f(env, &iter->line, iter->y - env->player.actions.is_up_down + env->jumpmod);
-		setpixel(env->sdl.surface, iter->x, iter->y + env->jumpmod,
-		fog(env, &iter->line, iter->color, iter->y + env->jumpmod));
+	{	
+		iter->color = f(env, &iter->line,
+		iter->y - env->player.actions.is_up_down);
+
+		setpixel(env->sdl.surface,
+		iter->x,
+		iter->y + (int)(env->jumpmod / (iter->line.wdist / 4)) % HEIGHT,
+		iter->color);
+
+		//fog(env, &iter->line, iter->color, iter->y + env->jumpmod));
 		++(iter->y);
 	}
 }

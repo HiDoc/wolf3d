@@ -80,7 +80,8 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 	keycode = event.key.keysym.scancode;
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
-		load_weapon(env, SDL_SCANCODE_R, env->player.inventory.weapons[0]->sprite_reload);
+		load_weapon(env, SDL_SCANCODE_R,
+		env->player.inventory.weapons[0]->sprite_reload);
 	if (keycodes[SDL_SCANCODE_SPACE])
 		jumping(env, SDL_SCANCODE_SPACE);
 	sdl_exit_wolf(env, keycode);
