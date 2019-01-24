@@ -52,15 +52,6 @@ int			sdl_motion_mouse(t_env *env, int x, int y)
 	return (0);
 }
 
-int			player_jump(t_env *env)
-{
-	if (env->player.actions.is_jumping == 1)
-	{
-		env->jumpmod = 50;
-	}
-	return (0);
-}
-
 int			jumping(t_env *env, Uint8 keycode)
 {
 	if (keycode == SDL_SCANCODE_SPACE)

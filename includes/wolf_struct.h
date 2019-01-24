@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 16:32:42 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:45:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_minimap		t_minimap;
 typedef struct s_point			t_point;
 typedef struct s_thr				t_thr;
 
+typedef struct s_vector			t_vector;
 typedef struct s_line				t_line;
 typedef struct s_obj				t_obj;
 typedef struct s_iline			t_iline;
@@ -60,6 +61,12 @@ struct					s_point
 {
 	double				x;
 	double				y;
+};
+
+struct					s_vector
+{
+	t_point			a;
+	t_point			b;
 };
 
 struct					s_thr

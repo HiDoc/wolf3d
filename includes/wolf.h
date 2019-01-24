@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 13:47:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:44:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 # include "wolf_define.h"
 # include "wolf_struct.h"
 
-int			wolf(t_env *env, int col);
-int			tron(t_env *env, int col);
-void		free_env(t_env *env);
-int			exit_wolf(t_env *env);
-int			key_hook(int key, t_env *env);
-int			render_env(t_env *env);
+int				wolf(t_env *env, int col);
+int				tron(t_env *env, int col);
+void			free_env(t_env *env);
+int				exit_wolf(t_env *env);
+int				key_hook(int key, t_env *env);
+int				render_env(t_env *env);
 
-void		img(t_env *env);
+void			img(t_env *env);
 
 /*
 ** Math helpers
@@ -31,6 +31,13 @@ void		img(t_env *env);
 double		delta(double x, double y);
 double		dist(double map, double pos, double step, double ray);
 double		ldist(t_env *env, t_line *line, char side);
+
+/*
+** Vector helpers
+*/
+
+void    	v_position(t_vector *vector, t_point *res, double c_time, double m_time);
+double  	v_distance(t_vector *vector);
 
 /*
 ** Textures helpers

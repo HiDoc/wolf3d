@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_tron.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/24 17:46:58 by fmadura           #+#    #+#             */
+/*   Updated: 2019/01/24 17:47:00 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
@@ -9,7 +21,7 @@ Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
 
 	w = 512;
 	h = 512;
-	return (0xff00ff00);
+	return (0xff654321);
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
@@ -28,13 +40,14 @@ Uint32			line_tron_floor(t_env *env, t_line *line, int y)
 
 	w = 512;
 	h = 512;
+	return (0xffb8a217);
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x - (1.0 + weight) * env->player.pos.x) * w);
 	h = (int)((weight * fwall.y - (1.0 + weight) * env->player.pos.y) * h);
 	w = w % 512;
 	h = h % 512;
-    return (0xff000000);
+	return (0xff000000);
 }
 
 Uint32			line_tron_wall(t_env *env, t_line *line, int y)
@@ -44,11 +57,10 @@ Uint32			line_tron_wall(t_env *env, t_line *line, int y)
 	double		delta;
 
 	(void)env;
-	return (0xffffffff);
 	x = (line->wall.x * 512);
 	delta = 256 * (2.0 * y - (HEIGHT + line->lineh));
 	yy = ft_abs(delta / line->lineh);
-    if ((int)x % 512 < 5 || (int)yy % 512 < 5 || (int)x % 512 > 507 || (int)yy % 512 > 507)
+	if ((int)x % 512 < 5 || (int)yy % 512 < 5 || (int)x % 512 > 507 || (int)yy % 512 > 507)
 		return (0xffc7ff00);
-    return (0xff000000);
+	return (0xff000000);
 }

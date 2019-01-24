@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 16:27:14 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 20:06:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*launch_thread(void *arg)
 	t_thr	*tmp;
 
 	tmp = (t_thr *)arg;
-	tron(tmp->env, tmp->nbr);
+	wolf(tmp->env, tmp->nbr);
 	pthread_exit(NULL);
 }
 

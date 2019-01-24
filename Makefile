@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/24 15:22:23 by fmadura          ###   ########.fr        #
+#    Updated: 2019/01/24 19:57:42 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= wolf3d
 CC 				= gcc
-CFLAGS 		= -Wall -Wextra -Werror -O3 -g #-fsanitize=address
+CFLAGS 		= -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT 		= ./libft
 LEN_NAME	=	`printf "%s" $(NAME) |wc -c`
 DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -76,6 +76,7 @@ SRC_NAME 	= main.c \
 			  utils_tab.c \
 			  utils_sdl.c \
 			  utils_maths.c \
+			  utils_vector.c \
 			  utils_point.c \
 			  utils_fog.c \
 			  utils_textures.c \

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 17:00:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:27:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int					render_env(t_env *env)
 	return (0);
 }
 
-static void inline	loop_weapons(t_env *env, int *frame)
+static void inline	loop_frames(t_env *env, int *frame)
 {
 	static int	jfram;
+
 	if (env->player.actions.is_shooting)
 	{
 		put_gun_shoot(env, *frame);
@@ -41,14 +42,13 @@ static void inline	loop_weapons(t_env *env, int *frame)
 	}
 	if (env->player.actions.is_jumping)
 	{
+		env->jumpmod = 50;
 		jfram++;
-		player_jump(env);
-		printf("%d\n", jfram);
-		if (jfram > 40)
+		if (jfram > 15)
 		{
 			env->player.actions.is_jumping = 0;
-			env->jumpmod = 0;
 			jfram = 0;
+			env->jumpmod = 0;
 		}
 	}
 }
@@ -93,9 +93,9 @@ void				loop_env(t_env *env)
 			loop_mouse(env);
 			init_thread(env, 8);
 			handle_bots(env);
-			loop_weapons(env, &frame);
-			ui_put_minimap(env);
-			ui_put_health(env);
+			loop_frames(env, &frame);
+			//ui_put_minimap(env);
+			//ui_put_health(env);
 			ui_put_fps(env, fps);
 			copy_sdl(env);
 			render_env(env);
