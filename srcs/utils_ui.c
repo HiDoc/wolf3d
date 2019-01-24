@@ -6,11 +6,23 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 19:49:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:32:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/23 20:52:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+void	put_img(t_env *env, SDL_Surface *img, int x, int y)
+{
+	SDL_Rect	rect;
+
+	rect.w = 128;
+	rect.h = 128;
+	rect.x = x;
+	rect.y = y;
+	if (img)
+		SDL_BlitSurface(img, NULL, env->sdl.surface, &rect);
+}
 
 void    ui_put_string(t_env *env, char *str, int x, int y)
 {

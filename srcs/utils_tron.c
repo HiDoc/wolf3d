@@ -9,13 +9,14 @@ Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
 
 	w = 512;
 	h = 512;
+	return (0xff00ff00);
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->player.pos.y) * h);
 	if (w % 512 < 5 || h % 512 < 5 || h % 512 > 507 || w % 512 > 507)
 		return (0xFFc7ff00);
-    return (0xff000000);
+	return (0xff000000);
 }
 
 Uint32			line_tron_floor(t_env *env, t_line *line, int y)

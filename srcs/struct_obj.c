@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:19:55 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 13:50:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_line	*obj_init(t_env *env, t_line *previous)
 	t_line	*line;
 
 	line = previous->objs;
+	if (!line)
+		return (NULL);
 	line->wdist = -1;
 	line->sidew = -1;
 	line->wdist = ldist(env, previous, previous->sidew == 0 ? 'x' : 'y');

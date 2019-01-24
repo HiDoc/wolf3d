@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 17:15:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:19:55 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:13:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_line	*line_init(t_env *env, t_line *line, int **map, int x)
 {
 	line->nb_objs = 0;
-	line->floor = env->floor;
-	line->sky = env->sky;
+	line->floor = env->world.surfaces.floors[0].sprite;
+	line->sky = env->world.surfaces.floors[2].sprite;
 	line->wdist = -1;
 	line->sidew = -1;
 	env->cam = 2 * x / (double)WIDTH - 1;
@@ -58,13 +58,24 @@ t_line	*line_dda(t_env *env, t_line *line, int **map)
 			line->sidew = 1;
 		}
 	}
-	line->text = (wall_poster(env, line) == 1) ?
-	env->wobj.wposters[env->w_map[(int)line->map.x][(int)line->map.y] >> 12]
-	: env->walls[env->w_map[(int)line->map.x][(int)line->map.y] & 0xF];
-	env->wobj.is_bullet = (check_impact(line, env) != 0) ? 1 : 0;
-	if (env->wobj.is_bullet)
-		line->text = env->bul_surf[env->wobj.impact];
 	line->wdist = ldist(env, line, line->sidew == 0 ? 'x' : 'y');
+	return (line_texture(env, line));
+}
+
+t_line	*line_texture(t_env *env, t_line *line)
+{
+	int		x;
+	int		y;
+
+	x = (int)line->map.x;
+	y = (int)line->map.y;
+	//if (wall_poster(env, line) == 1) ?
+	//	line->text = env->wobj.wposters[env->w_map[x][y] >> 12];
+	//else
+	line->text = env->world.surfaces.walls[(env->w_map[x][y] & 0xF) % 5].sprite;
+	//env->wobj.is_bullet = (check_impact(line, env) != 0) ? 1 : 0;
+	//if (env->wobj.is_bullet)
+	//	line->text = env->bul_surf[env->wobj.impact];
 	return (line_max(env, line));
 }
 

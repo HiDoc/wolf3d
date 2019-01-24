@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:36:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:17:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,15 @@ int		init_env(t_env *env)
 	env->player.health = 100;
 	env->hratio = 2.0;
 	fill_tab(env);
+	env->sdl.surface = SDL_CreateRGBSurface(
+	0,
+	env->sdl.width,
+	env->sdl.height,
+	32,
+	0x000000FF,
+	0x0000FF00,
+	0x00FF0000,
+	0xFF000000);
 
 	// a laisser tant que parsing non implemente
 	if (!(env->bots = (t_bot **)ft_memalloc(sizeof(t_bot *)
@@ -129,6 +138,7 @@ int		init_env(t_env *env)
 	// -----------------------------------------
 
 	img(env);
+	init_world(env);
 	init_wobj(env);
 	put_poster(env);
 	init_thread(env, 8);

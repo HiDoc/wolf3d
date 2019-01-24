@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/09 15:27:03 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:17:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,6 @@ SDL_Surface		*img_wpn(char *filename)
 	return (new);
 }
 
-void			stitch(t_env *env)
-{
-	int			count;
-	char		*num;
-	const char	*path = "enemies/stitch/";
-
-	count = 0;
-	while (count < 18)
-	{
-		num = ft_strrjoin((char *)path, ft_itoa(count + 1));
-		env->stitch[count] = img_new(num);
-		free(num);
-		num = NULL;
-		count++;
-	}
-}
-
 void			new_bullet_surf(t_env *env)
 {
 	int	i;
@@ -92,19 +75,7 @@ void			new_bullet_surf(t_env *env)
 void			img(t_env *env)
 {
 	env->enemies[0].sprite = img_new("enemies/enemytest");
-	env->walls[0] = img_new("wall_1");
-	env->walls[1] = img_new("door");
-	env->walls[2] = img_new("wall_1");
-	env->walls[3] = img_new("wall_1");
-	env->walls[4] = img_new("floor_scifi2");
-	env->walls[5] = img_new("wall_1");
-	env->walls[6] = img_new("floor_scifi2");
-	env->walls[7] = img_new("floor_scifi2");
-	env->floor = img_new("floor_scifi");
-	env->sky = img_new("floor");
 	env->life.img = img_new("thealth");
-	env->lscreen.img = img_new("accueil");
-	env->gun_impact = img_new("lilbullet");
 	env->wobj.posters[1] = img_new("posters/lilstrangerthings");
 	env->wobj.posters[2] = img_new("posters/lilstarwars");
 	env->wobj.posters[3] = img_new("posters/lilbisounours");

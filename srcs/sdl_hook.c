@@ -56,16 +56,8 @@ int			player_jump(t_env *env)
 {
 	if (env->player.actions.is_jumping == 1)
 	{
-		env->player.actions.is_up_down += 20;
-		env->hratio += 0.1;
+		env->jumpmod = 50;
 	}
-	else
-	{
-		env->player.actions.is_up_down -= 20;
-		env->hratio -= 0.1;
-	}
-	if (env->hratio >= 2 && env->player.actions.is_jumping == 1)
-		env->player.actions.is_jumping = 0;
 	return (0);
 }
 

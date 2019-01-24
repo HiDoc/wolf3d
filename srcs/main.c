@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:41:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 17:00:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int					render_env(t_env *env)
 {
 	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP | SDL_MOUSEMOTION);
-	SDL_FreeSurface(env->sdl.surface);
 	SDL_RenderClear(env->sdl.renderer);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
@@ -24,6 +23,7 @@ int					render_env(t_env *env)
 
 static void inline	loop_weapons(t_env *env, int *frame)
 {
+	static int	jfram;
 	if (env->player.actions.is_shooting)
 	{
 		put_gun_shoot(env, *frame);
@@ -40,7 +40,17 @@ static void inline	loop_weapons(t_env *env, int *frame)
 		*frame = 0;
 	}
 	if (env->player.actions.is_jumping)
+	{
+		jfram++;
 		player_jump(env);
+		printf("%d\n", jfram);
+		if (jfram > 40)
+		{
+			env->player.actions.is_jumping = 0;
+			env->jumpmod = 0;
+			jfram = 0;
+		}
+	}
 }
 
 static void inline	loop_mouse(t_env *env)

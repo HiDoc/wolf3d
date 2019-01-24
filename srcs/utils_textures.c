@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:33:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:12:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ Uint32			line_sky(t_env *env, t_line *line, int y)
 	int		w;
 	int		h;
 
-	w = line->floor->w << 1;
-	h = line->floor->h << 1;
+	w = line->sky->w;
+	h = line->sky->h;
 	get_fwall(line, &fwall);
 	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x - (1.0 / 3.0 + weight) * env->player.pos.x) * w);
 	h = (int)((weight * fwall.y - (1.0 / 3.0 + weight) * env->player.pos.y) * h);
-	w = w % line->floor->w;
-	h = h % line->floor->h;
-	return (getpixel(line->floor, w % 128, h % 128));
+	w = w % line->sky->w;
+	h = h % line->sky->h;
+	return (getpixel(line->sky, w % 128, h % 128));
 }
 
 Uint32			line_floor_under(t_env *env, t_line *line, int y)

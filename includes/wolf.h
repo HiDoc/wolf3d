@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:41:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 13:47:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_line		*obj_init(t_env *env, t_line *line);
 t_line		*line_init(t_env *env, t_line *line, int **map, int x);
 t_line		*line_dda(t_env *env, t_line *line, int **map);
 t_line		*line_step(t_env *env, t_line *line, int **map);
+t_line		*line_texture(t_env *env, t_line *line);
 t_line		*line_max(t_env *env, t_line *line);
 
 /*
@@ -92,6 +93,7 @@ void        weapon_set(t_weapon *weapon, char *name);
 
 int			init_thread(t_env *env, int threads);
 int			init_env(t_env *env);
+void		init_world(t_env *env);
 void		init_sdl(t_env *env);
 
 int			env_free(t_env *env);

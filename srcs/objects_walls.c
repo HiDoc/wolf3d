@@ -66,7 +66,7 @@ int			check_impact(t_line *line, t_env *env)
 	{
 		index = (env->w_map[(int)line->map.x][(int)line->map.y] & 0xF00);
 		if (env->wobj.hit)
-			env->bul_surf[env->wobj.impact] = env->walls[0];
+			env->bul_surf[env->wobj.impact] = env->world.surfaces.walls[0].sprite;
 		env->wobj.hit = 0;
 		return (index);
 	}

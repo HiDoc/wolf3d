@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/23 19:56:00 by fmadura          ###   ########.fr        #
+#    Updated: 2019/01/24 15:22:23 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= wolf3d
 CC 				= gcc
-CFLAGS 		= -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS 		= -Wall -Wextra -Werror -O3 -g #-fsanitize=address
 LIBFT 		= ./libft
 LEN_NAME	=	`printf "%s" $(NAME) |wc -c`
 DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -65,6 +65,7 @@ SRC_NAME 	= main.c \
 			  struct_env.c \
 			  struct_enemy.c \
 			  struct_weapon.c \
+			  struct_world.c \
 			  struct_action.c \
 			  struct_character.c \
 			  struct_object.c \
@@ -78,13 +79,13 @@ SRC_NAME 	= main.c \
 			  utils_point.c \
 			  utils_fog.c \
 			  utils_textures.c \
+			  utils_weapons.c \
 			  utils_tron.c \
 			  utils_free.c \
 			  utils_ui.c \
 			  musics.c		\
 			  sdl_mouse.c	\
-			  objects_walls.c \
-			  weapons.c
+			  objects_walls.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
@@ -154,7 +155,7 @@ lldb:
 fsani:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
 		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft
+		-L$(LIBFT) -lft 
 	./wolf3d
 
 valg:

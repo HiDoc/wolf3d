@@ -48,18 +48,10 @@ int		env_free(t_env *env)
 	int i;
 
 	i = 0;
-	env_surface_free((SDL_Surface **)env->walls);
 	env_surface_free((SDL_Surface **)env->bul_surf);
-	env_surface_free((SDL_Surface **)env->stitch);
 	wobj_free(&env->wobj);
 	if (env->w_map)
 		tab_free(env->w_map, 24);
-	if (env->floor)
-		SDL_FreeSurface(env->floor);
-	if (env->sky)
-		SDL_FreeSurface(env->sky);
-	if (env->gun_impact)
-		SDL_FreeSurface(env->gun_impact);
 	Mix_FreeChunk(env->sounds.shot);
 	Mix_CloseAudio();
 	TTF_Quit();

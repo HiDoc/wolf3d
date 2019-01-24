@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 14:50:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:07:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void		copy_sdl(t_env *env)
 				SDL_GetError());
 		exit(1);
 	}
-	SDL_FreeSurface(env->sdl.surface);
-	env->sdl.surface = NULL;
 }
 
 void		init_sdl(t_env *env)

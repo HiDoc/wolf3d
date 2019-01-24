@@ -6,137 +6,137 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:09:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:32:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_STRUCT_H
 # define WOLF_STRUCT_H
 
-typedef struct s_env		t_env;
-typedef struct s_sdl		t_sdl;
-typedef struct s_minimap	t_minimap;
+typedef struct s_env				t_env;
+typedef struct s_sdl				t_sdl;
+typedef struct s_minimap		t_minimap;
 
-typedef struct s_point		t_point;
-typedef struct s_thr		t_thr;
+typedef struct s_point			t_point;
+typedef struct s_thr				t_thr;
 
-typedef struct s_line		t_line;
-typedef struct s_obj		t_obj;
-typedef struct s_iline		t_iline;
+typedef struct s_line				t_line;
+typedef struct s_obj				t_obj;
+typedef struct s_iline			t_iline;
 
-typedef struct s_portal		t_portal;
-typedef struct s_hub		t_hub;
-typedef struct s_msc		t_msc;
-typedef struct s_wobj		t_wobj;
-typedef struct s_limit		t_limit;
+typedef struct s_portal			t_portal;
+typedef struct s_hub				t_hub;
+typedef struct s_msc				t_msc;
+typedef struct s_wobj				t_wobj;
+typedef struct s_limit			t_limit;
 
 /*
 **	Gameplay Structure
 */
 
-typedef struct s_object		t_object;
-typedef struct s_world		t_world;
-typedef struct s_surface	t_surface;
-typedef struct s_weapon		t_weapon;
-typedef struct s_action		t_action;
+typedef struct s_object			t_object;
+typedef struct s_world			t_world;
+typedef struct s_surface		t_surface;
+typedef struct s_weapon			t_weapon;
+typedef struct s_action			t_action;
 typedef struct s_inventory	t_inventory;
 typedef struct s_container	t_container;
 typedef struct s_character	t_character;
-typedef struct s_bot		t_bot; // fusionner avec t_character
+typedef struct s_bot				t_bot; // fusionner avec t_character
 
 struct					s_sdl
 {
-	Uint32			pixels[WIDTH * HEIGHT];
-	int				width;
-	int				height;
+	Uint32				pixels[WIDTH * HEIGHT];
+	int						width;
+	int						height;
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	SDL_Texture		*texture;
 	SDL_Surface		*surface;
-	SDL_Event		event;
+	SDL_Event			event;
 };
 
 struct					s_point
 {
-	double		x;
-	double		y;
+	double				x;
+	double				y;
 };
 
 struct					s_thr
 {
-	pthread_t	th;
-	t_env		*env;
-	int			nbr;
+	pthread_t			th;
+	t_env					*env;
+	int						nbr;
 };
 
 struct					s_obj
 {
-	SDL_Surface	*text;
-	SDL_Surface	*floor;
-	SDL_Surface	*sky;
-	t_point		map;
-	t_point		delta;
-	t_point		step;
-	t_point		raydir;
-	t_point		wall;
-	t_point		side;
-	double		wdist;
-	int			sidew;
-	int			lineh;
-	int			start_draw;
-	int			end_draw;
+	SDL_Surface		*text;
+	SDL_Surface		*floor;
+	SDL_Surface		*sky;
+	t_point				map;
+	t_point				delta;
+	t_point				step;
+	t_point				raydir;
+	t_point				wall;
+	t_point				side;
+	double				wdist;
+	int						sidew;
+	int						lineh;
+	int						start_draw;
+	int						end_draw;
 };
 
 struct					s_line
 {
-	SDL_Surface	*text;
-	SDL_Surface	*floor;
-	SDL_Surface	*sky;
-	t_point		map;
-	t_point		delta;
-	t_point		step;
-	t_point		raydir;
-	t_point		wall;
-	t_point		side;
-	int			nb_objs;
-	double		wdist;
-	int			sidew;
-	int			lineh;
-	int			start_draw;
-	int			end_draw;
-	t_line		*objs;
+	SDL_Surface		*text;
+	SDL_Surface		*floor;
+	SDL_Surface		*sky;
+	t_point				map;
+	t_point				delta;
+	t_point				step;
+	t_point				raydir;
+	t_point				wall;
+	t_point				side;
+	int						nb_objs;
+	double				wdist;
+	int						sidew;
+	int						lineh;
+	int						start_draw;
+	int						end_draw;
+	t_line				*objs;
 };
 
 struct					s_hub
 {
 	SDL_Texture		*texture;
 	SDL_Surface		*surface;
-	SDL_Rect		rect;
-	SDL_Color		color;
-	TTF_Font		*font;
+	SDL_Rect			rect;
+	SDL_Color			color;
+	TTF_Font			*font;
 	SDL_Surface		*img;
-	int				size;
-	double			ang;
-	int				w;
-	int				h;
-	t_point			pt;
+	int						size;
+	double				ang;
+	int						w;
+	int						h;
+	t_point				pt;
 };
 
 struct					s_portal
 {
-	SDL_Surface	*inimg;
-	SDL_Surface	*outimg;
-	t_point		inplane;
-	t_point		indir;
-	t_point		inpos;
-	t_point		outplane;
-	t_point		outdir;
-	t_point		outpos;
-	t_point		inemp;
-	t_point		outemp;
-	int			in;
-	int			out;
-	int			hit;
+	SDL_Surface		*inimg;
+	SDL_Surface		*outimg;
+	t_point				inplane;
+	t_point				indir;
+	t_point				inpos;
+	t_point				outplane;
+	t_point				outdir;
+	t_point				outpos;
+	t_point				inemp;
+	t_point				outemp;
+	int						in;
+	int						out;
+	int						hit;
 };
 
 struct					s_msc
@@ -214,15 +214,15 @@ struct					s_weapon
 	SDL_Surface	*sprite_bullet;
 	SDL_Surface	**sprite_reload;
 	SDL_Surface	**sprite_shoot;
-	long		ref;
-	int			type;
-	int			time_reload;
-	int			time_shoot;
-	double		time_shoot_between;
-	int			ammo_current;
-	int			ammo_magazine;
-	int			ammo_max;
-	int			damage;
+	long				ref;
+	int					type;
+	int					time_reload;
+	int					time_shoot;
+	double			time_shoot_between;
+	int					ammo_current;
+	int					ammo_magazine;
+	int					ammo_max;
+	int					damage;
 };
 
 struct					s_surface
@@ -231,31 +231,31 @@ struct					s_surface
 	int					health;
 	int					height;
 	int					width;
-	double			angle;
+double				angle;
 };
 
 struct					s_container
 {
-	t_surface	walls[30];
-	t_surface	floors[30];
-	t_surface	ceils[30];
+	t_surface		walls[30];
+	t_surface		floors[30];
+	t_surface		ceils[30];
 };
 
 struct					s_world
 {
-	t_weapon	armory[WORLD_NB_WEAPONS];
-	t_object	objects[WORLD_NB_OBJECTS];
-	t_container	surfaces[WORLD_NB_SURFACE];
+	t_weapon		armory[WORLD_NB_WEAPONS];
+	t_object		objects[WORLD_NB_OBJECTS];
+	t_container	surfaces;
 };
 
 struct					s_action
 {
-	int			is_shooting;
-	int			is_loading;
-	int			is_swimming;
-	int			is_flying;
-	int			is_jumping;
-	int			is_up_down;
+	int					is_shooting;
+	int					is_loading;
+	int					is_swimming;
+	int					is_flying;
+	int					is_jumping;
+	int					is_up_down;
 };
 
 struct					s_inventory
@@ -311,14 +311,10 @@ struct					s_iline
 struct					s_env
 {
 	SDL_Surface	*bul_surf[6];
-	SDL_Surface	*floor;
-	SDL_Surface	*gun_impact;
-	SDL_Surface	*sky;
-	SDL_Surface	*stitch[18];
-	SDL_Surface	*walls[10];
 
 	double		cam;
 	double		hratio;
+	int				jumpmod;
 
 	int			**w_map;
 	int			is_menu_active;

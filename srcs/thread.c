@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 19:57:02 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:27:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int		set_thread(t_env *env, int threads)
 
 void	set_surface(t_env *env)
 {
-	SDL_FreeSurface(env->sdl.surface);
-	env->sdl.surface = SDL_CreateRGBSurface(0, env->sdl.width, env->sdl.height, 32,
-			0x000000FF,
-			0x0000FF00,
-			0x00FF0000,
-			0xFF000000);
+		SDL_Surface *surface;
+
+		surface = env->sdl.surface;
+    SDL_LockSurface(surface);
+    SDL_memset(surface->pixels, 0, surface->h * surface->pitch);
+    SDL_UnlockSurface(surface);
 }
 
 int		init_thread(t_env *env, int threads)
@@ -50,7 +50,6 @@ int		init_thread(t_env *env, int threads)
 	int		x;
 
 	x = set_thread(env, threads);
-	set_surface(env);
 	while (x < threads)
 	{
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))
