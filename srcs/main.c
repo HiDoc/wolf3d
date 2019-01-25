@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 19:27:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 13:55:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void				loop_env(t_env *env)
 	int		fps;
 	Uint32	time_a;
 	Uint32	time_b;
+	(void)frame;
+	(void)loop_frames;
 
 	time_b = 0;
 	fps = 0;
@@ -94,8 +96,8 @@ void				loop_env(t_env *env)
 			init_thread(env, 8);
 			handle_bots(env);
 			loop_frames(env, &frame);
-			//ui_put_minimap(env);
-			//ui_put_health(env);
+			ui_put_minimap(env);
+			ui_put_health(env);
 			ui_put_fps(env, fps);
 			copy_sdl(env);
 			render_env(env);

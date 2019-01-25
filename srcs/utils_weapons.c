@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 20:50:18 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/23 20:50:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/24 21:22:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	put_gun_load(t_env *env, int frame)
 
 	weapon = env->player.inventory.weapons[0];
 	frame /= 2.5;
-	if (frame < weapon->time_reload)
+	if (frame < weapon->time_reload - 1)
 		put_img(env, weapon->sprite_reload[frame], 200, 170);
 	else
 		env->player.actions.is_loading = 0;

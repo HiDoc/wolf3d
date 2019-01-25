@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 20:06:23 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 13:50:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,22 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 static void	line_iter(t_env *env, t_iline *iter,
 Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 {
-	(void)fog;
+	if (iter->delim < 0)
+		return;
 	while (iter->y < iter->delim && iter->y < HEIGHT)
 	{	
 		iter->color = 
 		f(
 			env, 
 			&iter->line,
-			iter->y - env->player.actions.is_up_down //- (int)(env->jumpmod / (iter->line.wdist / 4))
+			iter->y - env->player.actions.is_up_down - (int)(env->jumpmod / (iter->line.wdist / 4))
 		);
-
 		setpixel(
 			env->sdl.surface,
 			iter->x,
-			iter->y ,//+ (int)(env->jumpmod / (iter->line.wdist / 4)),
-			iter->color
+			iter->y, //+ (int)(env->jumpmod / (iter->line.wdist / 4)),
+			fog(env, &iter->line, iter->color, iter->y)
 		);
-		//fog(env, &iter->line, iter->color, iter->y + env->jumpmod));
 		++(iter->y);
 	}
 }
@@ -97,9 +96,11 @@ int					tron(t_env *env, int col)
 		iter->y = 0;
 		line_init(env, &iter->line, env->w_map, iter->x);
 		iter->delim = iter->line.start_draw - (iter->line.end_draw - iter->line.start_draw)
-		+ (int)(env->jumpmod / (iter->line.wdist / 4));;
+		+ (int)(env->jumpmod / (iter->line.wdist / 4));
+		if (x == 400)
+			printf("%d\n", iter->delim);
 		line_iter(env, iter, &line_tron_floor, &sky_fog);
-		iter->delim = iter->line.start_draw + (int)(env->jumpmod / (iter->line.wdist / 4));;
+		iter->delim = iter->line.start_draw + (int)(env->jumpmod / (iter->line.wdist / 4));
 		line_iter(env, iter, &line_tron_wall, &wall_fog);
 		iter->delim = iter->line.end_draw + (int)(env->jumpmod / (iter->line.wdist / 4));
 		line_iter(env, iter, &line_tron_wall, &wall_fog);
@@ -126,11 +127,14 @@ int					wolf(t_env *env, int col)
 		iter->y = 0;
 		line_init(env, &iter->line, env->w_map, iter->x);
 		iter->delim = iter->line.start_draw
-		- (iter->line.end_draw - iter->line.start_draw);
+		- (iter->line.end_draw - iter->line.start_draw)
+		+ (int)(env->jumpmod / (iter->line.wdist / 4));
 		line_iter(env, iter, &line_sky, &sky_fog);
-		iter->delim = iter->line.start_draw;
+		iter->delim = iter->line.start_draw
+		+ (int)(env->jumpmod / (iter->line.wdist / 4));
 		line_iter(env, iter, &line_wall, &wall_fog);
-		iter->delim = iter->line.end_draw;
+		iter->delim = iter->line.end_draw
+		+ (int)(env->jumpmod / (iter->line.wdist / 4));
 		line_iter(env, iter, &line_wall, &wall_fog);
 		iter->delim = HEIGHT;
 		line_iter(env, iter, &line_floor, &floor_fog);
