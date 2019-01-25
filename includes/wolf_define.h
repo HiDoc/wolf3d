@@ -26,7 +26,7 @@
 # include "libft.h"
 # define WIDTH          800
 # define HEIGHT 	    600
-# define THREAD_NBR     200
+# define THREAD_NBR     8
 # define SCREEN_FPS     60
 # define SCREEN_TIC     16
 # define PI             3.141592

@@ -108,12 +108,15 @@ void				loop_env(t_env *env)
 	}
 }
 
-int					main(int argc, char *argv[])
+int					main(int argc, char **argv)
 {
 	t_env *env;
 
-	(void)argv;
-	(void)argc;
+	if (argc != 2)
+	{
+		ft_putendl_fd("doom_nukem: error: bad args", 2); // set le usage et tout
+		return (0);
+	}
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return (1);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -127,9 +130,9 @@ int					main(int argc, char *argv[])
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
 		exit(1);
 	}
-	init_env(env);
 	env->minimap.mnp_size = 20; // a mettre la ou il faut
 	env->menu.is_active = 1;
+	init_env(env, argv[1]);
 	load_sounds(env);
 	launch_screen(env);
 	loop_env(env);

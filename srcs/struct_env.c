@@ -113,7 +113,9 @@ int		init_env(t_env *env)
 	init_player(env);
 	env->player.health = 100;
 	env->hratio = 2.0;
-	fill_tab(env);
+	
+	fill_tab(env); // to remove du coup
+	
 	env->sdl.surface = SDL_CreateRGBSurface(
 	0,
 	env->sdl.width,
@@ -136,6 +138,26 @@ int		init_env(t_env *env)
 	env->bots[0]->position.y = 4.5;
 	env->bots[0]->health = 100;
 	// -----------------------------------------
+
+	parse_map(env, filename);
+	env->w_map = env->map;
+
+	// this is to previsualize the map ------------
+	int	i = 0;
+	int	j;
+	while (i < env->map_h)
+	{
+		j = 0;
+		while (j < env->map_w)
+		{
+			printf("0x%x ", env->map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	//exit(EXIT_FAILURE); // to try only the parsing
+	// ---------------------------------------------
 
 	img(env);
 	init_world(env);

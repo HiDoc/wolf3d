@@ -15,12 +15,15 @@
 # include "wolf_define.h"
 # include "wolf_struct.h"
 
-int				wolf(t_env *env, int col);
-int				tron(t_env *env, int col);
-void			free_env(t_env *env);
-int				exit_wolf(t_env *env);
-int				key_hook(int key, t_env *env);
-int				render_env(t_env *env);
+void		parse_map(t_env * env, char *filename);
+
+int			wolf(t_env *env, int col);
+int			tron(t_env *env, int col);
+void		print_error(int nb, t_env *env);
+void		free_env(t_env *env);
+int			exit_wolf(t_env *env);
+int			key_hook(int key, t_env *env);
+int			render_env(t_env *env);
 
 void			img(t_env *env);
 
@@ -109,11 +112,11 @@ void        weapon_set(t_weapon *weapon, char *name);
 */
 
 int			init_thread(t_env *env, int threads);
-int			init_env(t_env *env);
 void		init_world(t_env *env);
 void		init_sdl(t_env *env);
 int			init_menu_surface(t_env *env);
 
+int			init_env(t_env *env, char *filename);
 int			env_free(t_env *env);
 int			fill_tab(t_env *env);
 void		tab_print(int **tab, int x, int y);
