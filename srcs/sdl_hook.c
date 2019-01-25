@@ -2,8 +2,8 @@
 
 int			sdl_exit_wolf(t_env *env)
 {
-	env_free(env);
-	exit(0);
+		env_free(env);
+		exit(0);
 }
 
 int			sdl_menu(t_env *env, Uint8 keycode)
@@ -11,17 +11,23 @@ int			sdl_menu(t_env *env, Uint8 keycode)
 	if (keycode == SDL_SCANCODE_ESCAPE)
 	{
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
-		if (env->menu.is_active)
+		if (env->menu.is_active == 2)
 		{
 			env->menu.is_active = 0;
 			env->menu.sub_menu = 0;
 		}
+		else if (env->menu.is_active == 1)
+			env->menu.sub_menu = 0;
 		else
-			env->menu.is_active = 1;
+		{
+			env->menu.is_active = 2;
+			env->menu.sub_menu = 2;
+		}
 		return (1);
 	}
 	return (0);
 }
+
 static int	sdl_check_pos(t_env *env, t_point mult, float check)
 {
 	int x;
