@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:00:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 14:03:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		init_thread(t_env *env, int threads)
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))
 		{
 			perror("Error");
-			return (sdl_exit_wolf(env, SDL_SCANCODE_ESCAPE));
+			return (sdl_exit_wolf(env));
 		}
 		x++;
 	}
@@ -65,7 +65,7 @@ int		init_thread(t_env *env, int threads)
 		if (pthread_join(env->thr[x].th, NULL))
 		{
 			perror("Error thread");
-			return (sdl_exit_wolf(env, SDL_SCANCODE_ESCAPE));
+			return (sdl_exit_wolf(env));
 		}
 		x++;
 	}

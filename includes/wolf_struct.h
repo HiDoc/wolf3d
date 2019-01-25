@@ -6,7 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/01/24 19:45:27 by fmadura          ###   ########.fr       */
+=======
+/*   Updated: 2019/01/23 17:27:35 by jsauron          ###   ########.fr       */
+>>>>>>> origin/menu
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +29,20 @@ typedef struct s_line				t_line;
 typedef struct s_obj				t_obj;
 typedef struct s_iline			t_iline;
 
+<<<<<<< HEAD
 typedef struct s_portal			t_portal;
 typedef struct s_hub				t_hub;
 typedef struct s_msc				t_msc;
 typedef struct s_wobj				t_wobj;
 typedef struct s_limit			t_limit;
+=======
+typedef struct s_portal		t_portal;
+typedef struct s_hub		t_hub;
+typedef struct s_msc		t_msc;
+typedef struct s_wobj		t_wobj;
+typedef struct s_limit		t_limit;
+typedef struct s_menu		t_menu;
+>>>>>>> origin/menu
 
 /*
 **	Gameplay Structure
@@ -44,6 +57,16 @@ typedef struct s_inventory	t_inventory;
 typedef struct s_container	t_container;
 typedef struct s_character	t_character;
 typedef struct s_bot				t_bot; // fusionner avec t_character
+
+struct					s_menu
+{
+	int				is_active;
+	int				button;
+	t_menu			*sub;
+	int				sub_menu;
+	int				nb_sub;
+	SDL_Surface		*sprite;
+};
 
 struct					s_sdl
 {
@@ -341,6 +364,7 @@ struct					s_env
 	t_thr		thr[THREAD_NBR];
 	t_wobj		wobj;
 	t_iline		rays[WIDTH];
+	t_menu		menu;
 };
 
 #endif

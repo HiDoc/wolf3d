@@ -6,7 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/01/24 19:44:16 by fmadura          ###   ########.fr       */
+=======
+/*   Updated: 2019/01/25 12:26:10 by jsauron          ###   ########.fr       */
+>>>>>>> origin/menu
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +28,16 @@ int				render_env(t_env *env);
 
 void			img(t_env *env);
 
+//menu
+
+int		menu(t_env *env);
+int		display_button_menu(t_env *env);
+int		move_button_menu(t_env *env, Uint8 keycode);
+int		select_button_menu_1(t_env *env, Uint8 keycode);
+int		select_button_menu_2(t_env *env, Uint8 keycode);
+int		select_button_menu(t_env *env, Uint8 keycode);
+int		sdl_menu(t_env *env, Uint8 keycode);
+int		display_sub_menu(t_env *env, int i);
 /*
 ** Math helpers
 */
@@ -102,6 +116,7 @@ int			init_thread(t_env *env, int threads);
 int			init_env(t_env *env);
 void		init_world(t_env *env);
 void		init_sdl(t_env *env);
+int			init_menu_surface(t_env *env);
 
 int			env_free(t_env *env);
 int			fill_tab(t_env *env);
@@ -116,7 +131,7 @@ void		hub_texture(t_env *env, t_hub *bloc, char *line, char *police);
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int			sdl_motion_mouse(t_env *env, int x, int y);
 int			sdl_mouse_click(t_env *env, int x, int y);
-int			sdl_exit_wolf(t_env *env, Uint8 scancode);
+int			sdl_exit_wolf(t_env *env);
 
 void		ui_put_string(t_env *env, char *str, int x, int y);
 void		ui_put_fps(t_env *env, int fps);
@@ -136,7 +151,7 @@ void		put_gun_shoot(t_env *env, int frame);
 /*
 ** Functions to manipulate surfaces
 */
-
+SDL_Surface	*create_surf(char *path);
 SDL_Surface	*surface_new(Uint32 *pixels, int width, int height);
 SDL_Surface	*img_new(char *filename);
 SDL_Surface	*img_wpn(char *filename);
