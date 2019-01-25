@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 13:50:47 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/01/25 15:01:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,16 @@ void				loop_env(t_env *env)
 		{
 			fps = 1000 / (time_a - time_b);
 			time_b = time_a;
-			sdl_keyhook(env, env->sdl.event);
-			loop_mouse(env);
-			init_thread(env, 8);
-			handle_bots(env);
-			loop_frames(env, &frame);
-			ui_put_minimap(env);
-			ui_put_health(env);
-			ui_put_fps(env, fps);
+			if (sdl_keyhook(env, env->sdl.event))
+			{
+				loop_mouse(env);
+				init_thread(env, 8);
+				handle_bots(env);
+				loop_frames(env, &frame);
+				ui_put_minimap(env);
+				ui_put_health(env);
+				ui_put_fps(env, fps);
+			}
 			menu(env);
 			copy_sdl(env);
 			render_env(env);
@@ -127,6 +129,7 @@ int					main(int argc, char *argv[])
 	}
 	init_env(env);
 	env->minimap.mnp_size = 20; // a mettre la ou il faut
+	env->menu.is_active = 1;
 	load_sounds(env);
 	launch_screen(env);
 	loop_env(env);

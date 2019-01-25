@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sdl_hook.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/25 14:25:08 by fmadura           #+#    #+#             */
+/*   Updated: 2019/01/25 15:09:08 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 int			sdl_exit_wolf(t_env *env)
@@ -90,15 +102,24 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 
 	if (sdl_menu(env, keycode))
 		return (0);
-	if (keycodes[SDL_SCANCODE_DOWN] || keycodes[SDL_SCANCODE_UP])
-		move_button_menu(env, keycode);
-	if (keycodes[SDL_SCANCODE_RETURN])
-		select_button_menu(env, keycode);
+	if (env->menu.is_active)
+	{
+		if (keycodes[SDL_SCANCODE_DOWN] || keycodes[SDL_SCANCODE_UP])
+		{
+			move_button_menu(env, keycode);
+			SDL_FlushEvent(SDL_KEYUP);
+			SDL_FlushEvent(SDL_KEYDOWN);
+			SDL_WaitEvent(&env->sdl.event);
+		}
+		else if (keycodes[SDL_SCANCODE_RETURN])
+			select_button_menu(env, keycode);
+		return (0);
+	}
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
 		load_weapon(env, SDL_SCANCODE_R,
 		env->player.inventory.weapons[0]->sprite_reload);
 	if (keycodes[SDL_SCANCODE_SPACE])
 		jumping(env, SDL_SCANCODE_SPACE);
-	return (0);
+	return (1);
 }
