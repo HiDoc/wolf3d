@@ -6,11 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/01/24 19:45:27 by fmadura          ###   ########.fr       */
-=======
-/*   Updated: 2019/01/23 17:27:35 by jsauron          ###   ########.fr       */
->>>>>>> origin/menu
+/*   Updated: 2019/01/25 14:04:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +25,12 @@ typedef struct s_line				t_line;
 typedef struct s_obj				t_obj;
 typedef struct s_iline			t_iline;
 
-<<<<<<< HEAD
-typedef struct s_portal			t_portal;
-typedef struct s_hub				t_hub;
-typedef struct s_msc				t_msc;
-typedef struct s_wobj				t_wobj;
-typedef struct s_limit			t_limit;
-=======
 typedef struct s_portal		t_portal;
 typedef struct s_hub		t_hub;
 typedef struct s_msc		t_msc;
 typedef struct s_wobj		t_wobj;
 typedef struct s_limit		t_limit;
 typedef struct s_menu		t_menu;
->>>>>>> origin/menu
 
 /*
 **	Gameplay Structure

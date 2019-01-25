@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/25 14:03:20 by fmadura          ###   ########.fr        #
+#    Updated: 2019/01/25 14:07:46 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,13 +86,8 @@ SRC_NAME 	= main.c \
 			  utils_ui.c \
 			  musics.c		\
 			  sdl_mouse.c	\
-<<<<<<< HEAD
-			  objects_walls.c
-=======
 			  objects_walls.c \
-			  weapons.c \
 			  menu.c
->>>>>>> origin/menu
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
