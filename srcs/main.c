@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 15:01:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 19:55:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,32 @@ static void inline	loop_mouse(t_env *env)
 	}
 }
 
+void				loop_menu(t_env *env, Uint8 keycode)
+{	
+	if (env->sdl.event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+			env->menu.is_active = 1;
+	if (env->menu.is_active)
+	{
+		while (1)
+		{
+			if (env->sdl.event.type == SDL_KEYDOWN)
+			{
+				if (keycode == SDL_SCANCODE_DOWN || keycode == SDL_SCANCODE_UP)
+					move_button_menu(env, keycode);
+				if (keycode == SDL_SCANCODE_RETURN)
+					select_button_menu(env, keycode);
+				menu(env);
+				copy_sdl(env);
+				render_env(env);
+			}
+			SDL_WaitEvent(&env->sdl.event);
+			keycode = env->sdl.event.key.keysym.scancode;
+			if (!env->menu.is_active)
+					break;
+		}
+	}
+}
+
 void				loop_env(t_env *env)
 {
 	int		frame;
@@ -87,6 +113,7 @@ void				loop_env(t_env *env)
 		SDL_PollEvent(&env->sdl.event);
 		if (env->sdl.event.type == SDL_QUIT)
 			break;
+		loop_menu(env, env->sdl.event.key.keysym.scancode);
 		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
 		{
 			fps = 1000 / (time_a - time_b);
@@ -101,7 +128,6 @@ void				loop_env(t_env *env)
 				ui_put_health(env);
 				ui_put_fps(env, fps);
 			}
-			menu(env);
 			copy_sdl(env);
 			render_env(env);
 		}

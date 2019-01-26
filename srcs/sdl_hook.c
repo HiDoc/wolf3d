@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:25:08 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 15:09:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 19:50:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,6 @@ int			sdl_exit_wolf(t_env *env)
 {
 		env_free(env);
 		exit(0);
-}
-
-int			sdl_menu(t_env *env, Uint8 keycode)
-{
-	if (keycode == SDL_SCANCODE_ESCAPE)
-	{
-		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
-		if (env->menu.is_active == 2)
-		{
-			env->menu.is_active = 0;
-			env->menu.sub_menu = 0;
-		}
-		else if (env->menu.is_active == 1)
-			env->menu.sub_menu = 0;
-		else
-		{
-			env->menu.is_active = 2;
-			env->menu.sub_menu = 2;
-		}
-		return (1);
-	}
-	return (0);
 }
 
 static int	sdl_check_pos(t_env *env, t_point mult, float check)
@@ -100,21 +78,6 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
 
-	if (sdl_menu(env, keycode))
-		return (0);
-	if (env->menu.is_active)
-	{
-		if (keycodes[SDL_SCANCODE_DOWN] || keycodes[SDL_SCANCODE_UP])
-		{
-			move_button_menu(env, keycode);
-			SDL_FlushEvent(SDL_KEYUP);
-			SDL_FlushEvent(SDL_KEYDOWN);
-			SDL_WaitEvent(&env->sdl.event);
-		}
-		else if (keycodes[SDL_SCANCODE_RETURN])
-			select_button_menu(env, keycode);
-		return (0);
-	}
 	sdl_move(env, (Uint8 *)keycodes);
 	if (keycodes[SDL_SCANCODE_R])
 		load_weapon(env, SDL_SCANCODE_R,
