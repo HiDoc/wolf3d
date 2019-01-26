@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:04:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:08:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,24 +319,29 @@ struct					s_bot // a fusionner avec s_character/ennemies
 
 struct					s_iline
 {
-	int			x;
-	int			y;
-	int			delim;
+	int			x; // sgalasso : je m'en sert pas
+	int			y; // sgalasso : je m'en sert pas 
+	int			delim; // sgalasso : je m'en sert pas
 	t_line		line;
-	Uint32		color;
+	Uint32		color; // sgalasso : je m'en sert pas
 };
 
 struct					s_env
 {
+	int			map_w; // largeur map (sgalasso - parsing)
+	int			map_h; // hauteur map (sgalasso - parsing)
+	int			**w_map;
+
+	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*bul_surf[6];
 
 	double		cam;
 	double		hratio;
 	int				jumpmod;
 
-	int			**w_map;
 	int			is_menu_active;
 	t_character	enemies[10];
+	int			nb_bots;
 	t_bot		**bots; // a fusionner plus tard avec t_character
 	t_minimap	minimap;
 	t_hub		life;
