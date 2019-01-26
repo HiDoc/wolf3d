@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 14:27:24 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/24 19:35:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:40:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			handle_bots(t_env *env)
 
 	i = 0;
 	ft_bzero(&last_pos, sizeof(t_point));
-	while (env->bots[i])
+	while (i < env->nb_bots)
 	{
 		get_player_dist(env, i);
 		get_player_angl(env, i);
