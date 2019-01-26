@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 15:18:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/26 16:07:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,6 @@ int		init_env(t_env *env, char *filename)
 	
 	env->sdl.surface = SDL_CreateRGBSurface(0, env->sdl.width, env->sdl.height,
 	32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-
-	// a laisser tant que parsing non implemente
-	if (!(env->bots = (t_bot **)ft_memalloc(sizeof(t_bot *)
-	* (1/*tosetrelative*/ + 1))))
-		exit(EXIT_FAILURE); // to exit properly
-	if (!(env->bots[0] = (t_bot *)ft_memalloc(sizeof(t_bot))))
-		exit(EXIT_FAILURE); // to exit properly
-	env->bots[0]->init_pos.x = 4.5;
-	env->bots[0]->init_pos.y = 4.5;
-	env->bots[0]->position.x = 4.5;
-	env->bots[0]->position.y = 4.5;
-	env->bots[0]->health = 100;
-	// -----------------------------------------
 
 	parse_map(env, filename);
 

@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/28 11:13:50 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 15:22:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/26 16:43:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,6 @@ static void		ft_parsing_exit(t_env *env, int fd, char *msg)
 	if (msg)
 		ft_putendl(msg); // to remove
 	exit(EXIT_FAILURE); // to remove
-}
-
-static int		ft_nbrlen(int nb, int base)
-{
-	int	c;
-
-	c = 1;
-	while (nb >= base)
-	{
-		nb /= base;
-		c++;
-	}
-	return (c);
 }
 
 static int	convert(char c, int base)
@@ -100,25 +87,6 @@ static int		ft_tablen(char **tab)
 	return (i);
 }
 
-static int		ft_nbwords(char *line)
-{
-	int		c;
-
-	c = 0;
-	while (*line)
-	{
-		while (*line && *line == ',')
-			line++;
-		if (*line)
-		{
-			while (*line && *line != ',')
-				line++;
-			c++;
-		}
-	}
-	return (c);
-}
-
 static int		ft_strdigit(char *line)
 {
 	while (*line)
@@ -132,18 +100,32 @@ static int		ft_strdigit(char *line)
 
 static void		ft_get_mapsize(t_env *env, int fd, char *line)
 {
-	if (ft_nbwords(line) != 2 || !ft_strdigit(line))
+	char	**split;
+	int		i;
+
+	i = 0;
+	if (!(split = ft_strsplit(line, ',')))
+		ft_parsing_exit(env, fd, "doom_nukem: parsing error: out of memory");
+	if (ft_tablen(split) != 3 || !ft_strdigit(line))
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
-	if ((env->map_w = ft_atoi(line)) == 0)
+
+	if ((env->map_w = ft_atoi(split[0])) == 0)
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
-	if ((env->map_h = ft_atoi(line + ft_nbrlen(env->map_w, 10) + 1)) == 1)
+	if ((env->map_h = ft_atoi(split[1])) == 1)
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
+	if ((env->nb_bots = ft_atoi(split[2])) == 0)
+		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
+
+	while (split[i])
+		ft_strdel(&split[i++]);
+	ft_memdel((void **)split);
 }
 
 static void		ft_parse_line(t_env *env, int fd, int index, char *line)
 {
-	char	**split;
-	int		i;
+	static int	bot_index = 0;
+	char		**split;
+	int			i;
 
 	i = 0;
 	if (!(split = ft_strsplit(line, ',')))
@@ -157,6 +139,18 @@ static void		ft_parse_line(t_env *env, int fd, int index, char *line)
 		{
 			env->player.pos = (t_point){(index + 0.5), (i + 0.5)};
 			env->w_map[index][i] = 0;
+		}
+		else if ((env->w_map[index][i] & 0xc0) == 0xc0)
+		{
+			if (!(env->bots[bot_index] = (t_bot *)ft_memalloc(sizeof(t_bot))))
+				exit(EXIT_FAILURE); // to recup exit
+			ft_bzero(env->bots[bot_index], sizeof(t_bot));
+			env->bots[bot_index]->init_pos.x = i + 0.5;
+			env->bots[bot_index]->init_pos.y = index + 0.5;
+			env->bots[bot_index]->position.x = i + 0.5;
+			env->bots[bot_index]->position.y = index + 0.5;
+			env->bots[bot_index]->health = 100;
+			bot_index++;
 		}
 		ft_strdel((void *)&(split[i]));
 		i++;
@@ -177,6 +171,10 @@ void			parse_map(t_env *env, char *filename)
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
 	ft_get_mapsize(env, fd, line);
 	ft_strdel(&line);
+
+	printf("nb_bots : %d\n", env->nb_bots);
+	if (!(env->bots = (t_bot **)ft_memalloc(sizeof(t_bot *) * (env->nb_bots + 1))))
+		exit(EXIT_FAILURE); // to recup exit
 
 	printf("map_w : %d\nmap_h : %d\n", env->map_w, env->map_h);
 

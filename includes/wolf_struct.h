@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 15:22:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/26 16:08:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ struct					s_env
 
 	int			is_menu_active;
 	t_character	enemies[10];
+	int			nb_bots;
 	t_bot		**bots; // a fusionner plus tard avec t_character
 	t_minimap	minimap;
 	t_hub		life;

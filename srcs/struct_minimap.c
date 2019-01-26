@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/26 14:54:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/01/26 16:14:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void		ft_init_minimap(t_env *env)
 	int			i;
 
 	i = 0;
-	while (i < 1) // to set relative (nb of bots)
+	while (i < env->nb_bots)
 	{
 		calcpos.x = env->minimap.diff.x
 		+ (env->bots[i]->position.x * env->minimap.mnp_size) - 5;
@@ -148,5 +148,5 @@ void	ui_put_minimap(t_env *env)
 		i++;
 	}
 	ft_draw_player(env);
-	//ft_draw_bots(env);
+	ft_draw_bots(env);
 }
