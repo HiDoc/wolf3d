@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 15:00:26 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:42:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # include "libft.h"
 # define WIDTH          800
-# define HEIGHT 	    600
+# define HEIGHT         600
 # define THREAD_NBR     200
 # define SCREEN_FPS     60
 # define SCREEN_TIC     16

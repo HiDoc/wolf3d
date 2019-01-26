@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:09:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:48:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static inline void	put_objs(t_env *env, t_iline *iter)
 	{
 		iter->y = iter->line.objs->start_draw;
 		iter->delim = iter->line.objs->end_draw;
-		obj_iter(env, iter, &line_tron_wall, &wall_fog);
+		obj_iter(env, iter, &line_tron_objs, &wall_fog);
 	}
 }
 
@@ -104,7 +104,7 @@ int					tron(t_env *env, int col)
 		line_iter(env, iter, &line_tron_wall, &wall_fog);
 		iter->delim = HEIGHT;
 		line_iter(env, iter, &line_tron_ceil, &floor_fog);
-		//put_objs(env, iter);
+		put_objs(env, iter);
 		x += 8;
 	}
 	return (0);

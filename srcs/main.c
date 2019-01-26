@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 19:55:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:47:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ static void inline	loop_mouse(t_env *env)
 }
 
 void				loop_menu(t_env *env, Uint8 keycode)
-{	
+{
+	(void)keycode;
 	if (env->sdl.event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-			env->menu.is_active = 1;
-	if (env->menu.is_active)
+			exit(0);
+			//env->menu.is_active = !env->menu.is_active;
+	/*if (env->menu.is_active)
 	{
 		while (1)
 		{
@@ -94,7 +96,7 @@ void				loop_menu(t_env *env, Uint8 keycode)
 			if (!env->menu.is_active)
 					break;
 		}
-	}
+	}*/
 }
 
 void				loop_env(t_env *env)
@@ -122,10 +124,10 @@ void				loop_env(t_env *env)
 			{
 				loop_mouse(env);
 				init_thread(env, 8);
-				handle_bots(env);
+				//handle_bots(env);
 				loop_frames(env, &frame);
-				ui_put_minimap(env);
-				ui_put_health(env);
+				//ui_put_minimap(env);
+				//ui_put_health(env);
 				ui_put_fps(env, fps);
 			}
 			copy_sdl(env);

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 19:04:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 16:48:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_point		*get_fwall(t_line *line, t_point *fwall);
 
 Uint32		line_tron_floor(t_env *env, t_line *line, int y);
 Uint32		line_tron_wall(t_env *env, t_line *line, int y);
+Uint32		line_tron_objs(t_env *env, t_line *line, int y);
 Uint32		line_tron_ceil(t_env *env, t_line *line, int y);
 
 t_line		*obj_init(t_env *env, t_line *line);
