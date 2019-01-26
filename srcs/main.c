@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 15:01:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 14:54:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void				loop_env(t_env *env)
 	int		fps;
 	Uint32	time_a;
 	Uint32	time_b;
-	(void)frame;
 	(void)loop_frames;
 
 	time_b = 0;
@@ -95,7 +94,7 @@ void				loop_env(t_env *env)
 			{
 				loop_mouse(env);
 				init_thread(env, 8);
-				handle_bots(env);
+				//handle_bots(env);
 				loop_frames(env, &frame);
 				ui_put_minimap(env);
 				ui_put_health(env);
@@ -114,7 +113,8 @@ int					main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putendl_fd("doom_nukem: error: bad args", 2); // set le usage et tout
+		ft_putendl_fd("doom_nukem: error: bad args", 2);
+		ft_putendl_fd("doom_nukem: usage: wolf3d [map_name]", 2);
 		return (0);
 	}
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
@@ -130,7 +130,6 @@ int					main(int argc, char **argv)
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
 		exit(1);
 	}
-	env->minimap.mnp_size = 20; // a mettre la ou il faut
 	env->menu.is_active = 1;
 	init_env(env, argv[1]);
 	load_sounds(env);

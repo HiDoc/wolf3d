@@ -6,7 +6,7 @@
 /*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/28 11:13:50 by fmadura           #+#    #+#             */
-/*   Updated: 2018/09/27 11:41:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 15:22:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,6 @@ static void		ft_get_mapsize(t_env *env, int fd, char *line)
 
 static void		ft_parse_line(t_env *env, int fd, int index, char *line)
 {
-	/*if (line[i] == '2')
-	{
-		if (data->player.position.x != -1) // env->w_map[i][j] & 0x0010
-			ft_parsing_exit(fd, "wolf3d: parsing error: bad spawn", data);
-		data->player.position.x = j + 0.5;
-		data->player.position.y = index + 0.5;
-	}*/
 	char	**split;
 	int		i;
 
@@ -159,7 +152,12 @@ static void		ft_parse_line(t_env *env, int fd, int index, char *line)
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
 	while (split[i])
 	{
-		env->map[index][i] = ft_atoibase(split[i], 16);
+		env->w_map[index][i] = ft_atoibase(split[i], 16);
+		if ((env->w_map[index][i] & 0xa0) == 0xa0) // add fc to check if double spawn
+		{
+			env->player.pos = (t_point){(index + 0.5), (i + 0.5)};
+			env->w_map[index][i] = 0;
+		}
 		ft_strdel((void *)&(split[i]));
 		i++;
 	}
@@ -182,13 +180,13 @@ void			parse_map(t_env *env, char *filename)
 
 	printf("map_w : %d\nmap_h : %d\n", env->map_w, env->map_h);
 
-	if (!(env->map = (int **)(ft_memalloc(sizeof(int *) * (env->map_h)))))
+	if (!(env->w_map = (int **)(ft_memalloc(sizeof(int *) * (env->map_h)))))
 		ft_parsing_exit(env, fd, "doom_nukem: parsing error: out of memory");
 	while ((get_next_line(fd, &line)) > 0)
 	{
 		if (i >= env->map_h)
 			ft_parsing_exit(env, fd, "doom_nukem: parsing error: bad map format");
-		if (!(env->map[i] = (int *)(ft_memalloc(sizeof(int) * (env->map_w)))))
+		if (!(env->w_map[i] = (int *)(ft_memalloc(sizeof(int) * (env->map_w)))))
 			ft_parsing_exit(env, fd, "doom_nukem: parsing error: out of memory");
 		ft_parse_line(env, fd, i, line);
 		ft_strdel(&line);

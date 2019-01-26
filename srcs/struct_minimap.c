@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/23 19:59:23 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 14:54:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void		ft_init_minimap(t_env *env)
 	env->minimap.origin.y = 10;
 	env->minimap.centre.x = (env->sdl.width - (env->sdl.width / 4) / 2) - 10;
 	env->minimap.centre.y = (env->sdl.height / 4) / 2 + 10;
-	env->minimap.map_size.x = env->minimap.mnp_size * 24; // to set relative
-	env->minimap.map_size.y = env->minimap.mnp_size * 24; // tp set relative
+	env->minimap.map_size.x = env->minimap.mnp_size * env->map_w;
+	env->minimap.map_size.y = env->minimap.mnp_size * env->map_h;
 	env->minimap.pos_play.x = env->player.pos.y * env->minimap.mnp_size;
 	env->minimap.pos_play.y = env->player.pos.x * env->minimap.mnp_size;
 	env->minimap.diff.x = env->minimap.centre.x - env->minimap.pos_play.x;
@@ -30,7 +30,7 @@ static void		ft_init_minimap(t_env *env)
 	env->minimap.limit.ymax = env->sdl.height / 4 + 10;
 }
 
-static void		ft_draw_background(t_env *env)
+/*static*/ void		ft_draw_background(t_env *env)
 {
 	SDL_Rect	rect;
 
@@ -40,7 +40,7 @@ static void		ft_draw_background(t_env *env)
 	surface_drawborder(env->sdl.surface, rect, 0xFFFFFFFF);
 }
 
-static void		ft_draw_ray(int i, t_env *env)
+/*static*/ void		ft_draw_ray(int i, t_env *env)
 {
 	t_point		a;
 	t_point		b;
@@ -57,7 +57,7 @@ static void		ft_draw_ray(int i, t_env *env)
 	env->minimap.limit, 0xFFBFFCFF);
 }
 
-static void		ft_draw_bots(t_env *env)
+/*static*/ void		ft_draw_bots(t_env *env)
 {
 	t_point		calcpos;
 	Uint32		color;
@@ -104,7 +104,7 @@ static void		ft_draw_bots(t_env *env)
 	}
 }
 
-static void		ft_draw_player(t_env *env)
+/*static*/ void		ft_draw_player(t_env *env)
 {
 	SDL_Rect	player;
 	int			i;
@@ -129,15 +129,15 @@ void	ui_put_minimap(t_env *env)
 	ft_init_minimap(env);
 	ft_draw_background(env);
 	i = 0;
-	while (i < 24) // to set relative
+	while (i < env->map_h)
 	{
 		j = 0;
-		while (j < 24) // to set relative
+		while (j < env->map_w)
 		{
 			rect = (SDL_Rect){env->minimap.diff.x + (j * env->minimap.mnp_size),
 			env->minimap.diff.y + (i * env->minimap.mnp_size),
 			env->minimap.mnp_size, env->minimap.mnp_size};
-			if (env->w_map[i][j] & 0x0010)
+			if (env->w_map[i][j] & 0x00000010)
 				surface_drawrect(env->sdl.surface, rect,
 				&(env->minimap.limit), 0xFF5C4424);
 			else
@@ -148,5 +148,5 @@ void	ui_put_minimap(t_env *env)
 		i++;
 	}
 	ft_draw_player(env);
-	ft_draw_bots(env);
+	//ft_draw_bots(env);
 }

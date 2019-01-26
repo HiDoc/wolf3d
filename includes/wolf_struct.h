@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:04:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 15:22:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,8 @@ struct					s_env
 {
 	int			map_w; // largeur map (sgalasso - parsing)
 	int			map_h; // hauteur map (sgalasso - parsing)
-	int			**map; // map parsee en hexa (sgalasso - parsing)
+	int			**w_map;
+
 	SDL_Surface	*ak_frms[43];
 	SDL_Surface	*bul_surf[6];
 
@@ -338,7 +339,6 @@ struct					s_env
 	double		hratio;
 	int				jumpmod;
 
-	int			**w_map;
 	int			is_menu_active;
 	t_character	enemies[10];
 	t_bot		**bots; // a fusionner plus tard avec t_character

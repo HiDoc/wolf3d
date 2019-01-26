@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:06:54 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/25 17:50:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int			init_menu_surface(t_env *env);
 
 int			init_env(t_env *env, char *filename);
 int			env_free(t_env *env);
-int			fill_tab(t_env *env);
 void		tab_print(int **tab, int x, int y);
 
 void		launch_screen(t_env *env);
