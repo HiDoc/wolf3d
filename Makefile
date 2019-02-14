@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/26 16:54:36 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/14 16:22:47 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= wolf3d
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
 LEN_NAME		=	`printf "%s" $(NAME) |wc -c`
 DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
