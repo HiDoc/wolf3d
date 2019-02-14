@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:57:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/14 16:28:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void				loop_env(t_env *env)
 				//handle_bots(env);
 				loop_frames(env, &frame);
 				ui_put_minimap(env);
-				//ui_put_health(env);
+				ui_put_health(env);
 				ui_put_fps(env, fps);
 			}
 			copy_sdl(env);

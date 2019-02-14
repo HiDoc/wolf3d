@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/14 16:22:47 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/14 16:27:40 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= wolf3d
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		=	`printf "%s" $(NAME) |wc -c`
 DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -31,6 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
+CELLAR		= /Users/$(ID_UN)/.brew/Cellar
 SRC_PATH 	= ./srcs/
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
@@ -39,62 +40,70 @@ INC_PATH	= ./includes/ \
 UNAME 		:= $(shell uname)
 
 ifeq ($(UNAME), Linux)
-CC 				= clang -std=c99
+CC 			= clang -std=c99
 INC_PATH 	+= /usr/include/SDL2/ 
-
-OPEN 			= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
+OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
 else
-INC_PATH 	+= /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.8/include/SDL2/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.14/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/2.0.3/include/ \
-				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.2_3/include/
+SDL_V		= $(shell ls $(CELLAR)/sdl2/ | head -1)
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/ \
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/ \
+			   
+SDL_TTF		= $(shell ls $(CELLAR)/sdl2_ttf/ | head -1)
+INC_PATH 	+= $(CELLAR)/sdl2_ttf/$(SDL_TTF)/include/
+
+SDL_IMG		= $(shell ls $(CELLAR)/sdl2_image/ | head -1)
+INC_PATH 	+= $(CELLAR)/sdl2_image/$(SDL_IMG)/include/
+
+SDL_MIX		= $(shell ls $(CELLAR)/sdl2_mixer/ | head -1)
+INC_PATH 	+= $(CELLAR)/sdl2_mixer/$(SDL_MIX)/include/
 endif
-HED_NAME 	= wolf.h \
-						wolf_struct.h \
-						wolf_define.h
+
+HED_NAME	= wolf.h \
+			  wolf_struct.h \
+			  wolf_define.h
 
 SRC_NAME 	= main.c \
-			  sdl_hook.c \
-			  raycasting.c \
-			  thread.c \
+				menu.c \
+			  musics.c \
+			  objects_walls.c \
 			  parser.c \
-			  ui.c \
-			  struct_line.c \
-			  struct_sdl.c \
-			  struct_env.c \
+			  raycasting.c \
+			  sdl_hook.c \
+			  sdl_mouse.c	\
+			  struct_action.c \
+			  struct_bots.c \
+			  struct_character.c \
 			  struct_enemy.c \
+			  struct_env.c \
+			  struct_img.c \
+			  struct_line.c \
+			  struct_minimap.c \
+			  struct_obj.c \
+			  struct_object.c \
+			  struct_sdl.c \
 			  struct_weapon.c \
 			  struct_world.c \
-			  struct_action.c \
-			  struct_character.c \
-			  struct_object.c \
-			  struct_bots.c \
-			  struct_obj.c \
-			  struct_img.c \
-			  struct_minimap.c \
-			  utils_tab.c \
-			  utils_sdl.c \
-			  utils_maths.c \
-			  utils_vector.c \
-			  utils_point.c \
+			  thread.c \
+			  ui.c \
 			  utils_fog.c \
-			  utils_textures.c \
-			  utils_weapons.c \
-			  utils_tron.c \
 			  utils_free.c \
+			  utils_maths.c \
+			  utils_point.c \
+			  utils_sdl.c \
+			  utils_tab.c \
+			  utils_textures.c \
+			  utils_tron.c \
 			  utils_ui.c \
-			  musics.c		\
-			  sdl_mouse.c	\
-			  objects_walls.c \
-			  menu.c
+			  utils_vector.c \
+			  utils_weapons.c 
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
-LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
+LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
+			  -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 SRC			= $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ			= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
-INC			= $(addprefix -I, $(INC_PATH))
+INC			= $(addprefix -I , $(INC_PATH))
 DIR			= $(sort $(dir $(OBJ)))
 NB			= $(words $(SRC_NAME))
 INDEX		= 0
@@ -106,11 +115,11 @@ SHELL		:=	bash
 
 all: $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJ) Makefile | $(HED) 
+$(NAME): $(OBJ_PATH) $(OBJ) Makefile 
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft $(INC) $(LSDL2)
+	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft 
 
 $(OBJ_PATH) :
 	@mkdir -p $@
@@ -150,7 +159,7 @@ run: all
 	./wolf3d ./maps/map
 
 lldb:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
+	gcc ./srcs/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
 	lldb ./wolf3d
 
@@ -158,12 +167,12 @@ fsani:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
 		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
 		-L$(LIBFT) -lft 
-	./wolf3d ./maps/map
+	./wolf3d
 
 valg:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) \
 	$(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 	-L$(LIBFT) -lft
-	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d /maps/map1
+	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
 
 re: fclean all
