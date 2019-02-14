@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:48:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 17:17:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 
 	x = iter->line.objs->map.x;
 	y = iter->line.objs->map.y;
+	// Enemy Projection here
 	if (env->w_map[x][y] == 0x60)
 	{
 		sprite = env->enemies[0].sprite;
@@ -36,8 +37,10 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 			++(iter->y);
 		}
 	}
-	else
+	else // Object projection
 	{
+		double size = iter->delim - iter->y;
+		iter->y += (int)(size * 0.75);
 		while (iter->y < iter->delim && iter->y < HEIGHT)
 		{
 			iter->color = f(env, iter->line.objs, iter->y - env->player.actions.is_up_down);

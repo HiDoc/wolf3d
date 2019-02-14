@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 14:17:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:17:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/01/26 17:01:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	mouse_shoot(t_env *env)
 {
-	t_line	line;
+	//t_line	line;
 
-	line_init(env, &line, env->w_map, 400);
+	//line_init(env, &line, env->w_map, 400);
 	env->player.actions.is_shooting = 1;
 	Mix_PlayChannel(-1, env->sounds.shot, 0);
 	SDL_FlushEvent(SDL_MOUSEBUTTONUP);

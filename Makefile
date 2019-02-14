@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/01/26 15:19:33 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/01/26 16:54:36 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,7 +147,7 @@ fclean: clean
 
 run: all
 	clear
-	./wolf3d
+	./wolf3d ./maps/map
 
 lldb:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
@@ -158,12 +158,12 @@ fsani:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
 		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
 		-L$(LIBFT) -lft 
-	./wolf3d
+	./wolf3d ./maps/map
 
 valg:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) \
 	$(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 	-L$(LIBFT) -lft
-	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
+	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d /maps/map1
 
 re: fclean all
