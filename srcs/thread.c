@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:51:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:17:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*launch_thread(void *arg)
 	t_thr	*tmp;
 
 	tmp = (t_thr *)arg;
-	tron(tmp->env, tmp->nbr);
+	wolf(tmp->env, tmp->nbr);
 	pthread_exit(NULL);
 }
 
@@ -49,7 +49,7 @@ int		init_thread(t_env *env, int threads)
 {
 	int		x;
 
-	x = set_thread(env, threads);
+	x = 0;
 	while (x < threads)
 	{
 		if (pthread_create(&env->thr[x].th, NULL, launch_thread, &env->thr[x]))

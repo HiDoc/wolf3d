@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/14 16:28:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:29:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int					render_env(t_env *env)
 {
-	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP | SDL_MOUSEMOTION);
+	copy_sdl(env);
+	SDL_FlushEvent(SDL_KEYDOWN);
+	SDL_FlushEvent(SDL_KEYUP);
+	SDL_FlushEvent(SDL_MOUSEMOTION);
 	SDL_RenderClear(env->sdl.renderer);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
@@ -129,7 +132,6 @@ void				loop_env(t_env *env)
 				ui_put_health(env);
 				ui_put_fps(env, fps);
 			}
-			copy_sdl(env);
 			render_env(env);
 		}
 	}
@@ -137,7 +139,7 @@ void				loop_env(t_env *env)
 
 int					main(int argc, char **argv)
 {
-	t_env *env;
+	t_env env;
 
 	if (argc != 2)
 	{
@@ -145,24 +147,9 @@ int					main(int argc, char **argv)
 		ft_putendl_fd("doom_nukem: usage: wolf3d [map_name]", 2);
 		return (0);
 	}
-	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		return (1);
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
-	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-		"Couldn't initialize SDL: %s", SDL_GetError());
-		return (3);
-	}
-	if (TTF_Init() < 0)
-	{
-		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
-		exit(1);
-	}
-	env->menu.is_active = 1;
-	init_env(env, argv[1]);
-	load_sounds(env);
-	launch_screen(env);
-	loop_env(env);
-	env_free(env);
+	env.menu.is_active = 1;
+	init_env(&env, argv[1]);
+	loop_env(&env);
+	env_free(&env);
 	return (0);
 }

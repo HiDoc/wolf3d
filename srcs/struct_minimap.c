@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 11:57:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/01/26 16:14:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/21 14:37:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,14 @@ static void		ft_init_minimap(t_env *env)
 
 /*static*/ void		ft_draw_ray(int i, t_env *env)
 {
-	t_point		a;
-	t_point		b;
+	t_limit		l;
 
-	// calcul des points
-	a = (t_point){env->minimap.centre.x, env->minimap.centre.y};
-	b.x = env->minimap.centre.x
-	+ (env->rays[i].line.raydir.y * env->rays[i].line.wdist * 20);
-	b.y = env->minimap.centre.y
-	+ (env->rays[i].line.raydir.x * env->rays[i].line.wdist * 20);
-
-	// affichage rayon
-	surface_drawline_limit(env->sdl.surface, a, b,
-	env->minimap.limit, 0xFFBFFCFF);
+	l = (t_limit){env->minimap.centre.x, env->minimap.centre.x
+	+ (env->rays[i].line.raydir.y * env->rays[i].line.wdist * 20),
+	env->minimap.centre.y,
+	env->minimap.centre.y
+	+ (env->rays[i].line.raydir.x * env->rays[i].line.wdist * 20)};
+	surface_drawline_limit(env->sdl.surface, l, env->minimap.limit, 0xFFBFFCFF);
 }
 
 /*static*/ void		ft_draw_bots(t_env *env)
@@ -97,7 +92,8 @@ static void		ft_init_minimap(t_env *env)
 		// debug
 		end.x = calcpos.x + env->bots[i]->debug.x * env->minimap.mnp_size;
 		end.y = calcpos.y + env->bots[i]->debug.y * env->minimap.mnp_size;
-		surface_drawline_limit(env->sdl.surface, calcpos, end,
+		t_limit l = (t_limit){calcpos.x, end.x, calcpos.y, end.y};
+		surface_drawline_limit(env->sdl.surface, l,
 		env->minimap.limit, color);
 
 		i++;

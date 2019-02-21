@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:51:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 14:20:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			exit_wolf(t_env *env);
 int			key_hook(int key, t_env *env);
 int			render_env(t_env *env);
 
-void			img(t_env *env);
+int			init_img(t_env *env);
 
 //menu
 
@@ -116,11 +116,11 @@ int			init_thread(t_env *env, int threads);
 void		init_world(t_env *env);
 void		init_sdl(t_env *env);
 int			init_menu_surface(t_env *env);
-
+int			init_surface(t_env *env);
 int			init_env(t_env *env, char *filename);
 int			env_free(t_env *env);
 void		tab_print(int **tab, int x, int y);
-
+int			set_thread(t_env *env, int threads);
 void		launch_screen(t_env *env);
 void		turn_logo(t_env *env);
 
@@ -157,10 +157,8 @@ SDL_Surface	*img_wpn(char *filename);
 
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 void		setpixel(SDL_Surface *s, int x, int y, Uint32 color);
-void		surface_drawline(SDL_Surface *surface,
-		t_point start, t_point end, Uint32 color);
-void		surface_drawline_limit(SDL_Surface *surface,
-		t_point start, t_point end, t_limit limit, Uint32 color);
+void		surface_drawline(SDL_Surface *surface, t_limit l, Uint32 color);
+void		surface_drawline_limit(SDL_Surface *surface, t_limit l, t_limit limit, Uint32 color);
 void		surface_drawrect(SDL_Surface *surface,
 		SDL_Rect rect, t_limit *limit, Uint32 color);
 void		surface_drawborder(SDL_Surface *surface,

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/01 20:41:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:02:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,46 +50,37 @@ int		init_weapon(t_env *env)
 
 int		init_env(t_env *env, char *filename)
 {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+		"Couldn't initialize SDL: %s", SDL_GetError());
+		return (3);
+	}
+	if (TTF_Init() < 0)
+	{
+		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
+		exit(1);
+	}
 	ft_bzero(env, sizeof(t_env));
 	env->sdl.width = WIDTH;
 	env->sdl.height = HEIGHT;
-	init_weapon(env);
-	init_player(env);
 	env->player.health = 100;
 	env->hratio = 2.0;
-	
-	env->sdl.surface = SDL_CreateRGBSurface(0, env->sdl.width, env->sdl.height,
-	32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-
-	parse_map(env, filename);
-
-	// this is to previsualize the map ------------
-	int	i = 0;
-	int	j;
-	while (i < env->map_h)
-	{
-		j = 0;
-		while (j < env->map_w)
-		{
-			printf("0x%x ", env->w_map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	//exit(EXIT_FAILURE); // to try only the parsing
-	// ---------------------------------------------
-
-	// init minimap
 	env->minimap.mnp_size = 20;
 
-	img(env);
+	parse_map(env, filename);
+	init_player(env);
 	init_world(env);
+	init_weapon(env);
+	init_img(env);
+	init_surface(env);
 	init_wobj(env);
 	put_poster(env);
-	init_thread(env, 8);
+	set_thread(env, 8);
 	init_sdl(env);
 	init_menu_surface(env);
 	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
+	load_sounds(env);
+	launch_screen(env);
 	return (0);
 }

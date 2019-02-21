@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 15:18:41 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/24 16:17:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 13:44:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			new_bullet_surf(t_env *env)
 	}
 }
 
-void			img(t_env *env)
+int				init_img(t_env *env)
 {
 	env->enemies[0].sprite = img_new("enemies/enemytest");
 	env->life.img = img_new("thealth");
@@ -82,4 +82,5 @@ void			img(t_env *env)
 	env->wobj.posters[4] = img_new("posters/fuckbisounours");
 	env->wobj.posters[5] = img_new("posters/lildukenukem");
 	new_bullet_surf(env);
+	return (1);
 }
