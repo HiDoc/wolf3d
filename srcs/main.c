@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 15:29:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:22:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void inline	loop_frames(t_env *env, int *frame)
 	}
 	if (env->player.actions.is_jumping)
 	{
-		env->jumpmod = 50;
+		env->jumpmod = 200;
 		jfram++;
 		if (jfram > 15)
 		{

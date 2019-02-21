@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:00:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 15:57:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:21:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,9 @@ Uint32 (*f)(t_env*, t_line*, int), int (*fog)(t_env *, t_line *, Uint32, int))
 	{	
 		iter->color = f(env, &iter->line,
 			iter->y - env->player.actions.is_up_down
-			- (int)(env->jumpmod / (iter->line.wdist / 4))
-		);
-		setpixel( env->sdl.surface,
-			iter->x, iter->y,
-			fog(env, &iter->line, iter->color, iter->y)
-		);
+			- (int)(env->jumpmod));
+		setpixel(env->sdl.surface, iter->x, iter->y,
+			fog(env, &iter->line, iter->color, iter->y) );
 		++(iter->y);
 	}
 }
@@ -87,7 +84,7 @@ static inline int	switch_delim(t_env *env, t_iline *iter, int m_switch)
 	int		jump;
 
 	ret = 0;
-	jump = (int)(env->jumpmod / (iter->line.wdist / 4));
+	jump = (int)(env->jumpmod);
 	if (m_switch == 1)
 	{
 		ret = iter->line.start_draw
@@ -121,7 +118,7 @@ int					tron(t_env *env, int col)
 		iter->delim = switch_delim(env, iter, 3);
 		line_iter(env, iter, &line_tron_wall, &wall_fog);
 		iter->delim = HEIGHT;
-		line_iter(env, iter, &line_tron_ceil, &floor_fog);
+		line_iter(env, iter, &line_floor_under, &floor_fog);
 		put_objs(env, iter);
 		x += 8;
 	}

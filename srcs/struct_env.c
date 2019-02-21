@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 17:01:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:04:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int		init_wobj(t_env *env)
 	env->wobj.poster = 0;
 	env->wobj.impact = 0;
 	env->wobj.is_bullet = 0;
-	env->wobj.simpact =
-	SDL_CreateRGBSurface(0, 564, 563, 32,
-	0xFF000000, 0xFF0000, 0xFF00, 0xFF);
+	env->wobj.simpact = SDL_CreateRGBSurface(0, 564, 563, 32,
+		0xFF000000, 0xFF0000, 0xFF00, 0xFF);
 	return (1);
 }
 

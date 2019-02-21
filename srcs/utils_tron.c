@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 17:46:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 17:29:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:19:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Uint32			line_tron_ceil(t_env *env, t_line *line, int y)
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->player.pos.y) * h);
 	if (w % 512 < 5 || h % 512 < 5 || h % 512 > 507 || w % 512 > 507)
-		return (0xFFc7ff00);
+		return (0x00c7ffff);
 	return (0xff000000);
 }
 

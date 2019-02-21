@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:34:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 13:41:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:07:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ Uint32			line_floor_under(t_env *env, t_line *line, int y)
 	w = line->floor->w;
 	h = line->floor->h;
 	get_fwall(line, &fwall);
-	weight = ((double)HEIGHT / (env->hratio * y - HEIGHT)) / line->wdist;
+	weight = ((double)HEIGHT / (2.0 * y - HEIGHT)) / line->wdist;
 	w = (int)((weight * fwall.x + (1.0 - weight) * env->player.pos.x) * w);
 	h = (int)((weight * fwall.y + (1.0 - weight) * env->player.pos.y) * h);
 	if (w % line->floor->w < 20 || h % line->floor->h < 20 )

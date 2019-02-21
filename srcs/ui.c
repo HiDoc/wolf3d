@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 16:41:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:04:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int		launch_screen(t_env *env)
 	while (1)
 	{
 		if (SDL_PollEvent(&env->sdl.event) > 0
-		&& env->sdl.event.type != 0x1100
-		&& env->sdl.event.type != 0x200)
+			&& env->sdl.event.type != 0x1100
+			&& env->sdl.event.type != 0x200)
 			break;
 	}
 	return (1);
