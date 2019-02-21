@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 14:20:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:40:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "wolf_define.h"
 # include "wolf_struct.h"
 
-void		parse_map(t_env * env, char *filename);
+int			parse_map(t_env * env, char *filename);
 
 int			wolf(t_env *env, int col);
 int			tron(t_env *env, int col);
@@ -113,15 +113,16 @@ void        weapon_set(t_weapon *weapon, char *name);
 */
 
 int			init_thread(t_env *env, int threads);
-void		init_world(t_env *env);
-void		init_sdl(t_env *env);
+int			init_world(t_env *env);
+int			init_sdl(t_env *env);
 int			init_menu_surface(t_env *env);
 int			init_surface(t_env *env);
+int			init_player(t_env *env);
 int			init_env(t_env *env, char *filename);
 int			env_free(t_env *env);
 void		tab_print(int **tab, int x, int y);
 int			set_thread(t_env *env, int threads);
-void		launch_screen(t_env *env);
+int			launch_screen(t_env *env);
 void		turn_logo(t_env *env);
 
 void		copy_sdl(t_env *env);
@@ -173,7 +174,7 @@ int			**tab_copy_alloc(int **src, int x, int y);
 int			**tab_init(int **src, int x, int y);
 int			tab_free(int **tab, int y);
 
-void		load_sounds(t_env *env);
+int			load_sounds(t_env *env);
 
 int			put_poster(t_env *env);
 int			wall_poster(t_env *env, t_line *line);

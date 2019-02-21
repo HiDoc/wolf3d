@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:48:54 by jsauron           #+#    #+#             */
-/*   Updated: 2019/01/25 18:37:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:00:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			init_menu_surface(t_env *env)
 	env->menu.sub[1].sprite = create_surf("./rsrc/menu/doom_load_game_vect.png");
 	env->menu.sub[2].sprite = create_surf("./rsrc/menu/doom_menu_2_vect.png");
 	env->menu.sub[3].sprite = create_surf("./rsrc/menu/doom_save_game_vect.png");
-	return (0);
+	return (1);
 }
 
 int			select_button_menu(t_env *env, Uint8 keycode)

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 15:33:08 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:03:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:57:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void    init_container(t_container *container)
     }
 }
 
-void    init_world(t_env *env)
+int   init_world(t_env *env)
 {
     t_world     *world;
     t_container *surfaces;
@@ -45,4 +45,5 @@ void    init_world(t_env *env)
     world = &env->world;
     surfaces = &env->world.surfaces;
     init_container(surfaces);
+    return (1);
 }

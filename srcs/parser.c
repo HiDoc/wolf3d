@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/28 11:13:50 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:43:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:39:41 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ static void		ft_parse_line(t_env *env, int fd, int index, char *line)
 	ft_memdel((void *)split);
 }
 
-void			parse_map(t_env *env, char *filename)
+int				parse_map(t_env *env, char *filename)
 {
 	char	*line;
 	int		fd;
@@ -193,4 +193,5 @@ void			parse_map(t_env *env, char *filename)
 	//if (i != env->map_h || env->player.position.x == -1)
 	//	ft_parsing_exit(fd, "wolf3d: parsing error: bad map format", data);
 	close(fd);
+	return (1);
 }

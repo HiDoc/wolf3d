@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 11:03:26 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/25 14:03:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:41:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	health(t_env *env)
 	ui_put_string(env, life, 65, 450);
 }
 
-void	launch_screen(t_env *env)
+int		launch_screen(t_env *env)
 {
 	SDL_Surface *home;
 
@@ -66,4 +66,5 @@ void	launch_screen(t_env *env)
 		&& env->sdl.event.type != 0x200)
 			break;
 	}
+	return (1);
 }

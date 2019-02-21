@@ -6,14 +6,17 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 17:41:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/08 13:56:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:40:34 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	load_sounds(t_env *env)
+int		load_sounds(t_env *env)
 {
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
-	env->sounds.shot = Mix_LoadWAV("rsrc/sound/shot.wav");
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+		return (0);
+	if (!(env->sounds.shot = Mix_LoadWAV("rsrc/sound/shot.wav")))
+		return (0);
+	return (1);
 }

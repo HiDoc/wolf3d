@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 13:46:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 15:17:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:35:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		set_thread(t_env *env, int threads)
 		env->thr[nbr].nbr = nbr + 1;
 		nbr++;
 	}
-	return (0);
+	return (1);
 }
 
 void	set_surface(t_env *env)

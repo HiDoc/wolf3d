@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/19 17:23:29 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/21 13:48:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:37:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,30 @@ void		copy_sdl(t_env *env)
 	}
 }
 
-void		init_sdl(t_env *env)
+int			init_sdl(t_env *env)
 {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+		"Couldn't initialize SDL: %s", SDL_GetError());
+		return (0);
+	}
+	if (TTF_Init() < 0)
+	{
+		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
+		return (0);
+	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	env->sdl.window = SDL_CreateWindow("Doom Nukem",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			env->sdl.width, env->sdl.height,
 			SDL_WINDOW_SHOWN);
-	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, 0);
+	if (env->sdl.window == NULL)
+		return (0);
+	env->sdl.renderer = SDL_CreateRenderer(env->sdl.window, -1, SDL_RENDERER_SOFTWARE);
+	if (env->sdl.renderer == NULL)
+		return (0);
+	SDL_SetRenderTarget(env->sdl.renderer, env->sdl.texture);
+	return (1);
 }
