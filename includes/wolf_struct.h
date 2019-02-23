@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/23 12:55:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/23 13:41:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,9 @@
 
 typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
-typedef struct s_minimap		t_minimap;
 
-typedef struct s_point			t_point;
-typedef struct s_thr				t_thr;
 
-typedef struct s_vector			t_vector;
-typedef struct s_line				t_line;
-typedef struct s_obj				t_obj;
-typedef struct s_iline			t_iline;
-
-typedef struct s_portal		t_portal;
-typedef struct s_hub		t_hub;
 typedef struct s_msc		t_msc;
-typedef struct s_wobj		t_wobj;
-typedef struct s_limit		t_limit;
-typedef struct s_menu		t_menu;
 
 /*
 **	Gameplay Structure
@@ -44,7 +31,6 @@ typedef struct s_action			t_action;
 typedef struct s_inventory	t_inventory;
 typedef struct s_container	t_container;
 typedef struct s_character	t_character;
-typedef struct s_bot				t_bot; // fusionner avec t_character
 
 struct					s_sdl
 {
@@ -182,5 +168,7 @@ struct					s_env
 	t_world		world;
 	t_sdl		sdl;
 };
+
+#include "doom_engine.h"
 
 #endif

@@ -12,23 +12,11 @@
 #define vfov (.2f*H)    // Affects the vertical field of vision
 
 /* Sectors: Floor and ceiling height; list of edge vertices and neighbors */
-static struct sector
-{
-    float floor, ceil;
-    struct xy { float x,y; } *vertex; // Each vertex has an x and y coordinate
-    signed char *neighbors;           // Each edge may have a corresponding neighboring sector
-    unsigned npoints;                 // How many vertexes there are
-} *sectors = NULL;
-static unsigned NumSectors = 0;
+static t_sector		*sectors = NULL;
+static unsigned		NumSectors = 0;
 
 /* Player: location */
-static struct player
-{
-    struct xyz { float x,y,z; } where,      // Current position
-                                velocity;   // Current motion vector
-    float angle, anglesin, anglecos, yaw;   // Looking towards (and sin() and cos() thereof)
-    unsigned sector;                        // Which sector the player is currently in
-} player;
+static t_player		player;
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
