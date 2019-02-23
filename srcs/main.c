@@ -1,16 +1,5 @@
 #include "wolf.h"
 
-/* Define window size */
-#define W 800
-#define H 600
-/* Define various vision related constants */
-#define EyeHeight  6    // Camera height from floor when standing
-#define DuckHeight 2.5  // And when crouching
-#define HeadMargin 1    // How much room there is above camera before the head hits the ceiling
-#define KneeHeight 2    // How tall obstacles the player can simply walk over without jumping
-#define hfov (0.73f*H)  // Affects the horizontal field of vision
-#define vfov (.2f*H)    // Affects the vertical field of vision
-
 /* Sectors: Floor and ceiling height; list of edge vertices and neighbors */
 static t_sector		*sectors = NULL;
 static unsigned		NumSectors = 0;
@@ -18,33 +7,29 @@ static unsigned		NumSectors = 0;
 /* Player: location */
 static t_player		player;
 
-// Utility functions. Because C doesn't have templates,
-// we use the slightly less safe preprocessor macros to
-// implement these functions that work with multiple types.
-#define min(a,b)             (((a) < (b)) ? (a) : (b)) // min: Choose smaller of two scalars.
-#define max(a,b)             (((a) > (b)) ? (a) : (b)) // max: Choose greater of two scalars.
-#define clamp(a, mi,ma)      min(max(a,mi),ma)         // clamp: Clamp value into set range.
-#define vxs(x0,y0, x1,y1)    ((x0)*(y1) - (x1)*(y0))   // vxs: Vector cross product
-// Overlap:  Determine whether the two number ranges overlap.
-#define Overlap(a0,a1,b0,b1) (min(a0,a1) <= max(b0,b1) && min(b0,b1) <= max(a0,a1))
-// IntersectBox: Determine whether two 2D-boxes intersect.
-#define IntersectBox(x0,y0, x1,y1, x2,y2, x3,y3) (Overlap(x0,x1,x2,x3) && Overlap(y0,y1,y2,y3))
-// PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
-#define PointSide(px,py, x0,y0, x1,y1) vxs((x1)-(x0), (y1)-(y0), (px)-(x0), (py)-(y0))
-// Intersect: Calculate the point of intersection between two lines.
-#define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_xy) { \
-    vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
-    vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
-
-static void LoadData()
+static void			LoadData(void)
 {
-    FILE* fp = fopen("map-clear.txt", "rt");
-    if(!fp) { perror("map-clear.txt"); exit(1); }
-    char Buf[256], word[256], *ptr;
-    t_xy *vert = NULL;
-    t_xy v;
-    int n, m, NumVertices = 0;
-    while(fgets(Buf, sizeof Buf, fp))
+    FILE		*fp;
+	char	Buf[256];
+	char	word[256];
+	char	*ptr;
+    t_xy	*vert;
+	t_xy	v;
+	int		n;
+	int		m;
+	int		NumVertices;
+
+	n = 0;
+	m = 0;
+	vert = NULL;
+	NumVertices = 0;
+    if (!(fp = fopen("map-clear.txt", "rt")))
+	{
+		perror("map-clear.txt");
+		exit(1);
+	}
+    while (fgets(Buf, sizeof Buf, fp))
+	{
         switch(sscanf(ptr = Buf, "%32s%n", word, &n) == 1 ? word[0] : '\0')
         {
             case 'v': // vertex
@@ -71,40 +56,61 @@ static void LoadData()
                 sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
                 player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
                 player.where.z = sectors[player.sector].floor + EyeHeight;
-        }
+		}
+	}
     fclose(fp);
     free(vert);
 }
-static void UnloadData()
+
+static void		UnloadData(void)
 {
-    for(unsigned a=0; a<NumSectors; ++a) free(sectors[a].vertex);
-    for(unsigned a=0; a<NumSectors; ++a) free(sectors[a].neighbors);
+	unsigned	a;
+
+	a = 0;
+    while (a < NumSectors)
+	{
+		free(sectors[a].vertex);
+		a++;
+	}
+	a = 0;
+    while (a < NumSectors)
+	{
+		free(sectors[a].neighbors);
+		a++;
+	}
     free(sectors);
-    sectors    = NULL;
+    sectors = NULL;
     NumSectors = 0;
 }
 
-static SDL_Surface* surface = NULL;
+static SDL_Surface*		surface = NULL;
 
 /* vline: Draw a vertical line on screen, with a different color pixel in top & bottom */
-static void vline(int x, int y1,int y2, int top,int middle,int bottom)
+static void				vline(int x, int y1, int y2, int top, int middle, int bottom)
 {
-    int *pix = (int*) surface->pixels;
-    y1 = clamp(y1, 0, H-1);
-    y2 = clamp(y2, 0, H-1);
-    if(y2 == y1)
-        pix[y1*W+x] = middle;
-    else if(y2 > y1)
+    int		*pix;
+	int		y;
+
+	pix	= (int *)surface->pixels;
+    y1 = clamp(y1, 0, H - 1);
+    y2 = clamp(y2, 0, H - 1);
+    if (y2 == y1)
+        pix[y1 * W + x] = middle;
+    else if (y2 > y1)
     {
-        pix[y1*W+x] = top;
-        for(int y=y1+1; y<y2; ++y) pix[y*W+x] = middle;
-        pix[y2*W+x] = bottom;
+        pix[y1 * W + x] = top;
+		y = y1 + 1;
+        while (y < y2)
+		{
+			pix[y * W + x] = middle;
+			y++;
+		}
+        pix[y2 * W + x] = bottom;
     }
 }
 
-/* MovePlayer(dx,dy): Moves the player by (dx,dy) in the map, and
- * also updates their anglesin/anglecos/sector properties properly.
- */
+// MovePlayer(dx,dy): Moves the player by (dx,dy) in the map, and
+// also updates their anglesin/anglecos/sector properties properly.
 static void MovePlayer(float dx, float dy)
 {
     float px = player.where.x, py = player.where.y;
@@ -243,7 +249,7 @@ static void DrawScreen()
     } while(head != tail); // render any other queued sectors
 }
 
-int main()
+int		main()
 {
     SDL_Window      *window;
     SDL_Texture     *texture;
