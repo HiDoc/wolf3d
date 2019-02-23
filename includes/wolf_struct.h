@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/01/26 16:08:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/23 12:55:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,6 @@ typedef struct s_container	t_container;
 typedef struct s_character	t_character;
 typedef struct s_bot				t_bot; // fusionner avec t_character
 
-struct					s_menu
-{
-	int				is_active;
-	int				button;
-	t_menu			*sub;
-	int				sub_menu;
-	int				nb_sub;
-	SDL_Surface		*sprite;
-};
-
 struct					s_sdl
 {
 	Uint32				pixels[WIDTH * HEIGHT];
@@ -68,131 +58,12 @@ struct					s_sdl
 	SDL_Event			event;
 };
 
-struct					s_point
-{
-	double				x;
-	double				y;
-};
 
-struct					s_vector
-{
-	t_point			a;
-	t_point			b;
-};
-
-struct					s_thr
-{
-	pthread_t			th;
-	t_env					*env;
-	int						nbr;
-};
-
-struct					s_obj
-{
-	SDL_Surface		*text;
-	SDL_Surface		*floor;
-	SDL_Surface		*sky;
-	t_point				map;
-	t_point				delta;
-	t_point				step;
-	t_point				raydir;
-	t_point				wall;
-	t_point				side;
-	double				wdist;
-	int						sidew;
-	int						lineh;
-	int						start_draw;
-	int						end_draw;
-};
-
-struct					s_line
-{
-	SDL_Surface		*text;
-	SDL_Surface		*floor;
-	SDL_Surface		*sky;
-	t_point				map;
-	t_point				delta;
-	t_point				step;
-	t_point				raydir;
-	t_point				wall;
-	t_point				side;
-	int						nb_objs;
-	double				wdist;
-	int						sidew;
-	int						lineh;
-	int						start_draw;
-	int						end_draw;
-	t_line				*objs;
-};
-
-struct					s_hub
-{
-	SDL_Texture		*texture;
-	SDL_Surface		*surface;
-	SDL_Rect			rect;
-	SDL_Color			color;
-	TTF_Font			*font;
-	SDL_Surface		*img;
-	int						size;
-	double				ang;
-	int						w;
-	int						h;
-	t_point				pt;
-};
-
-struct					s_portal
-{
-	SDL_Surface		*inimg;
-	SDL_Surface		*outimg;
-	t_point				inplane;
-	t_point				indir;
-	t_point				inpos;
-	t_point				outplane;
-	t_point				outdir;
-	t_point				outpos;
-	t_point				inemp;
-	t_point				outemp;
-	int						in;
-	int						out;
-	int						hit;
-};
 
 struct					s_msc
 {
 	Mix_Music	*load;
 	Mix_Chunk	*shot;
-};
-
-struct					s_wobj
-{
-	int			hit;
-	t_point		pos;
-	SDL_Surface	*simpact;
-	int			poster;
-	int			impact;
-	int			index;
-	SDL_Surface	*posters[8];
-	SDL_Surface	*wposters[8];
-	int			is_bullet;
-};
-
-struct					s_limit
-{
-	int				xmin;
-	int				xmax;
-	int				ymin;
-	int				ymax;
-};
-
-struct					s_minimap
-{
-	t_point		origin;
-	t_point		centre;
-	t_point		map_size;
-	double		mnp_size;
-	t_point		pos_play;
-	t_limit		limit;
-	t_point		diff;
 };
 
 /*
@@ -230,13 +101,13 @@ struct					s_weapon
 {
 	SDL_Surface	*sprite;
 	SDL_Surface	*sprite_bullet;
-	SDL_Surface	**sprite_reload;
-	SDL_Surface	**sprite_shoot;
+	SDL_Surface			**sprite_reload;
+	SDL_Surface			**sprite_shoot;
 	long				ref;
 	int					type;
 	int					time_reload;
 	int					time_shoot;
-	double			time_shoot_between;
+	double				time_shoot_between;
 	int					ammo_current;
 	int					ammo_magazine;
 	int					ammo_max;
@@ -245,11 +116,11 @@ struct					s_weapon
 
 struct					s_surface
 {
-	SDL_Surface	*sprite;
+	SDL_Surface			*sprite;
 	int					health;
 	int					height;
 	int					width;
-double				angle;
+	double				angle;
 };
 
 struct					s_container
@@ -263,7 +134,7 @@ struct					s_world
 {
 	t_weapon		armory[WORLD_NB_WEAPONS];
 	t_object		objects[WORLD_NB_OBJECTS];
-	t_container	surfaces;
+	t_container		surfaces;
 };
 
 struct					s_action
@@ -301,63 +172,15 @@ struct					s_character
 	SDL_Surface	*sprite;
 };
 
-struct					s_bot // a fusionner avec s_character/ennemies
-{
-	int         bot_type;
-	t_point     init_pos;
-	double		init_dir;
-	t_point     position;
-	double		direction;
-	double		player_dist;
-	double		player_angl;
-	int         detected;	// if it saw player
-	int			alerted;	// if it heard player
-	int         health;
-
-	t_point		debug;
-};
-
-struct					s_iline
-{
-	int			x; // sgalasso : je m'en sert pas
-	int			y; // sgalasso : je m'en sert pas 
-	int			delim; // sgalasso : je m'en sert pas
-	t_line		line;
-	Uint32		color; // sgalasso : je m'en sert pas
-};
-
 struct					s_env
 {
-	int			map_w; // largeur map (sgalasso - parsing)
-	int			map_h; // hauteur map (sgalasso - parsing)
-	int			**w_map;
-
-	SDL_Surface	*ak_frms[43];
-	SDL_Surface	*bul_surf[6];
-
-	double		cam;
-	double		hratio;
-	int				jumpmod;
-
-	int			is_menu_active;
-	t_character	enemies[10];
-	int			nb_bots;
-	t_bot		**bots; // a fusionner plus tard avec t_character
-	t_minimap	minimap;
-	t_hub		life;
-	t_hub		lscreen;
-	t_hub		title;
+	int			map_w;
+	int			map_h;
 	t_msc		sounds;
 
 	t_character player;
 	t_world		world;
-
-	t_point		mouse;
 	t_sdl		sdl;
-	t_thr		thr[THREAD_NBR];
-	t_wobj		wobj;
-	t_iline		rays[WIDTH];
-	t_menu		menu;
 };
 
 #endif

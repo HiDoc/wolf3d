@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/21 16:57:31 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/23 12:54:02 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,41 +62,7 @@ HED_NAME	= wolf.h \
 			  wolf_struct.h \
 			  wolf_define.h
 
-SRC_NAME 	= main.c \
-				menu.c \
-			  musics.c \
-			  objects_walls.c \
-			  parser.c \
-			  raycasting.c \
-			  sdl_hook.c \
-			  sdl_mouse.c	\
-			  struct_action.c \
-			  struct_bots.c \
-			  struct_character.c \
-			  struct_enemy.c \
-			  struct_env.c \
-			  struct_img.c \
-			  struct_line.c \
-			  struct_minimap.c \
-			  struct_obj.c \
-			  struct_object.c \
-			  struct_sdl.c \
-			  struct_weapon.c \
-			  struct_world.c \
-			  thread.c \
-			  ui.c \
-			  utils_fog.c \
-			  utils_free.c \
-			  utils_maths.c \
-			  utils_point.c \
-			  utils_sdl.c \
-			  utils_tab.c \
-			  utils_pixels.c \
-			  utils_textures.c \
-			  utils_tron.c \
-			  utils_ui.c \
-			  utils_vector.c \
-			  utils_weapons.c 
+SRC_NAME 	= main.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
