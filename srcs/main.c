@@ -241,37 +241,46 @@ static void DrawScreen()
     ++renderedsectors[now.sectorno];
     } while(head != tail); // render any other queued sectors
 }
-unsigned lol;
+
 int main()
 {
-    LoadData();
-    t_sdl   sdl;
+    SDL_Window      *window;
+    SDL_Texture     *texture;
+    SDL_Renderer    *renderer;
 
-    sdl.window = SDL_CreateWindow("Doom nukem",
+    window = SDL_CreateWindow("Doom nukem",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         W, H, SDL_WINDOW_SHOWN);
-    sdl.surface = SDL_CreateRGBSurface(0, W, H, 0xff, 0xff00, 0xff0000, 0xff000000);
-    sdl.texture = SDL_CreateTextureFromSurface()
-    sdl.renderer = SDL_CreateRenderer(sdl.window, -1, 0);
-    surface = SDL_SetVideoMode(W, H, 32, 0);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    texture = NULL;
+    surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 
-    SDL_EnableKeyRepeat(150, 30);
-    SDL_ShowCursor(SDL_DISABLE);
+    LoadData();
 
     int wsad[4]={0,0,0,0}, ground=0, falling=1, moving=0, ducking=0;
     float yaw = 0;
-    for(;;)
+    while(1)
     {
         SDL_LockSurface(surface);
         DrawScreen();
         SDL_UnlockSurface(surface);
-        SDL_Flip(surface);
+        if (texture == NULL)
+            texture = SDL_CreateTextureFromSurface(renderer, surface);
+        else
+        {
+            SDL_DestroyTexture(texture);
+            texture = SDL_CreateTextureFromSurface(renderer, surface);
+        }
+        
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+        SDL_RenderPresent(renderer);
 
         /* Vertical collision detection */
         float eyeheight = ducking ? DuckHeight : EyeHeight;
         ground = !falling;
-        if(falling)
+        if (falling)
         {
             player.velocity.z -= 0.05f; /* Add gravity */
             float nextz = player.where.z + player.velocity.z;
@@ -296,7 +305,7 @@ int main()
             }
         }
         /* Horizontal collision detection */
-        if(moving)
+        if (moving)
         {
             float px = player.where.x,    py = player.where.y;
             float dx = player.velocity.x, dy = player.velocity.y;

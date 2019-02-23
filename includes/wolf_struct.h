@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/23 13:41:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/23 13:51:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
-
-
-typedef struct s_msc		t_msc;
+typedef struct s_msc				t_msc;
 
 /*
 **	Gameplay Structure
@@ -28,19 +26,20 @@ typedef struct s_world			t_world;
 typedef struct s_surface		t_surface;
 typedef struct s_weapon			t_weapon;
 typedef struct s_action			t_action;
-typedef struct s_inventory	t_inventory;
-typedef struct s_container	t_container;
-typedef struct s_character	t_character;
+typedef struct s_inventory		t_inventory;
+typedef struct s_container		t_container;
+typedef struct s_character		t_character;
+typedef struct s_bot			t_bot;
 
 struct					s_sdl
 {
 	Uint32				pixels[WIDTH * HEIGHT];
-	int						width;
-	int						height;
-	SDL_Window		*window;
-	SDL_Renderer	*renderer;
-	SDL_Texture		*texture;
-	SDL_Surface		*surface;
+	int					width;
+	int					height;
+	SDL_Window			*window;
+	SDL_Renderer		*renderer;
+	SDL_Texture			*texture;
+	SDL_Surface			*surface;
 	SDL_Event			event;
 };
 
@@ -150,9 +149,6 @@ struct					s_character
 	int			max_objects;
 	double		angle_d;
 	double		angle_r;
-	t_point		pos;
-	t_point		plane;
-	t_point		dir;
 	t_action	actions;
 	t_inventory	inventory;
 	SDL_Surface	*sprite;
