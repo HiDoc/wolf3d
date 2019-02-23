@@ -388,7 +388,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 		int x,y;
 		SDL_GetRelativeMouseState(&x,&y);
 		player.angle += x * 0.03f;
-		yaw          = clamp(yaw - y * 0.05f, -5, 5);
+		yaw          = clamp(yaw + y * 0.05f, -5, 5);
 		player.yaw   = yaw - player.velocity.z * 0.5f;
 		MovePlayer(0,0);
 
@@ -424,10 +424,13 @@ int		main()
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	texture = NULL;
 	surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
-
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	LoadData();
 
 	sdl_loop(texture, renderer);
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 	UnloadData();
 	SDL_Quit();
 	return 0;
