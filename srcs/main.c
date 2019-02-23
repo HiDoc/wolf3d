@@ -33,8 +33,12 @@ static void			LoadData(void)
 		switch(sscanf(ptr = Buf, "%32s%n", word, &n) == 1 ? word[0] : '\0')
 		{
 			case 'v': // vertex
-				for(sscanf(ptr += n, "%f%n", &v.y, &n); sscanf(ptr += n, "%f%n", &v.x, &n) == 1; )
-					{ vert = realloc(vert, ++NumVertices * sizeof(*vert)); vert[NumVertices-1] = v; }
+				sscanf(ptr += n, "%f%n", &v.y, &n);
+				while (sscanf(ptr += n, "%f%n", &v.x, &n) == 1)
+				{
+					vert = realloc(vert, ++NumVertices * sizeof(*vert));
+					vert[NumVertices-1] = v;
+				}
 				break;
 			case 's': // sector
 				sectors = realloc(sectors, ++NumSectors * sizeof(*sectors));
@@ -42,12 +46,26 @@ static void			LoadData(void)
 				int* num = NULL;
 				sscanf(ptr += n, "%f%f%n", &sect->floor,&sect->ceil, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
-					{ num = realloc(num, ++m * sizeof(*num)); num[m-1] = word[0]=='x' ? -1 : atoi(word); }
+				{
+					num = realloc(num, ++m * sizeof(*num));
+					num[m-1] = word[0] == 'x' ? -1 : atoi(word);
+				}
 				sect->npoints   = m /= 2;
 				sect->neighbors = malloc( (m  ) * sizeof(*sect->neighbors) );
 				sect->vertex    = malloc( (m+1) * sizeof(*sect->vertex)    );
-				for(n=0; n<m; ++n) sect->neighbors[n] = num[m + n];
-				for(n=0; n<m; ++n) sect->vertex[n+1]  = vert[num[n]]; // TODO: Range checking
+				printf("Neightbors\n");
+				for (n=0; n<m; ++n)
+				{
+					printf("%d: [%d]", n, num[m + n]);
+					sect->neighbors[n] = num[m + n];
+				}
+				printf("\n\n Vertex:");
+				for(n=0; n<m; ++n)
+				{
+					printf("[%d]", num[n]);
+					sect->vertex[n+1]  = vert[num[n]]; // TODO: Range checking
+				}
+				printf("\n\n");
 				sect->vertex[0] = sect->vertex[m]; // Ensure the vertexes form a loop
 				free(num);
 				break;
@@ -293,6 +311,7 @@ void	player_falling(int *falling, int *moving, int *ground, float *eyeheight)
 		*moving = 1;
 	}
 }
+
 void	player_moving(int *moving, int *falling, float eyeheight)
 {
 	float	px = player.where.x;
@@ -370,7 +389,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 						case 's': wsad[1] = ev.type==SDL_KEYDOWN; break;
 						case 'a': wsad[2] = ev.type==SDL_KEYDOWN; break;
 						case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
-						case 'q': goto done;
+						case 'q': return (0);
 						case ' ': /* jump */
 							if (ground) { player.velocity.z += 0.5; falling = 1; }
 							break;
@@ -407,7 +426,6 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 
 		SDL_Delay(10);
 	}
-	done:
 	return (0);
 }
 
