@@ -32,7 +32,7 @@ static t_player		player;
 // PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
 #define PointSide(px,py, x0,y0, x1,y1) vxs((x1)-(x0), (y1)-(y0), (px)-(x0), (py)-(y0))
 // Intersect: Calculate the point of intersection between two lines.
-#define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((struct xy) { \
+#define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_xy) { \
     vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
     vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
 
@@ -41,7 +41,8 @@ static void LoadData()
     FILE* fp = fopen("map-clear.txt", "rt");
     if(!fp) { perror("map-clear.txt"); exit(1); }
     char Buf[256], word[256], *ptr;
-    struct xy* vert = NULL, v;
+    t_xy *vert = NULL;
+    t_xy v;
     int n, m, NumVertices = 0;
     while(fgets(Buf, sizeof Buf, fp))
         switch(sscanf(ptr = Buf, "%32s%n", word, &n) == 1 ? word[0] : '\0')
@@ -52,7 +53,7 @@ static void LoadData()
                 break;
             case 's': // sector
                 sectors = realloc(sectors, ++NumSectors * sizeof(*sectors));
-                struct sector* sect = &sectors[NumSectors-1];
+                t_sector *sect = &sectors[NumSectors-1];
                 int* num = NULL;
                 sscanf(ptr += n, "%f%f%n", &sect->floor,&sect->ceil, &n);
                 for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
@@ -68,7 +69,7 @@ static void LoadData()
             case 'p':; // player
                 float angle;
                 sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-                player = (struct player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
+                player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
                 player.where.z = sectors[player.sector].floor + EyeHeight;
         }
     fclose(fp);
@@ -113,8 +114,8 @@ static void MovePlayer(float dx, float dy)
      * clockwise order, PointSide will always return -1 for a point
      * that is outside the sector and 0 or 1 for a point that is inside.
      */
-    const struct sector* const sect = &sectors[player.sector];
-    const struct xy* const vert = sect->vertex;
+    const t_sector *sect = &sectors[player.sector];
+    const t_xy *vert = sect->vertex;
     for(unsigned s = 0; s < sect->npoints; ++s)
         if(sect->neighbors[s] >= 0
         && IntersectBox(px,py, px+dx,py+dy, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y)
@@ -149,7 +150,7 @@ static void DrawScreen()
 
     if(renderedsectors[now.sectorno] & 0x21) continue; // Odd = still rendering, 0x20 = give up
     ++renderedsectors[now.sectorno];
-    const struct sector* const sect = &sectors[now.sectorno];
+    const t_sector *sect = &sectors[now.sectorno];
     /* Render each wall of this sector that is facing towards player. */
     for(unsigned s = 0; s < sect->npoints; ++s)
     {
@@ -167,8 +168,8 @@ static void DrawScreen()
         {
             float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 20.f;
             // Find an intersection between the wall and the approximate edges of player's view
-            struct xy i1 = Intersect(tx1,tz1,tx2,tz2, -nearside,nearz, -farside,farz);
-            struct xy i2 = Intersect(tx1,tz1,tx2,tz2,  nearside,nearz,  farside,farz);
+            t_xy i1 = Intersect(tx1,tz1,tx2,tz2, -nearside,nearz, -farside,farz);
+            t_xy i2 = Intersect(tx1,tz1,tx2,tz2,  nearside,nearz,  farside,farz);
             if(tz1 < nearz) { if(i1.y > 0) { tx1 = i1.x; tz1 = i1.y; } else { tx1 = i2.x; tz1 = i2.y; } }
             if(tz2 < nearz) { if(i1.y > 0) { tx2 = i1.x; tz2 = i1.y; } else { tx2 = i2.x; tz2 = i2.y; } }
         }
@@ -310,8 +311,8 @@ int main()
             float px = player.where.x,    py = player.where.y;
             float dx = player.velocity.x, dy = player.velocity.y;
 
-            const struct sector* const sect = &sectors[player.sector];
-            const struct xy* const vert = sect->vertex;
+            const t_sector *sect = &sectors[player.sector];
+            const t_xy *vert = sect->vertex;
             /* Check if the player is about to cross one of the sector's edges */
             for(unsigned s = 0; s < sect->npoints; ++s)
                 if(IntersectBox(px,py, px+dx,py+dy, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y)
@@ -388,81 +389,3 @@ done:
     SDL_Quit();
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

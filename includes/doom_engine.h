@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   doom_engine.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/23 13:58:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:08:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef WOLF_ENGINE_H
+# define WOLF_ENGINE_H
 typedef struct	s_xy		t_xy;
 typedef struct	s_xyz		t_xyz;
 typedef struct	s_sector	t_sector;
-typedef struct	s_payer		t_player;
+typedef struct	s_player	t_player;
 
 struct						s_xy
 {
@@ -39,7 +41,7 @@ struct						s_sector
 
 struct						s_player
 {
-	t_xyz		where,      // Current position
+	t_xyz		where;      // Current position
 	t_xyz		velocity;   // Current motion vector
 	float		angle;
 	float		anglesin;
@@ -47,3 +49,4 @@ struct						s_player
 	float		yaw;		// Looking towards (and sin() and cos() thereof)
 	unsigned sector;
 };
+#endif
