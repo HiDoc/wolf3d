@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/24 17:55:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 20:51:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,15 @@ struct						s_engine
 	unsigned	NumSectors;
 	t_player	player;
 };
+
+void	LoadData(t_engine *e);
+void	UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e);
+void	DrawScreen(t_engine *e);
+int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e);
+int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s, t_engine *e);
+void	bumping_score(t_xy *d, t_xy b);
+void	player_moving(int *moving, int *falling, float eyeheight, int set, t_engine *e);
+void	player_falling(int *falling, int *moving, int *ground, float *eyeheight, t_engine *e);
+int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
+int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
 #endif

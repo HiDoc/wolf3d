@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/23 12:54:02 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/24 20:51:24 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,9 +60,16 @@ endif
 
 HED_NAME	= wolf.h \
 			  wolf_struct.h \
+			  doom_engine.h \
 			  wolf_define.h
 
-SRC_NAME 	= main.c
+SRC_NAME 	= main.c \
+			load.c \
+			loop.c \
+			move.c \
+			draw.c \
+			checking.c \
+			unload.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
