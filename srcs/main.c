@@ -132,6 +132,39 @@ static void				vline(t_line l)
 	}
 }
 
+
+/* 
+** Check where the hole is and whether we're bumping into a wall.
+*/
+int		is_bumping(const t_sector *sect, float eyeheight, unsigned s)
+{
+	float			hole_low;
+	float			hole_high;
+
+	if (sect->neighbors[s] < 0)
+	{
+		hole_low = 9e9;
+		hole_high = -9e9;
+	}
+	else
+	{
+		hole_low = max(sect->floor, sectors[sect->neighbors[s]].floor);
+		hole_high = min(sect->ceil, sectors[sect->neighbors[s]].ceil);
+	}
+	return (hole_high < player.where.z + HeadMargin
+			|| hole_low  > player.where.z - eyeheight + KneeHeight);
+}
+
+int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s)
+{
+	return (
+		IntersectBox(p.x, p.y, p.x + d.x, p.y + d.y,
+		vert[s].x, vert[s].y, vert[s + 1].x, vert[s + 1].y)
+		&& PointSide(p.x + d.x, p.y + d.y, vert[s].x,
+		vert[s].y, vert[s + 1].x, vert[s + 1].y) < 0
+	);
+}
+
 // MovePlayer(dx,dy): Moves the player by (dx,dy) in the map, and
 // also updates their anglesin/anglecos/sector properties properly.
 static void MovePlayer(float dx, float dy)
@@ -143,16 +176,15 @@ static void MovePlayer(float dx, float dy)
 	 * that is outside the sector and 0 or 1 for a point that is inside.
 	 */
 	const t_xy		p = {player.where.x, player.where.y};
+	const t_xy		d = {dx, dy};
 	const t_sector	*sect = &sectors[player.sector];
 	const t_xy		*vert = sect->vertex;
 	int				s;
 
-	s = -1; 
+	s = -1;
 	while (++s < (int)sect->npoints)
 	{
-		if (sect->neighbors[s] >= 0
-		&& IntersectBox(p.x,p.y, p.x+dx,p.y+dy, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y)
-		&& PointSide(p.x+dx, p.y+dy, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y) < 0)
+		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s))
 		{
 			player.sector = sect->neighbors[s];
 			break ;
@@ -162,6 +194,54 @@ static void MovePlayer(float dx, float dy)
 	player.where.y += dy;
 	player.anglesin = sinf(player.angle);
 	player.anglecos = cosf(player.angle);
+}
+
+void	bumping_score(t_xy *d, t_xy b)
+{
+	float			x2;
+	float			y2;
+
+	x2 = b.x * b.x;
+	y2 = b.y * b.y;
+	d->x = b.x * (d->x * b.x + b.y * d->y) / (x2 + y2);
+	d->y = b.y * (d->x * b.x + b.y * d->y) / (x2 + y2);
+}
+
+void	player_moving(int *moving, int *falling, float eyeheight, int set)
+{
+	t_xy			d;
+	int				s;
+	const t_xy		p = {player.where.x, player.where.y};
+	const t_sector	*sect = &sectors[player.sector];
+	const t_xy		*vert = sect->vertex;
+
+	s = -1;
+	d = set ? (t_xy){player.velocity.x, player.velocity.y} : (t_xy){0, 0};
+	/* Check if the player is about to cross one of the sector's edges */
+	while (set && ++s < (int)sect->npoints)
+	{
+		if (is_crossing(p, d, vert, s) && is_bumping(sect, eyeheight, s))
+		{
+			bumping_score(&d, (t_xy){
+				vert[s + 1].x - vert[s].x,
+				vert[s + 1].y - vert[s].y});
+			*moving = 0;
+		}
+	}
+	s = -1;
+	while (++s < (int)sect->npoints)
+	{
+		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s))
+		{
+			player.sector = sect->neighbors[s];
+			break ;
+		}
+	}
+	player.where.x += d.x;
+	player.where.y += d.y;
+	player.anglesin = sinf(player.angle);
+	player.anglecos = cosf(player.angle);
+	*falling = 1;
 }
 
 static void DrawScreen()
@@ -397,38 +477,6 @@ void	player_falling(int *falling, int *moving, int *ground, float *eyeheight)
 	}
 }
 
-void	player_moving(int *moving, int *falling, float eyeheight)
-{
-	const t_xy		p = {player.where.x, player.where.y};
-	t_xy			d;
-	const t_sector	*sect = &sectors[player.sector];
-	const t_xy		*vert = sect->vertex;
-
-	d = (t_xy){player.velocity.x, player.velocity.y};
-	/* Check if the player is about to cross one of the sector's edges */
-	for(unsigned s = 0; s < sect->npoints; ++s)
-		if(IntersectBox(p.x,p.y, p.x+d.x,p.y+d.y, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y)
-		&& PointSide(p.x+d.x, p.y+d.y, vert[s+0].x, vert[s+0].y, vert[s+1].x, vert[s+1].y) < 0)
-		{
-			/* Check where the hole is. */
-			float hole_low  = sect->neighbors[s] < 0 ?  9e9 : max(sect->floor, sectors[sect->neighbors[s]].floor);
-			float hole_high = sect->neighbors[s] < 0 ? -9e9 : min(sect->ceil,  sectors[sect->neighbors[s]].ceil );
-			/* Check whether we're bumping into a wall. */
-			if( hole_high < player.where.z + HeadMargin
-			|| hole_low  > player.where.z - eyeheight + KneeHeight)
-			{
-				/* Bumps into a wall! Slide along the wall. */
-				/* This formula is from Wikipedia article "vector projection". */
-				float xd = vert[s+1].x - vert[s+0].x;
-				float yd = vert[s+1].y - vert[s+0].y;
-				d.x = xd * (d.x * xd + yd * d.y) / (xd * xd + yd * yd);
-				d.y = yd * (d.x * xd + yd * d.y) / (xd * xd + yd * yd);
-				*moving = 0;
-			}
-		}
-	MovePlayer(d.x, d.y);
-	*falling = 1;
-}
 
 int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 {
@@ -460,7 +508,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 
 		/* Horizontal collision detection */
 		if (moving)
-			player_moving(&moving, &falling, eyeheight);
+			player_moving(&moving, &falling, eyeheight, 1);
 
 		SDL_Event ev;
 		while(SDL_PollEvent(&ev))
@@ -494,7 +542,9 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 		player.angle += x * 0.03f;
 		yaw          = clamp(yaw + y * 0.05f, -5, 5);
 		player.yaw   = yaw - player.velocity.z * 0.5f;
-		MovePlayer(0,0);
+		(void)MovePlayer;
+		// MovePlayer(0, 0);
+		player_moving(&moving, &falling, eyeheight, 0);
 
 		float move_vec[2] = {0.f, 0.f};
 		if(wsad[0]) { move_vec[0] += player.anglecos*0.2f; move_vec[1] += player.anglesin*0.2f; }
