@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/24 22:00:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 22:17:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_ylevel	t_ylevel;
 typedef struct	s_vision	t_vision;
 typedef struct	s_vertex	t_vertex;
 
-struct					s_vertex
+struct						s_vertex
 {
 	float		x1;
 	float		y1;
@@ -65,7 +65,7 @@ struct					s_vertex
 	float		y2;
 };
 
-struct					s_ylevel
+struct						s_ylevel
 {
 	float		yceil;
 	float		yfloor;
@@ -73,7 +73,7 @@ struct					s_ylevel
 	float		nyfloor;
 };
 
-struct					s_projec
+struct						s_projec
 {
 	int			y1a;
 	int			y1b;
@@ -140,13 +140,19 @@ struct						s_engine
 };
 
 void	LoadData(t_engine *e);
-void	UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e);
+void	UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
+		SDL_Window *window, t_engine *e);
 void	DrawScreen(t_engine *e);
-int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e);
-int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s, t_engine *e);
+int		is_bumping(const t_sector *sect, float eyeheight,
+		unsigned s, t_engine *e);
+int		is_crossing(const t_xy p, t_xy d, const t_xy *vert,
+		unsigned s, t_engine *e);
 void	bumping_score(t_xy *d, t_xy b);
+
 void	player_moving(t_vision *v, int set, t_engine *e);
 void	player_falling(t_vision *v, t_engine *e);
+void	player_collision(t_engine *e, t_vision *v);
+
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
 int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
 #endif

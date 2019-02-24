@@ -18,29 +18,37 @@ int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 	return (1);
 }
 
+/*
+** Mouse aiming !
+*/
+int		sdl_mouse(t_engine *e, t_vision *v)
+{
+	int				x;
+	int				y;
+
+	SDL_GetRelativeMouseState(&x,&y);
+	e->player.angle += x * 0.03f;
+	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
+	e->player.yaw = v->yaw - e->player.velocity.z * 0.5f;
+	player_moving(v, 0, e);
+	return (1);
+}
+
 int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 {
 	
 	int				wsad[4] = {0,0,0,0};
-    t_vision        v;
+	t_vision        v;
 
-    v = (t_vision) {0, 1, 0, 0, 0, 0};
+	v = (t_vision) {0, 1, 0, 0, 0, 0};
 	while (1)
 	{
 		sdl_render(texture, renderer, e);
-
-		/* Vertical collision detection */
-		v.eyeheight = v.ducking ? DuckHeight : EyeHeight;
-		v.ground = !v.falling;
-		if (v.falling)
-			player_falling(&v, e);
-
-		/* Horizontal collision detection */
-		if (v.moving)
-			player_moving(&v, 1, e);
-
+		player_collision(e, &v);
 		SDL_Event ev;
 		while(SDL_PollEvent(&ev))
+		{
+
 			switch(ev.type)
 			{
 				case SDL_KEYDOWN:
@@ -64,15 +72,9 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 					return (0); 
 					break;
 			}
+		}
 
-		/* mouse aiming */
-		int x,y;
-		SDL_GetRelativeMouseState(&x,&y);
-		e->player.angle += x * 0.03f;
-		v.yaw          = clamp(v.yaw + y * 0.05f, -5, 5);
-		e->player.yaw   = v.yaw - e->player.velocity.z * 0.5f;
-		player_moving(&v, 0, e);
-
+		sdl_mouse(e, &v);
 		float move_vec[2] = {0.f, 0.f};
 		if(wsad[0]) { move_vec[0] += e->player.anglecos * 0.2f; move_vec[1] += e->player.anglesin * 0.2f; }
 		if(wsad[1]) { move_vec[0] -= e->player.anglecos * 0.2f; move_vec[1] -= e->player.anglesin * 0.2f; }
@@ -84,8 +86,8 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 		e->player.velocity.x = e->player.velocity.x * (1-acceleration) + move_vec[0] * acceleration;
 		e->player.velocity.y = e->player.velocity.y * (1-acceleration) + move_vec[1] * acceleration;
 
-		if(pushing) v.moving = 1;
-
+		if (pushing)
+			v.moving = 1;
 		SDL_Delay(10);
 	}
 	return (0);
