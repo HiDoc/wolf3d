@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/23 14:07:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 15:14:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ typedef struct s_inventory		t_inventory;
 typedef struct s_container		t_container;
 typedef struct s_character		t_character;
 typedef struct s_bot			t_bot;
+typedef struct s_line			t_line;
+
+struct					s_line
+{
+	int					x;
+	int					y1;
+	int					y2;
+	int					top;
+	int					middle;
+	int					bottom;
+};
 
 struct					s_sdl
 {

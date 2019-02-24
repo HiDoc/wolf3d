@@ -81,7 +81,7 @@ static void			LoadData(void)
 	free(vert);
 }
 
-static void		UnloadData(void)
+static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window)
 {
 	unsigned	a;
 
@@ -100,31 +100,37 @@ static void		UnloadData(void)
 	free(sectors);
 	sectors = NULL;
 	NumSectors = 0;
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	texture = NULL;
+	window = NULL;
+	renderer = NULL;
 }
-
-
 
 /* vline: Draw a vertical line on screen, with a different color pixel in top & bottom */
 static void				vline(int x, int y1, int y2, int top, int middle, int bottom)
 {
+	t_line	l;
 	int		*pix;
 	int		y;
 
+	l = (t_line){x, y1, y2, top, middle, bottom};
 	pix	= (int *)surface->pixels;
-	y1 = clamp(y1, 0, H - 1);
-	y2 = clamp(y2, 0, H - 1);
-	if (y2 == y1)
-		pix[y1 * W + x] = middle;
-	else if (y2 > y1)
+	l.y1 = clamp(l.y1, 0, H - 1);
+	l.y2 = clamp(l.y2, 0, H - 1);
+	if (l.y2 == l.y1)
+		pix[l.y1 * W + l.x] = l.middle;
+	else if (l.y2 > l.y1)
 	{
-		pix[y1 * W + x] = top;
-		y = y1 + 1;
-		while (y < y2)
+		pix[l.y1 * W + l.x] = l.top;
+		y = l.y1 + 1;
+		while (y < l.y2)
 		{
-			pix[y * W + x] = middle;
+			pix[y * W + l.x] = l.middle;
 			y++;
 		}
-		pix[y2 * W + x] = bottom;
+		pix[l.y2 * W + l.x] = l.bottom;
 	}
 }
 
@@ -156,7 +162,7 @@ static void MovePlayer(float dx, float dy)
 	player.anglecos = cosf(player.angle);
 }
 
-static void DrawScreen(SDL_Texture *texture, SDL_Renderer *renderer)
+static void DrawScreen()
 {
 	enum { MaxQueue = 32 };  // maximum number of pending portal renders
 	t_item		queue[MaxQueue];
@@ -318,18 +324,7 @@ static void DrawScreen(SDL_Texture *texture, SDL_Renderer *renderer)
 					unsigned r = 0x010101 * (255 - z);
 					vline(x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0);
 				}
-				if (texture == NULL)
-					texture = SDL_CreateTextureFromSurface(renderer, surface);
-				else
-				{
-					SDL_DestroyTexture(texture);
-					texture = SDL_CreateTextureFromSurface(renderer, surface);
-				}
-					SDL_RenderClear(renderer);
-					SDL_RenderCopy(renderer, texture, NULL, NULL);
-					SDL_RenderPresent(renderer);
-					SDL_Delay(1);
-				}
+			}
 			/* Schedule the neighboring sector for rendering within the window formed by this wall. */
 			if (neighbor >= 0 && endx >= beginx && (head+MaxQueue + 1 - tail) % MaxQueue)
 			{
@@ -344,7 +339,7 @@ static void DrawScreen(SDL_Texture *texture, SDL_Renderer *renderer)
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer)
 {
 	SDL_LockSurface(surface);
-	DrawScreen(texture, renderer);
+	DrawScreen();
 	SDL_UnlockSurface(surface);
 	if (texture == NULL)
 		texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -521,10 +516,8 @@ int		main()
 	LoadData();
 	sdl_loop(texture, renderer);
 	
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	UnloadData();
+	
+	UnloadData(texture, renderer, window);
 	SDL_Quit();
 	return 0;
 }
