@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/24 15:14:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 16:59:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ typedef struct s_inventory		t_inventory;
 typedef struct s_container		t_container;
 typedef struct s_character		t_character;
 typedef struct s_bot			t_bot;
+/*
+** Store information to draw a line from y1 to y2 at position x.
+** Top, middle and bottom are colors to fill the line
+*/
 typedef struct s_line			t_line;
 
 struct					s_line

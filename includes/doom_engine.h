@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/24 15:56:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 17:55:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,61 @@ typedef struct	s_sector	t_sector;
 typedef struct	s_player	t_player;
 typedef struct	s_item		t_item;
 typedef struct	s_engine	t_engine;
+typedef struct	s_projec	t_projec;
+typedef struct	s_ylevel	t_ylevel;
+typedef struct	s_vertex	t_vertex;
+
+struct					s_vertex
+{
+	float		x1;
+	float		y1;
+	float		x2;
+	float		y2;
+};
+
+struct					s_ylevel
+{
+	float		yceil;
+	float		yfloor;
+	float		nyceil;
+	float		nyfloor;
+};
+
+struct					s_projec
+{
+	int			y1a;
+	int			y1b;
+	int			y2a;
+	int			y2b;
+};
 
 struct						s_item
 {
-	int				sectorno;
-	int				sx1;
-	int				sx2;
+	int			sectorno;
+	int			sx1;
+	int			sx2;
 };
 
 struct						s_xy
 {
-	float			x;
-	float			y;
+	float		x;
+	float		y;
 };
 
 struct						s_xyz
 {
-	float			x;
-	float			y;
-	float			z;
+	float		x;
+	float		y;
+	float		z;
 };
 
 struct						s_sector
 {
-	float			floor;
-	float			ceil;
-	t_xy			*vertex;	// Each vertex has an x and y coordinate
-	signed char		*neighbors;	// Each edge may have a correspond. neighbor. sector
-	unsigned		npoints;	// Number of vertex
+	float		floor;
+	float		ceil;
+	t_xy		*vertex;	// Each vertex has an x and y coordinate
+	signed char	*neighbors;	// Each edge may have a correspond. neighbor. sector
+	unsigned	npoints;	// Number of vertex
 };
 
 struct						s_player
@@ -90,14 +117,14 @@ struct						s_player
 	float		anglesin;
 	float		anglecos;
 	float		yaw;		// Looking towards (and sin() and cos() thereof)
-	unsigned sector;
+	unsigned 	sector;
 };
 
 struct						s_engine
 {
-	SDL_Surface		*surface;
-	t_sector		*sectors;
-	unsigned		NumSectors;
-	t_player		player;
+	SDL_Surface	*surface;
+	t_sector	*sectors;
+	unsigned	NumSectors;
+	t_player	player;
 };
 #endif
