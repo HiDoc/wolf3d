@@ -1,13 +1,12 @@
 #include "wolf.h"
 
-/* Sectors: Floor and ceiling height; list of edge vertices and neighbors */
-static t_sector		*sectors = NULL;
+/* e->sectors: Floor and ceiling height; list of edge vertices and neighbors */
 static unsigned		NumSectors = 0;
 
 /* Player: location */
 static t_player		player;
 
-static void			LoadData(void)
+static void			LoadData(t_engine *e)
 {
 	FILE		*fp;
 	char	Buf[256];
@@ -41,8 +40,8 @@ static void			LoadData(void)
 				}
 				break;
 			case 's': // sector
-				sectors = realloc(sectors, ++NumSectors * sizeof(*sectors));
-				t_sector *sect = &sectors[NumSectors-1];
+				e->sectors = realloc(e->sectors, ++NumSectors * sizeof(*e->sectors));
+				t_sector *sect = &e->sectors[NumSectors-1];
 				int* num = NULL;
 				sscanf(ptr += n, "%f%f%n", &sect->floor,&sect->ceil, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
@@ -73,31 +72,31 @@ static void			LoadData(void)
 				float angle;
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
 				player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
-				player.where.z = sectors[player.sector].floor + EyeHeight;
+				player.where.z = e->sectors[player.sector].floor + EyeHeight;
 		}
 	}
 	fclose(fp);
 	free(vert);
 }
 
-static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window)
+static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e)
 {
 	unsigned	a;
 
 	a = 0;
 	while (a < NumSectors)
 	{
-		free(sectors[a].vertex);
+		free(e->sectors[a].vertex);
 		a++;
 	}
 	a = 0;
 	while (a < NumSectors)
 	{
-		free(sectors[a].neighbors);
+		free(e->sectors[a].neighbors);
 		a++;
 	}
-	free(sectors);
-	sectors = NULL;
+	free(e->sectors);
+	e->sectors = NULL;
 	NumSectors = 0;
 	SDL_DestroyTexture(texture);
 	SDL_DestroyRenderer(renderer);
@@ -135,7 +134,7 @@ static void				vline(t_line l, t_engine *e)
 /* 
 ** Check where the hole is and whether we're bumping into a wall.
 */
-int		is_bumping(const t_sector *sect, float eyeheight, unsigned s)
+int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e)
 {
 	float			hole_low;
 	float			hole_high;
@@ -147,15 +146,16 @@ int		is_bumping(const t_sector *sect, float eyeheight, unsigned s)
 	}
 	else
 	{
-		hole_low = max(sect->floor, sectors[sect->neighbors[s]].floor);
-		hole_high = min(sect->ceil, sectors[sect->neighbors[s]].ceil);
+		hole_low = max(sect->floor, e->sectors[sect->neighbors[s]].floor);
+		hole_high = min(sect->ceil, e->sectors[sect->neighbors[s]].ceil);
 	}
 	return (hole_high < player.where.z + HeadMargin
 			|| hole_low  > player.where.z - eyeheight + KneeHeight);
 }
 
-int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s)
+int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s, t_engine *e)
 {
+	(void)e;
 	return (
 		IntersectBox(p.x, p.y, p.x + d.x, p.y + d.y,
 		vert[s].x, vert[s].y, vert[s + 1].x, vert[s + 1].y)
@@ -175,12 +175,12 @@ void	bumping_score(t_xy *d, t_xy b)
 	d->y = b.y * (d->x * b.x + b.y * d->y) / (x2 + y2);
 }
 
-void	player_moving(int *moving, int *falling, float eyeheight, int set)
+void	player_moving(int *moving, int *falling, float eyeheight, int set, t_engine *e)
 {
 	t_xy			d;
 	int				s;
 	const t_xy		p = {player.where.x, player.where.y};
-	const t_sector	*sect = &sectors[player.sector];
+	const t_sector	*sect = &e->sectors[player.sector];
 	const t_xy		*vert = sect->vertex;
 
 	s = -1;
@@ -188,7 +188,7 @@ void	player_moving(int *moving, int *falling, float eyeheight, int set)
 	/* Check if the player is about to cross one of the sector's edges */
 	while (set && ++s < (int)sect->npoints)
 	{
-		if (is_crossing(p, d, vert, s) && is_bumping(sect, eyeheight, s))
+		if (is_crossing(p, d, vert, s, e) && is_bumping(sect, eyeheight, s, e))
 		{
 			bumping_score(&d, (t_xy){
 				vert[s + 1].x - vert[s].x,
@@ -199,7 +199,7 @@ void	player_moving(int *moving, int *falling, float eyeheight, int set)
 	s = -1;
 	while (++s < (int)sect->npoints)
 	{
-		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s))
+		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s, e))
 		{
 			player.sector = sect->neighbors[s];
 			break ;
@@ -245,7 +245,7 @@ static void DrawScreen(t_engine *e)
 		if (renderedsectors[now.sectorno] & 0x21)
 			continue ; // Odd = still rendering, 0x20 = give up
 		++renderedsectors[now.sectorno];
-		sect = &sectors[now.sectorno];
+		sect = &e->sectors[now.sectorno];
 		/* Render each wall of this sector that is facing towards player. */
 		int s = -1;
 		while (++s < (int)sect->npoints)
@@ -322,15 +322,15 @@ static void DrawScreen(t_engine *e)
 			float yceil  = sect->ceil  - player.where.z;
 			float yfloor = sect->floor - player.where.z;
 
-			/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
+			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
 			int neighbor = sect->neighbors[s];
 			float nyceil = 0;
 			float nyfloor = 0;
 
 			if (neighbor >= 0) // Is another sector showing through this portal?
 			{
-				nyceil  = sectors[neighbor].ceil  - player.where.z;
-				nyfloor = sectors[neighbor].floor - player.where.z;
+				nyceil  = e->sectors[neighbor].ceil  - player.where.z;
+				nyfloor = e->sectors[neighbor].floor - player.where.z;
 			}
 
 			/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
@@ -418,21 +418,21 @@ int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 	return (1);
 }
 
-void	player_falling(int *falling, int *moving, int *ground, float *eyeheight)
+void	player_falling(int *falling, int *moving, int *ground, float *eyeheight, t_engine *e)
 {
 	float nextz;
 
 	player.velocity.z -= 0.05f; /* Add gravity */
 	nextz = player.where.z + player.velocity.z;
-	if (player.velocity.z < 0 && nextz < sectors[player.sector].floor + *eyeheight) // When going down
+	if (player.velocity.z < 0 && nextz < e->sectors[player.sector].floor + *eyeheight) // When going down
 	{
 		/* Fix to ground */
-		player.where.z    = sectors[player.sector].floor + *eyeheight;
+		player.where.z    = e->sectors[player.sector].floor + *eyeheight;
 		player.velocity.z = 0;
 		*falling = 0;
 		*ground  = 1;
 	}
-	else if (player.velocity.z > 0 && nextz > sectors[player.sector].ceil) // When going up
+	else if (player.velocity.z > 0 && nextz > e->sectors[player.sector].ceil) // When going up
 	{
 		/* Prevent jumping above ceiling */
 		player.velocity.z = 0;
@@ -472,11 +472,11 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 		eyeheight = ducking ? DuckHeight : EyeHeight;
 		ground = !falling;
 		if (falling)
-			player_falling(&falling, &moving, &ground, &eyeheight);
+			player_falling(&falling, &moving, &ground, &eyeheight, e);
 
 		/* Horizontal collision detection */
 		if (moving)
-			player_moving(&moving, &falling, eyeheight, 1);
+			player_moving(&moving, &falling, eyeheight, 1, e);
 
 		SDL_Event ev;
 		while(SDL_PollEvent(&ev))
@@ -510,7 +510,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 		player.angle += x * 0.03f;
 		yaw          = clamp(yaw + y * 0.05f, -5, 5);
 		player.yaw   = yaw - player.velocity.z * 0.5f;
-		player_moving(&moving, &falling, eyeheight, 0);
+		player_moving(&moving, &falling, eyeheight, 0, e);
 
 		float move_vec[2] = {0.f, 0.f};
 		if(wsad[0]) { move_vec[0] += player.anglecos*0.2f; move_vec[1] += player.anglesin*0.2f; }
@@ -548,11 +548,11 @@ int		main()
 	e.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
-	LoadData();
+	LoadData(&e);
 	sdl_loop(texture, renderer, &e);
 	
 	
-	UnloadData(texture, renderer, window);
+	UnloadData(texture, renderer, window, &e);
 	SDL_Quit();
 	return 0;
 }
