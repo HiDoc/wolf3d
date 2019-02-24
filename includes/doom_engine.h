@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/24 14:05:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/24 15:56:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_xyz		t_xyz;
 typedef struct	s_sector	t_sector;
 typedef struct	s_player	t_player;
 typedef struct	s_item		t_item;
-
+typedef struct	s_engine	t_engine;
 
 struct						s_item
 {
@@ -91,5 +91,13 @@ struct						s_player
 	float		anglecos;
 	float		yaw;		// Looking towards (and sin() and cos() thereof)
 	unsigned sector;
+};
+
+struct						s_engine
+{
+	SDL_Surface		*surface;
+	t_sector		*sectors;
+	unsigned		NumSectors;
+	t_player		player;
 };
 #endif

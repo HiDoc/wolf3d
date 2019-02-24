@@ -109,13 +109,11 @@ static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window
 }
 
 /* vline: Draw a vertical line on screen, with a different color pixel in top & bottom */
-static void				vline(int x, int y1, int y2, int top, int middle, int bottom)
+static void				vline(t_line l)
 {
-	t_line	l;
 	int		*pix;
 	int		y;
 
-	l = (t_line){x, y1, y2, top, middle, bottom};
 	pix	= (int *)surface->pixels;
 	l.y1 = clamp(l.y1, 0, H - 1);
 	l.y2 = clamp(l.y2, 0, H - 1);
@@ -295,10 +293,10 @@ static void DrawScreen()
 				int yb = (x - x1) * (y2b-y1b) / (x2-x1) + y1b, cyb = clamp(yb, ytop[x],ybottom[x]); // bottom
 
 				/* Render ceiling: everything above this sector's ceiling height. */
-				vline(x, ytop[x], cya-1, 0x111111 ,0x222222,0x111111);
+				vline((t_line){x, ytop[x], cya-1, 0x111111 , 0x222222, 0x111111});
 
 				/* Render floor: everything below this sector's floor height. */
-				vline(x, cyb+1, ybottom[x], 0x0000FF,0x0000AA,0x0000FF);
+				vline((t_line){x, cyb+1, ybottom[x], 0x0000FF,0x0000AA,0x0000FF});
 
 				/* Is there another sector behind this edge? */
 				if (neighbor >= 0)
@@ -311,18 +309,18 @@ static void DrawScreen()
 
 					/* If our ceiling is higher than their ceiling, render upper wall */
 					unsigned r1 = 0x010101 * (255-z), r2 = 0x040007 * (31-z/8);
-					vline(x, cya, cnya-1, 0, x==x1||x==x2 ? 0 : r1, 0); // Between our and their ceiling
+					vline((t_line){x, cya, cnya-1, 0, x==x1||x==x2 ? 0 : r1, 0}); // Between our and their ceiling
 					ytop[x] = clamp(max(cya, cnya), ytop[x], H-1);   // Shrink the remaining window below these ceilings
 
 					/* If our floor is lower than their floor, render bottom wall */
-					vline(x, cnyb + 1, cyb, 0, x==x1 || x==x2 ? 0 : r2, 0); // Between their and our floor
+					vline((t_line){x, cnyb + 1, cyb, 0, x==x1 || x==x2 ? 0 : r2, 0}); // Between their and our floor
 					ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]); // Shrink the remaining window above these floors
 				}
 				else
 				{
 					/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 					unsigned r = 0x010101 * (255 - z);
-					vline(x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0);
+					vline((t_line){x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0});
 				}
 			}
 			/* Schedule the neighboring sector for rendering within the window formed by this wall. */
@@ -503,6 +501,7 @@ int		main()
 	SDL_Window      *window;
 	SDL_Texture     *texture;
 	SDL_Renderer    *renderer;
+	t_engine		e;
 
 	window = SDL_CreateWindow("Doom nukem",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -510,6 +509,9 @@ int		main()
 		W, H, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	texture = NULL;
+	e.NumSectors = 0;
+	e.sectors = NULL;
+	e.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
