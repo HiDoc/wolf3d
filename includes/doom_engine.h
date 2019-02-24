@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/23 14:16:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/02/24 14:05:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ typedef struct	s_xy		t_xy;
 typedef struct	s_xyz		t_xyz;
 typedef struct	s_sector	t_sector;
 typedef struct	s_player	t_player;
+typedef struct	s_item		t_item;
+
+
+struct						s_item
+{
+	int				sectorno;
+	int				sx1;
+	int				sx2;
+};
 
 struct						s_xy
 {
