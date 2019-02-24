@@ -2,7 +2,6 @@
 
 /* Sectors: Floor and ceiling height; list of edge vertices and neighbors */
 static t_sector		*sectors = NULL;
-static SDL_Surface*	surface = NULL;
 static unsigned		NumSectors = 0;
 
 /* Player: location */
@@ -109,12 +108,12 @@ static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window
 }
 
 /* vline: Draw a vertical line on screen, with a different color pixel in top & bottom */
-static void				vline(t_line l)
+static void				vline(t_line l, t_engine *e)
 {
 	int		*pix;
 	int		y;
 
-	pix	= (int *)surface->pixels;
+	pix	= (int *)e->surface->pixels;
 	l.y1 = clamp(l.y1, 0, H - 1);
 	l.y2 = clamp(l.y2, 0, H - 1);
 	if (l.y2 == l.y1)
@@ -165,37 +164,6 @@ int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s)
 	);
 }
 
-// MovePlayer(dx,dy): Moves the player by (dx,dy) in the map, and
-// also updates their anglesin/anglecos/sector properties properly.
-static void MovePlayer(float dx, float dy)
-{
-	/* Check if this movement crosses one of this sector's edges
-	 * that have a neighboring sector on the other side.
-	 * Because the edge vertices of each sector are defined in
-	 * clockwise order, PointSide will always return -1 for a point
-	 * that is outside the sector and 0 or 1 for a point that is inside.
-	 */
-	const t_xy		p = {player.where.x, player.where.y};
-	const t_xy		d = {dx, dy};
-	const t_sector	*sect = &sectors[player.sector];
-	const t_xy		*vert = sect->vertex;
-	int				s;
-
-	s = -1;
-	while (++s < (int)sect->npoints)
-	{
-		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s))
-		{
-			player.sector = sect->neighbors[s];
-			break ;
-		}
-	}
-	player.where.x += dx;
-	player.where.y += dy;
-	player.anglesin = sinf(player.angle);
-	player.anglecos = cosf(player.angle);
-}
-
 void	bumping_score(t_xy *d, t_xy b)
 {
 	float			x2;
@@ -244,7 +212,7 @@ void	player_moving(int *moving, int *falling, float eyeheight, int set)
 	*falling = 1;
 }
 
-static void DrawScreen()
+static void DrawScreen(t_engine *e)
 {
 	enum { MaxQueue = 32 };  // maximum number of pending portal renders
 	t_item		queue[MaxQueue];
@@ -391,10 +359,10 @@ static void DrawScreen()
 				int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 
 				/* Render ceiling: everything above this sector's ceiling height. */
-				vline((t_line){x, ytop[x], cya - 1, 0x111111 , 0x222222, 0x111111});
+				vline((t_line){x, ytop[x], cya - 1, 0x111111 , 0x222222, 0x111111}, e);
 
 				/* Render floor: everything below this sector's floor height. */
-				vline((t_line){x, cyb + 1, ybottom[x], 0x0000FF,0x0000AA,0x0000FF});
+				vline((t_line){x, cyb + 1, ybottom[x], 0x0000FF,0x0000AA,0x0000FF}, e);
 
 				/* Is there another sector behind this edge? */
 				if (neighbor >= 0)
@@ -407,18 +375,18 @@ static void DrawScreen()
 
 					/* If our ceiling is higher than their ceiling, render upper wall */
 					unsigned r1 = 0x010101 * (255-z), r2 = 0x040007 * (31-z/8);
-					vline((t_line){x, cya, cnya-1, 0, x==x1 || x==x2 ? 0 : r1, 0}); // Between our and their ceiling
+					vline((t_line){x, cya, cnya-1, 0, x==x1 || x==x2 ? 0 : r1, 0}, e); // Between our and their ceiling
 					ytop[x] = clamp(max(cya, cnya), ytop[x], H - 1);   // Shrink the remaining window below these ceilings
 
 					/* If our floor is lower than their floor, render bottom wall */
-					vline((t_line){x, cnyb + 1, cyb, 0, x==x1 || x==x2 ? 0 : r2, 0}); // Between their and our floor
+					vline((t_line){x, cnyb + 1, cyb, 0, x==x1 || x==x2 ? 0 : r2, 0}, e); // Between their and our floor
 					ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]); // Shrink the remaining window above these floors
 				}
 				else
 				{
 					/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 					unsigned r = 0x010101 * (255 - z);
-					vline((t_line){x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0});
+					vline((t_line){x, cya, cyb, 0, x==x1 || x==x2 ? 0 : r, 0}, e);
 				}
 			}
 			/* Schedule the neighboring sector for rendering within the window formed by this wall. */
@@ -432,17 +400,17 @@ static void DrawScreen()
 	}
 }
 
-int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer)
+int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 {
-	SDL_LockSurface(surface);
-	DrawScreen();
-	SDL_UnlockSurface(surface);
+	SDL_LockSurface(e->surface);
+	DrawScreen(e);
+	SDL_UnlockSurface(e->surface);
 	if (texture == NULL)
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
 	else
 	{
 		SDL_DestroyTexture(texture);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
 	}
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -478,7 +446,7 @@ void	player_falling(int *falling, int *moving, int *ground, float *eyeheight)
 }
 
 
-int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
+int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 {
 	
 	int				wsad[4] = {0,0,0,0};
@@ -498,7 +466,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 
 	while (1)
 	{
-		sdl_render(texture, renderer);
+		sdl_render(texture, renderer, e);
 
 		/* Vertical collision detection */
 		eyeheight = ducking ? DuckHeight : EyeHeight;
@@ -542,8 +510,6 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer)
 		player.angle += x * 0.03f;
 		yaw          = clamp(yaw + y * 0.05f, -5, 5);
 		player.yaw   = yaw - player.velocity.z * 0.5f;
-		(void)MovePlayer;
-		// MovePlayer(0, 0);
 		player_moving(&moving, &falling, eyeheight, 0);
 
 		float move_vec[2] = {0.f, 0.f};
@@ -580,11 +546,10 @@ int		main()
 	e.NumSectors = 0;
 	e.sectors = NULL;
 	e.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
-	surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	LoadData();
-	sdl_loop(texture, renderer);
+	sdl_loop(texture, renderer, &e);
 	
 	
 	UnloadData(texture, renderer, window);
