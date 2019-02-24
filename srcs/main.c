@@ -1,10 +1,6 @@
 #include "wolf.h"
 
-/* e->sectors: Floor and ceiling height; list of edge vertices and neighbors */
-static unsigned		NumSectors = 0;
-
 /* Player: location */
-static t_player		player;
 
 static void			LoadData(t_engine *e)
 {
@@ -40,8 +36,8 @@ static void			LoadData(t_engine *e)
 				}
 				break;
 			case 's': // sector
-				e->sectors = realloc(e->sectors, ++NumSectors * sizeof(*e->sectors));
-				t_sector *sect = &e->sectors[NumSectors-1];
+				e->sectors = realloc(e->sectors, ++e->NumSectors * sizeof(*e->sectors));
+				t_sector *sect = &e->sectors[e->NumSectors-1];
 				int* num = NULL;
 				sscanf(ptr += n, "%f%f%n", &sect->floor,&sect->ceil, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
@@ -52,27 +48,23 @@ static void			LoadData(t_engine *e)
 				sect->npoints   = m /= 2;
 				sect->neighbors = malloc(m * sizeof(*sect->neighbors));
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
-				printf("Neightbors\n");
+				
 				for (n=0; n<m; ++n)
 				{
-					printf("%d: [%d]", n, num[m + n]);
 					sect->neighbors[n] = num[m + n];
 				}
-				printf("\n\n Vertex:");
 				for(n=0; n<m; ++n)
 				{
-					printf("[%d]", num[n]);
 					sect->vertex[n+1]  = vert[num[n]]; // TODO: Range checking
 				}
-				printf("\n\n");
 				sect->vertex[0] = sect->vertex[m]; // Ensure the vertexes form a loop
 				free(num);
 				break;
 			case 'p':; // player
 				float angle;
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-				player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
-				player.where.z = e->sectors[player.sector].floor + EyeHeight;
+				e->player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
+				e->player.where.z = e->sectors[e->player.sector].floor + EyeHeight;
 		}
 	}
 	fclose(fp);
@@ -84,20 +76,20 @@ static void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window
 	unsigned	a;
 
 	a = 0;
-	while (a < NumSectors)
+	while (a < e->NumSectors)
 	{
 		free(e->sectors[a].vertex);
 		a++;
 	}
 	a = 0;
-	while (a < NumSectors)
+	while (a < e->NumSectors)
 	{
 		free(e->sectors[a].neighbors);
 		a++;
 	}
 	free(e->sectors);
 	e->sectors = NULL;
-	NumSectors = 0;
+	e->NumSectors = 0;
 	SDL_DestroyTexture(texture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -149,8 +141,8 @@ int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e)
 		hole_low = max(sect->floor, e->sectors[sect->neighbors[s]].floor);
 		hole_high = min(sect->ceil, e->sectors[sect->neighbors[s]].ceil);
 	}
-	return (hole_high < player.where.z + HeadMargin
-			|| hole_low  > player.where.z - eyeheight + KneeHeight);
+	return (hole_high < e->player.where.z + HeadMargin
+			|| hole_low  > e->player.where.z - eyeheight + KneeHeight);
 }
 
 int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s, t_engine *e)
@@ -179,12 +171,12 @@ void	player_moving(int *moving, int *falling, float eyeheight, int set, t_engine
 {
 	t_xy			d;
 	int				s;
-	const t_xy		p = {player.where.x, player.where.y};
-	const t_sector	*sect = &e->sectors[player.sector];
+	const t_xy		p = {e->player.where.x, e->player.where.y};
+	const t_sector	*sect = &e->sectors[e->player.sector];
 	const t_xy		*vert = sect->vertex;
 
 	s = -1;
-	d = set ? (t_xy){player.velocity.x, player.velocity.y} : (t_xy){0, 0};
+	d = set ? (t_xy){e->player.velocity.x, e->player.velocity.y} : (t_xy){0, 0};
 	/* Check if the player is about to cross one of the sector's edges */
 	while (set && ++s < (int)sect->npoints)
 	{
@@ -201,14 +193,14 @@ void	player_moving(int *moving, int *falling, float eyeheight, int set, t_engine
 	{
 		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s, e))
 		{
-			player.sector = sect->neighbors[s];
+			e->player.sector = sect->neighbors[s];
 			break ;
 		}
 	}
-	player.where.x += d.x;
-	player.where.y += d.y;
-	player.anglesin = sinf(player.angle);
-	player.anglecos = cosf(player.angle);
+	e->player.where.x += d.x;
+	e->player.where.y += d.y;
+	e->player.anglesin = sinf(e->player.angle);
+	e->player.anglecos = cosf(e->player.angle);
 	*falling = 1;
 }
 
@@ -220,18 +212,18 @@ static void DrawScreen(t_engine *e)
 	t_item		*tail;
 	int			ytop[W];
 	int			ybottom[W];
-	int			renderedsectors[NumSectors];
+	int			renderedsectors[e->NumSectors];
 	t_item		now;
 	t_sector	*sect;
 
 	ft_memset(ybottom, (H - 1), sizeof(int) * W);
 	ft_bzero(ytop, sizeof(int) * W);
-	ft_bzero(renderedsectors, sizeof(int) * NumSectors);
+	ft_bzero(renderedsectors, sizeof(int) * e->NumSectors);
 	head = queue;
 	tail = queue;
 
 	/* Begin whole-screen rendering from where the player is. */
-	*head = (t_item) {player.sector, 0, W - 1};
+	*head = (t_item) {e->player.sector, 0, W - 1};
 	if (++head == queue + MaxQueue)
 		head = queue;
 
@@ -252,14 +244,14 @@ static void DrawScreen(t_engine *e)
 		{
 			/* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
 			t_vertex v = (t_vertex){
-				sect->vertex[s + 0].x - player.where.x,
-				sect->vertex[s + 0].y - player.where.y,
-				sect->vertex[s + 1].x - player.where.x,
-				sect->vertex[s + 1].y - player.where.y
+				sect->vertex[s + 0].x - e->player.where.x,
+				sect->vertex[s + 0].y - e->player.where.y,
+				sect->vertex[s + 1].x - e->player.where.x,
+				sect->vertex[s + 1].y - e->player.where.y
 			};
 			/* Rotate them around the player's view */
-			float pcos = player.anglecos;
-			float psin = player.anglesin;
+			float pcos = e->player.anglecos;
+			float psin = e->player.anglesin;
 			t_vertex t = (t_vertex){
 				v.x1 * psin - v.y1 * pcos,
 				v.x1 * pcos + v.y1 * psin,
@@ -319,8 +311,8 @@ static void DrawScreen(t_engine *e)
 				continue ;
 
 			/* Acquire the floor and ceiling heights, relative to where the player's view is */
-			float yceil  = sect->ceil  - player.where.z;
-			float yfloor = sect->floor - player.where.z;
+			float yceil  = sect->ceil  - e->player.where.z;
+			float yfloor = sect->floor - e->player.where.z;
 
 			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
 			int neighbor = sect->neighbors[s];
@@ -329,12 +321,12 @@ static void DrawScreen(t_engine *e)
 
 			if (neighbor >= 0) // Is another sector showing through this portal?
 			{
-				nyceil  = e->sectors[neighbor].ceil  - player.where.z;
-				nyfloor = e->sectors[neighbor].floor - player.where.z;
+				nyceil  = e->sectors[neighbor].ceil  - e->player.where.z;
+				nyfloor = e->sectors[neighbor].floor - e->player.where.z;
 			}
 
 			/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-			#define Yaw(y,z) (y + z * player.yaw)
+			#define Yaw(y,z) (y + z * e->player.yaw)
 			int y1a = H/2 - (int)(Yaw(yceil, t.y1) * scale.y1);
 			int y1b = H/2 - (int)(Yaw(yfloor, t.y1) * scale.y1);
 			int y2a = H/2 - (int)(Yaw(yceil, t.y2) * scale.y2);
@@ -422,25 +414,25 @@ void	player_falling(int *falling, int *moving, int *ground, float *eyeheight, t_
 {
 	float nextz;
 
-	player.velocity.z -= 0.05f; /* Add gravity */
-	nextz = player.where.z + player.velocity.z;
-	if (player.velocity.z < 0 && nextz < e->sectors[player.sector].floor + *eyeheight) // When going down
+	e->player.velocity.z -= 0.05f; /* Add gravity */
+	nextz = e->player.where.z + e->player.velocity.z;
+	if (e->player.velocity.z < 0 && nextz < e->sectors[e->player.sector].floor + *eyeheight) // When going down
 	{
 		/* Fix to ground */
-		player.where.z    = e->sectors[player.sector].floor + *eyeheight;
-		player.velocity.z = 0;
+		e->player.where.z    = e->sectors[e->player.sector].floor + *eyeheight;
+		e->player.velocity.z = 0;
 		*falling = 0;
 		*ground  = 1;
 	}
-	else if (player.velocity.z > 0 && nextz > e->sectors[player.sector].ceil) // When going up
+	else if (e->player.velocity.z > 0 && nextz > e->sectors[e->player.sector].ceil) // When going up
 	{
 		/* Prevent jumping above ceiling */
-		player.velocity.z = 0;
+		e->player.velocity.z = 0;
 		*falling = 1;
 	}
 	if (*falling)
 	{
-		player.where.z += player.velocity.z;
+		e->player.where.z += e->player.velocity.z;
 		*moving = 1;
 	}
 }
@@ -492,7 +484,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 						case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
 						case 'q': return (0);
 						case ' ': /* jump */
-							if (ground) { player.velocity.z += 0.5; falling = 1; }
+							if (ground) { e->player.velocity.z += 0.5; falling = 1; }
 							break;
 						case SDLK_LCTRL: /* duck */
 						case SDLK_RCTRL: ducking = ev.type==SDL_KEYDOWN; falling=1; break;
@@ -507,21 +499,21 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 		/* mouse aiming */
 		int x,y;
 		SDL_GetRelativeMouseState(&x,&y);
-		player.angle += x * 0.03f;
+		e->player.angle += x * 0.03f;
 		yaw          = clamp(yaw + y * 0.05f, -5, 5);
-		player.yaw   = yaw - player.velocity.z * 0.5f;
+		e->player.yaw   = yaw - e->player.velocity.z * 0.5f;
 		player_moving(&moving, &falling, eyeheight, 0, e);
 
 		float move_vec[2] = {0.f, 0.f};
-		if(wsad[0]) { move_vec[0] += player.anglecos*0.2f; move_vec[1] += player.anglesin*0.2f; }
-		if(wsad[1]) { move_vec[0] -= player.anglecos*0.2f; move_vec[1] -= player.anglesin*0.2f; }
-		if(wsad[2]) { move_vec[0] += player.anglesin*0.2f; move_vec[1] -= player.anglecos*0.2f; }
-		if(wsad[3]) { move_vec[0] -= player.anglesin*0.2f; move_vec[1] += player.anglecos*0.2f; }
+		if(wsad[0]) { move_vec[0] += e->player.anglecos*0.2f; move_vec[1] += e->player.anglesin*0.2f; }
+		if(wsad[1]) { move_vec[0] -= e->player.anglecos*0.2f; move_vec[1] -= e->player.anglesin*0.2f; }
+		if(wsad[2]) { move_vec[0] += e->player.anglesin*0.2f; move_vec[1] -= e->player.anglecos*0.2f; }
+		if(wsad[3]) { move_vec[0] -= e->player.anglesin*0.2f; move_vec[1] += e->player.anglecos*0.2f; }
 		int pushing = wsad[0] || wsad[1] || wsad[2] || wsad[3];
 		float acceleration = pushing ? 0.4 : 0.2;
 
-		player.velocity.x = player.velocity.x * (1-acceleration) + move_vec[0] * acceleration;
-		player.velocity.y = player.velocity.y * (1-acceleration) + move_vec[1] * acceleration;
+		e->player.velocity.x = e->player.velocity.x * (1-acceleration) + move_vec[0] * acceleration;
+		e->player.velocity.y = e->player.velocity.y * (1-acceleration) + move_vec[1] * acceleration;
 
 		if(pushing) moving = 1;
 
