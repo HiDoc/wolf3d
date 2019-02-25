@@ -24,45 +24,8 @@ static void				vline(t_line l, t_engine *e)
 	}
 }
 
-/* If it's partially behind the player, clip it against player's view frustrum */
-void	clip_view(t_edge *t)
-{
-	const float nearz = 1e-4f;
-	const float farz = 5;
-	const float nearside = 1e-5f;
-	const float farside = 20.f;
-	// Find an intersection between the wall and the approximate edges of player's view
-	t_xy i1 = Intersect(t->x1,t->y1,t->x2,t->y2, -nearside,nearz, -farside,farz);
-	t_xy i2 = Intersect(t->x1,t->y1,t->x2,t->y2,  nearside,nearz,  farside,farz);
-	if (t->y1 < nearz)
-	{
-		if (i1.y > 0)
-		{
-			t->x1 = i1.x;
-			t->y1 = i1.y;
-		}
-		else
-		{
-			t->x1 = i2.x;
-			t->y1 = i2.y;
-		}
-	}
-	if (t->y2 < nearz)
-	{
-		if (i1.y > 0)
-		{
-			t->x2 = i1.x;
-			t->y2 = i1.y;
-		}
-		else
-		{
-			t->x2 = i2.x;
-			t->y2 = i2.y;
-		}
-	}
-}
-
-void	render_wall(t_edge t, t_projec p, t_projec n, int x, int x1, int x2, int *ytop, int *ybottom, t_engine *e, int neighbor)
+void	render_wall(t_edge t, t_projec p, t_projec n, int x,
+		int x1, int x2, int *ytop, int *ybottom, t_engine *e, int neighbor)
 {
 	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 	int z = ((x - x1) * (t.y2 - t.y1) / (x2 - x1) + t.y1) * 8;
@@ -104,95 +67,87 @@ void	render_wall(t_edge t, t_projec p, t_projec n, int x, int x1, int x2, int *y
 	}
 }
 
-void    DrawScreen(t_engine *e)
+int		render_sector_edges(t_engine *e, t_queue *q, int s)
 {
-	enum { MaxQueue = 32 };  // maximum number of pending portal renders
-	t_item		queue[MaxQueue];
-	t_item		*head;
-	t_item		*tail;
-	t_item		now;
-	int			ytop[W];
-	int			ybottom[W];
-	int			renderedsectors[e->NumSectors];
-	t_sector	*sect;
+	/* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
+	t_edge v = current_edge(e, q->sect, s);
 
-	ft_memset(ybottom, (H - 1), sizeof(int) * W);
-	ft_bzero(ytop, sizeof(int) * W);
-	ft_bzero(renderedsectors, sizeof(int) * e->NumSectors);
-	head = queue;
-	tail = queue;
+	/* Rotate them around the player's view */
+	t_edge t = rotation_edge(e, v);
 
+	/* Is the wall at least partially in front of the player? */
+	if (t.y1 <= 0 && t.y2 <= 0)
+		return (0);
+
+	/* If it's partially behind the player, clip it against player's view frustrum */
+	if (t.y1 <= 0 || t.y2 <= 0)
+		clip_view(&t);
+
+	/* Do perspective transformation */
+	t_edge scale = scale_edge(t);
+	int x1 = W/2 - (int)(t.x1 * scale.x1);
+	int x2 = W/2 - (int)(t.x2 * scale.x2);
+
+	/* Verify if transformation is visible */
+	if (x1 >= x2 || x2 < q->now.sx1 || x1 > q->now.sx2)
+		return (0);
+
+	/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
+	int neighbor = q->sect->neighbors[s];
+
+	/* Acquire the floor and ceiling heights, relative to where the player's view is */
+	t_ylevel levels = get_ylevels(e, q->sect, neighbor);
+
+	/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
+	t_projec p = curr_projection(e->player.yaw, levels, t, scale);
+	t_projec n = next_projection(e->player.yaw, levels, t, scale);
+
+	/* Render the wall. */
+	int beginx = max(x1, q->now.sx1);
+	int endx = min(x2, q->now.sx2);
+	int x = beginx;
+	while (x <= endx)
+	{
+		render_wall(t, p, n, x, x1, x2, &q->ytop[x], &q->ybottom[x], e, neighbor);
+		x++;
+	}
+	/* Schedule the neighboring sector for rendering within the window formed by this wall. */
+	if (neighbor >= 0 && endx >= beginx && (q->head + MaxQueue + 1 - q->tail) % MaxQueue)
+	{
+		*q->head = (t_item) { neighbor, beginx, endx };
+		if (++q->head == q->queue + MaxQueue)
+			q->head = q->queue;
+	}
+	return (1);
+}
+
+void    DrawScreen(t_engine *engine)
+{
+	t_queue		queue;
+	int			s;
+
+	ini_queue(engine, &queue);
 	/* Begin whole-screen rendering from where the player is. */
-	*head = (t_item) {e->player.sector, 0, W - 1};
-	if (++head == queue + MaxQueue)
-		head = queue;
-
-	while (head != tail)
+	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
+	if (++queue.head == queue.queue + MaxQueue)
+		queue.head = queue.queue;
+	while (queue.head != queue.tail)
 	{
 		/* Pick a sector & slice from the queue to draw */
-		now = *tail;
-		if (++tail == queue + MaxQueue)
-			tail = queue;
+		queue.now = *queue.tail;
+		if (++queue.tail == queue.queue + MaxQueue)
+			queue.tail = queue.queue;
 
-		if (renderedsectors[now.sectorno] & 0x21)
+		if (queue.renderedsectors[queue.now.sectorno] & 0x21)
 			continue ; // Odd = still rendering, 0x20 = give up
-		++renderedsectors[now.sectorno];
-		sect = &e->sectors[now.sectorno];
+		++queue.renderedsectors[queue.now.sectorno];
+		queue.sect = &engine->sectors[queue.now.sectorno];
 
 		/* Render each wall of this sector that is facing towards player. */
-		int s = -1;
-		while (++s < (int)sect->npoints)
-		{
-			/* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
-			t_edge v = current_edge(e, sect, s);
-
-			/* Rotate them around the player's view */
-			t_edge t = rotation_edge(e, v);
-
-			/* Is the wall at least partially in front of the player? */
-			if (t.y1 <= 0 && t.y2 <= 0)
-				continue ;
-
-			/* If it's partially behind the player, clip it against player's view frustrum */
-			if (t.y1 <= 0 || t.y2 <= 0)
-				clip_view(&t);
-
-			/* Do perspective transformation */
-			t_edge scale = scale_edge(t);
-			int x1 = W/2 - (int)(t.x1 * scale.x1);
-			int x2 = W/2 - (int)(t.x2 * scale.x2);
-
-			/* Verify if transformation is visible */
-			if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2)
-				continue ;
-
-			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
-			int neighbor = sect->neighbors[s];
-
-			/* Acquire the floor and ceiling heights, relative to where the player's view is */
-			t_ylevel levels = get_ylevels(e, sect, neighbor);
-
-			/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-			t_projec p = curr_projection(e->player.yaw, levels, t, scale);
-			t_projec n = next_projection(e->player.yaw, levels, t, scale);
-
-			/* Render the wall. */
-			int beginx = max(x1, now.sx1);
-			int endx = min(x2, now.sx2);
-			int x = beginx;
-			while (x <= endx)
-			{
-				render_wall(t, p, n, x, x1, x2, &ytop[x], &ybottom[x], e, neighbor);
-				x++;
-			}
-			/* Schedule the neighboring sector for rendering within the window formed by this wall. */
-			if (neighbor >= 0 && endx >= beginx && (head + MaxQueue + 1 - tail) % MaxQueue)
-			{
-				*head = (t_item) { neighbor, beginx, endx };
-				if (++head == queue + MaxQueue)
-					head = queue;
-			}
-		} // for s in sector's edges
-		++renderedsectors[now.sectorno];
+		s = -1;
+		while (++s < (int)queue.sect->npoints) // for s in sector's edges
+			render_sector_edges(engine, &queue, s);
+		++queue.renderedsectors[queue.now.sectorno];
 	}
+	free(queue.renderedsectors);
 }

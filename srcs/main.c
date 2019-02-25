@@ -10,7 +10,7 @@ int		main()
 	window = SDL_CreateWindow("Doom nukem",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		W, H, SDL_WINDOW_SHOWN);
+		W, H, SDL_WINDOW_FULLSCREEN);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	texture = NULL;
 	e.NumSectors = 0;

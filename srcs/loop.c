@@ -46,7 +46,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 		sdl_render(texture, renderer, e);
 		player_collision(e, &v);
 		SDL_Event ev;
-		while(SDL_PollEvent(&ev))
+		while (SDL_PollEvent(&ev))
 		{
 
 			switch(ev.type)

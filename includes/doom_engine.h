@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/25 16:22:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/25 18:14:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /* Define window size */
 # define W 800
 # define H 600
+# define MaxQueue 32
 
 /* Define various vision related constants */
 # define EyeHeight  6    // Camera height from floor when standing
@@ -128,7 +129,11 @@ struct						s_queue
 	t_item		*head;
 	t_item		*tail;
 	t_item		now;
-}
+	t_sector	*sect;
+	int			ytop[W];
+	int			ybottom[W];
+	int			*renderedsectors;
+};
 
 struct						s_vision
 {
@@ -148,29 +153,32 @@ struct						s_engine
 	t_player	player;
 };
 
-void	LoadData(t_engine *e);
-void	UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
-		SDL_Window *window, t_engine *e);
-void	DrawScreen(t_engine *e);
-int		is_bumping(const t_sector *sect, float eyeheight,
-		unsigned s, t_engine *e);
-int		is_crossing(const t_xy p, t_xy d, const t_xy *vert,
-		unsigned s, t_engine *e);
-void	bumping_score(t_xy *d, t_xy b);
+void		LoadData(t_engine *e);
+void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
+			SDL_Window *window, t_engine *e);
+void		DrawScreen(t_engine *e);
+int			is_bumping(const t_sector *sect, float eyeheight,
+			unsigned s, t_engine *e);
+int			is_crossing(const t_xy p, t_xy d, const t_xy *vert,
+			unsigned s, t_engine *e);
+void		bumping_score(t_xy *d, t_xy b);
 
-void	player_moving(t_vision *v, int set, t_engine *e);
-void	player_falling(t_vision *v, t_engine *e);
-void	player_collision(t_engine *e, t_vision *v);
+void		player_moving(t_vision *v, int set, t_engine *e);
+void		player_falling(t_vision *v, t_engine *e);
+void		player_collision(t_engine *e, t_vision *v);
 
-int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
-int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
+int			sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
+int			sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
 
-t_edge  current_edge(t_engine *e, t_sector *sect, int s);
-t_edge  rotation_edge(t_engine *e, t_edge v);
-t_edge  scale_edge(t_edge t);
+t_edge 		current_edge(t_engine *e, t_sector *sect, int s);
+t_edge 		rotation_edge(t_engine *e, t_edge v);
+t_edge 		scale_edge(t_edge t);
+void		clip_view(t_edge *t);
 
 t_projec    curr_projection(float yaw, t_ylevel levels, t_edge t, t_edge scale);
 t_projec    next_projection(float yaw, t_ylevel levels, t_edge t, t_edge scale);
 
 t_ylevel    get_ylevels(t_engine *e, t_sector *sect, int neighbor);
+
+int			ini_queue(t_engine *e, t_queue *q);
 #endif

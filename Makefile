@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/25 16:16:52 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/25 16:23:41 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ HED_NAME	= wolf.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
+			queue.c \
 			edge.c \
 			move.c \
 			draw.c \
