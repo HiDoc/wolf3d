@@ -1,4 +1,4 @@
-#include "wolf.h"
+#include "doom.h"
 
 int		ini_queue(t_engine *e, t_queue *q)
 {

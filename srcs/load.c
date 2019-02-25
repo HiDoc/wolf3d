@@ -1,4 +1,4 @@
-#include "wolf.h"
+#include "doom.h"
 
 void			LoadData(t_engine *e)
 {
@@ -6,8 +6,8 @@ void			LoadData(t_engine *e)
 	char	Buf[256];
 	char	word[256];
 	char	*ptr;
-	t_xy	*vert;
-	t_xy	v;
+	t_vtx	*vert;
+	t_vtx	v;
 	int		n;
 	int		m;
 	int		NumVertices;

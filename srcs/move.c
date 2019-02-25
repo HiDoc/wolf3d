@@ -1,4 +1,4 @@
-#include "wolf.h"
+#include "doom.h"
 
 void	player_falling(t_vision *v, t_engine *e)
 {
@@ -42,7 +42,7 @@ void	player_collision(t_engine *e, t_vision *v)
 		player_moving(v, 1, e);
 }
 
-void	set_player(t_engine *e, t_vision *v, t_xy d)
+void	set_player(t_engine *e, t_vision *v, t_vtx d)
 {
 	e->player.where.x += d.x;
 	e->player.where.y += d.y;
@@ -53,27 +53,27 @@ void	set_player(t_engine *e, t_vision *v, t_xy d)
 
 void	player_moving(t_vision *v, int set, t_engine *e)
 {
-	t_xy			d;
+	t_vtx			d;
 	int				s;
-	const t_xy		p = {e->player.where.x, e->player.where.y};
+	const t_vtx		p = {e->player.where.x, e->player.where.y};
 	const t_sector	*sect = &e->sectors[e->player.sector];
-	const t_xy		*vert = sect->vertex;
+	const t_vtx		*vert = sect->vertex;
 
 	s = -1;
-	d = set ? (t_xy){e->player.velocity.x, e->player.velocity.y} : (t_xy){0, 0};
+	d = set ? (t_vtx){e->player.velocity.x, e->player.velocity.y} : (t_vtx){0, 0};
 	/* Check if the player is about to cross one of the sector's edges */
 	while (set && ++s < (int)sect->npoints)
 	{
-		if (is_crossing(p, d, vert, s, e) && is_bumping(sect, v->eyeheight, s, e))
+		if (is_crossing(p, d, vert, s) && is_bumping(sect, v->eyeheight, s, e))
 		{
-			bumping_score(&d, (t_xy){vert[s + 1].x - vert[s].x, vert[s + 1].y - vert[s].y});
+			bumping_score(&d, (t_vtx){vert[s + 1].x - vert[s].x, vert[s + 1].y - vert[s].y});
 			v->moving = 0;
 		}
 	}
 	s = -1;
 	while (++s < (int)sect->npoints)
 	{
-		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s, e))
+		if (sect->neighbors[s] >= 0 && is_crossing(p, d, vert, s))
 		{
 			e->player.sector = sect->neighbors[s];
 			break ;

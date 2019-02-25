@@ -1,4 +1,4 @@
-#include "wolf.h"
+#include "doom.h"
 
 /* 
 ** Check where the hole is and whether we're bumping into a wall.
@@ -22,18 +22,13 @@ int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e)
 			|| hole_low  > e->player.where.z - eyeheight + KneeHeight);
 }
 
-int		is_crossing(const t_xy p, t_xy d, const t_xy *vert, unsigned s, t_engine *e)
+int		is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s)
 {
-	(void)e;
-	return (
-		IntersectBox(p.x, p.y, p.x + d.x, p.y + d.y,
-		vert[s].x, vert[s].y, vert[s + 1].x, vert[s + 1].y)
-		&& PointSide(p.x + d.x, p.y + d.y, vert[s].x,
-		vert[s].y, vert[s + 1].x, vert[s + 1].y) < 0
-	);
+	return (intersect_rect(p, add_vertex(p, d), vert[s], vert[s + 1])
+			&& pointside(add_vertex(p, d), vert[s], vert[s + 1]) < 0);
 }
 
-void	bumping_score(t_xy *d, t_xy b)
+void	bumping_score(t_vtx *d, t_vtx b)
 {
 	float			x2;
 	float			y2;

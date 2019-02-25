@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf_define.h                                      :+:      :+:    :+:   */
+/*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/23 12:52:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/25 19:41:58 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define WIDTH          800
 # define HEIGHT 	    600
 # define PI             3.141592
+
+# define NEARZ          1e-4f
+# define NEARSIDE       1e-5f
+# define FARZ           5
+# define FARSIDE        20.f
 
 #define WORLD_NB_WEAPONS 15
 #define WORLD_NB_OBJECTS 15

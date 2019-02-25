@@ -1,4 +1,4 @@
-#include "wolf.h"
+#include "doom.h"
 
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 {

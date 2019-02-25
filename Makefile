@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/25 16:23:41 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/25 22:10:10 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,20 +58,25 @@ SDL_MIX		= $(shell ls $(CELLAR)/sdl2_mixer/ | head -1)
 INC_PATH 	+= $(CELLAR)/sdl2_mixer/$(SDL_MIX)/include/
 endif
 
-HED_NAME	= wolf.h \
-			  wolf_struct.h \
+HED_NAME	= doom.h \
+			  doom_struct_assets.h \
+			  doom_struct_env.h \
+			  doom_struct_gameplay.h \
 			  doom_engine.h \
-			  wolf_define.h
+			  doom_define.h
 
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
 			queue.c \
 			edge.c \
+			vertex.c \
+			utils_vertex.c \
+			transformation.c \
 			move.c \
 			draw.c \
+			struct_drawline.c \
 			projection.c \
-			ylevel.c \
 			checking.c \
 			unload.c
 
@@ -85,7 +90,7 @@ INC			= $(addprefix -I , $(INC_PATH))
 DIR			= $(sort $(dir $(OBJ)))
 NB			= $(words $(SRC_NAME))
 INDEX		= 0
-HEAD		= $(addprefix ./includes ,$(HED_NAME))
+HEAD		= $(addprefix ./includes/,$(HED_NAME))
 
 SHELL		:=	bash
 
@@ -93,7 +98,7 @@ SHELL		:=	bash
 
 all: $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJ) Makefile 
+$(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile 
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)

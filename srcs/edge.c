@@ -1,42 +1,63 @@
-#include "wolf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   edge.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
+/*   Updated: 2019/02/25 21:58:23 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_edge  rotation_edge(t_engine *e, t_edge v)
+#include "doom.h"
+
+/*
+** Build an edge with same rotation as the player
+*/
+t_edge  rotation_edge(t_player player, t_edge v)
 {
-	t_edge edge;
-	const float pcos = e->player.anglecos;
-	const float psin = e->player.anglesin;
+	t_edge		edge;
+	const float pcos = player.anglecos;
+	const float psin = player.anglesin;
 	
-	edge = (t_edge){
-		v.x1 * psin - v.y1 * pcos,
-		v.x1 * pcos + v.y1 * psin,
-		v.x2 * psin - v.y2 * pcos,
-		v.x2 * pcos + v.y2 * psin
+	edge.v1 = (t_vtx){
+		v.v1.x * psin - v.v1.y * pcos,
+		v.v1.x * pcos + v.v1.y * psin
+	};
+	edge.v2 = (t_vtx){
+		v.v2.x * psin - v.v2.y * pcos,
+		v.v2.x * pcos + v.v2.y * psin
 	};
 	return (edge);
 }
 
-t_edge  current_edge(t_engine *e, t_sector *sect, int s)
+/*
+** Build an edge with current vectex and next vertex in sector
+*/
+t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 {
-	t_edge edge;
+	t_edge		edge;
 	
-	edge = (t_edge){
-		sect->vertex[s + 0].x - e->player.where.x,
-		sect->vertex[s + 0].y - e->player.where.y,
-		sect->vertex[s + 1].x - e->player.where.x,
-		sect->vertex[s + 1].y - e->player.where.y
-	};
+	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
+	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
 	return (edge);
 }
 
+/*
+** Build an edge with scale from perspective projection
+*/
 t_edge  scale_edge(t_edge t)
 {
-	t_edge edge;
+	t_edge		edge;
 	
-	edge = (t_edge){
-		hfov / t.y1,
-		vfov / t.y1,
-		hfov / t.y2,
-		vfov / t.y2
+	edge.v1 = (t_vtx){
+		hfov / t.v1.y,
+		vfov / t.v1.y
+	};
+	edge.v2 = (t_vtx){
+		hfov / t.v2.y,
+		vfov / t.v2.y
 	};
 	return (edge);
 }
@@ -46,37 +67,21 @@ t_edge  scale_edge(t_edge t)
 */
 void	clip_view(t_edge *t)
 {
-	const float nearz = 1e-4f;
-	const float farz = 5;
-	const float nearside = 1e-5f;
-	const float farside = 20.f;
+	const t_vtx i1 = intersect_vtx(t->v1, t->v2,
+		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
+	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
+		(t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
 	// Find an intersection between the wall and the approximate edges of player's view
-	t_xy i1 = Intersect(t->x1,t->y1,t->x2,t->y2, -nearside,nearz, -farside,farz);
-	t_xy i2 = Intersect(t->x1,t->y1,t->x2,t->y2,  nearside,nearz,  farside,farz);
-	if (t->y1 < nearz)
+	// t_vtx i1 = Intersect(t->x1,t->y1,t->x2,t->y2, -NEARSIDE,NEARZ, -FARSIDE,FARZ);
+	// t_vtx i2 = Intersect(t->x1,t->y1,t->x2,t->y2, NEARSIDE,NEARZ, FARSIDE,FARZ);
+	if (t->v1.y < NEARZ)
 	{
-		if (i1.y > 0)
-		{
-			t->x1 = i1.x;
-			t->y1 = i1.y;
-		}
-		else
-		{
-			t->x1 = i2.x;
-			t->y1 = i2.y;
-		}
+		t->v1.x = (i1.y > 0) ? i1.x : i2.x;
+		t->v1.y = (i1.y > 0) ? i1.y : i2.y;
 	}
-	if (t->y2 < nearz)
+	if (t->v2.y < NEARZ)
 	{
-		if (i1.y > 0)
-		{
-			t->x2 = i1.x;
-			t->y2 = i1.y;
-		}
-		else
-		{
-			t->x2 = i2.x;
-			t->y2 = i2.y;
-		}
+		t->v2.x = (i1.y > 0) ? i1.x : i2.x;
+		t->v2.y = (i1.y > 0) ? i1.y : i2.y;
 	}
 }
