@@ -165,14 +165,13 @@ void    DrawScreen(t_engine *e)
 			if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2)
 				continue ;
 
-			/* Acquire the floor and ceiling heights, relative to where the player's view is */
+			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
+			int neighbor = sect->neighbors[s];
 			float yceil  = sect->ceil  - e->player.where.z;
 			float yfloor = sect->floor - e->player.where.z;
 			float nyceil = 0;
 			float nyfloor = 0;
 
-			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
-			int neighbor = sect->neighbors[s];
 
 			if (neighbor >= 0) // Is another sector showing through this portal?
 			{
@@ -193,10 +192,11 @@ void    DrawScreen(t_engine *e)
 				x++;
 			}
 			/* Schedule the neighboring sector for rendering within the window formed by this wall. */
-			if (neighbor >= 0 && endx >= beginx && (head+MaxQueue + 1 - tail) % MaxQueue)
+			if (neighbor >= 0 && endx >= beginx && (head + MaxQueue + 1 - tail) % MaxQueue)
 			{
 				*head = (t_item) { neighbor, beginx, endx };
-				if(++head == queue+MaxQueue) head = queue;
+				if (++head == queue + MaxQueue)
+					head = queue;
 			}
 		} // for s in sector's edges
 		++renderedsectors[now.sectorno];
