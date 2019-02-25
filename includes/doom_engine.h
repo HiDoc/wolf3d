@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/25 13:58:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/25 15:30:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef struct	s_engine	t_engine;
 typedef struct	s_projec	t_projec;
 typedef struct	s_ylevel	t_ylevel;
 typedef struct	s_vision	t_vision;
-typedef struct	s_vertex	t_vertex;
+typedef struct	s_edge		t_edge;
 
-struct						s_vertex
+struct						s_edge
 {
 	float		x1;
 	float		y1;
@@ -155,4 +155,11 @@ void	player_collision(t_engine *e, t_vision *v);
 
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
 int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
+
+t_edge  current_edge(t_engine *e, t_sector *sect, int s);
+t_edge  rotation_edge(t_engine *e, t_edge v);
+t_edge  scale_edge(t_edge t);
+
+t_projec    curr_projection(float yaw, float yceil, float yfloor, t_edge t, t_edge scale);
+t_projec    next_projection(float yaw, float nyceil, float nyfloor, t_edge t, t_edge scale);
 #endif

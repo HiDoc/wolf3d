@@ -25,7 +25,7 @@ static void				vline(t_line l, t_engine *e)
 }
 
 /* If it's partially behind the player, clip it against player's view frustrum */
-void	clip_view(t_vertex *t)
+void	clip_view(t_edge *t)
 {
 	const float nearz = 1e-4f;
 	const float farz = 5;
@@ -62,7 +62,7 @@ void	clip_view(t_vertex *t)
 	}
 }
 
-void	render_wall(t_vertex t, t_projec p, t_projec n, int x, int x1, int x2, int *ytop, int *ybottom, t_engine *e, int neighbor)
+void	render_wall(t_edge t, t_projec p, t_projec n, int x, int x1, int x2, int *ytop, int *ybottom, t_engine *e, int neighbor)
 {
 	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 	int z = ((x - x1) * (t.y2 - t.y1) / (x2 - x1) + t.y1) * 8;
@@ -143,34 +143,21 @@ void    DrawScreen(t_engine *e)
 		while (++s < (int)sect->npoints)
 		{
 			/* Acquire the x,y coordinates of the two endpoints (vertices) of this edge of the sector */
-			t_vertex v = (t_vertex){
-				sect->vertex[s + 0].x - e->player.where.x,
-				sect->vertex[s + 0].y - e->player.where.y,
-				sect->vertex[s + 1].x - e->player.where.x,
-				sect->vertex[s + 1].y - e->player.where.y
-			};
+			t_edge v = current_edge(e, sect, s);
+
 			/* Rotate them around the player's view */
-			float pcos = e->player.anglecos;
-			float psin = e->player.anglesin;
-			t_vertex t = (t_vertex){
-				v.x1 * psin - v.y1 * pcos,
-				v.x1 * pcos + v.y1 * psin,
-				v.x2 * psin - v.y2 * pcos,
-				v.x2 * pcos + v.y2 * psin
-			};
+			t_edge t = rotation_edge(e, v);
+
 			/* Is the wall at least partially in front of the player? */
 			if (t.y1 <= 0 && t.y2 <= 0)
 				continue ;
+
 			/* If it's partially behind the player, clip it against player's view frustrum */
 			if (t.y1 <= 0 || t.y2 <= 0)
 				clip_view(&t);
+
 			/* Do perspective transformation */
-			t_vertex scale = (t_vertex){
-				hfov / t.y1,
-				vfov / t.y1,
-				hfov / t.y2,
-				vfov / t.y2
-			};
+			t_edge scale = scale_edge(t);
 			int x1 = W/2 - (int)(t.x1 * scale.x1);
 			int x2 = W/2 - (int)(t.x2 * scale.x2);
 
@@ -194,19 +181,8 @@ void    DrawScreen(t_engine *e)
 			}
 
 			/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-			#define Yaw(y,z) (y + z * e->player.yaw)
-			t_projec p = (t_projec){
-				H/2 - (int)(Yaw(yceil, t.y1) * scale.y1),
-				H/2 - (int)(Yaw(yfloor, t.y1) * scale.y1),
-				H/2 - (int)(Yaw(yceil, t.y2) * scale.y2),
-				H/2 - (int)(Yaw(yfloor, t.y2) * scale.y2)
-			};
-			t_projec n = (t_projec){
-				H/2 - (int)(Yaw(nyceil, t.y1) * scale.y1),
-				H/2 - (int)(Yaw(nyfloor, t.y1) * scale.y1),
-				H/2 - (int)(Yaw(nyceil, t.y2) * scale.y2),
-				H/2 - (int)(Yaw(nyfloor, t.y2) * scale.y2)
-			};
+			t_projec p = curr_projection(e->player.yaw, yceil, yfloor, t, scale);
+			t_projec n = next_projection(e->player.yaw, nyceil, nyfloor, t, scale);
 			/* Render the wall. */
 			int beginx = max(x1, now.sx1);
 			int endx = min(x2, now.sx2);
