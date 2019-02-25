@@ -1,9 +1,6 @@
 #include "wolf.h"
 
-
-/* Acquire the floor and ceiling heights, relative to where the player's view is */
-/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
-t_ylevel    get_ylevel(t_sector *sect, t_engine *e, int neighbor)
+t_ylevel    get_ylevels(t_engine *e, t_sector *sect, int neighbor)
 {
     float      yceil;
     float      yfloor;
@@ -19,4 +16,5 @@ t_ylevel    get_ylevel(t_sector *sect, t_engine *e, int neighbor)
         nyceil  = e->sectors[neighbor].ceil  - e->player.where.z;
         nyfloor = e->sectors[neighbor].floor - e->player.where.z;
     }
+    return ((t_ylevel){yceil, yfloor, nyceil, nyfloor});
 }

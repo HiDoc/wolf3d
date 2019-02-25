@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/25 16:07:24 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:22:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct	s_projec	t_projec;
 typedef struct	s_ylevel	t_ylevel;
 typedef struct	s_vision	t_vision;
 typedef struct	s_edge		t_edge;
+typedef struct	s_queue		t_queue;
 
 struct						s_edge
 {
@@ -121,6 +122,14 @@ struct						s_player
 	unsigned 	sector;
 };
 
+struct						s_queue
+{
+	t_item		queue[MaxQueue];
+	t_item		*head;
+	t_item		*tail;
+	t_item		now;
+}
+
 struct						s_vision
 {
 	int				ground;
@@ -160,6 +169,8 @@ t_edge  current_edge(t_engine *e, t_sector *sect, int s);
 t_edge  rotation_edge(t_engine *e, t_edge v);
 t_edge  scale_edge(t_edge t);
 
-t_projec    curr_projection(float yaw, float yceil, float yfloor, t_edge t, t_edge scale);
-t_projec    next_projection(float yaw, float nyceil, float nyfloor, t_edge t, t_edge scale);
+t_projec    curr_projection(float yaw, t_ylevel levels, t_edge t, t_edge scale);
+t_projec    next_projection(float yaw, t_ylevel levels, t_edge t, t_edge scale);
+
+t_ylevel    get_ylevels(t_engine *e, t_sector *sect, int neighbor);
 #endif

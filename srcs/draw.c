@@ -110,10 +110,10 @@ void    DrawScreen(t_engine *e)
 	t_item		queue[MaxQueue];
 	t_item		*head;
 	t_item		*tail;
+	t_item		now;
 	int			ytop[W];
 	int			ybottom[W];
 	int			renderedsectors[e->NumSectors];
-	t_item		now;
 	t_sector	*sect;
 
 	ft_memset(ybottom, (H - 1), sizeof(int) * W);
@@ -138,6 +138,7 @@ void    DrawScreen(t_engine *e)
 			continue ; // Odd = still rendering, 0x20 = give up
 		++renderedsectors[now.sectorno];
 		sect = &e->sectors[now.sectorno];
+
 		/* Render each wall of this sector that is facing towards player. */
 		int s = -1;
 		while (++s < (int)sect->npoints)
@@ -167,21 +168,14 @@ void    DrawScreen(t_engine *e)
 
 			/* Check the edge type. neighbor=-1 means wall, other=boundary between two e->sectors. */
 			int neighbor = sect->neighbors[s];
-			float yceil  = sect->ceil  - e->player.where.z;
-			float yfloor = sect->floor - e->player.where.z;
-			float nyceil = 0;
-			float nyfloor = 0;
 
-
-			if (neighbor >= 0) // Is another sector showing through this portal?
-			{
-				nyceil  = e->sectors[neighbor].ceil  - e->player.where.z;
-				nyfloor = e->sectors[neighbor].floor - e->player.where.z;
-			}
+			/* Acquire the floor and ceiling heights, relative to where the player's view is */
+			t_ylevel levels = get_ylevels(e, sect, neighbor);
 
 			/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-			t_projec p = curr_projection(e->player.yaw, yceil, yfloor, t, scale);
-			t_projec n = next_projection(e->player.yaw, nyceil, nyfloor, t, scale);
+			t_projec p = curr_projection(e->player.yaw, levels, t, scale);
+			t_projec n = next_projection(e->player.yaw, levels, t, scale);
+
 			/* Render the wall. */
 			int beginx = max(x1, now.sx1);
 			int endx = min(x2, now.sx2);

@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/25 15:18:54 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/25 16:16:52 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRC_NAME 	= main.c \
 			move.c \
 			draw.c \
 			projection.c \
+			ylevel.c \
 			checking.c \
 			unload.c
 
