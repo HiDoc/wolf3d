@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/25 22:18:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:33:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,10 @@ struct						s_transf
 	t_limit_float	lf_next;
 	t_projec		p;
 	t_projec		n;
+	int				x;
 	int				x1;
 	int				x2;
-	int				neighbors;
+	int				neighbor;
 };
 
 struct						s_engine
@@ -144,4 +145,5 @@ void		clip_view(t_edge *t);
 int			ini_queue(t_engine *e, t_queue *q);
 
 void		vline(t_drawline line, t_engine *e);
+int			transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s);
 #endif

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 21:58:23 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:11:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,19 @@ t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 
 /*
 ** Build an edge with scale from perspective projection
+** using field of view
 */
 t_edge  scale_edge(t_edge t)
 {
 	t_edge		edge;
 	
-	edge.v1 = (t_vtx){
-		hfov / t.v1.y,
-		vfov / t.v1.y
-	};
-	edge.v2 = (t_vtx){
-		hfov / t.v2.y,
-		vfov / t.v2.y
-	};
+	edge.v1 = (t_vtx){hfov / t.v1.y, vfov / t.v1.y};
+	edge.v2 = (t_vtx){hfov / t.v2.y, vfov / t.v2.y};
 	return (edge);
 }
 
 /*
-** If it's partially behind the player, clip it against player's view frustrum
+** Clip vertex to window
 */
 void	clip_view(t_edge *t)
 {
@@ -71,9 +66,6 @@ void	clip_view(t_edge *t)
 		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
 	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
 		(t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
-	// Find an intersection between the wall and the approximate edges of player's view
-	// t_vtx i1 = Intersect(t->x1,t->y1,t->x2,t->y2, -NEARSIDE,NEARZ, -FARSIDE,FARZ);
-	// t_vtx i2 = Intersect(t->x1,t->y1,t->x2,t->y2, NEARSIDE,NEARZ, FARSIDE,FARZ);
 	if (t->v1.y < NEARZ)
 	{
 		t->v1.x = (i1.y > 0) ? i1.x : i2.x;
