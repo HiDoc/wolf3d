@@ -1,3 +1,80 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "todohighlight.keywords": [
+        "t_edge",
+        "t_sector",
+        "t_item",
+        "t_xyz",
+        "t_xy",
+        "t_player",
+        "t_engine",
+        "t_projec",
+        "t_queue",
+        "t_vtx",
+        "t_vctr",
+        "t_transf",
+        "t_vision",
+        "t_env",
+        "t_sdl",
+        "t_limit_float",
+        {
+            "text": "current_edge",
+            "color": "#e6e3aa",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "current_projection",
+            "color": "#e6e3aa",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "next_projection",
+            "color": "#e6e3aa",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "intersect_vtx",
+            "color": "#e6e3aa",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "SDL_Texture",
+            "color": "#ed553B",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "SDL_Event",
+            "color": "#ed553B",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "SDL_Renderer",
+            "color": "#ed553B",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "SDL_Surface",
+            "color": "#ed553B",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+        {
+            "text": "SDL_Window",
+            "color": "#ed553B",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "transaprent"
+        },
+    ],
+    "todohighlight.defaultStyle": {
+        "color": "#3CAEA3",
+        "backgroundColor": "transparent",
+        "overviewRulerColor": "grey"
+    }
 }
