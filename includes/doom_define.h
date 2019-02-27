@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:15:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:36:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "libft.h"
 # define PI             3.141592
 
-/* 
+/*
 ** Define window size
 */
 # define W				800
@@ -35,15 +35,15 @@
 /*
 ** Define maximum queue in renderer
 */
-# define MaxQueue		32
+# define MAXQUEUE		32
 
 /*
 ** Define visions constants
 */
-# define EyeHeight		6    
-# define DuckHeight		2.5
-# define HeadMargin		1
-# define KneeHeight		2
+# define EYEHEIGHT		6
+# define DUCKHEIGHT		2.5
+# define HEADMARGIN		1
+# define KNEEHEIGHT		2
 # define NEARZ			1e-4f
 # define NEARSIDE		1e-5f
 # define FARZ			5
@@ -52,14 +52,14 @@
 /*
 ** Field of view
 */
-# define hfov (0.73f * H)
-# define vfov (.2f * H)
+# define HFOV (0.73f * H)
+# define VFOV (.2f * H)
 
 /*
 ** World related constants
 */
-#define WORLD_NB_WEAPONS 15
-#define WORLD_NB_OBJECTS 15
-#define WORLD_NB_SURFACE 15
+# define WORLD_NB_WEAPONS 15
+# define WORLD_NB_OBJECTS 15
+# define WORLD_NB_SURFACE 15
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:31:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:39:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@
 ** 7 - Character
 */
 
-typedef struct s_object			t_object;
-typedef struct s_weapon			t_weapon;
-typedef struct s_surface		t_surface;
-typedef struct s_container		t_container;
-typedef struct s_world			t_world;
-typedef struct s_inventory		t_inventory;
-typedef struct s_character		t_character;
+typedef struct s_object		t_object;
+typedef struct s_weapon		t_weapon;
+typedef struct s_surface	t_surface;
+typedef struct s_container	t_container;
+typedef struct s_world		t_world;
+typedef struct s_inventory	t_inventory;
+typedef struct s_character	t_character;
 
-struct					s_object
+struct						s_object
 {
 	SDL_Surface	*sprite;
 	int			is_consumable;
@@ -50,45 +50,45 @@ struct					s_object
 ** ammo_magazine = ff
 ** damage = g
 */
-struct					s_weapon
+struct						s_weapon
 {
 	SDL_Surface	*sprite;
 	SDL_Surface	*sprite_bullet;
-	SDL_Surface			**sprite_reload;
-	SDL_Surface			**sprite_shoot;
-	long				ref;
-	int					type;
-	int					time_reload;
-	int					time_shoot;
-	double				time_shoot_between;
-	int					ammo_current;
-	int					ammo_magazine;
-	int					ammo_max;
-	int					damage;
+	SDL_Surface	**sprite_reload;
+	SDL_Surface	**sprite_shoot;
+	long		ref;
+	int			type;
+	int			time_reload;
+	int			time_shoot;
+	double		time_shoot_between;
+	int			ammo_current;
+	int			ammo_magazine;
+	int			ammo_max;
+	int			damage;
 };
 
-struct					s_container
+struct						s_container
 {
-	t_surface		walls[30];
-	t_surface		floors[30];
-	t_surface		ceils[30];
+	t_surface	walls[30];
+	t_surface	floors[30];
+	t_surface	ceils[30];
 };
 
-struct					s_world
+struct						s_world
 {
-	t_weapon		armory[WORLD_NB_WEAPONS];
-	t_object		objects[WORLD_NB_OBJECTS];
-	t_container		surfaces;
+	t_weapon	armory[WORLD_NB_WEAPONS];
+	t_object	objects[WORLD_NB_OBJECTS];
+	t_container	surfaces;
 };
 
-struct					s_inventory
+struct						s_inventory
 {
 	t_weapon	*current;
 	t_weapon	*weapons[15];
 	t_object	*objects[15];
 };
 
-struct					s_character
+struct						s_character
 {
 	int			health;
 	int			shield;
@@ -100,7 +100,7 @@ struct					s_character
 	float		anglecos;
 	float		anglesin;
 	float		yaw;
-	float		eyeheight;
+	float		EYEHEIGHT;
 	t_inventory	inventory;
 	SDL_Surface	*sprite;
 };

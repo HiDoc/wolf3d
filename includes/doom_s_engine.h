@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/27 20:28:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:36:02 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct						s_player
 
 struct						s_queue
 {
-	t_item		queue[MaxQueue];
+	t_item		queue[MAXQUEUE];
 	t_item		*head;
 	t_item		*tail;
 	t_item		now;
@@ -67,7 +67,7 @@ struct						s_vision
 	int			moving;
 	int			ducking;
 	float		yaw;
-	float		eyeheight;
+	float		EYEHEIGHT;
 };
 
 struct						s_transf

@@ -6,22 +6,23 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:42:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:30:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:37:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_ASSETS_H
 # define DOOM_S_ASSETS_H
-typedef struct s_surface    t_surface;
+
+typedef struct s_surface	t_surface;
 typedef struct s_drawline	t_drawline;
 
-struct					    s_surface
+struct						s_surface
 {
-	SDL_Surface				*sprite;
-	int						health;
-	int						height;
-	int						width;
-	double					angle;
+	SDL_Surface	*sprite;
+	int			health;
+	int			height;
+	int			width;
+	double		angle;
 };
 
 /*
@@ -29,12 +30,11 @@ struct					    s_surface
 */
 struct						s_drawline
 {
-	int						abscisse;
-	int						from;
-	int						to;
-	int						bottom;
-	int						middle;
-	int						top;
+	int			abscisse;
+	int			from;
+	int			to;
+	int			bottom;
+	int			middle;
+	int			top;
 };
-
 #endif
