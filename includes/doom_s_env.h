@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_struct_env.h                                  :+:      :+:    :+:   */
+/*   doom_s_env.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 19:28:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:31:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_STRUCT_ENV_H
-# define DOOM_STRUCT_ENV_H
+#ifndef DOOM_S_ENV_H
+# define DOOM_S_ENV_H
 
 typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
@@ -43,4 +43,6 @@ struct					s_env
 	t_engine		engine;
 };
 
+int			sdl_render(t_env *env, t_engine *e);
+int			sdl_loop(t_env *env);
 #endif

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_struct_assets.h                               :+:      :+:    :+:   */
+/*   doom_s_assets.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:42:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 19:15:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:30:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_STRUCT_ASSETS_H
-# define DOOM_STRUCT_ASSETS_H
+#ifndef DOOM_S_ASSETS_H
+# define DOOM_S_ASSETS_H
 typedef struct s_surface    t_surface;
 typedef struct s_drawline	t_drawline;
 

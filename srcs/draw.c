@@ -1,56 +1,82 @@
 #include "doom.h"
 
+t_limit_int	wonder_wall(t_transf container, t_projec projct, int *ytop, int *ybottom)
+{
+	t_limit_int		limits;
+	t_limit_int		coord;
+	const int		diff_abs = container.x2 - container.x1;
+	const int		diff_curr = container.x - container.x1;
+
+	/* Acquire the Y coordinates for our ceiling
+	& floor for this X coordinate. Clamp them. */
+	coord.ceil = diff_curr * (projct.y2a - projct.y1a)
+		/ (diff_abs) + projct.y1a;
+	coord.floor = diff_curr * (projct.y2b - projct.y1b)
+		/ (diff_abs) + projct.y1b;
+	limits.ceil = clamp(coord.ceil, *ytop, *ybottom);
+	limits.floor = clamp(coord.floor, *ytop, *ybottom);
+	return (limits);
+}
+
 void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 {
+	t_limit_int y_coord_curr;
+	t_limit_int y_coord_next;
+	const int	equal = container.x == container.x1 || container.x == container.x2;
+
 	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
-	int z = ((container.x - container.x1) * (container.t.v2.y - container.t.v1.y)
+	const int z = ((container.x - container.x1)
+		* (container.t.v2.y - container.t.v1.y)
 		/ (container.x2 - container.x1) + container.t.v1.y) * 8;
+	(void)z;
+	unsigned r = 0xFF00FF;
+	unsigned r1 = 0xFF00FF;
+	unsigned r2 = 0xBB4EFF;
 	/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-	int ya = (container.x - container.x1) * (container.p.y2a - container.p.y1a)
-		/ (container.x2 - container.x1) + container.p.y1a;
-	int cya = clamp(ya, *ytop, *ybottom); // top
-	int yb = (container.x - container.x1) * (container.p.y2b - container.p.y1b)
-		/ (container.x2 - container.x1) + container.p.y1b;
-	int cyb = clamp(yb, *ytop, *ybottom); // bottom
+	y_coord_curr = wonder_wall(container, container.p, ytop, ybottom);
 
 	/* Render ceiling: everything above this sector's ceiling height. */
-	vline((t_drawline){container.x, *ytop, cya - 1, 0x111111 , 0x222222, 0x111111}, e);
+	vline((t_drawline){container.x, *ytop, y_coord_curr.ceil - 1,
+		0x111111 , 0x222222, 0x111111}, e);
 
 	/* Render floor: everything below this sector's floor height. */
-	vline((t_drawline){container.x, cyb + 1, *ybottom, 0x0000FF,0x0000AA,0x0000FF}, e);
+	vline((t_drawline){container.x, y_coord_curr.floor + 1, *ybottom,
+		0x0000FF, 0x0000AA, 0x0000FF}, e);
 
 	/* Is there another sector behind this edge? */
 	if (container.neighbor >= 0)
 	{
 		/* Same for _their_ floor and ceiling */
-		int nya = (container.x - container.x1) * (container.n.y2a - container.n.y1a)
-			/ (container.x2 - container.x1) + container.n.y1a;
-		int	cnya = clamp(nya, *ytop,*ybottom);
-		int nyb = (container.x - container.x1) * (container.n.y2b - container.n.y1b)
-			/ (container.x2 - container.x1) + container.n.y1b;
-		int cnyb = clamp(nyb, *ytop, *ybottom);
+		y_coord_next = wonder_wall(container, container.n, ytop, ybottom);
 
 		/* If our ceiling is higher than their ceiling, render upper wall */
-		unsigned r1 = 0x010101 * (255 - z);
-		unsigned r2 = 0x040007 * (31 - z / 8);
-		vline((t_drawline){container.x, cya, cnya-1, 0, container.x==container.x1
-			|| container.x==container.x2 ? 0 : r1, 0}, e); // Between our and their ceiling
-		*ytop = clamp(max(cya, cnya), *ytop, H - 1);   // Shrink the remaining window below these ceilings
+		vline((t_drawline){container.x, y_coord_curr.ceil,
+			y_coord_next.ceil - 1, 0, equal ? 0 : r1, 0}, e); // Between our and their ceiling
+		
+		/* Shrink the remaining window below these ceilings */
+		*ytop = (int)clamp(fmax(y_coord_curr.ceil,
+			y_coord_next.ceil), *ytop, H - 1);   
 
 		/* If our floor is lower than their floor, render bottom wall */
-		vline((t_drawline){container.x, cnyb + 1, cyb, 0, container.x==container.x1
-			|| container.x==container.x2 ? 0 : r2, 0}, e); // Between their and our floor
-		*ybottom = clamp(min(cyb, cnyb), 0, *ybottom); // Shrink the remaining window above these floors
+		vline((t_drawline){container.x, y_coord_next.floor + 1,
+			y_coord_curr.floor, 0, equal ? 0 : r2, 0}, e); // Between their and our floor
+
+		/* Shrink the remaining window above these floors */
+		*ybottom = (int)clamp(fmin(y_coord_curr.floor,
+			y_coord_next.floor), 0, *ybottom); 
 	}
 	else
 	{
-		/* There's no container.neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
-		unsigned r = 0x010101 * (255 - z);
-		vline((t_drawline){container.x, cya, cyb, 0, container.x==container.x1
-			|| container.x==container.x2 ? 0 : r, 0}, e);
+		/* There's no container.neighbor. Render wall from top to bottom  */
+		
+		vline((t_drawline){container.x, y_coord_curr.ceil,
+			y_coord_curr.floor, 0, equal ? 0 : r, 0}, e);
 	}
 }
 
+/*
+** Queue logic to render wall and add a new sector if it has a neighbour
+*/
 int		render_sector_edges(t_engine *e, t_queue *q, int s)
 {
 	t_transf	container;
@@ -60,16 +86,18 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 	if (transform_vertex(e, q, &container, s) == 0)
 		return (0);
 	/* Render the wall. */
-	end = min(container.x2, q->now.sx2);
-	start = max(container.x1, q->now.sx1);
+	end = (int)fmin(container.x2, q->now.sx2);
+	start = (int)fmax(container.x1, q->now.sx1);
 	container.x = start;
 	while (container.x <= end)
 	{
 		render_wall(e, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
-	/* Schedule the neighboring sector for rendering within the window formed by this wall. */
-	if (container.neighbor >= 0 && end >= start && (q->head + MaxQueue + 1 - q->tail) % MaxQueue)
+	/* Schedule the neighboring sector for rendering 
+		within the window formed by this wall. */
+	if (container.neighbor >= 0 && end >= start
+		&& (q->head + MaxQueue + 1 - q->tail) % MaxQueue)
 	{
 		*q->head = (t_item) {container.neighbor, start, end};
 		if (++q->head == q->queue + MaxQueue)
@@ -78,7 +106,7 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 	return (1);
 }
 
-void    DrawScreen(t_engine *engine)
+void    draw_screen(t_engine *engine)
 {
 	t_queue		queue;
 	int			s;

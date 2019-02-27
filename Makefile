@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/25 22:10:10 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/27 20:30:47 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,10 +59,13 @@ INC_PATH 	+= $(CELLAR)/sdl2_mixer/$(SDL_MIX)/include/
 endif
 
 HED_NAME	= doom.h \
-			  doom_struct_assets.h \
-			  doom_struct_env.h \
-			  doom_struct_gameplay.h \
-			  doom_engine.h \
+			  doom_s_assets.h \
+			  doom_s_env.h \
+			  doom_s_math.h \
+			  doom_s_gameplay.h \
+			  doom_s_engine.h \
+			  doom_f_engine.h \
+			  doom_f_math.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \

@@ -6,12 +6,12 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 16:12:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:15:58 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WOLF_DEFINE_H
-# define WOLF_DEFINE_H
+#ifndef DOOM_DEFINE_H
+# define DOOM_DEFINE_H
 # include <pthread.h>
 # include <math.h>
 # include <stdlib.h>
@@ -24,14 +24,40 @@
 # include <SDL2/SDL_mixer.h>
 
 # include "libft.h"
-# define WIDTH          800
-# define HEIGHT 	    600
 # define PI             3.141592
-# define NEARZ          1e-4f
-# define NEARSIDE       1e-5f
-# define FARZ           5
-# define FARSIDE        20.f
 
+/* 
+** Define window size
+*/
+# define W				800
+# define H				600
+
+/*
+** Define maximum queue in renderer
+*/
+# define MaxQueue		32
+
+/*
+** Define visions constants
+*/
+# define EyeHeight		6    
+# define DuckHeight		2.5
+# define HeadMargin		1
+# define KneeHeight		2
+# define NEARZ			1e-4f
+# define NEARSIDE		1e-5f
+# define FARZ			5
+# define FARSIDE		20.f
+
+/*
+** Field of view
+*/
+# define hfov (0.73f * H)
+# define vfov (.2f * H)
+
+/*
+** World related constants
+*/
 #define WORLD_NB_WEAPONS 15
 #define WORLD_NB_OBJECTS 15
 #define WORLD_NB_SURFACE 15

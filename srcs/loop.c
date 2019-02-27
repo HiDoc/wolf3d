@@ -1,20 +1,20 @@
 #include "doom.h"
 
-int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
+int		sdl_render(t_env *env, t_engine *e)
 {
 	SDL_LockSurface(e->surface);
-	DrawScreen(e);
+	draw_screen(e);
 	SDL_UnlockSurface(e->surface);
-	if (texture == NULL)
-		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
+	if (env->sdl.texture == NULL)
+		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
 	else
 	{
-		SDL_DestroyTexture(texture);
-		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
+		SDL_DestroyTexture(env->sdl.texture);
+		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
 	}
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+	SDL_RenderClear(env->sdl.renderer);
+	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
+	SDL_RenderPresent(env->sdl.renderer);
 	return (1);
 }
 
@@ -34,16 +34,18 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
-int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
+int		sdl_loop(t_env *env)
 {
 	
 	int				wsad[4] = {0,0,0,0};
 	t_vision        v;
+	t_engine		*e;
 
+	e = &env->engine;
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
 	while (1)
 	{
-		sdl_render(texture, renderer, e);
+		sdl_render(env, e);
 		player_collision(e, &v);
 		SDL_Event ev;
 		while (SDL_PollEvent(&ev))

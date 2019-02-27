@@ -15,8 +15,8 @@ int		is_bumping(const t_sector *sect, float eyeheight, unsigned s, t_engine *e)
 	}
 	else
 	{
-		hole_low = max(sect->floor, e->sectors[sect->neighbors[s]].floor);
-		hole_high = min(sect->ceil, e->sectors[sect->neighbors[s]].ceil);
+		hole_low = fmax(sect->floor, e->sectors[sect->neighbors[s]].floor);
+		hole_high = fmin(sect->ceil, e->sectors[sect->neighbors[s]].ceil);
 	}
 	return (hole_high < e->player.where.z + HeadMargin
 			|| hole_low  > e->player.where.z - eyeheight + KneeHeight);

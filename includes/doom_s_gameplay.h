@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_struct_gameplay.h                             :+:      :+:    :+:   */
+/*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 19:32:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:31:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_STRUCT_GAMEPLAY_H
-# define DOOM_STRUCT_GAMEPLAY_H
+#ifndef DOOM_S_GAMEPLAY_H
+# define DOOM_S_GAMEPLAY_H
 
 /*
 ** Gameplay structures

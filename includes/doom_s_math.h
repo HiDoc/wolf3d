@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_maths.h                                       :+:      :+:    :+:   */
+/*   doom_s_math.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 21:47:24 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/27 20:31:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_MATHS_H
-# define DOOM_MATHS_H
+#ifndef DOOM_S_MATHS_H
+# define DOOM_S_MATHS_H
 
+/*
+** 1 : Vertex
+** 2 : Vectors
+** 3 : Edge
+** 4 : Limit of floor and ceil in integer
+** 5 : Limit of floor and ceil in float
+** 6 : Perspective projection of an edge
+*/
 typedef struct s_vtx			t_vtx;
 typedef struct s_vctr			t_vctr;
 typedef struct s_edge			t_edge;
@@ -51,7 +59,7 @@ struct							s_limit_float
 	float	floor;
 };
 
-struct						s_projec
+struct							s_projec
 {
 	int		y1a;
 	int		y1b;
@@ -59,13 +67,4 @@ struct						s_projec
 	int		y2b;
 };
 
-float							cross_product(t_vtx v1, t_vtx v2);
-t_vtx							intersect_vtx(t_vtx v1, t_vtx v2,
-								t_vtx v3, t_vtx v4);
-t_projec						calc_projection(float p,
-								t_limit_float l, t_edge t, t_edge s);
-t_vtx   add_vertex(t_vtx v1, t_vtx v2);
-t_vtx   diff_vertex(t_vtx v1, t_vtx v2);
-float	pointside(t_vtx p, t_vtx v0, t_vtx v1);
-int		intersect_rect(t_vtx a_up, t_vtx a_bot, t_vtx b_up, t_vtx b_bot);
 #endif
