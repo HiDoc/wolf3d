@@ -97,10 +97,10 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 	/* Schedule the neighboring sector for rendering 
 		within the window formed by this wall. */
 	if (container.neighbor >= 0 && end >= start
-		&& (q->head + MaxQueue + 1 - q->tail) % MaxQueue)
+		&& (q->head + MAXQUEUE + 1 - q->tail) % MAXQUEUE)
 	{
 		*q->head = (t_item) {container.neighbor, start, end};
-		if (++q->head == q->queue + MaxQueue)
+		if (++q->head == q->queue + MAXQUEUE)
 			q->head = q->queue;
 	}
 	return (1);
@@ -114,13 +114,13 @@ void    draw_screen(t_engine *engine)
 	ini_queue(engine, &queue);
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
-	if (++queue.head == queue.queue + MaxQueue)
+	if (++queue.head == queue.queue + MAXQUEUE)
 		queue.head = queue.queue;
 	while (queue.head != queue.tail)
 	{
 		/* Pick a sector & slice from the queue to draw */
 		queue.now = *queue.tail;
-		if (++queue.tail == queue.queue + MaxQueue)
+		if (++queue.tail == queue.queue + MAXQUEUE)
 			queue.tail = queue.queue;
 
 		if (queue.renderedsectors[queue.now.sectorno] & 0x21)

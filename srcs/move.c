@@ -29,12 +29,12 @@ void	player_falling(t_vision *v, t_engine *e)
 	}
 }
 
-/* 
+/*
 **Vertical collision detection and horizontal collision detection
 */
 void	player_collision(t_engine *e, t_vision *v)
 {
-	v->eyeheight = v->ducking ? DuckHeight : EyeHeight;
+	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
 	if (v->falling)
 		player_falling(v, e);

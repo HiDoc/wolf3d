@@ -6,11 +6,21 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 16:11:14 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 16:15:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+/*
+** Return if line have an intersection
+*/
+int		intersec_edge(t_vtx v0, t_vtx v1, t_vtx v2, t_vtx v3)
+{
+    return (intersect_rect(v0, v1, v2, v3)
+        && fabs(pointside(v2, v0, v1) + pointside(v3, v0, v1)) != 2
+        && fabs(pointside(v0, v2, v3) + pointside(v1, v2, v3)) != 2);
+}
 
 /*
 ** Build an edge with same rotation as the player
@@ -20,7 +30,7 @@ t_edge  rotation_edge(t_player player, t_edge v)
 	t_edge		edge;
 	const float pcos = player.anglecos;
 	const float psin = player.anglesin;
-	
+
 	edge.v1 = (t_vtx){
 		v.v1.x * psin - v.v1.y * pcos,
 		v.v1.x * pcos + v.v1.y * psin
@@ -38,7 +48,7 @@ t_edge  rotation_edge(t_player player, t_edge v)
 t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 {
 	t_edge		edge;
-	
+
 	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
 	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
 	return (edge);
@@ -51,9 +61,9 @@ t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 t_edge  scale_edge(t_edge t)
 {
 	t_edge		edge;
-	
-	edge.v1 = (t_vtx){hfov / t.v1.y, vfov / t.v1.y};
-	edge.v2 = (t_vtx){hfov / t.v2.y, vfov / t.v2.y};
+
+	edge.v1 = (t_vtx){HFOV / t.v1.y, VFOV / t.v1.y};
+	edge.v2 = (t_vtx){HFOV / t.v2.y, VFOV / t.v2.y};
 	return (edge);
 }
 

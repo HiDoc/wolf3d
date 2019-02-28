@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/27 20:34:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 15:58:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
 
 void		draw_screen(t_engine *e);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
-int			is_bumping(const t_sector *sect, float EYEHEIGHT,
+int			is_bumping(const t_sector *sect, float eyeheight,
 			unsigned s, t_engine *e);
 void		bumping_score(t_vtx *d, t_vtx b);
 
@@ -33,6 +33,8 @@ t_edge 		scale_edge(t_edge t);
 void		clip_view(t_edge *t);
 
 int			ini_queue(t_engine *e, t_queue *q);
+int     	verify_map(t_engine *e);
+int     	verify_hull(t_engine *e);
 
 void		vline(t_drawline line, t_engine *e);
 int			transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s);

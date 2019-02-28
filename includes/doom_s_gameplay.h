@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:39:05 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 10:48:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ struct						s_character
 	float		anglecos;
 	float		anglesin;
 	float		yaw;
-	float		EYEHEIGHT;
+	float		eyeheight;
 	t_inventory	inventory;
 	SDL_Surface	*sprite;
 };

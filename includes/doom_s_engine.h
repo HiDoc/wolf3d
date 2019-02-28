@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/27 20:36:02 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 15:59:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ typedef struct	s_engine	t_engine;
 typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
 typedef struct	s_transf	t_transf;
+typedef struct	s_chain		t_chain;
+
+struct						s_chain
+{
+	unsigned	a;
+	unsigned	b;
+	unsigned	c;
+	unsigned	d;
+	unsigned	e;
+	unsigned	f;
+	unsigned	g;
+	unsigned	h;
+};
 
 struct						s_item
 {
@@ -67,7 +80,7 @@ struct						s_vision
 	int			moving;
 	int			ducking;
 	float		yaw;
-	float		EYEHEIGHT;
+	float		eyeheight;
 };
 
 struct						s_transf
@@ -87,9 +100,9 @@ struct						s_transf
 
 struct						s_engine
 {
-	SDL_Surface	*surface;
-	t_sector	*sectors;
-	unsigned	NumSectors;
-	t_player	player;
+	SDL_Surface		*surface;
+	t_sector		*sectors;
+	unsigned		nsectors;
+	t_player		player;
 };
 #endif

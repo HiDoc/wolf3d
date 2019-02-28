@@ -34,8 +34,8 @@ void			LoadData(t_engine *e)
 				}
 				break;
 			case 's': // sector
-				e->sectors = realloc(e->sectors, ++e->NumSectors * sizeof(*e->sectors));
-				t_sector *sect = &e->sectors[e->NumSectors-1];
+				e->sectors = realloc(e->sectors, ++e->nsectors * sizeof(*e->sectors));
+				t_sector *sect = &e->sectors[e->nsectors-1];
 				int* num = NULL;
 				sscanf(ptr += n, "%f%f%n", &sect->floor,&sect->ceil, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
@@ -46,7 +46,7 @@ void			LoadData(t_engine *e)
 				sect->npoints   = m /= 2;
 				sect->neighbors = malloc(m * sizeof(*sect->neighbors));
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
-				
+
 				for (n=0; n<m; ++n)
 				{
 					sect->neighbors[n] = num[m + n];
@@ -62,7 +62,7 @@ void			LoadData(t_engine *e)
 				float angle;
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
 				e->player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
-				e->player.where.z = e->sectors[e->player.sector].floor + EyeHeight;
+				e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
 		}
 	}
 	fclose(fp);

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:31:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 20:11:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_edge			t_edge;
 typedef struct s_limit_int		t_limit_int;
 typedef struct s_limit_float	t_limit_float;
 typedef struct s_projec			t_projec;
+typedef struct s_du_int			t_du_int;
 
 struct							s_vtx
 {
@@ -45,6 +46,12 @@ struct							s_edge
 {
 	t_vtx	v1;
 	t_vtx	v2;
+};
+
+struct							s_du_int
+{
+	unsigned a;
+	unsigned b;
 };
 
 struct							s_limit_int

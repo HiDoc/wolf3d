@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/27 20:30:47 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/28 15:56:50 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,19 +35,19 @@ CELLAR		= /Users/$(ID_UN)/.brew/Cellar
 SRC_PATH 	= ./srcs/
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
-			  ./libft/includes/ 
+			  ./libft/includes/
 
 UNAME 		:= $(shell uname)
 
 ifeq ($(UNAME), Linux)
 CC 			= clang -std=c99
-INC_PATH 	+= /usr/include/SDL2/ 
-OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
+INC_PATH 	+= /usr/include/SDL2/
+OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread
 else
 SDL_V		= $(shell ls $(CELLAR)/sdl2/ | head -1)
 INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/ \
 INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/ \
-			   
+
 SDL_TTF		= $(shell ls $(CELLAR)/sdl2_ttf/ | head -1)
 INC_PATH 	+= $(CELLAR)/sdl2_ttf/$(SDL_TTF)/include/
 
@@ -72,6 +72,8 @@ SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
 			queue.c \
+			map.c \
+			hull.c \
 			edge.c \
 			vertex.c \
 			utils_vertex.c \
@@ -101,11 +103,11 @@ SHELL		:=	bash
 
 all: $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile 
+$(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft 
+	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft
 
 $(OBJ_PATH) :
 	@mkdir -p $@
@@ -152,7 +154,7 @@ lldb:
 fsani:
 	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
 		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft 
+		-L$(LIBFT) -lft
 	./wolf3d
 
 valg:

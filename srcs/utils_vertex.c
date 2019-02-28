@@ -6,11 +6,22 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 21:29:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:07:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 16:08:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+/*
+** Calculate distance between a and b
+*/
+float   dist_vertex(t_vtx a, t_vtx b)
+{
+    const float distx = b.x - a.x;
+    const float disty = b.y - a.y;
+
+    return (distx * distx + disty * disty);
+}
 
 /*
 ** Difference of two vertex.
@@ -31,7 +42,7 @@ t_vtx   add_vertex(t_vtx v1, t_vtx v2)
 }
 /*
 ** Clamp value into set range.
-*/ 
+*/
 float   clamp(float a, float min, float max)
 {
     return (fmin(fmax(a, min), max));
