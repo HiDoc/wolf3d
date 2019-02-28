@@ -6,11 +6,19 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 21:29:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/28 16:08:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/02/28 20:43:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+/*
+** Return if vertex are equals
+*/
+int     equal_vertex(t_vtx v1, t_vtx v2)
+{
+    return (v1.x == v2.x && v1.y == v2.y);
+}
 
 /*
 ** Calculate distance between a and b

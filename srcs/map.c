@@ -31,67 +31,62 @@ int		verify_neighbor(t_engine *e)
 	t_sector	*sect;
 	t_sector	*neigh;
 	t_vtx		*vert;
-	unsigned	iter_s;
-	unsigned	iter_v;
-	unsigned	iter_n;
-	unsigned	iter_p;
+	t_chain		chain;
+	t_edge		edge;
 	int			found;
 
-	iter_s = 0;
-	while (iter_s < e->nsectors)
+	chain.a = 0;
+	while (chain.a < e->nsectors)
 	{
-		sect = &e->sectors[iter_s];
+		sect = &e->sectors[chain.a];
 		vert = sect->vertex;
-		iter_v = 0;
-		while (iter_v < sect->npoints)
+		chain.b = 0;
+		while (chain.b < sect->npoints)
 		{
-			if (sect->neighbors[iter_v] >= (int)e->nsectors)
+			if (sect->neighbors[chain.b] >= (int)e->nsectors)
 			{
 				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u)\n",
-					iter_s, sect->neighbors[iter_v], e->nsectors);
+					chain.a, sect->neighbors[chain.b], e->nsectors);
 			}
-			t_vtx point1 = vert[iter_v];
-			t_vtx point2 = vert[iter_v + 1];
+			edge = (t_edge){vert[chain.b], vert[chain.b +1]};
 			found = 0;
-			iter_n = 0;
-			while (iter_n < e->nsectors)
+			chain.d = 0;
+			while (chain.d < e->nsectors)
 			{
-				neigh = &e->sectors[iter_n];
-				iter_p = 0;
-				while (iter_p < neigh->npoints)
+				neigh = &e->sectors[chain.d];
+				chain.c = 0;
+				while (chain.c < neigh->npoints)
 				{
-					if(neigh->vertex[iter_p + 1].x == point1.x
-					&& neigh->vertex[iter_p + 1].y == point1.y
-					&& neigh->vertex[iter_p].x == point2.x
-					&& neigh->vertex[iter_p].y == point2.y)
+					if (equal_vertex(neigh->vertex[chain.c + 1], edge.v1)
+						&& equal_vertex(neigh->vertex[chain.c], edge.v2))
 					{
-						if(neigh->neighbors[iter_p] != (int)iter_s)
+						if(neigh->neighbors[chain.c] != (int)chain.a)
 						{
 							fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-								iter_n, point2.x,point2.y, point1.x,point1.y, iter_s, neigh->neighbors[iter_p]);
-							neigh->neighbors[iter_p] = iter_s;
+								chain.d, edge.v2.x,edge.v2.y, edge.v1.x,edge.v1.y, chain.a, neigh->neighbors[chain.c]);
+							neigh->neighbors[chain.c] = chain.a;
 							return (verify_map(e));
 						}
-						if (sect->neighbors[iter_v] != (int)iter_n)
+						if (sect->neighbors[chain.b] != (int)chain.d)
 						{
 							fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-								iter_s, point1.x, point1.y, point2.x, point2.y, iter_n, sect->neighbors[iter_v]);
-							sect->neighbors[iter_v] = iter_n;
+								chain.a, edge.v1.x, edge.v1.y,edge.v2.x, edge.v2.y, chain.d, sect->neighbors[chain.b]);
+							sect->neighbors[chain.b] = chain.d;
 							return (verify_map(e));
 						}
 						else
 							++found;
 					}
-					iter_p++;
+					chain.c++;
 				}
-				iter_n++;
+				chain.d++;
 			}
-			if(sect->neighbors[iter_v] >= 0 && sect->neighbors[iter_v] < (int)e->nsectors && found != 1)
+			if(sect->neighbors[chain.b] >= 0 && sect->neighbors[chain.b] < (int)e->nsectors && found != 1)
 				fprintf(stderr, "Sectors %u and its neighbor %d don't share line (%g,%g)-(%g,%g)\n",
-					iter_s, sect->neighbors[iter_v], point1.x, point1.y, point2.x, point2.y);
-			iter_v++;
+					chain.a, sect->neighbors[chain.b], edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+			chain.b++;
 		}
-		iter_s++;
+		chain.a++;
 	}
 	return (1);
 }

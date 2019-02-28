@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/28 15:56:50 by fmadura          ###   ########.fr        #
+#    Updated: 2019/02/28 20:42:37 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRC_NAME 	= main.c \
 			edge.c \
 			vertex.c \
 			utils_vertex.c \
+			utils_edge.c \
 			transformation.c \
 			move.c \
 			draw.c \
