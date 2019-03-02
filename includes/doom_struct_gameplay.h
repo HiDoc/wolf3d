@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_struct_gameplay.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 19:32:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/02 17:37:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ typedef struct s_character		t_character;
 struct					s_object
 {
 	SDL_Surface	*sprite;
-	int			is_consumable;
+
 	int			nb_use;
+	int			max_stack;
+	int			ref;
+	int			sectorno;
+	t_vtx		vertex;
 };
 
 /*
@@ -52,8 +56,8 @@ struct					s_object
 */
 struct					s_weapon
 {
-	SDL_Surface	*sprite;
-	SDL_Surface	*sprite_bullet;
+	SDL_Surface			*sprite;
+	SDL_Surface			*sprite_bullet;
 	SDL_Surface			**sprite_reload;
 	SDL_Surface			**sprite_shoot;
 	long				ref;
@@ -84,8 +88,11 @@ struct					s_world
 struct					s_inventory
 {
 	t_weapon	*current;
-	t_weapon	*weapons[15];
-	t_object	*objects[15];
+	int			index_obj;
+	t_weapon	*weapons[3];
+	t_wrap_inv	objects[6];
+	int			nb_current_obj;
+	int			is_active;
 };
 
 struct					s_character

@@ -1,9 +1,13 @@
 #include "doom.h"
 
-int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
+int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *en)
 {
+	t_env *env = (t_env *)en;
+
 	SDL_LockSurface(e->surface);
 	DrawScreen(e);
+	if (env->player.inventory.is_active)
+		set_inventory(env);
 	SDL_UnlockSurface(e->surface);
 	if (texture == NULL)
 		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
@@ -34,16 +38,17 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
-int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
+int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *en)
 {
 	
 	int				wsad[4] = {0,0,0,0};
 	t_vision        v;
+	t_env *env = (t_env *)en;
 
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
 	while (1)
 	{
-		sdl_render(texture, renderer, e);
+		sdl_render(texture, renderer, e, en);
 		player_collision(e, &v);
 		SDL_Event ev;
 		while (SDL_PollEvent(&ev))
@@ -72,9 +77,10 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e)
 					return (0); 
 					break;
 			}
+			sdl_keyhook(env, ev);
 		}
-
-		sdl_mouse(e, &v);
+		if (!env->player.inventory.is_active)
+			sdl_mouse(e, &v);
 		float move_vec[2] = {0.f, 0.f};
 		if(wsad[0]) { move_vec[0] += e->player.anglecos * 0.2f; move_vec[1] += e->player.anglesin * 0.2f; }
 		if(wsad[1]) { move_vec[0] -= e->player.anglecos * 0.2f; move_vec[1] -= e->player.anglesin * 0.2f; }

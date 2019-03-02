@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void			LoadData(t_engine *e)
+void			LoadData(t_engine *e, t_env *env)
 {
 	FILE		*fp;
 	char	Buf[256];
@@ -46,6 +46,7 @@ void			LoadData(t_engine *e)
 				sect->npoints   = m /= 2;
 				sect->neighbors = malloc(m * sizeof(*sect->neighbors));
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
+				sect->head_object = NULL;
 				
 				for (n=0; n<m; ++n)
 				{
@@ -58,13 +59,23 @@ void			LoadData(t_engine *e)
 				sect->vertex[0] = sect->vertex[m]; // Ensure the vertexes form a loop
 				free(num);
 				break;
+			case 'o':; //object
+				t_vtx	vertex = (t_vtx){0, 0};
+				int		s = 0;
+				int		ref = 0;
+				sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);
+				fill_objects_sector(&e->sectors[s], vertex, ref);
+				break;
 			case 'p':; // player
 				float angle;
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
 				e->player = (t_player) { {v.x, v.y, 0}, {0,0,0}, angle,0,0,0, n }; // TODO: Range checking
 				e->player.where.z = e->sectors[e->player.sector].floor + EyeHeight;
+				break;
 		}
 	}
+	init_consumable(env);
+	init_character(&env->player);
 	fclose(fp);
 	free(vert);
 }

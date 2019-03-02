@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/25 22:10:10 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/02 18:54:02 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,13 +72,18 @@ SRC_NAME 	= main.c \
 			edge.c \
 			vertex.c \
 			utils_vertex.c \
+			utils_pixels.c \
 			transformation.c \
 			move.c \
 			draw.c \
 			struct_drawline.c \
 			projection.c \
 			checking.c \
-			unload.c
+			unload.c \
+			struct_obj.c \
+			struct_img.c \
+			sdl_hook.c \
+			struct_character.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

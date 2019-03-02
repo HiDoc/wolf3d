@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_engine.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/27 16:33:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/02 18:59:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ struct						s_sector
 	t_vtx		*vertex;
 	signed char	*neighbors;
 	unsigned	npoints;
+	t_wrap_sect	*head_object;
+	int			nb_objects;
 };
 
 struct						s_player
@@ -121,7 +123,6 @@ struct						s_engine
 	t_player	player;
 };
 
-void		LoadData(t_engine *e);
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
 			SDL_Window *window, t_engine *e);
 void		DrawScreen(t_engine *e);
@@ -134,8 +135,8 @@ void		player_moving(t_vision *v, int set, t_engine *e);
 void		player_falling(t_vision *v, t_engine *e);
 void		player_collision(t_engine *e, t_vision *v);
 
-int			sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
-int			sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e);
+int			sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *env);
+int			sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *env);
 
 t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge v);

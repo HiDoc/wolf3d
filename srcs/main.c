@@ -15,8 +15,8 @@ int		main()
 	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	env.engine.surface = env.sdl.surface;
-	LoadData(&env.engine);
-	sdl_loop(env.sdl.texture, env.sdl.renderer, &env.engine);
+	LoadData(&env.engine, &env);
+	sdl_loop(env.sdl.texture, env.sdl.renderer, &env.engine, &env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	SDL_Quit();
 	return 0;
