@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/02/28 20:42:37 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/02 18:20:52 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ INC_PATH 	+= /usr/include/SDL2/
 OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread
 else
 SDL_V		= $(shell ls $(CELLAR)/sdl2/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/ \
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/ \
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/
 
 SDL_TTF		= $(shell ls $(CELLAR)/sdl2_ttf/ | head -1)
 INC_PATH 	+= $(CELLAR)/sdl2_ttf/$(SDL_TTF)/include/
