@@ -37,6 +37,7 @@ void		LoadData(t_engine *e, t_env *env);
 void		setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 
-int			print_inventory(t_env *env, t_inventory *inventory, int x, int y);
+int			print_inventory(t_env *env, int x, int y);
 int			set_inventory(t_env *env);
+// int			use_object(t_env *env, t_wrap_inv *object, int (action)(void *, t_wrap_inv *));
 #endif

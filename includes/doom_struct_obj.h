@@ -12,6 +12,8 @@ struct                  s_actions
     int         is_shield;
     int         is_health;
     int         is_ammo;
+	int			sub_action;
+	t_edge		edge;
 };
 
 struct					s_wrap_sect

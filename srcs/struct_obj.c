@@ -156,6 +156,11 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		}
 		env->player.inventory.nb_current_obj++;
 		obj->is_picked = 1;
+		//******************************
+		//******************************
+		//fonction pour retirer de la map
+		//******************************
+		//******************************
 		return (1);
 	}
 	else
@@ -270,59 +275,96 @@ void	surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color)
 	}
 }
 
-int			select_object(t_env *env, int x, int y, t_edge *p)
+int			select_object(t_wrap_inv *object, int x, int y, t_edge *p)
 {
-	int i = 0;
-	(void)env;
+	int i;
+	
+	i = 0;
 	while (i < 6)
 	{
 		if (x >= p[i].v1.x && x <= p[i].v2.x && y >= p[i].v1.y && y <= p[i].v2.y)
-			printf("ok\n");
+		{
+			if (object[i].current)
+				return (i);
+			else
+				printf("Emplacement vide %i\n", i);
+		}
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int			set_inventory(t_env *env)
 {
-	int	x;
-	int	y;
 	SDL_SetRelativeMouseMode(SDL_FALSE);
-	SDL_GetRelativeMouseState(&x,&y);
-	print_inventory(env, &env->player.inventory, x, y);
+	print_inventory(env, 0, 0);
 	return (0);
 }
-int			print_inventory(t_env *env, t_inventory *inventory, int x, int y)
+
+int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 {
-	(void)inventory;
-	(void)env;
+	int inter;
+	int sbloc;
+
+	inter = W / 2 / 4 / 4 / 4;
+	sbloc = W / 2 / 3 - inter;
+	bloc->v1 = (t_vtx){n->x, n->y};
+	n->x += sbloc;
+	n->y = i < 3 ? sbloc + inter : (sbloc + inter) * 2;
+	bloc->v2 = (t_vtx){n->x, n->y};
+	surface_drawrect(env->engine.surface, *bloc, 0x88888888);
+	n->x = i == 2 ? inter : n->x + inter;
+	n->y = i < 2 ? inter : inter * 2 + sbloc;
+	return (1);
+}
+
+int			sub_action(t_env *env, t_edge bloc, int iter)
+{
+	t_edge	sbloc[2];
+	int		x;
+	int		y;
+
+	if (env->player.actions.sub_action == 1)
+	{	
+		sbloc[0].v1.x = bloc.v2.x;
+		sbloc[0].v1.y = bloc.v2.y - bloc.v2.y / 2;
+		sbloc[0].v2.x = sbloc[0].v1.x + bloc.v2.x / 2;
+		sbloc[0].v2.y = bloc.v2.y - bloc.v2.y / 4;
+		surface_drawrect(env->engine.surface, sbloc[0], 0x88888888);
+		if (iter > -1)
+		{
+			if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+			{
+				env->player.inventory.objects[iter].current->action((void*)env, &env->player.inventory.objects[iter]);
+			}
+		}
+	}
+	return (0);
+}
+
+int			print_inventory(t_env *env, int x, int y)
+{
 	t_edge	edge;
-	t_edge	p0[6];
+	t_edge	bloc[6];
+	int		iter;
+	t_vtx	n;
+
+	n = (t_vtx){W / 2 / 4 / 4 / 4, W / 2 / 4 / 4 / 4};
+	iter = 0;
 	edge.v1 = (t_vtx){0, 0};
 	edge.v2 = (t_vtx){env->engine.surface->w / 2, env->engine.surface->h};
 	surface_drawrect(env->engine.surface, edge, SDL_MapRGB(env->engine.surface->format, 255, 0, 0));
-	p0[0].v1 = (t_vtx){10, 10};
-	p0[0].v2 = (t_vtx){60, 60};
-	surface_drawrect(env->engine.surface, p0[0], 0x88888888);
-	p0[1].v1 = (t_vtx){80, 10};
-	p0[1].v2 = (t_vtx){130, 60};
-	surface_drawrect(env->engine.surface, p0[1], 0x88888888);
-	p0[1].v1 = (t_vtx){150, 10};
-	p0[1].v2 = (t_vtx){200, 60};
-	surface_drawrect(env->engine.surface, p0[1], 0x88888888);
-
-	select_object(env, x, y, p0);
+	while (iter < 6)
+		iter += fill_bloc(env, &bloc[iter], &n, iter);
+	iter = -1;	
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
+		iter = select_object(env->player.inventory.objects, x, y, bloc);
+	if (iter > -1)
+	{
+		env->player.actions.sub_action = 1;
+		env->player.actions.edge = bloc[iter];
+	}
+	sub_action(env, env->player.actions.edge, iter);
+	SDL_Delay(100);
 	return (0);
 }
-
-// int		give_ammo(t_engine e, t_env *env, t_wrap_inv *object)
-// {
-
-// 	return (0);
-// }
-
-// int		use_object(t_env *env, t_wrap_inv *object)
-// {
-
-// 	return (0);
-// }
