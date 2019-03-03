@@ -1,5 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "Disabled",
+    "editor.insertSpaces": false,
+    "files.trimTrailingWhitespace": true,
     "todohighlight.keywords": [
         "t_edge",
         "t_sector",
@@ -12,6 +14,7 @@
         "t_queue",
         "t_vtx",
         "t_vctr",
+        "t_chain",
         "t_transf",
         "t_vision",
         "t_env",
