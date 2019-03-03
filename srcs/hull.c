@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/02 18:24:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/02 20:56:37 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int			verify_parallelism(t_chain *chain, t_sector *sect, int mycase)
 ** Return shortest distance between two vertex shared by
 ** two sectors
 */
-float		look_for_dist(t_chain *chain, t_sector *sect, float *dist, float *nearest_dist, unsigned n)
+float		look_for_dist(t_chain *chain, t_sector *sect,
+			float *dist, float *nearest_dist, unsigned n)
 {
 	const t_vtx	*vert = sect->vertex;
 	const t_vtx	v0 = vert[chain->b];

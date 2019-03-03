@@ -37,7 +37,7 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 
 	/* Render ceiling: everything above this sector's ceiling height. */
 	vline((t_drawline){container.x, *ytop, y_coord_curr.ceil - 1,
-		0x111111 , 0x222222, 0x111111}, e);
+		0x111111 ,0x222222, 0x111111}, e);
 
 	/* Render floor: everything below this sector's floor height. */
 	vline((t_drawline){container.x, y_coord_curr.floor + 1, *ybottom,
@@ -52,10 +52,10 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 		/* If our ceiling is higher than their ceiling, render upper wall */
 		vline((t_drawline){container.x, y_coord_curr.ceil,
 			y_coord_next.ceil - 1, 0, equal ? 0 : r1, 0}, e); // Between our and their ceiling
-		
+
 		/* Shrink the remaining window below these ceilings */
 		*ytop = (int)clamp(fmax(y_coord_curr.ceil,
-			y_coord_next.ceil), *ytop, H - 1);   
+			y_coord_next.ceil), *ytop, H - 1);
 
 		/* If our floor is lower than their floor, render bottom wall */
 		vline((t_drawline){container.x, y_coord_next.floor + 1,
@@ -63,12 +63,12 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 
 		/* Shrink the remaining window above these floors */
 		*ybottom = (int)clamp(fmin(y_coord_curr.floor,
-			y_coord_next.floor), 0, *ybottom); 
+			y_coord_next.floor), 0, *ybottom);
 	}
 	else
 	{
 		/* There's no container.neighbor. Render wall from top to bottom  */
-		
+
 		vline((t_drawline){container.x, y_coord_curr.ceil,
 			y_coord_curr.floor, 0, equal ? 0 : r, 0}, e);
 	}
@@ -94,7 +94,7 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 		render_wall(e, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
-	/* Schedule the neighboring sector for rendering 
+	/* Schedule the neighboring sector for rendering
 		within the window formed by this wall. */
 	if (container.neighbor >= 0 && end >= start
 		&& (q->head + MAXQUEUE + 1 - q->tail) % MAXQUEUE)
