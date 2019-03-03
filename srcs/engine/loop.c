@@ -3,7 +3,7 @@
 int		sdl_render(t_env *env, t_engine *e)
 {
 	SDL_LockSurface(e->surface);
-	draw_screen(e);
+	draw_screen(env);
 	SDL_UnlockSurface(e->surface);
 	if (env->sdl.texture == NULL)
 		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
@@ -36,7 +36,7 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 
 int		sdl_loop(t_env *env)
 {
-	
+
 	int				wsad[4] = {0,0,0,0};
 	t_vision        v;
 	t_engine		*e;
@@ -71,7 +71,7 @@ int		sdl_loop(t_env *env)
 					}
 					break;
 				case SDL_QUIT:
-					return (0); 
+					return (0);
 					break;
 			}
 		}

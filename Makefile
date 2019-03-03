@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/03 16:36:45 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/03 17:20:37 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ SRC_NAME 	= main.c \
 			move.c \
 			draw.c \
 			struct_drawline.c \
+			struct_container.c \
 			projection.c \
 			checking.c \
 			unload.c

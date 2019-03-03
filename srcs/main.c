@@ -17,6 +17,7 @@ int		main()
 	env.engine.surface = env.sdl.surface;
 	LoadData(&env.engine);
 	verify_map(&env.engine);
+	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	SDL_Quit();

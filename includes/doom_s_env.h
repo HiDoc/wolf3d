@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/03 16:21:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/03 17:10:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ struct								s_env
 
 int				sdl_render(t_env *env, t_engine *e);
 int				sdl_loop(t_env *env);
+int				init_container(t_env *env);
 
 SDL_Surface		*new_surface(char *filename);
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);

@@ -18,7 +18,7 @@ t_limit_int	wonder_wall(t_transf container, t_projec projct, int *ytop, int *ybo
 	return (limits);
 }
 
-void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
+void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
 {
 	t_limit_int y_coord_curr;
 	t_limit_int y_coord_next;
@@ -36,12 +36,12 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 	y_coord_curr = wonder_wall(container, container.p, ytop, ybottom);
 
 	/* Render ceiling: everything above this sector's ceiling height. */
-	vline((t_drawline){container.x, *ytop, y_coord_curr.ceil - 1,
-		0x111111 ,0x222222, 0x111111}, e);
+	render_ceil((t_drawline){(void *)&container, *ytop, y_coord_curr.ceil - 1,
+		0x111111 ,0x222222, 0x111111}, env);
 
 	/* Render floor: everything below this sector's floor height. */
-	vline((t_drawline){container.x, y_coord_curr.floor + 1, *ybottom,
-		0x0000FF, 0x0000AA, 0x0000FF}, e);
+	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
+		0x0000FF, 0x0000AA, 0x0000FF}, env);
 
 	/* Is there another sector behind this edge? */
 	if (container.neighbor >= 0)
@@ -50,16 +50,16 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 		y_coord_next = wonder_wall(container, container.n, ytop, ybottom);
 
 		/* If our ceiling is higher than their ceiling, render upper wall */
-		vline((t_drawline){container.x, y_coord_curr.ceil,
-			y_coord_next.ceil - 1, 0, equal ? 0 : r1, 0}, e); // Between our and their ceiling
+		render_nfloor((t_drawline){(void *)&container, y_coord_curr.ceil,
+			y_coord_next.ceil - 1, 0, equal ? 0 : r1, 0}, env); // Between our and their ceiling
 
 		/* Shrink the remaining window below these ceilings */
 		*ytop = (int)clamp(fmax(y_coord_curr.ceil,
 			y_coord_next.ceil), *ytop, H - 1);
 
 		/* If our floor is lower than their floor, render bottom wall */
-		vline((t_drawline){container.x, y_coord_next.floor + 1,
-			y_coord_curr.floor, 0, equal ? 0 : r2, 0}, e); // Between their and our floor
+		render_nwall((t_drawline){(void *)&container, y_coord_next.floor + 1,
+			y_coord_curr.floor, 0, equal ? 0 : r2, 0}, env); // Between their and our floor
 
 		/* Shrink the remaining window above these floors */
 		*ybottom = (int)clamp(fmin(y_coord_curr.floor,
@@ -68,21 +68,22 @@ void	render_wall(t_engine *e, t_transf container, int *ytop, int *ybottom)
 	else
 	{
 		/* There's no container.neighbor. Render wall from top to bottom  */
-
-		vline((t_drawline){container.x, y_coord_curr.ceil,
-			y_coord_curr.floor, 0, equal ? 0 : r, 0}, e);
+		render_cwall((t_drawline){(void *)&container, y_coord_curr.ceil,
+			y_coord_curr.floor, 0, equal ? 0 : r, 0}, env);
 	}
 }
 
 /*
 ** Queue logic to render wall and add a new sector if it has a neighbour
 */
-int		render_sector_edges(t_engine *e, t_queue *q, int s)
+int		render_sector_edges(t_env *env, t_queue *q, int s)
 {
+	t_engine	*e;
 	t_transf	container;
 	int			start;
 	int			end;
 
+	e = &env->engine;
 	if (transform_vertex(e, q, &container, s) == 0)
 		return (0);
 	/* Render the wall. */
@@ -91,7 +92,7 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 	container.x = start;
 	while (container.x <= end)
 	{
-		render_wall(e, container, &q->ytop[container.x], &q->ybottom[container.x]);
+		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
 	/* Schedule the neighboring sector for rendering
@@ -106,11 +107,13 @@ int		render_sector_edges(t_engine *e, t_queue *q, int s)
 	return (1);
 }
 
-void    draw_screen(t_engine *engine)
+void    draw_screen(t_env *env)
 {
 	t_queue		queue;
+	t_engine	*engine;
 	int			s;
 
+	engine = &env->engine;
 	ini_queue(engine, &queue);
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
@@ -131,7 +134,7 @@ void    draw_screen(t_engine *engine)
 		/* Render each wall of this sector that is facing towards player. */
 		s = -1;
 		while (++s < (int)queue.sect->npoints) // for s in sector's edges
-			render_sector_edges(engine, &queue, s);
+			render_sector_edges(env, &queue, s);
 		++queue.renderedsectors[queue.now.sectorno];
 	}
 	free(queue.renderedsectors);

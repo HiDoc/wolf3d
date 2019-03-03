@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:42:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:37:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/03 18:14:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct						s_surface
 */
 struct						s_drawline
 {
-	int			abscisse;
+	void		*container;
 	int			from;
 	int			to;
 	int			bottom;

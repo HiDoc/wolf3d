@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/02 18:22:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/03 17:58:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		LoadData(t_engine *e);
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
 			SDL_Window *window, t_engine *e);
 
-void		draw_screen(t_engine *e);
+void		draw_screen(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
 int			is_bumping(const t_sector *sect, float eyeheight,
 			unsigned s, t_engine *e);
@@ -36,6 +36,12 @@ int			ini_queue(t_engine *engine, t_queue *queue);
 int     	verify_map(t_engine *engine);
 int     	verify_hull(t_engine *engine, t_sector *sector, t_vtx *vertexes);
 
-void		vline(t_drawline line, t_engine *e);
+void		vline(t_drawline line, t_env *env);
+void		render_cwall(t_drawline line, t_env *env);
+void		render_nwall(t_drawline line, t_env *env);
+void		render_floor(t_drawline line, t_env *env);
+void		render_nfloor(t_drawline line, t_env *env);
+void		render_ceil(t_drawline line, t_env *env);
+void		render_nceil(t_drawline line, t_env *env);
 int			transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s);
 #endif
