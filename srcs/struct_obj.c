@@ -172,7 +172,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	return (0);
 }
 
-int		drop_object(t_engine *e, t_env *env, t_wrap_inv *object)
+int		drop_object(t_env *env, t_wrap_inv *object)
 {
 	t_vtx	vertex;
 
@@ -180,9 +180,9 @@ int		drop_object(t_engine *e, t_env *env, t_wrap_inv *object)
 	{
 		if (!object->is_used)
 		{
-			vertex.x = e->player.where.x;
-			vertex.y = e->player.where.y;
-			fill_objects_sector(&e->sectors[e->player.sector], vertex, object->current->ref);
+			vertex.x = env->engine.player.where.x;
+			vertex.y = env->engine.player.where.y;
+			fill_objects_sector(&env->engine.sectors[env->engine.player.sector], vertex, object->current->ref);
 			printf("On jete un objet non utilisé, on le drop ds le secteur du player\n");
 		}
 		*object = (t_wrap_inv) {NULL, 0, 0};
@@ -212,7 +212,7 @@ int		give_shield(void *e, t_wrap_inv *object)
 		else
 		{
 			object->is_used = 1;
-			drop_object(e, env, object);
+			drop_object(env, object);
 			printf("J'ai pu de shield, il disparait de l'inventaire\n");
 		}
 	}
@@ -244,7 +244,7 @@ int		give_health(void *e, t_wrap_inv *object)
 		else
 		{
 			object->is_used = 1;
-			drop_object(e, env, object);
+			drop_object(env, object);
 			printf("J'ai pu de health, il disparait de l'inventaire\n");
 		}
 	}
@@ -294,12 +294,76 @@ int			select_object(t_wrap_inv *object, int x, int y, t_edge *p)
 	return (-1);
 }
 
-int			set_inventory(t_env *env)
+void	surface_draw_img(SDL_Surface *surface, t_edge edge, SDL_Surface *img)
 {
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	print_inventory(env, 0, 0);
-	return (0);
+	int		i;
+	int		j;
+	int		x;
+	int		y;
+	Uint32	c;
+
+	SDL_LockSurface(surface);
+	x = 0;
+	i = edge.v1.x;
+	while (i < edge.v2.x)
+	{
+		y = 0;
+		j = edge.v1.y;
+		while (j < edge.v2.y)
+		{
+			c = getpixel(img, x, y);
+			setpixel(surface, i, j, c);
+			// setpixel(surface, i, j, c) : setpixel(surface, i, j, 0x88888888);
+			j++;
+			y++;
+		}
+		x++;
+		i++;
+	}
+	SDL_UnlockSurface(surface);
 }
+void		put_img(t_env *env, SDL_Surface *img, t_edge bloc)
+{
+	SDL_Rect	rect;
+	int			x;
+	int			y;
+	SDL_Surface	*new;
+	t_vtx		scale;
+	Uint32		*pix;
+	Uint32		*image;
+
+	rect.w = bloc.v2.x - bloc.v1.x;
+	rect.h = bloc.v2.y - bloc.v1.y;
+	rect.y = bloc.v1.y;
+	rect.x = bloc.v1.x;
+	x = 0;
+	if (img)
+	{
+		scale.x = (float)img->w / (float)rect.w;
+		scale.y = (float)img->h / (float)rect.h;
+		new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
+		SDL_LockSurface(new);
+		pix = new->pixels;
+		image = img->pixels;
+		while (x < rect.w)
+		{
+			y = 0;
+			int sx = x * scale.x;
+			while (y < rect.h)
+			{
+				int sy = y * scale.y;
+				Uint32 p = image[(int)(img->w * sy + sx)];
+				p = ((p & 0xFF) << 24) + (((p & 0xFF00) >> 8) << 16) + (((p & 0xFF0000) >> 16) << 8) + (((p & 0xFF000000) >> 24));
+				pix[rect.w * y + x] = p;
+				y++;
+			}
+			x++;
+		}
+		SDL_UnlockSurface(new);
+		surface_draw_img(env->engine.surface, bloc, new);
+	}
+}
+
 
 int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 {
@@ -312,48 +376,74 @@ int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	n->x += sbloc;
 	n->y = i < 3 ? sbloc + inter : (sbloc + inter) * 2;
 	bloc->v2 = (t_vtx){n->x, n->y};
-	surface_drawrect(env->engine.surface, *bloc, 0x88888888);
+	if (env->player.inventory.objects[i].current)
+		put_img(env, env->world.objects[env->player.inventory.objects[i].current->ref].sprite, *bloc);
+	else
+		surface_drawrect(env->engine.surface, *bloc, 0x88888888);
 	n->x = i == 2 ? inter : n->x + inter;
 	n->y = i < 2 ? inter : inter * 2 + sbloc;
 	return (1);
 }
 
-int			sub_action(t_env *env, t_edge bloc, int iter)
+int			select_action(t_edge *p, int x, int y)
+{
+	int i;
+	
+	i = 0;
+	while (i < 2)
+	{
+		if (x >= p[i].v1.x && x <= p[i].v2.x && y >= p[i].v1.y && y <= p[i].v2.y)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int			sub_action(t_env *env, t_edge bloc, int index, int x, int y)
 {
 	t_edge	sbloc[2];
-	int		x;
-	int		y;
-
-	if (env->player.actions.sub_action == 1)
-	{	
-		sbloc[0].v1.x = bloc.v2.x;
-		sbloc[0].v1.y = bloc.v2.y - bloc.v2.y / 2;
-		sbloc[0].v2.x = sbloc[0].v1.x + bloc.v2.x / 2;
-		sbloc[0].v2.y = bloc.v2.y - bloc.v2.y / 4;
-		surface_drawrect(env->engine.surface, sbloc[0], 0x88888888);
-		if (iter > -1)
-		{
-			if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
-			{
-				env->player.inventory.objects[iter].current->action((void*)env, &env->player.inventory.objects[iter]);
-			}
-		}
+	int		iter;
+	SDL_Event	ev;
+	
+	sbloc[0].v1.x = bloc.v2.x / 2;
+	sbloc[0].v1.y = bloc.v2.y - bloc.v2.y / 2;
+	sbloc[0].v2.x = bloc.v2.x + bloc.v2.x / 2;
+	sbloc[0].v2.y = bloc.v2.y - bloc.v2.y / 4;
+	surface_drawrect(env->engine.surface, sbloc[0], 0xFF00FF00);
+	sbloc[1].v1.x = bloc.v2.x;
+	sbloc[1].v1.y = bloc.v2.y - bloc.v2.y / 4;
+	sbloc[1].v2.x = sbloc[1].v1.x + bloc.v2.x / 2;
+	sbloc[1].v2.y = bloc.v2.y;
+	surface_drawrect(env->engine.surface, sbloc[1], 0xF0F0F0F0);
+	// SDL_FlushEvents(SDL_MOUSEBUTTONDOWN, SDL_MOUSEBUTTONUP);
+	SDL_WaitEvent(&ev);
+	if (ev.type == SDL_MOUSEBUTTONDOWN && index > -1 && SDL_GetMouseState(&x, &y))
+	{
+		if ((iter = select_action(sbloc, x, y)) == 0)
+			env->player.inventory.objects[index].current->action((void*)env, &env->player.inventory.objects[index]);
+		else if ((iter = select_action(sbloc, x, y)) == 1)
+			drop_object(env, &env->player.inventory.objects[index]);
+		env->player.actions.sub_action = 0;
+		SDL_FlushEvents(SDL_MOUSEBUTTONDOWN, SDL_MOUSEBUTTONUP);
 	}
 	return (0);
 }
+
+
 
 int			print_inventory(t_env *env, int x, int y)
 {
 	t_edge	edge;
 	t_edge	bloc[6];
-	int		iter;
 	t_vtx	n;
+	int		iter;
 
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	n = (t_vtx){W / 2 / 4 / 4 / 4, W / 2 / 4 / 4 / 4};
 	iter = 0;
 	edge.v1 = (t_vtx){0, 0};
 	edge.v2 = (t_vtx){env->engine.surface->w / 2, env->engine.surface->h};
-	surface_drawrect(env->engine.surface, edge, SDL_MapRGB(env->engine.surface->format, 255, 0, 0));
+	surface_drawrect(env->engine.surface, edge, SDL_MapRGB(env->engine.surface->format, 0, 0, 0));
 	while (iter < 6)
 		iter += fill_bloc(env, &bloc[iter], &n, iter);
 	iter = -1;	
@@ -364,7 +454,8 @@ int			print_inventory(t_env *env, int x, int y)
 		env->player.actions.sub_action = 1;
 		env->player.actions.edge = bloc[iter];
 	}
-	sub_action(env, env->player.actions.edge, iter);
+	while (env->player.actions.sub_action)
+		sub_action(env, env->player.actions.edge, iter, 0, 0);
 	SDL_Delay(100);
 	return (0);
 }

@@ -7,7 +7,7 @@ int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void 
 	SDL_LockSurface(e->surface);
 	DrawScreen(e);
 	if (env->player.inventory.is_active)
-		set_inventory(env);
+		print_inventory(env, 0, 0);
 	SDL_UnlockSurface(e->surface);
 	if (texture == NULL)
 		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
