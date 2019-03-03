@@ -6,19 +6,19 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/02 18:20:52 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/03 16:36:45 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 			= wolf3d
+NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
-LEN_NAME		=	`printf "%s" $(NAME) |wc -c`
-DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
+LEN_NAME		= `printf "%s" $(NAME) |wc -c`
+DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
 
 #color
-YELLOW		= "\\033[33m"
+YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"
 RED				= "\\033[31m"
 WHITE			= "\\033[0m"
@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-SRC_PATH 	= ./srcs/
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -78,6 +78,8 @@ SRC_NAME 	= main.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_edge.c \
+			utils_pixels.c \
+			utils_surface.c \
 			transformation.c \
 			move.c \
 			draw.c \
@@ -90,7 +92,6 @@ OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
 			  -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
-SRC			= $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ			= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC			= $(addprefix -I , $(INC_PATH))
 DIR			= $(sort $(dir $(OBJ)))
@@ -113,7 +114,7 @@ $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 $(OBJ_PATH) :
 	@mkdir -p $@
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
+$(OBJ_PATH)%.o: %.c | $(OBJ_PATH)
 	@$(eval DONE=$(shell echo $$(($(INDEX)*20/$(NB)))))
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
@@ -145,23 +146,11 @@ fclean: clean
 
 run: all
 	clear
-	./wolf3d ./maps/map
+	./doom
 
 lldb:
-	gcc ./srcs/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
+	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
-	lldb ./wolf3d
-
-fsani:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
-		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft
-	./wolf3d
-
-valg:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) \
-	$(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
-	-L$(LIBFT) -lft
-	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
+	lldb ./doom
 
 re: fclean all
