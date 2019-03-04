@@ -29,7 +29,6 @@ void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
 		* (container.t.v2.y - container.t.v1.y)
 		/ (container.x2 - container.x1) + container.t.v1.y) * 8;
 	(void)z;
-	unsigned r = 0xFF00FF;
 	unsigned r1 = 0xFF00FF;
 	unsigned r2 = 0xBB4EFF;
 	/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
@@ -69,7 +68,7 @@ void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
 	{
 		/* There's no container.neighbor. Render wall from top to bottom  */
 		render_cwall((t_drawline){(void *)&container, y_coord_curr.ceil,
-			y_coord_curr.floor, 0, equal ? 0 : r, 0}, env);
+			y_coord_curr.floor, 0, 0, 0}, env);
 	}
 }
 

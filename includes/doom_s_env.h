@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/04 14:10:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/04 15:59:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ int				init_container(t_env *env);
 SDL_Surface		*new_surface(char *filename);
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32			getpixel(SDL_Surface *surface, int x, int y);
+void			projection_print(t_transf container);
 #endif

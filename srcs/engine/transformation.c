@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 17:38:55 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:27:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	acquire_limits(t_engine *e, t_queue *q, t_transf *ctn, int s)
 {
-	/* Check the edge type. neighbor=-1 means wall, 
+	/* Check the edge type. neighbor=-1 means wall,
 	** other=boundary between two e->sectors. */
 	ctn->neighbor = q->sect->neighbors[s];
 
-	/* Acquire the floor and ceiling heights, 
+	/* Acquire the floor and ceiling heights,
 	** relative to where the player's view is */
 	ctn->lf_current = (t_limit_float){q->sect->ceil - e->player.where.z,
 		q->sect->floor - e->player.where.z};
@@ -34,7 +34,7 @@ void	acquire_limits(t_engine *e, t_queue *q, t_transf *ctn, int s)
 
 int		transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s)
 {
-	/* Acquire the x,y coordinates of the two endpoints 
+	/* Acquire the x,y coordinates of the two endpoints
 	** (vertices) of this edge of the sector */
 	ctn->v = current_edge(e->player.where,
 		q->sect->vertex[s], q->sect->vertex[s + 1]);
@@ -46,10 +46,13 @@ int		transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s)
 	if (ctn->t.v1.y <= 0 && ctn->t.v2.y <= 0)
 		return (0);
 
-	/* If it's partially behind the player, 
+	/* If it's partially behind the player,
 	** clip it against player's view frustrum */
 	if (ctn->t.v1.y <= 0 || ctn->t.v2.y <= 0)
+	{
+		ctn->old = (t_edge)ctn->t;
 		clip_view(&ctn->t);
+	}
 
 	/* Do perspective transformation */
 	ctn->scale = scale_edge(ctn->t);

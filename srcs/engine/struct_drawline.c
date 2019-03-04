@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/04 15:41:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:28:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,34 @@ void				render_cwall(t_drawline l, t_env *env)
 
 	pixels	= (int *)env->engine.surface->pixels;
 	sprite = env->world.surfaces.walls[0].sprite;
+
 	height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 	if (l.from == l.to)
-		pixels[l.from * W + ctn->x] = l.middle;
+		pixels[l.from * W + ctn->x] = 0xffffffff;
+	else if (ctn->x == ctn->x1 || ctn->x == ctn->x2)
+	{
+		iter = l.from + 1;
+		while (iter < l.to)
+		{
+			pixels[iter * W + ctn->x] = 0xffffffff;
+			iter++;
+		}
+	}
 	else if (l.to > l.from)
 	{
-		pixels[l.from * W + ctn->x] = l.top;
+		pixels[l.from * W + ctn->x] = 0xffffffff;
 		iter = l.from + 1;
 		float y = 0;
-		x = (float)(ctn->x - ctn->x1) / (float)(ctn->x2 - ctn->x1) * (float)sprite->w;
+
+		// float a = ctn->x2 - ctn->x1;
+		float b = (ctn->x - ctn->x1);
+		float c = ctn->p.y1b - ctn->p.y1a;
+		float d = ctn->p.y2b - ctn->p.y2a;
+		float min = fmin(c, d);
+
+		x = (int)b % (int)min % sprite->w;
 		while (iter < l.to)
 		{
 			const int pos = y / height * sprite->h;
@@ -73,7 +90,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			y++;
 			iter++;
 		}
-		pixels[l.to * W + ctn->x] = l.bottom;
+		pixels[l.to * W + ctn->x] = 0xffffffff;
 	}
 }
 

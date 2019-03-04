@@ -7,8 +7,7 @@ vertex  5 15
 vertex  15 15
 vertex  15 5
 
-sector  0 20    0 1 2 3		-1 -1 -1 -1
-sector  0 20    4 5 6 7		-1 -1 -1 -1
+sector  0 20    0 1 2 3 4		-1 -1 -1 -1 -1
 
 
 #x y sectorno angle

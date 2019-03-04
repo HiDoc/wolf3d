@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/02/28 15:59:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:25:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ struct						s_transf
 {
 	t_edge			v;
 	t_edge			t;
+	t_edge			old;
 	t_edge			scale;
 	t_limit_float	lf_current;
 	t_limit_float	lf_next;
