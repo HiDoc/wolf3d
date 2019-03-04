@@ -95,7 +95,7 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector], vertex, object->current->ref);
 			printf("On jete un objet non utilisé, on le drop ds le secteur du player\n");
 		}
-		*object = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
+		*object = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}, NULL, {0, 0}};
 		printf("L'objet a ete supprimé de l'inventaire\n");
 		env->player.inventory.nb_current_obj--;
 	}

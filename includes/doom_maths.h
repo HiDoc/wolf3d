@@ -13,12 +13,19 @@
 #ifndef DOOM_MATHS_H
 # define DOOM_MATHS_H
 
+typedef struct s_ixy			t_ixy;
 typedef struct s_vtx			t_vtx;
 typedef struct s_vctr			t_vctr;
 typedef struct s_edge			t_edge;
 typedef struct s_limit_int		t_limit_int;
 typedef struct s_limit_float	t_limit_float;
 typedef struct s_projec			t_projec;
+
+struct 							s_ixy
+{
+	int		x;
+	int		y;
+};
 
 struct							s_vtx
 {

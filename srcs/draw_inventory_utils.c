@@ -18,32 +18,33 @@ void	surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color)
 	}
 }
 
-void	surface_draw_img(SDL_Surface *surface, t_edge edge, SDL_Surface *img)
+void	surface_draw_img(t_env *env, t_edge edge, SDL_Surface *img, int index)
 {
 	int		i;
 	int		j;
-	int		x;
-	int		y;
 
-	SDL_LockSurface(surface);
-	x = 0;
+	SDL_LockSurface(env->engine.surface);
+	env->player.inventory.objects[index].mmotion.x = 0;
 	i = edge.v1.x;
 	while (i < edge.v2.x)
 	{
-		y = 0;
+		env->player.inventory.objects[index].mmotion.y = 0;
 		j = edge.v1.y;
 		while (j < edge.v2.y)
 		{
-			getpixel(img, x, y) & 0xFF000000
-			? setpixel(surface, i, j, getpixel(img, x, y))
-			: setpixel(surface, i, j, 0x88888888);
+			getpixel(img, env->player.inventory.objects[index].mmotion.x,
+			env->player.inventory.objects[index].mmotion.y) & 0xFF000000
+			? setpixel(env->engine.surface, i, j, 
+			getpixel(img, env->player.inventory.objects[index].mmotion.x, 
+			env->player.inventory.objects[index].mmotion.y))
+			: setpixel(env->engine.surface, i, j, 0x88888888);
 			j++;
-			y++;
+			env->player.inventory.objects[index].mmotion.y++;
 		}
-		x++;
+		env->player.inventory.objects[index].mmotion.x++;
 		i++;
 	}
-	SDL_UnlockSurface(surface);
+	SDL_UnlockSurface(env->engine.surface);
 }
 
 int		scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img)

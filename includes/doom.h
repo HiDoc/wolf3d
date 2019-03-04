@@ -27,7 +27,7 @@ int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
 
 int         scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
-void        surface_draw_img(SDL_Surface *surface, t_edge edge, SDL_Surface *img);
+void        surface_draw_img(t_env* env, t_edge edge, SDL_Surface *img, int i);
 void	    surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
 

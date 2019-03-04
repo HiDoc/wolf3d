@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void		put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc)
+void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, int i)
 {
 	SDL_Rect	rect;
 	SDL_Surface	*new;
@@ -19,12 +19,13 @@ void		put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc)
 		pixls[1] = img->pixels;
 		scale_img(pixls[0], pixls[1], rect, img);
 		SDL_UnlockSurface(new);
-		surface_draw_img(env->engine.surface, bloc, new);
+		surface_draw_img(env, bloc, new, i);
+		env->player.inventory.objects[i].curr_img = new;
 		SDL_FreeSurface(new);
 	}
 }
 
-int			use_drop_icon(t_env *env, t_edge bloc, int i)
+int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
 	float	blocx;
 
@@ -44,7 +45,7 @@ int			use_drop_icon(t_env *env, t_edge bloc, int i)
 	return (0);
 }
 
-int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
+int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 {
 	int inter;
 	int sbloc;
@@ -59,7 +60,7 @@ int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	{
 		put_img_inv(env, 
 		env->world.objects[env->player.inventory.objects[i].current->ref].sprite,
-		*bloc);
+		*bloc, i);
 		use_drop_icon(env, *bloc, i);
 	}
 	else
@@ -69,7 +70,7 @@ int			fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	return (1);
 }
 
-int			print_inventory(t_env *env)
+int		print_inventory(t_env *env)
 {
 	t_edge	edge;
 	t_vtx	n;
