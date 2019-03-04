@@ -49,12 +49,12 @@ int	action_inventory(t_env *env, int x, int y)
 				env->player.inventory.objects[index].current->action((void*)env, &env->player.inventory.objects[index]);
 			else if ((iter = select_action(env->player.inventory.objects[index].udbox, x, y)) == 0)
 				drop_object(env, &env->player.inventory.objects[index]);
-			else if (env->player.inventory.objects[index].curr_img)
-				drag_sprite = env->player.inventory.objects[index].curr_img;
+			drag_sprite = env->player.inventory.objects[index].curr_img;
 		}
 	}
 	if (env->sdl.event.type == SDL_MOUSEMOTION)
 	{
+		printf("ok\n");
 		if (drag_sprite)
 		{
 			env->player.inventory.objects[index].mmotion.x += env->sdl.event.motion.xrel;
