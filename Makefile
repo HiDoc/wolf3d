@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/03 17:20:37 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/04 14:10:51 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ HED_NAME	= doom.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
+			no_op.c \
 			queue.c \
 			map.c \
 			hull.c \

@@ -1,9 +1,9 @@
 #include "doom.h"
 
-int		sdl_render(t_env *env, t_engine *e)
+int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env))
 {
 	SDL_LockSurface(e->surface);
-	draw_screen(env);
+	f(env);
 	SDL_UnlockSurface(e->surface);
 	if (env->sdl.texture == NULL)
 		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
@@ -45,7 +45,7 @@ int		sdl_loop(t_env *env)
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
 	while (1)
 	{
-		sdl_render(env, e);
+		sdl_render(env, e, &draw_screen);
 		player_collision(e, &v);
 		SDL_Event ev;
 		while (SDL_PollEvent(&ev))

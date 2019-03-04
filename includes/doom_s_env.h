@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/03 17:10:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/04 14:10:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ struct								s_env
 	t_sdl			sdl;
 	t_engine		engine;
 };
-
-int				sdl_render(t_env *env, t_engine *e);
+void			no_op(t_env *env);
+int				sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env));
 int				sdl_loop(t_env *env);
 int				init_container(t_env *env);
 
