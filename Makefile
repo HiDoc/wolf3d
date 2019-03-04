@@ -69,6 +69,7 @@ SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
 			queue.c \
+			sdl_hook.c \
 			edge.c \
 			vertex.c \
 			utils_vertex.c \
@@ -80,10 +81,15 @@ SRC_NAME 	= main.c \
 			projection.c \
 			checking.c \
 			unload.c \
-			struct_obj.c \
 			struct_img.c \
-			sdl_hook.c \
-			struct_character.c
+			struct_character.c \
+			struct_object.c \
+			parse_objects.c \
+			action_object.c \
+			action_pl_object.c \
+			action_inventory.c \
+			draw_inventory.c \
+			draw_inventory_utils.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

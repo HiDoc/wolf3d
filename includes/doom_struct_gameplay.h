@@ -93,6 +93,7 @@ struct					s_inventory
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;
 	int			is_active;
+	t_edge		blocs[6];
 };
 
 struct					s_character

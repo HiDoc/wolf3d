@@ -22,8 +22,18 @@
 
 int         init_consumable(t_env *env);
 int		    pick_object(t_env *env, t_wrap_sect *obj);
+int		    drop_object(t_env *env, t_wrap_inv *object);
 int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
+
+int         scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
+void        surface_draw_img(SDL_Surface *surface, t_edge edge, SDL_Surface *img);
+void	    surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color);
+int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
+
+int			set_inventory(t_env *env);
+int			print_inventory(t_env *env);
+int         action_inventory(t_env *env, int x, int y);
 
 int         init_character(t_character *new);
 
@@ -37,7 +47,4 @@ void		LoadData(t_engine *e, t_env *env);
 void		setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32		getpixel(SDL_Surface *surface, int x, int y);
 
-int			print_inventory(t_env *env, int x, int y);
-int			set_inventory(t_env *env);
-// int			use_object(t_env *env, t_wrap_inv *object, int (action)(void *, t_wrap_inv *));
 #endif

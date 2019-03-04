@@ -31,6 +31,7 @@ struct					s_wrap_inv
 	t_wrap_sect		*current;
 	int				nb_stack;
     int             is_used;
+	t_edge			udbox[2];
 };
 
 #endif
