@@ -14,6 +14,8 @@ struct                  s_actions
     int         is_ammo;
 	int			sub_action;
 	t_edge		edge;
+	int			is_shooting;
+	int			is_loading;
 };
 
 struct					s_wrap_sect
@@ -34,6 +36,8 @@ struct					s_wrap_inv
 	t_edge			udbox[2];
 	SDL_Surface		*curr_img;
 	t_ixy			mmotion;
+	int				is_dragged;
+	t_edge			where_img;
 };
 
 #endif

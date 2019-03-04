@@ -27,12 +27,14 @@ void	surface_draw_img(t_env *env, t_edge edge, SDL_Surface *img, int index)
 
 	SDL_LockSurface(env->engine.surface);
 	x = 0;
+	env->player.inventory.objects[index].where_img.v1 = (t_vtx){edge.v1.x + env->player.inventory.objects[index].mmotion.x, edge.v1.y + env->player.inventory.objects[index].mmotion.y};
+	env->player.inventory.objects[index].where_img.v2 = (t_vtx){edge.v2.x + env->player.inventory.objects[index].mmotion.x, edge.v2.y + env->player.inventory.objects[index].mmotion.y};
 	i = edge.v1.x + env->player.inventory.objects[index].mmotion.x;
-	while (i < edge.v2.x + env->player.inventory.objects[index].mmotion.x)
+	while (i < env->player.inventory.objects[index].where_img.v2.x)
 	{
 		y = 0;
 		j = edge.v1.y + env->player.inventory.objects[index].mmotion.y;
-		while (j < edge.v2.y + env->player.inventory.objects[index].mmotion.y)
+		while (j < env->player.inventory.objects[index].where_img.v2.y)
 		{
 			getpixel(img, x, y) & 0xFF000000
 			? setpixel(env->engine.surface, i, j, getpixel(img, x, y))

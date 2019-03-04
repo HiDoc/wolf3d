@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/02 17:37:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/04 15:46:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ struct					s_object
 */
 struct					s_weapon
 {
+	SDL_Surface			*inv_sprite;
 	SDL_Surface			*sprite;
 	SDL_Surface			*sprite_bullet;
 	SDL_Surface			**sprite_reload;
@@ -88,7 +89,6 @@ struct					s_world
 struct					s_inventory
 {
 	t_weapon	*current;
-	int			index_obj;
 	t_weapon	*weapons[3];
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;

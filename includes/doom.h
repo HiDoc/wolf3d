@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/02 20:55:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:45:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int		    drop_object(t_env *env, t_wrap_inv *object);
 int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
 
+int         init_character(t_character *new);
+int		    init_weapon(t_env *env);
+
 int         scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
 void        surface_draw_img(t_env* env, t_edge edge, SDL_Surface *img, int i);
 void	    surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color);
@@ -35,9 +38,9 @@ int			set_inventory(t_env *env);
 int			print_inventory(t_env *env);
 int         action_inventory(t_env *env, int x, int y);
 
-int         init_character(t_character *new);
-
 SDL_Surface *create_surf(char *path);
+SDL_Surface *img_wpn(char *filename);
+void	    put_img(t_env *env, SDL_Surface *img, int x, int y);
 
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);

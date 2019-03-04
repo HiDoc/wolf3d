@@ -76,6 +76,7 @@ void			LoadData(t_engine *e, t_env *env)
 	}
 	init_consumable(env);
 	init_character(&env->player);
+	init_weapon(env);
 	fclose(fp);
 	free(vert);
 }

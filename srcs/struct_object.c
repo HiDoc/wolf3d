@@ -29,7 +29,7 @@ int			init_inventory(t_env *env)
 	i = 0;
 	while (i < 6)
 	{
-		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}, NULL, {0, 0}};
+		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}, NULL, {0, 0}, 0, {{0, 0}, {0, 0}}};
 		i++;
 	}
 	env->player.inventory.is_active = 0;

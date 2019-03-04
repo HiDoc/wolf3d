@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/02 18:54:02 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/04 16:04:31 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,10 @@ SRC_NAME 	= main.c \
 			action_pl_object.c \
 			action_inventory.c \
 			draw_inventory.c \
-			draw_inventory_utils.c
+			draw_inventory_utils.c \
+			weapons_inventory.c	\
+			utils_weapons.c \
+			struct_weapon.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
