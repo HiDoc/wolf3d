@@ -92,8 +92,7 @@ struct					s_inventory
 	t_weapon	*weapons[3];
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;
-	int			is_active;
-	t_edge		blocs[6];
+	t_uinv		ui;
 };
 
 struct					s_character

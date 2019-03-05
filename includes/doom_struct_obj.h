@@ -6,6 +6,17 @@
 typedef struct s_wrap_inv		t_wrap_inv;
 typedef struct s_wrap_sect      t_wrap_sect;
 typedef struct s_actions        t_actions;
+typedef struct s_uinv	        t_uinv;
+
+struct 					s_uinv
+{
+	SDL_Surface	*front_pic;
+	int			is_active;
+	t_edge		blocs[6];
+	int			wwheel;
+	int			nb_wpn;
+};
+
 
 struct                  s_actions
 {

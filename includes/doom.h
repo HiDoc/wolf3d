@@ -28,10 +28,12 @@ int		    give_health(void *e, t_wrap_inv *object);
 
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
+int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 
-int         scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
-void        surface_draw_img(t_env* env, t_edge edge, SDL_Surface *img, int i);
-void	    surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color);
+void	    put_gun(t_env *env, SDL_Surface *sprite);
+
+int		    scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
+void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
 
 int			set_inventory(t_env *env);
@@ -40,7 +42,7 @@ int         action_inventory(t_env *env, int x, int y);
 
 SDL_Surface *create_surf(char *path);
 SDL_Surface *img_wpn(char *filename);
-void	    put_img(t_env *env, SDL_Surface *img, int x, int y);
+void	    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);
 
 int			sdl_keyhook(t_env *env, SDL_Event event);
 int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);

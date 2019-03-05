@@ -1,15 +1,31 @@
 #include "doom.h"
 
-void	put_img(t_env *env, SDL_Surface *img, int x, int y)
+void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 {
-	SDL_Rect	rect;
+	int		i;
+	int		j;
+	int		x;
+	int		y;
 
-	rect.w = 128;
-	rect.h = 128;
-	rect.x = x;
-	rect.y = y;
-	if (img)
-		SDL_BlitSurface(img, NULL, env->sdl.surface, &rect);
+	SDL_LockSurface(env->engine.surface);
+	x = pxl.x;
+	i = edge.v1.x;
+	while (i < edge.v2.x)
+	{
+		y = pxl.y;
+		j = edge.v1.y;
+		while (j < edge.v2.y)
+		{
+			getpixel(img, x, y) & 0xFF000000
+			? setpixel(env->engine.surface, i, j, getpixel(img, x, y))
+			: 0;
+			j++;
+			y++;
+		}
+		x++;
+		i++;
+	}
+	SDL_UnlockSurface(env->engine.surface);
 }
 
 SDL_Surface		*create_surf(char *path)

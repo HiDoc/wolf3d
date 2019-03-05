@@ -6,11 +6,12 @@ int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void 
 
 	SDL_LockSurface(e->surface);
 	DrawScreen(e);
-	if (env->player.inventory.is_active)
+	if (env->player.inventory.ui.is_active)
 	{
 		print_inventory(env);
 		action_inventory(env, 0, 0);
 	}
+	put_gun(env, env->player.inventory.current->sprite);
 	SDL_UnlockSurface(e->surface);
 	if (texture == NULL)
 		texture = SDL_CreateTextureFromSurface(renderer, e->surface);
@@ -82,7 +83,7 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *e
 			}
 			sdl_keyhook(env, ev);
 		}
-		if (!env->player.inventory.is_active)
+		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
 		float move_vec[2] = {0.f, 0.f};
 		if(wsad[0]) { move_vec[0] += e->player.anglecos * 0.2f; move_vec[1] += e->player.anglesin * 0.2f; }

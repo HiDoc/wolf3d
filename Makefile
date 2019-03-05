@@ -82,6 +82,7 @@ SRC_NAME 	= main.c \
 			checking.c \
 			unload.c \
 			struct_img.c \
+			utils_img.c \
 			struct_character.c \
 			struct_object.c \
 			parse_objects.c \

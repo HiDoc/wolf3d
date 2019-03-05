@@ -32,7 +32,7 @@ int			init_inventory(t_env *env)
 		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}, NULL, {0, 0}, 0, {{0, 0}, {0, 0}}};
 		i++;
 	}
-	env->player.inventory.is_active = 0;
+	env->player.inventory.ui.is_active = 0;
 	return (0);
 }
 
