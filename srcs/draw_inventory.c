@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, int i)
+void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc)
 {
 	SDL_Rect	rect;
 	SDL_Surface	*new;
@@ -61,7 +61,7 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	{
 		put_img_inv(env, 
 		env->world.objects[env->player.inventory.objects[i].current->ref].sprite,
-		*bloc, i);
+		*bloc);
 		use_drop_icon(env, *bloc, i);
 	}
 	n->x = i == 2 ? W / 2 / 4 / 4 : n->x + inter;

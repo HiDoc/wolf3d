@@ -28,7 +28,7 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 	SDL_UnlockSurface(env->engine.surface);
 }
 
-SDL_Surface		*create_surf(char *path)
+SDL_Surface		*surface_fr_rgb(char *path)
 {
 	SDL_Surface	*new;
 
@@ -46,11 +46,25 @@ SDL_Surface		*img_wpn(char *filename)
 	SDL_Surface	*new;
 	char		*path;
 	const char	*png = ".png";
+	SDL_Surface	*tmp;
+	Uint32		*pixls[2];
 
 	path = ft_strjoin("./rsrc/img/weapons/", filename);
 	path = ft_strljoin(path, (char *)png);
-	new = create_surf(path);
+	new = surface_fr_rgb(path);
 	free(path);
 	path = NULL;
+	if (new->w > W || new->h > H )
+	{
+		tmp = SDL_CreateRGBSurface(0, W, H , 32, 
+		0xff000000, 0xff0000, 0xff00, 0xff);
+		pixls[0] = tmp->pixels;
+		pixls[1] = new->pixels;
+		scale_img(pixls[0], pixls[1], (SDL_Rect){W, H, 0, 0}, new);
+		free(new);
+		new = tmp;
+		pixls[0] = NULL;
+		pixls[1] = NULL;
+	}
 	return (new);
 }

@@ -57,19 +57,9 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     free(sprite);
 }
 
-t_weapon *weapon_new(void)
-{
-    t_weapon *new;
-
-    if ((new = (t_weapon *)(malloc(sizeof(t_weapon)))) == NULL)
-        return (NULL);
-    ft_bzero(new, sizeof(t_weapon));
-    return (new);
-}
-
 int		init_weapon(t_env *env)
 {
-	env->world.armory[0].ref = 0xa1e0502061A1;
+	env->world.armory[0].ref = 0xa1e0502061a1;
 	env->world.armory[1].ref = 0xa2a0602092a2;
 	env->world.armory[2].ref = 0xa8e2002102f3;
 	weapon_set(&env->world.armory[0], "ak47", 12);

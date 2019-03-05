@@ -1,5 +1,25 @@
 #include "doom.h"
 
+int loop_frames(t_env *env, int *frame)
+{
+	if (env->player.actions.is_shooting)
+	{
+		put_gun_shoot(env, *frame);
+		++(*frame);
+	}
+	else if (env->player.actions.is_loading)
+	{
+		put_gun_load(env, *frame);
+		++(*frame);
+	}
+	else
+	{
+		put_gun(env);
+		*frame = 0;
+	}
+	return (1);
+}
+
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *en)
 {
 	t_env *env = (t_env *)en;
@@ -42,14 +62,21 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
+
 int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *en)
 {
 	
 	int				wsad[4] = {0,0,0,0};
 	t_vision        v;
 	t_env *env = (t_env *)en;
+	// int		fps;
+	// Uint32	time_a;
+	// Uint32	time_b;
+	// int			frame;
 
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
+	// time_b = 0;
+	// fps = 0;
 	while (1)
 	{
 		sdl_render(texture, renderer, e, en);
@@ -82,6 +109,9 @@ int		sdl_loop(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *e
 					break;
 			}
 			sdl_keyhook(env, ev);
+			wpn_mouse_wheel(env, ev);
+			// mouse_shoot(env);
+			// loop_frames(env, &frame);
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
