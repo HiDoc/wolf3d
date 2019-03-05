@@ -52,6 +52,10 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 		ret = *(Uint32 *)p;
 	else
 		ret = 0;
+	ret = ((ret & 0xFF) << 24)
+	+ (((ret & 0xFF00) >> 8) << 16)
+	+ (((ret & 0xFF0000) >> 16) << 8)
+	+ (((ret & 0xFF000000) >> 24));
 	SDL_UnlockSurface(surface);
 	return (ret);
 }

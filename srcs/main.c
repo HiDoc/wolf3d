@@ -4,6 +4,17 @@ int		main()
 {
 	t_env			env;
 
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+				"Couldn't initialize SDL: %s", SDL_GetError());
+		return (3);
+	}
+	if (TTF_Init() < 0)
+	{
+		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
+		exit(1);
+	}
 	env.sdl.window = SDL_CreateWindow("Doom nukem",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
@@ -18,6 +29,9 @@ int		main()
 	LoadData(&env.engine, &env);
 	sdl_loop(env.sdl.texture, env.sdl.renderer, &env.engine, &env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
+	Mix_FreeChunk(env.sounds.shot);
+	Mix_CloseAudio();
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }

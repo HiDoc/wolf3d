@@ -94,6 +94,8 @@ struct					s_inventory
 	int			nb_current_obj;
 	int			is_active;
 	t_edge		blocs[6];
+	int			wwheel;
+	int			nb_wpn;
 };
 
 struct					s_character

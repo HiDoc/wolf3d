@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, int i)
+void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc)
 {
 	SDL_Rect	rect;
 	SDL_Surface	*new;
@@ -8,8 +8,8 @@ void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, int i)
 
 	rect.w = bloc.v2.x - bloc.v1.x;
 	rect.h = bloc.v2.y - bloc.v1.y;
-	rect.y = bloc.v1.y;
-	rect.x = bloc.v1.x;
+	rect.y = rect.w / 8;
+	rect.x = rect.h / 8;
 	if (img)
 	{
 		new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 
@@ -19,8 +19,7 @@ void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, int i)
 		pixls[1] = img->pixels;
 		scale_img(pixls[0], pixls[1], rect, img);
 		SDL_UnlockSurface(new);
-		surface_draw_img(env, bloc, new, i);
-		env->player.inventory.objects[i].curr_img = new;
+		draw_img(env, bloc, new);
 		SDL_FreeSurface(new);
 	}
 }
@@ -34,13 +33,13 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
 	env->player.inventory.objects[i].udbox[0].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[0].v2.y = bloc.v1.y + blocx / 7;
-	surface_drawrect(env->engine.surface,
+	draw_flat_rect(env->engine.surface,
 	env->player.inventory.objects[i].udbox[0], 0x00000000);
 	env->player.inventory.objects[i].udbox[1].v1.x = bloc.v2.x - blocx / 3;
 	env->player.inventory.objects[i].udbox[1].v1.y = bloc.v2.y - blocx / 7;
 	env->player.inventory.objects[i].udbox[1].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[1].v2.y = bloc.v2.y;
-	surface_drawrect(env->engine.surface,
+	draw_flat_rect(env->engine.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
 	return (0);
 }
@@ -56,15 +55,14 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	n->x += sbloc;
 	n->y = i < 3 ? sbloc + H / 6 : 2 * sbloc + inter + H / 6;
 	bloc->v2 = (t_vtx){n->x, n->y};
+	draw_flat_rect(env->engine.surface, *bloc, 0x88888888);
 	if (env->player.inventory.objects[i].current)
 	{
 		put_img_inv(env, 
 		env->world.objects[env->player.inventory.objects[i].current->ref].sprite,
-		*bloc, i);
+		*bloc);
 		use_drop_icon(env, *bloc, i);
 	}
-	else
-		surface_drawrect(env->engine.surface, *bloc, 0x88888888);
 	n->x = i == 2 ? W / 2 / 4 / 4 : n->x + inter;
 	n->y = i < 2 ? H / 6 : inter + H / 6 + sbloc;
 	return (1);
@@ -81,7 +79,7 @@ int		print_inventory(t_env *env)
 	iter = 0;
 	edge.v1 = (t_vtx){0, 0};
 	edge.v2 = (t_vtx){env->engine.surface->w / 2, env->engine.surface->h};
-	surface_drawrect(env->engine.surface, edge,
+	draw_flat_rect(env->engine.surface, edge,
 	SDL_MapRGB(env->engine.surface->format, 0, 0, 0));
 	while (iter < 6)
 		iter += fill_bloc(env, &env->player.inventory.blocs[iter], &n, iter);

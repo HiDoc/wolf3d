@@ -70,6 +70,8 @@ SRC_NAME 	= main.c \
 			loop.c \
 			queue.c \
 			sdl_hook.c \
+			sdl_mouse.c \
+			musics.c \
 			edge.c \
 			vertex.c \
 			utils_vertex.c \
@@ -89,10 +91,11 @@ SRC_NAME 	= main.c \
 			action_pl_object.c \
 			action_inventory.c \
 			draw_inventory.c \
-			draw_inventory_utils.c \
-			weapons_inventory.c	\
+			weapon_inventory.c \
+			utils_draw_inventory.c \
+			struct_weapon.c \
 			utils_weapons.c \
-			struct_weapon.c
+			utils_img.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

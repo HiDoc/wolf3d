@@ -20,6 +20,9 @@
 # include "doom_engine.h"
 # include "doom_struct_env.h"
 
+SDL_Surface *surface_fr_rgb(char *path);
+SDL_Surface *img_wpn(char *filename);
+
 int         init_consumable(t_env *env);
 int		    pick_object(t_env *env, t_wrap_sect *obj);
 int		    drop_object(t_env *env, t_wrap_inv *object);
@@ -28,24 +31,27 @@ int		    give_health(void *e, t_wrap_inv *object);
 
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
+void	    put_gun(t_env *env);
+void	    put_gun_load(t_env *env, int frame);
+void	    put_gun_shoot(t_env *env, int frame);
+int	        load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon);
+void	    load_sounds(t_env *env);
 
 int         scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
-void        surface_draw_img(t_env* env, t_edge edge, SDL_Surface *img, int i);
-void	    surface_drawrect(SDL_Surface *surface, t_edge edge, Uint32 color);
+void        draw_img(t_env* env, t_edge edge, SDL_Surface *img);
+void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
 
 int			set_inventory(t_env *env);
 int			print_inventory(t_env *env);
 int         action_inventory(t_env *env, int x, int y);
 
-SDL_Surface *create_surf(char *path);
-SDL_Surface *img_wpn(char *filename);
-void	    put_img(t_env *env, SDL_Surface *img, int x, int y);
-
+int         wpn_mouse_wheel(t_env *env, SDL_Event event);
+int         mouse_shoot(t_env *env);
 int			sdl_keyhook(t_env *env, SDL_Event event);
-int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);
 
 void		LoadData(t_engine *e, t_env *env);
+int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);
 
 void		setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32		getpixel(SDL_Surface *surface, int x, int y);

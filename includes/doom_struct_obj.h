@@ -34,10 +34,6 @@ struct					s_wrap_inv
 	int				nb_stack;
     int             is_used;
 	t_edge			udbox[2];
-	SDL_Surface		*curr_img;
-	t_ixy			mmotion;
-	int				is_dragged;
-	t_edge			where_img;
 };
 
 #endif

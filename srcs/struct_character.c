@@ -9,6 +9,8 @@ int     init_character(t_character *new)
     new->max_health = 200;
     new->max_shield = 200;
     new->inventory.nb_current_obj = 0;
+    new->inventory.nb_wpn = 0;
+    new->inventory.wwheel = 0;
     new->actions.sub_action = 0;
     new->actions.is_loading = 0;
     new->actions.is_shooting = 0;

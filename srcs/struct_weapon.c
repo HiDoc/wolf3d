@@ -30,7 +30,7 @@ SDL_Surface **weapon_fill(char *path, int size)
     return (weapons);
 }
 
-void weapon_set(t_weapon *weapon, char *name)
+void weapon_set(t_weapon *weapon, char *name, int dam)
 {
     char *r_path;
     char *s_path;
@@ -44,7 +44,7 @@ void weapon_set(t_weapon *weapon, char *name)
     weapon->time_shoot_between = weapon_mask(ref, 5);
     weapon->ammo_current = weapon_mask(ref, 7);
     weapon->ammo_magazine = weapon_mask(ref, 9);
-    weapon->damage = ((ref & (0xF << 11)) >> 11);
+    weapon->damage = dam;
     r_path = ft_strjoin(name, "/reload/");
     s_path = ft_strjoin(name, "/shoot/");
     sprite = ft_strjoin(name, "/");
@@ -57,26 +57,15 @@ void weapon_set(t_weapon *weapon, char *name)
     free(sprite);
 }
 
-t_weapon *weapon_new(void)
-{
-    t_weapon *new;
-
-    if ((new = (t_weapon *)(malloc(sizeof(t_weapon)))) == NULL)
-        return (NULL);
-    ft_bzero(new, sizeof(t_weapon));
-    return (new);
-}
-
 int		init_weapon(t_env *env)
 {
-	env->world.armory[0].ref = 0xa1e0502061A1;
-	weapon_set(&env->world.armory[0], "ak47");
-    printf("tyep %i\n", env->world.armory[0].type);
-    printf("time reload %i\n", env->world.armory[0].time_reload);
-    printf("time_shoot %i\n", env->world.armory[0].time_shoot);
-    printf("time_shoot_between %f\n", env->world.armory[0].time_shoot_between);
-    printf("ammo_current %i\n", env->world.armory[0].ammo_current);
-    printf("ammo_magazine %i\n", env->world.armory[0].ammo_magazine);
-    printf("damage %i\n", env->world.armory[0].damage);
+	env->world.armory[0].ref = 0xa1e0502061a1;
+	env->world.armory[1].ref = 0xa2a0602092a2;
+	env->world.armory[2].ref = 0xa8e2002102f3;
+	weapon_set(&env->world.armory[0], "ak47", 12);
+	weapon_set(&env->world.armory[1], "pistol", 17);
+	weapon_set(&env->world.armory[2], "rifle", 30);
+    env->player.inventory.weapons[0] = &env->world.armory[1];
+    env->player.inventory.current = env->player.inventory.weapons[0];
 	return (0);
 }

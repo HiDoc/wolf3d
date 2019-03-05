@@ -22,6 +22,9 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 			env->player.inventory.is_active = 1;
 		if (keycodes[SDL_SCANCODE_U])
 			env->player.inventory.is_active = 0;
+		if (keycodes[SDL_SCANCODE_R])
+			load_weapon(env, SDL_SCANCODE_R,
+			env->player.inventory.current->sprite_reload);
 	}
 	return (1);
 }
