@@ -2,7 +2,7 @@
 
 int     init_character(t_character *new)
 {
-    new->health = 100;
+    new->health = 50;
     new->shield = 0;
     new->max_weapons = 3;
     new->max_objects = 3;

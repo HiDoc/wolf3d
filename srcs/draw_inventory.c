@@ -74,7 +74,7 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	float	sbloc;
 
 	inter = (float)W / 32;
-	sbloc = (float)W / 5 - (float)W / 64;
+	sbloc = (float)W / 6 - (float)W / 64;
 	bloc->v1 = *n;
 	n->x += sbloc;
 	n->y = H - H / 32;
@@ -82,9 +82,10 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	draw_flat_rect(env->engine.surface, *bloc, 0x0);
 	bloc->v2.x = iter == 0 ? bloc->v1.x + bloc->v2.x / 4.5 : bloc->v2.x - bloc->v2.x / 4.2;
 	iter == 2 ? bloc->v2.x = n->x - n->x / 5.3 : 0;
-	put_img_inv(env, env->player.inventory.ui.icon[iter], *bloc, (t_edge){{0, 0}, {0, 0}});	
+	put_img_inv(env, env->player.inventory.ui.icon[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
+	ui_icon_data(env, (t_vtx){bloc->v2.x, bloc->v1.y}, iter);
 	n->x += inter;
-	n->y = 	H - H / 9;
+	n->y = 	H - H / 11;
 	return (1);
 }
 
@@ -108,7 +109,7 @@ int		print_inventory(t_env *env)
 	while (iter < 3)
 		iter += fill_wpn(env, &env->player.inventory.ui.wblocs[iter], &n, iter);
 	iter = 0;
-	n = (t_vtx){W / 12, H - H / 9};
+	n = (t_vtx){W / 12, H - H / 11};
 	while (iter < 3)
 		iter += fill_icon(env, &env->player.inventory.ui.iblocs[iter], &n, iter);
 	return (0);

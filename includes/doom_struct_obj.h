@@ -16,10 +16,11 @@ struct 					s_uinv
 	SDL_Surface	*empt_wpn[3];
 	SDL_Surface	*icon[3];
 	SDL_Surface	*box[2];
-	int			is_active;
+	SDL_Color	color;
 	t_edge		blocs[6];
 	t_edge		wblocs[3];
 	t_edge		iblocs[3];
+	int			is_active;
 	int			wwheel;
 	int			nb_wpn;
 };

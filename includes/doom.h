@@ -49,6 +49,7 @@ int         doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *filename);
 int         ui_put_fps(t_env *env, int fps);
+int		    ui_icon_data(t_env *env, t_vtx v, int iter);
 
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);

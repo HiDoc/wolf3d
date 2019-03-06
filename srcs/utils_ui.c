@@ -41,6 +41,7 @@ int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	surface	= TTF_RenderText_Blended(font, str, color);
     draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
 	SDL_FreeSurface(surface);
+	str = NULL;
 	TTF_CloseFont(font);
     return (1);
 }
@@ -64,12 +65,51 @@ int    ui_put_fps(t_env *env, int fps)
 
 int     ui_txt_inv(t_env *env)
 {
-    doom_font(env, "Inventory", (t_vctr){20, 15, 60}, (SDL_Color){255, 255, 255, 255});
+	char	*tmp;
+	char	*ptr;
+
+	doom_font(env, "Inventory", (t_vctr){20, 15, 60}, (SDL_Color){255, 255, 255, 255});
     doom_font(env, "Weapons", (t_vctr){20, H / 1.7, 40}, (SDL_Color){255, 255, 255, 255});
-    doom_font(env, ft_strrjoin("Level : ", ft_itoa(1)), (t_vctr){505, 15, 60}, (SDL_Color){0, 0, 255, 0});
-    text_font(env, ft_strrjoin("Sector : ",
-    ft_itoa(env->engine.player.sector)), (t_vctr){535, 95, 25}, (SDL_Color){0, 0, 255, 0});
-    text_font(env, ft_strrjoin(ft_strrjoin("Keys found : ", ft_itoa(0)), ft_strrjoin("/", ft_itoa(4))),
-    (t_vctr){525, 125, 20}, (SDL_Color){0, 0, 255, 0});
+	if (!(tmp = ft_strrjoin("Level : ", ft_itoa(1))))
+		return (0);
+    doom_font(env, tmp, (t_vctr){505, 15, 60}, (SDL_Color){255, 255, 255, 0});
+	free(tmp);
+	if (!(tmp = ft_strrjoin("Sector : ", ft_itoa(env->engine.player.sector))))
+		return (0);
+    text_font(env, tmp, (t_vctr){535, 95, 25}, (SDL_Color){255, 255, 255, 0});
+	free(tmp);
+	ptr = ft_strrjoin("Keys found : ", ft_itoa(0));
+	if (!(tmp = ft_strrjoin(ptr, ft_strrjoin("/", ft_itoa(4)))))
+		return (0);
+    text_font(env, tmp, (t_vctr){525, 125, 20}, (SDL_Color){0, 0, 255, 0});
+	free(ptr);
+	free(tmp);
     return (0);
+}
+
+int		ui_icon_data(t_env *env, t_vtx v, int iter)
+{
+	int			data;
+	SDL_Color	c;
+
+	if (iter == 0)
+	{
+		data = env->player.health;
+		c = (SDL_Color){8, 167, 8, 8};
+	}
+	else if (iter == 1)
+	{
+		data = env->player.shield;
+		c = data < 200 ? (SDL_Color){242, 204, 42, 255} : (SDL_Color){0, 191, 255, 0};
+	}
+	else
+	{
+		data = 9942;
+		c = (SDL_Color){42, 204, 242, 255};
+	}
+	if (data < 100)
+		c = (SDL_Color){0, 0, 255, 0};
+	text_font(env, ft_strljoin(ft_itoa(data), "%"),
+	(t_vctr) {v.x + 15, v.y + 8, 28}, c);
+	return (1);
 }
