@@ -20,8 +20,6 @@
 # include "doom_engine.h"
 # include "doom_struct_env.h"
 
-SDL_Surface *surface_fr_rgb(char *path);
-SDL_Surface *img_wpn(char *filename);
 
 int         init_consumable(t_env *env);
 int		    pick_object(t_env *env, t_wrap_sect *obj);
@@ -43,11 +41,12 @@ int			set_inventory(t_env *env);
 int			print_inventory(t_env *env);
 int         action_inventory(t_env *env, int x, int y);
 
-SDL_Surface *create_surf(char *path);
+SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);
 void	    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);
 
 int			sdl_keyhook(t_env *env, SDL_Event event);
+void	    load_sounds(t_env *env);
 
 void		LoadData(t_engine *e, t_env *env);
 int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);

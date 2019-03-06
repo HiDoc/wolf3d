@@ -1,25 +1,5 @@
 #include "doom.h"
 
-int loop_frames(t_env *env, int *frame)
-{
-	if (env->player.actions.is_shooting)
-	{
-		put_gun_shoot(env, *frame);
-		++(*frame);
-	}
-	else if (env->player.actions.is_loading)
-	{
-		put_gun_load(env, *frame);
-		++(*frame);
-	}
-	else
-	{
-		put_gun(env);
-		*frame = 0;
-	}
-	return (1);
-}
-
 int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void *en)
 {
 	t_env *env = (t_env *)en;

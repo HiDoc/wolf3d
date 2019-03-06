@@ -8,7 +8,7 @@ SDL_Surface *img_consumable(char *filename)
 
 	path = ft_strjoin("./rsrc/img/consumable/", filename);
 	path = ft_strljoin(path, (char *)png);
-	new = surface_fr_rgb(path);
+	new = surface_fr_png(path);
 	free(path);
 	path = NULL;
 	return (new);

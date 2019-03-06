@@ -28,7 +28,7 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 	SDL_UnlockSurface(env->engine.surface);
 }
 
-SDL_Surface		*surface_fr_rgb(char *path)
+SDL_Surface		*surface_fr_png(char *path)
 {
 	SDL_Surface	*new;
 
@@ -51,7 +51,7 @@ SDL_Surface		*img_wpn(char *filename)
 
 	path = ft_strjoin("./rsrc/img/weapons/", filename);
 	path = ft_strljoin(path, (char *)png);
-	new = surface_fr_rgb(path);
+	new = surface_fr_png(path);
 	free(path);
 	path = NULL;
 	if (new->w > W || new->h > H )

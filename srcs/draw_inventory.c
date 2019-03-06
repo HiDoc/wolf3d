@@ -20,7 +20,6 @@ void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc)
 		scale_img(pixls[0], pixls[1], rect, img);
 		SDL_UnlockSurface(new);
 		draw_img(env, bloc, new, (t_ixy){0, 0});
-		env->player.inventory.objects[i].curr_img = new;
 		SDL_FreeSurface(new);
 	}
 }
@@ -47,11 +46,11 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 
 int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 {
-	int inter;
-	int sbloc;
+	float inter;
+	float sbloc;
 
-	inter = W / 2 / 4 / 4 / 4;
-	sbloc = W / 2 / 3 - W / 2 / 4 / 4;
+	inter = (float)W / 128.0;
+	sbloc = (float)W / 6.0 - (float)W / 32.0;
 	bloc->v1 = (t_vtx){n->x, n->y};
 	n->x += sbloc;
 	n->y = i < 3 ? sbloc + H / 6 : 2 * sbloc + inter + H / 6;
@@ -69,22 +68,43 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	return (1);
 }
 
+int		fill_wpn(t_env *env, int iter, t_vtx *n)
+{
+	t_edge	bloc;
+	float inter;
+	float sbloc;
+
+	inter = (float)W / 128.0;
+	sbloc = (float)W / 6.0 - (float)W / 32.0;
+	bloc.v1 = (t_vtx){n->x, n->y};
+	n->x += sbloc;
+	n->y = H - H / 5;
+	bloc.v2 = (t_vtx){n->x, n->y};
+	if (env->player.inventory.weapons[iter])
+		draw_img(env, bloc, env->player.inventory.ui.mini_wpn[iter], (t_ixy){0, 0});
+	else
+		draw_img(env, bloc, env->player.inventory.ui.empt_wpn[iter], (t_ixy){0, 0});
+	n->x += inter;
+	return (1);
+}
+
 int		print_inventory(t_env *env)
 {
-	t_edge	edge;
 	t_vtx	n;
 	int		iter;
 	t_ixy	start;
 
 	SDL_SetRelativeMouseMode(SDL_FALSE);
-	n = (t_vtx){W / 2 / 4 / 4, H / 6};
+	n = (t_vtx){W / 32, H / 6};
 	iter = 0;
 	start.x = abs(W / 2 - env->player.inventory.ui.front_pic->w);
 	start.y = abs(H - env->player.inventory.ui.front_pic->h);
-	edge.v1 = (t_vtx){0, 0};
-	edge.v2 = (t_vtx){W / 2, H};
-	draw_img(env, edge, env->player.inventory.ui.front_pic, start);
+	draw_img(env, (t_edge){{0, 0}, {W / 2, H}}, env->player.inventory.ui.front_pic, start);
 	while (iter < 6)
 		iter += fill_bloc(env, &env->player.inventory.ui.blocs[iter], &n, iter);
+	// iter = 0;
+	// n = (t_vtx){W / 32, H - H / 2};
+	// while (iter < 3)
+	// 	iter += fill_wpn(env, iter, &n);
 	return (0);
 }

@@ -13,6 +13,10 @@ struct 					s_uinv
 	SDL_Surface	*front_pic;
 	int			is_active;
 	t_edge		blocs[6];
+	t_edge		wblocs[3];
+	SDL_Surface	*mini_wpn[3];
+	SDL_Surface	*hud_wpn[3];
+	SDL_Surface	*empt_wpn[3];
 	int			wwheel;
 	int			nb_wpn;
 };
