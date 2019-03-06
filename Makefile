@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/04 15:59:03 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/06 18:55:49 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,14 @@ $(OBJ_PATH)%.o: %.c | $(OBJ_PATH)
 	@printf "\r\033[38;5;%dm⌛ [%s]: %2d%% `printf '█%.0s' {0..$(DONE)}`%*s❙%*.*s\033[0m\033[K" $(COLOR) $(NAME) $(PERCENT) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -MMD $(CFLAGS) $(INC) -o $@ -c $<
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
+
+norminette:
+	norminette \
+	-R CheckCommentsFormat \
+	-R CheckMultipleEmptyLines \
+	-R CheckCppComment \
+	-R CheckCommentsPlacement \
+	srcs/**.c
 
 clean:
 	make -C $(LIBFT) clean

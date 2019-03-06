@@ -1321,14 +1321,14 @@ Rescan:
                     {
                         if(neigh->neighbors[c] != (int)a)
                         {
-                            fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
+                            fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) change to %u from %d \n",
                                 d, point2.x,point2.y, point1.x,point1.y, a, neigh->neighbors[c]);
                             neigh->neighbors[c] = a;
                             goto Rescan;
                         }
                         if(sect->neighbors[b] != (int)d)
                         {
-                            fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
+                            fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) change to %u from %d \n",
                                 a, point1.x,point1.y, point2.x,point2.y, d, sect->neighbors[b]);
                             sect->neighbors[b] = d;
                             goto Rescan;

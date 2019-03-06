@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/06 18:52:49 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
-t_l_int	wonder_wall(t_raycast container, t_projec projct, int *ytop, int *ybottom)
+t_l_int	wonder_wall(t_raycast container, t_projec projct,
+		int *ytop, int *ybottom)
 {
 	t_l_int		limits;
 	t_l_int		coord;
-	const int		diff_abs = container.x2 - container.x1;
-	const int		diff_curr = container.x - container.x1;
+	const int	diff_abs = container.x2 - container.x1;
+	const int	diff_curr = container.x - container.x1;
 
 	/* Acquire the Y coordinates for our ceiling
 	& floor for this X coordinate. Clamp them. */
@@ -20,8 +33,8 @@ t_l_int	wonder_wall(t_raycast container, t_projec projct, int *ytop, int *ybotto
 
 void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 {
-	t_l_int y_coord_curr;
-	t_l_int y_coord_next;
+	t_l_int 	y_coord_curr;
+	t_l_int 	y_coord_next;
 	const int	equal = container.x == container.x1 || container.x == container.x2;
 
 	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
@@ -36,7 +49,7 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 
 	/* Render ceiling: everything above this sector's ceiling height. */
 	render_ceil((t_drawline){(void *)&container, *ytop, y_coord_curr.ceil - 1,
-		0x111111 ,0x222222, 0x111111}, env);
+		0x111111 , 0x222222, 0x111111}, env);
 
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
@@ -109,7 +122,7 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	return (1);
 }
 
-void    draw_screen(t_env *env)
+void	draw_screen(t_env *env)
 {
 	t_queue		queue;
 	t_engine	*engine;
