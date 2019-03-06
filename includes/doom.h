@@ -44,7 +44,11 @@ int			print_inventory(t_env *env);
 int         action_inventory(t_env *env, int x, int y);
 void	    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
 
+int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
+int         doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
+int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *filename);
+int         ui_put_fps(t_env *env, int fps);
 
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);

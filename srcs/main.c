@@ -19,6 +19,7 @@ int		main()
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		W, H, SDL_WINDOW_SHOWN);
+	// SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
 	env.sdl.texture = NULL;
 	env.engine.NumSectors = 0;

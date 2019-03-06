@@ -15,6 +15,7 @@ struct 					s_uinv
 	SDL_Surface	*hud_wpn[3];
 	SDL_Surface	*empt_wpn[3];
 	SDL_Surface	*icon[3];
+	SDL_Surface	*box[2];
 	int			is_active;
 	t_edge		blocs[6];
 	t_edge		wblocs[3];

@@ -96,7 +96,8 @@ SRC_NAME 	= main.c \
 			weapons_inventory.c \
 			utils_draw_inventory.c \
 			struct_weapon.c \
-			utils_weapons.c
+			utils_weapons.c \
+			utils_ui.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
