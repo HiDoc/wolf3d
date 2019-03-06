@@ -146,7 +146,9 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
-
+parser:
+	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
+	./parser map.txt
 run: all
 	clear
 	./doom
