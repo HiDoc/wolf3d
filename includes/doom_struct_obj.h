@@ -14,11 +14,11 @@ struct 					s_uinv
 	SDL_Surface	*mini_wpn[3];
 	SDL_Surface	*hud_wpn[3];
 	SDL_Surface	*empt_wpn[3];
-	SDL_Surface	*icon[2];
+	SDL_Surface	*icon[3];
 	int			is_active;
 	t_edge		blocs[6];
 	t_edge		wblocs[3];
-	t_edge		iblocs[2];
+	t_edge		iblocs[3];
 	int			wwheel;
 	int			nb_wpn;
 };

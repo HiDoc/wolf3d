@@ -25,12 +25,12 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	float inter;
 	float sbloc;
 
-	inter = (float)W / 128.0;
-	sbloc = (float)W / 6.0 - (float)W / 32.0;
-	bloc->v1 = (t_vtx){n->x, n->y};
+	inter = (float)W / 128;
+	sbloc = (float)W / 6 - (float)W / 32;
+	bloc->v1 = *n;
 	n->x += sbloc;
 	n->y = i < 3 ? sbloc + H / 6 : 2 * sbloc + inter + H / 6;
-	bloc->v2 = (t_vtx){n->x, n->y};
+	bloc->v2 = *n;
 	draw_flat_rect(env->engine.surface, *bloc, 0x88888888);
 	if (env->player.inventory.objects[i].current)
 	{
@@ -51,12 +51,12 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	float inter;
 	float sbloc;
 
-	inter = (float)W / 128.0;
-	sbloc = (float)W / 4.0 - (float)W / 32.0;
-	bloc->v1 = (t_vtx){n->x, n->y};
+	inter = (float)W / 128;
+	sbloc = (float)W / 4 - (float)W / 32;
+	bloc->v1 = *n;
 	n->x += sbloc;
-	n->y = H - H / 6.0;
-	bloc->v2 = (t_vtx){n->x, n->y};
+	n->y = H - H / 6;
+	bloc->v2 = *n;
 	if (env->player.inventory.weapons[iter])
 		put_img_inv(env, env->player.inventory.ui.mini_wpn[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
 	else
@@ -71,17 +71,18 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	float	inter;
 	float	sbloc;
 
-	(void)iter;
-	inter = (float)W / 128.0;
-	sbloc = (float)W / 4.0 - (float)W / 64.0;
-	bloc->v1 = (t_vtx){n->x, n->y};
+	inter = (float)W / 32;
+	sbloc = (float)W / 5 - (float)W / 64;
+	bloc->v1 = *n;
 	n->x += sbloc;
-	n->y = H - H / 8;
-	bloc->v2 = (t_vtx){n->x, n->y};
-	draw_flat_rect(env->engine.surface, *bloc, 0x88888888);
-	// put_img_inv(env, env->player.inventory.ui.mini_wpn[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
+	n->y = H - H / 32;
+	bloc->v2 = *n;
+	draw_flat_rect(env->engine.surface, *bloc, 0x0);
+	bloc->v2.x = iter == 0 ? bloc->v1.x + bloc->v2.x / 4.5 : bloc->v2.x - bloc->v2.x / 4.2;
+	iter == 2 ? bloc->v2.x = n->x - n->x / 5.3 : 0;
+	put_img_inv(env, env->player.inventory.ui.icon[iter], *bloc, (t_edge){{0, 0}, {0, 0}});	
 	n->x += inter;
-	n->y = 	H - H / 10;
+	n->y = 	H - H / 9;
 	return (1);
 }
 
@@ -104,8 +105,8 @@ int		print_inventory(t_env *env)
 	while (iter < 3)
 		iter += fill_wpn(env, &env->player.inventory.ui.wblocs[iter], &n, iter);
 	iter = 0;
-	n = (t_vtx){W / 16, H - H / 4};
-	while (iter < 2)
+	n = (t_vtx){W / 12, H - H / 9};
+	while (iter < 3)
 		iter += fill_icon(env, &env->player.inventory.ui.iblocs[iter], &n, iter);
 	return (0);
 }

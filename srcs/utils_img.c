@@ -9,8 +9,8 @@ int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
     Uint32  *src;
 
     src = img->pixels;
-	scale.x = (float)img->w / (float)(rect.w - rect.x);
-	scale.y = (float)img->h / (float)(rect.h - rect.y);
+	scale.x = fabs((float)img->w / (float)(rect.w - rect.x));
+	scale.y = fabs((float)img->h / (float)(rect.h - rect.y));
 	x = 0;
 	while (x < rect.w - rect.x)
 	{
