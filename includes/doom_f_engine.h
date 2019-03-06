@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/03 17:58:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/05 11:51:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void		render_floor(t_drawline line, t_env *env);
 void		render_nfloor(t_drawline line, t_env *env);
 void		render_ceil(t_drawline line, t_env *env);
 void		render_nceil(t_drawline line, t_env *env);
-int			transform_vertex(t_engine *e, t_queue *q, t_transf *ctn, int s);
+int			transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s);
 #endif

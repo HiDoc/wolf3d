@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/04 18:28:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/06 17:03:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void				vline(t_drawline l, t_env *env)
 	int		x;
 	int		iter;
 
-	x = ((t_transf *)l.container)->x;
+	x = ((t_raycast *)l.container)->x;
 	pixels	= (int *)env->engine.surface->pixels;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
@@ -29,7 +29,7 @@ void				vline(t_drawline l, t_env *env)
 		pixels[l.from * W + x] = l.middle;
 	else if (l.to > l.from)
 	{
-		pixels[l.from * W + x] = l.top;
+		pixels[l.from * W + x] = 0xff00ffff;
 		iter = l.from + 1;
 		int y = 0;
 		while (iter < l.to)
@@ -38,25 +38,24 @@ void				vline(t_drawline l, t_env *env)
 			y++;
 			iter++;
 		}
-		pixels[l.to * W + x] = l.bottom;
+		pixels[l.to * W + x] = 0xff00ffff;
 	}
 }
 
 void				render_cwall(t_drawline l, t_env *env)
 {
-	t_transf	*ctn;
+	t_raycast	*ctn;
 	int			*pixels;
 	SDL_Surface	*sprite;
 	int			iter;
-	float		height;
 	int			x;
 
-	ctn = ((t_transf *)l.container);
+	ctn = ((t_raycast *)l.container);
 
 	pixels	= (int *)env->engine.surface->pixels;
 	sprite = env->world.surfaces.walls[0].sprite;
 
-	height = l.to - l.from;
+	float height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 	if (l.from == l.to)
@@ -72,23 +71,51 @@ void				render_cwall(t_drawline l, t_env *env)
 	}
 	else if (l.to > l.from)
 	{
+		t_projec p = ctn->p;
 		pixels[l.from * W + ctn->x] = 0xffffffff;
 		iter = l.from + 1;
+
 		float y = 0;
-
-		// float a = ctn->x2 - ctn->x1;
-		float b = (ctn->x - ctn->x1);
-		float c = ctn->p.y1b - ctn->p.y1a;
-		float d = ctn->p.y2b - ctn->p.y2a;
-		float min = fmin(c, d);
-
-		x = (int)b % (int)min % sprite->w;
-		while (iter < l.to)
+		float scaley = (ctn->li_sector.ceil - ctn->li_sector.floor) / 20;
+		float a = ctn->x2 - ctn->x1;
+		float b = a - (ctn->x - ctn->x1);
+		float c = (p.y2a - p.y1a);
+		float d = c * b / a - p.y2a;
+		x = (b / a * scaley) * sprite->w;
+		int pos;
+		if (p.y1a < 0 && l.from == 0)
 		{
-			const int pos = y / height * sprite->h;
-			pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
-			y++;
-			iter++;
+			height += d;
+			y += d;
+			while (iter < l.to)
+			{
+				pos = (y / height * scaley) * sprite->h;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				y++;
+				iter++;
+			}
+		}
+		else if (p.y2a < 0 && l.from == 0)
+		{
+			height += d;
+			y += d;
+			while (iter < l.to)
+			{
+				pos = (y / height * scaley) * sprite->h;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				y++;
+				iter++;
+			}
+		}
+		else
+		{
+			while (iter < l.to)
+			{
+				pos = (y / height * scaley) * sprite->h;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				y++;
+				iter++;
+			}
 		}
 		pixels[l.to * W + ctn->x] = 0xffffffff;
 	}

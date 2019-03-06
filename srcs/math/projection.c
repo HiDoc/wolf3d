@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 21:26:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/25 21:26:03 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/05 12:19:55 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static float	yaw(float p_yaw, float y, float z)
 	return (y + z * p_yaw);
 }
 
-t_projec		calc_projection(float p, t_limit_float l, t_edge t, t_edge s)
+t_projec		calc_projection(float p, t_l_float l, t_edge t, t_edge s)
 {
 	t_projec	projection;
 	const int	h2 = H / 2;

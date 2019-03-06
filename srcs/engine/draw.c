@@ -1,9 +1,9 @@
 #include "doom.h"
 
-t_limit_int	wonder_wall(t_transf container, t_projec projct, int *ytop, int *ybottom)
+t_l_int	wonder_wall(t_raycast container, t_projec projct, int *ytop, int *ybottom)
 {
-	t_limit_int		limits;
-	t_limit_int		coord;
+	t_l_int		limits;
+	t_l_int		coord;
 	const int		diff_abs = container.x2 - container.x1;
 	const int		diff_curr = container.x - container.x1;
 
@@ -18,16 +18,16 @@ t_limit_int	wonder_wall(t_transf container, t_projec projct, int *ytop, int *ybo
 	return (limits);
 }
 
-void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
+void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 {
-	t_limit_int y_coord_curr;
-	t_limit_int y_coord_next;
+	t_l_int y_coord_curr;
+	t_l_int y_coord_next;
 	const int	equal = container.x == container.x1 || container.x == container.x2;
 
 	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 	const int z = ((container.x - container.x1)
-		* (container.t.v2.y - container.t.v1.y)
-		/ (container.x2 - container.x1) + container.t.v1.y) * 8;
+		* (container.rot.v2.y - container.rot.v1.y)
+		/ (container.x2 - container.x1) + container.rot.v1.y) * 8;
 	(void)z;
 	unsigned r1 = 0xFF00FF;
 	unsigned r2 = 0xBB4EFF;
@@ -41,7 +41,6 @@ void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
 		0x0000FF, 0x0000AA, 0x0000FF}, env);
-
 	/* Is there another sector behind this edge? */
 	if (container.neighbor >= 0)
 	{
@@ -78,7 +77,7 @@ void	render_wall(t_env *env, t_transf container, int *ytop, int *ybottom)
 int		render_sector_edges(t_env *env, t_queue *q, int s)
 {
 	t_engine	*e;
-	t_transf	container;
+	t_raycast	container;
 	int			start;
 	int			end;
 
@@ -89,6 +88,10 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	end = (int)fmin(container.x2, q->now.sx2);
 	start = (int)fmax(container.x1, q->now.sx1);
 	container.x = start;
+	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
+		env->engine.sectors[q->now.sectorno].floor};
+	// printf("{%d, %d}, {%d,  %d}\n", container.p.y1a,container.p.y1b, container.p.y2a, container.p.y2b );
+	// printf("{%d, %d} %d\n", container.x1, container.x2, container.x);
 	while (container.x <= end)
 	{
 		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
@@ -114,6 +117,7 @@ void    draw_screen(t_env *env)
 
 	engine = &env->engine;
 	ini_queue(engine, &queue);
+	// system("clear");
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)

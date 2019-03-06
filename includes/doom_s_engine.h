@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/04 16:25:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/05 12:20:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct	s_item		t_item;
 typedef struct	s_engine	t_engine;
 typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
-typedef struct	s_transf	t_transf;
+typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
 
 struct						s_chain
@@ -83,14 +83,14 @@ struct						s_vision
 	float		eyeheight;
 };
 
-struct						s_transf
+struct						s_raycast
 {
-	t_edge			v;
-	t_edge			t;
-	t_edge			old;
+	t_edge			curr;
+	t_edge			rot;
 	t_edge			scale;
-	t_limit_float	lf_current;
-	t_limit_float	lf_next;
+	t_l_float		lf_current;
+	t_l_float		lf_next;
+	t_l_int			li_sector;
 	t_projec		p;
 	t_projec		n;
 	int				x;

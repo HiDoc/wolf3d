@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/28 20:11:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/05 12:20:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 typedef struct s_vtx			t_vtx;
 typedef struct s_vctr			t_vctr;
 typedef struct s_edge			t_edge;
-typedef struct s_limit_int		t_limit_int;
-typedef struct s_limit_float	t_limit_float;
+typedef struct s_l_int			t_l_int;
+typedef struct s_l_float		t_l_float;
 typedef struct s_projec			t_projec;
 typedef struct s_du_int			t_du_int;
 
@@ -54,13 +54,13 @@ struct							s_du_int
 	unsigned b;
 };
 
-struct							s_limit_int
+struct							s_l_int
 {
 	int		ceil;
 	int		floor;
 };
 
-struct							s_limit_float
+struct							s_l_float
 {
 	float	ceil;
 	float	floor;

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/28 20:46:11 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/05 12:19:55 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 float		cross_product(t_vtx v1, t_vtx v2);
 t_vtx		intersect_vtx(t_vtx v1, t_vtx v2, t_vtx v3, t_vtx v4);
-t_projec	calc_projection(float p, t_limit_float l, t_edge t, t_edge s);
+t_projec	calc_projection(float p, t_l_float l, t_edge t, t_edge s);
 
 t_vtx		add_vertex(t_vtx v1, t_vtx v2);
 t_vtx		diff_vertex(t_vtx v1, t_vtx v2);

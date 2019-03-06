@@ -324,10 +324,10 @@ InitializeTextures:;
 }
 
 #ifdef LightMapping
-#define vlen(x,y,z) sqrtf((x)*(x) + (y)*(y) + (z)*(z))
-#define vlen2(x0,y0,z0, x1,y1,z1) vlen((x1)-(x0), (y1)-(y0), (z1)-(z0))
-#define vdot3(x0,y0,z0, x1,y1,z1) ((x0)*(x1) + (y0)*(y1) + (z0)*(z1))
-#define vxs3(x0,y0,z0, x1,y1,z1) (struct xyz){ vxs(y0,z0, y1,z1), vxs(z0,x0, z1,x1), vxs(x0,y0, x1,y1) }
+# define vlen(x,y,z) sqrtf((x)*(x) + (y)*(y) + (z)*(z))
+# define vlen2(x0,y0,z0, x1,y1,z1) vlen((x1)-(x0), (y1)-(y0), (z1)-(z0))
+# define vdot3(x0,y0,z0, x1,y1,z1) ((x0)*(x1) + (y0)*(y1) + (z0)*(z1))
+# define vxs3(x0,y0,z0, x1,y1,z1) (struct xyz){ vxs(y0,z0, y1,z1), vxs(z0,x0, z1,x1), vxs(x0,y0, x1,y1) }
 
 struct Intersection
 {

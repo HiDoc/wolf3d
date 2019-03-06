@@ -48,9 +48,10 @@ int		sdl_loop(t_env *env)
 		sdl_render(env, e, &draw_screen);
 		player_collision(e, &v);
 		SDL_Event ev;
+
 		while (SDL_PollEvent(&ev))
 		{
-
+			// SDL_WaitEvent(&ev);
 			switch(ev.type)
 			{
 				case SDL_KEYDOWN:
@@ -63,7 +64,9 @@ int		sdl_loop(t_env *env)
 						case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
 						case 'q': return (0);
 						case ' ': /* jump */
-							if (v.ground) { e->player.velocity.z += 0.5; v.falling = 1; }
+							// if (v.ground) {
+								e->player.velocity.z += 0.5; v.falling = 1;
+							// }
 							break;
 						case SDLK_LCTRL: /* duck */
 						case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;
