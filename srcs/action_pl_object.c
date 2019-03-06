@@ -63,8 +63,8 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.objects[index].current = obj;
 			printf("On a placé l'objet de ref %i dans l'inventaire et augmenté sa stack a %i\n", env->player.inventory.objects[index].current->ref, env->player.inventory.objects[index].nb_stack);
+			env->player.inventory.nb_current_obj++;
 		}
-		env->player.inventory.nb_current_obj++;
 		obj->is_picked = 1;
 		//******************************
 		//******************************

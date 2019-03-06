@@ -1,12 +1,14 @@
 #include "doom.h"
 
-int		scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img)
+int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
 {
 	int		x;
 	int		y;
 	t_vtx	scale;
 	Uint32	p;
+    Uint32  *src;
 
+    src = img->pixels;
 	scale.x = (float)img->w / (float)(rect.w - rect.x);
 	scale.y = (float)img->h / (float)(rect.h - rect.y);
 	x = 0;
@@ -16,7 +18,7 @@ int		scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img)
 		while (y < rect.h - rect.y)
 		{
 			p = src[img->w * (int)(y * scale.y) + (int)(x * scale.x)];
-			dest[rect.w * (y + rect.h / 12) + (x + rect.w / 12)] = p;
+			dest[rect.w * (y + padding.y) + (x + padding.x)] = p;
 			y++;
 		}
 		x++;

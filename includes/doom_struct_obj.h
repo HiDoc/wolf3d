@@ -11,12 +11,14 @@ typedef struct s_uinv	        t_uinv;
 struct 					s_uinv
 {
 	SDL_Surface	*front_pic;
-	int			is_active;
-	t_edge		blocs[6];
-	t_edge		wblocs[3];
 	SDL_Surface	*mini_wpn[3];
 	SDL_Surface	*hud_wpn[3];
 	SDL_Surface	*empt_wpn[3];
+	SDL_Surface	*icon[2];
+	int			is_active;
+	t_edge		blocs[6];
+	t_edge		wblocs[3];
+	t_edge		iblocs[2];
 	int			wwheel;
 	int			nb_wpn;
 };

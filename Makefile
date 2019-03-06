@@ -90,6 +90,7 @@ SRC_NAME 	= main.c \
 			parse_objects.c \
 			action_object.c \
 			action_pl_object.c \
+			struct_inventory.c \
 			action_inventory.c \
 			draw_inventory.c \
 			weapons_inventory.c \

@@ -57,50 +57,17 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     free(sprite);
 }
 
-SDL_Surface *ui_wpn_img(char *filename)
-{
-	SDL_Surface	*new;
-	char		*path;
-	const char	*png = ".png";
-
-	path = ft_strjoin("./rsrc/img/inventory/wpn/", filename);
-	path = ft_strljoin(path, (char *)png);
-	new = surface_fr_png(path);
-	free(path);
-	path = NULL;
-	return (new);
-}
-
-int     init_wpn_inv(t_env *env)
-{
-    env->player.inventory.ui.mini_wpn[0] = ui_wpn_img("lmini_ak");
-    env->player.inventory.ui.mini_wpn[1] = ui_wpn_img("lmini_pistol");
-    env->player.inventory.ui.mini_wpn[2] = ui_wpn_img("lmini_rifle");
-    env->player.inventory.ui.hud_wpn[0] = ui_wpn_img("hud_ak");
-    env->player.inventory.ui.hud_wpn[1] = ui_wpn_img("hud_pistol");
-    env->player.inventory.ui.hud_wpn[2] = ui_wpn_img("hud_rifle");
-    env->player.inventory.ui.empt_wpn[0] = ui_wpn_img("empty_ak");
-    env->player.inventory.ui.empt_wpn[1] = ui_wpn_img("empty_pistol");
-    env->player.inventory.ui.empt_wpn[2] = ui_wpn_img("empty_rifle");
-    return (0);
-}
-
 int		init_weapon(t_env *env)
 {
-	env->world.armory[1].ref = 0xa1e0502061a1;
-	env->world.armory[0].ref = 0xa2a0602092a2;
+	env->world.armory[0].ref = 0xa1e0502061a1;
+	env->world.armory[1].ref = 0xa2a0602092a2;
 	env->world.armory[2].ref = 0xa8e2002102f3;
-	weapon_set(&env->world.armory[1], "ak47", 12);
-	weapon_set(&env->world.armory[0], "pistol", 17);
+	weapon_set(&env->world.armory[0], "ak47", 12);
+	weapon_set(&env->world.armory[1], "pistol", 17);
 	weapon_set(&env->world.armory[2], "rifle", 30);
     env->player.inventory.weapons[0] = &env->world.armory[0];
-    env->player.inventory.weapons[1] = &env->world.armory[1];
-    env->player.inventory.weapons[2] = &env->world.armory[2];
+    env->player.inventory.weapons[1] = NULL;
+    env->player.inventory.weapons[2] = NULL;
     env->player.inventory.current = env->player.inventory.weapons[0];
-    env->player.inventory.ui.front_pic = surface_fr_png("./rsrc/img/inventory/fond.png");
-	env->player.inventory.ui.wwheel = 0;
-    env->player.inventory.ui.nb_wpn = 3;    
-    env->player.inventory.nb_current_obj = 0;
-    init_wpn_inv(env);
     return (0);
 }

@@ -29,17 +29,22 @@ int		    give_health(void *e, t_wrap_inv *object);
 
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
+int         init_inventory_ui(t_env *env);
+
 int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 
 void	    put_gun(t_env *env, SDL_Surface *sprite);
 
-int		    scale_img(Uint32 *dest, Uint32 *src, SDL_Rect rect, SDL_Surface *img);
+int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding);
 void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
 
 int			set_inventory(t_env *env);
 int			print_inventory(t_env *env);
 int         action_inventory(t_env *env, int x, int y);
+void	    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
+
+SDL_Surface *ui_img(char *filename);
 
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);

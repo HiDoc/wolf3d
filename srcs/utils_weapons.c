@@ -21,7 +21,6 @@ void	put_gun_shoot(t_env *env, int frame)
 		put_gun(env, weapon->sprite_shoot[frame]);
 	else
 		env->player.actions.is_shooting = 0;
-	// 	put_img(env, weapon->sprite_shoot[frame], 200, 170);
 }
 
 void	put_gun_load(t_env *env, int frame)
@@ -34,8 +33,6 @@ void	put_gun_load(t_env *env, int frame)
 		put_gun(env, weapon->sprite_reload[frame]);
 	else
 		env->player.actions.is_loading = 0;
-
-	// 	put_img(env, weapon->sprite_reload[frame], 200, 170);
 }
 
 void	put_gun(t_env *env, SDL_Surface *sprite)
