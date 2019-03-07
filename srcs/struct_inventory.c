@@ -4,8 +4,7 @@ int     init_icon(t_env *env)
 {
     if ((env->player.inventory.ui.icon[0] = ui_img("icons/icon_health"))
     && (env->player.inventory.ui.icon[1] = ui_img("icons/icon_shield"))
-    && (env->player.inventory.ui.icon[2] = ui_img("icons/icon_key"))
-    && (env->player.inventory.ui.cross = ui_img("icons/icon_cross")))
+    && (env->player.inventory.ui.icon[2] = ui_img("icons/icon_key")))
         return (1);
     return (0);
 }

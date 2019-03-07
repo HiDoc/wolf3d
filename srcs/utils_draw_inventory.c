@@ -30,14 +30,19 @@ void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding)
 	rect.x = padding.v1.y;
 	if (img)
 	{
-		new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 
-		0xff000000, 0xff0000, 0xff00, 0xff);
-		SDL_LockSurface(new);
-		pixls = new->pixels;
-		scale_img(pixls, rect, img, (t_ixy){padding.v2.x, padding.v2.y});
-		SDL_UnlockSurface(new);
-		draw_img(env, bloc, new, (t_ixy){0, 0});
-		SDL_FreeSurface(new);
-		new = NULL;
+		if (rect.w < img->w || rect.h < img->h)
+		{
+			new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 
+			0xff000000, 0xff0000, 0xff00, 0xff);
+			SDL_LockSurface(new);
+			pixls = new->pixels;
+			scale_img(pixls, rect, img, (t_ixy){padding.v2.x, padding.v2.y});
+			SDL_UnlockSurface(new);
+			draw_img(env, bloc, new, (t_ixy){0, 0});
+			SDL_FreeSurface(new);
+			new = NULL;
+		}
+		else
+			draw_img(env, bloc, img, (t_ixy){0, 0});
 	}
 }

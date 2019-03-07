@@ -113,3 +113,5 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 	(t_vctr) {v.x + 15, v.y + 8, 28}, c);
 	return (1);
 }
+
+// int		use_drop_inv(t_env *, t_edge **blocs, int)

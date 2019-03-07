@@ -9,16 +9,10 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
 	env->player.inventory.objects[i].udbox[0].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[0].v2.y = bloc.v1.y + blocx / 7;
-	// draw_flat_rect(env->engine.surface,
-	// env->player.inventory.objects[i].udbox[0], 0x0);
-	// doom_font(env, "X",
-	// (t_vctr){env->player.inventory.objects[i].udbox[0].v1.x + 2,
-	// env->player.inventory.objects[i].udbox[0].v1.y, 25},
-	// (SDL_Color){255, 255, 255, 255});
-
-	// put_img_inv(env, env->player.inventory.ui.cross, 
-	// env->player.inventory.objects[i].udbox[0], 
-	// (t_edge){{0, 0}, {0, 0}});
+	text_font(env, "X", 
+	(t_vctr){env->player.inventory.objects[i].udbox[0].v1.x + 2,
+	env->player.inventory.objects[i].udbox[0].v1.y, 30},
+	(SDL_Color){255, 255, 255, 255});
 	env->player.inventory.objects[i].udbox[1].v1.x = bloc.v2.x - blocx / 3;
 	env->player.inventory.objects[i].udbox[1].v1.y = bloc.v2.y - blocx / 7;
 	env->player.inventory.objects[i].udbox[1].v2.x = bloc.v2.x;
@@ -29,6 +23,10 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	(t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
 	env->player.inventory.objects[i].udbox[1].v1.y, 20},
 	(SDL_Color){255, 255, 255, 255});
+	// text_font(env, "use", 
+	// (t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
+	// env->player.inventory.objects[i].udbox[1].v1.y, 20},
+	// (SDL_Color){255, 255, 255, 255});
 	return (0);
 }
 
