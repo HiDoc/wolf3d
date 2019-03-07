@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 14:04:25 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/07 18:33:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 /*
 ** Define window size
 */
-# define W				1024
-# define H				768
+# define W				1000
+# define H				800
 
 /*
 ** Define maximum queue in renderer

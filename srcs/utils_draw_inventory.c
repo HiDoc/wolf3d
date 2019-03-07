@@ -32,7 +32,7 @@ void	put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding)
 	{
 		if (rect.w < img->w || rect.h < img->h)
 		{
-			new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 
+			new = SDL_CreateRGBSurface(0, rect.w, rect.h, 32,
 			0xff000000, 0xff0000, 0xff00, 0xff);
 			SDL_LockSurface(new);
 			pixls = new->pixels;

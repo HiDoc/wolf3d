@@ -43,9 +43,7 @@ void	put_gun(t_env *env, SDL_Surface *sprite)
 	x = W - sprite->w;
 	y = H - sprite->h;
 	if (x < 0 || y < 0)
-		draw_img(env, (t_edge){{0, 0}, {W, H}},
-		sprite,
-		(t_ixy){x < 0 ? -x : x, y < 0 ? -y : y});
+		put_img_inv(env, sprite, (t_edge){{0, 0}, {W, H}}, (t_edge){{0, 0}, {0, 0}});
 	else
 		draw_img(env, (t_edge){{x, y}, {W, H}},
 		sprite,

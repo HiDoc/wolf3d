@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 13:08:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/07 17:33:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ typedef struct s_l_float		t_l_float;
 typedef struct s_projec			t_projec;
 typedef struct s_du_int			t_du_int;
 typedef struct s_ixy			t_ixy;
+typedef struct s_rgba			t_rgba;
+
+struct 							s_rgba
+{
+	Uint8	r;
+	Uint8	g;
+	Uint8	b;
+	Uint8	a;
+};
 
 struct 							s_ixy
 {

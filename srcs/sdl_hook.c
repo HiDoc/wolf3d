@@ -19,9 +19,7 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 		if (keycodes[SDL_SCANCODE_RIGHT])
 			give_shield(env, env->player.hud.shortcut[1]);
 		if (keycodes[SDL_SCANCODE_TAB])
-			env->player.inventory.ui.is_active = 1;
-		if (keycodes[SDL_SCANCODE_U])
-			env->player.inventory.ui.is_active = 0;
+			env->player.inventory.ui.is_active = !env->player.inventory.ui.is_active;
 	}
 	return (1);
 }

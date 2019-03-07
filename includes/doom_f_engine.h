@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 13:34:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/07 17:29:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 void	    put_gun(t_env *env, SDL_Surface *sprite);
 
 int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding);
+int			SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);
 

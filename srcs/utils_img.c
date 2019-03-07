@@ -25,3 +25,38 @@ int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
 	}
 	return (0);
 }
+
+int	 SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c)
+{
+    SDL_PixelFormat	*fmt;
+	int				x;
+	int				y;
+	Uint32			*p;
+	unsigned		bpp;
+
+	fmt = surface->format;
+	bpp = fmt->BytesPerPixel;
+	// Scaling factor to clamp alpha to [0, alpha].
+	SDL_LockSurface(surface);
+	y = 0;
+	while (y < surface->h)
+	{
+		x = 0;
+		while (x < surface->w)
+		{
+			p = (Uint32 *)(
+				(Uint8 *)surface->pixels
+				+ y * surface->pitch
+				+ x * bpp
+				);
+			// Get the old pixel components.
+			SDL_GetRGBA( *p, fmt, &c->r, &c->g, &c->b, &c->a );
+			// Set the pixel with the new alpha.
+			*p = SDL_MapRGBA( fmt, c->r, c->g, c->b, (float)(alpha / 255.0f) * c->a );
+			x++;
+		}
+		y++;
+	}
+	SDL_UnlockSurface(surface);
+	return (1);
+}

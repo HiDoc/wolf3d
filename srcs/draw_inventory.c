@@ -3,10 +3,9 @@
 int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
 	float	blocx;
-	t_object *curr = &env->player.inventory.objects[i];
 
 	blocx = bloc.v2.x - bloc.v1.x;
-	curr->udbox[0].v1.x = bloc.v2.x - blocx / 7;
+	env->player.inventory.objects[i].udbox[0].v1.x = bloc.v2.x - blocx / 7;
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
 	env->player.inventory.objects[i].udbox[0].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[0].v2.y = bloc.v1.y + blocx / 7;
@@ -65,10 +64,10 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	float sbloc;
 
 	inter = (float)W / 64;
-	sbloc = (float)W / 5 - (float)W / 32;
+	sbloc = (float)W / 5 - (float)W / 16;
 	bloc->v1 = *n;
 	n->x += sbloc;
-	n->y = H - H / 5;
+	n->y = H - H / 4.8;
 	bloc->v2 = *n;
 	if (env->player.inventory.weapons[iter])
 		put_img_inv(env, env->player.inventory.ui.mini_wpn[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
@@ -107,9 +106,10 @@ int		print_inventory(t_env *env)
 	t_ixy	start;
 
 	SDL_SetRelativeMouseMode(SDL_FALSE);
-	start.x = fabs(W / 1.4 - env->player.inventory.ui.front_pic->w);
+	start.x = fabs(W / 2.0 - env->player.inventory.ui.front_pic->w);
 	start.y = abs(H - env->player.inventory.ui.front_pic->h);
-	draw_img(env, (t_edge){{0, 0}, {W / 1.4, H}}, env->player.inventory.ui.front_pic, start);
+	// put_img_inv(env, env->player.inventory.ui.front_pic, (t_edge){{0, 0}, {W / 1.4, H}}, (t_edge){{0, 0}, {0, 0}});
+	draw_img(env, (t_edge){{0, 0}, {W / 2, H}}, env->player.inventory.ui.front_pic, start);
 	ui_txt_inv(env);
 	iter = 0;
 	n = (t_vtx){W / 28, H / 6};
@@ -120,7 +120,7 @@ int		print_inventory(t_env *env)
 	while (iter < 3)
 		iter += fill_wpn(env, &env->player.inventory.ui.wblocs[iter], &n, iter);
 	iter = 0;
-	n = (t_vtx){W / 12, H - H / 11};
+	n = (t_vtx){W / 24, H - H / 11};
 	while (iter < 3)
 		iter += fill_icon(env, &env->player.inventory.ui.iblocs[iter], &n, iter);
 	return (0);
