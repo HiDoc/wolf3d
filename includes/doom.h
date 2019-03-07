@@ -51,6 +51,9 @@ SDL_Surface *ui_img(char *filename);
 int         ui_put_fps(t_env *env, int fps);
 int		    ui_icon_data(t_env *env, t_vtx v, int iter);
 
+int         init_hud(t_env *env);
+int         print_hud(t_env *env);
+
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);
 void	    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);

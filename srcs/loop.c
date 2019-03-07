@@ -7,6 +7,7 @@ int		sdl_render(SDL_Texture *texture, SDL_Renderer *renderer, t_engine *e, void 
 	SDL_LockSurface(e->surface);
 	DrawScreen(e);
 	put_gun(env, env->player.inventory.current->sprite);
+	print_hud(env);
 	if (env->player.inventory.ui.is_active)
 	{
 		print_inventory(env);

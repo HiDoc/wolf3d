@@ -7,6 +7,15 @@ typedef struct s_wrap_inv		t_wrap_inv;
 typedef struct s_wrap_sect      t_wrap_sect;
 typedef struct s_actions        t_actions;
 typedef struct s_uinv	        t_uinv;
+typedef struct s_hud			t_hud;
+
+struct					s_hud
+{
+	SDL_Surface			*health;
+	SDL_Surface			*hud_wpn[3];
+	t_wrap_inv			*shortcut[3];	
+};
+
 
 struct 					s_uinv
 {

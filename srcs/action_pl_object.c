@@ -58,12 +58,12 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			printf("C'est le 1er objet de ce type qu'on ramasse\n");
 			index = get_inventory_place(env);
 			printf("L'index %i de l'inventaire est vide\n", index);
-			if (!env->player.inventory.objects[index].nb_stack)
-				env->player.inventory.objects[index].nb_stack = 0;
 			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.objects[index].current = obj;
 			printf("On a placé l'objet de ref %i dans l'inventaire et augmenté sa stack a %i\n", env->player.inventory.objects[index].current->ref, env->player.inventory.objects[index].nb_stack);
 			env->player.inventory.nb_current_obj++;
+			if (obj->ref < 3)
+				env->player.hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
 		}
 		obj->is_picked = 1;
 		//******************************
@@ -99,6 +99,8 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			object->nb_stack--;
 		else
 		{
+			if (object->current->ref < 3)
+				env->player.hud.shortcut[object->current->ref] = NULL;
 			*object = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
 			printf("L'objet a ete supprimé de l'inventaire\n");
 			env->player.inventory.nb_current_obj--;

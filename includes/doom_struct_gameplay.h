@@ -108,8 +108,9 @@ struct					s_character
 	float		anglesin;
 	float		yaw;
 	float		eyeheight;
+	SDL_Surface	*sprite;
 	t_inventory	inventory;
 	t_actions	actions;
-	SDL_Surface	*sprite;
+	t_hud		hud;
 };
 #endif
