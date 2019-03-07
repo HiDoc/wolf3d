@@ -66,8 +66,8 @@ int		init_weapon(t_env *env)
 	weapon_set(&env->world.armory[1], "pistol", 17);
 	weapon_set(&env->world.armory[2], "rifle", 30);
     env->player.inventory.weapons[0] = &env->world.armory[0];
-    env->player.inventory.weapons[1] = NULL;
-    env->player.inventory.weapons[2] = NULL;
+    env->player.inventory.weapons[1] = &env->world.armory[1];
+    env->player.inventory.weapons[2] = &env->world.armory[2];
     env->player.inventory.current = env->player.inventory.weapons[0];
     return (0);
 }
