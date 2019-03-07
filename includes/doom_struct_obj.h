@@ -24,6 +24,7 @@ struct 					s_uinv
 	SDL_Surface	*hud_wpn[3];
 	SDL_Surface	*empt_wpn[3];
 	SDL_Surface	*icon[3];
+	SDL_Surface	*cross;
 	SDL_Surface	*box[2];
 	SDL_Color	color;
 	t_edge		blocs[6];
