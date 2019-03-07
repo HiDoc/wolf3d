@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/06 18:56:38 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
-int		main()
+int		main(void)
 {
 	t_env			env;
 
@@ -19,20 +31,22 @@ int		main()
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		W, H, SDL_WINDOW_SHOWN);
-	// SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
+	SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
 	env.sdl.texture = NULL;
-	env.engine.NumSectors = 0;
+	env.engine.nsectors = 0;
 	env.engine.sectors = NULL;
 	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	env.engine.surface = env.sdl.surface;
 	LoadData(&env.engine, &env);
-	sdl_loop(env.sdl.texture, env.sdl.renderer, &env.engine, &env);
+	verify_map(&env.engine);
+	init_container(&env);
+	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	Mix_FreeChunk(env.sounds.shot);
 	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();
-	return 0;
+	return (0);
 }

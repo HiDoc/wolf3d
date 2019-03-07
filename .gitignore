@@ -3,8 +3,8 @@
 **/*.a
 **/*.swp
 .DS_Store
+**/*.DS_Store
 ._.DS_Store
 .vscode
-wolf3d
-wolf3d.dSym*
-
+doom-nukem
+**.dSym

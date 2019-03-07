@@ -3,13 +3,14 @@
 int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
 	float	blocx;
+	t_object *curr = &env->player.inventory.objects[i];
 
 	blocx = bloc.v2.x - bloc.v1.x;
-	env->player.inventory.objects[i].udbox[0].v1.x = bloc.v2.x - blocx / 7;
+	curr->udbox[0].v1.x = bloc.v2.x - blocx / 7;
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
 	env->player.inventory.objects[i].udbox[0].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[0].v2.y = bloc.v1.y + blocx / 7;
-	text_font(env, "X", 
+	text_font(env, "X",
 	(t_vctr){env->player.inventory.objects[i].udbox[0].v1.x + 2,
 	env->player.inventory.objects[i].udbox[0].v1.y, 30},
 	(SDL_Color){255, 255, 255, 255});
@@ -19,11 +20,11 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	env->player.inventory.objects[i].udbox[1].v2.y = bloc.v2.y;
 	draw_flat_rect(env->engine.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
-	text_font(env, "use", 
+	text_font(env, "use",
 	(t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
 	env->player.inventory.objects[i].udbox[1].v1.y, 20},
 	(SDL_Color){255, 255, 255, 255});
-	// text_font(env, "use", 
+	// text_font(env, "use",
 	// (t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
 	// env->player.inventory.objects[i].udbox[1].v1.y, 20},
 	// (SDL_Color){255, 255, 255, 255});
@@ -44,9 +45,9 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	if (env->player.inventory.objects[i].current)
 	{
 		put_img_inv(env, env->player.inventory.ui.box[0], *bloc, (t_edge){{0, 0}, {0, 0}});
-		put_img_inv(env, 
+		put_img_inv(env,
 		env->world.objects[env->player.inventory.objects[i].current->ref].sprite,
-		*bloc, 
+		*bloc,
 		(t_edge){{(bloc->v2.x - bloc->v1.x) / 8, (bloc->v2.y - bloc->v1.y) / 8},
 		{(bloc->v2.x - bloc->v1.x) / 12,(bloc->v2.y - bloc->v1.y) / 12}});
 		use_drop_icon(env, *bloc, i);

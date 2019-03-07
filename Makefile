@@ -6,19 +6,19 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/04 16:04:31 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/07 14:20:40 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 			= wolf3d
+NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
-LEN_NAME		=	`printf "%s" $(NAME) |wc -c`
-DELTA			=	$$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
+LEN_NAME		= `printf "%s" $(NAME) |wc -c`
+DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
 
 #color
-YELLOW		= "\\033[33m"
+YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"
 RED				= "\\033[31m"
 WHITE			= "\\033[0m"
@@ -32,22 +32,22 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-SRC_PATH 	= ./srcs/
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
-			  ./libft/includes/ 
+			  ./libft/includes/
 
 UNAME 		:= $(shell uname)
 
 ifeq ($(UNAME), Linux)
 CC 			= clang -std=c99
-INC_PATH 	+= /usr/include/SDL2/ 
-OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread 
+INC_PATH 	+= /usr/include/SDL2/
+OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread
 else
 SDL_V		= $(shell ls $(CELLAR)/sdl2/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/ \
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/ \
-			   
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/
+INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/
+
 SDL_TTF		= $(shell ls $(CELLAR)/sdl2_ttf/ | head -1)
 INC_PATH 	+= $(CELLAR)/sdl2_ttf/$(SDL_TTF)/include/
 
@@ -59,15 +59,19 @@ INC_PATH 	+= $(CELLAR)/sdl2_mixer/$(SDL_MIX)/include/
 endif
 
 HED_NAME	= doom.h \
-			  doom_struct_assets.h \
-			  doom_struct_env.h \
-			  doom_struct_gameplay.h \
-			  doom_engine.h \
+			  doom_s_assets.h \
+			  doom_s_env.h \
+			  doom_s_math.h \
+			  doom_s_gameplay.h \
+			  doom_s_engine.h \
+			  doom_f_engine.h \
+			  doom_f_math.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
+			no_op.c \
 			queue.c \
 			sdl_hook.c \
 			sdl_mouse.c \
@@ -76,10 +80,16 @@ SRC_NAME 	= main.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_pixels.c \
+			map.c \
+			hull.c \
+			utils_edge.c \
+			utils_surface.c \
 			transformation.c \
 			move.c \
 			draw.c \
+			print_bug.c \
 			struct_drawline.c \
+			struct_container.c \
 			projection.c \
 			checking.c \
 			unload.c \
@@ -105,7 +115,6 @@ OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
 			  -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
-SRC			= $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ			= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC			= $(addprefix -I , $(INC_PATH))
 DIR			= $(sort $(dir $(OBJ)))
@@ -119,16 +128,16 @@ SHELL		:=	bash
 
 all: $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile 
+$(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft 
+	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft
 
 $(OBJ_PATH) :
 	@mkdir -p $@
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
+$(OBJ_PATH)%.o: %.c | $(OBJ_PATH)
 	@$(eval DONE=$(shell echo $$(($(INDEX)*20/$(NB)))))
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
@@ -136,6 +145,14 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@printf "\r\033[38;5;%dm⌛ [%s]: %2d%% `printf '█%.0s' {0..$(DONE)}`%*s❙%*.*s\033[0m\033[K" $(COLOR) $(NAME) $(PERCENT) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -MMD $(CFLAGS) $(INC) -o $@ -c $<
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
+
+norminette:
+	norminette \
+	-R CheckCommentsFormat \
+	-R CheckMultipleEmptyLines \
+	-R CheckCppComment \
+	-R CheckCommentsPlacement \
+	srcs/**.c
 
 clean:
 	make -C $(LIBFT) clean
@@ -157,26 +174,16 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
-
+parser:
+	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
+	./parser map.txt
 run: all
 	clear
-	./wolf3d ./maps/map
+	./doom
 
 lldb:
-	gcc ./srcs/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
+	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
-	lldb ./wolf3d
-
-fsani:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) -fsanitize=address \
-		$(LIB) $(LSDL2) $(FRK) $(OPEN) $(FRK) $(APPK) -o $(NAME) \
-		-L$(LIBFT) -lft 
-	./wolf3d
-
-valg:
-	gcc ./srcs/*.c $(INC) $(CFLAGS) \
-	$(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
-	-L$(LIBFT) -lft
-	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=definite ./wolf3d
+	lldb ./doom
 
 re: fclean all
