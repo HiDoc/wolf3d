@@ -50,6 +50,7 @@ int		    pick_object(t_env *env, t_wrap_sect *obj);
 int		    drop_object(t_env *env, t_wrap_inv *object);
 int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
+int			check_object_type(t_env *env, int ref);
 
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
