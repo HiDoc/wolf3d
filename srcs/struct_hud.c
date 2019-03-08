@@ -5,6 +5,7 @@ int init_hud(t_env *env)
     int i;
 
     i = 0;
+    env->player.hud.amask = 1;
     while (i < 3)
         env->player.hud.shortcut[i++] = NULL;
     if ((env->player.hud.empty_bar = ui_img("hud/empty_bar"))

@@ -150,7 +150,7 @@ int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 			ui_text_msg(env, "Inventory full - Max 6 different items");
 		else if (*nb == 8)
 			ui_text_msg(env, "Item suppressed from inventory");
-		if (*tframe < 30)
+		if (*tframe < 60)
 			++(*tframe);
 		else
 		{
@@ -160,5 +160,3 @@ int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 	}
 	return (0);
 }
-
-// int		use_drop_inv(t_env *, t_edge **blocs, int)
