@@ -11,14 +11,11 @@ int     init_icon(t_env *env)
 
 int     init_wpn_inv(t_env *env)
 {
-    if ((env->player.inventory.ui.mini_wpn[0] = ui_img("wpn/lmini_ak"))
-    && (env->player.inventory.ui.mini_wpn[1] = ui_img("wpn/lmini_pistol"))
+    if ((env->player.inventory.ui.mini_wpn[1] = ui_img("wpn/lmini_ak"))
+    && (env->player.inventory.ui.mini_wpn[0] = ui_img("wpn/lmini_pistol"))
     && (env->player.inventory.ui.mini_wpn[2] = ui_img("wpn/lmini_rifle"))
-    && (env->player.hud.hud_wpn[0] = ui_img("hud/hud_ak"))
-    && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_pistol"))
-    && (env->player.hud.hud_wpn[2] = ui_img("hud/hud_rifle"))
-    && (env->player.inventory.ui.empt_wpn[0] = ui_img("wpn/empty_ak"))
-    && (env->player.inventory.ui.empt_wpn[1] = ui_img("wpn/empty_pistol"))
+    && (env->player.inventory.ui.empt_wpn[1] = ui_img("wpn/empty_ak"))
+    && (env->player.inventory.ui.empt_wpn[0] = ui_img("wpn/empty_pistol"))
     && (env->player.inventory.ui.empt_wpn[2] = ui_img("wpn/empty_rifle")))
         return (1);
     return (0);

@@ -7,7 +7,12 @@ int init_hud(t_env *env)
     i = 0;
     while (i < 3)
         env->player.hud.shortcut[i++] = NULL;
-    if ((env->player.hud.health = ui_img("hud/health")))
+    if ((env->player.hud.empty_bar = ui_img("hud/empty_bar"))
+    && (env->player.hud.bar[0] = ui_img("hud/health_bar"))
+    && (env->player.hud.bar[1] = ui_img("hud/shield_bar"))
+    && (env->player.hud.hud_wpn[0] = ui_img("hud/hud_pistol"))
+    && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_ak"))
+    && (env->player.hud.hud_wpn[2] = ui_img("hud/hud_rifle")))
         return (1);
     return (0);
 }

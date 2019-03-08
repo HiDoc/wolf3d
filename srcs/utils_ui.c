@@ -126,7 +126,7 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 
 int	ui_text_msg(t_env *env, char *msg)
 {
-	text_font(env, msg, (t_vctr){50, H - H / 3, 20}, (SDL_Color){255, 255, 255, 255});
+	text_font(env, msg, (t_vctr){50, H - H / 2.5, 20}, (SDL_Color){255, 255, 255, 255});
 	return (0);
 }
 

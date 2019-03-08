@@ -89,7 +89,6 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	n->x += sbloc;
 	n->y = H - H / 32;
 	bloc->v2 = *n;
-	draw_flat_rect(env->engine.surface, *bloc, 0x0);
 	bloc->v2.x = iter == 0 ? bloc->v1.x + bloc->v2.x / 4.5 : bloc->v2.x - bloc->v2.x / 4.2;
 	iter == 2 ? bloc->v2.x = n->x - n->x / 5.3 : 0;
 	put_img_inv(env, env->player.inventory.ui.icon[iter], *bloc, (t_edge){{0, 0}, {0, 0}});

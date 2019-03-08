@@ -11,7 +11,8 @@ typedef struct s_hud			t_hud;
 
 struct					s_hud
 {
-	SDL_Surface			*health;
+	SDL_Surface			*bar[2];
+	SDL_Surface			*empty_bar;
 	SDL_Surface			*hud_wpn[3];
 	t_wrap_inv			*shortcut[3];
 	int					is_txt;
@@ -22,7 +23,6 @@ struct 					s_uinv
 {
 	SDL_Surface	*front_pic;
 	SDL_Surface	*mini_wpn[3];
-	SDL_Surface	*hud_wpn[3];
 	SDL_Surface	*empt_wpn[3];
 	SDL_Surface	*icon[3];
 	SDL_Surface	*box[2];
