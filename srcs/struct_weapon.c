@@ -59,11 +59,11 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
 
 int		init_weapon(t_env *env)
 {
-	env->world.armory[0].ref = 0xa1e0502061a1;
-	env->world.armory[1].ref = 0xa2a0602092a2;
+	env->world.armory[0].ref = 0xa2a0602092a2;
+	env->world.armory[1].ref = 0xa1e0502061a1;
 	env->world.armory[2].ref = 0xa8e2002102f3;
-	weapon_set(&env->world.armory[0], "ak47", 12);
-	weapon_set(&env->world.armory[1], "pistol", 17);
+	weapon_set(&env->world.armory[0], "pistol", 17);
+	weapon_set(&env->world.armory[1], "ak47", 12);
 	weapon_set(&env->world.armory[2], "rifle", 30);
     env->player.inventory.weapons[0] = &env->world.armory[0];
     env->player.inventory.weapons[1] = &env->world.armory[1];

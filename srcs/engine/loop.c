@@ -1,10 +1,11 @@
 #include "doom.h"
 
-int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env))
+int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame)
 {
 	SDL_LockSurface(e->surface);
 	f(env);
-	put_gun(env, env->player.inventory.current->sprite);
+	loop_frames(env, frame);
+	// put_gun(env, env->player.inventory.current->sprite);
 	print_hud(env);
 	if (env->player.inventory.ui.is_active)
 	{
@@ -47,49 +48,55 @@ int		sdl_loop(t_env *env)
 	int				wsad[4] = {0,0,0,0};
 	t_vision        v;
 	t_engine		*e;
+	int				fps;
+	Uint32			time_a;
+	Uint32			time_b;
+	int				frame;
 
+	time_b = 0;
+	fps = 0;
 	e = &env->engine;
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
-	// time_b = 0;
-	// fps = 0;
 	while (1)
 	{
-		sdl_render(env, e, &draw_screen);
-		player_collision(e, &v);
 		SDL_Event ev;
-
-		while (SDL_PollEvent(&ev))
+		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
 		{
-			// SDL_WaitEvent(&ev);
-			switch(ev.type)
+			fps = 1000 / (time_a - time_b);
+			time_b = time_a;
+			sdl_render(env, e, &draw_screen, &frame);
+			player_collision(e, &v);
+			while (SDL_PollEvent(&ev))
 			{
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					switch(ev.key.keysym.sym)
-					{
-						case 'w': wsad[0] = ev.type==SDL_KEYDOWN; break;
-						case 's': wsad[1] = ev.type==SDL_KEYDOWN; break;
-						case 'a': wsad[2] = ev.type==SDL_KEYDOWN; break;
-						case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
-						case 'q': return (0);
-						case ' ': /* jump */
-							// if (v.ground) {
-								e->player.velocity.z += 0.5; v.falling = 1;
-							// }
-							break;
-						case SDLK_LCTRL: /* duck */
-						case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;
-						default: break;
-					}
-					break;
-				case SDL_QUIT:
-					return (0);
-					break;
+				// SDL_WaitEvent(&ev);
+				switch(ev.type)
+				{
+					case SDL_KEYDOWN:
+					case SDL_KEYUP:
+						switch(ev.key.keysym.sym)
+						{
+							case 'w': wsad[0] = ev.type==SDL_KEYDOWN; break;
+							case 's': wsad[1] = ev.type==SDL_KEYDOWN; break;
+							case 'a': wsad[2] = ev.type==SDL_KEYDOWN; break;
+							case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
+							case 'q': return (0);
+							case ' ': /* jump */
+								// if (v.ground) {
+									e->player.velocity.z += 0.5; v.falling = 1;
+								// }
+								break;
+							case SDLK_LCTRL: /* duck */
+							case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;
+							default: break;
+						}
+						break;
+					case SDL_QUIT:
+						return (0);
+						break;
+				}
+				sdl_keyhook(env, ev);
+				wpn_mouse_wheel(env, ev);
 			}
-			sdl_keyhook(env, ev);
-			wpn_mouse_wheel(env, ev);
-			// mouse_shoot(env);
-			// loop_frames(env, &frame);
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);

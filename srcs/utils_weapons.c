@@ -1,8 +1,7 @@
 #include "doom.h"
 
-int	load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon)
+int	load_weapon(t_env *env, Uint8 keycode)
 {
-	(void)weapon;
 	if (keycode == SDL_SCANCODE_R)
 	{
 		env->player.actions.is_loading = 1;
@@ -11,7 +10,7 @@ int	load_weapon(t_env *env, Uint8 keycode, SDL_Surface **weapon)
 	return (0);
 }
 
-void	put_gun_shoot(t_env *env, int frame)
+int	put_gun_shoot(t_env *env, int frame)
 {
 	t_weapon	*weapon;
 
@@ -21,9 +20,10 @@ void	put_gun_shoot(t_env *env, int frame)
 		put_gun(env, weapon->sprite_shoot[frame]);
 	else
 		env->player.actions.is_shooting = 0;
+	return (1);
 }
 
-void	put_gun_load(t_env *env, int frame)
+int	put_gun_load(t_env *env, int frame)
 {
 	t_weapon	*weapon;
 
@@ -33,9 +33,10 @@ void	put_gun_load(t_env *env, int frame)
 		put_gun(env, weapon->sprite_reload[frame]);
 	else
 		env->player.actions.is_loading = 0;
+	return (1);
 }
 
-void	put_gun(t_env *env, SDL_Surface *sprite)
+int	put_gun(t_env *env, SDL_Surface *sprite)
 {
 	int x;
 	int y;
@@ -48,4 +49,5 @@ void	put_gun(t_env *env, SDL_Surface *sprite)
 		draw_img(env, (t_edge){{x, y}, {W, H}},
 		sprite,
 		(t_ixy){0, 0});
+	return (1);
 }

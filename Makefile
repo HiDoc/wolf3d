@@ -71,6 +71,7 @@ HED_NAME	= doom.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
+			loop_frames.c \
 			no_op.c \
 			queue.c \
 			sdl_hook.c \

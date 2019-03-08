@@ -43,7 +43,7 @@ struct								s_env
 	t_engine		engine;
 };
 void			no_op(t_env *env);
-int				sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env));
+int				sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame);
 int				sdl_loop(t_env *env);
 int				init_container(t_env *env);
 

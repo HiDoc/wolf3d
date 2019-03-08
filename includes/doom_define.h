@@ -33,6 +33,12 @@
 # define H				800
 
 /*
+** FPS frames
+*/
+# define SCREEN_FPS     60
+# define SCREEN_TIC     16
+
+/*
 ** Define maximum queue in renderer
 */
 # define MAXQUEUE		32
