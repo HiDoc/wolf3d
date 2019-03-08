@@ -79,6 +79,8 @@ int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *filename);
 int         ui_put_fps(t_env *env, int fps);
 int		    ui_icon_data(t_env *env, t_vtx v, int iter);
+int			ui_draw_msg(t_env *env, int *nb, int *tframe);
+int			ui_text_msg(t_env *env, char *msg);
 
 int         init_hud(t_env *env);
 int         print_hud(t_env *env);

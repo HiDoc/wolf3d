@@ -39,13 +39,13 @@ int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	SDL_Surface	    *surface;
 	TTF_Font        *font;
 	SDL_Surface		*tmp;
-	t_rgba			rgba;
+	// t_rgba			rgba;
 
 	if (!(font = TTF_OpenFont("rsrc/font/AmazDooMLeft2.ttf", pos.z)))
         return (0);
 	tmp	= TTF_RenderText_Blended(font, str, color);
 	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
-	SetSurfaceAlpha(surface, 128, &rgba);
+	// SetSurfaceAlpha(surface, 128, &rgba);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
     draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
@@ -122,6 +122,43 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 	free(tmp);
 	tmp = NULL;
 	return (1);
+}
+
+int	ui_text_msg(t_env *env, char *msg)
+{
+	text_font(env, msg, (t_vctr){50, H - H / 3, 20}, (SDL_Color){255, 255, 255, 255});
+	return (0);
+}
+
+int	ui_draw_msg(t_env *env, int *nb, int *tframe)
+{
+	if (*nb)
+	{
+		if (*nb == 1)
+			ui_text_msg(env, "Already full shield !");
+		else if (*nb == 2)
+			ui_text_msg(env, "No shield in stock, stop crying & find some");
+		else if (*nb == 3)
+			ui_text_msg(env, "Already full of life, enjoy mate !");
+		else if (*nb == 4)
+			ui_text_msg(env, "No heal in stock, shut your mouth and keep up !");
+		else if (*nb == 5)
+			ui_text_msg(env, "Too greedy man.. Already full stack of this item");
+		else if (*nb == 6)
+			ui_text_msg(env, "New item placed in inventory");
+		else if (*nb == 7)
+			ui_text_msg(env, "Inventory full - Max 6 different items");
+		else if (*nb == 8)
+			ui_text_msg(env, "Item suppressed from inventory");
+		if (*tframe < 30)
+			++(*tframe);
+		else
+		{
+			*tframe = 0;
+			*nb = 0;
+		}
+	}
+	return (0);
 }
 
 // int		use_drop_inv(t_env *, t_edge **blocs, int)

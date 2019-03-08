@@ -1,12 +1,12 @@
 #include "doom.h"
 
-int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame)
+int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int *tframe)
 {
 	SDL_LockSurface(e->surface);
 	f(env);
 	loop_frames(env, frame);
-	// put_gun(env, env->player.inventory.current->sprite);
 	print_hud(env);
+	ui_draw_msg(env, &env->player.hud.is_txt, tframe);
 	if (env->player.inventory.ui.is_active)
 	{
 		print_inventory(env);
@@ -52,6 +52,7 @@ int		sdl_loop(t_env *env)
 	Uint32			time_a;
 	Uint32			time_b;
 	int				frame;
+	int				tframe;
 
 	time_b = 0;
 	fps = 0;
@@ -64,7 +65,7 @@ int		sdl_loop(t_env *env)
 		{
 			fps = 1000 / (time_a - time_b);
 			time_b = time_a;
-			sdl_render(env, e, &draw_screen, &frame);
+			sdl_render(env, e, &draw_screen, &frame, &tframe);
 			player_collision(e, &v);
 			while (SDL_PollEvent(&ev))
 			{
