@@ -16,4 +16,4 @@ sector  0  60	7 6 8 9		-1 -1 -1 -1 -1
 
 
 #x y sectorno angle
-player	1 20	-0.7 0.7
+player	1 20	0 0.7

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/06 21:56:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/07 13:00:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		LoadData(t_engine *e);
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
 			SDL_Window *window, t_engine *e);
 
-void		draw_screen(t_env *env);
+void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
 int			is_bumping(const t_sector *sect, float eyeheight,
 			unsigned s, t_engine *e);

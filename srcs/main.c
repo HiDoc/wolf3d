@@ -21,6 +21,7 @@ int		main(void)
 		SDL_WINDOWPOS_UNDEFINED,
 		W, H, SDL_WINDOW_SHOWN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
+	ft_bzero(&env, sizeof(&env));
 	env.sdl.texture = NULL;
 	env.engine.nsectors = 0;
 	env.engine.sectors = NULL;

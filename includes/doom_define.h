@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/27 20:36:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/07 19:13:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 /*
 ** Field of view
 */
-# define HFOV (0.73f * H)
+# define HFOV (.73f * H)
 # define VFOV (.2f * H)
 
 /*

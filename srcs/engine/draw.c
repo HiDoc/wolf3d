@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/06 18:52:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:58:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,14 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	container.x = start;
 	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
 		env->engine.sectors[q->now.sectorno].floor};
-	// printf("{%d, %d}, {%d,  %d}\n", container.p.y1a,container.p.y1b, container.p.y2a, container.p.y2b );
-	// printf("{%d, %d} %d\n", container.x1, container.x2, container.x);
+	printf("player angle: cos/sin {%f, %f} %f\n", env->engine.player.anglecos, env->engine.player.anglesin, env->engine.player.angle);
+	printf("projection: {%d, %d}, {%d, %d}\n", container.p.y1a, container.p.y1b, container.p.y2a, container.p.y2b );
+	printf("current : {%f, %f}, {%f, %f}\n", container.curr.v1.x, container.curr.v1.y, container.curr.v2.x, container.curr.v2.y);
+	printf("rotation : {%f, %f}, {%f, %f}\n", container.rot.v1.x, container.rot.v1.y, container.rot.v2.x, container.rot.v2.y);
+	printf("calcul : %f\n", ((W / 2) - (container.x - container.x1)) / container.scale.v1.x);
+	printf("scale : {%f, %f}, {%f, %f}\n", container.scale.v1.x, container.scale.v1.y, container.scale.v2.x, container.scale.v2.y);
+	printf("limits x : {%d, %d} %d\n", container.x1, container.x2, container.x);
+	printf("\n");
 	while (container.x <= end)
 	{
 		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
@@ -122,15 +128,15 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	return (1);
 }
 
-void	draw_screen(t_env *env)
+void	dfs(t_env *env)
 {
 	t_queue		queue;
 	t_engine	*engine;
 	int			s;
 
 	engine = &env->engine;
+	system("clear");
 	ini_queue(engine, &queue);
-	// system("clear");
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)

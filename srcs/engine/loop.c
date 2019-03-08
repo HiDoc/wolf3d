@@ -26,7 +26,7 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	int				x;
 	int				y;
 
-	SDL_GetRelativeMouseState(&x,&y);
+	SDL_GetRelativeMouseState(&x, &y);
 	e->player.angle += x * 0.03f;
 	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.5f;
@@ -45,12 +45,12 @@ int		sdl_loop(t_env *env)
 	v = (t_vision) {0, 1, 0, 0, 0, 0};
 	while (1)
 	{
-		sdl_render(env, e, &draw_screen);
+		sdl_render(env, e, &dfs);
 		player_collision(e, &v);
 		SDL_Event ev;
-
-		while (SDL_PollEvent(&ev))
-		{
+		SDL_WaitEvent(&ev);
+		// while (SDL_PollEvent(&ev))
+		// {
 			// SDL_WaitEvent(&ev);
 			switch(ev.type)
 			{
@@ -69,7 +69,7 @@ int		sdl_loop(t_env *env)
 							// }
 							break;
 						case SDLK_LCTRL: /* duck */
-						case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;
+						case SDLK_RCTRL: v.ducking = ev.type== SDL_KEYDOWN; v.falling=1; break;
 						default: break;
 					}
 					break;
@@ -77,7 +77,7 @@ int		sdl_loop(t_env *env)
 					return (0);
 					break;
 			}
-		}
+		// }
 
 		sdl_mouse(e, &v);
 		float move_vec[2] = {0.f, 0.f};
