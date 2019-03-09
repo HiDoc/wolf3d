@@ -16,8 +16,8 @@ struct					s_hud
 	SDL_Surface			*hud_wpn[3];
 	SDL_Surface			*pad;
 	SDL_Surface			*shadow;
-	SDL_Surface			*e_pad[3];
-	t_wrap_inv			*shortcut[3];
+	SDL_Surface			*e_pad[4];
+	t_wrap_inv			*shortcut[6];
 	int					is_txt;
 };
 
@@ -48,6 +48,7 @@ struct                  s_actions
 	t_edge		edge;
 	int			is_shooting;
 	int			is_loading;
+	int			is_flying;
 };
 
 struct					s_wrap_sect

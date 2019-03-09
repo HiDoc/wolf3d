@@ -1409,7 +1409,7 @@ Rescan:
             if(nearest_point == ~0u)
             {
                 fprintf(stderr, " - ERROR: Could not find a vertex to pair with!\n");
-                SDL_Delay(200);
+                // SDL_Delay(200);
                 continue;
             }
             unsigned e = nearest_point;

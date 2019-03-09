@@ -50,7 +50,7 @@ int		give_health(void *e, t_wrap_inv *object)
 int	give_ammo(void *e, t_wrap_inv *obj)
 {
 	t_env		*env;
-	int			ref;
+	int			stack;
 	int			ammo;
 	t_weapon	*wpn;
 
@@ -58,9 +58,9 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 	if (obj)
 	{
 		ammo = obj->current->ref * 10;
-		ref = obj->current->ref - 2;
-		wpn = env->player.inventory.weapons[ref];
-		if (wpn)
+		wpn = env->player.inventory.weapons[obj->current->ref - 2];
+		stack = wpn->ammo_current + wpn->ammo_magazine;
+		if (wpn && stack < wpn->ammo_curr_max + wpn->ammo_mag_max)
 		{
 			ammo -= wpn->ammo_curr_max - wpn->ammo_current;
 			wpn->ammo_current = wpn->ammo_curr_max;
@@ -72,7 +72,21 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			SDL_Delay(100);
 			return (0);
 		}
-		return (3);
+		return (wpn ? 9 : 10);
 	}
 	return (4);
+}
+
+int	give_jetpack(void *e, t_wrap_inv *obj)
+{
+	t_env	*env;
+
+	env = (t_env*)e;
+	if (obj)
+	{
+		env->player.actions.is_flying = !env->player.actions.is_flying;
+		SDL_Delay(100);
+		return (env->player.actions.is_flying ? 11 : 12);
+	}
+	return (13);
 }

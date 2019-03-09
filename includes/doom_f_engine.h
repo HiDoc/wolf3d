@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 17:29:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/09 23:06:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int			is_bumping(const t_sector *sect, float eyeheight,
 void		bumping_score(t_vtx *d, t_vtx b);
 
 void		player_moving(t_vision *vision, int set, t_engine *engine);
-void		player_falling(t_vision *vision, t_engine *engine);
-void		player_collision(t_engine *engine, t_vision *vision);
+void		player_falling(t_vision *vision, t_engine *engine, float limit, float speed);
+void		player_collision(t_engine *engine, t_vision *vision, int jetpack);
 
 t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge to_rotate);
@@ -51,6 +51,7 @@ int		    drop_object(t_env *env, t_wrap_inv *object);
 int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
 int			give_ammo(void *e, t_wrap_inv *obj);
+int			give_jetpack(void *e, t_wrap_inv *obj);
 int			check_object_type(t_env *env, int ref);
 
 int         init_character(t_character *new);

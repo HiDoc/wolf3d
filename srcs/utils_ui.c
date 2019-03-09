@@ -164,7 +164,7 @@ int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 		else if (*nb == 3)
 			ui_text_msg(env, "Already full of life, enjoy mate !");
 		else if (*nb == 4)
-			ui_text_msg(env, "No heal in stock, shut your mouth and keep up !");
+			ui_text_msg(env, "No heal in stock, hang on !");
 		else if (*nb == 5)
 			ui_text_msg(env, "Too greedy man.. Already full stack of this item");
 		else if (*nb == 6)
@@ -173,6 +173,16 @@ int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 			ui_text_msg(env, "Inventory full - Max 6 different items");
 		else if (*nb == 8)
 			ui_text_msg(env, "Item suppressed from inventory");
+		else if (*nb == 9)
+			ui_text_msg(env, "Weapon already full");
+		else if (*nb == 10)
+			ui_text_msg(env, "No ammo for this weapon");
+		else if (*nb == 11)
+			ui_text_msg(env, "JetPack ON");
+		else if (*nb == 12)
+			ui_text_msg(env, "JetPack OFF");
+		else if (*nb == 13)
+			ui_text_msg(env, "No JetPack here, keep looking bro !");
 		if (*tframe < 60)
 			++(*tframe);
 		else

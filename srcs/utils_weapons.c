@@ -13,17 +13,16 @@ int	reload_ammo(t_env *env)
 	tmp = *cur_max - *cur;
 	*cur += *mag >= tmp ? tmp : *mag;
 	*mag -= *mag >= tmp ? tmp : *mag;
-	SDL_Delay(150);
 	return (0);
 }
 
 int	load_weapon(t_env *env)
 {
-	if (env->player.inventory.current->ammo_magazine)
-	{
+	t_weapon	*wpn;
+
+	wpn = env->player.inventory.current;
+	if (wpn->ammo_magazine && wpn->ammo_current < wpn->ammo_curr_max)
 		env->player.actions.is_loading = 1;
-		env->player.actions.is_shooting = 0;
-	}
 	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	return (0);
 }

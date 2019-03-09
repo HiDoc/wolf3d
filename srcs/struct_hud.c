@@ -22,7 +22,7 @@ int init_hud(t_env *env)
     // SDL_Surface *tmp;
 
     i = 0;
-    while (i < 3)
+    while (i < 6)
         env->player.hud.shortcut[i++] = NULL;
     if (!(env->player.hud.shadow = ui_img("hud/hud_shadow")))
         return (0);
@@ -41,7 +41,8 @@ int init_hud(t_env *env)
     && (env->player.hud.pad = ui_img("hud/pad3"))
     && (env->player.hud.e_pad[0] = ui_img("hud/hud_e_kit"))
     && (env->player.hud.e_pad[1] = ui_img("hud/hud_e_armor"))
-    && (env->player.hud.e_pad[2] = ui_img("hud/hud_e_jetp")))
+    && (env->player.hud.e_pad[2] = ui_img("hud/hud_e_jetp"))
+    && (env->player.hud.e_pad[3] = ui_img("hud/hud_e_ammo")))
         return (1);
     return (0);
 }

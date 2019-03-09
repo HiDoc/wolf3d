@@ -101,7 +101,7 @@ int			insert_new_edge(t_chain *chain, t_sector *sect)
 	if (nearest_point == ~0u)
 	{
 		fprintf(stderr, " - ERROR: Could not find a vertex to pair with!\n");
-		SDL_Delay(200);
+		// SDL_Delay(200);
 		++chain->b;
 		return (0);
 	}

@@ -4,10 +4,12 @@ int			pick_action(t_wrap_sect *new)
 {
 	if (new->ref == 0)
 		new->action = &give_health;
-	else if (new->ref == 1)
+	if (new->ref == 1)
 		new->action = &give_shield;
-	else if (new->ref > 1 && new->ref < 5)
+	if (new->ref > 1 && new->ref < 5)
 		new->action = &give_ammo;
+	if (new->ref == 5)
+		new->action = &give_jetpack;
 	return (0);
 }
 

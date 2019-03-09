@@ -50,10 +50,10 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		else
 		{
 			index = get_inventory_place(env);
-			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.objects[index].current = obj;
+			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.nb_current_obj++;
-			if (obj->ref < 3)
+			if (obj->ref < 6)
 				env->player.hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
 		}
 		obj->is_picked = 1;

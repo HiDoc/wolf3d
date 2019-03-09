@@ -1,10 +1,10 @@
 #include "doom.h"
 
-void	player_falling(t_vision *v, t_engine *e)
+void	player_falling(t_vision *v, t_engine *e, float limit, float speed)
 {
 	float nextz;
 
-	e->player.velocity.z -= 0.05f; /* Add gravity */
+	e->player.velocity.z -= speed; /* Add gravity */
 	nextz = e->player.where.z + e->player.velocity.z;
 	if (e->player.velocity.z < 0
 		&& nextz < e->sectors[e->player.sector].floor + v->eyeheight) // When going down
@@ -16,7 +16,7 @@ void	player_falling(t_vision *v, t_engine *e)
 		v->ground = 1;
 	}
 	else if (e->player.velocity.z > 0
-		&& nextz > e->sectors[e->player.sector].ceil) // When going up
+		&& nextz > limit) // When going up
 	{
 		/* Prevent jumping above ceiling */
 		e->player.velocity.z = 0;
@@ -32,12 +32,15 @@ void	player_falling(t_vision *v, t_engine *e)
 /*
 **Vertical collision detection and horizontal collision detection
 */
-void	player_collision(t_engine *e, t_vision *v)
+void	player_collision(t_engine *e, t_vision *v, int jetpack)
 {
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
-	if (v->falling)
-		player_falling(v, e);
+	if (v->falling && jetpack)
+		player_falling(v, e, e->sectors[e->player.sector].ceil, 0.05f);
+	else if (v->falling)
+		player_falling(v, e, e->sectors[e->player.sector].floor
+		+ v->eyeheight * 2, 0.08f);
 	if (v->moving)
 		player_moving(v, 1, e);
 }

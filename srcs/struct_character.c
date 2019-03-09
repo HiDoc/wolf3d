@@ -12,5 +12,6 @@ int     init_character(t_character *new)
     new->actions.sub_action = 0;
     new->actions.is_loading = 0;
     new->actions.is_shooting = 0;
+    new->actions.is_flying = 0;
     return (0);
 }
