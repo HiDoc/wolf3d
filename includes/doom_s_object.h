@@ -15,6 +15,7 @@ struct					s_hud
 	SDL_Surface			*bar[2];
 	SDL_Surface			*hud_wpn[3];
 	SDL_Surface			*pad;
+	SDL_Surface			*shadow;
 	t_wrap_inv			*shortcut[3];
 	int					is_txt;
 };

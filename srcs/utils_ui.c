@@ -31,6 +31,7 @@ int    text_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	SDL_FreeSurface(surface);
 	surface = NULL;
 	TTF_CloseFont(font);
+	font = NULL;
     return (1);
 }
 
@@ -39,13 +40,13 @@ int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	SDL_Surface	    *surface;
 	TTF_Font        *font;
 	SDL_Surface		*tmp;
-	// t_rgba			rgba;
+	t_rgba			rgba;
 
 	if (!(font = TTF_OpenFont("rsrc/font/AmazDooMLeft2.ttf", pos.z)))
         return (0);
 	tmp	= TTF_RenderText_Blended(font, str, color);
 	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
-	// SetSurfaceAlpha(surface, 128, &rgba);
+	SetSurfaceAlpha(surface, 128, &rgba);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
     draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
@@ -53,6 +54,7 @@ int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	surface = NULL;
 	str = NULL;
 	TTF_CloseFont(font);
+	font = NULL;
     return (1);
 }
 
@@ -64,6 +66,7 @@ int    ui_put_fps(t_env *env, int fps)
         return (0);
 	text_font(env, fps_count, (t_vctr){10, 10, 20},  (SDL_Color){255, 0, 0, 255});
 	free(fps_count);
+	fps_count = NULL;
     return (1);
 }
 
