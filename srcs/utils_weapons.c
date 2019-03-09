@@ -1,12 +1,30 @@
 #include "doom.h"
 
-int	load_weapon(t_env *env, Uint8 keycode)
+int	reload_ammo(t_env *env)
 {
-	if (keycode == SDL_SCANCODE_R)
+	int	*cur_max;
+	int	*cur;
+	int	*mag;
+	int	tmp;
+
+	cur_max = &env->player.inventory.current->ammo_curr_max;
+	cur = &env->player.inventory.current->ammo_current;
+	mag = &env->player.inventory.current->ammo_magazine;
+	tmp = *cur_max - *cur;
+	*cur += *mag >= tmp ? tmp : *mag;
+	*mag -= *mag >= tmp ? tmp : *mag;
+	SDL_Delay(150);
+	return (0);
+}
+
+int	load_weapon(t_env *env)
+{
+	if (env->player.inventory.current->ammo_magazine)
 	{
 		env->player.actions.is_loading = 1;
-		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
+		env->player.actions.is_shooting = 0;
 	}
+	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	return (0);
 }
 
@@ -33,6 +51,8 @@ int	put_gun_load(t_env *env, int frame)
 		put_gun(env, weapon->sprite_reload[frame]);
 	else
 		env->player.actions.is_loading = 0;
+	if (frame == (int)(weapon->time_reload / 2))
+		reload_ammo(env);
 	return (1);
 }
 

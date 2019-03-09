@@ -35,6 +35,26 @@ int    text_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
     return (1);
 }
 
+int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
+{
+	SDL_Surface	    *surface;
+	TTF_Font        *font;
+	SDL_Surface		*tmp;
+
+	if (!(font = TTF_OpenFont("rsrc/font/5E.ttf", pos.z)))
+        return (0);
+	tmp	= TTF_RenderText_Blended(font, str, color);
+	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
+	SDL_FreeSurface(tmp);
+	tmp = NULL;
+    draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
+	SDL_FreeSurface(surface);
+	surface = NULL;
+	TTF_CloseFont(font);
+	font = NULL;
+    return (1);
+}
+
 int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 {
 	SDL_Surface	    *surface;

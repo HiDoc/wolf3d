@@ -44,10 +44,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		if (iter > -1)
 		{
 			if (env->player.inventory.objects[iter].nb_stack >= env->world.objects[obj->ref].max_stack)
-			{
-				env->player.hud.is_txt = 5;
-				return (0);
-			}
+				return (5);
 			env->player.inventory.objects[iter].nb_stack++;
 		}
 		else
@@ -66,12 +63,11 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		//fonction pour retirer de la map
 		//******************************
 		//******************************
-		return (1);
+
+		SDL_Delay(100);
+		return (6);
 	}
-	else
-		env->player.hud.is_txt = 7;
-	SDL_Delay(100);
-	return (0);
+	return (7);
 }
 
 int		drop_object(t_env *env, t_wrap_inv *object)
@@ -84,7 +80,8 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 		{
 			vertex.x = env->engine.player.where.x;
 			vertex.y = env->engine.player.where.y;
-			fill_objects_sector(&env->engine.sectors[env->engine.player.sector], vertex, object->current->ref);
+			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
+			vertex, object->current->ref);
 
 		}
 		if (object->nb_stack > 1)
@@ -93,10 +90,11 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 		{
 			if (object->current->ref < 3)
 				env->player.hud.shortcut[object->current->ref] = NULL;
-			*object = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
+			*object = (t_wrap_inv)
+			{NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
 			env->player.inventory.nb_current_obj--;
 		}
 	}
 	env->player.hud.is_txt = 8;
-	return (0);
+	return (1);
 }

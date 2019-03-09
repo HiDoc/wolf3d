@@ -67,7 +67,9 @@ struct						s_weapon
 	int					time_shoot;
 	double				time_shoot_between;
 	int					ammo_current;
+	int					ammo_curr_max;
 	int					ammo_magazine;
+	int					ammo_mag_max;
 	int					ammo_max;
 	int					damage;
 };

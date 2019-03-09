@@ -53,7 +53,7 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
-		0xFF00FF, 0xFF00AA, 0xFF00FF}, env);
+		0x0000FF, 0x0000AA, 0x0000FF}, env);
 	/* Is there another sector behind this edge? */
 	if (container.neighbor >= 0)
 	{

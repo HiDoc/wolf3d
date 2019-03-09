@@ -42,6 +42,8 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     weapon->time_reload = weapon_mask(ref, 1);
     weapon->time_shoot = weapon_mask(ref, 3);
     weapon->time_shoot_between = weapon_mask(ref, 5);
+    weapon->ammo_curr_max = weapon_mask(ref, 7);
+    weapon->ammo_mag_max = weapon_mask(ref, 9);
     weapon->ammo_current = weapon_mask(ref, 7);
     weapon->ammo_magazine = weapon_mask(ref, 9);
     weapon->damage = dam;

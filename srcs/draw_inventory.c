@@ -3,7 +3,10 @@
 int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
 	float	blocx;
+	char	*tmp;
 
+	if (!(tmp = ft_itoa(env->player.inventory.objects[i].nb_stack)))
+		return (0);
 	blocx = bloc.v2.x - bloc.v1.x;
 	env->player.inventory.objects[i].udbox[0].v1.x = bloc.v2.x - blocx / 7;
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
@@ -23,10 +26,10 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	(t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
 	env->player.inventory.objects[i].udbox[1].v1.y, 20},
 	(SDL_Color){255, 255, 255, 255});
-	// text_font(env, "use",
-	// (t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
-	// env->player.inventory.objects[i].udbox[1].v1.y, 20},
-	// (SDL_Color){255, 255, 255, 255});
+	text_font(env, tmp,
+	(t_vctr){bloc.v1.x + 8,	bloc.v1.y + 5, 20},	(SDL_Color){242, 204, 42, 255});
+	free(tmp);
+	tmp = NULL;
 	return (0);
 }
 

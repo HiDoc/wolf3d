@@ -50,6 +50,7 @@ int		    pick_object(t_env *env, t_wrap_sect *obj);
 int		    drop_object(t_env *env, t_wrap_inv *object);
 int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
+int			give_ammo(void *e, t_wrap_inv *obj);
 int			check_object_type(t_env *env, int ref);
 
 int         init_character(t_character *new);
@@ -62,7 +63,8 @@ int		    put_gun(t_env *env, SDL_Surface *sprite);
 int			put_gun_load(t_env *env, int frame);
 int			loop_frames(t_env *env, int *frame);
 int			put_gun_shoot(t_env *env, int frame);
-int			load_weapon(t_env *env, Uint8 keycode);
+int			load_weapon(t_env *env);
+int			reload_ammo(t_env *env);
 
 int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding);
 int			SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c);
@@ -76,6 +78,7 @@ void	    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int         doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
+int    		number_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *filename);
 int         ui_put_fps(t_env *env, int fps);
@@ -91,6 +94,7 @@ SDL_Surface *img_wpn(char *filename);
 void	    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);
 
 int			sdl_keyhook(t_env *env, SDL_Event event);
+int			mouse_shoot(t_env *env);
 void	    load_sounds(t_env *env);
 
 int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);

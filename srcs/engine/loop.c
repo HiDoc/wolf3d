@@ -97,6 +97,7 @@ int		sdl_loop(t_env *env)
 				}
 				sdl_keyhook(env, ev);
 				wpn_mouse_wheel(env, ev);
+				mouse_shoot(env);
 			}
 		}
 		if (!env->player.inventory.ui.is_active)
@@ -114,7 +115,7 @@ int		sdl_loop(t_env *env)
 
 		if (pushing)
 			v.moving = 1;
-		SDL_Delay(10);
+		// SDL_Delay(10);
 	}
 	return (0);
 }
