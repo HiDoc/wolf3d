@@ -3,33 +3,28 @@
 int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
 	float	blocx;
-	char	*tmp;
+	// t_edge	*udbox[2];
+	const	SDL_Color c[2] = {{255, 255, 255, 255}, {242, 204, 42, 255}};
 
-	if (!(tmp = ft_itoa(env->player.inventory.objects[i].nb_stack)))
-		return (0);
 	blocx = bloc.v2.x - bloc.v1.x;
 	env->player.inventory.objects[i].udbox[0].v1.x = bloc.v2.x - blocx / 7;
 	env->player.inventory.objects[i].udbox[0].v1.y = bloc.v1.y;
 	env->player.inventory.objects[i].udbox[0].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[0].v2.y = bloc.v1.y + blocx / 7;
-	text_font(env, "X",
-	(t_vctr){env->player.inventory.objects[i].udbox[0].v1.x + 2,
-	env->player.inventory.objects[i].udbox[0].v1.y, 30},
-	(SDL_Color){255, 255, 255, 255});
+	ui_put_string(env, (t_font){c[0], "X", F_TEXT,
+	(t_vtx){env->player.inventory.objects[i].udbox[0].v1.x + 2,
+	env->player.inventory.objects[i].udbox[0].v1.y}, 20, -1, -1});
 	env->player.inventory.objects[i].udbox[1].v1.x = bloc.v2.x - blocx / 3;
 	env->player.inventory.objects[i].udbox[1].v1.y = bloc.v2.y - blocx / 7;
 	env->player.inventory.objects[i].udbox[1].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[1].v2.y = bloc.v2.y;
 	draw_flat_rect(env->sdl.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
-	text_font(env, "use",
-	(t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,
-	env->player.inventory.objects[i].udbox[1].v1.y, 20},
-	(SDL_Color){255, 255, 255, 255});
-	text_font(env, tmp,
-	(t_vctr){bloc.v1.x + 8,	bloc.v1.y + 5, 20},	(SDL_Color){242, 204, 42, 255});
-	free(tmp);
-	tmp = NULL;
+	ui_put_string(env, (t_font){c[0], "USE", F_TEXT,
+	(t_vtx){env->player.inventory.objects[i].udbox[1].v1.x + 2,
+	env->player.inventory.objects[i].udbox[1].v1.y}, 20, -1, -1});
+	ui_put_string(env, (t_font){c[1], " ", F_NUMB,
+	(t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1, env->player.inventory.objects[i].nb_stack});
 	return (0);
 }
 

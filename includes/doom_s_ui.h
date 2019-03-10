@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_ui.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 13:59:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 15:46:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 # define DOOM_S_UI
 typedef struct s_uinv	t_uinv;
 typedef struct s_hud	t_hud;
+typedef struct s_font	t_font;
+
+struct 					s_font
+{
+	SDL_Color			color;
+	const char			*str;
+	const char			*font;
+	t_vtx				pos;
+	int					size;
+	int					l;
+	int					r;
+};
+
 
 struct					s_hud
 {

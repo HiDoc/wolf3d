@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:22:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 15:38:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,13 @@
 # define WORLD_NB_WEAPONS 15
 # define WORLD_NB_OBJECTS 15
 # define WORLD_NB_SURFACE 15
+
+/*
+** Ui put string
+*/
+
+#define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
+#define F_TEXT "rsrc/font/interbureau.ttf"
+#define F_NUMB "rsrc/font/5E.ttf"
 
 #endif

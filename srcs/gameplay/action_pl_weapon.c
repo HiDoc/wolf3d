@@ -30,6 +30,8 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.ui.nb_wpn++;
 			env->player.inventory.weapons[obj->ref].current = obj;
 			env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
+			env->player.inventory.current->ammo_current = env->world.armory[obj->ref].ammo_curr_max;
+			env->player.inventory.current->ammo_magazine = env->world.armory[obj->ref].ammo_mag_max;
 		}
 		else
 			return (14);
