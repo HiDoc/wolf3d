@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_env.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 13:08:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 15:51:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ struct								s_env
 	t_engine		engine;
 };
 void			no_op(t_env *env);
-int				sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int *tframe);
+int				sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe);
 int				sdl_loop(t_env *env);
 int				init_container(t_env *env);
 

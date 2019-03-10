@@ -36,7 +36,7 @@ void	player_collision(t_engine *e, t_vision *v, int jetpack)
 {
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
-	if (v->falling && jetpack)
+	if (!v->falling && jetpack)
 		player_falling(v, e, e->sectors[e->player.sector].ceil, 0.05f);
 	else if (v->falling)
 		player_falling(v, e, e->sectors[e->player.sector].floor
@@ -71,6 +71,7 @@ void	player_moving(t_vision *v, int set, t_engine *e)
 		{
 			bumping_score(&d, (t_vtx){vert[s + 1].x - vert[s].x, vert[s + 1].y - vert[s].y});
 			v->moving = 0;
+			e->player.velocity = (t_vctr){0, 0, 0};
 		}
 	}
 	s = -1;
