@@ -3,10 +3,9 @@
 int			sdl_keyhook(t_env *env, SDL_Event event)
 {
 	Uint8	keycode;
-	Uint8	*keycodes;
+	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	t_character	*p;
 
-	keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	keycode = event.key.keysym.scancode;
 	p = &env->player;
 	if (event.type == SDL_KEYDOWN)

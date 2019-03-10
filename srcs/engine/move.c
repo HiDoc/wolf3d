@@ -36,7 +36,7 @@ void	player_collision(t_engine *e, t_vision *v, int jetpack)
 {
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
-	if (v->falling && jetpack)
+	if (!v->falling && jetpack)
 		player_falling(v, e, e->sectors[e->player.sector].ceil, 0.05f);
 	else if (v->falling)
 		player_falling(v, e, e->sectors[e->player.sector].floor

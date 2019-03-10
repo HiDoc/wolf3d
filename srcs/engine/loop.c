@@ -1,8 +1,7 @@
 #include "doom.h"
 
-int sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int *tframe)
+int sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe)
 {
-	(void)e;
 	SDL_LockSurface(env->sdl.surface);
 	f(env);
 	loop_frames(env, frame);
@@ -54,6 +53,7 @@ int sdl_loop(t_env *env)
 	Uint32 time_b;
 	int frame;
 	int tframe;
+	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 
 	time_b = 0;
 	fps = 0;
@@ -66,54 +66,35 @@ int sdl_loop(t_env *env)
 		{
 			fps = 1000 / (time_a - time_b);
 			time_b = time_a;
-			sdl_render(env, e, &dfs, &frame, &tframe);
+			sdl_render(env, &dfs, &frame, &tframe);
 			player_collision(e, &v, env->player.actions.is_flying);
-			while (SDL_PollEvent(&ev))
+			SDL_PollEvent(&ev);
+			if (ev.type == SDL_KEYDOWN)
 			{
-				switch (ev.type)
+				wsad[0] = (keycodes[SDL_SCANCODE_W]);
+				wsad[1] = (keycodes[SDL_SCANCODE_S]);
+				wsad[2] = (keycodes[SDL_SCANCODE_A]);
+				wsad[3] = (keycodes[SDL_SCANCODE_D]);
+				if (keycodes[SDL_SCANCODE_SPACE])
 				{
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					switch (ev.key.keysym.sym)
+					if (v.ground)
 					{
-						case 'w':
-							wsad[0] = ev.type == SDL_KEYDOWN;
-							break;
-						case 's':
-							wsad[1] = ev.type == SDL_KEYDOWN;
-							break;
-						case 'a':
-							wsad[2] = ev.type == SDL_KEYDOWN;
-							break;
-						case 'd':
-							wsad[3] = ev.type == SDL_KEYDOWN;
-							break;
-						case 'q':
-							return (0);
-						case ' ': /* jump */
-							if (v.ground)
-							{
-								e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
-								v.falling = 1;
-							}
-							break;
-						case SDLK_LCTRL: /* duck */
-						case SDLK_RCTRL:
-							v.ducking = ev.type == SDL_KEYDOWN;
+						e->player.velocity.z += env->player.actions.is_flying ? 1.5 : 0.5;
+						if (!env->player.actions.is_flying)
 							v.falling = 1;
-							break;
-						default:
-							break;
 					}
-					break;
-				case SDL_QUIT:
-					return (0);
-					break;
 				}
-				sdl_keyhook(env, ev);
-				wpn_mouse_wheel(env, ev);
-				mouse_shoot(env);
+				if (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL])
+				{
+					v.ducking = 1;
+					v.falling = 1;
+				}
+				if (keycodes[SDL_SCANCODE_Q])
+					return (0);
 			}
+			sdl_keyhook(env, ev);
+			wpn_mouse_wheel(env, ev);
+			mouse_shoot(env);
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
