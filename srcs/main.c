@@ -33,6 +33,7 @@ int		main(void)
 		W, H, SDL_WINDOW_SHOWN);
 	// SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
+	ft_bzero(&env, sizeof(&env));
 	env.sdl.texture = NULL;
 	env.engine.nsectors = 0;
 	env.engine.sectors = NULL;

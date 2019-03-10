@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/04 16:26:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 12:33:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ int		intersec_edge(t_vtx v0, t_vtx v1, t_vtx v2, t_vtx v3)
     return (intersect_rect(v0, v1, v2, v3)
         && fabs(pointside(v2, v0, v1) + pointside(v3, v0, v1)) != 2
         && fabs(pointside(v0, v2, v3) + pointside(v1, v2, v3)) != 2);
+}
+
+/*
+** Build an edge with current vectex and next vertex in sector
+*/
+t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
+{
+	t_edge		edge;
+
+	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
+	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
+	return (edge);
 }
 
 /*
@@ -43,18 +55,6 @@ t_edge  rotation_edge(t_player player, t_edge v)
 }
 
 /*
-** Build an edge with current vectex and next vertex in sector
-*/
-t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
-{
-	t_edge		edge;
-
-	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
-	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
-	return (edge);
-}
-
-/*
 ** Build an edge with scale from perspective projection
 ** using field of view
 */
@@ -70,12 +70,14 @@ t_edge  scale_edge(t_edge t)
 /*
 ** Clip vertex to window
 */
-void	clip_view(t_edge *t)
+void	clip_view(t_raycast *ctn)
 {
-	const t_vtx i1 = intersect_vtx(t->v1, t->v2,
-		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
-	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
-		(t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
+	t_edge		*t = &ctn->rot;
+	const t_vtx i1 = intersect_vtx(t->v1, t->v2, (t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
+	const t_vtx i2 = intersect_vtx(t->v1, t->v2, (t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
+	const t_vtx org1 = {t->v1.x, t->v1.y};
+	const t_vtx org2 = {t->v2.x, t->v2.y};
+
 	if (t->v1.y < NEARZ)
 	{
 		t->v1.x = (i1.y > 0) ? i1.x : i2.x;
@@ -85,5 +87,15 @@ void	clip_view(t_edge *t)
 	{
 		t->v2.x = (i1.y > 0) ? i1.x : i2.x;
 		t->v2.y = (i1.y > 0) ? i1.y : i2.y;
+	}
+	if (fabs(t->v2.x - t->v1.x) > fabs(t->v2.y - t->v1.y))
+	{
+		ctn->li_texture.floor = (t->v1.x - org1.x) * 512 / (org2.x - org1.x);
+		ctn->li_texture.ceil = (t->v2.x - org1.x) * 512 / (org2.x - org1.x);
+	}
+	else
+	{
+		ctn->li_texture.floor = (t->v1.y - org1.y) * 512 / (org2.y - org1.y);
+		ctn->li_texture.ceil = (t->v2.y - org1.y) * 512 / (org2.y - org1.y);
 	}
 }

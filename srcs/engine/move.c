@@ -51,10 +51,6 @@ void	set_player(t_engine *e, t_vision *v, t_vtx d)
 	e->player.where.y += d.y;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);
-	// printf("anglecos: {%f}\n", e->player.anglecos);
-	// printf("anglesin: {%f}\n", e->player.anglesin);
-	// printf("x: {%f}\n", e->player.where.x);
-	// printf("y: {%f}\n", e->player.where.y);
 	v->falling = 1;
 }
 

@@ -34,7 +34,7 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	int				x;
 	int				y;
 
-	SDL_GetRelativeMouseState(&x,&y);
+	SDL_GetRelativeMouseState(&x, &y);
 	e->player.angle += x * 0.03f;
 	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.5f;

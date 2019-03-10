@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 13:12:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 13:20:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,13 @@ struct						s_raycast
 	t_l_float		lf_current;
 	t_l_float		lf_next;
 	t_l_int			li_sector;
+	t_l_int			li_texture;
 	t_projec		p;
 	t_projec		n;
 	int				x;
 	int				x1;
 	int				x2;
+	int				txtx;
 	int				neighbor;
 };
 

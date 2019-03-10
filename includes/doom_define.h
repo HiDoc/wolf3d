@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 18:33:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 13:19:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 /*
 ** Field of view
 */
-# define HFOV (0.73f * H)
+# define HFOV (.73f * H)
 # define VFOV (.2f * H)
 
 /*
