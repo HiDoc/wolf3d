@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/05 12:20:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 11:32:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,13 @@ struct						s_raycast
 	t_l_float		lf_current;
 	t_l_float		lf_next;
 	t_l_int			li_sector;
+	t_l_int			li_texture;
 	t_projec		p;
 	t_projec		n;
 	int				x;
 	int				x1;
 	int				x2;
+	int				txtx;
 	int				neighbor;
 };
 

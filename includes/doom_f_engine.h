@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 13:00:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 11:34:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void		player_collision(t_engine *engine, t_vision *vision);
 t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge to_rotate);
 t_edge 		scale_edge(t_edge to_scale);
-void		clip_view(t_edge *to_clip);
-
+void		clip_view(t_raycast *ctn);
 int			ini_queue(t_engine *engine, t_queue *queue);
 int     	verify_map(t_engine *engine);
 int     	verify_hull(t_engine *engine, t_sector *sector, t_vtx *vertexes);

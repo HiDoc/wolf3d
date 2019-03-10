@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/08 13:56:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 12:33:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ t_edge  scale_edge(t_edge t)
 /*
 ** Clip vertex to window
 */
-void	clip_view(t_edge *t)
+void	clip_view(t_raycast *ctn)
 {
-	const t_vtx i1 = intersect_vtx(t->v1, t->v2,
-		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
-	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
-		(t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
+	t_edge		*t = &ctn->rot;
+	const t_vtx i1 = intersect_vtx(t->v1, t->v2, (t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
+	const t_vtx i2 = intersect_vtx(t->v1, t->v2, (t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
+	const t_vtx org1 = {t->v1.x, t->v1.y};
+	const t_vtx org2 = {t->v2.x, t->v2.y};
+
 	if (t->v1.y < NEARZ)
 	{
 		t->v1.x = (i1.y > 0) ? i1.x : i2.x;
@@ -85,5 +87,15 @@ void	clip_view(t_edge *t)
 	{
 		t->v2.x = (i1.y > 0) ? i1.x : i2.x;
 		t->v2.y = (i1.y > 0) ? i1.y : i2.y;
+	}
+	if (fabs(t->v2.x - t->v1.x) > fabs(t->v2.y - t->v1.y))
+	{
+		ctn->li_texture.floor = (t->v1.x - org1.x) * 512 / (org2.x - org1.x);
+		ctn->li_texture.ceil = (t->v2.x - org1.x) * 512 / (org2.x - org1.x);
+	}
+	else
+	{
+		ctn->li_texture.floor = (t->v1.y - org1.y) * 512 / (org2.y - org1.y);
+		ctn->li_texture.ceil = (t->v2.y - org1.y) * 512 / (org2.y - org1.y);
 	}
 }
