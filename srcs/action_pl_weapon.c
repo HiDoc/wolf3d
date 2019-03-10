@@ -29,7 +29,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		{
 			env->player.inventory.ui.nb_wpn++;
 			env->player.inventory.weapons[obj->ref].current = obj;
-			env->player.inventory.current->current = obj;
+			env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
 		}
 		else
 			return (14);
