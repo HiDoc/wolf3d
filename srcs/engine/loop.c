@@ -42,6 +42,43 @@ int sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
+int	sdl_set_velocity(t_env *env, t_vision *v, const int wsad[4])
+{
+	t_engine	*e;
+	t_vtx		move_vec;
+	const int	pushing = wsad[0] || wsad[1] || wsad[2] || wsad[3];
+	float		accel;
+	const float	speed = env->player.actions.is_running ? SPEED_RUN : SPEED_WALK;
+
+	move_vec = (t_vtx){0.f, 0.f};
+	e = &env->engine;
+	if (wsad[0])
+	{
+		move_vec.x += e->player.anglecos * speed;
+		move_vec.y += e->player.anglesin * speed;
+	}
+	if (wsad[1])
+	{
+		move_vec.x -= e->player.anglecos * speed;
+		move_vec.y -= e->player.anglesin * speed;
+	}
+	if (wsad[2])
+	{
+		move_vec.x += e->player.anglesin * speed;
+		move_vec.y -= e->player.anglecos * speed;
+	}
+	if (wsad[3])
+	{
+		move_vec.x -= e->player.anglesin * speed;
+		move_vec.y += e->player.anglecos * speed;
+	}
+	accel = pushing ? 0.4 : 0.2;
+	e->player.velocity.x = e->player.velocity.x * (1 - accel) + move_vec.x * accel;
+	e->player.velocity.y = e->player.velocity.y * (1 - accel) + move_vec.y * accel;
+	v->moving = pushing;
+	return (1);
+}
+
 int sdl_loop(t_env *env)
 {
 
@@ -79,7 +116,7 @@ int sdl_loop(t_env *env)
 				{
 					if (v.ground)
 					{
-						e->player.velocity.z += env->player.actions.is_flying ? 1.5 : 0.5;
+						e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
 						if (!env->player.actions.is_flying)
 							v.falling = 1;
 					}
@@ -98,35 +135,7 @@ int sdl_loop(t_env *env)
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
-		float move_vec[2] = {0.f, 0.f};
-		if (wsad[0])
-		{
-			move_vec[0] += e->player.anglecos * 0.2f;
-			move_vec[1] += e->player.anglesin * 0.2f;
-		}
-		if (wsad[1])
-		{
-			move_vec[0] -= e->player.anglecos * 0.2f;
-			move_vec[1] -= e->player.anglesin * 0.2f;
-		}
-		if (wsad[2])
-		{
-			move_vec[0] += e->player.anglesin * 0.2f;
-			move_vec[1] -= e->player.anglecos * 0.2f;
-		}
-		if (wsad[3])
-		{
-			move_vec[0] -= e->player.anglesin * 0.2f;
-			move_vec[1] += e->player.anglecos * 0.2f;
-		}
-		int pushing = wsad[0] || wsad[1] || wsad[2] || wsad[3];
-		float acceleration = pushing ? 0.4 : 0.2;
-
-		e->player.velocity.x = e->player.velocity.x * (1 - acceleration) + move_vec[0] * acceleration;
-		e->player.velocity.y = e->player.velocity.y * (1 - acceleration) + move_vec[1] * acceleration;
-
-		if (pushing)
-			v.moving = 1;
+		sdl_set_velocity(env, &v, (const int *)wsad);
 		// SDL_Delay(10);
 	}
 	return (0);

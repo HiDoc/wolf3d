@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 13:03:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 17:08:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	dfs(t_env *env)
 			queue.tail = queue.queue;
 
 		if (queue.renderedsectors[queue.now.sectorno] & 0x21)
-			continue ; // Odd = still rendering, 0x20 = give up
+			continue ;
 		++queue.renderedsectors[queue.now.sectorno];
 		queue.sect = &engine->sectors[queue.now.sectorno];
 

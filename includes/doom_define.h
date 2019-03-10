@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:22:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 17:34:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@
 # define FARZ			5
 # define FARSIDE		20.f
 
+/*
+** Movement
+*/
+# define SPEED_WALK 0.2f
+# define SPEED_RUN	0.4f
 /*
 ** Field of view
 */
