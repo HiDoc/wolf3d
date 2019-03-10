@@ -65,7 +65,7 @@ int		sdl_loop(t_env *env)
 		{
 			fps = 1000 / (time_a - time_b);
 			time_b = time_a;
-			sdl_render(env, e, &draw_screen, &frame, &tframe);
+			sdl_render(env, e, &dfs, &frame, &tframe);
 			player_collision(e, &v, env->player.actions.is_flying);
 			while (SDL_PollEvent(&ev))
 			{
@@ -82,9 +82,9 @@ int		sdl_loop(t_env *env)
 							case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
 							case 'q': return (0);
 							case ' ': /* jump */
-								// if (v.ground) {
+								if (v.ground) {
 									e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5; v.falling = 1;
-								// }
+								}
 								break;
 							case SDLK_LCTRL: /* duck */
 							case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;

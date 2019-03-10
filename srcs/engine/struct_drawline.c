@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_drawline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 11:38:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 13:29:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
 				y++;
 				iter++;
 			}
@@ -104,7 +104,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
 				y++;
 				iter++;
 			}
@@ -114,7 +114,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
 				y++;
 				iter++;
 			}
