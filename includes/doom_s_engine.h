@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/10 13:20:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:06:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ struct						s_raycast
 
 struct						s_engine
 {
-	SDL_Surface		*surface;
 	t_sector		*sectors;
 	unsigned		nsectors;
 	t_player		player;

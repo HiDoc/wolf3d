@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_img.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/07 16:49:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:06:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 	int		y;
 	Uint32 	pix;
 
-	SDL_LockSurface(env->engine.surface);
+	SDL_LockSurface(env->sdl.surface);
 	while (edge.v1.x < edge.v2.x)
 	{
 		y = pxl.y;
@@ -27,14 +27,14 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 		{
 			pix = getpixel(img, pxl.x, y);
 			if ((pix & img->format->Amask) > 0)
-				setpixel(env->engine.surface, edge.v1.x, j, pix);
+				setpixel(env->sdl.surface, edge.v1.x, j, pix);
 			j++;
 			y++;
 		}
 		pxl.x++;
 		edge.v1.x++;
 	}
-	SDL_UnlockSurface(env->engine.surface);
+	SDL_UnlockSurface(env->sdl.surface);
 }
 
 SDL_Surface		*surface_fr_png(char *path)

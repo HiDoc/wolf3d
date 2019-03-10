@@ -1,8 +1,9 @@
 #include "doom.h"
 
-int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int *tframe)
+int sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int *tframe)
 {
-	SDL_LockSurface(e->surface);
+	(void)e;
+	SDL_LockSurface(env->sdl.surface);
 	f(env);
 	loop_frames(env, frame);
 	print_hud(env);
@@ -12,13 +13,13 @@ int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int 
 		print_inventory(env);
 		action_inventory(env, 0, 0);
 	}
-	SDL_UnlockSurface(e->surface);
+	SDL_UnlockSurface(env->sdl.surface);
 	if (env->sdl.texture == NULL)
-		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
+		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->sdl.surface);
 	else
 	{
 		SDL_DestroyTexture(env->sdl.texture);
-		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, e->surface);
+		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->sdl.surface);
 	}
 	SDL_RenderClear(env->sdl.renderer);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
@@ -29,10 +30,10 @@ int		sdl_render(t_env *env, t_engine *e, void (*f)(t_env *env), int *frame, int 
 /*
 ** Mouse aiming !
 */
-int		sdl_mouse(t_engine *e, t_vision *v)
+int sdl_mouse(t_engine *e, t_vision *v)
 {
-	int				x;
-	int				y;
+	int x;
+	int y;
 
 	SDL_GetRelativeMouseState(&x, &y);
 	e->player.angle += x * 0.03f;
@@ -42,22 +43,22 @@ int		sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
-int		sdl_loop(t_env *env)
+int sdl_loop(t_env *env)
 {
 
-	int				wsad[4] = {0,0,0,0};
-	t_vision        v;
-	t_engine		*e;
-	int				fps;
-	Uint32			time_a;
-	Uint32			time_b;
-	int				frame;
-	int				tframe;
+	int wsad[4] = {0, 0, 0, 0};
+	t_vision v;
+	t_engine *e;
+	int fps;
+	Uint32 time_a;
+	Uint32 time_b;
+	int frame;
+	int tframe;
 
 	time_b = 0;
 	fps = 0;
 	e = &env->engine;
-	v = (t_vision) {0, 1, 0, 0, 0, 0};
+	v = (t_vision){0, 1, 0, 0, 0, 0};
 	while (1)
 	{
 		SDL_Event ev;
@@ -69,31 +70,45 @@ int		sdl_loop(t_env *env)
 			player_collision(e, &v, env->player.actions.is_flying);
 			while (SDL_PollEvent(&ev))
 			{
-				// SDL_WaitEvent(&ev);
-				switch(ev.type)
+				switch (ev.type)
 				{
-					case SDL_KEYDOWN:
-					case SDL_KEYUP:
-						switch(ev.key.keysym.sym)
-						{
-							case 'w': wsad[0] = ev.type==SDL_KEYDOWN; break;
-							case 's': wsad[1] = ev.type==SDL_KEYDOWN; break;
-							case 'a': wsad[2] = ev.type==SDL_KEYDOWN; break;
-							case 'd': wsad[3] = ev.type==SDL_KEYDOWN; break;
-							case 'q': return (0);
-							case ' ': /* jump */
-								if (v.ground) {
-									e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5; v.falling = 1;
-								}
-								break;
-							case SDLK_LCTRL: /* duck */
-							case SDLK_RCTRL: v.ducking = ev.type==SDL_KEYDOWN; v.falling=1; break;
-							default: break;
-						}
-						break;
-					case SDL_QUIT:
-						return (0);
-						break;
+				case SDL_KEYDOWN:
+				case SDL_KEYUP:
+					switch (ev.key.keysym.sym)
+					{
+						case 'w':
+							wsad[0] = ev.type == SDL_KEYDOWN;
+							break;
+						case 's':
+							wsad[1] = ev.type == SDL_KEYDOWN;
+							break;
+						case 'a':
+							wsad[2] = ev.type == SDL_KEYDOWN;
+							break;
+						case 'd':
+							wsad[3] = ev.type == SDL_KEYDOWN;
+							break;
+						case 'q':
+							return (0);
+						case ' ': /* jump */
+							if (v.ground)
+							{
+								e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
+								v.falling = 1;
+							}
+							break;
+						case SDLK_LCTRL: /* duck */
+						case SDLK_RCTRL:
+							v.ducking = ev.type == SDL_KEYDOWN;
+							v.falling = 1;
+							break;
+						default:
+							break;
+					}
+					break;
+				case SDL_QUIT:
+					return (0);
+					break;
 				}
 				sdl_keyhook(env, ev);
 				wpn_mouse_wheel(env, ev);
@@ -103,15 +118,31 @@ int		sdl_loop(t_env *env)
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
 		float move_vec[2] = {0.f, 0.f};
-		if(wsad[0]) { move_vec[0] += e->player.anglecos * 0.2f; move_vec[1] += e->player.anglesin * 0.2f; }
-		if(wsad[1]) { move_vec[0] -= e->player.anglecos * 0.2f; move_vec[1] -= e->player.anglesin * 0.2f; }
-		if(wsad[2]) { move_vec[0] += e->player.anglesin * 0.2f; move_vec[1] -= e->player.anglecos * 0.2f; }
-		if(wsad[3]) { move_vec[0] -= e->player.anglesin * 0.2f; move_vec[1] += e->player.anglecos * 0.2f; }
+		if (wsad[0])
+		{
+			move_vec[0] += e->player.anglecos * 0.2f;
+			move_vec[1] += e->player.anglesin * 0.2f;
+		}
+		if (wsad[1])
+		{
+			move_vec[0] -= e->player.anglecos * 0.2f;
+			move_vec[1] -= e->player.anglesin * 0.2f;
+		}
+		if (wsad[2])
+		{
+			move_vec[0] += e->player.anglesin * 0.2f;
+			move_vec[1] -= e->player.anglecos * 0.2f;
+		}
+		if (wsad[3])
+		{
+			move_vec[0] -= e->player.anglesin * 0.2f;
+			move_vec[1] += e->player.anglecos * 0.2f;
+		}
 		int pushing = wsad[0] || wsad[1] || wsad[2] || wsad[3];
 		float acceleration = pushing ? 0.4 : 0.2;
 
-		e->player.velocity.x = e->player.velocity.x * (1-acceleration) + move_vec[0] * acceleration;
-		e->player.velocity.y = e->player.velocity.y * (1-acceleration) + move_vec[1] * acceleration;
+		e->player.velocity.x = e->player.velocity.x * (1 - acceleration) + move_vec[0] * acceleration;
+		e->player.velocity.y = e->player.velocity.y * (1 - acceleration) + move_vec[1] * acceleration;
 
 		if (pushing)
 			v.moving = 1;

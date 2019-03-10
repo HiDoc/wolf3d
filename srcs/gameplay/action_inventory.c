@@ -52,6 +52,5 @@ int	action_inventory(t_env *env, int x, int y)
 				drop_object(env, object);
 		}
 	}
-	SDL_Delay(100);
 	return (0);
 }

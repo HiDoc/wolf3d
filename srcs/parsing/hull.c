@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hull.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 13:40:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:24:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int			insert_new_edge(t_chain *chain, t_sector *sect)
 	if (nearest_point == ~0u)
 	{
 		fprintf(stderr, " - ERROR: Could not find a vertex to pair with!\n");
-		// SDL_Delay(200);
 		++chain->b;
 		return (0);
 	}

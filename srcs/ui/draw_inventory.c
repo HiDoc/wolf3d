@@ -20,7 +20,7 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	env->player.inventory.objects[i].udbox[1].v1.y = bloc.v2.y - blocx / 7;
 	env->player.inventory.objects[i].udbox[1].v2.x = bloc.v2.x;
 	env->player.inventory.objects[i].udbox[1].v2.y = bloc.v2.y;
-	draw_flat_rect(env->engine.surface,
+	draw_flat_rect(env->sdl.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
 	text_font(env, "use",
 	(t_vctr){env->player.inventory.objects[i].udbox[1].v1.x + 2,

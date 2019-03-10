@@ -16,7 +16,6 @@ int		give_shield(void *e, t_wrap_inv *object)
 			object->nb_stack > 0 ? object->nb_stack-- : 0;
 			object->is_used = object->nb_stack < 1
 			? drop_object(env, object) : 0;
-			SDL_Delay(100);
 			return (0);
 		}
 		return (1);
@@ -39,7 +38,6 @@ int		give_health(void *e, t_wrap_inv *object)
 			object->nb_stack > 0 ? object->nb_stack-- : 0;
 			object->is_used = object->nb_stack < 1
 			? drop_object(env, object) : 0;
-			SDL_Delay(100);
 			return (0);
 		}
 		return (3);
@@ -71,7 +69,6 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 				wpn->ammo_magazine = wpn_ref->ammo_mag_max;
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? drop_object(env, obj) : 0;
-			SDL_Delay(100);
 			return (0);
 		}
 		return (wpn ? 9 : 10);
@@ -87,7 +84,6 @@ int	give_jetpack(void *e, t_wrap_inv *obj)
 	if (obj)
 	{
 		env->player.actions.is_flying = !env->player.actions.is_flying;
-		SDL_Delay(100);
 		return (env->player.actions.is_flying ? 11 : 12);
 	}
 	return (13);

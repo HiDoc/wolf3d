@@ -55,16 +55,28 @@ int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
     return (1);
 }
 
-int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
+typedef struct	s_font
+{
+	SDL_Color	color;
+	const char	*str;
+	const char	*font;
+	t_vtx		pos;
+	int			size;
+	int			num;
+}				t_font;
+
+int    doom_font(t_env *env, t_font	data)
 {
 	SDL_Surface	    *surface;
 	TTF_Font        *font;
 	SDL_Surface		*tmp;
 	t_rgba			rgba;
+	const t_vtx		pos = data.pos;
 
-	if (!(font = TTF_OpenFont("rsrc/font/AmazDooMLeft2.ttf", pos.z)))
+	// if (!(font = TTF_OpenFont("rsrc/font/AmazDooMLeft2.ttf", pos.z)))
+	if (!(font = TTF_OpenFont(data.font, data.size)))
         return (0);
-	tmp	= TTF_RenderText_Blended(font, str, color);
+	tmp	= TTF_RenderText_Blended(font, data.str, data.color);
 	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
 	SetSurfaceAlpha(surface, 128, &rgba);
 	SDL_FreeSurface(tmp);
@@ -72,7 +84,6 @@ int    doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
     draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
 	SDL_FreeSurface(surface);
 	surface = NULL;
-	str = NULL;
 	TTF_CloseFont(font);
 	font = NULL;
     return (1);
@@ -89,17 +100,32 @@ int    ui_put_fps(t_env *env, int fps)
 	fps_count = NULL;
     return (1);
 }
-
+// typedef struct	s_font
+// {
+// 	SDL_Color	color;
+// 	const char	*str;
+// 	const char	*font;
+// 	t_vtx		pos;
+// 	int			size;
+// 	int			num;
+// }				t_font;
+#define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
 int     ui_txt_inv(t_env *env)
 {
 	char	*tmp;
 	char	*ptr;
+	const SDL_Color c[3] = {{255, 255, 255, 255}, {255, 255, 255, 0}, {8, 8, 255, 255}};
 
-	doom_font(env, "Inventory", (t_vctr){20, 15, 60}, (SDL_Color){255, 255, 255, 255});
-    doom_font(env, "Weapons", (t_vctr){20, H / 1.7, 40}, (SDL_Color){255, 255, 255, 255});
+	// doom_font(env, "Inventory", (t_vctr){20, 15, 60}, (SDL_Color){255, 255, 255, 255});
+	doom_font(env, (t_font){c[0], "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1});
+
+    //doom_font(env, "Weapons", (t_vctr){20, H / 1.7, 40}, (SDL_Color){255, 255, 255, 255});
+	doom_font(env, (t_font){c[0], "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1});
+
 	if (!(tmp = ft_strrjoin("Level : ", ft_itoa(1))))
 		return (0);
-    doom_font(env, tmp, (t_vctr){W - W / 3, 15, 60}, (SDL_Color){255, 255, 255, 0});
+    //doom_font(env, tmp, (t_vctr){W - W / 3, 15, 60}, (SDL_Color){255, 255, 255, 0});
+	doom_font(env, (t_font){c[1], (const char *)tmp, F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1});
 	free(tmp);
 	if (!(tmp = ft_strrjoin("Sector : ", ft_itoa(env->engine.player.sector))))
 		return (0);

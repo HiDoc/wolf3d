@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 13:24:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:03:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 */
 # include "doom_s_assets.h"
 # include "doom_s_math.h"
-# include "doom_s_object.h"
-# include "doom_s_engine.h"
+# include "doom_s_wrapper.h"
+# include "doom_s_ui.h"
 # include "doom_s_gameplay.h"
+# include "doom_s_engine.h"
 # include "doom_s_env.h"
 
 /*

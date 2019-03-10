@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 13:19:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:22:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 /*
 ** Define window size
 */
-# define W				1000
+# define W				1200
 # define H				800
 
 /*

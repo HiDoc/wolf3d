@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/10 13:19:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 15:02:11 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int         action_inventory(t_env *env, int x, int y);
 void	    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
-int         doom_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int    		number_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *filename);

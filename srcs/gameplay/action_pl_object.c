@@ -65,7 +65,6 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		//******************************
 		//******************************
 
-		SDL_Delay(100);
 		return (6);
 	}
 	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));

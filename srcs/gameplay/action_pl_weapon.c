@@ -40,7 +40,6 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		//******************************
 		//******************************
 
-		SDL_Delay(100);
 		return (15);
 	}
 	return (16);

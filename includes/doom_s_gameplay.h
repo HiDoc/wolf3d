@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 02:15:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:04:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 ** 4 - Container
 ** 5 - World
 ** 6 - Inventory
-** 7 - Character
+** 7 - Actions
+** 8 - Character
 */
 
 typedef struct s_object		t_object;
@@ -30,6 +31,7 @@ typedef struct s_surface	t_surface;
 typedef struct s_container	t_container;
 typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
+typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
 
 struct						s_object
@@ -97,6 +99,18 @@ struct						s_inventory
 	t_uinv		ui;
 };
 
+struct						s_actions
+{
+    int         is_shield;
+    int         is_health;
+    int         is_ammo;
+	int			sub_action;
+	t_edge		edge;
+	int			is_shooting;
+	int			is_loading;
+	int			is_flying;
+};
+
 struct						s_character
 {
 	int			health;
@@ -115,4 +129,5 @@ struct						s_character
 	t_actions	actions;
 	t_hud		hud;
 };
+
 #endif

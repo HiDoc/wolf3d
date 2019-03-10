@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_drawline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 13:29:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 14:08:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void				vline(t_drawline l, t_env *env)
 	int		iter;
 
 	x = ((t_raycast *)l.container)->x;
-	pixels	= (int *)env->engine.surface->pixels;
+	pixels	= (int *)env->sdl.surface->pixels;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 	if (l.from == l.to)
@@ -52,7 +52,7 @@ void				render_cwall(t_drawline l, t_env *env)
 
 	ctn = ((t_raycast *)l.container);
 
-	pixels	= (int *)env->engine.surface->pixels;
+	pixels	= (int *)env->sdl.surface->pixels;
 	sprite = env->world.surfaces.walls[0].sprite;
 
 	float height = l.to - l.from;

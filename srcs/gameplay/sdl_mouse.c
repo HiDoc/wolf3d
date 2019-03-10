@@ -15,7 +15,6 @@ int	mouse_shoot(t_env *env)
 			env->player.actions.is_shooting = 1;
 			// Mix_PlayChannel(-1, env->sounds.shot, 0);
 			env->player.inventory.current->ammo_current--;
-			SDL_Delay(150);
 		}
 		else
 			load_weapon(env);
