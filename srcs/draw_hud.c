@@ -6,17 +6,17 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/09 23:27:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 02:57:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	print_wpn_hud(t_env *env, t_weapon *wpn)
+int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
-	char	*tmp;
+	char		*tmp;
 
-	put_img_inv(env, env->player.hud.hud_wpn[wpn->type - 2],
+	put_img_inv(env, env->player.hud.hud_wpn[wpn->current->ref],
 	(t_edge){{W - W / 4.5, H / 1.5}, {W - W / 4.5 + 190, H / 1.5 + 140}},
 	(t_edge){{0, 0}, {0, 0}});
 	if (!(tmp = ft_itoa(env->player.inventory.current->ammo_current)))
@@ -101,7 +101,7 @@ int	print_pad(t_env *env)
 	action_pad(env, 1, (t_edge){{W - W / 1.5 + 110, H - H / 4 + 64},
 	{W - W / 1.5 + 140, H - H / 4 + 92}});
 	if (env->player.inventory.current)
-		action_pad(env, env->player.inventory.current->type,
+		action_pad(env, env->player.inventory.current->current->ref + 2,
 		(t_edge){{W - W / 1.5 + 40, H - H / 4.5 + 110},
 		{W - W / 1.5 + 70, H - H / 4.5 + 140}});
 	action_pad(env, 5, (t_edge){{W - W / 1.5 + 37, H - H / 4.5 - 35},

@@ -6,6 +6,7 @@ int	mouse_shoot(t_env *env)
     int y;
 
     if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1)
+	&& env->player.inventory.current
 	&& !env->player.inventory.ui.is_active
 	&& !env->player.actions.is_loading)
 	{

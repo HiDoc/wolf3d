@@ -21,7 +21,8 @@ int	loop_frames(t_env *env, int *frame)
 		}
 		else
 		{
-			put_gun(env, env->player.inventory.current->sprite);
+			put_gun(env,
+			env->world.armory[env->player.inventory.current->current->ref].sprite);
 			*frame = 0;
 		}
 	}

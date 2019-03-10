@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/09 23:06:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 00:33:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
 int         init_inventory_ui(t_env *env);
 
+int			pick_weapon(t_env *env, t_wrap_sect *obj);
 int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 
 int		    put_gun(t_env *env, SDL_Surface *sprite);
@@ -98,6 +99,6 @@ int			sdl_keyhook(t_env *env, SDL_Event event);
 int			mouse_shoot(t_env *env);
 void	    load_sounds(t_env *env);
 
-int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref);
+int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn);
 
 #endif

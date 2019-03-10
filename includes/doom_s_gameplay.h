@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 13:08:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/10 02:15:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ struct						s_world
 
 struct						s_inventory
 {
-	t_weapon	*current;
-	t_weapon	*weapons[3];
+	t_wrap_wpn	*current;
+	t_wrap_wpn	weapons[3];
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;
 	t_uinv		ui;

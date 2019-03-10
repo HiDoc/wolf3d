@@ -38,7 +38,8 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	int	iter;
 
 	iter = 0;
-	if (env->player.inventory.nb_current_obj < 6)
+	if (env->player.inventory.nb_current_obj < 6
+	&& !obj->is_wpn)
 	{
 		iter = check_object_type(env, obj->ref);
 		if (iter > -1)
@@ -67,7 +68,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		SDL_Delay(100);
 		return (6);
 	}
-	return (7);
+	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
 }
 
 int		drop_object(t_env *env, t_wrap_inv *object)
@@ -81,14 +82,14 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			vertex.x = env->engine.player.where.x;
 			vertex.y = env->engine.player.where.y;
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
-			vertex, object->current->ref);
+			vertex, object->current->ref, object->current->is_wpn);
 
 		}
 		if (object->nb_stack > 1)
 			object->nb_stack--;
 		else
 		{
-			if (object->current->ref < 3)
+			if (object->current->ref < 6)
 				env->player.hud.shortcut[object->current->ref] = NULL;
 			*object = (t_wrap_inv)
 			{NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};

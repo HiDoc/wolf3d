@@ -62,8 +62,9 @@ void			LoadData(t_engine *e, t_env *env)
 				t_vtx	vertex = (t_vtx){0, 0};
 				int		s = 0;
 				int		ref = 0;
-				sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);
-				fill_objects_sector(&e->sectors[s], vertex, ref);
+				int		is_wpn = 0;
+				sscanf(ptr += n, "%f %f %d %d %d%n", &vertex.x, &vertex.y, &s, &ref, &is_wpn, &n);
+				fill_objects_sector(&e->sectors[s], vertex, ref, is_wpn);
 				break;
 			case 'p':; // player
 				float angle;

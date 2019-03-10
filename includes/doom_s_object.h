@@ -4,6 +4,7 @@
 # define DOOM_STRUCT_OBJ_H
 
 typedef struct s_wrap_inv		t_wrap_inv;
+typedef struct s_wrap_wpn		t_wrap_wpn;
 typedef struct s_wrap_sect      t_wrap_sect;
 typedef struct s_actions        t_actions;
 typedef struct s_uinv	        t_uinv;
@@ -21,7 +22,6 @@ struct					s_hud
 	int					is_txt;
 };
 
-
 struct 					s_uinv
 {
 	SDL_Surface	*front_pic;
@@ -37,7 +37,6 @@ struct 					s_uinv
 	int			wwheel;
 	int			nb_wpn;
 };
-
 
 struct                  s_actions
 {
@@ -56,10 +55,10 @@ struct					s_wrap_sect
 	t_vtx		vertex;
 	int			is_picked;
 	int			ref;
+	int			is_wpn;
     int         (*action)(void *, t_wrap_inv *);
 	t_wrap_sect	*next;
 };
-
 
 struct					s_wrap_inv
 {
@@ -67,6 +66,13 @@ struct					s_wrap_inv
 	int				nb_stack;
     int             is_used;
 	t_edge			udbox[2];
+};
+
+struct					s_wrap_wpn
+{
+	t_wrap_sect		*current;
+	int				ammo_current;
+	int				ammo_magazine;
 };
 
 #endif

@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/07 14:20:40 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/10 02:50:46 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,7 @@ SRC_NAME 	= main.c \
 			parse_objects.c \
 			action_object.c \
 			action_pl_object.c \
+			action_pl_weapon.c \
 			struct_inventory.c \
 			action_inventory.c \
 			draw_inventory.c \

@@ -52,21 +52,23 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 	t_env		*env;
 	int			stack;
 	int			ammo;
-	t_weapon	*wpn;
+	t_wrap_wpn	*wpn;
+	t_weapon	*wpn_ref;
 
 	env = (t_env*)e;
 	if (obj)
 	{
 		ammo = obj->current->ref * 10;
-		wpn = env->player.inventory.weapons[obj->current->ref - 2];
+		wpn = &env->player.inventory.weapons[obj->current->ref - 2];
 		stack = wpn->ammo_current + wpn->ammo_magazine;
-		if (wpn && stack < wpn->ammo_curr_max + wpn->ammo_mag_max)
+		wpn_ref = &env->world.armory[obj->current->ref];
+		if (wpn && stack < wpn_ref->ammo_curr_max + wpn_ref->ammo_mag_max)
 		{
-			ammo -= wpn->ammo_curr_max - wpn->ammo_current;
-			wpn->ammo_current = wpn->ammo_curr_max;
+			ammo -= wpn_ref->ammo_curr_max - wpn->ammo_current;
+			wpn->ammo_current = wpn_ref->ammo_curr_max;
 			wpn->ammo_magazine += ammo;
-			if (wpn->ammo_magazine > wpn->ammo_mag_max)
-				wpn->ammo_magazine = wpn->ammo_mag_max;
+			if (wpn->ammo_magazine > wpn_ref->ammo_mag_max)
+				wpn->ammo_magazine = wpn_ref->ammo_mag_max;
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? drop_object(env, obj) : 0;
 			SDL_Delay(100);

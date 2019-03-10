@@ -22,7 +22,7 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 		if (keycodes[SDL_SCANCODE_UP])
 			p->hud.is_txt = give_jetpack(env, p->hud.shortcut[5]);
 		if (keycodes[SDL_SCANCODE_DOWN])
-			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->type]);
+			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]);
 		if (keycodes[SDL_SCANCODE_TAB])
 			p->inventory.ui.is_active = !p->inventory.ui.is_active;
 		if (keycodes[SDL_SCANCODE_R])

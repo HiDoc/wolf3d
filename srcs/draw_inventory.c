@@ -72,7 +72,7 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	n->x += sbloc;
 	n->y = H - H / 4.8;
 	bloc->v2 = *n;
-	if (env->player.inventory.weapons[iter])
+	if (env->player.inventory.weapons[iter].current)
 		put_img_inv(env, env->player.inventory.ui.mini_wpn[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
 	else
 		put_img_inv(env, env->player.inventory.ui.empt_wpn[iter], *bloc, (t_edge){{0, 0}, {0, 0}});

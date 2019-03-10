@@ -36,7 +36,7 @@ int    init_inventory_ui(t_env *env)
     env->player.inventory.ui.front_pic = ui_img("inventaire");
     SetSurfaceAlpha(env->player.inventory.ui.front_pic, 100, &rgba);
 	env->player.inventory.ui.wwheel = 0;
-    env->player.inventory.ui.nb_wpn = 3;
+    env->player.inventory.ui.nb_wpn = 2;
     env->player.inventory.nb_current_obj = 0;
     return (init_wpn_inv(env)
     && init_icon(env)
