@@ -16,7 +16,7 @@ void			LoadData(t_engine *e, t_env *env)
 	m = 0;
 	vert = NULL;
 	NumVertices = 0;
-	if (!(fp = fopen("map-clear.txt", "rt")))
+	if (!(fp = fopen("rsrc/maps/map.txt", "rt")))
 	{
 		perror("map-clear.txt");
 		exit(1);
