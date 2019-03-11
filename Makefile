@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/11 18:01:25 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/11 19:14:48 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) |wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -120,6 +120,7 @@ SRC_NAME 	= main.c \
 			ui_draw_vector.c \
 			ui_draw_rect.c \
 			ui_draw_full_rect.c \
+			ui_draw_circle.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

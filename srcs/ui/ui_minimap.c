@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 18:03:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:13:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ static void		draw_sectors(SDL_Surface *surface, t_engine *engine)
 
 		edge = rotate_edge(engine->player, edge);
 
-		edge.v1.x += MINIMAP_W / 2;
-		edge.v1.y += MINIMAP_H / 2;
-		edge.v2.x += MINIMAP_W / 2;
-		edge.v2.y += MINIMAP_H / 2;
+		edge.v1.x += MINIMAP_W / 2 % MINIMAP_W;
+		edge.v1.y += MINIMAP_H / 2 % MINIMAP_H;
+		edge.v2.x += MINIMAP_W / 2 % MINIMAP_W;
+		edge.v2.y += MINIMAP_H / 2 % MINIMAP_H;
 
 		ui_draw_line(surface, edge, C_CYAN);
 
@@ -82,10 +82,10 @@ static void		draw_sectors(SDL_Surface *surface, t_engine *engine)
 
 			edge = rotate_edge(engine->player, edge);
 
-			edge.v1.x += MINIMAP_W / 2;
-			edge.v1.y += MINIMAP_H / 2;
-			edge.v2.x += MINIMAP_W / 2;
-			edge.v2.y += MINIMAP_H / 2;
+			edge.v1.x += MINIMAP_W / 2 % MINIMAP_W;
+			edge.v1.y += MINIMAP_H / 2 % MINIMAP_H;
+			edge.v2.x += MINIMAP_W / 2 % MINIMAP_W;
+			edge.v2.y += MINIMAP_H / 2 % MINIMAP_H;
 
 			ui_draw_line(surface, edge, C_CYAN);
 
