@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 15:51:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:52:12 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
 typedef struct s_msc				t_msc;
+typedef struct s_time				t_time;
 
 struct								s_sdl
 {
@@ -32,18 +33,30 @@ struct								s_msc
 	Mix_Chunk		*shot;
 };
 
+struct s_time
+{
+	int				fps;
+	Uint32			time_a;
+	Uint32			time_b;
+	int				frame;
+	int				tframe;
+};
+
+
 struct								s_env
 {
 	int				map_w;
 	int				map_h;
+	t_time			time;
 	t_msc			sounds;
 	t_character		player;
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
 };
+
 void			no_op(t_env *env);
-int				sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe);
+int				sdl_render(t_env *env, void (*f)(t_env *env));
 int				sdl_loop(t_env *env);
 int				init_container(t_env *env);
 

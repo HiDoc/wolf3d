@@ -1,27 +1,36 @@
 #include "doom.h"
 
-int sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe)
+int	sdl_render_game(t_env *env)
 {
-	SDL_LockSurface(env->sdl.surface);
-	f(env);
-	loop_frames(env, frame);
-	ui_put_fps(env, 0);
+	dfs(env);
+	loop_frames(env, &env->time.frame);
+	ui_put_fps(env, env->time.fps);
 	print_hud(env);
-	ui_draw_msg(env, &env->player.hud.is_txt, tframe);
+	ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
+	return (1);
+}
+
+int	sdl_render_inventory(t_env *env)
+{
+	print_inventory(env);
+	action_inventory(env, 0, 0);
+	return (1);
+}
+
+int sdl_render(t_env *env, void (*f)(t_env *env))
+{
+	(void)f;
+	SDL_LockSurface(env->sdl.surface);
+	sdl_render_game(env);
 	if (env->player.inventory.ui.is_active)
 	{
-		print_inventory(env);
-		action_inventory(env, 0, 0);
+		sdl_render_inventory(env);
 	}
 	SDL_UnlockSurface(env->sdl.surface);
-	if (env->sdl.texture == NULL)
-		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->sdl.surface);
-	else
-	{
-		SDL_DestroyTexture(env->sdl.texture);
-		env->sdl.texture = SDL_CreateTextureFromSurface(env->sdl.renderer, env->sdl.surface);
-	}
-	SDL_RenderClear(env->sdl.renderer);
+	SDL_UpdateTexture(env->sdl.texture,
+					NULL,
+					env->sdl.surface->pixels,
+					env->sdl.surface->pitch);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (1);
@@ -85,27 +94,24 @@ int sdl_loop(t_env *env)
 	t_vision v;
 	t_engine *e;
 	int wsad[4] = {0, 0, 0, 0};
-	int fps;
-	Uint32 time_a;
-	Uint32 time_b;
-	int frame;
-	int tframe;
 	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 
-	time_b = 0;
-	fps = 0;
+	env->time.time_b = 0;
+	env->time.fps = 0;
+	env->time.frame = 0;
+	env->time.tframe = 0;
 	e = &env->engine;
 	v = (t_vision){0, 1, 0, 0, 0, 0};
 	while (1)
 	{
 		SDL_Event ev;
-		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
+		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
-			fps = 1000 / (time_a - time_b);
-			time_b = time_a;
-			sdl_render(env, &dfs, &frame, &tframe);
-			player_collision(e, &v, env->player.actions.is_flying);
+			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
+			env->time.time_b = env->time.time_a;
+			sdl_render(env, &dfs);
 			SDL_PollEvent(&ev);
+			player_collision(e, &v, env->player.actions.is_flying);
 			wsad[0] = (keycodes[SDL_SCANCODE_W]);
 			wsad[1] = (keycodes[SDL_SCANCODE_S]);
 			wsad[2] = (keycodes[SDL_SCANCODE_A]);
@@ -129,7 +135,7 @@ int sdl_loop(t_env *env)
 				if (keycodes[SDL_SCANCODE_Q])
 					return (0);
 			}
-			sdl_keyhook(env, ev);
+			sdl_keyhook_game(env, ev, keycodes);
 			wpn_mouse_wheel(env, ev);
 			mouse_shoot(env);
 		}
