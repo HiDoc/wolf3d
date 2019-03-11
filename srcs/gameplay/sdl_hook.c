@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 16:18:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:12:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	t_uinv		*ui;
 
 	ui = &env->player.inventory.ui;
+	SDL_WaitEvent(&ev);
 	if (ev.type == SDL_KEYDOWN)
 	{
 		if (keycodes[SDL_SCANCODE_TAB])
+		{
 			ui->is_active = !ui->is_active;
+			SDL_SetRelativeMouseMode(SDL_TRUE);
+			SDL_Delay(300);
+		}
 		SDL_FlushEvent(SDL_KEYDOWN);
 	}
 	return (1);
@@ -37,12 +42,13 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	{
 		if (keycodes[SDL_SCANCODE_SPACE])
 		{
+			// add flying here
 			if (v->ground)
 			{
-				env->engine.player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
-				if (!env->player.actions.is_flying)
-					v->falling = 1;
+				env->engine.player.velocity.z += 0.5;
+				v->falling = 1;
 			}
+
 		}
 		if (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL])
 		{
@@ -65,6 +71,7 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		{
 			p->inventory.ui.is_active = !p->inventory.ui.is_active;
 			SDL_Delay(300);
+			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);

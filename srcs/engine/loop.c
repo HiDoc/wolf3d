@@ -114,15 +114,14 @@ int sdl_loop(t_env *env)
 				wpn_mouse_wheel(env, ev);
 				mouse_shoot(env);
 				sdl_mouse(e, v);
+				sdl_set_velocity(env, v, keycodes);
 			}
 			else
 			{
-				sdl_render(env, &sdl_render_game);
+				sdl_render(env, &sdl_render_inventory);
 				sdl_keyhook_inventory(env, ev, keycodes);
 			}
 		}
-		if (!env->player.inventory.ui.is_active)
-			sdl_set_velocity(env, v, keycodes);
 	}
 	return (0);
 }
