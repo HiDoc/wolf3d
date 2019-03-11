@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sdl_hook.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 22:16:53 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 int			sdl_keyhook(t_env *env, SDL_Event event)
@@ -26,6 +38,7 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 			p->inventory.ui.is_active = !p->inventory.ui.is_active;
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);
+		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	}
 	return (1);
 }

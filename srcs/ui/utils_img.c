@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_img.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:21:37 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 22:22:22 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
@@ -26,7 +38,7 @@ int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
 	return (0);
 }
 
-int	 SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c)
+int	 set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 {
     SDL_PixelFormat	*fmt;
 	int				x;
@@ -36,7 +48,6 @@ int	 SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 
 	fmt = surface->format;
 	bpp = fmt->BytesPerPixel;
-	// Scaling factor to clamp alpha to [0, alpha].
 	SDL_LockSurface(surface);
 	y = 0;
 	while (y < surface->h)
@@ -44,14 +55,10 @@ int	 SetSurfaceAlpha (SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 		x = 0;
 		while (x < surface->w)
 		{
-			p = (Uint32 *)(
-				(Uint8 *)surface->pixels
+			p = (Uint32 *)((Uint8 *)surface->pixels
 				+ y * surface->pitch
-				+ x * bpp
-				);
-			// Get the old pixel components.
+				+ x * bpp);
 			SDL_GetRGBA( *p, fmt, &c->r, &c->g, &c->b, &c->a );
-			// Set the pixel with the new alpha.
 			*p = SDL_MapRGBA( fmt, c->r, c->g, c->b, (float)(alpha / 255.0f) * c->a );
 			x++;
 		}
