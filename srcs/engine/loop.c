@@ -1,6 +1,6 @@
 #include "doom.h"
 
-int	sdl_render_game(t_env *env)
+void	sdl_render_game(t_env *env)
 {
 	dfs(env);
 	loop_frames(env, &env->time.frame);
@@ -8,25 +8,19 @@ int	sdl_render_game(t_env *env)
 	print_hud(env);
 	ui_minimap(env);
 	ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
-	return (1);
 }
 
-int	sdl_render_inventory(t_env *env)
+void	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
 	action_inventory(env, 0, 0);
-	return (1);
 }
 
 int sdl_render(t_env *env, void (*f)(t_env *env))
 {
 	(void)f;
 	SDL_LockSurface(env->sdl.surface);
-	sdl_render_game(env);
-	if (env->player.inventory.ui.is_active)
-	{
-		sdl_render_inventory(env);
-	}
+	f(env);
 	SDL_UnlockSurface(env->sdl.surface);
 	SDL_UpdateTexture(env->sdl.texture,
 					NULL,
@@ -53,32 +47,32 @@ int sdl_mouse(t_engine *e, t_vision *v)
 	return (1);
 }
 
-int	sdl_set_velocity(t_env *env, t_vision *v, const int wsad[4])
+int	sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes)
 {
 	t_engine	*e;
 	t_vtx		move_vec;
-	const int	pushing = wsad[0] || wsad[1] || wsad[2] || wsad[3];
+	const int	pushing = (keycodes[SDL_SCANCODE_W]) || (keycodes[SDL_SCANCODE_S]) || (keycodes[SDL_SCANCODE_A]) || (keycodes[SDL_SCANCODE_D]);
 	float		accel;
 	const float	speed = env->player.actions.is_running ? SPEED_RUN : SPEED_WALK;
 
 	move_vec = (t_vtx){0.f, 0.f};
 	e = &env->engine;
-	if (wsad[0])
+	if (keycodes[SDL_SCANCODE_W])
 	{
 		move_vec.x += e->player.anglecos * speed;
 		move_vec.y += e->player.anglesin * speed;
 	}
-	if (wsad[1])
+	if (keycodes[SDL_SCANCODE_S])
 	{
 		move_vec.x -= e->player.anglecos * speed;
 		move_vec.y -= e->player.anglesin * speed;
 	}
-	if (wsad[2])
+	if (keycodes[SDL_SCANCODE_A])
 	{
 		move_vec.x += e->player.anglesin * speed;
 		move_vec.y -= e->player.anglecos * speed;
 	}
-	if (wsad[3])
+	if (keycodes[SDL_SCANCODE_D])
 	{
 		move_vec.x -= e->player.anglesin * speed;
 		move_vec.y += e->player.anglecos * speed;
@@ -92,9 +86,8 @@ int	sdl_set_velocity(t_env *env, t_vision *v, const int wsad[4])
 
 int sdl_loop(t_env *env)
 {
-	t_vision v;
+	t_vision *v;
 	t_engine *e;
-	int wsad[4] = {0, 0, 0, 0};
 	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 
 	env->time.time_b = 0;
@@ -102,47 +95,34 @@ int sdl_loop(t_env *env)
 	env->time.frame = 0;
 	env->time.tframe = 0;
 	e = &env->engine;
-	v = (t_vision){0, 1, 0, 0, 0, 0};
+	v = &e->player.vision;
+	v->falling = 1;
 	while (1)
 	{
 		SDL_Event ev;
+		if (keycodes[SDL_SCANCODE_Q])
+			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
-			sdl_render(env, &dfs);
 			SDL_PollEvent(&ev);
-			player_collision(e, &v, env->player.actions.is_flying);
-			wsad[0] = (keycodes[SDL_SCANCODE_W]);
-			wsad[1] = (keycodes[SDL_SCANCODE_S]);
-			wsad[2] = (keycodes[SDL_SCANCODE_A]);
-			wsad[3] = (keycodes[SDL_SCANCODE_D]);
-			if (ev.type == SDL_KEYDOWN)
+			if (!env->player.inventory.ui.is_active)
 			{
-				if (keycodes[SDL_SCANCODE_SPACE])
-				{
-					if (v.ground)
-					{
-						e->player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
-						if (!env->player.actions.is_flying)
-							v.falling = 1;
-					}
-				}
-				if (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL])
-				{
-					v.ducking = 1;
-					v.falling = 1;
-				}
-				if (keycodes[SDL_SCANCODE_Q])
-					return (0);
+				sdl_render(env, &sdl_render_game);
+				player_collision(e, v, env->player.actions.is_flying);
+				sdl_keyhook_game(env, ev, keycodes);
+				wpn_mouse_wheel(env, ev);
+				mouse_shoot(env);
+				sdl_mouse(e, v);
+				sdl_set_velocity(env, v, keycodes);
 			}
-			sdl_keyhook_game(env, ev, keycodes);
-			wpn_mouse_wheel(env, ev);
-			mouse_shoot(env);
+			else
+			{
+				sdl_render(env, &sdl_render_inventory);
+				sdl_keyhook_inventory(env, ev, keycodes);
+			}
 		}
-		if (!env->player.inventory.ui.is_active)
-			sdl_mouse(e, &v);
-		sdl_set_velocity(env, &v, (const int *)wsad);
 	}
 	return (0);
 }

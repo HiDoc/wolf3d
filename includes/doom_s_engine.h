@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 13:12:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:13:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,21 @@ struct						s_sector
 	int			nb_objects;
 };
 
+struct						s_vision
+{
+	int			ground;
+	int			falling;
+	int			moving;
+	int			ducking;
+	float		yaw;
+	float		eyeheight;
+};
+
 struct						s_player
 {
 	t_vctr		where;
 	t_vctr		velocity;
+	t_vision	vision;
 	float		angle;
 	float		anglesin;
 	float		anglecos;
@@ -73,16 +84,6 @@ struct						s_queue
 	int			ytop[W];
 	int			ybottom[W];
 	int			*renderedsectors;
-};
-
-struct						s_vision
-{
-	int			ground;
-	int			falling;
-	int			moving;
-	int			ducking;
-	float		yaw;
-	float		eyeheight;
 };
 
 struct						s_raycast

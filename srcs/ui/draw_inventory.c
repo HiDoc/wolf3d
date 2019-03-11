@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_inventory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:17:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:11:14 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,24 +113,25 @@ int		print_inventory(t_env *env)
 	t_vtx	n;
 	int		iter;
 	t_ixy	start;
+	t_uinv	*ui;
 
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	start.x = fabs(W / 2.0 - env->player.inventory.ui.front_pic->w);
-	start.y = abs(H - env->player.inventory.ui.front_pic->h);
+	ui = &env->player.inventory.ui;
+	start.x = fabs(W / 2.0 - ui->front_pic->w);
+	start.y = abs(H - ui->front_pic->h);
 	// put_img_inv(env, env->player.inventory.ui.front_pic, (t_edge){{0, 0}, {W / 1.4, H}}, (t_edge){{0, 0}, {0, 0}});
-	draw_img(env, (t_edge){{0, 0}, {W / 2, H}}, env->player.inventory.ui.front_pic, start);
+	draw_img(env, (t_edge){{0, 0}, {W / 2, H}}, ui->front_pic, start);
 	ui_txt_inv(env);
 	iter = 0;
 	n = (t_vtx){W / 28, H / 6};
 	while (iter < 6)
-		iter += fill_bloc(env, &env->player.inventory.ui.blocs[iter], &n, iter);
+		iter += fill_bloc(env, &ui->blocs[iter], &n, iter);
 	iter = 0;
 	n = (t_vtx){W / 32, H - H / 3};
 	while (iter < 3)
-		iter += fill_wpn(env, &env->player.inventory.ui.wblocs[iter], &n, iter);
+		iter += fill_wpn(env, &ui->wblocs[iter], &n, iter);
 	iter = 0;
 	n = (t_vtx){W / 24, H - H / 11};
 	while (iter < 3)
-		iter += fill_icon(env, &env->player.inventory.ui.iblocs[iter], &n, iter);
+		iter += fill_icon(env, &ui->iblocs[iter], &n, iter);
 	return (0);
 }
