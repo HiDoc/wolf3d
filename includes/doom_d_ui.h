@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:41:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 15:59:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:05:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 
 # define COEF_MINIMAP 5
-# define MINIMAP_W 350
+# define MINIMAP_W 250
 # define MINIMAP_H 250
 
 #endif
