@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 12:40:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:51:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int		transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s)
 
 	/* If it's partially behind the player,
 	** clip it against player's view frustrum */
+
 	ctn->li_texture.floor = 0;
-	ctn->li_texture.ceil = 511;
+	ctn->li_texture.ceil = 2047;
 	if (ctn->rot.v1.y <= 0 || ctn->rot.v2.y <= 0)
 		clip_view(ctn);
 

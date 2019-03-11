@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 12:33:53 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:51:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void	clip_view(t_raycast *ctn)
 	}
 	if (fabs(t->v2.x - t->v1.x) > fabs(t->v2.y - t->v1.y))
 	{
-		ctn->li_texture.floor = (t->v1.x - org1.x) * 512 / (org2.x - org1.x);
-		ctn->li_texture.ceil = (t->v2.x - org1.x) * 512 / (org2.x - org1.x);
+		ctn->li_texture.floor = (t->v1.x - org1.x) * 2048 / (org2.x - org1.x);
+		ctn->li_texture.ceil = (t->v2.x - org1.x) * 2048 / (org2.x - org1.x);
 	}
 	else
 	{
-		ctn->li_texture.floor = (t->v1.y - org1.y) * 512 / (org2.y - org1.y);
-		ctn->li_texture.ceil = (t->v2.y - org1.y) * 512 / (org2.y - org1.y);
+		ctn->li_texture.floor = (t->v1.y - org1.y) * 2048 / (org2.y - org1.y);
+		ctn->li_texture.ceil = (t->v2.y - org1.y) * 2048 / (org2.y - org1.y);
 	}
 }

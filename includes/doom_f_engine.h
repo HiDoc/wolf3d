@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/10 17:12:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:51:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			ui_text_msg(t_env *env, char *msg);
 
 int         init_hud(t_env *env);
 int         print_hud(t_env *env);
+void		print_sct(t_env *env);
 
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);
