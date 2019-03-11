@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:18:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 14:17:34 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ SDL_Surface	*str_join_text(t_font data, TTF_Font *font)
 		if (!(strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r))))
 			return (NULL);
 	}
-	if (!(new = TTF_RenderText_Blended(font, strjoin ? strjoin : data.str, data.color)))
+	if (!(new = TTF_RenderText_Shaded(font, strjoin ? strjoin : data.str, data.color, (SDL_Color){0,0,0,0})))
 		return (0);
 	if (strjoin)
 		free(strjoin);
