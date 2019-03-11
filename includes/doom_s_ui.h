@@ -6,12 +6,13 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 13:59:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 16:08:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_UI
 # define DOOM_S_UI
+
 typedef struct s_uinv	t_uinv;
 typedef struct s_hud	t_hud;
 
@@ -41,4 +42,5 @@ struct 					s_uinv
 	int					wwheel;
 	int					nb_wpn;
 };
+
 #endif

@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/10 13:56:44 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/10 18:14:29 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -O3
+CFLAGS 			= -Wall -Wextra -Werror -g -O3 #-fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) |wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -66,6 +66,7 @@ HED_NAME	= doom.h \
 			  doom_s_engine.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
+			  doom_f_ui.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
@@ -111,7 +112,12 @@ SRC_NAME 	= main.c \
 			utils_weapons.c \
 			utils_ui.c \
 			struct_hud.c \
-			draw_hud.c
+			draw_hud.c \
+			ui_minimap.c \
+			ui_make_surface.c \
+			ui_draw_line.c \
+			ui_draw_rect.c \
+			ui_draw_full_rect.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

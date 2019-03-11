@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:03:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 16:08:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@
 */
 # include "doom_f_math.h"
 # include "doom_f_engine.h"
+# include "doom_f_ui.h"
 
 #endif

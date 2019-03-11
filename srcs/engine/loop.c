@@ -6,6 +6,7 @@ int sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe)
 	f(env);
 	loop_frames(env, frame);
 	print_hud(env);
+	ui_minimap(env);
 	ui_draw_msg(env, &env->player.hud.is_txt, tframe);
 	if (env->player.inventory.ui.is_active)
 	{
