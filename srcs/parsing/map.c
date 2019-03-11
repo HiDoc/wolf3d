@@ -24,14 +24,15 @@ int     verify_vertex(t_engine *e)
 }
 
 /*
-** Verify that sectors are bounded together if 
+** Verify that sectors are bounded together if
 ** they share an edge
 */
 int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *found)
 {
-	const t_sector	*sect = &e->sectors[chain->a];
+	t_sector		*sect;
 	t_sector		*neigh;
 
+	sect = &e->sectors[chain->a];
 	while (chain->d < e->nsectors)
 	{
 		neigh = &e->sectors[chain->d];
@@ -45,7 +46,9 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 				{
 					fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
 						chain->d, edge->v2.x,edge->v2.y, edge->v1.x,edge->v1.y, chain->a, neigh->neighbors[chain->c]);
+					printf("N/value was : %d\n", neigh->neighbors[chain->c]);
 					neigh->neighbors[chain->c] = chain->a;
+					printf("N/value is now : %d\n", neigh->neighbors[chain->c]);
 					return (1);
 				}
 				if (sect->neighbors[chain->b] != (int)chain->d)
@@ -53,6 +56,7 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 					fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
 						chain->a, edge->v1.x, edge->v1.y,edge->v2.x, edge->v2.y, chain->d, sect->neighbors[chain->b]);
 					sect->neighbors[chain->b] = chain->d;
+					printf("S/value is now : %d\n", sect->neighbors[chain->b]);
 					return (1);
 				}
 				else
@@ -84,8 +88,9 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 		{
 			if (sect->neighbors[chain.b] >= (int)e->nsectors)
 			{
-				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u)\n",
+				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u), fixing it\n",
 					chain.a, sect->neighbors[chain.b], e->nsectors);
+				sect->neighbors[chain.b] = -1;
 			}
 			edge = (t_edge){vert[chain.b], vert[chain.b +1]};
 			found = 0;
