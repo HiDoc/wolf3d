@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/11 13:55:04 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/11 15:22:50 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,6 +117,7 @@ SRC_NAME 	= main.c \
 			ui_minimap.c \
 			ui_make_surface.c \
 			ui_draw_line.c \
+			ui_draw_vector.c \
 			ui_draw_rect.c \
 			ui_draw_full_rect.c \
 
