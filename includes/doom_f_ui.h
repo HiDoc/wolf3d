@@ -44,7 +44,7 @@ int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 
-Uint32		mix_colors(Uint32 cr1, Uint32 cr2, float p, int *mix);
+Uint32		mix_colors(Uint32 cr1, Uint32 cr2, int *mix);
 
 void	    load_sounds(t_env *env);
 

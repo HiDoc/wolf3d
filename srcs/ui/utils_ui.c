@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:18:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 14:28:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 
 	if (!(font = TTF_OpenFont("rsrc/font/5E.ttf", pos.z)))
         return (0);
-	tmp	= TTF_RenderText_Blended(font, str, color);
+	tmp	= TTF_RenderText_Shaded(font, str, color, TRANSPARENT);
 	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
@@ -63,7 +63,7 @@ SDL_Surface	*str_join_text(t_font data, TTF_Font *font)
 		if (!(strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r))))
 			return (NULL);
 	}
-	if (!(new = TTF_RenderText_Blended(font, strjoin ? strjoin : data.str, data.color)))
+	if (!(new = TTF_RenderText_Shaded(font, strjoin ? strjoin : data.str, data.color, TRANSPARENT)))
 		return (0);
 	if (strjoin)
 		free(strjoin);
@@ -95,8 +95,7 @@ int    ui_put_string(t_env *env, t_font	data)
 
 int    ui_put_fps(t_env *env, int fps)
 {
-	ui_put_string(env, (t_font){(SDL_Color){255, 0, 0, 255}, "fps : ",
-	F_NUMB, (t_vtx){10, 10}, 20, -1, fps});
+	ui_put_string(env, (t_font){RED, "fps : ", F_NUMB, (t_vtx){10, 10}, 20, -1, fps});
     return (1);
 }
 // typedef struct	s_font
@@ -111,13 +110,11 @@ int    ui_put_fps(t_env *env, int fps)
 
 int     ui_txt_inv(t_env *env)
 {
-	const SDL_Color c[3] = {{255, 255, 255, 0}, {255, 255, 255, 0}, {8, 8, 255, 255}};
-
-	ui_put_string(env, (t_font){c[0], "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
-	ui_put_string(env, (t_font){c[0], "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
-	ui_put_string(env, (t_font){c[1], "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
-    ui_put_string(env, (t_font){c[1], "Sector : ", F_TEXT, (t_vtx){W - W / 3.2, 95}, 25, -1, env->engine.player.sector});
-    ui_put_string(env, (t_font){c[2], "Enemies to kill : ", F_TEXT, (t_vtx){W - W / 3.1, 125}, 20, -1, 1});
+	ui_put_string(env, (t_font){BLACK, "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
+	ui_put_string(env, (t_font){BLACK, "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
+	ui_put_string(env, (t_font){BLACK, "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
+    ui_put_string(env, (t_font){BLUE, "Sector : ", F_TEXT, (t_vtx){W - W / 3.2, 95}, 25, -1, env->engine.player.sector});
+    ui_put_string(env, (t_font){RED, "Enemies to kill : ", F_TEXT, (t_vtx){W - W / 3.1, 125}, 20, -1, 1});
     return (1);
 }
 

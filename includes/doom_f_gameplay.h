@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 20:42:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:52:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			put_gun_shoot(t_env *env, int frame);
 int			load_weapon(t_env *env);
 int			reload_ammo(t_env *env);
 
-int			sdl_keyhook(t_env *env, SDL_Event event);
+int			sdl_keyhook_game(t_env *env, SDL_Event event, const Uint8 *keycodes);
+int			sdl_keyhook_inventory(t_env *env, SDL_Event event, const Uint8 *keycodes);
 int			mouse_shoot(t_env *env);
 #endif

@@ -52,10 +52,21 @@ struct						s_sector
 	int			nb_objects;
 };
 
+struct						s_vision
+{
+	int			ground;
+	int			falling;
+	int			moving;
+	int			ducking;
+	float		yaw;
+	float		eyeheight;
+};
+
 struct						s_player
 {
 	t_vctr		where;
 	t_vctr		velocity;
+	t_vision	vision;
 	float		angle;
 	float		anglesin;
 	float		anglecos;
@@ -73,16 +84,6 @@ struct						s_queue
 	int			ytop[W];
 	int			ybottom[W];
 	int			*renderedsectors;
-};
-
-struct						s_vision
-{
-	int			ground;
-	int			falling;
-	int			moving;
-	int			ducking;
-	float		yaw;
-	float		eyeheight;
 };
 
 struct						s_raycast

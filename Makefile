@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/11 15:22:50 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/11 18:01:25 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -O3 #-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) |wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)

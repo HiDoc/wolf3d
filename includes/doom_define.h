@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 18:11:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:25:26 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 */
 # define SPEED_WALK 0.2f
 # define SPEED_RUN	0.4f
+
 /*
 ** Field of view
 */
@@ -80,5 +81,15 @@
 #define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
 #define F_TEXT "rsrc/font/interbureau.ttf"
 #define F_NUMB "rsrc/font/5E.ttf"
+
+/*
+** Colors
+*/
+
+#define RED			(SDL_Color){255, 0, 0, 255}
+#define WHITE		(SDL_Color){255, 255, 255, 255}
+#define BLACK		(SDL_Color){0, 0, 0, 255}
+#define BLUE		(SDL_Color){8, 8, 255, 0}
+#define TRANSPARENT	(SDL_Color){0, 0, 0, 0}
 
 #endif
