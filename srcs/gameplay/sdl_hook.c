@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:16:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:46:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int			sdl_keyhook(t_env *env, SDL_Event event)
 		if (keycodes[SDL_SCANCODE_DOWN])
 			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]);
 		if (keycodes[SDL_SCANCODE_TAB])
-			p->inventory.ui.is_active = !p->inventory.ui.is_active;
+			p->inventory.ui.is_active = 1;
+		if (keycodes[SDL_SCANCODE_Z])
+			p->inventory.ui.is_active = 0;
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);
 		SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);

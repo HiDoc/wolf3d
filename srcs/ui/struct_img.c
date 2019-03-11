@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 12:33:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:43:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 			{
 				pix = mix_colors(
 					getpixel(env->sdl.surface, edge.v1.x, j),
-					getpixel(img, pxl.x, y), 0.9, &env->player.hud.mix);
+					getpixel(img, pxl.x, y), &env->player.hud.mix);
 			}
 			else
 				pix = getpixel(img, pxl.x, y);
