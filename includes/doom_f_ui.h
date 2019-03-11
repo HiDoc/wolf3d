@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:26:34 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 12:40:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:42:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 
-Uint32		mix_colors(Uint32 cr1, Uint32 cr2, float p, int *mix);
+Uint32		mix_colors(Uint32 cr1, Uint32 cr2, int *mix);
 
 void	    load_sounds(t_env *env);
 #endif

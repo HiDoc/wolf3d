@@ -38,6 +38,8 @@ int		main(void)
 	env.engine.nsectors = 0;
 	env.engine.sectors = NULL;
 	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
+	env.sdl.texture = SDL_CreateTexture(env.sdl.renderer,
+		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, W, H);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
