@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 16:16:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 17:32:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,47 @@ static void	draw_sectors(SDL_Surface *surface, t_engine *engine)
 		edge = (t_edge){
 		engine->sectors[i].vertex[engine->sectors[i].npoints],
 		engine->sectors[i].vertex[0]};
+
+		edge = current_edge(engine->player.where, edge.v1, edge.v2);
+
+		edge.v1.x *= COEF_MINIMAP;
+		edge.v1.y *= COEF_MINIMAP;
+		edge.v2.x *= COEF_MINIMAP;
+		edge.v2.y *= COEF_MINIMAP;
+
+		edge = rotation_edge(engine->player, edge);
+
+		edge.v1.x += MINIMAP_W / 2;
+		edge.v1.y += MINIMAP_H / 2;
+		edge.v2.x += MINIMAP_W / 2;
+		edge.v2.y += MINIMAP_H / 2;
+
 		ui_draw_line(surface, edge, C_CYAN);
+
 		while (j < engine->sectors[i].npoints - 1)
 		{
 			edge = (t_edge){
 			(t_vtx){
-			engine->sectors[i].vertex[j].x * COEF_MINIMAP - engine->player.where.x * COEF_MINIMAP + MINIMAP_W / 2,
-			engine->sectors[i].vertex[j].y * COEF_MINIMAP - engine->player.where.y * COEF_MINIMAP + MINIMAP_H / 2},
+			engine->sectors[i].vertex[j].x,
+			engine->sectors[i].vertex[j].y},
 			(t_vtx){
-			engine->sectors[i].vertex[j + 1].x * COEF_MINIMAP - engine->player.where.x * COEF_MINIMAP + MINIMAP_W / 2,
-			engine->sectors[i].vertex[j + 1].y * COEF_MINIMAP - engine->player.where.y * COEF_MINIMAP + MINIMAP_H / 2}
+			engine->sectors[i].vertex[j + 1].x,
+			engine->sectors[i].vertex[j + 1].y}
 			};
+
+			edge = current_edge(engine->player.where, edge.v1, edge.v2);
+
+			edge.v1.x *= COEF_MINIMAP;
+			edge.v1.y *= COEF_MINIMAP;
+			edge.v2.x *= COEF_MINIMAP;
+			edge.v2.y *= COEF_MINIMAP;
+
+			edge = rotation_edge(engine->player, edge);
+
+			edge.v1.x += MINIMAP_W / 2;
+			edge.v1.y += MINIMAP_H / 2;
+			edge.v2.x += MINIMAP_W / 2;
+			edge.v2.y += MINIMAP_H / 2;
 
 			ui_draw_line(surface, edge, C_CYAN);
 
@@ -45,18 +75,19 @@ static void	draw_sectors(SDL_Surface *surface, t_engine *engine)
 	}
 }
 
-static void	draw_player(SDL_Surface *surface, t_engine *engine)
+static void	draw_player(SDL_Surface *surface)
 {
 	SDL_Rect	rect;
-	t_vtx		vtx;
+	t_edge		edge;
 
 	// player position
 	rect = (SDL_Rect){(MINIMAP_W / 2) - 5, (MINIMAP_H / 2) - 5, 10, 10};
 	ui_draw_full_rect(surface, rect, C_BLUE);
 
 	// player direction
-	vtx = (t_vtx){rect.x + 5, rect.y + 5};
-	ui_draw_vector(surface, vtx, engine->player.angle, 15, C_RED);
+	edge = (t_edge){(t_vtx){rect.x + 5, rect.y + 5},
+	(t_vtx){rect.x + 5, rect.y - 10}};
+	ui_draw_line(surface, edge, C_CYAN);
 }
 
 void		ui_minimap(t_env *env)
@@ -78,7 +109,7 @@ void		ui_minimap(t_env *env)
 	draw_sectors(surface, &(env->engine));
 
 	// player
-	draw_player(surface, &(env->engine));
+	draw_player(surface);
 
 
 	// recoder BlitSurface
