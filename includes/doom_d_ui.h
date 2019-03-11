@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_draw_full_rect.c                                :+:      :+:    :+:   */
+/*   doom_d_ui.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 17:27:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 15:11:45 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/11 15:41:18 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/11 15:59:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#ifndef DOOM_D_UI_H
+# define DOOM_D_UI_H
 
-void	ui_draw_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
-{
-	t_edge		edge;
-	int			y;
+# define C_BLACK 0x000000FF
+# define C_WHITE 0xFFFFFFFF
+# define C_RED 0xFF0000FF
+# define C_GREEN 0x00FF00FF
+# define C_BLUE 0x0000FFFF
 
-	y = rect.y;
-	while (y < rect.y + rect.h)
-	{
-		edge.v1 = (t_vtx){rect.x, y};
-		edge.v2 = (t_vtx){rect.x + rect.w, y};
-		ui_draw_line(surface, edge, color);
-		y++;
-	}
-}
+# define C_CYAN 0x91F1F7FF
+
+
+# define COEF_MINIMAP 5
+# define MINIMAP_W 350
+# define MINIMAP_H 250
+
+#endif

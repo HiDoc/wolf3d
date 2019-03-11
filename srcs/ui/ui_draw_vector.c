@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_draw_full_rect.c                                :+:      :+:    :+:   */
+/*   ui_draw_vector.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 17:27:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 15:11:45 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/11 15:12:33 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/11 16:06:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	ui_draw_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
+void	ui_draw_vector(SDL_Surface *surface, t_vtx vtx_a, float angle,
+		float size, Uint32 color) // mettre a la norme
 {
-	t_edge		edge;
-	int			y;
+	t_edge	edge;
+	float	step_x;
+	float	step_y;
+	t_vtx	vtx_b;
 
-	y = rect.y;
-	while (y < rect.y + rect.h)
-	{
-		edge.v1 = (t_vtx){rect.x, y};
-		edge.v2 = (t_vtx){rect.x + rect.w, y};
-		ui_draw_line(surface, edge, color);
-		y++;
-	}
+	step_x = cos(angle) * size;
+	step_y = sin(angle) * size;
+
+	vtx_b.x = vtx_a.x + step_x;
+	vtx_b.y = vtx_a.y + step_y;
+
+	edge = (t_edge){vtx_a, vtx_b};
+
+	ui_draw_line(surface, edge, color);
 }
