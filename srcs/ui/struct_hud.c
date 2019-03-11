@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_hud.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/11 12:25:34 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 int fill_surface_color(SDL_Surface *img, Uint32 c)
@@ -22,6 +34,7 @@ int init_hud(t_env *env)
     // SDL_Surface *tmp;
 
     i = 0;
+    env->player.hud.mix = 0;
     while (i < 6)
         env->player.hud.shortcut[i++] = NULL;
     if (!(env->player.hud.shadow = ui_img("hud/hud_shadow")))
@@ -32,7 +45,7 @@ int init_hud(t_env *env)
     // fill_surface_color(tmp, 0x11000000);
     // env->player.hud.shadow = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
     env->player.hud.hud_wpn[0] = ui_img("hud/hud_pistol");
-    // SetSurfaceAlpha(env->player.hud.hud_wpn[0], 255, &rgb);
+    // set_surface_alpha(env->player.hud.hud_wpn[0], 255, &rgb);
     if ((env->player.hud.empty_bar = ui_img("hud/empty_barq"))
     && (env->player.hud.bar[0] = ui_img("hud/health_bar"))
     && (env->player.hud.bar[1] = ui_img("hud/shield_bar"))

@@ -71,6 +71,7 @@ void	player_moving(t_vision *v, int set, t_engine *e)
 		{
 			bumping_score(&d, (t_vtx){vert[s + 1].x - vert[s].x, vert[s + 1].y - vert[s].y});
 			v->moving = 0;
+			e->player.velocity = (t_vctr){0, 0, 0};
 		}
 	}
 	s = -1;

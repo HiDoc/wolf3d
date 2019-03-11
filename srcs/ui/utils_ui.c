@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_ui.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 22:18:58 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 SDL_Surface *ui_img(char *filename)
@@ -13,26 +25,6 @@ SDL_Surface *ui_img(char *filename)
 	free(path);
 	path = NULL;
 	return (new);
-}
-
-int    text_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
-{
-	SDL_Surface	    *surface;
-	TTF_Font        *font;
-	SDL_Surface		*tmp;
-
-	if (!(font = TTF_OpenFont("rsrc/font/interbureau.ttf", pos.z)))
-        return (0);
-	tmp	= TTF_RenderText_Blended(font, str, color);
-	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
-	SDL_FreeSurface(tmp);
-	tmp = NULL;
-    draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
-	SDL_FreeSurface(surface);
-	surface = NULL;
-	TTF_CloseFont(font);
-	font = NULL;
-    return (1);
 }
 
 int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
@@ -55,30 +47,42 @@ int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
     return (1);
 }
 
-typedef struct	s_font
+SDL_Surface	*str_join_text(t_font data, TTF_Font *font)
 {
-	SDL_Color	color;
-	const char	*str;
-	const char	*font;
-	t_vtx		pos;
-	int			size;
-	int			num;
-}				t_font;
+	char		*strjoin;
+	SDL_Surface	*new;
 
-int    doom_font(t_env *env, t_font	data)
+	strjoin = NULL;
+	if (data.l > -1)
+	{
+		if (!(strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str)))
+			return (NULL);
+	}
+	else if (data.r > -1)
+	{
+		if (!(strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r))))
+			return (NULL);
+	}
+	if (!(new = TTF_RenderText_Blended(font, strjoin ? strjoin : data.str, data.color)))
+		return (0);
+	if (strjoin)
+		free(strjoin);
+	return (new);
+}
+
+int    ui_put_string(t_env *env, t_font	data)
 {
 	SDL_Surface	    *surface;
-	TTF_Font        *font;
 	SDL_Surface		*tmp;
-	t_rgba			rgba;
+	TTF_Font		*font;
 	const t_vtx		pos = data.pos;
 
-	// if (!(font = TTF_OpenFont("rsrc/font/AmazDooMLeft2.ttf", pos.z)))
 	if (!(font = TTF_OpenFont(data.font, data.size)))
         return (0);
-	tmp	= TTF_RenderText_Blended(font, data.str, data.color);
-	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
-	SetSurfaceAlpha(surface, 128, &rgba);
+	if (!(tmp = str_join_text(data, font)))
+		return (0);
+	if (!(surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
+		return (0);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
     draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
@@ -91,13 +95,8 @@ int    doom_font(t_env *env, t_font	data)
 
 int    ui_put_fps(t_env *env, int fps)
 {
-	char            *fps_count;
-
-	if (!(fps_count = ft_strrjoin("fps : ", ft_itoa(fps))))
-        return (0);
-	text_font(env, fps_count, (t_vctr){10, 10, 20},  (SDL_Color){255, 0, 0, 255});
-	free(fps_count);
-	fps_count = NULL;
+	ui_put_string(env, (t_font){(SDL_Color){255, 0, 0, 255}, "fps : ",
+	F_NUMB, (t_vtx){10, 10}, 20, -1, fps});
     return (1);
 }
 // typedef struct	s_font
@@ -109,73 +108,54 @@ int    ui_put_fps(t_env *env, int fps)
 // 	int			size;
 // 	int			num;
 // }				t_font;
-#define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
+
 int     ui_txt_inv(t_env *env)
 {
-	char	*tmp;
-	char	*ptr;
-	const SDL_Color c[3] = {{255, 255, 255, 255}, {255, 255, 255, 0}, {8, 8, 255, 255}};
+	const SDL_Color c[3] = {{255, 255, 255, 0}, {255, 255, 255, 0}, {8, 8, 255, 255}};
 
-	// doom_font(env, "Inventory", (t_vctr){20, 15, 60}, (SDL_Color){255, 255, 255, 255});
-	doom_font(env, (t_font){c[0], "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1});
-
-    //doom_font(env, "Weapons", (t_vctr){20, H / 1.7, 40}, (SDL_Color){255, 255, 255, 255});
-	doom_font(env, (t_font){c[0], "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1});
-
-	if (!(tmp = ft_strrjoin("Level : ", ft_itoa(1))))
-		return (0);
-    //doom_font(env, tmp, (t_vctr){W - W / 3, 15, 60}, (SDL_Color){255, 255, 255, 0});
-	doom_font(env, (t_font){c[1], (const char *)tmp, F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1});
-	free(tmp);
-	if (!(tmp = ft_strrjoin("Sector : ", ft_itoa(env->engine.player.sector))))
-		return (0);
-    text_font(env, tmp, (t_vctr){W - W / 3.2, 95, 25}, (SDL_Color){255, 255, 255, 0});
-	free(tmp);
-	ptr = ft_strrjoin("Keys found : ", ft_itoa(0));
-	if (!(tmp = ft_strrjoin(ptr, ft_strrjoin("/", ft_itoa(4)))))
-		return (0);
-    text_font(env, tmp, (t_vctr){W - W / 3.1, 125, 20}, (SDL_Color){8, 8, 255, 255});
-	free(ptr);
-	free(tmp);
-	ptr = NULL;
-	tmp = NULL;
+	ui_put_string(env, (t_font){c[0], "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
+	ui_put_string(env, (t_font){c[0], "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
+	ui_put_string(env, (t_font){c[1], "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
+    ui_put_string(env, (t_font){c[1], "Sector : ", F_TEXT, (t_vtx){W - W / 3.2, 95}, 25, -1, env->engine.player.sector});
+    ui_put_string(env, (t_font){c[2], "Enemies to kill : ", F_TEXT, (t_vtx){W - W / 3.1, 125}, 20, -1, 1});
     return (1);
 }
 
 int		ui_icon_data(t_env *env, t_vtx v, int iter)
 {
-	int			data;
-	SDL_Color	c;
-	char		*tmp;
+	int				data;
+	SDL_Color 		c;
+	const SDL_Color	clrs[4] = {
+		{8, 255, 8, 255},
+		{42, 204, 242, 255},
+		{242, 204, 42, 255},
+		{255, 0, 0, 255}};
 
 	if (iter == 0)
 	{
 		data = env->player.health;
-		c = (SDL_Color){8, 255, 8, 255};
+		c = clrs[0];
 	}
 	else if (iter == 1)
 	{
 		data = env->player.shield;
-		c = data < 200 ? (SDL_Color){42, 204, 242, 255}  : (SDL_Color){242, 204, 42, 255};
+		c = data < 200 ? clrs[1] : clrs[2];
 	}
 	else
 	{
 		data = 9942;
-		c = (SDL_Color){42, 204, 242, 255};
+		c = clrs[1];
 	}
 	if (data < 100)
-		c = (SDL_Color){255, 0, 0, 255};
-	if (!(tmp = ft_strljoin(ft_itoa(data), "%")))
-		return (0);
-	text_font(env, tmp, (t_vctr) {v.x + 15, v.y + 8, 28}, c);
-	free(tmp);
-	tmp = NULL;
+		c = clrs[3];
+	ui_put_string(env, (t_font){c, "%", F_TEXT, (t_vtx){v.x + 15, v.y + 8}, 28, data, -1});
 	return (1);
 }
 
 int	ui_text_msg(t_env *env, char *msg)
 {
-	text_font(env, msg, (t_vctr){50, H - H / 2.5, 20}, (SDL_Color){255, 255, 255, 255});
+	ui_put_string(env, (t_font){(SDL_Color){255, 255, 255, 255}, msg,
+	F_TEXT, (t_vtx){50, H - H / 2.5}, 20, -1, -1});
 	return (0);
 }
 

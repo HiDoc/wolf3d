@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_inventory.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:18:21 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 22:18:22 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 int     init_icon(t_env *env)
@@ -34,7 +46,7 @@ int    init_inventory_ui(t_env *env)
    	t_rgba	rgba;
 
     env->player.inventory.ui.front_pic = ui_img("inventaire");
-    SetSurfaceAlpha(env->player.inventory.ui.front_pic, 100, &rgba);
+    set_surface_alpha(env->player.inventory.ui.front_pic, 100, &rgba);
 	env->player.inventory.ui.wwheel = 0;
     env->player.inventory.ui.nb_wpn = 2;
     env->player.inventory.nb_current_obj = 0;

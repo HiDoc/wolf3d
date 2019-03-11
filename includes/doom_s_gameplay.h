@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:04:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 17:36:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,12 @@ struct						s_inventory
 
 struct						s_actions
 {
+	t_edge		edge;
     int         is_shield;
     int         is_health;
     int         is_ammo;
+	int			is_running;
 	int			sub_action;
-	t_edge		edge;
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;

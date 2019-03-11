@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action_pl_weapon.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 22:16:34 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 int		check_weapon_type(t_env *env, int ref)
@@ -30,6 +42,8 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.ui.nb_wpn++;
 			env->player.inventory.weapons[obj->ref].current = obj;
 			env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
+			env->player.inventory.current->ammo_current = env->world.armory[obj->ref].ammo_curr_max;
+			env->player.inventory.current->ammo_magazine = env->world.armory[obj->ref].ammo_mag_max;
 		}
 		else
 			return (14);
