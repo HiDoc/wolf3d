@@ -91,6 +91,7 @@ int sdl_loop(t_env *env)
 	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 
 	ft_bzero(&env->time, sizeof(t_time));
+
 	e = &env->engine;
 	v = &e->player.vision;
 	v->falling = 1;
@@ -99,8 +100,8 @@ int sdl_loop(t_env *env)
 		SDL_Event ev;
 		if (keycodes[SDL_SCANCODE_Q])
 			return (0);
-		env->time.time_a = SDL_GetTicks();// > SCREEN_TIC)
-		//{
+		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
+		{
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
 			SDL_PollEvent(&ev);
@@ -119,7 +120,7 @@ int sdl_loop(t_env *env)
 				sdl_render(env, &sdl_render_inventory);
 				sdl_keyhook_inventory(env, ev, keycodes);
 			}
-		//}
+		}
 	}
 	return (0);
 }
