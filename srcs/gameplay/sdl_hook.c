@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 17:12:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:23:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[SDL_SCANCODE_TAB])
 		{
 			ui->is_active = !ui->is_active;
+			SDL_WarpMouseInWindow(env->sdl.window, W/2, H/2);
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 			SDL_Delay(300);
 		}
@@ -38,7 +39,7 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 
 	p = &env->player;
 	v = &env->engine.player.vision;
-	if (ev.type == SDL_KEYDOWN)
+	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
 		if (keycodes[SDL_SCANCODE_SPACE])
 		{
@@ -55,6 +56,11 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			v->ducking = 1;
 			v->falling = 1;
 		}
+		else
+		{
+			v->ducking = 0;
+		}
+
 		if (keycodes[SDL_SCANCODE_C])
 			pick_object(env, env->engine.sectors[0].head_object);
 		if (keycodes[SDL_SCANCODE_V])
