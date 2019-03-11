@@ -5,6 +5,7 @@ int sdl_render(t_env *env, void (*f)(t_env *env), int *frame, int *tframe)
 	SDL_LockSurface(env->sdl.surface);
 	f(env);
 	loop_frames(env, frame);
+	ui_put_fps(env, 0);
 	print_hud(env);
 	ui_draw_msg(env, &env->player.hud.is_txt, tframe);
 	if (env->player.inventory.ui.is_active)
@@ -83,6 +84,7 @@ int sdl_loop(t_env *env)
 {
 	t_vision v;
 	t_engine *e;
+	int wsad[4] = {0, 0, 0, 0};
 	int fps;
 	Uint32 time_a;
 	Uint32 time_b;
@@ -96,7 +98,6 @@ int sdl_loop(t_env *env)
 	v = (t_vision){0, 1, 0, 0, 0, 0};
 	while (1)
 	{
-		int wsad[4] = {0, 0, 0, 0};
 		SDL_Event ev;
 		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
 		{
