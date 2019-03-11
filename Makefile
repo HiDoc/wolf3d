@@ -66,6 +66,7 @@ HED_NAME	= doom.h \
 			  doom_s_engine.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
+			  doom_f_ui.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
@@ -112,7 +113,13 @@ SRC_NAME 	= main.c \
 			utils_ui.c \
 			struct_hud.c \
 			draw_hud.c 	\
-			utils_color.c
+			utils_color.c \
+			ui_minimap.c \
+			ui_make_surface.c \
+			ui_draw_line.c \
+			ui_draw_vector.c \
+			ui_draw_rect.c \
+			ui_draw_full_rect.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

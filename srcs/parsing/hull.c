@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:24:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/10 17:37:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int			verify_parallelism(t_chain *chain, t_sector *sect, int mycase)
 	{
 		if (sect->neighbors[chain->b] != sect->neighbors[chain->c])
 		{
-			fprintf(stderr, "Sector %u: Edges %u-%u and %u-%u are parallel, \
+			/*fprintf(stderr, "Sector %u: Edges %u-%u and %u-%u are parallel, \
 			but have different neighbors. This would pose problems for \
 			collision detection.\n",
-			chain->a, chain->b, chain->c, chain->c, chain->d);
+			chain->a, chain->b, chain->c, chain->c, chain->d);*/
 			return (0);
 		}
 	}
 	else if (mycase == -1)
 	{
-		fprintf(stderr, "Sector %u: Edges %u-%u and %u-%u create a \
+		/*fprintf(stderr, "Sector %u: Edges %u-%u and %u-%u create a \
 			concave turn. This would be rendered wrong.\n",
-			chain->a, chain->b, chain->c, chain->c, chain->d);
+			chain->a, chain->b, chain->c, chain->c, chain->d);*/
 		return (0);
 	}
 	++chain->b;
