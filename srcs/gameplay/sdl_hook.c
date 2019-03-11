@@ -6,11 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/03/11 16:00:28 by fmadura          ###   ########.fr       */
-=======
-/*   Updated: 2019/03/11 15:46:35 by abaille          ###   ########.fr       */
->>>>>>> 5104a8df38ba76e89daf6cab944b41b5acecd0c5
+/*   Updated: 2019/03/11 16:18:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +29,26 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_character	*p;
+	t_vision	*v;
 
 	p = &env->player;
+	v = &env->engine.player.vision;
 	if (ev.type == SDL_KEYDOWN)
 	{
+		if (keycodes[SDL_SCANCODE_SPACE])
+		{
+			if (v->ground)
+			{
+				env->engine.player.velocity.z += env->player.actions.is_flying ? 0.7 : 0.5;
+				if (!env->player.actions.is_flying)
+					v->falling = 1;
+			}
+		}
+		if (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL])
+		{
+			v->ducking = 1;
+			v->falling = 1;
+		}
 		if (keycodes[SDL_SCANCODE_C])
 			pick_object(env, env->engine.sectors[0].head_object);
 		if (keycodes[SDL_SCANCODE_V])
