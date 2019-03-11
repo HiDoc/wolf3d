@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_img.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 14:06:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:33:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,16 @@ void	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
 		j = edge.v1.y;
 		while (j < edge.v2.y)
 		{
-			pix = getpixel(img, pxl.x, y);
-			if ((pix & img->format->Amask) > 0)
+
+			if (env->player.hud.mix)
+			{
+				pix = mix_colors(
+					getpixel(env->sdl.surface, edge.v1.x, j),
+					getpixel(img, pxl.x, y), 0.9, &env->player.hud.mix);
+			}
+			else
+				pix = getpixel(img, pxl.x, y);
+			if (pix & img->format->Amask)
 				setpixel(env->sdl.surface, edge.v1.x, j, pix);
 			j++;
 			y++;

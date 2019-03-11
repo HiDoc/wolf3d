@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 15:46:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:35:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct					s_hud
 	SDL_Surface			*e_pad[4];
 	t_wrap_inv			*shortcut[6];
 	int					is_txt;
+	int					mix;
 };
 
 struct 					s_uinv

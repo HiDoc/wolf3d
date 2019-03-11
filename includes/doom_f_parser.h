@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_character.c                                 :+:      :+:    :+:   */
+/*   doom_f_parser.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 22:16:59 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:17:00 by abaille          ###   ########.fr       */
+/*   Created: 2019/03/10 20:43:23 by abaille           #+#    #+#             */
+/*   Updated: 2019/03/10 20:45:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#ifndef DOOM_F_PARSER_H
+# define DOOM_F_PARSER_H
 
-int     init_character(t_character *new)
-{
-    new->health = 50;
-    new->shield = 0;
-    new->max_weapons = 3;
-    new->max_objects = 3;
-    new->max_health = 200;
-    new->max_shield = 200;
-    new->hud.is_txt = 0;
-    new->actions.sub_action = 0;
-    new->actions.is_loading = 0;
-    new->actions.is_shooting = 0;
-    new->actions.is_flying = 0;
-    return (0);
-}
+void		LoadData(t_engine *e, t_env *env);
+void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
+			SDL_Window *window, t_engine *e);
+int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn);
+
+#endif

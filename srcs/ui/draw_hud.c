@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 02:57:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 12:21:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
 	char		*tmp;
 
+	env->player.hud.mix = 1;
 	put_img_inv(env, env->player.hud.hud_wpn[wpn->current->ref],
 	(t_edge){{W - W / 4.5, H / 1.5}, {W - W / 4.5 + 190, H / 1.5 + 140}},
 	(t_edge){{0, 0}, {0, 0}});

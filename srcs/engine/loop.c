@@ -106,6 +106,7 @@ int sdl_loop(t_env *env)
 			sdl_render(env, &dfs, &frame, &tframe);
 			player_collision(e, &v, env->player.actions.is_flying);
 			SDL_PollEvent(&ev);
+			v.moving = 0;
 			if (ev.type == SDL_KEYDOWN)
 			{
 				wsad[0] = (keycodes[SDL_SCANCODE_W]);
@@ -135,7 +136,8 @@ int sdl_loop(t_env *env)
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
-		sdl_set_velocity(env, &v, (const int *)wsad);
+		if (v.moving)
+			sdl_set_velocity(env, &v, (const int *)wsad);
 		// SDL_Delay(10);
 	}
 	return (0);
