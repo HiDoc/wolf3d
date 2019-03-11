@@ -41,7 +41,6 @@ int		main(void)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
-	print_sct(&env);
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);

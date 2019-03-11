@@ -82,8 +82,6 @@ int	sdl_set_velocity(t_env *env, t_vision *v, const int wsad[4])
 
 int sdl_loop(t_env *env)
 {
-
-	int wsad[4] = {0, 0, 0, 0};
 	t_vision v;
 	t_engine *e;
 	int fps;
@@ -99,6 +97,7 @@ int sdl_loop(t_env *env)
 	v = (t_vision){0, 1, 0, 0, 0, 0};
 	while (1)
 	{
+		int wsad[4] = {0, 0, 0, 0};
 		SDL_Event ev;
 		if ((time_a = SDL_GetTicks()) - time_b > SCREEN_TIC)
 		{
@@ -107,13 +106,12 @@ int sdl_loop(t_env *env)
 			sdl_render(env, &dfs, &frame, &tframe);
 			player_collision(e, &v, env->player.actions.is_flying);
 			SDL_PollEvent(&ev);
-			v.moving = 0;
+			wsad[0] = (keycodes[SDL_SCANCODE_W]);
+			wsad[1] = (keycodes[SDL_SCANCODE_S]);
+			wsad[2] = (keycodes[SDL_SCANCODE_A]);
+			wsad[3] = (keycodes[SDL_SCANCODE_D]);
 			if (ev.type == SDL_KEYDOWN)
 			{
-				wsad[0] = (keycodes[SDL_SCANCODE_W]);
-				wsad[1] = (keycodes[SDL_SCANCODE_S]);
-				wsad[2] = (keycodes[SDL_SCANCODE_A]);
-				wsad[3] = (keycodes[SDL_SCANCODE_D]);
 				if (keycodes[SDL_SCANCODE_SPACE])
 				{
 					if (v.ground)
@@ -137,9 +135,7 @@ int sdl_loop(t_env *env)
 		}
 		if (!env->player.inventory.ui.is_active)
 			sdl_mouse(e, &v);
-		if (v.moving)
-			sdl_set_velocity(env, &v, (const int *)wsad);
-		// SDL_Delay(10);
+		sdl_set_velocity(env, &v, (const int *)wsad);
 	}
 	return (0);
 }
