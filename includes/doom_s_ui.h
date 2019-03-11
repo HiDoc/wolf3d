@@ -6,18 +6,20 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 12:35:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:55:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_UI
 # define DOOM_S_UI
 
-typedef struct s_uinv	t_uinv;
-typedef struct s_hud	t_hud;
-typedef struct s_font	t_font;
+typedef struct s_uinv		t_uinv;
+typedef struct s_hud		t_hud;
+typedef struct s_font		t_font;
+typedef struct s_circle		t_circle;
+typedef struct s_minimap	t_minimap;
 
-struct 					s_font
+struct 						s_font
 {
 	SDL_Color			color;
 	const char			*str;
@@ -29,7 +31,7 @@ struct 					s_font
 };
 
 
-struct					s_hud
+struct						s_hud
 {
 	SDL_Surface			*empty_bar;
 	SDL_Surface			*bar[2];
@@ -42,7 +44,7 @@ struct					s_hud
 	int					mix;
 };
 
-struct 					s_uinv
+struct 						s_uinv
 {
 	SDL_Surface			*front_pic;
 	SDL_Surface			*mini_wpn[3];
@@ -55,6 +57,19 @@ struct 					s_uinv
 	int					is_active;
 	int					wwheel;
 	int					nb_wpn;
+};
+
+struct						s_circle
+{
+	float				x;
+	float				y;
+	float				radius;
+	Uint32				color;
+};
+
+struct						s_minimap
+{
+	// trucs simon
 };
 
 #endif
