@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_ui.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 20:26:34 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 12:40:03 by abaille          ###   ########.fr       */
+/*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/10 18:10:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_UI_H
 # define DOOM_F_UI_H
+
+void		ui_minimap(t_env *env);
+
+SDL_Surface	*ui_make_surface(int height, int width);
+void		ui_draw_line(SDL_Surface *surface, t_edge edge, Uint32 color);
+void		ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
+void		ui_draw_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
+
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int    		number_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
@@ -37,4 +45,5 @@ void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 Uint32		mix_colors(Uint32 cr1, Uint32 cr2, float p, int *mix);
 
 void	    load_sounds(t_env *env);
+
 #endif

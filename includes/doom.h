@@ -37,5 +37,6 @@
 # include "doom_f_gameplay.h"
 # include "doom_f_ui.h"
 # include "doom_f_engine.h"
+# include "doom_f_ui.h"
 
 #endif

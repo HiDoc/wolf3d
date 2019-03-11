@@ -12,6 +12,7 @@
 
 #ifndef DOOM_S_UI
 # define DOOM_S_UI
+
 typedef struct s_uinv	t_uinv;
 typedef struct s_hud	t_hud;
 typedef struct s_font	t_font;
@@ -55,4 +56,5 @@ struct 					s_uinv
 	int					wwheel;
 	int					nb_wpn;
 };
+
 #endif
