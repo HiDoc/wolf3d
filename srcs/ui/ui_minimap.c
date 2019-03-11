@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 19:13:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:53:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void		ui_minimap(t_env *env)
 {
 	SDL_Surface		*surface;
 	SDL_Rect		rect;
+	t_circle		circle;
 
 	if (!(surface = ui_make_surface(MINIMAP_H, MINIMAP_W)))
 	{
@@ -122,8 +123,12 @@ void		ui_minimap(t_env *env)
 	}
 
 	// background
-	rect = (SDL_Rect){0, 0, MINIMAP_W, MINIMAP_H};
-	ui_draw_rect(surface, rect, C_BLACK);
+	circle = (t_circle){
+	MINIMAP_W / 2, MINIMAP_W / 2, MINIMAP_W / 2 - 1, 0x0C0A15FF};
+	ui_draw_full_circle(surface, circle);
+	circle = (t_circle){
+	MINIMAP_W / 2, MINIMAP_W / 2, MINIMAP_W / 2, C_WHITE};
+	ui_draw_circle(surface, circle);
 
 	// walls
 	draw_sectors(surface, &(env->engine));

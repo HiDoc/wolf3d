@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 18:57:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:46:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void		ui_draw_vector(SDL_Surface *surface, t_vtx vtx_a, float angle,
 void		ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
 void		ui_draw_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
 void		ui_draw_circle(SDL_Surface *surface, t_circle circ);
+void		ui_draw_full_circle(SDL_Surface *surface, t_circle circ);
 
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
