@@ -23,6 +23,49 @@ int     verify_vertex(t_engine *e)
 	return (1);
 }
 
+int		verify_vertex_parallel(t_engine *e)
+{
+	t_chain		chain;
+	t_vtx		*vertex;
+	t_sector	*sect;
+	t_edge		current;
+	t_edge		next;
+
+	chain.a = 0;
+	while (chain.a < e->nsectors)
+    {
+		sect = &e->sectors[chain.a];
+        vertex = sect->vertex;
+		chain.b = 0;
+		printf("current sector : %u, nb points: %u \n", chain.a, sect->npoints);
+		if (sect->npoints > 2)
+		{
+			while (chain.b < sect->npoints - 2)
+			{
+				chain.c = chain.b + 1;
+				current = (t_edge){vertex[chain.b], vertex[chain.c]};
+				next = (t_edge){vertex[chain.c], vertex[chain.c + 1]};
+				print_edg(current);
+				print_edg(next);
+				printf("\tparallel: %d \n\n", edge_parallel(current, next));
+				++chain.b;
+			}
+			current = (t_edge){vertex[sect->npoints - 2], vertex[sect->npoints - 1]};
+			next = (t_edge){vertex[sect->npoints - 1], vertex[0]};
+			print_edg(current);
+			print_edg(next);
+			printf("\tparallel: %d \n\n", edge_parallel(current, next));
+			current = (t_edge){vertex[sect->npoints - 1], vertex[0]};
+			next = (t_edge){vertex[0], vertex[1]};
+			print_edg(current);
+			print_edg(next);
+			printf("\tparallel: %d \n\n", edge_parallel(current, next));
+		}
+		++chain.a;
+    }
+	return (1);
+}
+
 /*
 ** Verify that sectors are bounded together if
 ** they share an edge
@@ -112,5 +155,6 @@ int     verify_map(t_engine *e)
 	verify_vertex(e);
 	verify_neighbor(e, NULL, NULL);
 	verify_hull(e, NULL, NULL);
+	verify_vertex_parallel(e);
 	return (1);
 }

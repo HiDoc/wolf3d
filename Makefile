@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/11 19:14:48 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/12 13:31:55 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRC_NAME 	= main.c \
 			sdl_mouse.c \
 			musics.c \
 			edge.c \
+			function.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_pixels.c \

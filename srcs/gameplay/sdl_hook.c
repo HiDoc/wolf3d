@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 17:23:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:15:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,7 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			}
 
 		}
-		if (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL])
-		{
-			v->ducking = 1;
-			v->falling = 1;
-		}
-		else
-		{
-			v->ducking = 0;
-		}
-
+		v->ducking = (keycodes[SDL_SCANCODE_LCTRL] || keycodes[SDL_SCANCODE_RCTRL]);
 		if (keycodes[SDL_SCANCODE_C])
 			pick_object(env, env->engine.sectors[0].head_object);
 		if (keycodes[SDL_SCANCODE_V])
