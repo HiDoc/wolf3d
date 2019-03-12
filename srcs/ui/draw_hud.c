@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/12 18:12:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/12 23:44:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,16 @@
 
 int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
-	char		*tmp;
-
 	env->player.hud.mix = 1;
 	put_img_inv(env, env->player.hud.hud_wpn[wpn->current->ref],
 	(t_edge){{W - W / 4.5, H / 1.5}, {W - W / 4.5 + 190, H / 1.5 + 140}},
 	(t_edge){{0, 0}, {0, 0}});
-	if (!(tmp = ft_itoa(env->player.inventory.current->ammo_current)))
-		return (0);
-	number_font(env, tmp, (t_vctr){W - W / 4.5 + 115, H / 1.5 + 80, 30},
-	(SDL_Color){242, 204, 42, 255});
-	free(tmp);
-	tmp = NULL;
-	if (!(tmp = ft_strrjoin("/",
-	ft_itoa(env->player.inventory.current->ammo_magazine))))
-		return (0);
-	number_font(env, tmp, (t_vctr){W - W / 4.5 + 130, H / 1.5 + 110, 30},
-	(SDL_Color){242, 204, 42, 255});
-	free(tmp);
-	tmp = NULL;
+	ui_put_string(env, (t_font){GOLD, "", F_NUMB,
+	(t_vtx){W - W / 4.5 + 115, H / 1.5 + 80}, 30,
+	env->player.inventory.current->ammo_current, -1});
+	ui_put_string(env, (t_font){GOLD, "/", F_NUMB,
+	(t_vtx){W - W / 4.5 + 130, H / 1.5 + 110}, 30,
+	-1, env->player.inventory.current->ammo_magazine});
 	return (1);
 }
 
@@ -77,16 +68,16 @@ int	action_pad(t_env *env, int ref, t_edge limits)
 			rref = i - 2;
 		else
 			rref = ref;
-		put_img_inv(env, env->world.objects[rref].sprite,
-		limits, (t_edge){{0, 0}, {0, 0}});
-		print_stack_pad(env, &env->player.inventory.objects[i], ref);
-		return (1);
+		if (put_img_inv(env, env->world.objects[rref].sprite,
+		limits, (t_edge){{0, 0}, {0, 0}})
+		&& print_stack_pad(env, &env->player.inventory.objects[i], ref))
+			return (1);
+		return (0);
 	}
 	if (ref > 1 && ref < 6)
 		ref = ref < 5 ? 3 : 2;
-	put_img_inv(env, env->player.hud.e_pad[ref],
-	limits, (t_edge){{0, 0}, {0, 0}});
-	return (1);
+	return (put_img_inv(env, env->player.hud.e_pad[ref],
+	limits, (t_edge){{0, 0}, {0, 0}}));
 }
 
 int	print_pad(t_env *env)
@@ -94,9 +85,6 @@ int	print_pad(t_env *env)
 	int	wpad;
 
 	wpad = (W - W / 16) - (W - W / 6);
-	put_img_inv(env, env->player.hud.pad,
-	(t_edge){{W - W / 1.5, H - H / 4.5}, {W - W / 1.5 + 110, H - H / 4.5 + 110}},
-	(t_edge){{0, 0}, {0, 0}});
 	action_pad(env, 0, (t_edge){{W - W / 1.5 - 40, H - H / 4 + 60},
 	{W - W / 1.5 - 5, H - H / 4 + 90}});
 	action_pad(env, 1, (t_edge){{W - W / 1.5 + 110, H - H / 4 + 64},
@@ -121,7 +109,7 @@ int	print_health_shield(t_env *env, SDL_Surface *img, t_edge scale_size, t_vtx d
 	size.h = scale_size.v2.y - scale_size.v1.y;
 	size.x = 0;
 	size.y = 0;
-	ldrawx = (size.w - size.w / 2.2) / data.x * data.y + size.w / 2.2;
+	ldrawx = (size.w - size.w / 2.4) / data.x * data.y + size.w / 2.4;
 	if (img)
 	{
 		if (size.w < img->w || size.h < img->h)
@@ -147,19 +135,22 @@ int print_hud(t_env *env)
 {
 	int	h;
 
-	put_img_inv(env, env->player.hud.empty_bar, (t_edge){{W / 63, H - H / 3},
-	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}});
-	print_health_shield(env, env->player.hud.bar[0], (t_edge){{W / 63, H - H / 3},
-	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_health, env->player.health});
-	print_health_shield(env, env->player.hud.bar[1], (t_edge){{W / 63, H - H / 3},
-	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_shield, env->player.shield});
 	h = 200;
 	while (h >= env->player.health)
 		h -= 50;
-	put_img_inv(env, env->player.hud.faces[h / 50], (t_edge){{W / 63, H - H / 3},
-	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}});
+
 	if (env->player.inventory.current)
-		print_wpn_hud(env, env->player.inventory.current);
-	print_pad(env);
-	return (1);
+	{
+		if (!print_wpn_hud(env, env->player.inventory.current))
+			return (0);
+	}
+	// print_pad(env);
+	return ((put_img_inv(env, env->player.hud.empty_bar, (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}}))
+	&& (print_health_shield(env, env->player.hud.bar[0], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_health, env->player.health}))
+	&& (print_health_shield(env, env->player.hud.bar[1], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_shield, env->player.shield}))
+	&& (put_img_inv(env, env->player.hud.faces[h > 50 ? h / 50 : 0], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}})));
 }

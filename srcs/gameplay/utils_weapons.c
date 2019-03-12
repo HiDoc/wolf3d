@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:17:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/12 23:44:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,7 @@ int	put_gun(t_env *env, SDL_Surface *sprite)
 
 	x = W - sprite->w;
 	y = H - sprite->h;
-	if (x < 0 || y < 0)
-		put_img_inv(env, sprite, (t_edge){{0, 0}, {W - W / 16, H}}, (t_edge){{0, 0}, {0, 0}});
-	else
-		draw_img(env, (t_edge){{x, y}, {W, H}},
-		sprite,
-		(t_ixy){100, 0});
+	draw_img(env, (t_edge){{x, y}, {W, H}},
+	sprite, (t_ixy){50, 0});
 	return (1);
 }
