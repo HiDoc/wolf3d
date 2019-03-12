@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 12:25:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/12 18:23:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,20 @@ int init_hud(t_env *env)
     // env->player.hud.shadow = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
     env->player.hud.hud_wpn[0] = ui_img("hud/hud_pistol");
     // set_surface_alpha(env->player.hud.hud_wpn[0], 255, &rgb);
-    if ((env->player.hud.empty_bar = ui_img("hud/empty_barq"))
-    && (env->player.hud.bar[0] = ui_img("hud/health_bar"))
-    && (env->player.hud.bar[1] = ui_img("hud/shield_bar"))
+    if ((env->player.hud.empty_bar = ui_img("hud/healthbartest"))
+    && (env->player.hud.bar[0] = ui_img("hud/bar_h"))
+    && (env->player.hud.bar[1] = ui_img("hud/bar_s"))
     && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_ak"))
     && (env->player.hud.hud_wpn[2] = ui_img("hud/hud_rifle"))
     && (env->player.hud.pad = ui_img("hud/pad3"))
     && (env->player.hud.e_pad[0] = ui_img("hud/hud_e_kit"))
     && (env->player.hud.e_pad[1] = ui_img("hud/hud_e_armor"))
     && (env->player.hud.e_pad[2] = ui_img("hud/hud_e_jetp"))
-    && (env->player.hud.e_pad[3] = ui_img("hud/hud_e_ammo")))
+    && (env->player.hud.e_pad[3] = ui_img("hud/hud_e_ammo"))
+    && (env->player.hud.faces[0] = ui_img("hud/face_4"))
+    && (env->player.hud.faces[1] = ui_img("hud/face_3"))
+    && (env->player.hud.faces[2] = ui_img("hud/face_2"))
+    && (env->player.hud.faces[3] = ui_img("hud/face_1")))
         return (1);
     return (0);
 }

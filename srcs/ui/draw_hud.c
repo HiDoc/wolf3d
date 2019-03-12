@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 12:21:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/12 18:12:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,22 +110,56 @@ int	print_pad(t_env *env)
 	return (0);
 }
 
+int	print_health_shield(t_env *env, SDL_Surface *img, t_edge scale_size, t_vtx data)
+{
+	SDL_Surface		*tmp;
+	SDL_Rect	size;
+	Uint32		*pxl;
+	int			ldrawx;
+
+	size.w = scale_size.v2.x - scale_size.v1.x;
+	size.h = scale_size.v2.y - scale_size.v1.y;
+	size.x = 0;
+	size.y = 0;
+	ldrawx = (size.w - size.w / 2.2) / data.x * data.y + size.w / 2.2;
+	if (img)
+	{
+		if (size.w < img->w || size.h < img->h)
+		{
+			if (!(tmp = SDL_CreateRGBSurface(0, size.w, size.h, 32,
+			0xff000000, 0xff0000, 0xff00, 0xff)))
+				return (0);
+			SDL_LockSurface(tmp);
+			pxl = tmp->pixels;
+			scale_img(pxl, size, img, (t_ixy){0, 0});
+			draw_img(env, (t_edge){{scale_size.v1.x, scale_size.v1.y},
+			{ldrawx, scale_size.v2.y}}, tmp, (t_ixy) {0, 0});
+			SDL_UnlockSurface(tmp);
+			SDL_FreeSurface(tmp);
+			tmp = NULL;
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int print_hud(t_env *env)
 {
-	put_img_inv(env, env->player.inventory.ui.icon[0],
-	(t_edge){{40, H - 75}, {70, H - 45}}, (t_edge){{0, 0}, {0, 0}});
-	put_img_inv(env, env->player.inventory.ui.icon[1],
-	(t_edge){{40, H - 115}, {70, H - 85}}, (t_edge){{0, 0}, {0, 0}});
-	draw_img(env, (t_edge){{80, H - 80 - env->player.hud.empty_bar->h},
-	{80 + env->player.hud.empty_bar->w, H - 80}}, env->player.hud.empty_bar, (t_ixy){0, 0});
-	draw_img(env, (t_edge){{80, H - 80 - env->player.hud.bar[1]->h},
-	{80 + env->player.shield, H - 80}}, env->player.hud.bar[1], (t_ixy){0, 0});
-	draw_img(env, (t_edge){{80, H - 40 - env->player.hud.empty_bar->h},
-	{80 + env->player.hud.empty_bar->w, H - 40}}, env->player.hud.empty_bar, (t_ixy){0, 0});
-	draw_img(env, (t_edge){{80, H - 40 - env->player.hud.bar[0]->h},
-	{80 + env->player.health, H - 40}}, env->player.hud.bar[0], (t_ixy){0, 0});
+	int	h;
+
+	put_img_inv(env, env->player.hud.empty_bar, (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}});
+	print_health_shield(env, env->player.hud.bar[0], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_health, env->player.health});
+	print_health_shield(env, env->player.hud.bar[1], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_vtx){env->player.max_shield, env->player.shield});
+	h = 200;
+	while (h >= env->player.health)
+		h -= 50;
+	put_img_inv(env, env->player.hud.faces[h / 50], (t_edge){{W / 63, H - H / 3},
+	{W / 2.5, H - H / 16}}, (t_edge){{0, 0}, {0, 0}});
 	if (env->player.inventory.current)
 		print_wpn_hud(env, env->player.inventory.current);
 	print_pad(env);
-	return (0);
+	return (1);
 }
