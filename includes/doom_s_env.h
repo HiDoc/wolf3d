@@ -6,7 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/03/12 12:04:56 by fmadura          ###   ########.fr       */
+=======
+/*   Updated: 2019/03/11 18:52:43 by sgalasso         ###   ########.fr       */
+>>>>>>> 5f48cb30e0fa937a36bbbb304316f7900ab7aa97
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +57,7 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
+	t_minimap		minimap;
 };
 
 void			no_op(t_env *env);
