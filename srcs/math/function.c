@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_f_parser.h                                    :+:      :+:    :+:   */
+/*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 20:43:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 18:48:35 by fmadura          ###   ########.fr       */
+/*   Created: 2019/03/11 20:29:45 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/12 12:07:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_F_PARSER_H
-# define DOOM_F_PARSER_H
+#include "doom.h"
 
-void		LoadData(t_engine *e, t_env *env);
-void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
-			SDL_Window *window, t_engine *e);
-int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn);
-int			verify_parallelism(t_chain *chain, t_sector *sect, int mycase);
+int		edge_parallel(t_edge e1, t_edge e2)
+{
+	const float dist = e1.v2.y - e1.v1.y;
+	const float scale = e1.v2.x - e1.v1.x;
+	const float a = dist / scale;
+	const float b = (cross_product(e1.v2, e1.v1)) / (scale);
 
-#endif
+	return (e2.v1.y == a * e2.v1.x + b
+		&& e2.v2.y == a * e2.v2.x + b);
+}
