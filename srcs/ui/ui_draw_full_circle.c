@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 19:34:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/13 15:53:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/13 15:59:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ui_draw_full_circle(SDL_Surface *surface, t_circle circ)
 	int		y;
 	int		x;
 
-	circ.radius *= 2;
 	y = circ.y - circ.radius;
 	while (y < circ.y + circ.radius)
 	{

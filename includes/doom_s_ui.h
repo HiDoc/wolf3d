@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 18:55:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:20:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ struct						s_circle
 
 struct						s_minimap
 {
-	// trucs simon
+	t_vtx				origin; // origin minimap
+	t_vtx				player; // player pos relatif minimap
 };
 
 #endif

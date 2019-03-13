@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/13 15:49:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/13 17:09:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 	return (edge);
 }
 
-/*static */void		draw_sectors(SDL_Surface *surface, t_engine *engine)
+/*static */void		draw_sectors(SDL_Surface *surface,
+					t_minimap *minimap, t_engine *engine)
 {
 	t_edge			edge;
 	unsigned int	i;
@@ -40,24 +41,28 @@
 	{
 		j = 0;
 		edge = (t_edge){
-		engine->sectors[i].vertex[engine->sectors[i].npoints - 1],
+		engine->sectors[i].vertex[engine->sectors[i].npoints ],
 		engine->sectors[i].vertex[0]};
 
-		//edge = translate_edge(engine->player.where, edge.v1, edge.v2);
+		/*edge.v1.x = edge.v1.x * COEF_MINIMAP
+		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+		edge.v1.y = edge.v1.y * COEF_MINIMAP
+		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+		edge.v2.x = edge.v2.x * COEF_MINIMAP
+		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+		edge.v2.y = edge.v2.y * COEF_MINIMAP
+		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
 
-		edge.v1.x *= COEF_MINIMAP;
-		edge.v1.y *= COEF_MINIMAP;
-		edge.v2.x *= COEF_MINIMAP;
-		edge.v2.y *= COEF_MINIMAP;
+		edge = rotate_edge(engine->player, edge);
 
-		/*edge = rotate_edge(engine->player, edge);
-
-		edge.v1.x += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-		edge.v1.y += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-		edge.v2.x += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-		edge.v2.y += MINIMAP_SIZE / 2 % MINIMAP_SIZE;*/
-
-		ui_draw_line(surface, edge, C_CYAN);
+		edge.v1.x = edge.v1.x * COEF_MINIMAP
+		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+		edge.v1.y = edge.v1.y * COEF_MINIMAP
+		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+		edge.v2.x = edge.v2.x * COEF_MINIMAP
+		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+		edge.v2.y = edge.v2.y * COEF_MINIMAP
+		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
 
 		while (j < engine->sectors[i].npoints - 1)
 		{
@@ -65,21 +70,29 @@
 			engine->sectors[i].vertex[j],
 			engine->sectors[i].vertex[j + 1]};
 
-			//edge = translate_edge(engine->player.where, edge.v1, edge.v2);
+			/*edge.v1.x = edge.v1.x * COEF_MINIMAP
+			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+			edge.v1.y = edge.v1.y * COEF_MINIMAP
+			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+			edge.v2.x = edge.v2.x * COEF_MINIMAP
+			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+			edge.v2.y = edge.v2.y * COEF_MINIMAP
+			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
 
-			edge.v1.x *= COEF_MINIMAP;
-			edge.v1.y *= COEF_MINIMAP;
-			edge.v2.x *= COEF_MINIMAP;
-			edge.v2.y *= COEF_MINIMAP;
+			edge = rotate_edge(engine->player, edge);
 
-			/*edge = rotate_edge(engine->player, edge);
+			edge.v1.x = edge.v1.x * COEF_MINIMAP
+			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+			edge.v1.y = edge.v1.y * COEF_MINIMAP
+			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+			edge.v2.x = edge.v2.x * COEF_MINIMAP
+			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
+			edge.v2.y = edge.v2.y * COEF_MINIMAP
+			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
 
-			edge.v1.x += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-			edge.v1.y += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-			edge.v2.x += MINIMAP_SIZE / 2 % MINIMAP_SIZE;
-			edge.v2.y += MINIMAP_SIZE / 2 % MINIMAP_SIZE;*/
-
-			ui_draw_line(surface, edge, C_CYAN);
+			if (edge.v1.x > 0 && edge.v1.y > 0 && edge.v2.x < W && edge.v2.y < H
+			&& edge.v1.x < W && edge.v1.y < H && edge.v2.x > 0 && edge.v2.y > 0)
+				ui_draw_line(surface, edge, C_CYAN);
 
 			j++;
 		}
@@ -87,27 +100,37 @@
 	}
 }
 
-/*static */void		draw_player(SDL_Surface *surface)
+/*static */void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 {
 	SDL_Rect	rect;
 	t_edge		edge;
 
 	// player position
-	rect = (SDL_Rect){(MINIMAP_SIZE / 2) - 5, (MINIMAP_SIZE / 2) - 5, 10, 10};
+	//rect = (SDL_Rect){minimap->player.x - 5, minimap->player.y + 5, 10, 10};
+	rect = (SDL_Rect){
+	minimap->origin.x + MINIMAP_SIZE / 2 - 5,
+	minimap->origin.y + MINIMAP_SIZE / 2 - 5, 10, 10};
 	ui_draw_full_rect(surface, rect, C_BLUE);
 
 	// player direction
 	edge = (t_edge){(t_vtx){rect.x + 5, rect.y + 5},
-		(t_vtx){rect.x + 5, rect.y - 10}};
+	(t_vtx){rect.x + 5, rect.y - 10}};
 	ui_draw_line(surface, edge, C_CYAN);
 }
 
 void		ui_minimap(t_env *env)
 {
+	t_minimap		minimap;
 	//SDL_Surface		*surface;
 	//SDL_Rect		srcrect;
 	//SDL_Rect		dstrect;
 	t_circle		circle;
+
+	// precalculate
+	minimap.origin.x = W - MINIMAP_SIZE - 10;
+	minimap.origin.y = 10;
+	minimap.player.x = env->engine.player.where.x * COEF_MINIMAP;
+	minimap.player.y = env->engine.player.where.y * COEF_MINIMAP;
 
 	// Fonction provisoire XMaxMin
 	const t_engine	*engine = &env->engine;
@@ -144,22 +167,25 @@ void		ui_minimap(t_env *env)
 		exit(EXIT_FAILURE); // retourner erreur
 	}*/
 
-	// drawing sectors on area
-	draw_sectors(env->sdl.surface, &(env->engine));
-
 	// background
+	SDL_Rect rect = (SDL_Rect){minimap.origin.x, minimap.origin.y, // to remove
+	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
+	ui_draw_rect(env->sdl.surface, rect, C_RED); // to remove
 	circle = (t_circle){
-	W - MINIMAP_SIZE / 2 - 10, MINIMAP_SIZE / 2 + 10,
-	MINIMAP_SIZE / 4, 0x0C0A15FF};
+	minimap.origin.x + MINIMAP_SIZE / 2, minimap.origin.y + MINIMAP_SIZE / 2,
+	MINIMAP_SIZE / 2, 0x0C0A15FF};
 	ui_draw_full_circle(env->sdl.surface, circle);
 	circle = (t_circle){
-	W - MINIMAP_SIZE / 2 - 10, MINIMAP_SIZE / 2 + 10,
+	minimap.origin.x + MINIMAP_SIZE / 2, minimap.origin.y + MINIMAP_SIZE / 2,
 	MINIMAP_SIZE / 2, C_WHITE};
 	ui_draw_circle(env->sdl.surface, circle);
 
-	/*// player
-	draw_player(surface);
-*/
+	// drawing sectors on area
+	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
+
+	// player
+	draw_player(env->sdl.surface, &minimap);
+
 	// recoder BlitSurface
 	/*srcrect = (SDL_Rect){
 	env->engine.player.where.x, env->engine.player.where.y,
