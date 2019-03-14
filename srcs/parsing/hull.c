@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 18:47:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/12 14:17:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,10 +195,9 @@ int			verify_hull(t_engine *e, t_sector *sect, t_vtx *vert)
 			fprintf(stderr, " and point %u - (%g,%g) as the far point.\n", chain.e, vert[chain.e].x,vert[chain.e].y);
 			insertn_sector(e, sect, (t_du_int){chain.c, chain.e}, -1);
 			insertn_sector(e, sect, (t_du_int){chain.e, chain.c}, chain.a);
-			verify_map(e);
-			break ;
+			return (1);
 		}
 		chain.a++;
 	}
-	return (1);
+	return (0);
 }
