@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:31 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:17:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/14 12:18:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_wrap_sect	*new_wrap(t_vtx curr, int ref, int is_wpn)
 	new->ref = ref;
 	new->vertex = curr;
 	new->is_picked = 0;
-	new->is_wpn = is_wpn;;
+	new->is_wpn = is_wpn;
 	new->next = NULL;
 	if (!is_wpn)
 		pick_action(new);

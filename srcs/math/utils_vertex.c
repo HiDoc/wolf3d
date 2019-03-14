@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 21:29:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/02/28 20:43:50 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/12 14:10:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_vtx   add_vertex(t_vtx v1, t_vtx v2)
 {
     return ((t_vtx){v1.x + v2.x, v1.y + v2.y});
 }
+
 /*
 ** Clamp value into set range.
 */

@@ -79,6 +79,7 @@ SRC_NAME 	= main.c \
 			sdl_mouse.c \
 			musics.c \
 			edge.c \
+			function.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_pixels.c \

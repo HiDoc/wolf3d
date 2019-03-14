@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_ui.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 19:46:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/12 21:19:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int			print_inventory(t_env *env);
 
 SDL_Surface *surface_fr_png(char *path);
 SDL_Surface *img_wpn(char *filename);
-void	    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
-void	    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);
+int		    put_img_inv(t_env *env, SDL_Surface *img, t_edge bloc, t_edge padding);
+int		    draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl);
 int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 
-Uint32		mix_colors(Uint32 cr1, Uint32 cr2, int *mix);
+Uint32		mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p);
 
 void	    load_sounds(t_env *env);
 
