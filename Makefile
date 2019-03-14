@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/14 13:30:28 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/14 14:59:19 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,6 +122,7 @@ SRC_NAME 	= main.c \
 			ui_draw_rect.c \
 			ui_draw_full_rect.c \
 			ui_draw_circle.c \
+			ui_draw_full_circle.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

@@ -53,7 +53,6 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
-	t_minimap		minimap;
 };
 
 void			no_op(t_env *env);
