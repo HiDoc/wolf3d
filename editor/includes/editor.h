@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 15:33:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:13:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,32 @@
 # include "editor_struct.h"
 # include "libui.h"
 
-int			handle_events(t_env *env);
-void		editor(t_env *env);
+/*
+**	display/
+*/
 
+void		editor(t_env *env);
+void		display_interface(t_env *env);
+void		display_selection(t_env *env);
+
+/*
+**	events/
+*/
+
+int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
 int			select_mode(t_env *env);
-
 t_vtx		*target_vertex(t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
-
 int			vertex_in_sector(t_sct *sector, t_pos pos, t_env *env);
 int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 //float		pointside(t_pos p, t_vrx v0, t_vrx v1);
 
-int			export_map(t_env *env);
+/*
+**	utils/
+*/
 
-// utils
+int			export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/12 15:12:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:21:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int		handle_events(t_env *env)
 		env->sct_hover = target_sector(env->data->mouse, env);
 
 		// calc vrx distance
-		/*if (env->cur_vrx > -1)
-			env->cur_vrx_size = sqrt(
-			pow(env->vertex[env->cur_vrx].pos.x - env->data->mouse.x, 2)
-			+ pow(env->vertex[env->cur_vrx].pos.y - env->data->mouse.y, 2));*/
+		if (env->sct_current)
+			env->vtx_size = sqrt(
+			pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
+			+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
 		return (1);
 	}
 	return (0);

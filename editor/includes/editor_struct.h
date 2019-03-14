@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/08 14:14:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:19:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ struct                  s_env
 	// data infos
 	int				nb_vtx;
 	int				nb_sct;
+	int				vtx_size; // current
 
 	// state
 	int				drawing;		// am i drawing an edge
