@@ -6,13 +6,22 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 13:50:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:25:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-/*static */t_edge	rotate_edge(t_player player, t_edge v)
+static t_edge	translate_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
+{
+	t_edge      edge;
+
+	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
+	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
+	return (edge);
+}
+
+static t_edge	rotate_edge(t_player player, t_edge v)
 {
 	const float pcos = -player.anglecos;
 	const float psin = -player.anglesin;
@@ -29,8 +38,8 @@
 	return (edge);
 }
 
-/*static */void		draw_sectors(SDL_Surface *surface,
-					t_minimap *minimap, t_engine *engine)
+static void		draw_sectors(SDL_Surface *surface,
+				t_minimap *minimap, t_engine *engine)
 {
 	t_edge			edge;
 	unsigned int	i;
@@ -40,56 +49,24 @@
 	while (i < engine->nsectors)
 	{
 		j = 0;
-		edge = (t_edge){
-		engine->sectors[i].vertex[engine->sectors[i].npoints - 1],
-		engine->sectors[i].vertex[0]};
-
-		/*edge.v1.x = edge.v1.x * COEF_MINIMAP
-		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-		edge.v1.y = edge.v1.y * COEF_MINIMAP
-		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
-		edge.v2.x = edge.v2.x * COEF_MINIMAP
-		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-		edge.v2.y = edge.v2.y * COEF_MINIMAP
-		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
-
-		/*edge = rotate_edge(engine->player, edge);
-
-		edge.v1.x = edge.v1.x * COEF_MINIMAP
-		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-		edge.v1.y = edge.v1.y * COEF_MINIMAP
-		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
-		edge.v2.x = edge.v2.x * COEF_MINIMAP
-		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-		edge.v2.y = edge.v2.y * COEF_MINIMAP
-		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
-
-		if (edge.v1.x >= 0 && edge.v1.y >= 0 && edge.v2.x < W && edge.v2.y < H
-		&& edge.v1.x < W && edge.v1.y < H && edge.v2.x >= 0 && edge.v2.y >= 0)
-			ui_draw_line(surface, edge, C_CYAN);
-
-		while (j < engine->sectors[i].npoints - 1)
+		while (j < engine->sectors[i].npoints)
 		{
 			edge = (t_edge){
 			engine->sectors[i].vertex[j],
 			engine->sectors[i].vertex[j + 1]};
 
-			(void)minimap;
-			//edge.v1.x = edge.v1.x + minimap->player.x/* * COEF_MINIMAP*/;
-			//edge.v1.y = edge.v1.y + minimap->origin.y/* * COEF_MINIMAP*/;
-			//edge.v2.x = edge.v2.x + minimap->player.x/* * COEF_MINIMAP*/;
-			//edge.v2.y = edge.v2.y + minimap->player.y/* * COEF_MINIMAP*/;
+			edge = translate_edge(engine->player.where, edge.v1, edge.v2);
 
-			/*edge = rotate_edge(engine->player, edge);
+			edge = rotate_edge(engine->player, edge);
 
-			edge.v1.x = edge.v1.x * COEF_MINIMAP
-			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-			edge.v1.y = edge.v1.y * COEF_MINIMAP
-			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
-			edge.v2.x = edge.v2.x * COEF_MINIMAP
-			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-			edge.v2.y = edge.v2.y * COEF_MINIMAP
-			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
+			edge.v1.x = edge.v1.x * COEF_MINIMAP + minimap->origin.x
+			+ MINIMAP_SIZE / 2;
+			edge.v1.y = edge.v1.y * COEF_MINIMAP + minimap->origin.y
+			+ MINIMAP_SIZE / 2;
+			edge.v2.x = edge.v2.x * COEF_MINIMAP + minimap->origin.x
+			+ MINIMAP_SIZE / 2;
+			edge.v2.y = edge.v2.y * COEF_MINIMAP + minimap->origin.y
+			+ MINIMAP_SIZE / 2;
 
 			if (edge.v1.x >= 0 && edge.v1.y >= 0 && edge.v2.x < W && edge.v2.y < H
 			&& edge.v1.x < W && edge.v1.y < H && edge.v2.x >= 0 && edge.v2.y >= 0)
@@ -101,7 +78,7 @@
 	}
 }
 
-/*static */void		draw_player(SDL_Surface *surface, t_minimap *minimap)
+static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 {
 	SDL_Rect	rect;
 	t_edge		edge;

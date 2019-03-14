@@ -3,9 +3,9 @@
 void	sdl_render_game(t_env *env)
 {
 	dfs(env);
-	loop_frames(env, &env->time.frame);
+	//loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-	print_hud(env);
+	//print_hud(env);
 	ui_minimap(env);
 	ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
