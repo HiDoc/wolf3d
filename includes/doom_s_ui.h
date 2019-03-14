@@ -70,7 +70,8 @@ struct						s_circle
 
 struct						s_minimap
 {
-	// trucs simon
+	t_vtx				origin; // origin minimap
+	t_vtx				player; // player pos relatif minimap
 };
 
 #endif

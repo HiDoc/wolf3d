@@ -22,6 +22,7 @@ void		ui_draw_vector(SDL_Surface *surface, t_vtx vtx_a, float angle,
 void		ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
 void		ui_draw_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color);
 void		ui_draw_circle(SDL_Surface *surface, t_circle circ);
+void		ui_draw_full_circle(SDL_Surface *surface, t_circle circ);
 
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
