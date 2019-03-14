@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/12 14:50:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:43:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,41 @@ static void	display_interface(t_env *env)
 	sct = env->sct_start;
 	while (sct)
 	{
-		color = (sct == env->sct_hover) ? 0xFF0000FF : 0xFFFFFFFF;	
-		(sct == env->sct_end && !sct->close) ? color = C_CYAN : 0;	
-		vtx = sct->vtx_start;
+		if (sct != env->sct_hover)
+		{
+			vtx = sct->vtx_start;
+			color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
+			while (vtx->next)
+			{
+				vec = (t_vec){vtx->pos, vtx->next->pos};
+				ui_make_line(env->data->surface, vec, color);
+				vtx = vtx->next;
+			}
+			if (sct->close)
+			{
+				vec = (t_vec){sct->vtx_start->pos, sct->vtx_end->pos};
+				ui_make_line(env->data->surface, vec, color);
+			}
+		}
+		sct = sct->next;
+	}
+	// display hovered one overflowing the others
+	if (env->sct_hover)
+	{
+		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
+		vtx = env->sct_hover->vtx_start;
 		while (vtx->next)
 		{
 			vec = (t_vec){vtx->pos, vtx->next->pos};
 			ui_make_line(env->data->surface, vec, color);
 			vtx = vtx->next;
 		}
-		if (sct->close)
+		if (env->sct_hover->close)
 		{
-			vec = (t_vec){sct->vtx_start->pos, sct->vtx_end->pos};
+			vec = (t_vec){env->sct_hover->vtx_start->pos,
+			env->sct_hover->vtx_end->pos};
 			ui_make_line(env->data->surface, vec, color);
 		}
-		sct = sct->next;
 	}
 		
 	// display vtx hovering
