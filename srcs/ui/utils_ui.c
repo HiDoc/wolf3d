@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 14:28:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/14 21:38:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int			copy_img(Uint32 *pxl, SDL_Surface *img)
+{
+	int	x;
+	int	y;
+	Uint32	*src;
+
+	src = img->pixels;
+	x = 0;
+	while (x < img->w)
+	{
+		y = 0;
+		while (y < img->h)
+		{
+			pxl[img->w * y + x] = src[img->w * y + x];
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
 
 SDL_Surface *ui_img(char *filename)
 {
@@ -39,7 +60,8 @@ int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
 	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
-    draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
+	(void)env;
+    // draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
 	SDL_FreeSurface(surface);
 	surface = NULL;
 	TTF_CloseFont(font);
@@ -85,7 +107,9 @@ int    ui_put_string(t_env *env, t_font	data)
 		return (0);
 	SDL_FreeSurface(tmp);
 	tmp = NULL;
-    draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
+	(void)env;
+	draw_img(env, surface, (t_ixy){pos.x, pos.y}, (t_edge){{0, 0}, {surface->w, surface->h}});
+    // draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
 	SDL_FreeSurface(surface);
 	surface = NULL;
 	TTF_CloseFont(font);
@@ -110,9 +134,9 @@ int    ui_put_fps(t_env *env, int fps)
 
 int     ui_txt_inv(t_env *env)
 {
-	ui_put_string(env, (t_font){BLACK, "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
-	ui_put_string(env, (t_font){BLACK, "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
-	ui_put_string(env, (t_font){BLACK, "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
+	ui_put_string(env, (t_font){WHITE, "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
+	ui_put_string(env, (t_font){WHITE, "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
+	ui_put_string(env, (t_font){WHITE, "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
     ui_put_string(env, (t_font){BLUE, "Sector : ", F_TEXT, (t_vtx){W - W / 3.2, 95}, 25, -1, env->engine.player.sector});
     ui_put_string(env, (t_font){RED, "Enemies to kill : ", F_TEXT, (t_vtx){W - W / 3.1, 125}, 20, -1, 1});
     return (1);

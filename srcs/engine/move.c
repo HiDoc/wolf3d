@@ -1,4 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/14 16:38:47 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
+
+/*
+** Mouse aiming !
+*/
+int sdl_mouse(t_engine *e, t_vision *v)
+{
+	int			x;
+	int			y;
+
+	SDL_GetRelativeMouseState(&x, &y);
+	e->player.angle += x * 0.03f;
+	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
+	e->player.yaw = v->yaw - e->player.velocity.z * 0.5f;
+	player_set(e, (t_vtx){0, 0});
+	return (1);
+}
+
+int		sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keyb)
+{
+	t_engine	*e;
+	t_vtx		move_vec;
+	const int	pushing = (keyb[SDL_SCANCODE_W]) || (keyb[SDL_SCANCODE_S]) || (keyb[SDL_SCANCODE_A]) || (keyb[SDL_SCANCODE_D]);
+	float		accel;
+	const float	speed = env->player.actions.is_running ? SPEED_RUN : SPEED_WALK;
+
+	move_vec = (t_vtx){0.f, 0.f};
+	e = &env->engine;
+	if (keyb[SDL_SCANCODE_W])
+	{
+		move_vec.x += e->player.anglecos * speed;
+		move_vec.y += e->player.anglesin * speed;
+	}
+	if (keyb[SDL_SCANCODE_S])
+	{
+		move_vec.x -= e->player.anglecos * speed;
+		move_vec.y -= e->player.anglesin * speed;
+	}
+	if (keyb[SDL_SCANCODE_A])
+	{
+		move_vec.x += e->player.anglesin * speed;
+		move_vec.y -= e->player.anglecos * speed;
+	}
+	if (keyb[SDL_SCANCODE_D])
+	{
+		move_vec.x -= e->player.anglesin * speed;
+		move_vec.y += e->player.anglecos * speed;
+	}
+	accel = pushing ? 0.4 : 0.2;
+	e->player.velocity.x = e->player.velocity.x * (1 - accel) + move_vec.x * accel;
+	e->player.velocity.y = e->player.velocity.y * (1 - accel) + move_vec.y * accel;
+	v->moving = pushing;
+	return (1);
+}
 
 void	player_falling(t_vision *v, t_engine *e, float limit, float speed)
 {
@@ -7,9 +72,8 @@ void	player_falling(t_vision *v, t_engine *e, float limit, float speed)
 	e->player.velocity.z -= speed; /* Add gravity */
 	nextz = e->player.where.z + e->player.velocity.z;
 	if (e->player.velocity.z < 0
-		&& nextz < e->sectors[e->player.sector].floor + v->eyeheight) // When going down
+		&& nextz < e->sectors[e->player.sector].floor + v->eyeheight)
 	{
-		/* Fix to v->ground */
 		e->player.where.z = e->sectors[e->player.sector].floor + v->eyeheight;
 		e->player.velocity.z = 0;
 		v->falling = 0;
@@ -36,22 +100,23 @@ void	player_collision(t_engine *e, t_vision *v, int jetpack)
 {
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
+	(void)jetpack;
+	// Change for jetpack
+	/*
 	if (!v->falling && jetpack)
 		player_falling(v, e, e->sectors[e->player.sector].ceil, 0.05f);
-	else if (v->falling)
-		player_falling(v, e, e->sectors[e->player.sector].floor
-		+ v->eyeheight * 2, 0.08f);
+	else */if (v->falling)
+		player_falling(v, e, e->sectors[e->player.sector].floor + v->eyeheight * 2, 0.08f);
 	if (v->moving)
 		player_moving(v, 1, e);
 }
 
-void	set_player(t_engine *e, t_vision *v, t_vtx d)
+void	player_set(t_engine *e, t_vtx d)
 {
 	e->player.where.x += d.x;
 	e->player.where.y += d.y;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);
-	v->falling = 1;
 }
 
 void	player_moving(t_vision *v, int set, t_engine *e)
@@ -63,9 +128,11 @@ void	player_moving(t_vision *v, int set, t_engine *e)
 	const t_vtx		*vert = sect->vertex;
 
 	s = -1;
-	d = set ? (t_vtx){e->player.velocity.x, e->player.velocity.y} : (t_vtx){0, 0};
+	(void)set;
+	d = (t_vtx){e->player.velocity.x, e->player.velocity.y};
+
 	/* Check if the player is about to cross one of the sector's edges */
-	while (set && ++s < (int)sect->npoints)
+	while (++s < (int)sect->npoints)
 	{
 		if (is_crossing(p, d, vert, s) && is_bumping(sect, v->eyeheight, s, e))
 		{
@@ -83,5 +150,6 @@ void	player_moving(t_vision *v, int set, t_engine *e)
 			break ;
 		}
 	}
-	set_player(e, v, d);
+	player_set(e, d);
+	v->falling = 1;
 }

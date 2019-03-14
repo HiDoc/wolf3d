@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 20:47:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:44:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 **include all define
 */
 # include "doom_define.h"
+# include "doom_d_ui.h"
 
 /*
 ** Include all structures
@@ -37,5 +38,6 @@
 # include "doom_f_gameplay.h"
 # include "doom_f_ui.h"
 # include "doom_f_engine.h"
+# include "doom_f_ui.h"
 
 #endif

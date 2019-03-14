@@ -6,11 +6,16 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:57:32 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 12:40:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/12 12:23:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	print_edg(t_edge edge)
+{
+	printf("\t[%f, %f], [%f, %f]\n", edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+}
 
 void	print_sct(t_env *env)
 {

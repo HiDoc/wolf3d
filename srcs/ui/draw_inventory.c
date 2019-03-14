@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:17:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/14 19:56:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	ui_put_string(env, (t_font){c[0], "USE", F_TEXT,
 	(t_vtx){env->player.inventory.objects[i].udbox[1].v1.x + 2,
 	env->player.inventory.objects[i].udbox[1].v1.y}, 20, -1, -1});
-	ui_put_string(env, (t_font){c[1], " ", F_NUMB,
+	ui_put_string(env, (t_font){c[1], "", F_NUMB,
 	(t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1, env->player.inventory.objects[i].nb_stack});
 	return (0);
 }
@@ -90,9 +90,11 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 
 int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 {
-	float	inter;
-	float	sbloc;
+	float		inter;
+	float		sbloc;
+	SDL_Surface	*icon;
 
+	icon = env->player.inventory.ui.icon[iter];
 	inter = (float)W / 32;
 	sbloc = (float)W / 6 - (float)W / 64;
 	bloc->v1 = *n;
@@ -101,36 +103,49 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	bloc->v2 = *n;
 	bloc->v2.x = iter == 0 ? bloc->v1.x + bloc->v2.x / 4.5 : bloc->v2.x - bloc->v2.x / 4.2;
 	iter == 2 ? bloc->v2.x = n->x - n->x / 5.3 : 0;
-	put_img_inv(env, env->player.inventory.ui.icon[iter], *bloc, (t_edge){{0, 0}, {0, 0}});
+	draw_img(env, icon, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, {icon->w, icon->h}});
 	ui_icon_data(env, (t_vtx){bloc->v2.x, bloc->v1.y}, iter);
 	n->x += inter;
 	n->y = 	H - H / 11;
 	return (1);
 }
 
+int		fill_inventory(t_env *env)
+{
+	t_vtx	n1;
+	t_vtx	n2;
+	t_vtx	n3;
+	int		iter;
+	t_uinv	*ui;
+
+	ui = &env->player.inventory.ui;
+	iter = 0;
+	n1 = (t_vtx){W / 28, H / 6};
+	n2 = (t_vtx){W / 32, H - H / 3};
+	n3 = (t_vtx){W / 24, H - H / 11};
+	while (iter < 6)
+	{
+		if (!fill_bloc(env, &ui->blocs[iter], &n1, iter))
+			return (0);
+		if (iter < 3)
+		{
+			if (!fill_wpn(env, &ui->wblocs[iter], &n2, iter)
+			|| !fill_icon(env, &ui->iblocs[iter], &n3, iter))
+				return (0);
+		}
+		iter++;
+	}
+	return (1);
+}
+
 int		print_inventory(t_env *env)
 {
-	t_vtx	n;
-	int		iter;
-	t_ixy	start;
+	t_uinv	*ui;
 
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	start.x = fabs(W / 2.0 - env->player.inventory.ui.front_pic->w);
-	start.y = abs(H - env->player.inventory.ui.front_pic->h);
-	// put_img_inv(env, env->player.inventory.ui.front_pic, (t_edge){{0, 0}, {W / 1.4, H}}, (t_edge){{0, 0}, {0, 0}});
-	draw_img(env, (t_edge){{0, 0}, {W / 2, H}}, env->player.inventory.ui.front_pic, start);
+	ui = &env->player.inventory.ui;
+	// draw_img(env, (t_edge){{0, 0}, {W, H}}, ui->front_pic, start);
+	fill_inventory(env);
 	ui_txt_inv(env);
-	iter = 0;
-	n = (t_vtx){W / 28, H / 6};
-	while (iter < 6)
-		iter += fill_bloc(env, &env->player.inventory.ui.blocs[iter], &n, iter);
-	iter = 0;
-	n = (t_vtx){W / 32, H - H / 3};
-	while (iter < 3)
-		iter += fill_wpn(env, &env->player.inventory.ui.wblocs[iter], &n, iter);
-	iter = 0;
-	n = (t_vtx){W / 24, H - H / 11};
-	while (iter < 3)
-		iter += fill_icon(env, &env->player.inventory.ui.iblocs[iter], &n, iter);
-	return (0);
+
+	return (1);
 }

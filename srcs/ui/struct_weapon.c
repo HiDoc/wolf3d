@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:20:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/14 19:19:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ int		init_weapon(t_env *env)
     while (i < 3)
         env->player.inventory.weapons[i++].current = NULL;
     env->player.inventory.current = NULL;
+    env->player.inventory.weapons[0].current = env->engine.sectors[0].head_object;
+    env->player.inventory.current = &env->player.inventory.weapons[0];
     return (0);
 }
