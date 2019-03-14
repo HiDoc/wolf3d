@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/13 17:09:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 13:50:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 	{
 		j = 0;
 		edge = (t_edge){
-		engine->sectors[i].vertex[engine->sectors[i].npoints ],
+		engine->sectors[i].vertex[engine->sectors[i].npoints - 1],
 		engine->sectors[i].vertex[0]};
 
 		/*edge.v1.x = edge.v1.x * COEF_MINIMAP
@@ -53,7 +53,7 @@
 		edge.v2.y = edge.v2.y * COEF_MINIMAP
 		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
 
-		edge = rotate_edge(engine->player, edge);
+		/*edge = rotate_edge(engine->player, edge);
 
 		edge.v1.x = edge.v1.x * COEF_MINIMAP
 		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
@@ -62,7 +62,11 @@
 		edge.v2.x = edge.v2.x * COEF_MINIMAP
 		+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
 		edge.v2.y = edge.v2.y * COEF_MINIMAP
-		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+		+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
+
+		if (edge.v1.x >= 0 && edge.v1.y >= 0 && edge.v2.x < W && edge.v2.y < H
+		&& edge.v1.x < W && edge.v1.y < H && edge.v2.x >= 0 && edge.v2.y >= 0)
+			ui_draw_line(surface, edge, C_CYAN);
 
 		while (j < engine->sectors[i].npoints - 1)
 		{
@@ -70,16 +74,13 @@
 			engine->sectors[i].vertex[j],
 			engine->sectors[i].vertex[j + 1]};
 
-			/*edge.v1.x = edge.v1.x * COEF_MINIMAP
-			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-			edge.v1.y = edge.v1.y * COEF_MINIMAP
-			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
-			edge.v2.x = edge.v2.x * COEF_MINIMAP
-			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
-			edge.v2.y = edge.v2.y * COEF_MINIMAP
-			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
+			(void)minimap;
+			//edge.v1.x = edge.v1.x + minimap->player.x/* * COEF_MINIMAP*/;
+			//edge.v1.y = edge.v1.y + minimap->origin.y/* * COEF_MINIMAP*/;
+			//edge.v2.x = edge.v2.x + minimap->player.x/* * COEF_MINIMAP*/;
+			//edge.v2.y = edge.v2.y + minimap->player.y/* * COEF_MINIMAP*/;
 
-			edge = rotate_edge(engine->player, edge);
+			/*edge = rotate_edge(engine->player, edge);
 
 			edge.v1.x = edge.v1.x * COEF_MINIMAP
 			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
@@ -88,10 +89,10 @@
 			edge.v2.x = edge.v2.x * COEF_MINIMAP
 			+ minimap->origin.x - minimap->player.x + MINIMAP_SIZE / 2;
 			edge.v2.y = edge.v2.y * COEF_MINIMAP
-			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;
+			+ minimap->origin.y - minimap->player.y + MINIMAP_SIZE / 2;*/
 
-			if (edge.v1.x > 0 && edge.v1.y > 0 && edge.v2.x < W && edge.v2.y < H
-			&& edge.v1.x < W && edge.v1.y < H && edge.v2.x > 0 && edge.v2.y > 0)
+			if (edge.v1.x >= 0 && edge.v1.y >= 0 && edge.v2.x < W && edge.v2.y < H
+			&& edge.v1.x < W && edge.v1.y < H && edge.v2.x >= 0 && edge.v2.y >= 0)
 				ui_draw_line(surface, edge, C_CYAN);
 
 			j++;
