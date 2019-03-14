@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 18:55:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:08:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ struct						s_hud
 {
 	SDL_Surface			*empty_bar;
 	SDL_Surface			*bar[2];
+	SDL_Surface			*faces[4];
 	SDL_Surface			*hud_wpn[3];
 	SDL_Surface			*pad;
 	SDL_Surface			*shadow;

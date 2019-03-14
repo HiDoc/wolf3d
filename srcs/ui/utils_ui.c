@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/11 14:28:40 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/12 19:00:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int    ui_put_fps(t_env *env, int fps)
 
 int     ui_txt_inv(t_env *env)
 {
-	ui_put_string(env, (t_font){BLACK, "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
-	ui_put_string(env, (t_font){BLACK, "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
-	ui_put_string(env, (t_font){BLACK, "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
+	ui_put_string(env, (t_font){WHITE, "Inventory", F_DOOM, (t_vtx){20, 15}, 60, -1, -1});
+	ui_put_string(env, (t_font){WHITE, "Weapons", F_DOOM, (t_vtx){20, H / 1.7}, 40, -1, -1});
+	ui_put_string(env, (t_font){WHITE, "Level : ", F_DOOM, (t_vtx){W - (W / 3), 15}, 60, -1, 1});
     ui_put_string(env, (t_font){BLUE, "Sector : ", F_TEXT, (t_vtx){W - W / 3.2, 95}, 25, -1, env->engine.player.sector});
     ui_put_string(env, (t_font){RED, "Enemies to kill : ", F_TEXT, (t_vtx){W - W / 3.1, 125}, 20, -1, 1});
     return (1);
