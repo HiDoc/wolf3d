@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:13:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:51:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 **	display/
 */
 
+void        menu(t_env *env);
 void		editor(t_env *env);
 void		display_interface(t_env *env);
 void		display_selection(t_env *env);

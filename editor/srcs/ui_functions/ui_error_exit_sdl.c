@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:00:02 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 18:42:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:49:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		ui_error_exit_sdl(char *msg, t_data *data)
 {
+	// free images
 	// free sector + vertex
 	if (data->surface)
 		SDL_FreeSurface(data->surface);

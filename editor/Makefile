@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/14 16:13:35 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/14 17:52:54 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,8 @@ SRC_NAME 	=	main.c \
 				ui_hex_to_rgb.c \
 				ui_mouseenter.c \
 				ui_close_to.c \
+				ui_load_image.c \
+				menu.c \
 				editor.c \
 				draw_mode.c \
 				select_mode.c \

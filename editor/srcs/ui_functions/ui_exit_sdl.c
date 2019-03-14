@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 18:42:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:49:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		ui_exit_sdl(t_data *data)
 {
+	// free images
 	// free sector + vertex
 	SDL_FreeSurface(data->surface);
 	TTF_CloseFont(data->font);

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:15:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:33:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 void		editor(t_env *env)
 {
 	t_rect		rect;
+
+	if (env->menu.state == 1)
+	{
+		menu(env);
+		return ;
+	}
 
 	display_interface(env);
 	display_selection(env);

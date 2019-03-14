@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:19:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:43:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct  s_vtx   t_vtx;
 typedef struct  s_sct   t_sct;
+typedef struct	s_menu	t_menu;
 typedef struct  s_env   t_env;
 
 struct					s_vtx
@@ -41,9 +42,17 @@ struct					s_sct
 	t_sct		*next;
 };
 
-struct                  s_env
+struct					s_menu
+{
+	int				state;
+	SDL_Surface		*background;
+};
+
+struct					s_env
 {
 	t_data          *data;
+
+	t_menu			menu;
 
 	char			*map_name;
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 21:22:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:43:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int		main(void)
 	t_env		env;
 
 	ui_init_sdl(&data);
+
 	init_env(&env, &data);
+	env.menu.state = 1;
+	env.menu.background = ui_load_image(
+	"ressources/images/doom-background.jpg", &env);
 
 	env.map_name = "map"; // to remove
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 20:01:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:30:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int			select_mode(t_env *env)
 	//t_vrx	*hover;
 
 	(void)env;
+
+	// for ISCLOSETO EDGE use pointside return distance from edge
+
 	//unselect_all(env);
 	/*if ((hover = dock_vertex(env)))
 	{
