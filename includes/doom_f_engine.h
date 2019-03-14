@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 14:22:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/14 16:05:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		player_collision(t_engine *engine, t_vision *vision, int jetpack);
 
 int			sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
-void		player_set(t_engine *e, t_vtx d);
 
 t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge to_rotate);

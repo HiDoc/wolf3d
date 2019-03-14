@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:47:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 14:32:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/14 15:57:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ int		is_bumping(const t_sector *sect, float eyeheight,
 
 int		is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s)
 {
-	printf("point side : %f\n", pointside(add_vertex(p, d), vert[s], vert[s + 1]));
-	printf("intersect : %d\n", intersect_rect(p, add_vertex(p, d), vert[s], vert[s + 1]));
 	return (intersect_rect(p, add_vertex(p, d), vert[s], vert[s + 1])
-			&& pointside(add_vertex(p, d), vert[s], vert[s + 1]) < 0.5);
+			&& pointside(add_vertex(p, d), vert[s], vert[s + 1]) < 0);
 }
 
 void	bumping_score(t_vtx *d, t_vtx b)
