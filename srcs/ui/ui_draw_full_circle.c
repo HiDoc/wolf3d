@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_d_ui.h                                        :+:      :+:    :+:   */
+/*   ui_draw_full_circle.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/11 15:41:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/13 16:01:38 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/11 19:34:18 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/13 15:59:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_D_UI_H
-# define DOOM_D_UI_H
+#include "doom.h"
 
-# define C_BLACK 0x000000FF
-# define C_WHITE 0xFFFFFFFF
-# define C_RED 0xFF0000FF
-# define C_GREEN 0x00FF00FF
-# define C_BLUE 0x0000FFFF
+void	ui_draw_full_circle(SDL_Surface *surface, t_circle circ)
+{
+	int		y;
+	int		x;
 
-# define C_CYAN 0x91F1F7FF
-
-# define COEF_MINIMAP 2.5
-# define MINIMAP_SIZE 250
-
-#endif
+	y = circ.y - circ.radius;
+	while (y < circ.y + circ.radius)
+	{
+		x = circ.y - circ.radius;
+		while (x < circ.x + circ.radius)
+		{
+			if (sqrt(pow(x - circ.x, 2) + pow(y - circ.y, 2)) < circ.radius)
+				setpixel(surface, x, y, circ.color);
+			x++;
+		}
+		y++;
+	}
+}
