@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/12 18:08:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:18:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ struct 						s_font
 
 struct						s_hud
 {
-	SDL_Surface			*empty_bar;
 	SDL_Surface			*bar[2];
 	SDL_Surface			*faces[4];
 	SDL_Surface			*hud_wpn[3];
 	SDL_Surface			*pad;
-	SDL_Surface			*shadow;
+	SDL_Surface			*empty_b;
+	SDL_Surface			*full_b;
 	SDL_Surface			*e_pad[4];
 	t_wrap_inv			*shortcut[6];
 	int					is_txt;
@@ -50,7 +50,7 @@ struct 						s_uinv
 	SDL_Surface			*front_pic;
 	SDL_Surface			*mini_wpn[3];
 	SDL_Surface			*empt_wpn[3];
-	SDL_Surface			*icon[3];
+	SDL_Surface			*icon[2];
 	SDL_Surface			*box[2];
 	t_edge				blocs[6];
 	t_edge				wblocs[3];

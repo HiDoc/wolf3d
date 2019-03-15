@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 14:08:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:20:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			p->hud.is_txt = give_shield(env, p->hud.shortcut[1]);
 		if (keycodes[SDL_SCANCODE_UP])
 			p->hud.is_txt = give_jetpack(env, p->hud.shortcut[5]);
+		if (keycodes[SDL_SCANCODE_R])
+			load_weapon(env);
 		if (keycodes[SDL_SCANCODE_DOWN])
-			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]);
+			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]); */
 		if (keycodes[SDL_SCANCODE_TAB])
 		{
 			p->inventory.ui.is_active = !p->inventory.ui.is_active;
 			SDL_Delay(300);
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}
-		if (keycodes[SDL_SCANCODE_R])
-			load_weapon(env);*/
 	}
 	return (1);
 }

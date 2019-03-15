@@ -6,43 +6,35 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/12 23:42:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:27:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	draw_img(t_env *env, t_edge edge, SDL_Surface *img, t_ixy pxl)
+int	draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
 {
-	int		j;
+	Uint32	src;
 	int		y;
-	Uint32 	pix;
+	int		i;
+	int		sx;
 
-	SDL_LockSurface(env->sdl.surface);
-	while (edge.v1.x < edge.v2.x)
+	sx = start.x;
+	while ((start.x < sx + limit_img.v2.x) && start.x < W)
 	{
-		y = pxl.y;
-		j = edge.v1.y;
-		while (j < edge.v2.y)
+		y = limit_img.v1.y;
+		i = start.y;
+		while ((i < start.y + limit_img.v2.y) && (i < H))
 		{
-
-			// if (env->player.hud.mix)
-			// {
-			// 	pix = mix_colors(env,
-			// 		getpixel(env->sdl.surface, edge.v1.x, j),
-			// 		getpixel(img, pxl.x, y), 0.8);
-			// }
-			// else
-				pix = getpixel(img, pxl.x, y);
-			if (pix & img->format->Amask)
-				setpixel(env->sdl.surface, edge.v1.x, j, pix);
-			j++;
+			src = getpixel(img, limit_img.v1.x, y);
+			if (src & img->format->Amask)
+				setpixel(env->sdl.surface, start.x, i, src);
+			i++;
 			y++;
 		}
-		pxl.x++;
-		edge.v1.x++;
+		start.x++;
+		limit_img.v1.x++;
 	}
-	SDL_UnlockSurface(env->sdl.surface);
 	return (1);
 }
 
@@ -50,10 +42,19 @@ SDL_Surface		*surface_fr_png(char *path)
 {
 	SDL_Surface	*new;
 	SDL_Surface	*tmp;
+	Uint32		*pxl;
 
-	if ((tmp = IMG_Load(path))
-	&& (new = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
+	if ((new = IMG_Load(path))
+	&& (tmp = SDL_ConvertSurfaceFormat(new, SDL_PIXELFORMAT_RGBA32, 0)))
 	{
+		SDL_FreeSurface(new);
+		if (!(new = SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32,
+		0xff000000, 0xff0000, 0xff00, 0xff)))
+			return (NULL);
+		SDL_LockSurface(new);
+		pxl = new->pixels;
+		copy_img(pxl, tmp);
+		SDL_UnlockSurface(new);
 		SDL_FreeSurface(tmp);
 		tmp = NULL;
 		return (new);
@@ -66,27 +67,14 @@ SDL_Surface		*img_wpn(char *filename)
 	SDL_Surface	*new;
 	char		*path;
 	const char	*png = ".png";
-	SDL_Surface	*img;
-	Uint32		*pxl;
 
 	if ((path = ft_strjoin("./rsrc/img/weapons/", filename))
 	&& (path = ft_strljoin(path, (char *)png))
-	&& (img = surface_fr_png(path)))
+	&& (new = surface_fr_png(path)))
 	{
 		free(path);
-		if (img->w > W || img->h > H)
-		{
-			if (!(new = SDL_CreateRGBSurface(0, W - W / 16, H, 32,
-			0xff000000, 0xff0000, 0xff00, 0xff)))
-				return (NULL);
-			SDL_LockSurface(new);
-			pxl = new->pixels;
-			scale_img(pxl, (SDL_Rect){0, 0, W - W / 16, H}, img, (t_ixy){0, 0});
-			SDL_UnlockSurface(new);
-			SDL_FreeSurface(img);
-			return (new);
-		}
-		return (img);
+		path = NULL;
+		return (new);
 	}
 	return (NULL);
 }
