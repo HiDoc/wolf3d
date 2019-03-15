@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 18:43:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:34:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ struct					s_sct
 struct					s_menu
 {
 	int				state;
+	int				nb_maps;
+	char			**maps;
 	SDL_Surface		*background;
 };
 

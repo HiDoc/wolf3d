@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_error_exit.c                                    :+:      :+:    :+:   */
+/*   menu_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 17:00:02 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 15:19:04 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/15 15:02:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		ui_error_exit_sdl(char *msg, t_data *data)
+int			menu_events(t_env *env)
 {
-	// free maps files
-	// free images
-	// free sector + vertex
-	if (data->surface)
-		SDL_FreeSurface(data->surface);
-	if (data->font)
-		TTF_CloseFont(data->font);
-	if (data->sdl.renderer)
-		SDL_DestroyRenderer(data->sdl.renderer);
-	if (data->sdl.window)
-		SDL_DestroyWindow(data->sdl.window);
-	TTF_Quit();
-	SDL_Quit();
-	ft_putendl_fd(msg, 2);
-	exit(EXIT_SUCCESS);
+	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		t_square    square;
+
+		square.rect = (t_rect){WIN_W / 2 + 10, WIN_H / 2 + 250 - 40,
+		150, 25, 0xFFFFFFFF};
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, square))
+		{
+			env->menu.state = 0;
+			return (1);
+		}
+	}
+	return (0);
 }

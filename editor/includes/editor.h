@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 17:51:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:26:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_ttf.h>
 # include <SDL2/SDL_image.h>
+# include <dirent.h>
 # include <math.h>
 
 # include "libui_struct.h"
@@ -53,6 +54,7 @@ void		display_selection(t_env *env);
 **	events/
 */
 
+int	        menu_events(t_env *env);
 int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
 int			select_mode(t_env *env);

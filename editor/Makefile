@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/14 17:52:54 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/15 14:52:13 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRC_NAME 	=	main.c \
 				vertex_in_sector.c \
 				display_interface.c \
 				display_selection.c \
+				menu_events.c \
 				#export_map.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)

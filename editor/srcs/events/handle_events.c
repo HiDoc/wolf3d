@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:21:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:53:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int		handle_events(t_env *env)
 	if (env->data->state[SDL_SCANCODE_ESCAPE]
 	|| env->data->sdl.event.type == SDL_QUIT)
 		ui_exit_sdl(env->data);
+
+	if (env->menu.state == 1)
+		return (menu_events(env));
 
 	if (env->data->state[SDL_SCANCODE_1])
 	{
