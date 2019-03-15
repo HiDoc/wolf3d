@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 19:19:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:18:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     char *r_path;
     char *s_path;
     char *sprite;
+    char *shoot;
     long ref;
 
     ref = weapon->ref;
@@ -63,9 +64,11 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     s_path = ft_strjoin(name, "/shoot/");
     sprite = ft_strjoin(name, "/");
     sprite = ft_strljoin(sprite, name);
+    shoot = ft_strjoin(name, "/");
+    shoot = ft_strjoin(shoot, "shoot");
     weapon->sprite = img_wpn(sprite);
     weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload);
-    weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot);
+    weapon->sprite_shoot = img_wpn(shoot);
     free(r_path);
     free(s_path);
     free(sprite);
@@ -76,9 +79,9 @@ int		init_weapon(t_env *env)
     int i;
 
     i = 0;
-	env->world.armory[0].ref = 0xa2a0602092a2;
-	env->world.armory[1].ref = 0xa1e0502061a3;
-	env->world.armory[2].ref = 0xa8e2002102f4;
+	env->world.armory[0].ref = 0xa2a0602012a2;
+	env->world.armory[1].ref = 0xa1e0502011a3;
+	env->world.armory[2].ref = 0xa8e2002012f4;
 	weapon_set(&env->world.armory[0], "pistol", 17);
 	weapon_set(&env->world.armory[1], "ak47", 12);
 	weapon_set(&env->world.armory[2], "rifle", 30);

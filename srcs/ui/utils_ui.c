@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 21:38:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 12:05:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int    ui_put_string(t_env *env, t_font	data)
 	tmp = NULL;
 	(void)env;
 	draw_img(env, surface, (t_ixy){pos.x, pos.y}, (t_edge){{0, 0}, {surface->w, surface->h}});
-    // draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
 	SDL_FreeSurface(surface);
 	surface = NULL;
 	TTF_CloseFont(font);

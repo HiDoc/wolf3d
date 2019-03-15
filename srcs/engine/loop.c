@@ -4,8 +4,6 @@ void	sdl_render_game(t_env *env)
 {
 	dfs(env);
 	loop_frames(env, &env->time.frame);
-	put_gun(env,
-			env->world.armory[env->player.inventory.current->current->ref].sprite);
 	ui_put_fps(env, env->time.fps);
 	print_hud(env);
 	//ui_minimap(env);
@@ -59,10 +57,10 @@ int sdl_loop(t_env *env)
 				sdl_render(env, &sdl_render_game);
 
 				//wpn_mouse_wheel(env, ev);
-				//mouse_shoot(env);
+				mouse_shoot(env);
 
 				sdl_mouse(e, v);
-				// sdl_keyhook_game(env, ev, keycodes);
+				sdl_keyhook_game(env, ev, keycodes);
 				player_collision(e, v, env->player.actions.is_flying);
 				sdl_set_velocity(env, v, keycodes);
 			}
