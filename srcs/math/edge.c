@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 17:30:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:50:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_edge  scale_edge(t_edge t)
 }
 
 /*
-** Clip vertex to window
+** Clip vertex to window and save scaled texture coordinate
 */
 void	clip_view(t_raycast *ctn)
 {
