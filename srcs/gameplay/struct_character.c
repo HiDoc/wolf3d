@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:59 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 18:28:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:20:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int     init_character(t_character *new)
 {
-    new->health = 50;
-    new->shield = 50;
+    new->health = 200;
+    new->shield = 200;
     new->max_weapons = 3;
     new->max_objects = 3;
     new->max_health = 200;

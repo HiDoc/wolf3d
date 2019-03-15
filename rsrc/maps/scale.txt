@@ -1,15 +1,58 @@
-vertex	0	0 6 28
-vertex	2	1 17.5
-vertex	5	4 6 18 21
-vertex	6.5	9 11 13 13.5 17.5
-vertex	7	5 7 8 9 11 13 13.5 15 17 19 21
-vertex	7.5	4 6
-vertex	10.5	4 6
-vertex	11	5 7 8 9 11 13 13.5 15 17 19 21
-vertex	11.5	9 11 13 13.5 17.5
-vertex	13	4 6 18 21
-vertex	16	1 17.5
-vertex	18	0 6 28
+vertex	0 0
+vertex	0 6
+vertex	0 28
+vertex	2 1
+vertex	2 17.5
+vertex	5 4
+vertex	5 6
+vertex	5 18
+vertex	5 21
+vertex	6.5	9
+vertex	6.5	11
+vertex	6.5	13
+vertex	6.5	13.5
+vertex	6.5	17.5
+vertex	7 5
+vertex	7 5
+vertex	7 7
+vertex	7 8
+vertex	7 9
+vertex	7 11
+vertex	7 13
+vertex	7 13.5
+vertex	7 15
+vertex	7 17
+vertex	7 19
+vertex	7 21
+vertex	7.5	4
+vertex	7.5	6
+vertex	10.5 4
+vertex	10.5 6
+vertex	11	5
+vertex	11	7
+vertex	11	8
+vertex	11	9
+vertex	11	11
+vertex	11	13
+vertex	11	13.5
+vertex	11	15
+vertex	11	17
+vertex	11	19
+vertex	11	21
+vertex	11.5 9
+vertex	11.5 11
+vertex	11.5 13
+vertex	11.5 13.5
+vertex	11.5 17.5
+vertex	13	4
+vertex	13	6
+vertex	13	18
+vertex	13	21
+vertex	16	1
+vertex	16	17.5
+vertex	18	0
+vertex	18	6
+vertex	18	28
 
 sector	0 20	 3 14 29 49             -1 1 11 22
 sector	0 20	 17 15 14 3 9           -1 12 11 0 21
@@ -37,4 +80,4 @@ sector	0 20	 29 30 32 40 49         0 11 12 -1 2
 sector	16 36	 1 6 5 0                -1 7 -1 24
 sector	16 36	 0 5 25 27 45 51        -1 23 -1 9 -1 8
 
-player	2 6	0	0
+player	2 6	0	0.7

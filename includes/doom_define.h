@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 16:44:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:18:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@
 /*
 ** Define window size
 */
-# define W				800
-# define H				600
+
+# define W_TEXTURE		256
+# define W				1200
+# define H				800
 
 /*
 ** FPS frames
@@ -85,7 +87,6 @@
 /*
 ** Colors
 */
-
 #define RED			(SDL_Color){255, 0, 0, 255}
 #define WHITE		(SDL_Color){255, 255, 255, 255}
 #define BLACK		(SDL_Color){0, 0, 0, 255}

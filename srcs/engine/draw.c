@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 17:08:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:10:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,7 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
-	/* Schedule the neighboring sector for rendering
-		within the window formed by this wall. */
-	if (container.neighbor >= 0 && end >= start
-		&& (q->head + MAXQUEUE + 1 - q->tail) % MAXQUEUE)
-	{
-		*q->head = (t_item) {container.neighbor, start, end};
-		if (++q->head == q->queue + MAXQUEUE)
-			q->head = q->queue;
-	}
+	schedule_queue(q, container, start, end);
 	return (1);
 }
 

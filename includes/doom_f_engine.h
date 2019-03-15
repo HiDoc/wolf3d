@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 14:22:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:18:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
-int			is_bumping(const t_sector *sect, float eyeheight,
+int			is_bumping(const t_sector *sect, t_vision *vision,
 			unsigned s, t_engine *e);
-void		bumping_score(t_vtx *d, t_vtx b);
 
-void		player_moving(t_vision *vision, int set, t_engine *engine);
-void		player_falling(t_vision *vision, t_engine *engine, float limit, float speed);
-void		player_collision(t_engine *engine, t_vision *vision, int jetpack);
+void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
+
+int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
+int			sdl_mouse(t_engine *e, t_vision *v);
+void		player_set(t_engine *e, t_vtx d);
 
 int			sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
@@ -49,5 +50,7 @@ int         init_inventory_ui(t_env *env);
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
 int         init_consumable(t_env *env);
+t_sector	*pick_sector(t_env *env, unsigned sector);
+void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 
 #endif

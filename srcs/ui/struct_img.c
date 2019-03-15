@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 11:44:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:23:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ SDL_Surface		*img_wpn(char *filename)
 	SDL_Surface	*new;
 	char		*path;
 	const char	*png = ".png";
+	SDL_Surface	*img;
+	Uint32		*pxl;
 
 	if ((path = ft_strjoin("./rsrc/img/weapons/", filename))
 	&& (path = ft_strljoin(path, (char *)png))
