@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 14:25:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 19:26:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,24 @@ static void		draw_sectors(SDL_Surface *surface,
 	}
 }
 
+static void     draw_compass(SDL_Surface *surface,
+				t_minimap *minimap, t_engine *engine)
+{
+	t_vtx	vtx;
+	int		i;
+
+	i = 0;
+	while (i < 0)
+	{
+		vtx = (t_vtx){
+		minimap->origin.x + MINIMAP_SIZE / 2,
+		minimap->origin.y + MINIMAP_SIZE / 2};
+		ui_draw_vector(surface, vtx, i - engine->player.angle,
+		MINIMAP_SIZE / 2, C_WHITE);
+		i += 45;
+	}
+}
+
 static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 {
 	SDL_Rect	rect;
@@ -91,7 +109,8 @@ static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 	ui_draw_full_rect(surface, rect, C_BLUE);
 
 	// player direction
-	edge = (t_edge){(t_vtx){rect.x + 5, rect.y + 5},
+	edge = (t_edge){
+	(t_vtx){rect.x + 5, rect.y + 5},
 	(t_vtx){rect.x + 5, rect.y - 10}};
 	ui_draw_line(surface, edge, C_CYAN);
 }
@@ -158,10 +177,13 @@ void		ui_minimap(t_env *env)
 	MINIMAP_SIZE / 2, C_WHITE};
 	ui_draw_circle(env->sdl.surface, circle);
 
-	// drawing sectors on area
+	// draw sectors on area
 	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
 
-	// player
+	// draw compass
+	draw_compass(env->sdl.surface, &minimap, &(env->engine));
+
+	// draw player
 	draw_player(env->sdl.surface, &minimap);
 
 	// recoder BlitSurface
