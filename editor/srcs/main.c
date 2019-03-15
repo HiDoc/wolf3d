@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 15:27:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 16:25:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ int				main(void)
 	ui_init_sdl(&data);
 
 	init_env(&env, &data);
+	env.draw_cursor = ui_load_image(
+	"ressources/images/pen_cursor.png", &env);
 	init_menu(&env, &data);
 	env.menu.state = 1;
 	env.menu.background = ui_load_image(
-			"ressources/images/doom-background.jpg", &env);
+	"ressources/images/doom-background.jpg", &env);
 
 	env.map_name = "map"; // to remove
 

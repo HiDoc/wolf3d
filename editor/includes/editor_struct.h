@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 15:34:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 16:13:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ struct					s_env
 	// state
 	int				drawing;		// am i drawing an edge
 
-	// mouse flag
+	// mouse handling
 	int				mouse_mode;
+	SDL_Surface		*draw_cursor;
 };
 
 #endif

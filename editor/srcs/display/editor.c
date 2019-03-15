@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 18:33:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:13:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ void		editor(t_env *env)
 	{
 		menu(env);
 		return ;
+	}
+
+	if (env->mouse_mode == 0)
+		SDL_ShowCursor(1);
+	else if (env->mouse_mode == 1)
+	{
+		SDL_ShowCursor(0);
+		SDL_BlitScaled(env->draw_cursor, 0, env->data->surface,
+		&((SDL_Rect){env->data->mouse.x, env->data->mouse.y, 23, 34}));
 	}
 
 	display_interface(env);
