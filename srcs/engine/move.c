@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 14:58:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:34:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	player_collision(t_engine *e, t_vision *v, int jetpack)
 {
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	v->ground = !v->falling;
+	(void)jetpack;
 	// Change for jetpack
 	/*
 	if (!v->falling && jetpack)
