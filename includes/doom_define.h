@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/12 19:31:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/14 17:31:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 /*
 ** Define window size
 */
+
+# define W_TEXTURE		256
 # define W				1200
 # define H				800
 
@@ -85,7 +87,6 @@
 /*
 ** Colors
 */
-
 #define RED			(SDL_Color){255, 0, 0, 255}
 #define WHITE		(SDL_Color){255, 255, 255, 255}
 #define BLACK		(SDL_Color){0, 0, 0, 255}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/15 12:10:01 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 void	sdl_render_game(t_env *env)
@@ -6,7 +18,7 @@ void	sdl_render_game(t_env *env)
 	//loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	//print_hud(env);
-	//ui_minimap(env);
+	ui_minimap(env);
 	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
 
@@ -58,11 +70,8 @@ int sdl_loop(t_env *env)
 
 				//wpn_mouse_wheel(env, ev);
 				//mouse_shoot(env);
-
-				sdl_mouse(e, v);
 				//sdl_keyhook_game(env, ev, keycodes);
-				player_collision(e, v, env->player.actions.is_flying);
-				sdl_set_velocity(env, v, keycodes);
+				player_move(env, v, keycodes);
 			}
 			else
 			{
