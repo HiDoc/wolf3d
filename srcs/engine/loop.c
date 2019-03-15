@@ -58,11 +58,8 @@ int sdl_loop(t_env *env)
 
 				//wpn_mouse_wheel(env, ev);
 				//mouse_shoot(env);
-
-				sdl_mouse(e, v);
 				//sdl_keyhook_game(env, ev, keycodes);
-				player_collision(e, v, env->player.actions.is_flying);
-				sdl_set_velocity(env, v, keycodes);
+				player_move(e, v, keycodes);
 			}
 			else
 			{

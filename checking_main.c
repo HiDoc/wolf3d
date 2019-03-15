@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:47:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 17:58:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:01:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,25 @@
 /*
 ** Check where the hole is and whether we're bumping into a wall.
 */
-int		is_bumping(const t_sector *sect, t_vision *vision,
-		unsigned s, t_engine *e)
+int		is_bumping(t_engine *e, t_vision *v, const t_sector *curr, unsigned s)
 {
-	float			hole_low;
-	float			hole_high;
+	float		hole_low;
+	float		hole_high;
+	t_sector	neighbour;
 
-	if (sect->neighbors[s] < 0)
+	if (curr->neighbors[s] < 0)
 		return (1);
-	else
-	{
-		hole_low = fmax(sect->floor, e->sectors[sect->neighbors[s]].floor);
-		hole_high = fmin(sect->ceil, e->sectors[sect->neighbors[s]].ceil);
-	}
+	neighbour = e->sectors[curr->neighbors[s]];
+	hole_low = fmax(curr->floor, neighbour.floor);
+	hole_high = fmin(curr->ceil, neighbour.ceil);
 	return (hole_high < e->player.where.z + HEADMARGIN
-			|| hole_low > e->player.where.z - vision->eyeheight + KNEEHEIGHT);
+		|| hole_low > e->player.where.z - v->eyeheight + KNEEHEIGHT);
 }
 
-int		is_crossing(const t_vtx player, t_vtx dest, const t_vtx *vert, unsigned s)
+int		is_crossing(const t_vtx player, t_vtx dest, t_edge wall)
 {
 	const t_vtx	add = add_vertex(player, dest);
 
-	return (intersect_rect(player, add, vert[s], vert[s + 1])
-			&& pointside(add, vert[s], vert[s + 1]) < 0.5);
+	return (intersect_rect(player, add, wall.v1, wall.v2)
+		&& pointside(add, wall.v1, wall.v2) < 0);
 }
