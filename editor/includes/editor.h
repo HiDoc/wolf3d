@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 15:26:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:11:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 # define C_RED 0xFF0000FF
 # define C_GREEN 0xFF00FF00
 # define C_BLUE 0xFFFF0000
-
-# define NEW_SCT 1
-# define CUR_SCT 0
 
 # define VRX_MAX 500
 # define EDG_MAX 250

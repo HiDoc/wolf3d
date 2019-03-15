@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 17:13:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:12:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		editor(t_env *env)
 {
 	t_rect		rect;
 
-	if (env->menu.state == 1)
+	if (env->menu.state > 0)
 	{
 		menu(env);
 		return ;
@@ -39,10 +39,12 @@ void		editor(t_env *env)
 	ui_make_square(rect, 0, 0, env->data);
 	rect = (t_rect){45, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "New", env->data);
+	//
 	rect = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
 	ui_make_square(rect, 0, 0, env->data);
 	rect = (t_rect){155, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "Upload", env->data);
+	//
 	rect = (t_rect){300, 20, 100, 40, 0xFFFFFFFF};
 	ui_make_square(rect, 0, 0, env->data);
 	rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};

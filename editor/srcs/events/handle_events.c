@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 16:08:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:14:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		handle_events(t_env *env)
 	|| env->data->sdl.event.type == SDL_QUIT)
 		ui_exit_sdl(env->data);
 
-	if (env->menu.state == 1)
+	if (env->menu.state > 0)
 		return (menu_events(env));
 
 	if (env->data->state[SDL_SCANCODE_1])
@@ -39,9 +39,13 @@ int		handle_events(t_env *env)
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		t_square    square;
+		t_square    new;
+		t_square    upload;
 		t_square	save;
 
 		square.rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
+		new.rect = (t_rect){20, 20, 100, 40, 0xFFFFFFFF};
+		upload.rect = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
 		save.rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, square))
 		{ // if on interface
@@ -49,6 +53,11 @@ int		handle_events(t_env *env)
 				return (select_mode(env));
 			else if (env->mouse_mode == 1)
 				return (draw_mode(env));
+		}
+		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, new)
+		|| ui_mouseenter(env->data->mouse.x, env->data->mouse.y, upload))
+		{ // else if on new or upload
+			env->menu.state = 2;
 		}
 		/*else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, save))
 		{ // else if on save button
