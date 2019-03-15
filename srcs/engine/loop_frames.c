@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:32:57 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:26:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:29:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	loop_frames(t_env *env, int *frame)
 		}
 		else
 		{
-			put_gun(env,
-			env->world.armory[env->player.inventory.current->current->ref].sprite);
+			if (env->world.armory[env->player.inventory.current->current->ref].sprite)
+				put_gun(env, env->world.armory[env->player.inventory.current->current->ref].sprite);
 			*frame = 0;
 		}
 	}
