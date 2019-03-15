@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/08 14:14:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:10:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct  s_vtx   t_vtx;
 typedef struct  s_sct   t_sct;
+typedef struct	s_menu	t_menu;
 typedef struct  s_env   t_env;
 
 struct					s_vtx
@@ -41,9 +42,19 @@ struct					s_sct
 	t_sct		*next;
 };
 
-struct                  s_env
+struct					s_menu
+{
+	int				state;
+	int				nb_maps;
+	char			**maps;
+	SDL_Surface		*background;
+};
+
+struct					s_env
 {
 	t_data          *data;
+
+	t_menu			menu;
 
 	char			*map_name;
 
@@ -59,12 +70,14 @@ struct                  s_env
 	// data infos
 	int				nb_vtx;
 	int				nb_sct;
+	int				vtx_size; // current
 
 	// state
 	int				drawing;		// am i drawing an edge
 
-	// mouse flag
+	// mouse handling
 	int				mouse_mode;
+	SDL_Surface		*draw_cursor;
 };
 
 #endif
