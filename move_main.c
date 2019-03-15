@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:07:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:24:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 {
 	float		accel;
 	t_vtx		move_vec;
-	const float	speed = keyb[SDL_SCANCODE_LSHIFT] ? SPEED_RUN : SPEED_WALK;
+	const float	speed = keyb[SDL_SCANCODE_LSHIFT] && v->ground ? SPEED_RUN * 2 : SPEED_WALK * 2;
 	const float	sin_move = e->player.anglesin * speed;
 	const float	cos_move = e->player.anglecos * speed;
 
@@ -112,34 +112,32 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 	while (++s < (int)sect->npoints)
 	{
 		wall = (t_edge){vert[s], vert[s + 1]};
-		if (is_crossing(player, dest, vert, s) && is_bumping(sect, v, s, e))
+		if (is_crossing(player, dest, wall) && is_bumping(e, v, sect, s))
 		{
-			if (sector_collision(player, &dest, wall))
-				v->moving = 0;
+			sector_collision(player, &dest, wall);
+			//if (sector_collision(player, &dest, wall) && sect->neighbors[s] < 0)
+			//	v->moving = 0;
 		}
-	}
-	s = -1;
-	while (++s < (int)sect->npoints)
-	{
-		if (sect->neighbors[s] >= 0 && is_crossing(player, dest, vert, s))
-		{
+		if (sect->neighbors[s] >= 0 && is_crossing(player, dest, wall))
 			e->player.sector = sect->neighbors[s];
-			break;
-		}
 	}
-	e->player.where.x += dest.x;
-	e->player.where.y += dest.y;
-	v->falling = 1;
+	//if (v->moving)
+	//{
+		e->player.where.x += dest.x;
+		e->player.where.y += dest.y;
+	//}
 }
 
 /*
-**Vertical collision detection and horizontal collision detection
+** Vertical collision detection and horizontal collision detection
 */
-void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
+void	player_move(t_env *env, t_vision *v, const Uint8 *keycodes)
 {
-	int	x;
-	int y;
+	t_engine	*e;
+	int			x;
+	int			y;
 
+	e = &env->engine;
 	v->falling = 1;
 	SDL_GetRelativeMouseState(&x, &y);
 	e->player.angle += x * 0.03f;
@@ -149,7 +147,6 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 	e->player.anglecos = cosf(e->player.angle);
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	handle_gravity(v, e, 0.05f);
-	if (v->moving)
-		collision(v, e, &e->sectors[e->player.sector]);
-	keyboard_movement(e, v, keycodes);
+	(v->moving) ? collision(v, e, &e->sectors[e->player.sector]) : 0;
+	keyboard_movement(&env->engine, v, keycodes);
 }

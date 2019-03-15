@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 15:08:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:05:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 # define DOOM_F_ENGINE_H
 
 void		dfs(t_env *env);
-int			is_crossing(const t_vtx player, t_vtx dest, t_edge wall);
-int			is_bumping(t_engine *engine, t_vision *vision,
-			const t_sector *current, unsigned iter);
+int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
+int			is_bumping(const t_sector *sect, t_vision *vision,
+			unsigned s, t_engine *e);
 
-void		player_move(t_env *env, t_vision *vision, const Uint8 *keycodes);
+void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
+
+int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
+int			sdl_mouse(t_engine *e, t_vision *v);
+void		player_set(t_engine *e, t_vtx d);
 
 t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge to_rotate);
