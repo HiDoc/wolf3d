@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:47:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 17:58:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:07:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 int		is_bumping(const t_sector *sect, t_vision *vision,
 		unsigned s, t_engine *e)
 {
-	float			hole_low;
-	float			hole_high;
+	float		hole_low;
+	float		hole_high;
 
 	if (sect->neighbors[s] < 0)
 		return (1);

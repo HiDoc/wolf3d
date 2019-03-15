@@ -193,11 +193,11 @@ int     verify_map(t_engine *e)
 	{
 		if (!verify_vertex(e))
 			break ;
-		if (verify_vertex_parallel(e))
-		{
-			printf("vertex are parallel\n");
-			continue ;
-		}
+		//if (verify_vertex_parallel(e))
+		//{
+	//		printf("vertex are parallel\n");
+	//		continue ;
+	//`	}
 		if (verify_neighbor(e, NULL, NULL))
 		{
 			printf("neighbors not linked\n");

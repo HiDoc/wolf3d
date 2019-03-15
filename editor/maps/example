@@ -1,0 +1,31 @@
+# wall vertex (x y)
+v  0 0
+v  0 20
+v  20 20
+v  20 0
+v  3 1
+v  5 1
+v  5 3
+v  3 3
+
+# object vertex (x y)
+v 0 1
+
+# monster vertex (x y)
+v 0 1
+
+# objects (vertex sector indexObject)
+o 5 0 1
+
+# sector (floor ceil indexVertex, neighbours
+s 0 20    0 1 2 3 4 5 6 7,  1 -1 -1 -1 -1 1 1 1
+s 0 6     4 5 6 7, 0 0 0 0
+
+# monster (vertex sector indexMonster)
+m 2 0 1
+
+# texture (vertex1 vertex2 indexTexture)
+t 0 1 0
+
+# player (x y angle sector)
+p 2 6 0 0

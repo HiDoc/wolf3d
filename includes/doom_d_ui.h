@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:41:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 18:05:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:01:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@
 
 # define C_CYAN 0x91F1F7FF
 
-
-# define COEF_MINIMAP 5
-# define MINIMAP_W 250
-# define MINIMAP_H 250
+# define COEF_MINIMAP 2.5
+# define MINIMAP_SIZE 250
 
 #endif

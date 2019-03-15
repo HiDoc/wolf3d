@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/15 18:06:36 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 void	sdl_render_game(t_env *env)
@@ -6,7 +18,7 @@ void	sdl_render_game(t_env *env)
 	//loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	//print_hud(env);
-	//ui_minimap(env);
+	ui_minimap(env);
 	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
 

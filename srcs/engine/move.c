@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 17:58:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:07:28 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 		if (sect->neighbors[s] >= 0 && is_crossing(player, dest, vert, s))
 		{
 			e->player.sector = sect->neighbors[s];
-			break ;
+			break;
 		}
 	}
 	e->player.where.x += dest.x;
