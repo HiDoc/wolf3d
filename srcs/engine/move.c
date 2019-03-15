@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 14:26:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:24:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 {
 	float		nextz;
 	t_vtx		bezier;
+	t_vtx		c_point;
 	const float	floor = e->sectors[e->player.sector].floor;
 	const float	limit = floor + v->eyeheight * 2;
 
+	c_point = (t_vtx){0, 40};
 	e->player.velocity.z -= gravity;
 	bezier = bezier_curve((t_edge){(t_vtx){0, 6}, (t_vtx){20, 6}},
-			(t_vtx){0, 15}, 1 - (e->player.velocity.z + 0.12f));
+			c_point, 1 - (e->player.velocity.z + 0.12f));
 	nextz = (e->player.velocity.z < 0) ? e->player.where.z + e->player.velocity.z : bezier.y;
 	if (e->player.velocity.z < 0 && nextz < (floor + v->eyeheight))
 	{
@@ -70,7 +72,7 @@ void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 		v->ground = 1;
 	}
 	else if (e->player.velocity.z > 0 && nextz > limit)
-		e->player.velocity.z = 0;
+		e->player.where.z = limit;
 	if (v->falling)
 	{
 		e->player.where.z = bezier.y;
@@ -112,17 +114,18 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 		wall = (t_edge){vert[s], vert[s + 1]};
 		if (is_crossing(player, dest, wall) && is_bumping(e, v, sect, s))
 		{
-			if (sector_collision(player, &dest, wall) && sect->neighbors[s] < 0)
-				v->moving = 0;
+			sector_collision(player, &dest, wall);
+			//if (sector_collision(player, &dest, wall) && sect->neighbors[s] < 0)
+			//	v->moving = 0;
 		}
 		if (sect->neighbors[s] >= 0 && is_crossing(player, dest, wall))
 			e->player.sector = sect->neighbors[s];
 	}
-	if (v->moving)
-	{
+	//if (v->moving)
+	//{
 		e->player.where.x += dest.x;
 		e->player.where.y += dest.y;
-	}
+	//}
 }
 
 /*

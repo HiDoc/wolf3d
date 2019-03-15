@@ -188,6 +188,7 @@ int     verify_map(t_engine *e)
 	int		iter;
 
 	iter = 1;
+	return (1);
 	while (iter)
 	{
 		if (!verify_vertex(e))

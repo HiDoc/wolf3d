@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 14:00:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:08:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ int         init_inventory_ui(t_env *env);
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
 int         init_consumable(t_env *env);
+t_sector	*pick_sector(t_env *env, unsigned sector);
+void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 
 #endif
