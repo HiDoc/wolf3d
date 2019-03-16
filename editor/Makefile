@@ -6,13 +6,13 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/15 14:52:13 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/16 16:09:11 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	editor
 CC			=	gcc
-CFLAGS 		=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 		=	-Wall -Wextra -Werror -g# -fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \
@@ -42,8 +42,10 @@ SRC_NAME 	=	main.c \
 				ui_init_sdl.c \
 				ui_make_window.c \
 				ui_make_surface.c \
-				ui_make_square.c \
+				ui_make_rect.c \
+				ui_make_full_rect.c \
 				ui_make_line.c \
+				ui_make_dotted_line.c \
 				ui_set_pixel.c \
 				ui_make_frame.c \
 				ui_gameloop.c \

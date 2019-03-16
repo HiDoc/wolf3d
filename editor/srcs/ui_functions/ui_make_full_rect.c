@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_gameloop.c                                      :+:      :+:    :+:   */
+/*   ui_make_full_rect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/27 12:58:57 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 14:23:12 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/16 14:29:53 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/16 15:14:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void	ui_gameloop(int (*event)(t_env *env),
-		void (*fc)(t_env *env), t_env *env)
+void	ui_make_full_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
 {
-	ui_make_frame(fc, env);
-	while (1)
+	t_vec		edge;
+	int			y;
+
+	y = rect.y;
+	while (y < rect.y + rect.h)
 	{
-		if (ui_get_events(event, env))
-			ui_make_frame(fc, env);
+		edge.a = (t_pos){rect.x, y};
+		edge.b = (t_pos){rect.x + rect.w, y};
+		ui_make_line(surface, edge, color);
+		y++;
 	}
 }

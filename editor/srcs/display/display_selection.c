@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:15:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/16 15:11:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		display_selection(t_env *env)
 
 	// display selection area
 	rect = (t_rect){890, 100, 290, 250, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	ui_make_rect(rect, env->data);
 
 	// display selected
 	/*rect = (t_rect){30, 110, 0, 20, 0xFFFFFFFF};
@@ -40,9 +40,9 @@ void		display_selection(t_env *env)
 	rect = (t_rect){900, 150, 0, 20, 0xffffffff};
 	ui_make_string(rect, "Height", env->data);
 	rect = (t_rect){900, 180, 140, 20, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	ui_make_rect(rect, env->data);
 	rect = (t_rect){900, 210, 0, 20, 0xFFFFFFFF};
 	ui_make_string(rect, "Texture", env->data);
 	rect = (t_rect){900, 240, 140, 20, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	ui_make_rect(rect, env->data);
 }

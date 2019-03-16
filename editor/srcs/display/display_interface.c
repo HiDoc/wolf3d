@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 16:24:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/16 16:15:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			display_interface(t_env *env)
 
 	// display interface area
 	rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	ui_make_rect(rect, env->data);
 
 	display_infos(env);
 
@@ -58,7 +58,7 @@ void			display_interface(t_env *env)
 			while (vtx->next)
 			{
 				vec = (t_vec){vtx->pos, vtx->next->pos};
-				ui_make_line(env->data->surface, vec, color);
+				ui_make_dotted_line(env->data->surface, vec, color);
 				vtx = vtx->next;
 			}
 			if (sct->close)
@@ -94,7 +94,7 @@ void			display_interface(t_env *env)
 	{
 		circ = (t_circ){env->vtx_hover->pos.x,
 		env->vtx_hover->pos.y, 10, 0xFFFFFFFF};
-		ui_make_circle(circ, 0, 0, env->data);
+		ui_make_circle(circ, env->data);
 	}
 
 	// display current edge
