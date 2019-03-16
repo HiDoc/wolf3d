@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:16:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:17:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	mouse_shoot(t_env *env)
 	{
 		if (env->player.inventory.current->ammo_current)
 		{
-			env->player.actions.is_shooting = 1;
+			env->player.actions.is_shooting = !env->player.actions.is_shooting;
 			// Mix_PlayChannel(-1, env->sounds.shot, 0);
 			env->player.inventory.current->ammo_current--;
 		}
