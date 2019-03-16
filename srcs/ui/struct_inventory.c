@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:21 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:23:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 15:04:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int    init_inventory_ui(t_env *env)
 {
    	// t_rgba	rgba;
 
-    env->player.inventory.ui.front_pic = ui_img("fond800");
-    // set_surface_alpha(env->player.inventory.ui.front_pic, 50, &rgba);
+    env->player.inventory.ui.front_pic = ui_img("fonduke800");
 	env->player.inventory.ui.wwheel = 0;
     env->player.inventory.ui.nb_wpn = 1;
     env->player.inventory.nb_current_obj = 0;

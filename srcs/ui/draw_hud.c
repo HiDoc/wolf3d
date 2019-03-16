@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:22:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 17:39:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ int	check_object_stack(t_env *env, int ref, t_ixy start)
 
 	if ((iter = check_object_type(env, ref)) > -1)
 	{
-		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2)
-			sprite = env->world.objects[iter].sprite;
+		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
+			sprite = env->player.hud.objects[ref];
 		else
 			sprite = env->player.hud.empty_b;
-		draw_img(env, env->player.hud.full_b, start,
-		(t_edge){{0, 0}, {env->player.hud.full_b->w, env->player.hud.full_b->h}});
 		draw_img(env, sprite, start,
 		(t_edge){{0, 0}, {sprite->w, sprite->h}});
 	}
@@ -75,13 +73,13 @@ int	print_pad(t_env *env)
 	size_b = env->player.hud.empty_b->w + 2;
 	check_object_stack(env, 0, start);
 	start.x += size_b;
-	check_object_stack(env, 1, (t_ixy){ start.x, start.y});
+	check_object_stack(env, 1, start);
 	start.x += size_b;
 	i = 2;
 	while (i < 5)
-		check_object_stack(env, i++, (t_ixy){ start.x, start.y});
+		check_object_stack(env, i++, start);
 	start.x += size_b;
-	check_object_stack(env, 5, (t_ixy){ start.x, start.y});
+	check_object_stack(env, 5, start);
 	return (0);
 }
 
@@ -105,16 +103,16 @@ int print_hud(t_env *env)
 			return (0);
 	}
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
-	draw_img(env, env->player.hud.faces[index], (t_ixy){W / 128, H - H / 2.5},
+	draw_img(env, env->player.hud.faces[index], (t_ixy){W / 128, H - H / 2.8},
 	(t_edge){{0, 0}, {env->player.hud.faces[index]->w,
 	env->player.hud.faces[index]->h}});
 	limit_bar = size_bar(env->player.hud.bar[0]->w,
 	env->player.max_health, env->player.health);
-	draw_img(env, env->player.hud.bar[0], (t_ixy){W / 128, H - H / 2.5},
+	draw_img(env, env->player.hud.bar[0], (t_ixy){W / 128, H - H / 2.8},
 	(t_edge){{0, 0}, {limit_bar, env->player.hud.bar[0]->h}});
 	limit_bar = size_bar(env->player.hud.bar[1]->w,
 	env->player.max_shield, env->player.shield);
-	draw_img(env, env->player.hud.bar[1], (t_ixy){W / 128, H - H / 2.5},
+	draw_img(env, env->player.hud.bar[1], (t_ixy){W / 128, H - H / 2.8},
 	(t_edge){{0, 0}, {limit_bar, env->player.hud.bar[1]->h}});
 	print_pad(env);
 	return (1);

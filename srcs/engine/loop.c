@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:19:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:35:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int sdl_loop(t_env *env)
 				sdl_render(env, &sdl_render_game);
 
 				//wpn_mouse_wheel(env, ev);
-				//mouse_shoot(env);
-				//sdl_keyhook_game(env, ev, keycodes);
+				mouse_shoot(env);
+				sdl_keyhook_game(env, ev, keycodes);
 				player_move(e, v, keycodes);
 			}
 			else

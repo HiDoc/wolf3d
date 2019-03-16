@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 16:18:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 17:43:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ SDL_Surface **weapon_fill(char *path, int size)
 void weapon_set(t_weapon *weapon, char *name, int dam)
 {
     char *r_path;
-    char *s_path;
     char *sprite;
     char *shoot;
     long ref;
@@ -61,7 +60,6 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     weapon->ammo_magazine = weapon_mask(ref, 9);
     weapon->damage = dam;
     r_path = ft_strjoin(name, "/reload/");
-    s_path = ft_strjoin(name, "/shoot/");
     sprite = ft_strjoin(name, "/");
     sprite = ft_strljoin(sprite, name);
     shoot = ft_strjoin(name, "/");
@@ -70,8 +68,8 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload);
     weapon->sprite_shoot = img_wpn(shoot);
     free(r_path);
-    free(s_path);
     free(sprite);
+    free(shoot);
 }
 
 int		init_weapon(t_env *env)
@@ -80,15 +78,17 @@ int		init_weapon(t_env *env)
 
     i = 0;
 	env->world.armory[0].ref = 0xa2a0602012a2;
-	env->world.armory[1].ref = 0xa1e0502011a3;
+	env->world.armory[1].ref = 0xa2a020201123;
 	env->world.armory[2].ref = 0xa8e2002012f4;
 	weapon_set(&env->world.armory[0], "pistol", 17);
-	weapon_set(&env->world.armory[1], "ak47", 12);
+	weapon_set(&env->world.armory[1], "pompe", 100);
 	weapon_set(&env->world.armory[2], "rifle", 30);
     while (i < 3)
         env->player.inventory.weapons[i++].current = NULL;
     env->player.inventory.current = NULL;
     env->player.inventory.weapons[0].current = env->engine.sectors[0].head_object;
     env->player.inventory.current = &env->player.inventory.weapons[0];
+    env->player.inventory.current->ammo_current = 50;
+    env->player.inventory.current->ammo_magazine = 100;
     return (0);
 }

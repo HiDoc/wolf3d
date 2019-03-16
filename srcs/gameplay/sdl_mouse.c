@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 16:17:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 15:19:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	mouse_shoot(t_env *env)
 		else
 			load_weapon(env);
 	}
-	SDL_FlushEvent(SDL_MOUSEBUTTONUP);
 	return (0);
 }
