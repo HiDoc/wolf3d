@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:05:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:18:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int			is_bumping(const t_sector *sect, t_vision *vision,
 void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
 
 int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
+int			sdl_mouse(t_engine *e, t_vision *v);
+void		player_set(t_engine *e, t_vtx d);
+
+int			sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 
