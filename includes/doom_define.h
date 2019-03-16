@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 17:31:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:37:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 */
 
 # define W_TEXTURE		256
-# define W				1200
-# define H				800
+# define W				800
+# define H				600
 
 /*
 ** FPS frames

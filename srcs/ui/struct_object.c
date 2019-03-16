@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:18:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/14 16:47:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			init_inventory(t_env *env)
 
 int         init_consumable(t_env *env)
 {
-	return (object_new(&env->world.objects[0], "kit3", 3)
+	return (object_new(&env->world.objects[0], "kit", 3)
 	&& object_new(&env->world.objects[1], "armor2", 3)
 	&& object_new(&env->world.objects[2], "ammo_1", 5)
 	&& object_new(&env->world.objects[3], "ammo_2", 5)

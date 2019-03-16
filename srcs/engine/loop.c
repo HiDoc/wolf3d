@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:06:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:39:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	sdl_render_game(t_env *env)
 {
 	dfs(env);
-	//loop_frames(env, &env->time.frame);
+	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-	//print_hud(env);
-	ui_minimap(env);
+	print_hud(env);
+	//ui_minimap(env);
 	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
 
@@ -70,7 +70,7 @@ int sdl_loop(t_env *env)
 
 				//wpn_mouse_wheel(env, ev);
 				//mouse_shoot(env);
-				//sdl_keyhook_game(env, ev, keycodes);
+				sdl_keyhook_game(env, ev, keycodes);
 				player_move(e, v, keycodes);
 			}
 			else

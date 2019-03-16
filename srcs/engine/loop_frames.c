@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_frames.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:32:57 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/11 15:32:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:29:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ int	loop_frames(t_env *env, int *frame)
 		}
 		else if (env->player.actions.is_shooting)
 		{
-			put_gun_shoot(env, *frame);
-			++(*frame);
+			put_gun(env,
+			env->world.armory[env->player.inventory.current->current->ref].sprite_shoot);
+			env->player.actions.is_shooting = 0;
+			*frame = 0;
 		}
 		else
 		{
-			put_gun(env,
-			env->world.armory[env->player.inventory.current->current->ref].sprite);
+			if (env->world.armory[env->player.inventory.current->current->ref].sprite)
+				put_gun(env, env->world.armory[env->player.inventory.current->current->ref].sprite);
 			*frame = 0;
 		}
 	}
