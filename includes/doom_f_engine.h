@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:18:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:24:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
 int         init_consumable(t_env *env);
 t_sector	*pick_sector(t_env *env, unsigned sector);
+void		print_sct(t_env *env);
 void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 
 #endif
