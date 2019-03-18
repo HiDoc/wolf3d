@@ -15,7 +15,7 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *windo
 		{
 			e->sectors[a].head_object = b->next;
 			free(b);
-			b = e->sectors[a].head_object = b->next;
+			b = e->sectors[a].head_object;
 		}
 		a++;
 	}
