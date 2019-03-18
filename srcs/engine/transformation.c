@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 19:37:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 19:15:44 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int		transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s)
 {
 	/* Acquire the x,y coordinates of the two endpoints
 	** (vertices) of this edge of the sector */
-	ctn->curr = current_edge(e->player.where,
+	ctn->trsl = translation_edge(e->player.where,
 		q->sect->vertex[s], q->sect->vertex[s + 1]);
 
 	/* Rotate them around the player's view */
-	ctn->rot = rotation_edge(e->player, ctn->curr);
+	ctn->rot = rotation_edge(e->player, ctn->trsl);
 
 	/* Is the wall at least partially in front of the player? */
 	if (ctn->rot.v1.y <= 0 && ctn->rot.v2.y <= 0)
