@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:39:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:04:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	sdl_render_game(t_env *env)
 	dfs(env);
 	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-	print_hud(env);
-	//ui_minimap(env);
+	//print_hud(env);
+	ui_minimap(env);
 	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
 
@@ -35,9 +35,9 @@ int sdl_render(t_env *env, void (*f)(t_env *env))
 	f(env);
 	SDL_UnlockSurface(env->sdl.surface);
 	SDL_UpdateTexture(env->sdl.texture,
-					NULL,
-					env->sdl.surface->pixels,
-					env->sdl.surface->pitch);
+		NULL,
+		env->sdl.surface->pixels,
+		env->sdl.surface->pitch);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (1);

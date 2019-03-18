@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:57:32 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/12 12:23:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:32:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	print_sct(t_env *env)
 		printf("sector : %u \n", iters);
 		while (iterv < sect->npoints)
 		{
-			printf("vtx %u : {%f, %f}, neigbour : %d\n", iterv,
-				vtx[iterv].x, vtx[iterv].y,
-				sect[iters].neighbors[(iterv + 1) % sect->npoints]);
+			printf("vtx %u : {%f, %f}, \n", iterv,
+				vtx[iterv].x, vtx[iterv].y);
+				//sect[iters].neighbors[(iterv + 1) % sect->npoints]);
 			iterv++;
 		}
 		iters++;
