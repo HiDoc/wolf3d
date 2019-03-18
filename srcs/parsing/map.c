@@ -156,9 +156,12 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 	int			found;
 
 	chain.a = 0;
+	if (e->nsectors < 2)
+		return (0);
 	while (chain.a < e->nsectors)
 	{
 		sect = &e->sectors[chain.a];
+		print_sect(sect);
 		vert = sect->vertex;
 		chain.b = 0;
 		while (chain.b < sect->npoints)
@@ -196,28 +199,22 @@ int     verify_map(t_engine *e)
 	while (iter)
 	{
 		printf("iter: %d\n", iter);
-		if (!verify_vertex(e))
-		{
-			printf("vertex does not form a loop\n");
-			break;
-		}
+		// if (!verify_vertex(e))
+		// {
+		// 	printf("vertex does not form a loop\n");
+		// 	break;
+		// }
 		if (verify_neighbor(e, NULL, NULL))
 		{
 			printf("neighbors not linked\n");
 			continue ;
 		}
-		if (verify_hull(e, NULL, NULL))
+		if (verify_hull(e))
 		{
-			printf("hull not correct\n");
-			continue ;
-		}/*
-		if (verify_vertex_parallel(e))
-		{
-			printf("vertex are parallel\n");
+			printf("hull redispatch\n");
 			continue ;
 		}
-		else
-			break ;*/
+		else break;
 		iter++;
 		if (iter > 5)
 			break;
