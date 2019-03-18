@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:22:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:03:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		use_drop_icon(t_env *env, t_edge bloc, int i)
+int		use_drop_icon(t_env *env, t_edge bloc, SDL_Surface *sprite, int i)
 {
 	float	blocx;
 	t_edge	*udbox[2];
@@ -20,7 +20,7 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 
 	udbox[0] = &env->player.inventory.objects[i].udbox[0];
 	udbox[1] = &env->player.inventory.objects[i].udbox[1];
-	blocx = bloc.v2.x - bloc.v1.x;
+	blocx = sprite->w;
 	udbox[0]->v1 = (t_vtx){bloc.v2.x - blocx / 7, bloc.v1.y};
 	udbox[0]->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + blocx / 7};
 	ui_put_string(env, (t_font){c[0], "X", F_TEXT,
@@ -29,11 +29,11 @@ int		use_drop_icon(t_env *env, t_edge bloc, int i)
 	udbox[1]->v2 = bloc.v2;
 	draw_flat_rect(env->sdl.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
-	ui_put_string(env, (t_font){c[0], "USE", F_TEXT,
-	(t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
-	ui_put_string(env, (t_font){c[1], "", F_NUMB,
-	(t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1,
-	env->player.inventory.objects[i].nb_stack});
+	// ui_put_string(env, (t_font){c[0], "USE", F_TEXT,
+	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
+	// ui_put_string(env, (t_font){c[1], "", F_NUMB,
+	// (t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1,
+	// env->player.inventory.objects[i].nb_stack});
 	return (0);
 }
 
@@ -55,6 +55,7 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 		draw_img(env, sprite, (t_ixy){bloc->v1.x + env->player.inventory.ui.box[0]->w / 128,
 		bloc->v1.y + env->player.inventory.ui.box[0]->h / 128},
 		(t_edge){{0, 0}, {sprite->w, sprite->h}});
+		use_drop_icon(env, *bloc, sprite, i);
 	}
 	else
 	{

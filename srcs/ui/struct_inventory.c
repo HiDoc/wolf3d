@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:21 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/17 17:18:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 12:27:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int     init_inv_box(t_env *env)
 {
     if((env->player.inventory.ui.box[0] = ui_img("box/full"))
     && (env->player.inventory.ui.box[1] = ui_img("box/empty")))
-    {
-        printf("size empty %i, %i\n", env->player.inventory.ui.box[0]->w, env->player.inventory.ui.box[0]->h);
         return (1);
-    }
     return (0);
 }
 
@@ -53,7 +50,6 @@ int    init_inventory_ui(t_env *env)
 	env->player.inventory.ui.wwheel = 0;
     env->player.inventory.ui.nb_wpn = 1;
     env->player.inventory.nb_current_obj = 0;
-    printf("size empty ok\n");
     init_wpn_inv(env);
     init_icon(env);
     init_inv_box(env);
