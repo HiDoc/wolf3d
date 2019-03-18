@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:21 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 15:04:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:18:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int     init_icon(t_env *env)
 
 int     init_wpn_inv(t_env *env)
 {
-    if ((env->player.inventory.ui.mini_wpn[1] = ui_img("wpn/lmini_ak"))
+    if ((env->player.inventory.ui.mini_wpn[1] = ui_img("wpn/lmini_pompe"))
     && (env->player.inventory.ui.mini_wpn[0] = ui_img("wpn/lmini_pistol"))
     && (env->player.inventory.ui.mini_wpn[2] = ui_img("wpn/lmini_rifle")))
         return (1);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/16 14:35:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:27:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	sdl_render_game(t_env *env)
 	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	print_hud(env);
-	//ui_minimap(env);
-	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
+	ui_minimap(env);
+	ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
 }
 
 void	sdl_render_inventory(t_env *env)

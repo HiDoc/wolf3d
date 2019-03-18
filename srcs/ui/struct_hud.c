@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 17:38:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 23:15:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int init_hud(t_env *env)
     // set_surface_alpha(env->player.hud.hud_wpn[0], 255, &rgb);
     if ((env->player.hud.bar[0] = ui_img("hud/bar_h"))
     && (env->player.hud.bar[1] = ui_img("hud/bar_s"))
-    && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_ak"))
+    && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_pompe"))
     && (env->player.hud.hud_wpn[2] = ui_img("hud/hud_rifle"))
     && (env->player.hud.empty_b = ui_img("hud/hud_empty"))
     && (env->player.hud.full_b = ui_img("hud/hud_full"))
