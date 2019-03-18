@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 19:17:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/18 19:21:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
    
 	player = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	edge = (t_edge){player, obj->vertex};
-	edge = translation_edge(engine->player.where, edge.v1, edge.v2);
-	edge = rotation_edge(engine->player, edge);
+	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
+	edge = rotation_edge(env->engine.player, edge);
 	if (edge.v1.x > 0 && edge.v1.y > 0 && edge.v1.x < W && edge.v1.y < H
 		&& edge.v2.x > 0 && edge.v2.y > 0 && edge.v2.x < W && edge.v2.y < H)
 	{
