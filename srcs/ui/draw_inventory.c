@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/18 13:03:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:51:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,10 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	bloc->v1 = *n;
 	bloc->v2 = (t_vtx){sbloc, env->player.inventory.ui.mini_wpn[iter]->h};
 	if (env->player.inventory.weapons[iter].current)
-	{
 		mwpn = env->player.inventory.ui.mini_wpn[iter];
-		draw_img(env, mwpn, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, {mwpn->w, mwpn->h}});
-	}
-	// else
-	// 	mwpn = env->player.inventory.ui.empt_wpn[iter];
+	else
+		mwpn = env->player.inventory.ui.empt_wpn[iter];
+	draw_img(env, mwpn, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, {mwpn->w, mwpn->h}});
 	n->x += inter + sbloc;
 	n->y = H - H / 3;
 	return (1);

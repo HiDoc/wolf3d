@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 23:15:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:44:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,6 @@ int init_hud(t_env *env)
     && (env->player.hud.objects[3] = ui_img("hud/hud_ammo2"))
     && (env->player.hud.objects[4] = ui_img("hud/hud_ammo3"))
     && (env->player.hud.objects[5] = ui_img("hud/hud_jetpack"))
-    // && (env->player.hud.pad = ui_img("hud/pad3"))
-    // && (env->player.hud.e_pad[0] = ui_img("hud/hud_e_kit"))
-    // && (env->player.hud.e_pad[1] = ui_img("hud/hud_e_armor"))
-    // && (env->player.hud.e_pad[2] = ui_img("hud/hud_e_jetp"))
-    // && (env->player.hud.e_pad[3] = ui_img("hud/hud_e_ammo"))
     && (env->player.hud.faces[0] = ui_img("hud/hp_face1"))
     && (env->player.hud.faces[1] = ui_img("hud/hp_face2"))
     && (env->player.hud.faces[2] = ui_img("hud/hp_face3"))

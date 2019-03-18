@@ -51,6 +51,7 @@ int		main(void)
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
+	free_all_sprites(&env);
 	Mix_FreeChunk(env.sounds.shot);
 	Mix_CloseAudio();
 	TTF_Quit();

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/16 14:24:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:30:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ struct						s_object
 */
 struct						s_weapon
 {
-	SDL_Surface			*inv_sprite;
 	SDL_Surface			*sprite;
 	SDL_Surface			*sprite_bullet;
 	SDL_Surface			**sprite_reload;
