@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 15:10:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 19:00:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 	t_l_int 	y_coord_next;
 	const int	equal = container.x == container.x1 || container.x == container.x2;
 
-	/* Calculate the Z coordinate for this point. (Only used for lighting.) */
-	const int z = ((container.x - container.x1)
-		* (container.rot.v2.y - container.rot.v1.y)
-		/ (container.x2 - container.x1) + container.rot.v1.y) * 8;
-	(void)z;
 	unsigned r1 = 0xFF00FF;
 	unsigned r2 = 0xBB4EFF;
 	/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */

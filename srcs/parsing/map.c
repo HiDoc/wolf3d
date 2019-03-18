@@ -49,7 +49,7 @@ int		fix_vertex_parallel(t_sector *sec, t_chain *chain)
 			if (chain->d != chain->f)
 			{
 				printf("assign [%f, %f]\n", sec->vertex[chain->d].x, sec->vertex[chain->d].y);
-				vertex[chain->e] = (t_vtx){sec->vertex[chain->d].x, sec->vertex[chain->d].y};
+				//vertex[chain->e] = (t_vtx){sec->vertex[chain->d].x, sec->vertex[chain->d].y};
 			}
 			if (chain->d != chain->f)
 				++chain->e;
@@ -87,9 +87,10 @@ int		verify_vertex_parallel(t_engine *e)
 				next = (t_edge){vertex[chain.c], vertex[chain.c + 1]};
 				if (edge_parallel(current, next))
 				{
+					printf("Vertex are parallel");
 					print_edg(current);
 					print_edg(next);
-					fix_vertex_parallel(sect, &chain);
+					//fix_vertex_parallel(sect, &chain);
 					return (1);
 				}
 				++chain.b;
@@ -128,8 +129,8 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 						chain->d, edge->v2.x,edge->v2.y, edge->v1.x,edge->v1.y, chain->a, neigh->neighbors[chain->c]);
 					fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
 						chain->a, edge->v1.x, edge->v1.y,edge->v2.x, edge->v2.y, chain->d, sect->neighbors[chain->b]);
-					neigh->neighbors[chain->c] = chain->a;
-					sect->neighbors[chain->b] = chain->d;
+					//neigh->neighbors[chain->c] = chain->a;
+					//sect->neighbors[chain->b] = chain->d;
 					return (1);
 				}
 				else
@@ -161,9 +162,10 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 		{
 			if (sect->neighbors[chain.b] >= (int)e->nsectors)
 			{
-				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u), fixing it\n",
+				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u, you will segfault here),\n",
 					chain.a, sect->neighbors[chain.b], e->nsectors);
-				sect->neighbors[chain.b] = -1;
+				fprintf(stderr, "Please verify that you have as much neighbour as vertexes in your map\n");
+				//sect->neighbors[chain.b] = -1;
 			}
 			edge = (t_edge){vert[chain.b], vert[chain.b +1]};
 			found = 0;
@@ -188,28 +190,29 @@ int     verify_map(t_engine *e)
 	int		iter;
 
 	iter = 1;
-	return (1);
-	while (iter)
-	{
+	// while (iter)
+	// {
 		if (!verify_vertex(e))
-			break ;
-		//if (verify_vertex_parallel(e))
-		//{
-	//		printf("vertex are parallel\n");
-	//		continue ;
-	//`	}
+		{
+			printf("vertex does not form a loop");
+		}
+		if (verify_vertex_parallel(e))
+		{
+			printf("vertex are parallel\n");
+			//continue ;
+		}
 		if (verify_neighbor(e, NULL, NULL))
 		{
 			printf("neighbors not linked\n");
-			continue ;
+			//continue ;
 		}
 		if (verify_hull(e, NULL, NULL))
 		{
 			printf("hull not correct\n");
-			continue ;
+			//continue ;
 		}
-		else
-			break ;
-	}
-	return (1);
+		// else
+		// 	break ;
+	// }
+	return (iter);
 }

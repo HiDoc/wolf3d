@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/06 21:53:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:57:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 void					ui_init_sdl(t_data *data);
 void					ui_make_window(char *name, t_data *data);
 void					ui_load_font(char *path, t_data *data);
+SDL_Surface				*ui_load_image(char *path, t_env *env);
 
 // Other
 

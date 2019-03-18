@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 14:08:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 19:38:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				render_cwall(t_drawline l, t_env *env)
 		float b = a - (ctn->x - ctn->x1);
 		float c = (p.y2a - p.y1a);
 		float d = c * b / a - p.y2a;
+
 		x = (ctn->li_texture.floor * ((ctn->x2 - ctn->x) * ctn->rot.v2.y)
 		+ ctn->li_texture.ceil * ((ctn->x - ctn->x1) * ctn->rot.v1.y))
 		/ ((ctn->x2 - ctn->x) * ctn->rot.v2.y + (ctn->x - ctn->x1) * ctn->rot.v1.y);

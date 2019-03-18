@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_error_exit.c                                    :+:      :+:    :+:   */
+/*   ui_exit_sdl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 17:00:02 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/07 18:42:28 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/15 16:24:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		ui_error_exit_sdl(char *msg, t_data *data)
+void		ui_exit_sdl(t_data *data)
 {
+	// free maps files
+	// free images background
+	// free images cursor
 	// free sector + vertex
-	if (data->surface)
-		SDL_FreeSurface(data->surface);
-	if (data->font)
-		TTF_CloseFont(data->font);
-	if (data->sdl.renderer)
-		SDL_DestroyRenderer(data->sdl.renderer);
-	if (data->sdl.window)
-		SDL_DestroyWindow(data->sdl.window);
+	SDL_FreeSurface(data->surface);
+	TTF_CloseFont(data->font);
+	SDL_DestroyRenderer(data->sdl.renderer);
+	SDL_DestroyWindow(data->sdl.window);
 	TTF_Quit();
 	SDL_Quit();
-	ft_putendl_fd(msg, 2);
 	exit(EXIT_SUCCESS);
 }
