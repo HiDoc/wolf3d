@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 19:00:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 19:17:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,23 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 	}
 }
 
+static void		render_sprites(t_env *env, t_wrap_sect *obj)
+{
+	t_vtx		player;
+	t_edge		edge;
+   
+	player = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
+	edge = (t_edge){player, obj->vertex};
+	edge = translation_edge(engine->player.where, edge.v1, edge.v2);
+	edge = rotation_edge(engine->player, edge);
+	if (edge.v1.x > 0 && edge.v1.y > 0 && edge.v1.x < W && edge.v1.y < H
+		&& edge.v2.x > 0 && edge.v2.y > 0 && edge.v2.x < W && edge.v2.y < H)
+	{
+		printf("draw sprite\n");
+	}
+	// draw_sprites
+}
+
 /*
 ** Queue logic to render wall and add a new sector if it has a neighbour
 */
@@ -86,6 +103,7 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 {
 	t_engine	*e;
 	t_raycast	container;
+	t_wrap_sect *current_obj;
 	int			start;
 	int			end;
 
@@ -100,9 +118,19 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 		env->engine.sectors[q->now.sectorno].floor};
 	while (container.x <= end)
 	{
-		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
+		render_wall(env, container, &q->ytop[container.x],
+			&q->ybottom[container.x]);
 		++container.x;
 	}
+
+	// Render objects/bots sprites //
+	current_obj = env->engine.sectors[env->engine.player.sector].head_object;
+	while (current_obj)
+	{
+		render_sprites(env, current_obj);
+		current_obj = current_obj->next;
+	}
+
 	schedule_queue(q, container, start, end);
 	return (1);
 }
