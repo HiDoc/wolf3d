@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 13:50:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 19:14:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		intersec_edge(t_vtx v0, t_vtx v1, t_vtx v2, t_vtx v3)
 /*
 ** Build an edge with current vectex and next vertex in sector
 */
-t_edge  current_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
+t_edge  translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 {
 	t_edge		edge;
 
