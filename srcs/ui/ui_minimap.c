@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 14:25:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/18 20:17:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,50 @@ static void		draw_sectors(SDL_Surface *surface,
 				ui_draw_line(surface, edge, C_CYAN);
 
 			j++;
+		}
+		i++;
+	}
+}
+
+static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
+				t_engine *engine)
+{
+	t_wrap_sect		*obj;
+	SDL_Rect		rect;
+	unsigned int	i;
+
+	i = 0;
+	while (i < engine->nsectors)
+	{
+		obj = engine->sectors[i].head_object;
+		while (obj)
+		{
+			// translate
+			rect = (SDL_Rect){
+			obj->vertex.x + engine->player.where.x, 
+			obj->vertex.y + engine->player.where.y,
+			10, 10};
+
+			// rotate
+			rect = (SDL_Rect){
+			rect.x * engine->player.anglesin - rect.y * engine->player.anglecos, 
+			rect.x * engine->player.anglecos + rect.y * engine->player.anglesin,
+			10, 10};
+
+			// scale
+			rect = (SDL_Rect){
+			rect.x * COEF_MINIMAP, 
+			rect.y * COEF_MINIMAP,
+			10, 10};
+
+			// origin
+			rect = (SDL_Rect){
+			rect.x + minimap->origin.x + MINIMAP_SIZE / 2, 
+			rect.y + minimap->origin.y + MINIMAP_SIZE / 2,
+			10, 10};
+
+			ui_draw_rect(surface, rect, C_GREEN);
+			obj = obj->next;
 		}
 		i++;
 	}
@@ -158,8 +202,12 @@ void		ui_minimap(t_env *env)
 	MINIMAP_SIZE / 2, C_WHITE};
 	ui_draw_circle(env->sdl.surface, circle);
 
-	// drawing sectors on area
+	// draw sectors on area
 	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
+
+	// draw objects && bots
+	draw_objects(env->sdl.surface, &minimap, &(env->engine));
+	// draw_bots();
 
 	// player
 	draw_player(env->sdl.surface, &minimap);
