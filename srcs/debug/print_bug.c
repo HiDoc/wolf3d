@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:57:32 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 13:32:54 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 17:05:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 void	print_edg(t_edge edge)
 {
 	printf("\t[%f, %f], [%f, %f]\n", edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+}
+
+void	print_sect(t_sector *sect)
+{
+	t_vtx		*vtx;
+	unsigned	iterv;
+
+	iterv = 0;
+	vtx = sect->vertex;
+	while (iterv < sect->npoints)
+	{
+		printf("vtx %u : {%f, %f}, \n", iterv,
+			vtx[iterv].x, vtx[iterv].y);
+			//sect[iters].neighbors[(iterv + 1) % sect->npoints]);
+		iterv++;
+	}
+	printf("\n");
 }
 
 void	print_sct(t_env *env)

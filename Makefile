@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
 #    Updated: 2019/03/18 19:01:22 by sgalasso         ###   ########.fr        #
@@ -14,7 +14,7 @@ NAME 			= doom
 CC 				= gcc
 CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
 LIBFT 			= ./libft
-LEN_NAME		= `printf "%s" $(NAME) |wc -c`
+LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
 
 #color
