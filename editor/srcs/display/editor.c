@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 15:10:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/18 17:59:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		editor(t_env *env)
 {
+	SDL_Cursor* cursor;
 	t_rect		rect;
 
 	if (env->menu.state > 0)
@@ -23,12 +24,16 @@ void		editor(t_env *env)
 	}
 
 	if (env->mouse_mode == 0)
-		SDL_ShowCursor(1);
+	{
+		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
+			ui_error_exit_sdl("Libui: error cursor texture", env->data);
+		SDL_SetCursor(cursor);
+	}
 	else if (env->mouse_mode == 1)
 	{
-		SDL_ShowCursor(0);
-		SDL_BlitScaled(env->draw_cursor, 0, env->data->surface,
-		&((SDL_Rect){env->data->mouse.x, env->data->mouse.y, 23, 34}));
+		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR)))
+			ui_error_exit_sdl("Libui: error cursor texture", env->data);
+		SDL_SetCursor(cursor);
 	}
 
 	display_interface(env);

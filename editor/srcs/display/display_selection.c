@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 15:11:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/18 14:51:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,17 @@ void		display_selection(t_env *env)
 
 	// display inputs
 	rect = (t_rect){900, 110, 0, 20, 0xffffffff};
-	ui_make_string(rect, "Selected vertex [S3] [V2]", env->data);
+	ui_make_string(rect, "Hovered vertex [S", env->data);
+	rect = (t_rect){1020, 110, 0, 20, 0xffffffff};
+	ui_make_nbrstring(rect, 3, env->data); /**/
+	rect = (t_rect){1040, 110, 0, 20, 0xffffffff};
+	ui_make_string(rect, "] [", env->data);
+	rect = (t_rect){1080, 110, 0, 20, 0xffffffff};
+	ui_make_nbrstring(rect, 2, env->data); /**/
+	rect = (t_rect){1100, 110, 0, 20, 0xffffffff};
+	ui_make_string(rect, "]", env->data);
+
+
 	rect = (t_rect){900, 150, 0, 20, 0xffffffff};
 	ui_make_string(rect, "Height", env->data);
 	rect = (t_rect){900, 180, 140, 20, 0xFFFFFFFF};
