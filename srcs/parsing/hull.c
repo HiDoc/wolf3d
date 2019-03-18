@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 19:48:47 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 12:21:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,11 @@ int			verify_hull(t_engine *e, t_sector *sect, t_vtx *vert)
 				continue ;
 			fprintf(stderr, "- Splitting sector, using (%g,%g) as anchor",
 				vert[chain.c].x, vert[chain.c].y);
-			// if (insert_new_edge(&chain, sect) == 0)
-			// 	continue ;
+			if (insert_new_edge(&chain, sect) == 0)
+				continue ;
 			fprintf(stderr, " and point %u - (%g,%g) as the far point.\n", chain.e, vert[chain.e].x,vert[chain.e].y);
-			//insertn_sector(e, sect, (t_du_int){chain.c, chain.e}, -1);
-			//insertn_sector(e, sect, (t_du_int){chain.e, chain.c}, chain.a);
+			insertn_sector(e, sect, (t_du_int){chain.c, chain.e}, -1);
+			insertn_sector(e, sect, (t_du_int){chain.e, chain.c}, chain.a);
 			return (1);
 		}
 		chain.a++;
