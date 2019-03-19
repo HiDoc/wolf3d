@@ -12,6 +12,13 @@
 
 #include "doom.h"
 
+int		init_gameplay_env(t_env *env)
+{
+	return (init_consumable(env)
+	&& init_character(&env->player)
+	&& init_weapon(env));
+}
+
 int		main(void)
 {
 	t_env			env;
@@ -49,6 +56,8 @@ int		main(void)
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
 	LoadData(&env.engine, &env);
+	if (!init_gameplay_env(&env))
+		return (0);
 	verify_map(&env.engine);
 	init_container(&env);
 	sdl_loop(&env);

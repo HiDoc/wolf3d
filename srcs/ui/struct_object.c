@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 16:47:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:33:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			init_inventory(t_env *env)
 		i++;
 	}
 	env->player.inventory.ui.is_active = 0;
-	return (0);
+	return (1);
 }
 
 int         init_consumable(t_env *env)

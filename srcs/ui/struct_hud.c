@@ -6,26 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/18 13:44:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 15:30:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int fill_surface_color(SDL_Surface *img, Uint32 c)
-{
-    int i;
-    Uint32  *p;
-
-    i = 0;
-    p = img->pixels;
-    while (i < img->w * img->h)
-    {
-        p[i] = c;
-        i++;
-    }
-    return (0);
-}
 
 int init_hud(t_env *env)
 {
@@ -37,15 +22,7 @@ int init_hud(t_env *env)
     env->player.hud.mix = 0;
     while (i < 6)
         env->player.hud.shortcut[i++] = NULL;
-    // if (!(env->player.hud.shadow = ui_img("hud/hud_shadow")))
-    //     return (0);
-    // if (!(tmp = SDL_CreateRGBSurface(0, 190, 140, 32,
-	// 0xff000000, 0xff0000, 0xff00, 0xff)))
-    //     return (0);
-    // fill_surface_color(tmp, 0x11000000);
-    // env->player.hud.shadow = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
     env->player.hud.hud_wpn[0] = ui_img("hud/hud_pistol");
-    // set_surface_alpha(env->player.hud.hud_wpn[0], 255, &rgb);
     if ((env->player.hud.bar[0] = ui_img("hud/bar_h"))
     && (env->player.hud.bar[1] = ui_img("hud/bar_s"))
     && (env->player.hud.hud_wpn[1] = ui_img("hud/hud_pompe"))

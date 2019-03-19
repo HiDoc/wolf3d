@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:59 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 12:34:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:35:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int     init_character(t_character *new)
     new->max_health = 200;
     new->max_shield = 200;
     new->hud.is_txt = 0;
-    return (0);
+    return (1);
 }

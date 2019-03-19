@@ -74,9 +74,6 @@ void			LoadData(t_engine *e, t_env *env)
 				break;
 		}
 	}
-	init_consumable(env);
-	init_character(&env->player);
-	init_weapon(env);
 	init_hud(env);
 	init_inventory_ui(env);
 	fclose(fp);
