@@ -95,7 +95,6 @@ void		free_hud(t_hud *hud)
 		i++;
 	}
 	free_img(hud->empty_b);
-	free_img(hud->full_b);
 }
 
 void		free_all_sprites(t_env *env)

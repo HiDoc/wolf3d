@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:24:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:09:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,29 @@ int			copy_img(Uint32 *pxl, SDL_Surface *img)
 	return (1);
 }
 
-SDL_Surface *ui_img(char *filename)
+SDL_Surface *ui_img(char *doss, char *ssdoss, int i)
 {
 	SDL_Surface	*new;
 	char		*path;
 	const char	*png = ".png";
+	int			ret;
+	char		*nb;
 
-	path = ft_strjoin("./rsrc/img/inventory/", filename);
-	path = ft_strljoin(path, (char *)png);
-	if (!(new = surface_fr_png(path)))
-        return (NULL);
-	free(path);
+	nb = NULL;
 	path = NULL;
+	if ((nb = ft_itoa(i + 1)) && (path = ft_strjoin("./rsrc/img/", doss))
+	&& (path = ft_strljoin(path, ssdoss)) && (path = ft_strljoin(path, nb))
+	&& (path = ft_strljoin(path, (char *)png))
+	&& (new = surface_fr_png(path)))
+		ret = 1;
+	else
+		ret = 0;
+	if (nb)
+		free(nb);
+	if (path)
+		free(path);
+	if (!ret)
+        return (NULL);
 	return (new);
 }
 

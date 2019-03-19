@@ -6,50 +6,53 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:21 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/18 15:52:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:52:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int     init_icon(t_env *env)
+int     init_icon(t_uinv *ui)
 {
-    if ((env->player.inventory.ui.icon[0] = ui_img("icons/icon_health"))
-    && (env->player.inventory.ui.icon[1] = ui_img("icons/icon_shield")))
+    if ((ui->icon[0] = ui_img("inventory/", "icons/", 0))
+    && (ui->icon[1] = ui_img("inventory/", "icons/", 1)))
         return (1);
-    // && (env->player.inventory.ui.icon[2] = ui_img("icons/icon_key"))
-
+    // && (ui->icon[2] = ui_img("icons/icon_key"))
     return (0);
 }
 
-int     init_wpn_inv(t_env *env)
+int     init_wpn_inv(t_uinv *ui)
 {
-    if ((env->player.inventory.ui.mini_wpn[1] = ui_img("wpn/lmini_pompe"))
-    && (env->player.inventory.ui.mini_wpn[0] = ui_img("wpn/lmini_pistol"))
-    && (env->player.inventory.ui.mini_wpn[2] = ui_img("wpn/lmini_rifle"))
-    && (env->player.inventory.ui.empt_wpn[0] = ui_img("wpn/empty_pistol"))
-    && (env->player.inventory.ui.empt_wpn[1] = ui_img("wpn/empty_pompe"))
-    && (env->player.inventory.ui.empt_wpn[2] = ui_img("wpn/empty_rifle")))
-        return (1);
-    return (0);
+    int i;
+
+    i = 0;
+    while (i < 3)
+    {
+        if (!(ui->mini_wpn[i] = ui_img("inventory/", "wpn/", i))
+        || !(ui->empt_wpn[i] = ui_img("inventory/", "e_wpn/", i)))
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-int     init_inv_box(t_env *env)
+int     init_inv_box(t_uinv *ui)
 {
-    if((env->player.inventory.ui.box[0] = ui_img("box/full"))
-    && (env->player.inventory.ui.box[1] = ui_img("box/empty")))
+    if((ui->box[0] = ui_img("inventory/", "box/", 0))
+    && (ui->box[1] = ui_img("inventory/", "box/", 1)))
         return (1);
     return (0);
 }
 
 int    init_inventory_ui(t_env *env)
 {
-    env->player.inventory.ui.front_pic = ui_img("fonduke800");
 	env->player.inventory.ui.wwheel = 0;
     env->player.inventory.ui.nb_wpn = 1;
     env->player.inventory.nb_current_obj = 0;
-    init_wpn_inv(env);
-    init_icon(env);
-    init_inv_box(env);
-    return (1);
+    if ((env->player.inventory.ui.front_pic = ui_img("inventory/", "fond/", 0))
+    && init_wpn_inv(&env->player.inventory.ui)
+    && init_icon(&env->player.inventory.ui)
+    && init_inv_box(&env->player.inventory.ui))
+        return (1);
+    return (0);
 }

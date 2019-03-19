@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 13:06:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:30:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int    		number_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int    		ui_put_string(t_env *env, t_font data);
 int         ui_txt_inv(t_env *env);
-SDL_Surface *ui_img(char *filename);
+SDL_Surface *ui_img(char *doss, char *ssdoss, int i);
 int         ui_put_fps(t_env *env, int fps);
 int		    ui_icon_data(t_env *env, t_vtx v, int iter);
 int			ui_draw_msg(t_env *env, int *nb, int *tframe);

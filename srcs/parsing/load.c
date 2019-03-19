@@ -16,6 +16,7 @@ void			LoadData(t_engine *e, t_env *env)
 	m = 0;
 	vert = NULL;
 	NumVertices = 0;
+	(void)env;
 	if (!(fp = fopen("rsrc/maps/segfault.txt", "rt")))
 	{
 		perror("map-clear.txt");
@@ -74,8 +75,6 @@ void			LoadData(t_engine *e, t_env *env)
 				break;
 		}
 	}
-	init_hud(env);
-	init_inventory_ui(env);
 	fclose(fp);
 	free(vert);
 }

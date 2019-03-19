@@ -16,7 +16,9 @@ int		init_gameplay_env(t_env *env)
 {
 	return (init_consumable(env)
 	&& init_character(&env->player)
-	&& init_weapon(env));
+	&& init_weapon(env)
+	&& init_hud(env, 0)
+	&& init_inventory_ui(env));
 }
 
 int		main(void)
@@ -57,7 +59,12 @@ int		main(void)
 		return (0);
 	LoadData(&env.engine, &env);
 	if (!init_gameplay_env(&env))
+	{
+		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
+		free_all_sprites(&env);
+		free_all_sounds(&env);
 		return (0);
+	}
 	verify_map(&env.engine);
 	init_container(&env);
 	sdl_loop(&env);
