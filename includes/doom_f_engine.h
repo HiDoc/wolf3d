@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/18 13:24:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 19:18:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int			sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 
-t_edge		current_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
+t_edge		translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge 		rotation_edge(t_player player, t_edge to_rotate);
 t_edge 		scale_edge(t_edge to_scale);
 void		clip_view(t_raycast *ctn);
 int			ini_queue(t_engine *engine, t_queue *queue);
 int     	verify_map(t_engine *engine);
-int     	verify_hull(t_engine *engine, t_sector *sector, t_vtx *vertexes);
+int     	verify_hull(t_engine *engine);
+void		print_sect(t_sector *sect);
 
 void		vline(t_drawline line, t_env *env);
 void		render_cwall(t_drawline line, t_env *env);

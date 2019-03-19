@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 19:26:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/19 14:54:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,43 @@ static void		draw_sectors(SDL_Surface *surface,
 	}
 }
 
-static void     draw_compass(SDL_Surface *surface,
-				t_minimap *minimap, t_engine *engine)
+static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
+				t_engine *engine)
 {
-	t_vtx	vtx;
-	int		i;
+	t_wrap_sect		*obj;
+	SDL_Rect		rect;
+	t_edge			edge;
+	unsigned int	i;
 
 	i = 0;
-	while (i < 0)
+	while (i < engine->nsectors)
 	{
-		vtx = (t_vtx){
-		minimap->origin.x + MINIMAP_SIZE / 2,
-		minimap->origin.y + MINIMAP_SIZE / 2};
-		ui_draw_vector(surface, vtx, i - engine->player.angle,
-		MINIMAP_SIZE / 2, C_WHITE);
-		i += 45;
+		obj = engine->sectors[i].head_object;
+		while (obj)
+		{
+			// translation
+			edge = translate_edge(engine->player.where,
+			obj->vertex, obj->vertex);
+
+			// rotation
+			edge = rotate_edge(engine->player, edge);
+
+			// scale
+			rect = (SDL_Rect){
+			edge.v1.x * COEF_MINIMAP, 
+			edge.v1.y * COEF_MINIMAP,
+			10, 10};
+
+			// origin
+			rect = (SDL_Rect){
+			rect.x + minimap->origin.x + MINIMAP_SIZE / 2 - 5,
+			rect.y + minimap->origin.y + MINIMAP_SIZE / 2 - 5,
+			10, 10};
+
+			ui_draw_rect(surface, rect, C_GREEN);
+			obj = obj->next;
+		}
+		i++;
 	}
 }
 
@@ -180,10 +202,11 @@ void		ui_minimap(t_env *env)
 	// draw sectors on area
 	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
 
-	// draw compass
-	draw_compass(env->sdl.surface, &minimap, &(env->engine));
+	// draw objects && bots
+	draw_objects(env->sdl.surface, &minimap, &(env->engine));
+	// draw_bots();
 
-	// draw player
+	// player
 	draw_player(env->sdl.surface, &minimap);
 
 	// recoder BlitSurface
