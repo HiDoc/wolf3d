@@ -1,3 +1,4 @@
+# vertex y / x
 vertex  0	0
 vertex  0	20
 vertex	5	40
