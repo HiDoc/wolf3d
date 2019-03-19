@@ -6,58 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 20:38:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 22:05:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int			copy_img(Uint32 *pxl, SDL_Surface *img)
-{
-	int	x;
-	int	y;
-	Uint32	*src;
-
-	src = img->pixels;
-	x = 0;
-	while (x < img->w)
-	{
-		y = 0;
-		while (y < img->h)
-		{
-			pxl[img->w * y + x] = src[img->w * y + x];
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
-SDL_Surface *ui_img(char *doss, char *ssdoss, int i)
-{
-	SDL_Surface	*new;
-	char		*path;
-	const char	*png = ".png";
-	int			ret;
-	char		*nb;
-
-	nb = NULL;
-	path = NULL;
-	if ((nb = ft_itoa(i + 1)) && (path = ft_strjoin("./rsrc/img/", doss))
-	&& (path = ft_strljoin(path, ssdoss)) && (path = ft_strljoin(path, nb))
-	&& (path = ft_strljoin(path, (char *)png))
-	&& (new = surface_fr_png(path)))
-		ret = 1;
-	else
-		ret = 0;
-	if (nb)
-		free(nb);
-	if (path)
-		free(path);
-	if (!ret)
-        return (NULL);
-	return (new);
-}
 
 SDL_Surface	*str_join_text(t_font data, TTF_Font *font)
 {

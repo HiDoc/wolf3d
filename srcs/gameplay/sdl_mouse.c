@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 21:09:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 23:19:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ int	mouse_shoot(t_env *env)
 			env->player.inventory.current->ammo_current--;
 		}
 		else
+		{
 			load_weapon(env);
+			env->player.actions.mouse_state = 1;
+		}
 	}
-	if (env->sdl.event.type == SDL_MOUSEBUTTONUP)
+	if (env->sdl.event.type == SDL_MOUSEBUTTONUP && !env->time.frame)
 		env->player.actions.mouse_state = 0;
 	return (0);
 }

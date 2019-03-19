@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 20:35:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 22:09:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void		render_ceil(t_drawline line, t_env *env);
 void		render_nceil(t_drawline line, t_env *env);
 int			transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s);
 
-int         init_hud(t_env *env);
-int         init_inventory_ui(t_env *env);
+int         init_hud(t_env *env, char *res);
+int         init_inventory_ui(t_env *env, char *res);
 int         init_character(t_character *new);
-int		    init_weapon(t_env *env);
-int         init_consumable(t_env *env);
+int		    init_weapon(t_env *env, char *res);
+int         init_consumable(t_env *env, char *res);
 t_sector	*pick_sector(t_env *env, unsigned sector);
 void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 

@@ -12,13 +12,13 @@
 
 #include "doom.h"
 
-int		init_gameplay_env(t_env *env)
+int		init_gameplay_env(t_env *env, char *res)
 {
-	return (init_consumable(env)
+	return (init_consumable(env, res)
 	&& init_character(&env->player)
-	&& init_weapon(env)
-	&& init_hud(env)
-	&& init_inventory_ui(env));
+	&& init_weapon(env, res)
+	&& init_hud(env, res)
+	&& init_inventory_ui(env, res));
 }
 
 int		main(void)
@@ -58,7 +58,7 @@ int		main(void)
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
 	LoadData(&env.engine, &env);
-	if (!init_gameplay_env(&env))
+	if (!init_gameplay_env(&env, "800*600/"))
 	{
 		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 		free_all_sprites(&env);

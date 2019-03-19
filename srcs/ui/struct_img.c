@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 12:55:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 22:26:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
+int			draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
 {
 	Uint32	src;
 	int		y;
@@ -38,12 +38,34 @@ int	draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
 	return (1);
 }
 
-SDL_Surface		*surface_fr_png(char *path)
+int			copy_img(Uint32 *pxl, SDL_Surface *img)
+{
+	int	x;
+	int	y;
+	Uint32	*src;
+
+	src = img->pixels;
+	x = 0;
+	while (x < img->w)
+	{
+		y = 0;
+		while (y < img->h)
+		{
+			pxl[img->w * y + x] = src[img->w * y + x];
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
+
+SDL_Surface	*surface_fr_png(char *path)
 {
 	SDL_Surface	*new;
 	SDL_Surface	*tmp;
 	Uint32		*pxl;
 
+	new = NULL;
 	if ((new = IMG_Load(path))
 	&& (tmp = SDL_ConvertSurfaceFormat(new, SDL_PIXELFORMAT_RGBA32, 0)))
 	{
@@ -64,21 +86,55 @@ SDL_Surface		*surface_fr_png(char *path)
 	return (NULL);
 }
 
-SDL_Surface		*img_wpn(char *filename)
+SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 {
 	SDL_Surface	*new;
 	char		*path;
 	const char	*png = ".png";
+	char		*nb;
+	char		*resolution;
 
-	if ((path = ft_strjoin("./rsrc/img/weapons/", filename))
+	nb = NULL;
+	path = NULL;
+
+	if ((nb = ft_itoa(i + 1))
+	&& (resolution = ft_strjoin("./rsrc/img/", res))
+	&& (path = ft_strljoin(resolution, doss))
+	&& (path = ft_strljoin(path, ssdoss))
+	&& (path = ft_strljoin(path, nb))
 	&& (path = ft_strljoin(path, (char *)png))
 	&& (new = surface_fr_png(path)))
-	{
-		free(path);
-		path = NULL;
-		return (new);
-	}
+		i = 1;
+	else
+		i = 0;
+	if (nb)
+		free(nb);
 	if (path)
 		free(path);
-	return (NULL);
+	if (!i)
+        return (NULL);
+	return (new);
+}
+
+SDL_Surface	*img_wpn(char *res, char *filename)
+{
+	SDL_Surface	*new;
+	char		*path;
+	const char	*png = ".png";
+	char		*resolution;
+	int			ret;
+
+	ret = 0;
+	path = NULL;
+	if ((resolution = ft_strjoin("./rsrc/img/", res))
+	&& (resolution = ft_strljoin(resolution, "weapons/"))
+	&& (path = ft_strljoin(resolution, filename))
+	&& (path = ft_strljoin(path, (char *)png))
+	&& (new = surface_fr_png(path)))
+		ret = 1;
+	if (path)
+		free(path);
+	if (!ret)
+		return (NULL);
+	return (new);
 }

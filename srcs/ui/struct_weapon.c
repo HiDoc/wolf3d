@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 21:04:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 23:13:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int weapon_mask(long ref, int pos)
 ** from null malloc
 */
 
-SDL_Surface **weapon_fill(char *path, int size)
+SDL_Surface **weapon_fill(char *res, char *path, int size)
 {
 	int			i;
 	SDL_Surface	**weapons;
@@ -31,18 +31,16 @@ SDL_Surface **weapon_fill(char *path, int size)
 	int			ret;
 
 	i = 0;
-	ret = 1;
+	ret = 0;
 	if ((weapons = malloc(sizeof(SDL_Surface *) * size)) == NULL)
 		return (NULL);
 	while (i < size)
 	{
 		nb = NULL;
 		filename = NULL;
-		if (!(nb = ft_itoa(i + 1)) || !(filename = ft_strrjoin((char *)path,
-		ft_itoa(i + 1))) || !(weapons[i] = img_wpn(filename)))
-			ret = 0;
-		if (nb)
-			free(nb);
+		if ((filename = ft_strrjoin(path, ft_itoa(i + 1)))
+		&& (weapons[i] = img_wpn(res, filename)))
+			ret = 1;
 		if (filename)
 			free(filename);
 		if (!ret)
@@ -52,13 +50,14 @@ SDL_Surface **weapon_fill(char *path, int size)
 	return (weapons);
 }
 
-int     weapon_sprites(t_weapon *weapon, char *name)
+int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 {
 	char	*r_path;
 	char	*s_path;
 	char	*sprite;
 	int		ret;
 
+	ret = 0;
 	r_path = NULL;
 	s_path = NULL;
 	sprite = NULL;
@@ -66,12 +65,10 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	&& (s_path = ft_strjoin(name, "/shoot/"))
 	&& (sprite = ft_strjoin(name, "/"))
 	&& (sprite = ft_strljoin(sprite, name))
-	&& (weapon->sprite = img_wpn(sprite))
-	&& (weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload))
-	&& (weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot)))
+	&& (weapon->sprite = img_wpn(res, sprite))
+	&& (weapon->sprite_reload = weapon_fill(res, r_path, weapon->time_reload)) != NULL
+	&& (weapon->sprite_shoot = weapon_fill(res, s_path, weapon->time_shoot)))
 		ret = 1;
-	else
-		ret = 0;
 	if (r_path)
 		free(r_path);
 	if (s_path)
@@ -81,7 +78,7 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	return (ret);
 }
 
-int weapon_set(t_weapon *weapon, char *name, int dam)
+int weapon_set(t_weapon *weapon, char *res, char *name, int dam)
 {
 	long	ref;
 
@@ -95,13 +92,13 @@ int weapon_set(t_weapon *weapon, char *name, int dam)
 	weapon->ammo_current = weapon_mask(ref, 7);
 	weapon->ammo_magazine = weapon_mask(ref, 9);
 	weapon->damage = dam;
-	if (weapon_sprites(weapon, name)
+	if (weapon_sprites(weapon, name, res)
 	&& load_sounds(weapon, name, "shot/"))
 		return (1);
 	return (0);
 }
 
-int		init_weapon(t_env *env)
+int		init_weapon(t_env *env, char *res)
 {
 	int	i;
 
@@ -114,9 +111,9 @@ int		init_weapon(t_env *env)
 	env->world.armory[1].ref = 0xa2a020105123;
 	env->world.armory[2].ref = 0xa8e2000042a4;
 	// weapon_set(&env->world.armory[0], "pistol", 17);
-	if (weapon_set(&env->world.armory[0], "magnum", 56)
-	&& weapon_set(&env->world.armory[1], "pompe", 100)
-	&& weapon_set(&env->world.armory[2], "rifle", 30))
+	if (weapon_set(&env->world.armory[0], res, "magnum", 56)
+	&& weapon_set(&env->world.armory[1], res, "pompe", 100)
+	&& weapon_set(&env->world.armory[2], res, "rifle", 30))
 	{
 		env->player.inventory.weapons[0].current = env->engine.sectors[0].head_object;
 		env->player.inventory.current = &env->player.inventory.weapons[0];
