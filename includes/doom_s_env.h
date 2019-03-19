@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_env.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 13:13:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:17:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ struct								s_sdl
 struct								s_msc
 {
 	Mix_Music		*load;
-	Mix_Chunk		*shot;
 };
 
 struct s_time

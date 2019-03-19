@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/17 17:19:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:27:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ SDL_Surface **weapon_fill(char *path, int size)
 void weapon_set(t_weapon *weapon, char *name, int dam)
 {
     char *r_path;
+    char *s_path;
     char *sprite;
-    char *shoot;
     long ref;
 
     ref = weapon->ref;
@@ -60,16 +60,16 @@ void weapon_set(t_weapon *weapon, char *name, int dam)
     weapon->ammo_magazine = weapon_mask(ref, 9);
     weapon->damage = dam;
     r_path = ft_strjoin(name, "/reload/");
+    s_path = ft_strjoin(name, "/shoot/");
     sprite = ft_strjoin(name, "/");
     sprite = ft_strljoin(sprite, name);
-    shoot = ft_strjoin(name, "/");
-    shoot = ft_strjoin(shoot, "shoot");
     weapon->sprite = img_wpn(sprite);
     weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload);
-    weapon->sprite_shoot = img_wpn(shoot);
+    weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot);
+    load_sounds(weapon, name, "shot/");
     free(r_path);
+    free(s_path);
     free(sprite);
-    free(shoot);
 }
 
 int		init_weapon(t_env *env)
@@ -77,13 +77,15 @@ int		init_weapon(t_env *env)
     int i;
 
     i = 0;
-	env->world.armory[0].ref = 0xa2a0602012a2;
-	env->world.armory[1].ref = 0xa2a020201123;
-	env->world.armory[2].ref = 0xa8e2002012f4;
-	weapon_set(&env->world.armory[0], "pistol", 17);
+	env->world.armory[0].ref = 0xa2a0602041f2;
+	// env->world.armory[0].ref = 0xa2a0602012a2;
+	env->world.armory[1].ref = 0xa2a020205123;
+	env->world.armory[2].ref = 0xa8e2002042a4;
+	// weapon_set(&env->world.armory[0], "pistol", 17);
+	weapon_set(&env->world.armory[0], "magnum", 56);
 	weapon_set(&env->world.armory[1], "pompe", 100);
 	weapon_set(&env->world.armory[2], "rifle", 30);
-    while (i < 3)
+    while (i < WORLD_NB_WEAPONS)
         env->player.inventory.weapons[i++].current = NULL;
     env->player.inventory.current = NULL;
     env->player.inventory.weapons[1].current = env->engine.sectors[0].head_object;

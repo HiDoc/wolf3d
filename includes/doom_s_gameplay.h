@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 13:30:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:51:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ struct						s_weapon
 	SDL_Surface			*sprite;
 	SDL_Surface			*sprite_bullet;
 	SDL_Surface			**sprite_reload;
-	SDL_Surface			*sprite_shoot;
+	SDL_Surface			**sprite_shoot;
 	long				ref;
 	int					type;
 	int					time_reload;
@@ -73,6 +73,7 @@ struct						s_weapon
 	int					ammo_mag_max;
 	int					ammo_max;
 	int					damage;
+	Mix_Chunk			*shot;
 };
 
 struct						s_container
@@ -92,7 +93,7 @@ struct						s_world
 struct						s_inventory
 {
 	t_wrap_wpn	*current;
-	t_wrap_wpn	weapons[3];
+	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;
 	t_uinv		ui;
@@ -109,6 +110,7 @@ struct						s_actions
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;
+	int			mouse_state;
 };
 
 struct						s_character

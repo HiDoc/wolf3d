@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:18:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:34:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 
 int		    put_gun(t_env *env, SDL_Surface *sprite);
 int			put_gun_load(t_env *env, int frame);
+int			put_gun_shoot(t_env *env, int frame);
 int			loop_frames(t_env *env, int *frame);
 int			load_weapon(t_env *env);
 int			reload_ammo(t_env *env);

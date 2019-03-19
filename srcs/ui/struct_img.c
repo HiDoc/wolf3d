@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:27:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:55:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ SDL_Surface		*surface_fr_png(char *path)
 		tmp = NULL;
 		return (new);
 	}
+	if (new)
+		free(new);
 	return (NULL);
 }
 
@@ -76,5 +78,7 @@ SDL_Surface		*img_wpn(char *filename)
 		path = NULL;
 		return (new);
 	}
+	if (path)
+		free(path);
 	return (NULL);
 }

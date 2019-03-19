@@ -1,5 +1,22 @@
 #include "doom.h"
 
+void		free_wpn_sounds(t_world *world)
+{
+	int	i;
+
+	i = 0;
+	while (i < WORLD_NB_WEAPONS)
+	{
+		Mix_FreeChunk(world->armory[i].shot);
+		i++;
+	}
+}
+
+void		free_all_sounds(t_env *env)
+{
+	free_wpn_sounds(&env->world);
+}
+
 void		free_img(SDL_Surface *sprite)
 {
 	if (sprite)
@@ -25,8 +42,13 @@ void		free_world_img(t_world *world)
 				free_img(world->armory[i].sprite_reload[j]);
 				j++;
 			}
+			j = 0;
+			while (j < world->armory[i].time_shoot)
+			{
+				free_img(world->armory[i].sprite_shoot[j]);
+				j++;
+			}
 			free_img(world->armory[i].sprite);
-			free_img(world->armory[i].sprite_shoot);
 			free_img(world->armory[i].sprite_bullet);
 		}
 		free_img(world->objects[i].sprite);

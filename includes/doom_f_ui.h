@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:18:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:06:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ void	    draw_flat_rect(SDL_Surface *surface, t_edge edge, Uint32 color);
 
 Uint32		mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p);
 
-void	    load_sounds(t_env *env);
+int			load_sounds(t_weapon *wpn, char *name, char *action);
 
 #endif

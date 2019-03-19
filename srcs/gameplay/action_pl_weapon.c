@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 14:24:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:16:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		check_weapon_type(t_env *env, int ref)
 	int	i;
 
 	i = 0;
-	while (i < 3)
+	while (i < WORLD_NB_WEAPONS)
 	{
 		if (env->player.inventory.weapons[i].current != NULL)
 		{
@@ -34,7 +34,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 	int	iter;
 
 	iter = 0;
-	if (env->player.inventory.ui.nb_wpn < 3)
+	if (env->player.inventory.ui.nb_wpn < WORLD_NB_WEAPONS)
 	{
 		iter = check_weapon_type(env, obj->ref);
 		if (!iter)

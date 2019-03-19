@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 13:08:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:42:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,26 @@ int sdl_loop(t_env *env)
 	v->falling = 1;
 	while (1)
 	{
-		SDL_Event ev;
 		if (keycodes[SDL_SCANCODE_Q])
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
-			SDL_PollEvent(&ev);
+			SDL_PollEvent(&env->sdl.event);
 			if (!env->player.inventory.ui.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
 
 				//wpn_mouse_wheel(env, ev);
 				mouse_shoot(env);
-				sdl_keyhook_game(env, ev, keycodes);
+				sdl_keyhook_game(env, env->sdl.event, keycodes);
 				player_move(e, v, keycodes);
 			}
 			else
 			{
 				sdl_render(env, &sdl_render_inventory);
-				sdl_keyhook_inventory(env, ev, keycodes);
+				sdl_keyhook_inventory(env, env->sdl.event, keycodes);
 			}
 		}
 	}

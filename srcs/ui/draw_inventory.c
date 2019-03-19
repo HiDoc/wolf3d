@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/18 15:51:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:16:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,11 @@ int		fill_inventory(t_env *env)
 	n1 = (t_vtx){W / 28, H / 6};
 	n2 = (t_vtx){W / 32, H - H / 3};
 	n3 = (t_vtx){W / 24, H - H / 11};
-	while (iter < 6)
+	while (iter < WORLD_NB_OBJECTS)
 	{
 		if (!fill_bloc(env, &ui->blocs[iter], &n1, iter))
 			return (0);
-		if (iter < 3)
+		if (iter < WORLD_NB_WEAPONS)
 		{
 			if (!fill_wpn(env, &ui->wblocs[iter], &n2, iter))
 				return (0);

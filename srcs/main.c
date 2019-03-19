@@ -46,13 +46,15 @@ int		main(void)
 	cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 	SDL_SetCursor(cursor);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
+		return (0);
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	free_all_sprites(&env);
-	Mix_FreeChunk(env.sounds.shot);
+	free_all_sounds(&env);
 	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();
