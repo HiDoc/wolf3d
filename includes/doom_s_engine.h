@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 14:16:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/18 19:15:02 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ struct						s_queue
 
 struct						s_raycast
 {
-	t_edge			curr;
+	t_edge			trsl;
 	t_edge			rot;
 	t_edge			scale;
 	t_l_float		lf_current;

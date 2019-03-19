@@ -40,14 +40,17 @@ int		main(void)
 	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	env.sdl.texture = SDL_CreateTexture(env.sdl.renderer,
 		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, W, H);
-		SDL_Cursor* cursor;
 
 	ft_bzero(&env.engine, sizeof(t_engine));
+
+	SDL_Cursor* cursor;
 	cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 	SDL_SetCursor(cursor);
+
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
+
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);

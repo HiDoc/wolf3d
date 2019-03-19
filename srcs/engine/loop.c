@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:06:36 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:04:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sdl_render_game(t_env *env)
 {
 	dfs(env);
-	//loop_frames(env, &env->time.frame);
+	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	//print_hud(env);
 	ui_minimap(env);
@@ -35,9 +35,9 @@ int sdl_render(t_env *env, void (*f)(t_env *env))
 	f(env);
 	SDL_UnlockSurface(env->sdl.surface);
 	SDL_UpdateTexture(env->sdl.texture,
-					NULL,
-					env->sdl.surface->pixels,
-					env->sdl.surface->pitch);
+		NULL,
+		env->sdl.surface->pixels,
+		env->sdl.surface->pitch);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (1);
@@ -70,7 +70,7 @@ int sdl_loop(t_env *env)
 
 				//wpn_mouse_wheel(env, ev);
 				//mouse_shoot(env);
-				//sdl_keyhook_game(env, ev, keycodes);
+				sdl_keyhook_game(env, ev, keycodes);
 				player_move(e, v, keycodes);
 			}
 			else

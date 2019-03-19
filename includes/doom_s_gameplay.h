@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 17:36:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:08:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ struct						s_weapon
 	SDL_Surface			*sprite;
 	SDL_Surface			*sprite_bullet;
 	SDL_Surface			**sprite_reload;
-	SDL_Surface			**sprite_shoot;
+	SDL_Surface			*sprite_shoot;
 	long				ref;
 	int					type;
 	int					time_reload;
