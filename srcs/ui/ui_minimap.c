@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 13:00:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/19 14:54:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 {
 	t_wrap_sect		*obj;
 	SDL_Rect		rect;
+	t_edge			edge;
 	unsigned int	i;
 
 	i = 0;
@@ -91,30 +92,23 @@ static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 		obj = engine->sectors[i].head_object;
 		while (obj)
 		{
-			rect = (SDL_Rect){obj->vertex.x, obj->vertex.y, 10, 10};
+			// translation
+			edge = translate_edge(engine->player.where,
+			obj->vertex, obj->vertex);
 
-			// translate
-			rect = (SDL_Rect){
-			rect.x + engine->player.where.x,
-			rect.y + engine->player.where.y,
-			10, 10};
-
-			// rotate
-			rect = (SDL_Rect){
-			rect.x * engine->player.anglesin - rect.y * engine->player.anglecos, 
-			rect.x * engine->player.anglecos + rect.y * engine->player.anglesin,
-			10, 10};
+			// rotation
+			edge = rotate_edge(engine->player, edge);
 
 			// scale
 			rect = (SDL_Rect){
-			rect.x * COEF_MINIMAP, 
-			rect.y * COEF_MINIMAP,
+			edge.v1.x * COEF_MINIMAP, 
+			edge.v1.y * COEF_MINIMAP,
 			10, 10};
 
 			// origin
 			rect = (SDL_Rect){
-			rect.x + minimap->origin.x + MINIMAP_SIZE / 2, 
-			rect.y + minimap->origin.y + MINIMAP_SIZE / 2,
+			rect.x + minimap->origin.x + MINIMAP_SIZE / 2 - 5,
+			rect.y + minimap->origin.y + MINIMAP_SIZE / 2 - 5,
 			10, 10};
 
 			ui_draw_rect(surface, rect, C_GREEN);
