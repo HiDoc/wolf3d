@@ -139,10 +139,8 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 				else
 					++*found;
 			}
-			printf("c: %u \n", chain->c);
 			chain->c++;
 		}
-		printf("c: %u \n", chain->d);
 		chain->d++;
 	}
 	return (0);
@@ -186,9 +184,7 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 				return (0);
 			}
 			chain.b++;
-			printf("b: %u \n", chain.b);
 		}
-		printf("a: %u \n", chain.a);
 		chain.a++;
 	}
 	return (0);
@@ -202,7 +198,6 @@ int     verify_map(t_engine *e)
 	while (iter)
 	{
 		iter++;
-		printf("iter: %d\n", iter);
 		if (iter > 5) break;
 		if (!verify_vertex(e))
 		 	printf("vertex does not form a loop\n");

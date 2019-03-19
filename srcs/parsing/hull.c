@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 12:53:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:04:28 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int			insert_sct(t_engine *e, t_sector *curr, t_chain *chain)
 	new->nb_objects = 0;
 	new->npoints = 3;
 	remove_vertex(&e->sectors[chain->a], chain);
-	print_sect(&e->sectors[chain->a]);
-	print_sect(new);
 	return (1);
 }
 /*
@@ -106,7 +104,6 @@ int			verify_hull(t_engine *e)
 			v2 = &vert[chain.d];
 			if (pointside(vert[chain.c], *v1, *v2) > 0)
 			{
-				printf("possible hull \n");
 				insert_sct(e, sect, &chain);
 				return (1);
 			}
