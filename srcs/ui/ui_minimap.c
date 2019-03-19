@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/14 14:25:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/19 14:54:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,46 @@ static void		draw_sectors(SDL_Surface *surface,
 				ui_draw_line(surface, edge, C_CYAN);
 
 			j++;
+		}
+		i++;
+	}
+}
+
+static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
+				t_engine *engine)
+{
+	t_wrap_sect		*obj;
+	SDL_Rect		rect;
+	t_edge			edge;
+	unsigned int	i;
+
+	i = 0;
+	while (i < engine->nsectors)
+	{
+		obj = engine->sectors[i].head_object;
+		while (obj)
+		{
+			// translation
+			edge = translate_edge(engine->player.where,
+			obj->vertex, obj->vertex);
+
+			// rotation
+			edge = rotate_edge(engine->player, edge);
+
+			// scale
+			rect = (SDL_Rect){
+			edge.v1.x * COEF_MINIMAP, 
+			edge.v1.y * COEF_MINIMAP,
+			10, 10};
+
+			// origin
+			rect = (SDL_Rect){
+			rect.x + minimap->origin.x + MINIMAP_SIZE / 2 - 5,
+			rect.y + minimap->origin.y + MINIMAP_SIZE / 2 - 5,
+			10, 10};
+
+			ui_draw_rect(surface, rect, C_GREEN);
+			obj = obj->next;
 		}
 		i++;
 	}
@@ -158,8 +198,12 @@ void		ui_minimap(t_env *env)
 	MINIMAP_SIZE / 2, C_WHITE};
 	ui_draw_circle(env->sdl.surface, circle);
 
-	// drawing sectors on area
+	// draw sectors on area
 	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
+
+	// draw objects && bots
+	draw_objects(env->sdl.surface, &minimap, &(env->engine));
+	// draw_bots();
 
 	// player
 	draw_player(env->sdl.surface, &minimap);
