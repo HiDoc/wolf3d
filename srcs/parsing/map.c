@@ -161,7 +161,6 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 	while (chain.a < e->nsectors)
 	{
 		sect = &e->sectors[chain.a];
-		print_sect(sect);
 		vert = sect->vertex;
 		chain.b = 0;
 		while (chain.b < sect->npoints)
@@ -173,7 +172,7 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 				fprintf(stderr, "Please verify that you have as much neighbour as vertexes in your map\n");
 				sect->neighbors[chain.b] = -1;
 			}
-			edge = (t_edge){vert[chain.b], vert[chain.b +1]};
+			edge = (t_edge){vert[chain.b], vert[chain.b + 1]};
 			found = 0;
 			chain.d = 0;
 			if (verify_bounded_neighbor(e, &chain, &edge, &found))
@@ -182,7 +181,7 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 			{
 				fprintf(stderr, "Sectors %u and its neighbor %d don't share line (%g,%g)-(%g,%g)\n",
 					chain.a, sect->neighbors[chain.b], edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
-				return (1);
+				return (0);
 			}
 			chain.b++;
 		}
@@ -198,12 +197,10 @@ int     verify_map(t_engine *e)
 	iter = 1;
 	while (iter)
 	{
-		printf("iter: %d\n", iter);
-		// if (!verify_vertex(e))
-		// {
-		// 	printf("vertex does not form a loop\n");
-		// 	break;
-		// }
+		iter++;
+		if (iter > 5) break;
+		if (!verify_vertex(e))
+		 	printf("vertex does not form a loop\n");
 		if (verify_neighbor(e, NULL, NULL))
 		{
 			printf("neighbors not linked\n");
@@ -215,9 +212,6 @@ int     verify_map(t_engine *e)
 			continue ;
 		}
 		else break;
-		iter++;
-		if (iter > 5)
-			break;
 	}
 	return (iter);
 }

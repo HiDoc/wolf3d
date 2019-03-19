@@ -26,8 +26,8 @@ void			LoadData(t_engine *e, t_env *env)
 		switch(sscanf(ptr = Buf, "%32s%n", word, &n) == 1 ? word[0] : '\0')
 		{
 			case 'v': // vertex
-				sscanf(ptr += n, "%f%n", &v.y, &n);
-				while (sscanf(ptr += n, "%f%n", &v.x, &n) == 1)
+				sscanf(ptr += n, "%f%n", &v.x, &n);
+				while (sscanf(ptr += n, "%f%n", &v.y, &n) == 1)
 				{
 					vert = realloc(vert, ++NumVertices * sizeof(*vert));
 					vert[NumVertices-1] = v;
