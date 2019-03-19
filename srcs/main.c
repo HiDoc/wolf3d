@@ -17,7 +17,7 @@ int		init_gameplay_env(t_env *env)
 	return (init_consumable(env)
 	&& init_character(&env->player)
 	&& init_weapon(env)
-	&& init_hud(env, 0)
+	&& init_hud(env)
 	&& init_inventory_ui(env));
 }
 

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 15:28:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 21:04:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,17 @@ int		init_weapon(t_env *env)
 	while (i < WORLD_NB_WEAPONS)
 		env->player.inventory.weapons[i++].current = NULL;
 	env->player.inventory.current = NULL;
-	env->world.armory[0].ref = 0xa2a0602041f2;
+	env->world.armory[0].ref = 0xa2a0601042a2;
 	// env->world.armory[0].ref = 0xa2a0602012a2;
-	env->world.armory[1].ref = 0xa2a020205123;
-	env->world.armory[2].ref = 0xa8e2002042a4;
+	env->world.armory[1].ref = 0xa2a020105123;
+	env->world.armory[2].ref = 0xa8e2000042a4;
 	// weapon_set(&env->world.armory[0], "pistol", 17);
 	if (weapon_set(&env->world.armory[0], "magnum", 56)
 	&& weapon_set(&env->world.armory[1], "pompe", 100)
 	&& weapon_set(&env->world.armory[2], "rifle", 30))
 	{
-		env->player.inventory.weapons[1].current = env->engine.sectors[0].head_object;
-		env->player.inventory.current = &env->player.inventory.weapons[1];
+		env->player.inventory.weapons[0].current = env->engine.sectors[0].head_object;
+		env->player.inventory.current = &env->player.inventory.weapons[0];
 		env->player.inventory.current->ammo_current = 50;
 		env->player.inventory.current->ammo_magazine = 100;
 		return (1);

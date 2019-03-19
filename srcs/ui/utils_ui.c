@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 16:09:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 20:38:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,6 @@ SDL_Surface *ui_img(char *doss, char *ssdoss, int i)
 	if (!ret)
         return (NULL);
 	return (new);
-}
-
-int    number_font(t_env *env, char *str, t_vctr pos, SDL_Color color)
-{
-	SDL_Surface	    *surface;
-	TTF_Font        *font;
-	SDL_Surface		*tmp;
-
-	if (!(font = TTF_OpenFont("rsrc/font/5E.ttf", pos.z)))
-        return (0);
-	tmp	= TTF_RenderText_Shaded(font, str, color, TRANSPARENT);
-	surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0);
-	SDL_FreeSurface(tmp);
-	tmp = NULL;
-	(void)env;
-    // draw_img(env,(t_edge){{pos.x, pos.y},{pos.x + surface->w, pos.y + surface->h}}, surface, (t_ixy){0, 0});
-	SDL_FreeSurface(surface);
-	surface = NULL;
-	TTF_CloseFont(font);
-	font = NULL;
-    return (1);
 }
 
 SDL_Surface	*str_join_text(t_font data, TTF_Font *font)
