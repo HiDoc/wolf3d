@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 13:04:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:21:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int			verify_hull(t_engine *e)
 	while (chain.a < e->nsectors)
 	{
 		sect = &e->sectors[chain.a];
+		print_sect(sect);
+		break;
 		if (sect->npoints < 4)
 			continue ;
 		vert = sect->vertex;
