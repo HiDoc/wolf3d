@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/18 20:17:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/19 13:00:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,12 @@ static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 		obj = engine->sectors[i].head_object;
 		while (obj)
 		{
+			rect = (SDL_Rect){obj->vertex.x, obj->vertex.y, 10, 10};
+
 			// translate
 			rect = (SDL_Rect){
-			obj->vertex.x + engine->player.where.x, 
-			obj->vertex.y + engine->player.where.y,
+			rect.x + engine->player.where.x,
+			rect.y + engine->player.where.y,
 			10, 10};
 
 			// rotate
