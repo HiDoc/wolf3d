@@ -13,6 +13,7 @@
         "t_projec",
         "t_queue",
         "t_vtx",
+        "t_wrap_sect",
         "t_vctr",
         "t_chain",
         "t_raycast",

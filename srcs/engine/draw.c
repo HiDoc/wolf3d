@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 19:21:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/19 16:57:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,65 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 
 static void		render_sprites(t_env *env, t_wrap_sect *obj)
 {
-	t_vtx		player;
-	t_edge		edge;
-   
-	player = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
-	edge = (t_edge){player, obj->vertex};
+	const t_engine *e = &env->engine;
+	t_drawline		drawline;
+	t_raycast		raycast;
+	t_edge			edge;
+
+	ft_bzero(&drawline, sizeof(t_drawline));
+	edge = (t_edge){
+	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
+	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
+
+	// translation
 	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
+	raycast.trsl = edge;
+
+	printf("translation\n");
+	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n",
+	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+
+	// rotation
 	edge = rotation_edge(env->engine.player, edge);
-	if (edge.v1.x > 0 && edge.v1.y > 0 && edge.v1.x < W && edge.v1.y < H
-		&& edge.v2.x > 0 && edge.v2.y > 0 && edge.v2.x < W && edge.v2.y < H)
+	raycast.rot = edge;
+
+	printf("rotation\n");
+	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n",
+	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+
+	// scale
+	edge = scale_edge(edge);
+	raycast.scale = edge;
+
+	printf("scale\n");
+	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n****************************\n",
+	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
+	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
+	raycast.li_sector.ceil = 15;
+	raycast.li_sector.floor = 0;
+	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
+	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
-		printf("draw sprite\n");
+		printf("bot on sight\n");
+
+		raycast.x = raycast.x1;
+		drawline.container = (void *)&raycast;
+		int x = 0, y = 0;
+		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
+		drawline.from = 0;
+		drawline.to = 400;
+		drawline.bottom = 0xFFFFFFFF;
+		drawline.middle = 0xFFFFFFFF;
+		drawline.top = 0xFFFFFFFF;
+		printf("x1 : [%d]\nx2 : [%d]\n--------------------\n", raycast.x1, raycast.x2);
+		while (raycast.x < raycast.x2)
+		{
+			vline(drawline, env);
+			raycast.x++;
+		}
 	}
-	// draw_sprites
 }
 
 /*
@@ -103,7 +149,6 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 {
 	t_engine	*e;
 	t_raycast	container;
-	t_wrap_sect *current_obj;
 	int			start;
 	int			end;
 
@@ -114,23 +159,14 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	end = (int)fmin(container.x2, q->now.sx2);
 	start = (int)fmax(container.x1, q->now.sx1);
 	container.x = start;
-	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
-		env->engine.sectors[q->now.sectorno].floor};
+	container.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
+		e->sectors[q->now.sectorno].floor};
 	while (container.x <= end)
 	{
 		render_wall(env, container, &q->ytop[container.x],
 			&q->ybottom[container.x]);
 		++container.x;
 	}
-
-	// Render objects/bots sprites //
-	current_obj = env->engine.sectors[env->engine.player.sector].head_object;
-	while (current_obj)
-	{
-		render_sprites(env, current_obj);
-		current_obj = current_obj->next;
-	}
-
 	schedule_queue(q, container, start, end);
 	return (1);
 }
@@ -161,8 +197,18 @@ void	dfs(t_env *env)
 
 		/* Render each wall of this sector that is facing towards player. */
 		s = -1;
-		while (++s < (int)queue.sect->npoints) // for s in sector's edges
+		while (++s < (int)queue.sect->npoints)
+		{
 			render_sector_edges(env, &queue, s);
+			// Render objects/bots sprites //
+			t_wrap_sect *current_obj;
+			current_obj = engine->sectors[engine->player.sector].head_object;
+			while (current_obj)
+			{
+				render_sprites(env, current_obj);
+				current_obj = current_obj->next;
+			}
+		} // for s in sector's edges
 		++queue.renderedsectors[queue.now.sectorno];
 	}
 	free(queue.renderedsectors);
