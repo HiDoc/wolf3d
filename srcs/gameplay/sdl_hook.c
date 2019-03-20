@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/15 18:20:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/16 17:01:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
 		/*if (keycodes[SDL_SCANCODE_C])
-			pick_object(env, env->engine.sectors[0].head_object);
+			pick_object(env, env->engine.sectors[0].head_object);*/
 		if (keycodes[SDL_SCANCODE_V])
 			pick_object(env, env->engine.sectors[0].head_object->next);
+		/*
 		if (keycodes[SDL_SCANCODE_LEFT])
 			p->hud.is_txt = give_health(env, p->hud.shortcut[0]);
 		if (keycodes[SDL_SCANCODE_RIGHT])

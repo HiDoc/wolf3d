@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 19:58:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:09:10 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ struct								s_sdl
 struct								s_msc
 {
 	Mix_Music		*load;
-	Mix_Chunk		*shot;
 };
 
 struct s_time
