@@ -12,6 +12,11 @@
 
 #include "doom.h"
 
+void	init_floor(t_env *env)
+{
+	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+}
+
 int		main(void)
 {
 	t_env			env;
@@ -28,7 +33,6 @@ int		main(void)
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
 		exit(1);
 	}
-
 
 	/* SDL structure initialize */
 	env.sdl.window = SDL_CreateWindow("Doom nukem",
@@ -50,6 +54,7 @@ int		main(void)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
+	init_floor(&env);
 
 	////////////////////////////////////////////
 	// initialisation : blame -> sgalasso

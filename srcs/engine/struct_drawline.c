@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 19:38:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/20 14:26:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,37 @@ void				render_ceil(t_drawline l, t_env *env)
 
 void				render_floor(t_drawline l, t_env *env)
 {
-	vline(l, env);
+	t_raycast	*ctn;
+	int			*pixels;
+	SDL_Surface	*sprite;
+	int			iter;
+	int			x;
+
+	ctn = ((t_raycast *)l.container);
+	x = ctn->x;
+	pixels	= (int *)env->sdl.surface->pixels;
+	sprite = env->world.surfaces.floors[0].sprite;
+	l.from = clamp(l.from, 0, H - 1);
+	l.to = clamp(l.to, 0, H - 1);
+
+	if (l.from == l.to)
+		pixels[l.from * W + ctn->x] = l.middle;
+	else if (l.to > l.from)
+	{
+		pixels[l.from * W + x] = 0xff00ffff;
+		iter = l.from + 1;
+		x = (ctn->li_texture.floor * ((ctn->x2 - ctn->x) * ctn->rot.v2.y)
+		+ ctn->li_texture.ceil * ((ctn->x - ctn->x1) * ctn->rot.v1.y))
+		/ ((ctn->x2 - ctn->x) * ctn->rot.v2.y + (ctn->x - ctn->x1) * ctn->rot.v1.y);
+		while (iter < l.to)
+		{
+			t_vtx map = screen_to_map(&env->engine, ctn->li_sector.floor, ctn->x, iter);
+			t_vtx txt = {map.x * 1024, map.y * 1024};
+			pixels[iter * W + ctn->x] = getpixel(sprite, (int)txt.x % sprite->w, (int)txt.y % sprite->h);
+			iter++;
+		}
+		pixels[l.to * W + ctn->x] = 0xff00ffff;
+	}
 }
 
 void				render_nfloor(t_drawline l, t_env *env)
