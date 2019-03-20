@@ -6,13 +6,14 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 14:16:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:02:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_ENGINE_H
 # define DOOM_S_ENGINE_H
 
+typedef struct	s_scaler	t_scaler;
 typedef struct	s_sector	t_sector;
 typedef struct	s_player	t_player;
 typedef struct	s_item		t_item;
@@ -21,6 +22,16 @@ typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
+
+
+struct						s_scaler
+{
+	int		result;
+	int		bop;
+	int		fd;
+	int		ca;
+	int		cache;
+};
 
 struct						s_chain
 {
@@ -88,7 +99,7 @@ struct						s_queue
 
 struct						s_raycast
 {
-	t_edge			curr;
+	t_edge			trsl;
 	t_edge			rot;
 	t_edge			scale;
 	t_l_float		lf_current;

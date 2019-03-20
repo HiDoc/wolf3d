@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 14:17:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:06:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
+
+	// font sgalasso, a ranger je sais pas ou
+	TTF_Font		*arial_font;
 };
 
 void			no_op(t_env *env);

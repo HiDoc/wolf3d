@@ -3,18 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2019/03/20 13:50:25 by abaille          ###   ########.fr        #
+=======
+#    Updated: 2019/03/20 15:01:35 by fmadura          ###   ########.fr        #
+>>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
+<<<<<<< HEAD
 CFLAGS 			= -Wall -Wextra -Werror -g
+=======
+CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
+>>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
 LIBFT 			= ./libft
-LEN_NAME		= `printf "%s" $(NAME) |wc -c`
+LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
 
 #color
@@ -90,6 +98,7 @@ SRC_NAME 	= main.c \
 			utils_surface.c \
 			transformation.c \
 			move.c \
+			position.c \
 			draw.c \
 			print_bug.c \
 			struct_drawline.c \
@@ -124,6 +133,7 @@ SRC_NAME 	= main.c \
 			ui_draw_full_rect.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
+			ui_draw_string.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
