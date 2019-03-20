@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 14:54:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:50:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,21 @@ static void		draw_sectors(SDL_Surface *surface,
 		while (j < engine->sectors[i].npoints)
 		{
 			edge = (t_edge){
-			engine->sectors[i].vertex[j],
-			engine->sectors[i].vertex[j + 1]};
+				engine->sectors[i].vertex[j],
+				engine->sectors[i].vertex[j + 1]};
 
 			edge = translate_edge(engine->player.where, edge.v1, edge.v2);
 
 			edge = rotate_edge(engine->player, edge);
 
 			edge.v1.x = edge.v1.x * COEF_MINIMAP + minimap->origin.x
-			+ MINIMAP_SIZE / 2;
+				+ MINIMAP_SIZE / 2;
 			edge.v1.y = edge.v1.y * COEF_MINIMAP + minimap->origin.y
-			+ MINIMAP_SIZE / 2;
+				+ MINIMAP_SIZE / 2;
 			edge.v2.x = edge.v2.x * COEF_MINIMAP + minimap->origin.x
-			+ MINIMAP_SIZE / 2;
+				+ MINIMAP_SIZE / 2;
 			edge.v2.y = edge.v2.y * COEF_MINIMAP + minimap->origin.y
-			+ MINIMAP_SIZE / 2;
+				+ MINIMAP_SIZE / 2;
 
 			if (edge.v1.x >= 0 && edge.v1.y >= 0 && edge.v2.x < W && edge.v2.y < H
 			&& edge.v1.x < W && edge.v1.y < H && edge.v2.x >= 0 && edge.v2.y >= 0)
@@ -94,7 +94,7 @@ static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 		{
 			// translation
 			edge = translate_edge(engine->player.where,
-			obj->vertex, obj->vertex);
+					obj->vertex, obj->vertex);
 
 			// rotation
 			edge = rotate_edge(engine->player, edge);
@@ -135,6 +135,52 @@ static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 	(t_vtx){rect.x + 5, rect.y + 5},
 	(t_vtx){rect.x + 5, rect.y - 10}};
 	ui_draw_line(surface, edge, C_CYAN);
+}
+
+static void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *env)
+{
+	SDL_Rect	rect;
+	t_vtx		vtx;
+	float		start;
+	float		size;
+	int			i;
+
+	i = 0;
+	while (i < 16)
+	{
+		vtx = (t_vtx){
+		minimap->origin.x + MINIMAP_SIZE / 2,
+		minimap->origin.y + MINIMAP_SIZE / 2};
+
+		start = MINIMAP_SIZE / 2 - 10;
+		size = MINIMAP_SIZE / 2;
+
+		rect.x = vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle)
+		* size - 8;
+		rect.y = vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle)
+		* size - 15;
+		rect.w = 0;
+		rect.h = 30;
+
+
+		if (i == 0)
+			ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
+		else if (i == 4)
+			ui_draw_string(surface, rect, "E", 0xFFFFFFFF, env);
+		else if (i == 8)
+			ui_draw_string(surface, rect, "S", 0xFFFFFFFF, env);
+		else if (i == 12)
+			ui_draw_string(surface, rect, "O", 0xFFFFFFFF, env);
+
+		if (i % 4 != 0)
+		{
+			ui_draw_vector(surface, vtx,
+			i * (M_PI / 8)  - env->engine.player.angle,
+			start, size, C_WHITE);
+		}
+
+		i++;
+	}
 }
 
 void		ui_minimap(t_env *env)
@@ -178,13 +224,13 @@ void		ui_minimap(t_env *env)
 		i++;
 	}
 	//////////////////////////////
-	
+
 
 	/*if (!(surface = ui_make_surface(ymax + 1, xmax + 1)))
-	{
-		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-		exit(EXIT_FAILURE); // retourner erreur
-	}*/
+	  {
+	  printf("Doom_nukem: minimap: %s\n", SDL_GetError());
+	  exit(EXIT_FAILURE); // retourner erreur
+	  }*/
 
 	// background
 	SDL_Rect rect = (SDL_Rect){minimap.origin.x, minimap.origin.y, // to remove
@@ -206,21 +252,24 @@ void		ui_minimap(t_env *env)
 	draw_objects(env->sdl.surface, &minimap, &(env->engine));
 	// draw_bots();
 
-	// player
+	// draw player
 	draw_player(env->sdl.surface, &minimap);
+
+	// draw compass
+	draw_compass(env->sdl.surface, &minimap, env);
 
 	// recoder BlitSurface
 	/*srcrect = (SDL_Rect){
-	env->engine.player.where.x, env->engine.player.where.y,
-	xmax, xmax}; // set relatif
-	dstrect = (SDL_Rect){W - MINIMAP_SIZE - 10, 10, MINIMAP_SIZE, MINIMAP_SIZE};
-	SDL_UnlockSurface(env->sdl.surface);
-	if ((SDL_BlitScaled(surface, &srcrect, env->sdl.surface, &dstrect)) < 0)
-	{
-		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-		exit(EXIT_FAILURE); // retourner erreur
-	}
-	SDL_LockSurface(env->sdl.surface);*/
+	  env->engine.player.where.x, env->engine.player.where.y,
+	  xmax, xmax}; // set relatif
+	  dstrect = (SDL_Rect){W - MINIMAP_SIZE - 10, 10, MINIMAP_SIZE, MINIMAP_SIZE};
+	  SDL_UnlockSurface(env->sdl.surface);
+	  if ((SDL_BlitScaled(surface, &srcrect, env->sdl.surface, &dstrect)) < 0)
+	  {
+	  printf("Doom_nukem: minimap: %s\n", SDL_GetError());
+	  exit(EXIT_FAILURE); // retourner erreur
+	  }
+	  SDL_LockSurface(env->sdl.surface);*/
 	/////////////////////
 
 	//SDL_FreeSurface(surface);
