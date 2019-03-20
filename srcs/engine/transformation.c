@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 19:15:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:06:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	acquire_limits(t_engine *e, t_queue *q, t_raycast *ctn, int s)
 			e->sectors[ctn->neighbor].floor - e->player.where.z
 		};
 	}
+
+	/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
+	ctn->p = calc_projection(e->player.yaw, ctn->lf_current, ctn->rot, ctn->scale);
+	ctn->n = calc_projection(e->player.yaw, ctn->lf_next, ctn->rot, ctn->scale);
 }
 
 int		transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s)
@@ -62,12 +66,5 @@ int		transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s)
 	/* Verify if transformation is visible */
 	if (ctn->x1 >= ctn->x2 || ctn->x2 < q->now.sx1 || ctn->x1 > q->now.sx2)
 		return (0);
-
-	/* Get limits of ceil and floor of current sector */
-	acquire_limits(e, q, ctn, s);
-
-	/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-	ctn->p = calc_projection(e->player.yaw, ctn->lf_current, ctn->rot, ctn->scale);
-	ctn->n = calc_projection(e->player.yaw, ctn->lf_next, ctn->rot, ctn->scale);
 	return (1);
 }

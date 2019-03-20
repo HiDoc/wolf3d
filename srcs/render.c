@@ -1734,25 +1734,6 @@ static void DrawScreen(void)
                 /* Clamp the ya & yb */
                 int cya = clamp(ya, ytop[x],ybottom[x]);
                 int cyb = clamp(yb, ytop[x],ybottom[x]);
-
-                // Our perspective calculation produces these two:
-                //     screenX = W/2 + -mapX              * (W*hfov) / mapZ
-                //     screenY = H/2 + -(mapY + mapZ*yaw) * (H*vfov) / mapZ
-                // To translate these coordinates back into mapX, mapY and mapZ...
-                //
-                // Solving for Z, when we know Y (ceiling height):
-                //     screenY - H/2  = -(mapY + mapZ*yaw) * (H*vfov) / mapZ
-                //     (screenY - H/2) / (H*vfov) = -(mapY + mapZ*yaw) / mapZ
-                //     (H/2 - screenY) / (H*vfov) = (mapY + mapZ*yaw) / mapZ
-                //     mapZ = mapY / ((H/2 - screenY) / (H*vfov) - yaw)
-                //     mapZ = mapY*H*vfov / (H/2 - screenY - yaw*H*vfov)
-                // Solving for X, when we know Z
-                //     mapX = mapZ*(W/2 - screenX) / (W*hfov)
-                //
-                // This calculation is used for visibility tracking
-                //   (the visibility cones in the map)
-                // and for floor & ceiling texture mapping.
-                //
                 #define CeilingFloorScreenCoordinatesToMapCoordinates(mapY, screenX,screenY, X,Z) \
                     do { Z = (mapY)*H*vfov / ((H/2 - (screenY)) - player.yaw*H*vfov); \
                          X = (Z) * (W/2 - (screenX)) / (W*hfov); \
@@ -1765,17 +1746,10 @@ static void DrawScreen(void)
                     } while(0)
 
 #ifdef TextureMapping
-                // Texture-mapping for floors and ceilings is not very optimal in my program.
-                // I'm converting each screen-pixel into map-coordinates by doing the perspective
-                // transformation in reverse, and using these map-coordinates as indexes into texture.
-                // This involves a few division calculations _per_ pixel, and would have been way
-                // too slow for the platforms targeted by Doom and Duke3D.
-                // In any case, there's no neat way to do it.
-                // It is why the SNES port of Doom didn't do floor & ceiling textures at all.
                 for(int y=ytop[x]; y<=ybottom[x]; ++y)
                 {
-                    if(y >= cya && y <= cyb) { y = cyb; continue; }
-                    float hei = y < cya ? yceil    : yfloor;
+                    if (y >= cya && y <= cyb) { y = cyb; continue; }
+                    float hei = y < cya ? yceil : yfloor;
                     float mapx, mapz;
                     CeilingFloorScreenCoordinatesToMapCoordinates(hei, x,y,  mapx,mapz);
                     unsigned txtx = (mapx * 256), txtz = (mapz * 256);

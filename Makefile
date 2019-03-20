@@ -6,17 +6,17 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/19 19:26:19 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/20 15:20:58 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g#-O3 # -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
-
+MAKEFLAGS		= --jobs=16
 #color
 YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"
@@ -90,6 +90,7 @@ SRC_NAME 	= main.c \
 			utils_surface.c \
 			transformation.c \
 			move.c \
+			position.c \
 			draw.c \
 			print_bug.c \
 			struct_drawline.c \

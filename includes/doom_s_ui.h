@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_ui.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 19:58:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:09:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ struct						s_hud
 	SDL_Surface			*bar[2];
 	SDL_Surface			*faces[4];
 	SDL_Surface			*hud_wpn[3];
-	SDL_Surface			*pad;
 	SDL_Surface			*empty_b;
-	SDL_Surface			*full_b;
-	SDL_Surface			*e_pad[4];
+	SDL_Surface			*objects[6];
 	t_wrap_inv			*shortcut[6];
 	int					is_txt;
 	int					mix;
