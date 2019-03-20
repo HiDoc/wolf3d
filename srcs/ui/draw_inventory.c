@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 12:16:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:25:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int		use_drop_icon(t_env *env, t_edge bloc, SDL_Surface *sprite, int i)
 	blocx = sprite->w;
 	udbox[0]->v1 = (t_vtx){bloc.v2.x - blocx / 7, bloc.v1.y};
 	udbox[0]->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + blocx / 7};
-	ui_put_string(env, (t_font){c[0], "X", F_TEXT,
+	ui_put_string(env, (t_font){c[0], "X", env->ui.text,
 	(t_vtx){udbox[0]->v1.x + 2,	udbox[0]->v1.y}, 20, -1, -1});
 	udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 3, bloc.v2.y - blocx / 7};
 	udbox[1]->v2 = bloc.v2;
 	draw_flat_rect(env->sdl.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
-	// ui_put_string(env, (t_font){c[0], "USE", F_TEXT,
+	// ui_put_string(env, (t_font){c[0], "USE", env->ui.text,
 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
-	// ui_put_string(env, (t_font){c[1], "", F_NUMB,
+	// ui_put_string(env, (t_font){c[1], "", env->ui.number,
 	// (t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1,
 	// env->player.inventory.objects[i].nb_stack});
 	return (0);

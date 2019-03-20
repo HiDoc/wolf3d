@@ -1,5 +1,13 @@
 #include "doom.h"
 
+void	free_fonts(t_ui *f)
+{
+	TTF_CloseFont(f->arial);
+	TTF_CloseFont(f->doom);
+	TTF_CloseFont(f->text);
+	TTF_CloseFont(f->number);
+}
+
 void		free_wpn_sounds(t_world *world)
 {
 	int	i;
@@ -104,6 +112,7 @@ void		free_all_sprites(t_env *env)
 	free_hud(&env->player.hud);
 	free_inventory_img(&env->player.inventory.ui);
 	free_world_img(&env->world);
+	free_fonts(&env->ui);
 }
 
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e)

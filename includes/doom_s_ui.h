@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 16:18:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:20:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct 						s_font
 {
 	SDL_Color			color;
 	const char			*str;
-	const char			*font;
+	TTF_Font			*font;
 	t_vtx				pos;
 	int					size;
 	int					l;

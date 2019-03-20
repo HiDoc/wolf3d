@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 16:22:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:26:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	sprite = env->player.hud.hud_wpn[wpn->current->ref];
 	draw_img(env, sprite, (t_ixy){W - W / 6, H / 1.2},
 	(t_edge){{0, 0},{sprite->w, sprite->h}});
-	ui_put_string(env, (t_font){GOLD, "", F_NUMB,
+	ui_put_string(env, (t_font){GOLD, "", env->ui.number,
 	(t_vtx){W - W / 7, H / 1.3}, 30,
 	env->player.inventory.current->ammo_current, -1});
-	ui_put_string(env, (t_font){GOLD, "/", F_NUMB,
+	ui_put_string(env, (t_font){GOLD, "/", env->ui.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, 30,
 	-1, env->player.inventory.current->ammo_magazine});
 	return (1);

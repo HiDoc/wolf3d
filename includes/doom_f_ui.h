@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 16:18:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:18:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void		ui_draw_full_circle(SDL_Surface *surface, t_circle circ);
 void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 			char *text, Uint32 color, t_env *env);
 
+
+int			init_fonts(t_ui *f);
 
 int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
 int    		ui_put_string(t_env *env, t_font data);

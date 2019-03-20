@@ -19,7 +19,8 @@ void	init_floor(t_env *env)
 
 int		init_gameplay_env(t_env *env, char *res)
 {
-	return (init_consumable(env, res)
+	return (init_fonts(&env->ui)
+	&& init_consumable(env, res)
 	&& init_character(&env->player)
 	&& init_weapon(env, res)
 	&& init_hud(env, res)
