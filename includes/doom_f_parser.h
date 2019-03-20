@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:43:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 14:17:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 18:45:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer,
 int		    fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn);
 int			verify_parallelism(t_chain *chain, t_sector *sect, int mycase);
 
-void		free_all_sprites(t_env *env);
-void		free_all_sounds(t_env *env);
+void		free_ui(t_env *env);
 
 #endif

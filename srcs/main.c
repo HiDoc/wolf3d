@@ -68,8 +68,7 @@ int		main(void)
 	if (!init_gameplay_env(&env, "800*600/"))
 	{
 		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
-		free_all_sprites(&env);
-		free_all_sounds(&env);
+		free_ui(&env);
 		return (0);
 	}
 	verify_map(&env.engine);
@@ -88,8 +87,7 @@ int		main(void)
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
-	free_all_sprites(&env);
-	free_all_sounds(&env);
+	free_ui(&env);
 	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();

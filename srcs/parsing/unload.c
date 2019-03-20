@@ -107,11 +107,12 @@ void		free_hud(t_hud *hud)
 	free_img(hud->empty_b);
 }
 
-void		free_all_sprites(t_env *env)
+void		free_ui(t_env *env)
 {
 	free_hud(&env->player.hud);
 	free_inventory_img(&env->player.inventory.ui);
 	free_world_img(&env->world);
+	free_all_sounds(env);
 	free_fonts(&env->ui);
 }
 

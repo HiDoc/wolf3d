@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 18:42:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 18:48:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ SDL_Surface *dst, t_vtx pos)
 	new_size.y = src->h / ratio;
 	scale.x = src->w / new_size.x;
 	scale.y = src->h / new_size.y;
-	pos.x = data.pos.x;
 	x = 0;
+	pos.x = data.pos.x;
 	while (pos.x < data.pos.x + new_size.x && pos.x < W)
 	{
-		pos.y = data.pos.y;
 		y = 0;
+		pos.y = data.pos.y;
 		while (pos.y < data.pos.y + new_size.y && pos.y < H)
 		{
 			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
