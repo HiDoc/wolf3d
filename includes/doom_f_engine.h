@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 14:10:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:07:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 t_scaler	scaler_init(int a, int b, int c, int d, int f);
 int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
+void		acquire_limits(t_engine *e, t_queue *q, t_raycast *ctn, int s);
 #endif

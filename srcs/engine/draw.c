@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 14:14:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:07:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	if (transform_vertex(e, q, &container, s) == 0)
 		return (0);
 
+	/* Get limits of ceil and floor of current sector */
+	acquire_limits(e, q, &container, s);
 
 	/* Render the wall. */
 	end = (int)fmin(container.x2, q->now.sx2);
