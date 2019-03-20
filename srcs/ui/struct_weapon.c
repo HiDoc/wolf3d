@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 23:13:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 14:37:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ SDL_Surface **weapon_fill(char *res, char *path, int size)
 {
 	int			i;
 	SDL_Surface	**weapons;
-	char		*filename;
-	char		*nb;
 	int			ret;
 
 	i = 0;
@@ -36,14 +34,7 @@ SDL_Surface **weapon_fill(char *res, char *path, int size)
 		return (NULL);
 	while (i < size)
 	{
-		nb = NULL;
-		filename = NULL;
-		if ((filename = ft_strrjoin(path, ft_itoa(i + 1)))
-		&& (weapons[i] = img_wpn(res, filename)))
-			ret = 1;
-		if (filename)
-			free(filename);
-		if (!ret)
+		if (!(weapons[i] = ui_img(res, "weapons/", path, i)))
 			return (NULL);
 		i++;
 	}
@@ -61,12 +52,13 @@ int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 	r_path = NULL;
 	s_path = NULL;
 	sprite = NULL;
+	weapon->sprite_reload = NULL;
+	weapon->sprite_shoot = NULL;
 	if ((r_path = ft_strjoin(name, "/reload/"))
 	&& (s_path = ft_strjoin(name, "/shoot/"))
 	&& (sprite = ft_strjoin(name, "/"))
-	&& (sprite = ft_strljoin(sprite, name))
-	&& (weapon->sprite = img_wpn(res, sprite))
-	&& (weapon->sprite_reload = weapon_fill(res, r_path, weapon->time_reload)) != NULL
+	&& (weapon->sprite = ui_img(res, "weapons/", sprite, 0))
+	&& (weapon->sprite_reload = weapon_fill(res, r_path, weapon->time_reload))
 	&& (weapon->sprite_shoot = weapon_fill(res, s_path, weapon->time_shoot)))
 		ret = 1;
 	if (r_path)
@@ -75,6 +67,7 @@ int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 		free(s_path);
 	if (sprite)
 		free(sprite);
+		printf("%i\n", ret);
 	return (ret);
 }
 
@@ -94,7 +87,10 @@ int weapon_set(t_weapon *weapon, char *res, char *name, int dam)
 	weapon->damage = dam;
 	if (weapon_sprites(weapon, name, res)
 	&& load_sounds(weapon, name, "shot/"))
+	{
+		printf("c ok\n");
 		return (1);
+	}
 	return (0);
 }
 

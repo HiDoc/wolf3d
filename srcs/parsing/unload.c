@@ -39,13 +39,15 @@ void		free_world_img(t_world *world)
 			j = 0;
 			while (j < world->armory[i].time_reload)
 			{
-				free_img(world->armory[i].sprite_reload[j]);
+				if (world->armory[i].sprite_reload)
+					free_img(world->armory[i].sprite_reload[j]);
 				j++;
 			}
 			j = 0;
 			while (j < world->armory[i].time_shoot)
 			{
-				free_img(world->armory[i].sprite_shoot[j]);
+				if (world->armory[i].sprite_shoot)
+					free_img(world->armory[i].sprite_shoot[j]);
 				j++;
 			}
 			free_img(world->armory[i].sprite);

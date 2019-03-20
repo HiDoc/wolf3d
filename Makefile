@@ -6,13 +6,13 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/19 22:57:34 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/20 13:50:25 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) |wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)

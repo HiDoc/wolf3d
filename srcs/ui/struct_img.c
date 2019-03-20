@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 22:26:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 14:32:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 
 	nb = NULL;
 	path = NULL;
-
+	new = NULL;
 	if ((nb = ft_itoa(i + 1))
 	&& (resolution = ft_strjoin("./rsrc/img/", res))
 	&& (path = ft_strljoin(resolution, doss))
@@ -116,25 +116,3 @@ SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 	return (new);
 }
 
-SDL_Surface	*img_wpn(char *res, char *filename)
-{
-	SDL_Surface	*new;
-	char		*path;
-	const char	*png = ".png";
-	char		*resolution;
-	int			ret;
-
-	ret = 0;
-	path = NULL;
-	if ((resolution = ft_strjoin("./rsrc/img/", res))
-	&& (resolution = ft_strljoin(resolution, "weapons/"))
-	&& (path = ft_strljoin(resolution, filename))
-	&& (path = ft_strljoin(path, (char *)png))
-	&& (new = surface_fr_png(path)))
-		ret = 1;
-	if (path)
-		free(path);
-	if (!ret)
-		return (NULL);
-	return (new);
-}
