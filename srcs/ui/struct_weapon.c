@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 14:37:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 16:25:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 	r_path = NULL;
 	s_path = NULL;
 	sprite = NULL;
-	weapon->sprite_reload = NULL;
-	weapon->sprite_shoot = NULL;
 	if ((r_path = ft_strjoin(name, "/reload/"))
 	&& (s_path = ft_strjoin(name, "/shoot/"))
 	&& (sprite = ft_strjoin(name, "/"))
@@ -67,7 +65,6 @@ int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 		free(s_path);
 	if (sprite)
 		free(sprite);
-		printf("%i\n", ret);
 	return (ret);
 }
 
@@ -87,10 +84,7 @@ int weapon_set(t_weapon *weapon, char *res, char *name, int dam)
 	weapon->damage = dam;
 	if (weapon_sprites(weapon, name, res)
 	&& load_sounds(weapon, name, "shot/"))
-	{
-		printf("c ok\n");
 		return (1);
-	}
 	return (0);
 }
 

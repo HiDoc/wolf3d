@@ -12,7 +12,11 @@
 
 #include "doom.h"
 
-<<<<<<< HEAD
+void	init_floor(t_env *env)
+{
+	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+}
+
 int		init_gameplay_env(t_env *env, char *res)
 {
 	return (init_consumable(env, res)
@@ -20,11 +24,6 @@ int		init_gameplay_env(t_env *env, char *res)
 	&& init_weapon(env, res)
 	&& init_hud(env, res)
 	&& init_inventory_ui(env, res));
-=======
-void	init_floor(t_env *env)
-{
-	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
->>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
 }
 
 int		main(void)

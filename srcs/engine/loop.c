@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/03/19 12:42:28 by abaille          ###   ########.fr       */
-=======
-/*   Updated: 2019/03/18 13:04:54 by fmadura          ###   ########.fr       */
->>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
+/*   Updated: 2019/03/20 16:19:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +17,10 @@ void	sdl_render_game(t_env *env)
 	dfs(env);
 	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-<<<<<<< HEAD
+	ui_minimap(env);
 	print_hud(env);
 	ui_minimap(env);
 	ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
-=======
-	//print_hud(env);
-	ui_minimap(env);
-	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
->>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
 }
 
 void	sdl_render_inventory(t_env *env)

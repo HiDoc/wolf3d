@@ -3,28 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2019/03/20 13:50:25 by abaille          ###   ########.fr        #
-=======
-#    Updated: 2019/03/20 15:01:35 by fmadura          ###   ########.fr        #
->>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
+#    Updated: 2019/03/20 16:29:10 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-<<<<<<< HEAD
 CFLAGS 			= -Wall -Wextra -Werror -g
-=======
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
->>>>>>> 4ef9d7d073a07db0357b212339c91cd55826ee8d
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
-
+MAKEFLAGS		= --jobs=16
 #color
 YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"

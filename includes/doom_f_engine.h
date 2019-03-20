@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 15:05:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 16:18:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
 t_scaler	scaler_init(int a, int b, int c, int d, int f);
 int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
+void		acquire_limits(t_engine *e, t_queue *q, t_raycast *ctn, int s);
 #endif
