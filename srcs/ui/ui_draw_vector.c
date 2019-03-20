@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:12:33 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 19:20:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:12:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ui_draw_vector(SDL_Surface *surface, t_vtx vtx, float angle,
 	t_vtx	vtx_a;
 	t_vtx	vtx_b;
 
-	step_x = cos(angle * M_PI / 180) * start;
-	step_y = sin(angle * M_PI / 180) * start;
+	step_x = cos(angle) * start;
+	step_y = sin(angle) * start;
 	vtx_a.x = vtx.x + step_x;
 	vtx_a.y = vtx.y + step_y;
 
-	step_x = cos(angle * M_PI / 180) * size;
-	step_y = sin(angle * M_PI / 180) * size;
+	step_x = cos(angle) * size;
+	step_y = sin(angle) * size;
 	vtx_b.x = vtx.x + step_x;
 	vtx_b.y = vtx.y + step_y;
 

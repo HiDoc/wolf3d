@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 20:06:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:50:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,10 @@ static void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *en
 	t_vtx		vtx;
 	float		start;
 	float		size;
-	float		i;
+	int			i;
 
 	i = 0;
-	while (i <= 360)
+	while (i < 16)
 	{
 		vtx = (t_vtx){
 		minimap->origin.x + MINIMAP_SIZE / 2,
@@ -154,29 +154,31 @@ static void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *en
 		start = MINIMAP_SIZE / 2 - 10;
 		size = MINIMAP_SIZE / 2;
 
-		rect.x = vtx.x + cos(i - env->engine.player.angle) * size;
-		rect.y = vtx.y + sin(i - env->engine.player.angle) * size;
+		rect.x = vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle)
+		* size - 8;
+		rect.y = vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle)
+		* size - 15;
 		rect.w = 0;
-		rect.h = 50;
+		rect.h = 30;
 
-		ui_draw_string(surface, (SDL_Rect){100, 100, 0, 50},
-		"N",0xFFFFFFFF, env);
 
 		if (i == 0)
 			ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
-		else if (i == 90)
+		else if (i == 4)
 			ui_draw_string(surface, rect, "E", 0xFFFFFFFF, env);
-		else if (i == 180)
+		else if (i == 8)
 			ui_draw_string(surface, rect, "S", 0xFFFFFFFF, env);
-		else if (i == 270)
+		else if (i == 12)
 			ui_draw_string(surface, rect, "O", 0xFFFFFFFF, env);
-		else
+
+		if (i % 4 != 0)
 		{
 			ui_draw_vector(surface, vtx,
-			i - env->engine.player.angle / M_PI * 180,
+			i * (M_PI / 8)  - env->engine.player.angle,
 			start, size, C_WHITE);
 		}
-		i += 24.5;
+
+		i++;
 	}
 }
 

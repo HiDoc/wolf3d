@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 20:01:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 13:57:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 		exit(EXIT_FAILURE); // provisoire : rediriger erreur
 	}
 	sdl_rect.w = (sdl_rect.h * surface->w) / surface->h;
-	SDL_BlitScaled(surface, 0, dst_surface, &sdl_rect);
+	SDL_UnlockSurface(dst_surface);
+	if ((SDL_BlitScaled(surface, 0, dst_surface, &sdl_rect)) < 0)
+	{
+		ft_putendl(SDL_GetError()); // provisoire
+		exit(EXIT_FAILURE); // provisoire : rediriger erreur
+	}
+	SDL_LockSurface(dst_surface);
 	SDL_FreeSurface(surface);
 }
