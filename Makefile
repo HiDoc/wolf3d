@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/18 19:50:01 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/20 14:09:37 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ SRC_NAME 	= main.c \
 			utils_surface.c \
 			transformation.c \
 			move.c \
+			position.c \
 			draw.c \
 			print_bug.c \
 			struct_drawline.c \

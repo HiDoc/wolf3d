@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 13:21:01 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 18:27:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int			insert_sct(t_engine *e, t_sector *curr, t_chain *chain)
 		new->neighbors[i] = -1;
 	new->vertex = malloc(sizeof(t_vtx) * 4);
 	new->vertex[0] = (t_vtx){curr->vertex[chain->d].x, curr->vertex[chain->d].y};
-	new->vertex[1] = (t_vtx){curr->vertex[chain->c].x, curr->vertex[chain->c].y};
-	new->vertex[2] = (t_vtx){curr->vertex[chain->b].x, curr->vertex[chain->b].y};
+	new->vertex[1] = (t_vtx){curr->vertex[chain->b].x, curr->vertex[chain->b].y};
+	new->vertex[2] = (t_vtx){curr->vertex[chain->c].x, curr->vertex[chain->c].y};
 	new->vertex[3] = (t_vtx){curr->vertex[chain->d].x, curr->vertex[chain->d].y};
 	new->ceil = curr->ceil;
 	new->floor = curr->floor;
@@ -93,9 +93,11 @@ int			verify_hull(t_engine *e)
 	{
 		sect = &e->sectors[chain.a];
 		print_sect(sect);
-		break;
-		if (sect->npoints < 4)
+		if (sect->npoints < 6)
+		{
+			++chain.a;
 			continue ;
+		}
 		vert = sect->vertex;
 		chain.b = 0;
 		while (chain.b < sect->npoints)
@@ -104,7 +106,7 @@ int			verify_hull(t_engine *e)
 			chain.d = (chain.c + 1) % sect->npoints;
 			v1 = &vert[chain.b];
 			v2 = &vert[chain.d];
-			if (pointside(vert[chain.c], *v1, *v2) > 0)
+			if (pointside(vert[chain.c], *v1, *v2) < 0)
 			{
 				insert_sct(e, sect, &chain);
 				return (1);

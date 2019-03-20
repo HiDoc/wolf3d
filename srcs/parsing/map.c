@@ -194,12 +194,10 @@ int     verify_map(t_engine *e)
 {
 	int		iter;
 
-	return (1);
 	iter = 1;
 	while (iter)
 	{
 		iter++;
-		// if (iter > 5) break;
 		if (!verify_vertex(e))
 		 	printf("vertex does not form a loop\n");
 		if (verify_neighbor(e, NULL, NULL))

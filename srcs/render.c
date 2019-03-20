@@ -1774,8 +1774,8 @@ static void DrawScreen(void)
                 // It is why the SNES port of Doom didn't do floor & ceiling textures at all.
                 for(int y=ytop[x]; y<=ybottom[x]; ++y)
                 {
-                    if(y >= cya && y <= cyb) { y = cyb; continue; }
-                    float hei = y < cya ? yceil    : yfloor;
+                    if (y >= cya && y <= cyb) { y = cyb; continue; }
+                    float hei = y < cya ? yceil : yfloor;
                     float mapx, mapz;
                     CeilingFloorScreenCoordinatesToMapCoordinates(hei, x,y,  mapx,mapz);
                     unsigned txtx = (mapx * 256), txtz = (mapz * 256);
