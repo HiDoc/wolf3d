@@ -6,35 +6,21 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/14 16:47:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/19 21:53:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-SDL_Surface *img_consumable(char *filename)
-{
-	SDL_Surface	*new;
-	char		*path;
-	const char	*png = ".png";
-
-	path = ft_strjoin("./rsrc/img/consumable/", filename);
-	path = ft_strljoin(path, (char *)png);
-	new = surface_fr_png(path);
-	free(path);
-	path = NULL;
-	return (new);
-}
-
-int         object_new(t_object *new, char *filename, int max_stack)
+int	object_new(t_object *new, char *res, int i, int max_stack)
 {
     new->max_stack = max_stack;
-	if ((new->sprite = img_consumable(filename)))
+	if ((new->sprite = ui_img(res, "consumable/", "", i)))
 	    return (1);
     return (0);
 }
 
-int			init_inventory(t_env *env)
+int	init_inventory(t_env *env)
 {
 	int i;
 
@@ -45,16 +31,19 @@ int			init_inventory(t_env *env)
 		i++;
 	}
 	env->player.inventory.ui.is_active = 0;
-	return (0);
+	return (1);
 }
 
-int         init_consumable(t_env *env)
+int	init_consumable(t_env *env, char *res)
 {
-	return (object_new(&env->world.objects[0], "kit", 3)
-	&& object_new(&env->world.objects[1], "armor2", 3)
-	&& object_new(&env->world.objects[2], "ammo_1", 5)
-	&& object_new(&env->world.objects[3], "ammo_2", 5)
-	&& object_new(&env->world.objects[4], "ammo_3", 5)
-	&& object_new(&env->world.objects[5], "jetpack", 1)
-	&& init_inventory(env));
+	int	i;
+
+	i = 0;
+	while (i < WORLD_NB_OBJECTS)
+	{
+		if (!object_new(&env->world.objects[i], res, i, i == 5 ? 1 : 5))
+			return (0);
+		i++;
+	}
+	return (init_inventory(env));
 }
