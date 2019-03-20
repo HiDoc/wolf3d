@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 18:34:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/20 18:42:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,20 @@ int    ui_put_string(t_env *env, t_font	data)
 {
 	SDL_Surface	    *surface;
 	SDL_Surface		*tmp;
+	int				ret;
 
-	if (!(tmp = str_join_text(data)))
-		return (0);
-	if (!(surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
-		return (0);
-	SDL_FreeSurface(tmp);
+	ret = 0;
 	tmp = NULL;
-	(void)env;
-	draw_scaled_string(data, surface, env->sdl.surface, (t_vtx){0, 0});
-	SDL_FreeSurface(surface);
 	surface = NULL;
+	if ((tmp = str_join_text(data))
+	&& (surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0))
+	&& draw_scaled_string(data, surface, env->sdl.surface, (t_vtx){0, 0}))
+		ret = 1;
+	if (tmp)
+		SDL_FreeSurface(tmp);
+	if (surface)
+		SDL_FreeSurface(surface);
+	if (!ret)
+		return (0);
     return (1);
 }
