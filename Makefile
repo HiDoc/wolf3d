@@ -124,6 +124,7 @@ SRC_NAME 	= main.c \
 			ui_draw_full_rect.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
+			ui_draw_string.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

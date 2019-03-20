@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/14 13:13:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 19:58:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
+
+	// font sgalasso, a ranger je sais pas ou
+	TTF_Font		*arial_font;
 };
 
 void			no_op(t_env *env);
