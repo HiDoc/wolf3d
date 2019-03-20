@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 16:57:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:07:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
 		0x0000FF, 0x0000AA, 0x0000FF}, env);
+
 	/* Is there another sector behind this edge? */
 	if (container.neighbor >= 0)
 	{
@@ -155,16 +156,30 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	e = &env->engine;
 	if (transform_vertex(e, q, &container, s) == 0)
 		return (0);
+
+	/* Get limits of ceil and floor of current sector */
+	acquire_limits(e, q, &container, s);
+
 	/* Render the wall. */
 	end = (int)fmin(container.x2, q->now.sx2);
 	start = (int)fmax(container.x1, q->now.sx1);
+
+	/*Initialise scaler*/
+	t_scaler ya_int = scaler_init(container.x1, start, container.x2, container.p.y1a, container.p.y2a);
+	t_scaler yb_int = scaler_init(container.x1, start, container.x2, container.p.y1b, container.p.y2b);
+	// t_scaler nya_int = scaler_init(container.x1, start, container.x2, container.n.y1a, container.n.y2a);
+	// t_scaler nyb_int = scaler_init(container.x1, start, container.x2, container.n.y1b, container.n.y2b);
+
 	container.x = start;
 	container.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
 		e->sectors[q->now.sectorno].floor};
 	while (container.x <= end)
 	{
-		render_wall(env, container, &q->ytop[container.x],
-			&q->ybottom[container.x]);
+		int ya = scaler_next(&ya_int);
+    	int yb = scaler_next(&yb_int);
+		(void)ya;
+		(void)yb;
+		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
 	schedule_queue(q, container, start, end);

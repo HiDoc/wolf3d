@@ -90,6 +90,7 @@ SRC_NAME 	= main.c \
 			utils_surface.c \
 			transformation.c \
 			move.c \
+			position.c \
 			draw.c \
 			print_bug.c \
 			struct_drawline.c \

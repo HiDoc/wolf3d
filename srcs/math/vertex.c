@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:48:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/07 17:16:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:53:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ float   cross_product(t_vtx v1, t_vtx v2)
 
 /*
 ** Determine which side of a line the point is on.
-** Return value: <0, =0 or >0.
+** Return value: left < 0, on line 0, right > 0.
 */
 float pointside(t_vtx p, t_vtx v0, t_vtx v1)
 {

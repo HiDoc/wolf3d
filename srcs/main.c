@@ -12,6 +12,20 @@
 
 #include "doom.h"
 
+void	init_floor(t_env *env)
+{
+	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+}
+
+int		init_gameplay_env(t_env *env, char *res)
+{
+	return (init_consumable(env, res)
+	&& init_character(&env->player)
+	&& init_weapon(env, res)
+	&& init_hud(env, res)
+	&& init_inventory_ui(env, res));
+}
+
 int		main(void)
 {
 	t_env			env;
@@ -28,7 +42,6 @@ int		main(void)
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
 		exit(1);
 	}
-
 
 	/* SDL structure initialize */
 	env.sdl.window = SDL_CreateWindow("Doom nukem",
@@ -48,8 +61,18 @@ int		main(void)
 	SDL_SetCursor(cursor);
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
+		return (0);
 	LoadData(&env.engine, &env);
+	if (!init_gameplay_env(&env, "800*600/"))
+	{
+		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
+		free_all_sprites(&env);
+		free_all_sounds(&env);
+		return (0);
+	}
 	verify_map(&env.engine);
+	init_floor(&env);
 
 	////////////////////////////////////////////
 	// initialisation : blame -> sgalasso
@@ -64,7 +87,8 @@ int		main(void)
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
-	Mix_FreeChunk(env.sounds.shot);
+	free_all_sprites(&env);
+	free_all_sounds(&env);
 	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();

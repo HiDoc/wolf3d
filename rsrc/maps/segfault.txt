@@ -1,11 +1,12 @@
-# vertex	x	y
-vertex  	0	0
-vertex  	20	0
-vertex		20	20
-vertex		40	40
-vertex  	0	40
+vertex  0	0
+vertex  0	20
+vertex  5	40
+vertex  40	40
+vertex  35	5
+vertex  20	0
+vertex  10	5
 
-sector  0	20   0 1 2 3 4	-1 -1 -1 -1 -1
+sector  0	20   6 5 4 3 2 1 0	-1 -1 -1 -1 -1 -1 -1
 
 # object	x	y
 object  	25	30	0	0 1
