@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/06 18:56:38 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/19 19:45:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,17 @@ int		main(void)
 	LoadData(&env.engine, &env);
 	verify_map(&env.engine);
 	init_floor(&env);
+
+	////////////////////////////////////////////
+	// initialisation : blame -> sgalasso
+	// - penser a destroy ceci a la fin
+	if (!(env.arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
+	{
+		ft_putendl(TTF_GetError()); // provisoire
+		exit(EXIT_FAILURE); // provisoire, erreur a rediriger
+	}
+	////////////////////////////////////////////
+
 	init_container(&env);
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
