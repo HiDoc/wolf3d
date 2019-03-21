@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:07:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:45:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,65 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	return (1);
 }
 
+static void		render_sprites(t_env *env, t_wrap_sect *obj)
+{
+	const t_engine *e = &env->engine;
+	t_drawline		drawline;
+	t_raycast		raycast;
+	t_edge			edge;
+	t_vtx player = {e->player.where.x, e->player.where.y};
+
+	ft_bzero(&drawline, sizeof(t_drawline));
+	// if distance < value && obj not already picked, so object is pickable
+	if (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked)
+	{
+		obj->is_pickable = 1;
+		printf("dist obj < 5 %f\n", dist_vertex(player, obj->vertex));
+	}
+	else
+		obj->is_pickable = 0;
+	edge = (t_edge){
+	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
+	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
+
+	// translation
+	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
+	raycast.trsl = edge;
+
+	// rotation
+	edge = rotation_edge(env->engine.player, edge);
+	raycast.rot = edge;
+
+	// scale
+	edge = scale_edge(edge);
+	raycast.scale = edge;
+
+	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
+	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
+	raycast.li_sector.ceil = 15;
+	raycast.li_sector.floor = 0;
+	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
+	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+	if (raycast.x1 > 0 && raycast.x2 < W)
+	{
+
+		raycast.x = raycast.x1;
+		drawline.container = (void *)&raycast;
+		int x = 0, y = 0;
+		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
+		drawline.from = 0;
+		drawline.to = 400;
+		drawline.bottom = 0xFFFFFFFF;
+		drawline.middle = 0xFFFFFFFF;
+		drawline.top = 0xFFFFFFFF;
+		while (raycast.x < raycast.x2)
+		{
+			vline(drawline, env);
+			raycast.x++;
+		}
+	}
+}
+
 void	dfs(t_env *env)
 {
 	t_queue		queue;
@@ -150,8 +209,19 @@ void	dfs(t_env *env)
 
 		/* Render each wall of this sector that is facing towards player. */
 		s = -1;
-		while (++s < (int)queue.sect->npoints) // for s in sector's edges
+		while (++s < (int)queue.sect->npoints)
+		{
 			render_sector_edges(env, &queue, s);
+			// Render objects/bots sprites //
+			t_wrap_sect *current_obj;
+			current_obj = engine->sectors[engine->player.sector].head_object;
+			while (current_obj)
+			{
+				if (!current_obj->is_picked)
+					render_sprites(env, current_obj);
+				current_obj = current_obj->next;
+			}
+		} // for s in sector's edges
 		++queue.renderedsectors[queue.now.sectorno];
 	}
 	free(queue.renderedsectors);

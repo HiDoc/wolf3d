@@ -6,13 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/19 12:34:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:41:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_GAMEPLAY_H
 # define DOOM_F_GAMEPLAY_H
 
+int			is_pickable_object(t_env *env, t_sector *sector);
 int		    pick_object(t_env *env, t_wrap_sect *obj);
 int		    drop_object(t_env *env, t_wrap_inv *object);
 int			select_object(t_wrap_inv *object, int x, int y, t_edge *p);

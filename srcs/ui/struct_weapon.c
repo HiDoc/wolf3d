@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 16:25:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:44:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,6 @@ int		init_weapon(t_env *env, char *res)
 	if (weapon_set(&env->world.armory[0], res, "magnum", 56)
 	&& weapon_set(&env->world.armory[1], res, "pompe", 100)
 	&& weapon_set(&env->world.armory[2], res, "rifle", 30))
-	{
-		env->player.inventory.weapons[0].current = env->engine.sectors[0].head_object;
-		env->player.inventory.current = &env->player.inventory.weapons[0];
-		env->player.inventory.current->ammo_current = 50;
-		env->player.inventory.current->ammo_magazine = 100;
 		return (1);
-	}
 	return (0);
 }

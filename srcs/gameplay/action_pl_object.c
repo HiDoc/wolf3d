@@ -6,11 +6,33 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:16:25 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:39:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int		is_pickable_object(t_env *env, t_sector *sector)
+{
+	t_wrap_sect *current;
+
+	current = NULL;
+	if (sector->head_object)
+		current = sector->head_object;
+	while (current)
+	{
+		if (!current->is_picked)
+		{
+			if (current->is_pickable)
+			{
+				env->player.hud.is_txt = pick_object(env, current);
+				return (1);
+			}
+		}
+		current = current->next;
+	}
+	return (0);
+}
 
 int		get_inventory_place(t_env *env)
 {
@@ -70,12 +92,6 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		}
 		obj->is_picked = 1;
 		env->player.hud.is_txt = 6;
-		//******************************
-		//******************************
-		//fonction pour retirer de la map
-		//******************************
-		//******************************
-
 		return (6);
 	}
 	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
