@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/20 15:20:58 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/21 16:34:17 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRC_NAME 	= main.c \
 			musics.c \
 			edge.c \
 			function.c \
+			perspective.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_pixels.c \
@@ -202,4 +203,5 @@ lldb:
 		-L$(LIBFT) -lft
 	lldb ./doom
 
+.NOTPARALLEL:
 re: fclean all

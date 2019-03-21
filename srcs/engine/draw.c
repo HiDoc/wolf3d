@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:07:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/21 18:56:34 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,25 +101,33 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	end = (int)fmin(container.x2, q->now.sx2);
 	start = (int)fmax(container.x1, q->now.sx1);
 
-	/*Initialise scaler*/
-	t_scaler ya_int = scaler_init(container.x1, start, container.x2, container.p.y1a, container.p.y2a);
-	t_scaler yb_int = scaler_init(container.x1, start, container.x2, container.p.y1b, container.p.y2b);
 	// t_scaler nya_int = scaler_init(container.x1, start, container.x2, container.n.y1a, container.n.y2a);
 	// t_scaler nyb_int = scaler_init(container.x1, start, container.x2, container.n.y1b, container.n.y2b);
 
 	container.x = start;
 	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
 		env->engine.sectors[q->now.sectorno].floor};
+	t_l_int tmp = wonder_wall(container, container.p, &q->ytop[start], &q->ybottom[start]);
+	t_l_int tmp2 = wonder_wall(container, container.p, &q->ytop[end], &q->ybottom[end]);
 	while (container.x <= end)
 	{
-		int ya = scaler_next(&ya_int);
-    	int yb = scaler_next(&yb_int);
-		(void)ya;
-		(void)yb;
 		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
-	// ici
+	t_edge v1;
+	t_edge v2;
+	printf("current projection container : %u\n", s);
+	printf("player[%f]\n", env->engine.player.where.z);
+	printf("\t[%d, %d][%d, %d]\n", container.p.y1a, container.p.y1b, container.p.y2a,container.p.y2b);
+	printf("\t[%d, %d]\n", start, end);
+	printf("\t[%d, %d]\n", container.x1, container.x2);
+	printf("\t[%d, %d]\n", tmp.ceil, tmp.floor);
+	printf("\t[%d, %d]\n", tmp2.ceil, tmp2.floor);
+	//bot
+	v1 = (t_edge){(t_vtx){container.x1, 600}, (t_vtx){container.x2, 600}};
+	//top
+	v2 = (t_edge){(t_vtx){container.x1, tmp.ceil}, (t_vtx){container.x2, tmp.ceil}};
+	draw_perspective(env->sdl.surface, v1, v2);
 	schedule_queue(q, container, start, end);
 	return (1);
 }
@@ -154,5 +162,7 @@ void	dfs(t_env *env)
 			render_sector_edges(env, &queue, s);
 		++queue.renderedsectors[queue.now.sectorno];
 	}
+	SDL_WaitEvent(&env->sdl.event);
+	system("clear");
 	free(queue.renderedsectors);
 }

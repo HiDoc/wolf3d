@@ -3,43 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ui_draw_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 17:22:33 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/19 18:43:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/21 18:58:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		bresenham_tab(int *tab, t_vtx v1, t_vtx v2)
+void		ui_draw_line(SDL_Surface *surf, t_edge edg, Uint32 color)
 {
-	tab[0]	 = abs((int)v2.x - (int)v1.x);
-	tab[1] = (int)v1.x < (int)v2.x ? 1 : -1;
-	tab[2] = abs((int)v2.y - (int)v1.y);
-	tab[3] = (int)v1.y < (int)v2.y ? 1 : -1;
-	tab[4] = (tab[0] > tab[2] ? tab[0] : -tab[2]) / 2;
-}
+	t_vtx d;
+	t_vtx s;
+	t_vtx e;
 
-void		ui_draw_line(SDL_Surface *surface, t_edge edge, Uint32 color)
-{
-	int e2;
-	int tab[5];
-
-	bresenham_tab(tab, edge.v1, edge.v2);
-	while (!((int)edge.v1.x == (int)edge.v2.x && (int)edge.v1.y == (int)edge.v2.y))
+	d.x = fabs(edg.v2.x - edg.v1.x);
+	d.y = fabs(edg.v2.y - edg.v1.y);
+	s.x = edg.v1.x < edg.v2.x ? 1 : -1;
+	s.y = edg.v1.y < edg.v2.y ? 1 : -1;
+	e.x = (d.x > d.y ? d.x : -d.y) / 2;
+	while (abs(dist_vertex(edg.v1, edg.v2) > 1))
 	{
-		setpixel(surface, (int)edge.v1.x, (int)edge.v1.y, color);
-		e2 = tab[4];
-		if (e2 > -tab[0] && (int)edge.v1.x != (int)edge.v2.x)
+		if (edg.v1.x < surf->w && edg.v1.y < surf->h)
+			setpixel(surf, (int)edg.v1.x, (int)edg.v1.y, color);
+		e.y = e.x;
+		if (e.y >-d.x)
 		{
-			tab[4] -= tab[2];
-			edge.v1.x = (int)edge.v1.x + tab[1];
+			e.x -= d.y;
+			edg.v1.x += s.x;
 		}
-		if (e2 < tab[2] && (int)edge.v1.y != (int)edge.v2.y)
+		if (e.y < d.y)
 		{
-			tab[4] += tab[0];
-			edge.v1.y = (int)edge.v1.y + tab[3];
+			e.x += d.x;
+			edg.v1.y += s.y;
 		}
 	}
 }

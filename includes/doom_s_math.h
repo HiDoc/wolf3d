@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_math.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/10 17:29:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:39:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,64 +30,79 @@ typedef struct s_projec			t_projec;
 typedef struct s_du_int			t_du_int;
 typedef struct s_ixy			t_ixy;
 typedef struct s_rgba			t_rgba;
+typedef struct s_perspective	t_perspective;
 
 struct 							s_rgba
 {
-	Uint8	r;
-	Uint8	g;
-	Uint8	b;
-	Uint8	a;
+	Uint8		r;
+	Uint8		g;
+	Uint8		b;
+	Uint8		a;
 };
 
 struct 							s_ixy
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 };
 
 struct							s_vtx
 {
-	float	x;
-	float	y;
+	float		x;
+	float		y;
 };
 
 struct							s_vctr
 {
-	float	x;
-	float	y;
-	float	z;
+	float		x;
+	float		y;
+	float		z;
 };
 
 struct							s_edge
 {
-	t_vtx	v1;
-	t_vtx	v2;
+	t_vtx		v1;
+	t_vtx		v2;
 };
 
 struct							s_du_int
 {
-	unsigned a;
-	unsigned b;
+	unsigned	a;
+	unsigned	b;
 };
 
 struct							s_l_int
 {
-	int		ceil;
-	int		floor;
+	int			ceil;
+	int			floor;
 };
 
 struct							s_l_float
 {
-	float	ceil;
-	float	floor;
+	float		ceil;
+	float		floor;
 };
 
 struct							s_projec
 {
-	int		y1a;
-	int		y1b;
-	int		y2a;
-	int		y2b;
+	int			y1a;
+	int			y1b;
+	int			y2a;
+	int			y2b;
 };
 
+struct							s_perspective
+{
+	t_vtx		vanish;
+	t_vtx		horizon;
+	t_vtx		from;
+	t_vtx		to;
+	t_edge		bot;
+	t_edge		top;
+	t_l_float	a;
+	t_l_float	b;
+	size_t		col;
+	size_t		row;
+	int			height;
+};
 #endif
