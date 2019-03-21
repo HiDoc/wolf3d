@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/21 15:44:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:45:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,37 @@ static void		draw_sectors(SDL_Surface *surface,
 	}
 }
 
+// REFACTOR >>>>>>>>>>>>>>>>>>>>>>>>
+static void		ref_draw_sectors(SDL_Surface *surface, t_engine *engine)
+{
+	t_edge			edge;
+	unsigned int	i;
+	unsigned int	j;
+
+	i = 0;
+	while (i < engine->nsectors)
+	{
+		j = 0;
+		while (j < engine->sectors[i].npoints)
+		{
+			edge = (t_edge){
+			engine->sectors[i].vertex[j],
+			engine->sectors[i].vertex[j + 1]};
+
+			edge.v1.x = edge.v1.x * COEF_MINIMAP;
+			edge.v1.y = edge.v1.y * COEF_MINIMAP;
+			edge.v2.x = edge.v2.x * COEF_MINIMAP;
+			edge.v2.y = edge.v2.y * COEF_MINIMAP;
+
+			ui_draw_line(surface, edge, C_CYAN);
+
+			j++;
+		}
+		i++;
+	}
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 /*static */void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 				t_engine *engine)
 {
@@ -118,7 +149,7 @@ static void		draw_sectors(SDL_Surface *surface,
 	}
 }
 
-/*static*/ void		draw_player(SDL_Surface *surface, t_minimap *minimap)
+/*static */void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 {
 	SDL_Rect	rect;
 	t_edge		edge;
@@ -136,7 +167,7 @@ static void		draw_sectors(SDL_Surface *surface,
 	ui_draw_line(surface, edge, C_CYAN);
 }
 
-/*static*/ void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *env)
+/*static */void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *env)
 {
 	SDL_Rect	rect;
 	t_vtx		vtx;
@@ -238,7 +269,7 @@ void		ui_minimap(t_env *env)
 	minimap.surface->w - 1, minimap.surface->h - 1}; // to remove
 	ui_draw_rect(minimap.surface, rect, C_RED); // to remove
 	// draw sectors on area
-	//ref_draw_sectors(minimap.surface, &(env->engine));
+	ref_draw_sectors(minimap.surface, &(env->engine));
 
 	// blit
 	rect = (SDL_Rect){
