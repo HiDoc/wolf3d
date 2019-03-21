@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 13:48:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 14:47:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ SDL_Surface		*ui_create_string(t_font data)
 	return (surface);
 }
 
-int    ui_put_data(t_env *env, t_font	data)
+int    ui_put_data(t_env *env, t_font data)
 {
 	SDL_Surface	*surface;
 	SDL_Surface	*tmp;
