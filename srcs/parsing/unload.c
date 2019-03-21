@@ -107,6 +107,20 @@ void		free_hud(t_hud *hud)
 	free_img(hud->empty_b);
 }
 
+void		free_surface_string(t_ui *ui)
+{
+	int i;
+
+	i = 0;
+	while (i < UI_NB_STRING)
+	{
+		free_img(ui->string[i]);
+		if (i < UI_NB_STR_INV)
+			free_img(ui->t_inv[i]);
+		i++;
+	}
+}
+
 void		free_ui(t_env *env)
 {
 	free_hud(&env->player.hud);
@@ -114,6 +128,7 @@ void		free_ui(t_env *env)
 	free_world_img(&env->world);
 	free_all_sounds(env);
 	free_fonts(&env->ui);
+	free_surface_string(&env->ui);
 }
 
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e)

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 17:13:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 13:06:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ struct s_time
 	int				frame;
 	int				tframe;
 };
-
-struct								s_ui
-{
-	TTF_Font			*arial;
-	TTF_Font			*doom;
-	TTF_Font			*text;
-	TTF_Font			*number;
-};
-
 
 struct								s_env
 {

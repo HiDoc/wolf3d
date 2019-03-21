@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 18:48:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 13:48:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,32 @@ SDL_Surface *dst, t_vtx pos)
 	return (1);
 }
 
-int    ui_put_string(t_env *env, t_font	data)
+SDL_Surface		*ui_create_string(t_font data)
 {
-	SDL_Surface	    *surface;
-	SDL_Surface		*tmp;
-	int				ret;
+	SDL_Surface	*tmp;
+	SDL_Surface	*surface;
+	int			ret;
+
+	ret = 0;
+	tmp = NULL;
+	surface = NULL;
+	if ((tmp = TTF_RenderText_Shaded(data.font, data.str, data.color, TRANSPARENT))
+	&& (surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
+		ret = 1;
+	if (tmp)
+		SDL_FreeSurface(tmp);
+	if (!ret && surface)
+		SDL_FreeSurface(surface);
+	if (!ret)
+		return (NULL);
+	return (surface);
+}
+
+int    ui_put_data(t_env *env, t_font	data)
+{
+	SDL_Surface	*surface;
+	SDL_Surface	*tmp;
+	int			ret;
 
 	ret = 0;
 	tmp = NULL;
@@ -101,4 +122,44 @@ int    ui_put_string(t_env *env, t_font	data)
 	if (!ret)
 		return (0);
     return (1);
+}
+
+int		set_simple_strings(t_env *env)
+{
+	if ((env->ui.string[0] = ui_create_string((t_font){WHITE, "Already full shield !",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[1] = ui_create_string((t_font){WHITE, "No shield in stock, stop crying & find some",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[2] = ui_create_string((t_font){WHITE, "Already full of life, enjoy mate !",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[3] = ui_create_string((t_font){WHITE, "No heal in stock, hang on !",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[4] = ui_create_string((t_font){WHITE, "Too greedy man.. Already full stack of this item",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[5] = ui_create_string((t_font){WHITE, "New item placed in inventory",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[6] = ui_create_string((t_font){WHITE, "Inventory full - Max 6 different items",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[7] = ui_create_string((t_font){WHITE, "Item suppressed from inventory",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[8] = ui_create_string((t_font){WHITE, "Weapon already full",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[9] = ui_create_string((t_font){WHITE, "No ammo for this weapon",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[10] = ui_create_string((t_font){WHITE, "JetPack ON",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[11] = ui_create_string((t_font){WHITE, "JetPack OFF",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.string[12] = ui_create_string((t_font){WHITE, "No JetPack here, keep looking bro !",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.t_inv[0] = ui_create_string((t_font){WHITE, "Inventory",
+	env->ui.doom, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.t_inv[1] = ui_create_string((t_font){WHITE, "Weapons",
+	env->ui.doom, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.t_inv[2] = ui_create_string((t_font){WHITE, "X",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1}))
+	&& (env->ui.t_inv[3] = ui_create_string((t_font){WHITE, "Use",
+	env->ui.text, (t_vtx){0, 0}, 0, -1, -1})))
+		return (1);
+	return (0);
 }

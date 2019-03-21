@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 18:58:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 13:42:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@
 # define WORLD_NB_WEAPONS 3
 # define WORLD_NB_OBJECTS 6
 # define WORLD_NB_SURFACE 15
+
+# define UI_NB_STRING 13
+# define UI_NB_STR_INV 4
 
 /*
 ** Ui put string

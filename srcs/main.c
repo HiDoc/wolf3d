@@ -24,7 +24,8 @@ int		init_gameplay_env(t_env *env, char *res)
 	&& init_character(&env->player)
 	&& init_weapon(env, res)
 	&& init_hud(env, res)
-	&& init_inventory_ui(env, res));
+	&& init_inventory_ui(env, res)
+	&& set_simple_strings(env));
 }
 
 int		main(void)

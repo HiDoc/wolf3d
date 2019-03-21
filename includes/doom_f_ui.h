@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 17:18:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 13:44:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 
 int			init_fonts(t_ui *f);
 
-int         text_font(t_env *env, char *str, t_vctr pos, SDL_Color color);
-int    		ui_put_string(t_env *env, t_font data);
+int    		ui_put_data(t_env *env, t_font data);
+int			set_simple_strings(t_env *env);
+int			draw_scaled_string(t_font data, SDL_Surface *src, SDL_Surface *dst, t_vtx pos);
 int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i);
 int         ui_put_fps(t_env *env, int fps);
