@@ -1,16 +1,15 @@
 vertex  0	0
-vertex  0	20
-vertex  5	40
-vertex  40	40
-vertex  35	5
-vertex  20	0
-vertex  10	5
+vertex  0	60
+vertex  80	80
+vertex  70	10
+vertex  40	10
+vertex  20	10
 
-sector  0	20   6 5 4 3 2 1 0	-1 -1 -1 -1 -1 -1 -1
+sector  0	20   5 4 3 2 1 0	-1 -1 -1 -1 -1 -1
 
 # object	x	y
 object  	25	30	0	0 1
 object  	10 	30	0	5 0
 
 # player 	x 	y	sectorno	angle
-player  	10 	10  0			0
+player  	0 	0	0			0

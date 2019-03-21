@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 14:50:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:44:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void		draw_sectors(SDL_Surface *surface,
 	}
 }
 
-static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
+/*static */void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 				t_engine *engine)
 {
 	t_wrap_sect		*obj;
@@ -118,7 +118,7 @@ static void		draw_objects(SDL_Surface *surface, t_minimap *minimap,
 	}
 }
 
-static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
+/*static*/ void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 {
 	SDL_Rect	rect;
 	t_edge		edge;
@@ -136,7 +136,7 @@ static void		draw_player(SDL_Surface *surface, t_minimap *minimap)
 	ui_draw_line(surface, edge, C_CYAN);
 }
 
-static void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *env)
+/*static*/ void     draw_compass(SDL_Surface *surface, t_minimap *minimap, t_env *env)
 {
 	SDL_Rect	rect;
 	t_vtx		vtx;
@@ -224,15 +224,55 @@ void		ui_minimap(t_env *env)
 	}
 	//////////////////////////////
 
+	SDL_Rect	rect;
 
-	/*if (!(surface = ui_make_surface(ymax + 1, xmax + 1)))
-	  {
-	  printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-	  exit(EXIT_FAILURE); // retourner erreur
-	  }*/
+	// REFACTOR >>>>>>>>>>>>>>>>>>>>
+	if (!(minimap.surface = ui_make_surface(
+	(xmax - xmin) * COEF_MINIMAP + 1, (ymax - ymin) * COEF_MINIMAP + 1)))
+	{
+		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
+		exit(EXIT_FAILURE); // retourner erreur
+	}
+	// background
+	rect = (SDL_Rect){0, 0,
+	minimap.surface->w - 1, minimap.surface->h - 1}; // to remove
+	ui_draw_rect(minimap.surface, rect, C_RED); // to remove
+	// draw sectors on area
+	//ref_draw_sectors(minimap.surface, &(env->engine));
+
+	// blit
+	rect = (SDL_Rect){
+	env->engine.player.where.x * COEF_MINIMAP - MINIMAP_SIZE / 2,
+	env->engine.player.where.y * COEF_MINIMAP - MINIMAP_SIZE / 2,
+	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
+	if (rect.x < 0)
+	{
+		rect.w -= -rect.x * COEF_MINIMAP;
+		rect.x = 0;
+	}
+	if (rect.x + rect.w > (minimap.surface->w - 1))
+		rect.w = (minimap.surface->w - 1) - rect.x;
+	if (rect.y < 0)
+	{
+		rect.h -= -rect.y * COEF_MINIMAP;
+		rect.y = 0;
+	}
+	if (rect.y + rect.h > (minimap.surface->h - 1))
+		rect.h = (minimap.surface->h - 1) - rect.y;
+	/* visu src rect */
+	ui_draw_rect(minimap.surface, rect, C_BLUE); // to remove
+	rect = (SDL_Rect){100, 100, minimap.surface->w, minimap.surface->h};
+	SDL_UnlockSurface(env->sdl.surface);
+	if ((SDL_BlitScaled(minimap.surface, 0, env->sdl.surface, &rect)) < 0)
+	{
+		ft_putendl(SDL_GetError()); // provisoire
+		exit(EXIT_FAILURE); // provisoire : rediriger erreur
+	}
+	SDL_LockSurface(env->sdl.surface);
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	// background
-	SDL_Rect rect = (SDL_Rect){minimap.origin.x, minimap.origin.y, // to remove
+	rect = (SDL_Rect){minimap.origin.x, minimap.origin.y, // to remove
 	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
 	ui_draw_rect(env->sdl.surface, rect, C_RED); // to remove
 	circle = (t_circle){
@@ -248,28 +288,12 @@ void		ui_minimap(t_env *env)
 	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
 
 	// draw objects && bots
-	draw_objects(env->sdl.surface, &minimap, &(env->engine));
+	//draw_objects(env->sdl.surface, &minimap, &(env->engine));
 	// draw_bots();
 
 	// draw player
-	draw_player(env->sdl.surface, &minimap);
+	//draw_player(env->sdl.surface, &minimap);
 
 	// draw compass
-	draw_compass(env->sdl.surface, &minimap, env);
-
-	// recoder BlitSurface
-	/*srcrect = (SDL_Rect){
-	  env->engine.player.where.x, env->engine.player.where.y,
-	  xmax, xmax}; // set relatif
-	  dstrect = (SDL_Rect){W - MINIMAP_SIZE - 10, 10, MINIMAP_SIZE, MINIMAP_SIZE};
-	  SDL_UnlockSurface(env->sdl.surface);
-	  if ((SDL_BlitScaled(surface, &srcrect, env->sdl.surface, &dstrect)) < 0)
-	  {
-	  printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-	  exit(EXIT_FAILURE); // retourner erreur
-	  }
-	  SDL_LockSurface(env->sdl.surface);*/
-	/////////////////////
-
-	//SDL_FreeSurface(surface);
+	//draw_compass(env->sdl.surface, &minimap, env);
 }

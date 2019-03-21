@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:09:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:15:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ struct						s_circle
 
 struct						s_minimap
 {
-	t_vtx				origin; // origin minimap
-	t_vtx				player; // player pos relatif minimap
+	t_vtx				origin; 	// origin minimap
+	t_vtx				player; 	// player pos relatif minimap
+	SDL_Surface			*surface;	// calque
 };
 
 #endif
