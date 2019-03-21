@@ -1,9 +1,9 @@
 vertex  0	0
-vertex  0	60
-vertex  80	80
-vertex  70	10
-vertex  40	10
-vertex  20	10
+vertex  0	20
+vertex  40	40
+vertex  35	5
+vertex  20	5
+vertex  10	5
 
 sector  0	20   5 4 3 2 1 0	-1 -1 -1 -1 -1 -1
 

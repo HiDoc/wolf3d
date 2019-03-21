@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/21 15:45:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:13:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_edge	rotate_edge(t_player player, t_edge v)
 	return (edge);
 }
 
-static void		draw_sectors(SDL_Surface *surface,
+/*static */void		draw_sectors(SDL_Surface *surface,
 				t_minimap *minimap, t_engine *engine)
 {
 	t_edge			edge;
@@ -79,7 +79,7 @@ static void		draw_sectors(SDL_Surface *surface,
 }
 
 // REFACTOR >>>>>>>>>>>>>>>>>>>>>>>>
-static void		ref_draw_sectors(SDL_Surface *surface, t_engine *engine)
+/*static */void		ref_draw_sectors(SDL_Surface *surface, t_engine *engine)
 {
 	t_edge			edge;
 	unsigned int	i;
@@ -95,10 +95,10 @@ static void		ref_draw_sectors(SDL_Surface *surface, t_engine *engine)
 			engine->sectors[i].vertex[j],
 			engine->sectors[i].vertex[j + 1]};
 
-			edge.v1.x = edge.v1.x * COEF_MINIMAP;
-			edge.v1.y = edge.v1.y * COEF_MINIMAP;
-			edge.v2.x = edge.v2.x * COEF_MINIMAP;
-			edge.v2.y = edge.v2.y * COEF_MINIMAP;
+			edge.v1.x = edge.v1.x * COEF_MINIMAP + MINIMAP_SIZE / 2;
+			edge.v1.y = edge.v1.y * COEF_MINIMAP + MINIMAP_SIZE / 2;
+			edge.v2.x = edge.v2.x * COEF_MINIMAP + MINIMAP_SIZE / 2;
+			edge.v2.y = edge.v2.y * COEF_MINIMAP + MINIMAP_SIZE / 2;
 
 			ui_draw_line(surface, edge, C_CYAN);
 
@@ -124,8 +124,7 @@ static void		ref_draw_sectors(SDL_Surface *surface, t_engine *engine)
 		while (obj)
 		{
 			// translation
-			edge = translate_edge(engine->player.where,
-					obj->vertex, obj->vertex);
+			edge = translate_edge(engine->player.where, obj->vertex, obj->vertex);
 
 			// rotation
 			edge = rotate_edge(engine->player, edge);
@@ -257,51 +256,6 @@ void		ui_minimap(t_env *env)
 
 	SDL_Rect	rect;
 
-	// REFACTOR >>>>>>>>>>>>>>>>>>>>
-	if (!(minimap.surface = ui_make_surface(
-	(xmax - xmin) * COEF_MINIMAP + 1, (ymax - ymin) * COEF_MINIMAP + 1)))
-	{
-		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-		exit(EXIT_FAILURE); // retourner erreur
-	}
-	// background
-	rect = (SDL_Rect){0, 0,
-	minimap.surface->w - 1, minimap.surface->h - 1}; // to remove
-	ui_draw_rect(minimap.surface, rect, C_RED); // to remove
-	// draw sectors on area
-	ref_draw_sectors(minimap.surface, &(env->engine));
-
-	// blit
-	rect = (SDL_Rect){
-	env->engine.player.where.x * COEF_MINIMAP - MINIMAP_SIZE / 2,
-	env->engine.player.where.y * COEF_MINIMAP - MINIMAP_SIZE / 2,
-	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
-	if (rect.x < 0)
-	{
-		rect.w -= -rect.x * COEF_MINIMAP;
-		rect.x = 0;
-	}
-	if (rect.x + rect.w > (minimap.surface->w - 1))
-		rect.w = (minimap.surface->w - 1) - rect.x;
-	if (rect.y < 0)
-	{
-		rect.h -= -rect.y * COEF_MINIMAP;
-		rect.y = 0;
-	}
-	if (rect.y + rect.h > (minimap.surface->h - 1))
-		rect.h = (minimap.surface->h - 1) - rect.y;
-	/* visu src rect */
-	ui_draw_rect(minimap.surface, rect, C_BLUE); // to remove
-	rect = (SDL_Rect){100, 100, minimap.surface->w, minimap.surface->h};
-	SDL_UnlockSurface(env->sdl.surface);
-	if ((SDL_BlitScaled(minimap.surface, 0, env->sdl.surface, &rect)) < 0)
-	{
-		ft_putendl(SDL_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
-	SDL_LockSurface(env->sdl.surface);
-	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 	// background
 	rect = (SDL_Rect){minimap.origin.x, minimap.origin.y, // to remove
 	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
@@ -315,8 +269,51 @@ void		ui_minimap(t_env *env)
 	MINIMAP_SIZE / 2, C_WHITE};
 	ui_draw_circle(env->sdl.surface, circle);
 
+	// REFACTOR >>>>>>>>>>>>>>>>>>>>
+	if (!(minimap.surface = ui_make_surface(
+	(xmax - xmin) * COEF_MINIMAP + MINIMAP_SIZE + 1,
+	(ymax - ymin) * COEF_MINIMAP + MINIMAP_SIZE + 1)))
+	{
+		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
+		exit(EXIT_FAILURE); // retourner erreur
+	}
+	ref_draw_sectors(minimap.surface, &(env->engine));
+	if (!(minimap.rot_srf = ui_make_surface(MINIMAP_SIZE + 1, MINIMAP_SIZE + 1)))
+	{
+		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
+		exit(EXIT_FAILURE); // retourner erreur
+	}
+
+	// blit
+	SDL_Rect src_rect = (SDL_Rect){
+	(env->engine.player.where.x * COEF_MINIMAP),
+	(env->engine.player.where.y * COEF_MINIMAP),
+	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
+
+	rect = (SDL_Rect){0, 0, MINIMAP_SIZE, MINIMAP_SIZE};
+	SDL_UnlockSurface(env->sdl.surface);
+	if ((SDL_BlitScaled(minimap.surface, &src_rect, minimap.rot_srf, &rect)) < 0)
+	{
+		ft_putendl(SDL_GetError()); // provisoire
+		exit(EXIT_FAILURE); // provisoire : rediriger erreur
+	}
+	SDL_LockSurface(env->sdl.surface);
+
+	minimap.rot_srf = rotate_surface(minimap.rot_srf, env);
+
+	rect = (SDL_Rect){
+	W - MINIMAP_SIZE - 10, 10, MINIMAP_SIZE, MINIMAP_SIZE};
+	SDL_UnlockSurface(env->sdl.surface);
+	if ((SDL_BlitScaled(minimap.rot_srf, 0, env->sdl.surface, &rect)) < 0)
+	{
+		ft_putendl(SDL_GetError()); // provisoire
+		exit(EXIT_FAILURE); // provisoire : rediriger erreur
+	}
+	SDL_LockSurface(env->sdl.surface);
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 	// draw sectors on area
-	draw_sectors(env->sdl.surface, &minimap, &(env->engine));
+	//draw_sectors(env->sdl.surface, &minimap, &(env->engine));
 
 	// draw objects && bots
 	//draw_objects(env->sdl.surface, &minimap, &(env->engine));
