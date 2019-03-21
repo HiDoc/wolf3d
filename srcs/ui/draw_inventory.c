@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 13:44:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 18:56:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,22 @@ int		use_drop_icon(t_env *env, t_edge bloc, SDL_Surface *sprite, int i)
 {
 	float	blocx;
 	t_edge	*udbox[2];
-	const	SDL_Color c[2] = {{255, 255, 255, 255}, {242, 204, 42, 255}};
 
 	udbox[0] = &env->player.inventory.objects[i].udbox[0];
 	udbox[1] = &env->player.inventory.objects[i].udbox[1];
 	blocx = sprite->w;
 	udbox[0]->v1 = (t_vtx){bloc.v2.x - blocx / 7, bloc.v1.y};
 	udbox[0]->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + blocx / 7};
-	ui_put_data(env, (t_font){c[0], "X", env->ui.text,
-	(t_vtx){udbox[0]->v1.x + 2,	udbox[0]->v1.y}, 20, -1, -1});
-	udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 3, bloc.v2.y - blocx / 7};
+	draw_flat_rect(env->sdl.surface,
+	env->player.inventory.objects[i].udbox[0], 0x0);
+	draw_scaled_string((t_font){WHITE, "X", env->ui.text,
+	(t_vtx){udbox[0]->v1.x + 2,	udbox[0]->v1.y}, 20, -1, -1}, env->ui.t_inv[2], env->sdl.surface, (t_vtx){0, 0});
+	udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 3, bloc.v2.y - blocx / 14};
 	udbox[1]->v2 = bloc.v2;
 	draw_flat_rect(env->sdl.surface,
 	env->player.inventory.objects[i].udbox[1], 0x0);
+	draw_scaled_string((t_font){WHITE, "Use", env->ui.text,
+	(t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1}, env->ui.t_inv[3], env->sdl.surface, (t_vtx){0, 0});
 	// ui_put_data(env, (t_font){c[0], "USE", env->ui.text,
 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
 	// ui_put_data(env, (t_font){c[1], "", env->ui.number,

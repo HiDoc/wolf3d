@@ -11,6 +11,11 @@ sector  0	20   6 5 4 3 2 1 0	-1 -1 -1 -1 -1 -1 -1
 # object	x	y
 object  	25	30	0	0 1
 object  	10 	30	0	5 0
+object  	5 	30	0	0 0
+object  	10 	20	0	1 0
+object  	5 	20	0	3 0
+object  	5 	15	0	1 1
+object  	20 	20	0	2 1
 
 # player 	x 	y	sectorno	angle
 player  	10 	10  0			0

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 17:54:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/21 18:07:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int sdl_loop(t_env *env)
 			{
 				sdl_render(env, &sdl_render_game);
 
-				//wpn_mouse_wheel(env, ev);
+				wpn_mouse_wheel(env, env->sdl.event);
 				mouse_shoot(env);
 				sdl_keyhook_game(env, env->sdl.event, keycodes);
 				player_move(e, v, keycodes);
