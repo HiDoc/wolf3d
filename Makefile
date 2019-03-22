@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/21 16:34:17 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/22 15:24:36 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,9 +191,11 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
+
 parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
 	./parser map.txt
+
 run: all
 	clear
 	./doom

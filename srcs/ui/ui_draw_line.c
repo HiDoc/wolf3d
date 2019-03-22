@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 17:22:33 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/21 18:58:00 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 12:46:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ui_draw_line(SDL_Surface *surf, t_edge edg, Uint32 color)
 	e.x = (d.x > d.y ? d.x : -d.y) / 2;
 	while (abs(dist_vertex(edg.v1, edg.v2) > 1))
 	{
-		if (edg.v1.x < surf->w && edg.v1.y < surf->h)
+		if (edg.v1.x < surf->w && edg.v1.y < surf->h && edg.v1.x >= 0 && edg.v1.y >= 0)
 			setpixel(surf, (int)edg.v1.x, (int)edg.v1.y, color);
 		e.y = e.x;
 		if (e.y >-d.x)

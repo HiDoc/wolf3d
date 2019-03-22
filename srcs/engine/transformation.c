@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:06:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 13:04:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	acquire_limits(t_engine *e, t_queue *q, t_raycast *ctn, int s)
 	}
 
 	/* Project our ceiling & floor heights into screen coordinates (Y coordinate) */
-	ctn->p = calc_projection(e->player.yaw, ctn->lf_current, ctn->rot, ctn->scale);
-	ctn->n = calc_projection(e->player.yaw, ctn->lf_next, ctn->rot, ctn->scale);
+	ctn->p = calc_projec(e->player.yaw, ctn->lf_current, ctn->rot, ctn->scale);
+	ctn->n = calc_projec(e->player.yaw, ctn->lf_next, ctn->rot, ctn->scale);
 }
 
 int		transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s)

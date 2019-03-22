@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 16:33:54 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 17:32:26 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 15:39:37 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,18 @@ void	vertical(SDL_Surface *surface, t_perspective ctn)
 	}
 }
 
-void	draw_perspective(SDL_Surface *surface, t_edge v1, t_edge v2)
+void	draw_perspective(SDL_Surface *surface,
+		t_square square, t_vtx horizon, t_vtx vanish)
 {
 	t_perspective ctn;
 
-	ctn.vanish = (t_vtx){W / 2, H / 2};
-	ctn.horizon = (t_vtx){400, 300};
+	ctn.vanish = vanish;
+	ctn.horizon = horizon;
 
-	ctn.bot = v1;
-	ctn.top = v2;
+	ctn.bot = square.bot;
+	ctn.top = square.top;
 	ctn.col = 5;
-	ctn.row = 12;
+	ctn.row = 8;
 	ctn.height = 40;
 
 	ctn.a.floor = 0;

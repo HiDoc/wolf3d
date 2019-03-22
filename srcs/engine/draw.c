@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 18:56:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:48:49 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,28 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 	}
 }
 
+int		render_perspective(t_env *env, t_raycast *ctn)
+{
+	t_edge		bot;
+	t_edge		top;
+
+	printf("yaw : \t%f\n", env->engine.player.yaw);
+	printf("player\t[%f]\n", env->engine.player.where.z);
+	printf("\tprojection \t1 : a, b[%d, %d]2: a, b[%d, %d]\n",
+		ctn->p.y1a, ctn->p.y1b, ctn->p.y2a, ctn->p.y2b);
+	printf("\tcontainer x \t[%d, %d]\n", ctn->x1, ctn->x2);
+
+	//bot
+	bot = (t_edge){(t_vtx){ctn->x1, 600}, (t_vtx){ctn->x2, 600}};
+	//top
+	const int max = ctn->p.y2b < ctn->p.y1b ? ctn->p.y2b : ctn->p.y1b;
+	top = (t_edge){(t_vtx){ctn->x1, max}, (t_vtx){ctn->x2, max}};
+	t_vtx horizon = {0, max};
+	t_vtx vanish = {W / 2, H - max};
+	draw_perspective(env->sdl.surface, (t_square){top, bot}, horizon, vanish);
+	return (1);
+}
+
 /*
 ** Queue logic to render wall and add a new sector if it has a neighbour
 */
@@ -87,8 +109,8 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 {
 	t_engine	*e;
 	t_raycast	container;
-	int			start;
 	int			end;
+	int			start;
 
 	e = &env->engine;
 	if (transform_vertex(e, q, &container, s) == 0)
@@ -101,33 +123,16 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	end = (int)fmin(container.x2, q->now.sx2);
 	start = (int)fmax(container.x1, q->now.sx1);
 
-	// t_scaler nya_int = scaler_init(container.x1, start, container.x2, container.n.y1a, container.n.y2a);
-	// t_scaler nyb_int = scaler_init(container.x1, start, container.x2, container.n.y1b, container.n.y2b);
-
+	// Start at x, clamped with screen
 	container.x = start;
 	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
 		env->engine.sectors[q->now.sectorno].floor};
-	t_l_int tmp = wonder_wall(container, container.p, &q->ytop[start], &q->ybottom[start]);
-	t_l_int tmp2 = wonder_wall(container, container.p, &q->ytop[end], &q->ybottom[end]);
 	while (container.x <= end)
 	{
 		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
 		++container.x;
 	}
-	t_edge v1;
-	t_edge v2;
-	printf("current projection container : %u\n", s);
-	printf("player[%f]\n", env->engine.player.where.z);
-	printf("\t[%d, %d][%d, %d]\n", container.p.y1a, container.p.y1b, container.p.y2a,container.p.y2b);
-	printf("\t[%d, %d]\n", start, end);
-	printf("\t[%d, %d]\n", container.x1, container.x2);
-	printf("\t[%d, %d]\n", tmp.ceil, tmp.floor);
-	printf("\t[%d, %d]\n", tmp2.ceil, tmp2.floor);
-	//bot
-	v1 = (t_edge){(t_vtx){container.x1, 600}, (t_vtx){container.x2, 600}};
-	//top
-	v2 = (t_edge){(t_vtx){container.x1, tmp.ceil}, (t_vtx){container.x2, tmp.ceil}};
-	draw_perspective(env->sdl.surface, v1, v2);
+	render_perspective(env, &container);
 	schedule_queue(q, container, start, end);
 	return (1);
 }
@@ -140,6 +145,7 @@ void	dfs(t_env *env)
 
 	engine = &env->engine;
 	ini_queue(engine, &queue);
+
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)
@@ -162,7 +168,5 @@ void	dfs(t_env *env)
 			render_sector_edges(env, &queue, s);
 		++queue.renderedsectors[queue.now.sectorno];
 	}
-	SDL_WaitEvent(&env->sdl.event);
-	system("clear");
 	free(queue.renderedsectors);
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 18:28:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 15:15:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void				render_floor(t_drawline l, t_env *env)
 	int			iter;
 	int			x;
 
+	return ;
 	ctn = ((t_raycast *)l.container);
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;

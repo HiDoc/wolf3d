@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 16:39:35 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 15:26:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_du_int			t_du_int;
 typedef struct s_ixy			t_ixy;
 typedef struct s_rgba			t_rgba;
 typedef struct s_perspective	t_perspective;
+typedef struct s_square			t_square;
 
 struct 							s_rgba
 {
@@ -63,6 +64,12 @@ struct							s_edge
 {
 	t_vtx		v1;
 	t_vtx		v2;
+};
+
+struct							s_square
+{
+	t_edge 		top;
+	t_edge 		bot;
 };
 
 struct							s_du_int
@@ -104,5 +111,6 @@ struct							s_perspective
 	size_t		col;
 	size_t		row;
 	int			height;
+	SDL_Surface	*sprite;
 };
 #endif
