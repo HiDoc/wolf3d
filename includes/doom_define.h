@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 13:42:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 13:15:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 */
 
 # define W_TEXTURE		256
-# define W				800
-# define H				600
+# define W				1200
+# define H				800
 
 /*
 ** FPS frames

@@ -6,32 +6,36 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 18:56:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 17:15:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		use_drop_icon(t_env *env, t_edge bloc, SDL_Surface *sprite, int i)
+int		use_drop_icon(t_env *env, t_edge bloc, int i)
 {
-	float	blocx;
-	t_edge	*udbox[2];
+	const float	size_cross = (bloc.v2.x - bloc.v1.x) / 5;
+	t_wrap_inv	objects;
+	t_edge		*cross;
+	t_edge		*use;
 
-	udbox[0] = &env->player.inventory.objects[i].udbox[0];
-	udbox[1] = &env->player.inventory.objects[i].udbox[1];
-	blocx = sprite->w;
-	udbox[0]->v1 = (t_vtx){bloc.v2.x - blocx / 7, bloc.v1.y};
-	udbox[0]->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + blocx / 7};
-	draw_flat_rect(env->sdl.surface,
-	env->player.inventory.objects[i].udbox[0], 0x0);
-	draw_scaled_string((t_font){WHITE, "X", env->ui.text,
-	(t_vtx){udbox[0]->v1.x + 2,	udbox[0]->v1.y}, 20, -1, -1}, env->ui.t_inv[2], env->sdl.surface, (t_vtx){0, 0});
-	udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 3, bloc.v2.y - blocx / 14};
-	udbox[1]->v2 = bloc.v2;
-	draw_flat_rect(env->sdl.surface,
-	env->player.inventory.objects[i].udbox[1], 0x0);
-	draw_scaled_string((t_font){WHITE, "Use", env->ui.text,
-	(t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1}, env->ui.t_inv[3], env->sdl.surface, (t_vtx){0, 0});
+	objects = env->player.inventory.objects[i];
+	cross = &objects.udbox[0];
+	use = &objects.udbox[1];
+
+	cross->v1 = (t_vtx){bloc.v2.x - size_cross + W / 28, bloc.v1.y};
+	cross->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + size_cross};
+	draw_flat_rect(env->sdl.surface, *cross, 0x0);
+	draw_scaled_string(
+		(t_font){WHITE, "X", env->ui.text, cross->v1, 25, -1, -1},
+		env->ui.t_inv[2], env->sdl.surface, (t_vtx){0, 0});
+
+	// udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 2, bloc.v2.y - blocx / 2};
+	// udbox[1]->v2 = bloc.v2;
+	// draw_flat_rect(env->sdl.surface,
+	// env->player.inventory.objects[i].udbox[1], 0x0);
+	// draw_scaled_string((t_font){WHITE, "Use", env->ui.text,
+	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1}, env->ui.t_inv[3], env->sdl.surface, (t_vtx){0, 0});
 	// ui_put_data(env, (t_font){c[0], "USE", env->ui.text,
 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
 	// ui_put_data(env, (t_font){c[1], "", env->ui.number,
@@ -47,18 +51,18 @@ int		fill_bloc(t_env *env, t_edge *bloc, t_vtx *n, int i)
 	SDL_Surface	*sprite;
 
 	inter = (float)W / 128;
+	sbloc = W / 8;
 	bloc->v1 = *n;
-	sbloc = env->player.inventory.ui.box[1]->w;
-	bloc->v2 = (t_vtx){sbloc, env->player.inventory.ui.box[1]->h};
+	bloc->v2 = (t_vtx){sbloc, W / 8};
 	if (env->player.inventory.objects[i].current)
 	{
 		sprite = env->player.inventory.ui.box[0];
 		draw_img(env, sprite, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, bloc->v2});
 		sprite = env->world.objects[env->player.inventory.objects[i].current->ref].sprite;
-		draw_img(env, sprite, (t_ixy){bloc->v1.x + env->player.inventory.ui.box[0]->w / 128,
-		bloc->v1.y + env->player.inventory.ui.box[0]->h / 128},
-		(t_edge){{0, 0}, {sprite->w, sprite->h}});
-		use_drop_icon(env, *bloc, sprite, i);
+		draw_img(env, sprite, (t_ixy){bloc->v1.x + sbloc / 16,
+		bloc->v1.y + sbloc / 16},
+		(t_edge){{0, 0}, {sbloc - sbloc / 10, sbloc - sbloc / 10}});
+		use_drop_icon(env, *bloc, i);
 	}
 	else
 	{
@@ -77,14 +81,14 @@ int		fill_wpn(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	SDL_Surface	*mwpn;
 
 	inter = (float)W / 64;
-	sbloc = env->player.inventory.ui.mini_wpn[iter]->w;
+	sbloc = W / 7;
 	bloc->v1 = *n;
-	bloc->v2 = (t_vtx){sbloc, env->player.inventory.ui.mini_wpn[iter]->h};
+	bloc->v2 = (t_vtx){sbloc, H / 7};
 	if (env->player.inventory.weapons[iter].current)
 		mwpn = env->player.inventory.ui.mini_wpn[iter];
 	else
 		mwpn = env->player.inventory.ui.empt_wpn[iter];
-	draw_img(env, mwpn, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, {mwpn->w, mwpn->h}});
+	draw_img(env, mwpn, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, bloc->v2});
 	n->x += inter + sbloc;
 	n->y = H - H / 3;
 	return (1);
@@ -97,18 +101,13 @@ int		fill_icon(t_env *env, t_edge *bloc, t_vtx *n, int iter)
 	SDL_Surface	*icon;
 
 	icon = env->player.inventory.ui.icon[iter];
-	inter = (float)W / 32;
-	sbloc = (float)W / 6 - (float)W / 64;
+	inter = (float)W / 8;
+	sbloc = W / 21;
 	bloc->v1 = *n;
-	n->x += sbloc;
-	n->y = H - H / 32;
-	bloc->v2 = *n;
-	bloc->v2.x = iter == 0 ? bloc->v1.x + bloc->v2.x / 4.5 : bloc->v2.x - bloc->v2.x / 4.2;
-	iter == 2 ? bloc->v2.x = n->x - n->x / 5.3 : 0;
-	draw_img(env, icon, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, {icon->w, icon->h}});
-	ui_icon_data(env, (t_vtx){bloc->v2.x, bloc->v1.y}, iter);
-	n->x += inter;
-	n->y = 	H - H / 11;
+	bloc->v2 = (t_vtx){sbloc, H / 15.5};
+	draw_img(env, icon, (t_ixy){bloc->v1.x, bloc->v1.y}, (t_edge){{0, 0}, bloc->v2});
+	ui_icon_data(env, (t_vtx){n->x + W / 20, bloc->v1.y + H / 70}, iter);
+	n->x += inter + sbloc;
 	return (1);
 }
 
@@ -149,7 +148,7 @@ int		print_inventory(t_env *env)
 	t_uinv	*ui;
 
 	ui = &env->player.inventory.ui;
-	draw_img(env, ui->front_pic, (t_ixy){0, 0}, (t_edge){{0, 0}, {ui->front_pic->w, ui->front_pic->h}});
+	draw_img(env, ui->front_pic, (t_ixy){0, 0}, (t_edge){{0, 0}, {W, H}});
 	fill_inventory(env);
 	ui_txt_inv(env);
 

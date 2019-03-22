@@ -12,6 +12,7 @@
         "t_engine",
         "t_projec",
         "t_queue",
+        "t_wrap_inv",
         "t_vtx",
         "t_vctr",
         "t_chain",

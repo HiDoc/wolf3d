@@ -66,7 +66,7 @@ int		main(void)
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
 	LoadData(&env.engine, &env);
-	if (!init_gameplay_env(&env, "800*600/"))
+	if (!init_gameplay_env(&env, "1920*1080/"))
 	{
 		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 		free_ui(&env);

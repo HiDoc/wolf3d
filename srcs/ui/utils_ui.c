@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 13:49:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 16:51:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int    ui_put_fps(t_env *env, int fps)
 int     ui_txt_inv(t_env *env)
 {
 	draw_scaled_string((t_font){WHITE, "inventory",
-	env->ui.doom, (t_vtx){20, 15}, W / 16, -1, -1},
+	env->ui.doom, (t_vtx){W / 40, 15}, W / 16, -1, -1},
 	env->ui.t_inv[0], env->sdl.surface, (t_vtx){0, 0});
 	draw_scaled_string((t_font){WHITE, "weapons",
-	env->ui.doom, (t_vtx){20, 350}, W / 26, -1, -1},
+	env->ui.doom, (t_vtx){W / 40, H / 2}, W / 26, -1, -1},
 	env->ui.t_inv[1], env->sdl.surface, (t_vtx){0, 0});
 	ui_put_data(env, (t_font){WHITE, "Level : ", env->ui.doom,
 	(t_vtx){W - (W / 3), 15}, 50, -1, 1});

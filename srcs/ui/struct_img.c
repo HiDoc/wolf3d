@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 14:32:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 13:11:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 int			draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
 {
-	Uint32	src;
 	int		y;
 	int		i;
 	int		sx;
+	t_vtx	scale;
 
+	if (img->w > limit_img.v2.x || img->h > limit_img.v2.y)
+	{
+		scale.x = fabs((float)img->w / limit_img.v2.x);
+		scale.y = fabs((float)img->h / limit_img.v2.y);
+	}
+	else
+		scale = (t_vtx){1, 1};
 	sx = start.x;
 	while ((start.x < sx + limit_img.v2.x) && start.x < W)
 	{
@@ -26,9 +33,8 @@ int			draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
 		i = start.y;
 		while ((i < start.y + limit_img.v2.y) && (i < H))
 		{
-			src = getpixel(img, limit_img.v1.x, y);
-			if (src & img->format->Amask)
-				setpixel(env->sdl.surface, start.x, i, src);
+			if (getpixel(img, limit_img.v1.x * scale.x, y * scale.y) & img->format->Amask)
+				setpixel(env->sdl.surface, start.x, i, getpixel(img, limit_img.v1.x * scale.x, y * scale.y));
 			i++;
 			y++;
 		}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 17:45:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 16:46:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ t_l_int	wonder_wall(t_raycast container, t_projec projct,
 {
 	t_l_int		limits;
 	t_l_int		coord;
-	const int	diff_abs = container.x2 - container.x1;
+	int			diff_abs;
 	const int	diff_curr = container.x - container.x1;
 
 	/* Acquire the Y coordinates for our ceiling
 	& floor for this X coordinate. Clamp them. */
+	diff_abs = container.x2 - container.x1;
+	!diff_abs ? diff_abs = 1 : 0;
 	coord.ceil = diff_curr * (projct.y2a - projct.y1a)
 		/ (diff_abs) + projct.y1a;
 	coord.floor = diff_curr * (projct.y2b - projct.y1b)
@@ -133,14 +135,8 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 	t_vtx player = {e->player.where.x, e->player.where.y};
 
 	ft_bzero(&drawline, sizeof(t_drawline));
-	// if distance < value && obj not already picked, so object is pickable
-	if (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked)
-	{
-		obj->is_pickable = 1;
-		printf("dist obj < 5 %f\n", dist_vertex(player, obj->vertex));
-	}
-	else
-		obj->is_pickable = 0;
+	// if distance < value && obj not already picked, object is pickable
+	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
 	edge = (t_edge){
 	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
 	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:16:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:48:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	action_inventory(t_env *env, int x, int y)
 			else if ((iter = select_action(object->udbox, x, y)) == 0)
 				drop_object(env, object);
 		}
+		SDL_FlushEvents(SDL_MOUSEBUTTONDOWN, SDL_MOUSEBUTTONUP);
 	}
 	return (0);
 }

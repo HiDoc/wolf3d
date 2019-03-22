@@ -6,13 +6,15 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 13:43:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:48:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_UI
 # define DOOM_S_UI
 
+typedef struct s_bloc		t_bloc;
+typedef struct s_minibloc	t_minibloc;
 typedef struct s_uinv		t_uinv;
 typedef struct s_hud		t_hud;
 typedef struct s_font		t_font;
@@ -52,6 +54,41 @@ struct						s_hud
 	int					is_txt;
 	int					mix;
 };
+
+struct					s_minibloc
+{
+	SDL_Rect			rect;
+	SDL_Surface			*sprite;
+	unsigned			is_visible;
+};
+
+
+// #define W_SLOT_1	0
+// #define W_SLOT_2	1
+// #define W_SLOT_3	2
+// #define OBJECT_SLOT_1	3
+// #define OBJECT_SLOT_2	4
+// #define OBJECT_SLOT_3	5
+// #define OBJECT_SLOT_4	6
+// #define OBJECT_SLOT_5	7
+// #define OBJECT_SLOT_6	8
+// #define ICON_SLOT_1 	9
+// #define ICON_SLOT_2 	10
+// #define ICON_SLOT_3 	11
+
+// struct					s_bloc
+// {
+// 	t_minibloc			cross;
+// 	t_minibloc			use;
+// 	SDL_Surface			*bg_empty;
+// 	SDL_Surface			*bg_fill;
+// 	SDL_Surface			*sprite;
+// 	SDL_Rect			rect;
+// };
+
+// #define INV_PISTOL	0
+// #define INV_SHOTGUN	1
+// #define INV_RIFLE	2
 
 struct 						s_uinv
 {
