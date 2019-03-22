@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 18:07:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/22 12:56:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ struct						s_minimap
 	t_vtx				origin; 	// origin minimap
 	t_vtx				player; 	// player pos relatif minimap
 	SDL_Surface			*surface;	// calque precalcule
-	SDL_Surface			*rot_srf;	// intermediaire rotation
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/21 19:13:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/22 16:48:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,37 +278,16 @@ void		ui_minimap(t_env *env)
 		exit(EXIT_FAILURE); // retourner erreur
 	}
 	ref_draw_sectors(minimap.surface, &(env->engine));
-	if (!(minimap.rot_srf = ui_make_surface(MINIMAP_SIZE + 1, MINIMAP_SIZE + 1)))
-	{
-		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-		exit(EXIT_FAILURE); // retourner erreur
-	}
 
 	// blit
 	SDL_Rect src_rect = (SDL_Rect){
 	(env->engine.player.where.x * COEF_MINIMAP),
 	(env->engine.player.where.y * COEF_MINIMAP),
-	MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
+	MINIMAP_SIZE, MINIMAP_SIZE};
 
-	rect = (SDL_Rect){0, 0, MINIMAP_SIZE, MINIMAP_SIZE};
 	SDL_UnlockSurface(env->sdl.surface);
-	if ((SDL_BlitScaled(minimap.surface, &src_rect, minimap.rot_srf, &rect)) < 0)
-	{
-		ft_putendl(SDL_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
-	SDL_LockSurface(env->sdl.surface);
-
-	minimap.rot_srf = rotate_surface(minimap.rot_srf, env);
-
-	rect = (SDL_Rect){
-	W - MINIMAP_SIZE - 10, 10, MINIMAP_SIZE, MINIMAP_SIZE};
-	SDL_UnlockSurface(env->sdl.surface);
-	if ((SDL_BlitScaled(minimap.rot_srf, 0, env->sdl.surface, &rect)) < 0)
-	{
-		ft_putendl(SDL_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
+	env->sdl.surface = rotate_surface(src_rect,
+	minimap.surface, env->sdl.surface, minimap.origin, env);
 	SDL_LockSurface(env->sdl.surface);
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -320,7 +299,7 @@ void		ui_minimap(t_env *env)
 	// draw_bots();
 
 	// draw player
-	//draw_player(env->sdl.surface, &minimap);
+	draw_player(env->sdl.surface, &minimap);
 
 	// draw compass
 	//draw_compass(env->sdl.surface, &minimap, env);

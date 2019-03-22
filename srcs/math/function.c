@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 20:29:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 19:19:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/22 17:07:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,33 @@
 ** Rotation surface, relatif a env->engine.player.angle
 */
 // fonction a proteger
-SDL_Surface		*rotate_surface(SDL_Surface *surface, t_env *env)
+SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
+				SDL_Surface *dst, t_vtx origin, t_env *env)
 {
-	SDL_Surface		*dest;
-	int		y;
-	int		x;
-	int		xdst;
-	int		ydst;
+	const t_player	plr = env->engine.player;
+	const t_vtx		c = {src_rect.w / 2, src_rect.h / 2};
+	t_vtx			dest;
+	float			y;
+	float			x;
+	Uint32			color;
 
 	y = 0;
-	if (!(dest = ui_make_surface(MINIMAP_SIZE + 1, MINIMAP_SIZE + 1)))
-	{
-		printf("Doom_nukem: minimap: %s\n", SDL_GetError());
-		exit(EXIT_FAILURE); // retourner erreur
-	}
-	while (y < surface->h)
+	while (y < src_rect.h)
 	{
 		x = 0;
-		while (x < surface->w)
+		while (x < src_rect.w)
 		{
-			xdst = x * env->engine.player.anglesin - y
-				* env->engine.player.anglecos + MINIMAP_SIZE / 2;
-			ydst = x * env->engine.player.anglecos + y
-				* env->engine.player.anglesin + MINIMAP_SIZE / 2;
-			if (xdst > 0 && xdst < MINIMAP_SIZE + 1
-			&& ydst > 0 && ydst < MINIMAP_SIZE + 1)
-				setpixel(dest, xdst, ydst, getpixel(surface, x, y));
+			dest = (t_vtx) {
+			c.x + (x - c.x) * plr.anglecos + (y - c.y) * plr.anglesin,
+			c.y + (x - c.x) * plr.anglesin - (y - c.y) * plr.anglecos};
+			if ((color = getpixel(src, src_rect.x + dest.x, src_rect.y + dest.y)))
+				setpixel(dst, origin.x + x, origin.y + y, color);
 			x++;
 		}
 		y++;
 	}
-	SDL_FreeSurface(surface);
-	return (dest);
+	SDL_FreeSurface(src);
+	return (dst);
 }
 
 /*
