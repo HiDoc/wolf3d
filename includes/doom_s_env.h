@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 13:06:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 15:46:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
 typedef struct s_msc				t_msc;
 typedef struct s_time				t_time;
-typedef struct s_ui					t_ui;
 
 struct								s_sdl
 {
@@ -52,7 +51,7 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
-	t_ui			ui;
+	t_uitxt			ui;
 
 	// font sgalasso, a ranger je sais pas ou
 	TTF_Font		*arial_font;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 13:15:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 21:39:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,41 @@
 /*
 ** World related constants
 */
-# define WORLD_NB_WEAPONS 3
-# define WORLD_NB_OBJECTS 6
-# define WORLD_NB_SURFACE 15
+# define WORLD_NB_WEAPONS	3
+# define WORLD_NB_OBJECTS	6
+# define WORLD_NB_SURFACE	15
+# define NB_HUD_OBJ			21
+# define UI_NB_STRING		13
+# define UI_NB_STR_INV		4
 
-# define UI_NB_STRING 13
-# define UI_NB_STR_INV 4
+/*
+** HUD index img
+*/
+# define BG				0
+# define BOX_E			1
+# define BOX_F			2
+# define ICON_SLOT_1 	3
+# define ICON_SLOT_2 	4
+# define ICON_SLOT_3 	5
+# define FACE_1		 	6
+# define FACE_2		 	7
+# define FACE_3		 	8
+# define FACE_4		 	9
+# define HP_BAR_1	 	10
+# define HP_BAR_2	 	11
+# define W_SLOT_1		12
+# define W_SLOT_2		13
+# define W_SLOT_3		14
+# define INV_PISTOL		15
+# define INV_SHOTGUN	16
+# define INV_RIFLE		17
+# define HUD_PISTOL 	18
+# define HUD_SHOTGUN 	19
+# define HUD_RIFLE	 	20
 
 /*
 ** Ui put string
 */
-
 #define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
 #define F_TEXT "rsrc/font/interbureau.ttf"
 #define F_NUMB "rsrc/font/5E.ttf"

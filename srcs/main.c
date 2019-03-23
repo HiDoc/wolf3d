@@ -17,14 +17,13 @@ void	init_floor(t_env *env)
 	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
 }
 
-int		init_gameplay_env(t_env *env, char *res)
+int		init_gameplay_env(t_env *env)
 {
 	return (init_fonts(&env->ui)
-	&& init_consumable(env, res)
+	&& init_consumable(env)
 	&& init_character(&env->player)
-	&& init_weapon(env, res)
-	&& init_hud(env, res)
-	&& init_inventory_ui(env, res)
+	&& init_weapon(env)
+	&& init_hud_container(env)
 	&& set_simple_strings(env));
 }
 
@@ -66,7 +65,7 @@ int		main(void)
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
 	LoadData(&env.engine, &env);
-	if (!init_gameplay_env(&env, "1920*1080/"))
+	if (!init_gameplay_env(&env))
 	{
 		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 		free_ui(&env);
@@ -74,10 +73,10 @@ int		main(void)
 	}
 	verify_map(&env.engine);
 	init_floor(&env);
-
 	////////////////////////////////////////////
 	// initialisation : blame -> sgalasso
 	// - penser a destroy ceci a la fin
+	printf("OKKKKKKKKKKKK\n");
 	if (!(env.arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
 	{
 		ft_putendl(TTF_GetError()); // provisoire

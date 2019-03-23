@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 16:19:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 19:27:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	mouse_shoot(t_env *env)
 
 	if (env->sdl.event.type == SDL_MOUSEBUTTONDOWN
 	&& env->player.inventory.current
-	&& !env->player.inventory.ui.is_active
+	&& !env->player.hud.inventory.is_active
 	&& !env->player.actions.is_loading
 	&& !env->player.actions.mouse_state)
 	{

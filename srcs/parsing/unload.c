@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void	free_fonts(t_ui *f)
+void	free_fonts(t_uitxt *f)
 {
 	TTF_CloseFont(f->arial);
 	TTF_CloseFont(f->doom);
@@ -66,48 +66,59 @@ void		free_world_img(t_world *world)
 	}
 }
 
-void		free_inventory_img(t_uinv *ui)
+// void		free_inventory_img(t_uinv *ui)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < WORLD_NB_OBJECTS)
+// 	{
+// 		if (i < WORLD_NB_WEAPONS)
+// 		{
+// 			free_img(ui->mini_wpn[i]);
+// 			free_img(ui->empt_wpn[i]);
+// 		}
+// 		if (i < 2)
+// 		{
+// 			free_img(ui->box[i]);
+// 			free_img(ui->icon[i]);
+// 		}
+// 		i++;
+// 	}
+// 	free_img(ui->front_pic);
+// }
+
+// void		free_hud(t_hud *hud)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < WORLD_NB_OBJECTS)
+// 	{
+// 		free_img(hud->objects[i]);
+// 		if (i < 4)
+// 			free_img(hud->faces[i]);
+// 		if (i < WORLD_NB_WEAPONS)
+// 			free_img(hud->hud_wpn[i]);
+// 		if (i < 2)
+// 			free_img(hud->bar[i]);
+// 		i++;
+// 	}
+// 	free_img(hud->empty_b);
+// }
+
+void		free_hud(t_container *surface)
 {
 	int	i;
 
 	i = 0;
-	while (i < WORLD_NB_OBJECTS)
+	while (i < NB_HUD_OBJ)
 	{
-		if (i < WORLD_NB_WEAPONS)
-		{
-			free_img(ui->mini_wpn[i]);
-			free_img(ui->empt_wpn[i]);
-		}
-		if (i < 2)
-		{
-			free_img(ui->box[i]);
-			free_img(ui->icon[i]);
-		}
-		i++;
+		free_img(surface->hud[i]);
 	}
-	free_img(ui->front_pic);
 }
 
-void		free_hud(t_hud *hud)
-{
-	int	i;
-
-	i = 0;
-	while (i < WORLD_NB_OBJECTS)
-	{
-		free_img(hud->objects[i]);
-		if (i < 4)
-			free_img(hud->faces[i]);
-		if (i < WORLD_NB_WEAPONS)
-			free_img(hud->hud_wpn[i]);
-		if (i < 2)
-			free_img(hud->bar[i]);
-		i++;
-	}
-	free_img(hud->empty_b);
-}
-
-void		free_surface_string(t_ui *ui)
+void		free_surface_string(t_uitxt*ui)
 {
 	int i;
 
@@ -123,8 +134,8 @@ void		free_surface_string(t_ui *ui)
 
 void		free_ui(t_env *env)
 {
-	free_hud(&env->player.hud);
-	free_inventory_img(&env->player.inventory.ui);
+	free_hud(&env->world.surfaces);
+	// free_inventory_img(&env->player.inventory.ui);
 	free_world_img(&env->world);
 	free_all_sounds(env);
 	free_fonts(&env->ui);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 13:44:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 20:50:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
-	SDL_Surface	*sprite;
+	t_bloc	*bloc;
 
-	sprite = env->player.hud.hud_wpn[wpn->current->ref];
-	draw_img(env, sprite, (t_ixy){W - W / 6, H / 1.2},
-	(t_edge){{0, 0},{sprite->w, sprite->h}});
+	bloc = &env->player.hud.hud_wpn[wpn->current->ref];
+	draw_img(env, bloc->sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
+	(t_edge){{0, 0},{bloc->rect.w, bloc->rect.h}});
 	ui_put_data(env, (t_font){GOLD, "", env->ui.number,
 	(t_vtx){W - W / 7, H / 1.3}, 30,
 	env->player.inventory.current->ammo_current, -1});
@@ -47,11 +47,16 @@ int	check_object_stack(t_env *env, int ref, t_ixy start)
 {
 	int	iter;
 	SDL_Surface	*sprite;
+	// t_bloc		*bloc;
 
+	// bloc = env->player.hud.objects[]
 	if ((iter = check_object_type(env, ref)) > -1)
 	{
 		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
-			sprite = env->player.hud.objects[ref];
+		{
+
+			sprite = env->player.hud.objects[ref].sprite;
+		}
 		else
 			sprite = env->player.hud.empty_b;
 		draw_img(env, sprite, start,
@@ -93,6 +98,7 @@ int print_hud(t_env *env)
 	int	h;
 	int	limit_bar;
 	int	index;
+	t_bloc	*bloc;
 
 	h = 200;
 	while (h > env->player.health)
@@ -103,17 +109,19 @@ int print_hud(t_env *env)
 			return (0);
 	}
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
-	draw_img(env, env->player.hud.faces[index], (t_ixy){W / 128, H - H / 2.8},
-	(t_edge){{0, 0}, {env->player.hud.faces[index]->w,
-	env->player.hud.faces[index]->h}});
-	limit_bar = size_bar(env->player.hud.bar[0]->w,
+	bloc = &env->player.hud.faces[index];
+	draw_img(env, bloc->sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
+	(t_edge){{0, 0}, {bloc->rect.w,	bloc->rect.h}});
+	bloc = &env->player.hud.bar[0];
+	limit_bar = size_bar(bloc->rect.w,
 	env->player.max_health, env->player.health);
-	draw_img(env, env->player.hud.bar[0], (t_ixy){W / 128, H - H / 2.8},
-	(t_edge){{0, 0}, {limit_bar, env->player.hud.bar[0]->h}});
-	limit_bar = size_bar(env->player.hud.bar[1]->w,
+	draw_img(env, bloc->sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
+	(t_edge){{0, 0}, {limit_bar, bloc->rect.h}});
+	bloc = &env->player.hud.bar[1];
+	limit_bar = size_bar(bloc->rect.w,
 	env->player.max_shield, env->player.shield);
-	draw_img(env, env->player.hud.bar[1], (t_ixy){W / 128, H - H / 2.8},
-	(t_edge){{0, 0}, {limit_bar, env->player.hud.bar[1]->h}});
-	print_pad(env);
+	draw_img(env, bloc->sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
+	(t_edge){{0, 0}, {limit_bar, bloc->rect.h}});
+	// print_pad(env);
 	return (1);
 }

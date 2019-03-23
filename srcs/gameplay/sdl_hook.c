@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 17:49:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 19:26:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_uinv		*ui;
 
-	ui = &env->player.inventory.ui;
+	ui = &env->player.hud.inventory;
 	SDL_WaitEvent(&ev);
 	if (ev.type == SDL_KEYDOWN)
 	{
@@ -59,7 +59,7 @@ int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]); */
 		if (keycodes[SDL_SCANCODE_TAB])
 		{
-			p->inventory.ui.is_active = !p->inventory.ui.is_active;
+			p->hud.inventory.is_active = !p->hud.inventory.is_active;
 			SDL_Delay(300);
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}

@@ -45,10 +45,10 @@ int		fix_vertex_parallel(t_sector *sec, t_chain *chain)
 		chain->f = chain->c;
 		while (chain->d < sec->npoints)
 		{
-			printf("%u / %u\n", chain->d, chain->e);
+			// printf("%u / %u\n", chain->d, chain->e);
 			if (chain->d != chain->f)
 			{
-				printf("assign [%f, %f]\n", sec->vertex[chain->d].x, sec->vertex[chain->d].y);
+				// printf("assign [%f, %f]\n", sec->vertex[chain->d].x, sec->vertex[chain->d].y);
 				vertex[chain->e] = (t_vtx){sec->vertex[chain->d].x, sec->vertex[chain->d].y};
 			}
 			if (chain->d != chain->f)
@@ -82,7 +82,7 @@ int		verify_vertex_parallel(t_engine *e)
 		{
 			while (chain.b < sect->npoints)
 			{
-				printf("verify: \n");
+				// printf("verify: \n");
 				chain.c = (chain.b + 1) % sect->npoints;
 				current = (t_edge){vertex[chain.b], vertex[chain.c]};
 				next = (t_edge){vertex[chain.c], vertex[chain.c + 1]};
@@ -120,7 +120,7 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 			if (equal_vertex(neigh->vertex[chain->c + 1], edge->v1)
 				&& equal_vertex(neigh->vertex[chain->c], edge->v2))
 			{
-				printf("neigbours: %d, %d, %u, %u\n", neigh->neighbors[chain->c], neigh->neighbors[chain->b], chain->a, chain->d);
+				// printf("neigbours: %d, %d, %u, %u\n", neigh->neighbors[chain->c], neigh->neighbors[chain->b], chain->a, chain->d);
 				print_edg(*edge);
 				if (neigh->neighbors[chain->c] != (int)chain->a)
 				{
@@ -202,12 +202,12 @@ int     verify_map(t_engine *e)
 		 	printf("vertex does not form a loop\n");
 		if (verify_neighbor(e, NULL, NULL))
 		{
-			printf("neighbors not linked\n");
+			// printf("neighbors not linked\n");
 			continue ;
 		}
 		if (verify_hull(e))
 		{
-			printf("hull redispatch\n");
+			// printf("hull redispatch\n");
 			continue ;
 		}
 		else break;

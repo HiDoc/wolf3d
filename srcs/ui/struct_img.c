@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/22 13:11:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 22:07:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,31 +92,28 @@ SDL_Surface	*surface_fr_png(char *path)
 	return (NULL);
 }
 
-SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
+SDL_Surface *ui_img(char *file, int i)
 {
 	SDL_Surface	*new;
-	char		*path;
-	const char	*png = ".png";
 	char		*nb;
-	char		*resolution;
+	char		*path;
+	char		*final_path;
+	const char	*png = ".png";
 
-	nb = NULL;
 	path = NULL;
-	new = NULL;
+	final_path = NULL;
 	if ((nb = ft_itoa(i + 1))
-	&& (resolution = ft_strjoin("./rsrc/img/", res))
-	&& (path = ft_strljoin(resolution, doss))
-	&& (path = ft_strljoin(path, ssdoss))
-	&& (path = ft_strljoin(path, nb))
-	&& (path = ft_strljoin(path, (char *)png))
-	&& (new = surface_fr_png(path)))
+	&& (path = ft_strjoin("./rsrc/img/", file))
+	&& (final_path = ft_strrjoin(path, nb))
+	&& (final_path = ft_strljoin(final_path, (char *)png))
+	&& (new = surface_fr_png(final_path)))
 		i = 1;
 	else
 		i = 0;
-	if (nb)
-		free(nb);
 	if (path)
 		free(path);
+	if (final_path)
+		free(final_path);
 	if (!i)
         return (NULL);
 	return (new);

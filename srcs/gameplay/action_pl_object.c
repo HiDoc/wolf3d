@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 18:52:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 22:13:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.objects[index].current = obj;
 			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.nb_current_obj++;
+			env->player.hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
 			if (obj->ref < 6)
 				env->player.hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
 		}

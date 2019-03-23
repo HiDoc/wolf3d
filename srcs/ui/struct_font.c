@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 14:47:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/23 15:42:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		init_fonts(t_ui *f)
+int		init_fonts(t_uitxt*f)
 {
 	if ((f->arial = TTF_OpenFont(F_ARIAL, 100))
 	&& (f->doom = TTF_OpenFont(F_DOOM, 100))
