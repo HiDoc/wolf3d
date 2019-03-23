@@ -3,6 +3,8 @@
 #ifndef DOOM_F_TGA_READER_H
 # define DOOM_F_TGA_READER_H
 
+//load_tga.c
+void                load_texture(char *path);
 //rle.c
 void				rle_uncompress(t_tga *tga);
 
@@ -37,5 +39,5 @@ SDL_Surface			*set_surface(t_tga *tga);
 SDL_Surface			*ui_make_surface(int height, int width);
 SDL_PixelFormat		*fill_pxlformat(SDL_PixelFormat *fmt);
 
-
+unsigned char *ft_strjoin2(unsigned char *str, unsigned char *buff, int len_total, int len_buff);
 #endif

@@ -130,7 +130,7 @@ SRC_NAME 	= main.c \
 			ui_draw_string.c \
 			data_color.c \
 			ft_strjoin2.c \
-			load.c \
+			load_tga.c \
 			read_data.c \
 			rle_color.c \
 			rle.c \
