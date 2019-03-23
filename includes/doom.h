@@ -29,6 +29,7 @@
 # include "doom_s_gameplay.h"
 # include "doom_s_engine.h"
 # include "doom_s_env.h"
+# include "doom_s_tga_reader.h"
 
 /*
 ** Then include all functions
@@ -39,5 +40,6 @@
 # include "doom_f_ui.h"
 # include "doom_f_engine.h"
 # include "doom_f_ui.h"
+# include "doom_f_tga_reader.h"
 
 #endif

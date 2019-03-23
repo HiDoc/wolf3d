@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/tga_reader
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -64,10 +64,12 @@ HED_NAME	= doom.h \
 			  doom_s_math.h \
 			  doom_s_gameplay.h \
 			  doom_s_engine.h \
+			  doom_s_tga_reader.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
 			  doom_f_ui.h \
-			  doom_define.h
+			  doom_define.h \
+			  doom_f_tga_reader.h \
 
 SRC_NAME 	= main.c \
 			load.c \
@@ -126,6 +128,15 @@ SRC_NAME 	= main.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_string.c \
+			data_color.c \
+			ft_strjoin2.c \
+			load.c \
+			read_data.c \
+			rle_color.c \
+			rle.c \
+			set_data_pxl.c \
+			set_pxl_color.c \
+			tga_main.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
