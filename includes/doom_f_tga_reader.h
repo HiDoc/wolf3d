@@ -4,7 +4,7 @@
 # define DOOM_F_TGA_READER_H
 
 //load_tga.c
-void                load_texture(char *path);
+SDL_Surface                *load_texture(char *path);
 //rle.c
 void				rle_uncompress(t_tga *tga);
 

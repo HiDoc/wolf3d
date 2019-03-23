@@ -62,11 +62,12 @@ int			copy_img(Uint32 *pxl, SDL_Surface *img)
 SDL_Surface	*surface_fr_png(char *path)
 {
 	SDL_Surface	*new;
-	SDL_Surface	*tmp;
-	Uint32		*pxl;
+//	SDL_Surface	*tmp;
+//	Uint32		*pxl;
 
 	new = NULL;
-	if ((new = IMG_Load(path))
+	new = load_texture(path);
+/*	if ((new = IMG_Load(path))
 	&& (tmp = SDL_ConvertSurfaceFormat(new, SDL_PIXELFORMAT_RGBA32, 0)))
 	{
 		SDL_FreeSurface(new);
@@ -84,13 +85,15 @@ SDL_Surface	*surface_fr_png(char *path)
 	if (new)
 		free(new);
 	return (NULL);
+	*/
+	return (new);
 }
 
 SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 {
 	SDL_Surface	*new;
 	char		*path;
-	const char	*png = ".png";
+	const char	*png = ".tga";
 	char		*nb;
 	char		*resolution;
 
@@ -98,7 +101,7 @@ SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 	path = NULL;
 	new = NULL;
 	if ((nb = ft_itoa(i + 1))
-	&& (resolution = ft_strjoin("./rsrc/img/", res))
+	&& (resolution = ft_strjoin("./rsrc/img_tga/", res))
 	&& (path = ft_strljoin(resolution, doss))
 	&& (path = ft_strljoin(path, ssdoss))
 	&& (path = ft_strljoin(path, nb))

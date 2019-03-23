@@ -17,7 +17,7 @@ static void	tga2sur(t_tga *tga, SDL_Surface *surface)
 	surface = SDL_CreateRGBSurfaceWithFormatFrom(tga->pxl,tga->w, tga->h, 32, 4 * tga->w, SDL_PIXELFORMAT_ARGB32);
 }
 
-void		load_texture(char *path)
+SDL_Surface		*load_texture(char *path)
 {
 	SDL_Surface	*surface;
 	t_tga		*tga;
@@ -28,4 +28,6 @@ void		load_texture(char *path)
 		printf("Cant malloc tga\n");
 	tga_load(tga, path);
 	tga2sur(tga, surface);
+	printf("work\n");
+	return (surface);
 }
