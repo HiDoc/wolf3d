@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 20:29:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 14:39:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/24 19:56:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,15 @@ SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 		x = 0;
 		while (x < src_rect.w)
 		{
-			dest = (t_vtx) {
-				c.x + (x - c.x) * sin(angle)
-					- (y - c.y) * cos(angle),
-				c.y + (x - c.x) * cos(angle)
-					+ (y - c.y) * sin(angle)
-			};
+			dest = (t_vtx){
+			c.x + (x - c.x) * sin(angle) - (y - c.y) * cos(angle),
+			c.y + (x - c.x) * cos(angle) + (y - c.y) * sin(angle)};
 			if ((color = getpixel(src, src_rect.x + dest.x, src_rect.y + dest.y)))
 				setpixel(dst, origin.x + x, origin.y + y, color);
 			x++;
 		}
 		y++;
 	}
-	SDL_FreeSurface(src);
 	return (dst);
 }
 
