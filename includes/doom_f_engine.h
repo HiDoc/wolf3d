@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 16:17:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/24 15:03:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 
 t_edge		translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
-t_edge 		rotation_edge(t_player player, t_edge to_rotate);
+t_edge  	rotation_edge(t_edge v, float pcos, float psin);
 t_edge 		scale_edge(t_edge to_scale);
 void		clip_view(t_raycast *ctn);
 int			ini_queue(t_engine *engine, t_queue *queue);
@@ -44,7 +44,8 @@ void		render_floor(t_drawline line, t_env *env);
 void		render_nfloor(t_drawline line, t_env *env);
 void		render_ceil(t_drawline line, t_env *env);
 void		render_nceil(t_drawline line, t_env *env);
-int			transform_vertex(t_engine *e, t_queue *q, t_raycast *ctn, int s);
+
+int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
 int         init_hud(t_env *env, char *res);
 int         init_inventory_ui(t_env *env, char *res);
