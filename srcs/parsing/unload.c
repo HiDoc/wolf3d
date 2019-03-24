@@ -48,64 +48,23 @@ void		free_world_img(t_world *world)
 			while (j < world->armory[i].time_reload)
 			{
 				if (world->armory[i].sprite_reload)
-					free_img(world->armory[i].sprite_reload[j]);
+					free_img(world->armory[i].sprite_reload[j].sprite);
 				j++;
 			}
 			j = 0;
 			while (j < world->armory[i].time_shoot)
 			{
 				if (world->armory[i].sprite_shoot)
-					free_img(world->armory[i].sprite_shoot[j]);
+					free_img(world->armory[i].sprite_shoot[j].sprite);
 				j++;
 			}
-			free_img(world->armory[i].sprite);
-			free_img(world->armory[i].sprite_bullet);
+			free_img(world->armory[i].sprite.sprite);
+			free_img(world->armory[i].sprite_bullet.sprite);
 		}
 		free_img(world->objects[i].sprite);
 		i++;
 	}
 }
-
-// void		free_inventory_img(t_uinv *ui)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < WORLD_NB_OBJECTS)
-// 	{
-// 		if (i < WORLD_NB_WEAPONS)
-// 		{
-// 			free_img(ui->mini_wpn[i]);
-// 			free_img(ui->empt_wpn[i]);
-// 		}
-// 		if (i < 2)
-// 		{
-// 			free_img(ui->box[i]);
-// 			free_img(ui->icon[i]);
-// 		}
-// 		i++;
-// 	}
-// 	free_img(ui->front_pic);
-// }
-
-// void		free_hud(t_hud *hud)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < WORLD_NB_OBJECTS)
-// 	{
-// 		free_img(hud->objects[i]);
-// 		if (i < 4)
-// 			free_img(hud->faces[i]);
-// 		if (i < WORLD_NB_WEAPONS)
-// 			free_img(hud->hud_wpn[i]);
-// 		if (i < 2)
-// 			free_img(hud->bar[i]);
-// 		i++;
-// 	}
-// 	free_img(hud->empty_b);
-// }
 
 void		free_hud(t_container *surface)
 {

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 14:07:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 22:25:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct					s_minibloc
 {
 	SDL_Rect			rect;
 	SDL_Surface			*sprite;
+	int					*pxl;
 };
 
 struct					s_bloc
@@ -60,22 +61,16 @@ struct					s_bloc
 	SDL_Rect			rect;
 	int					type;
 	int					is_visible;
+	int					*pxl;
+	int					*pxl_obj;
 };
 
 struct 						s_uinv
 {
-	// t_bloc				box[2];
+	t_bloc				bg;
 	t_bloc				wpn[3];
 	t_bloc				icons[2];
 	t_bloc				objects[6];
-	SDL_Surface			*front_pic;
-	// SDL_Surface			*mini_wpn[3];
-	// SDL_Surface			*empt_wpn[3];
-	// SDL_Surface			*icon[2];
-	// SDL_Surface			*box[2];
-	// t_edge				blocs[6];
-	// t_edge				wblocs[3];
-	// t_edge				iblocs[3];
 	int					is_active;
 	int					wwheel;
 	int					nb_wpn;
@@ -83,16 +78,14 @@ struct 						s_uinv
 
 struct						s_hud
 {
+	t_uinv				inventory;
 	t_bloc				bar[2];
 	t_bloc				faces[4];
 	t_bloc				hud_wpn[3];
 	t_bloc				objects[6];
-	SDL_Surface			*empty_b;
 	t_wrap_inv			*shortcut[6];
-	t_uinv				inventory;
 	t_uitxt				text;
 	int					is_txt;
-	int					mix;
 };
 
 struct						s_circle

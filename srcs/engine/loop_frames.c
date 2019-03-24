@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:32:57 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 12:31:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 22:50:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	loop_frames(t_env *env, int *frame)
 {
+	t_bloc	*bloc;
+
 	if (env->player.inventory.current)
 	{
 		if (env->player.actions.is_loading)
@@ -34,7 +36,10 @@ int	loop_frames(t_env *env, int *frame)
 		else
 		{
 			if (env->player.inventory.current)
-				put_gun(env, env->world.armory[env->player.inventory.current->current->ref].sprite);
+			{
+				bloc = &env->world.armory[env->player.inventory.current->current->ref].sprite;
+				put_gun(env, bloc->sprite, bloc);
+			}
 			*frame = 0;
 		}
 	}

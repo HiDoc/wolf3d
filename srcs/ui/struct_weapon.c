@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 22:04:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 23:00:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,40 @@ static int weapon_mask(long ref, int pos)
 ** Protect this area
 ** from null malloc
 */
+int		current_sprite(t_bloc *bloc, char *sprite, int i)
+{
+	if (!(bloc->sprite = ui_img(sprite, i)))
+		return (0);
+	bloc->rect = (SDL_Rect){0, 0, W, H};
+	bloc->pxl = need_scale(bloc->sprite, bloc->rect)
+	? scale_hud_img(bloc->sprite, bloc->rect)
+	: NULL;
+	return (1);
+}
 
-SDL_Surface **weapon_fill(char *path, int size)
+t_bloc *weapon_fill(char *path, int size)
 {
 	int			i;
-	SDL_Surface	**weapons;
+	t_bloc		*weapons;
 
 	i = 0;
-	if (!(weapons = malloc(sizeof(SDL_Surface *) * size)))
+	if (!(weapons = malloc(sizeof(t_bloc) * size)))
 		return (NULL);
 	while (i < size)
 	{
-		if (!(weapons[i] = ui_img(path, i)))
+		if (!current_sprite(&weapons[i], path, i))
 			return (NULL);
+		// if (!(weapons[i].sprite = ui_img(path, i)))
+		// 	return (NULL);
+		// weapons[i].rect = (SDL_Rect){0, 0, W, H};
+		// weapons[i].pxl = need_scale(weapons[i].sprite, weapons[i].rect)
+		// ? scale_hud_img(weapons[i].sprite, weapons[i].rect)
+		// : NULL;
 		i++;
 	}
 	return (weapons);
 }
+
 
 int     weapon_sprites(t_weapon *weapon, char *name)
 {
@@ -53,9 +70,12 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	if ((r_path = ft_strjoin(name, "/reload/"))
 	&& (s_path = ft_strjoin(name, "/shoot/"))
 	&& (sprite = ft_strjoin(name, "/"))
-	&& (weapon->sprite = ui_img(sprite, 0))
+	&& (current_sprite(&weapon->sprite, sprite, 0))
 	&& (weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload))
 	&& (weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot)))
+	// && (weapon->sprite.sprite = ui_img(sprite, 0))
+	// && (weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload))
+	// && (weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot)))
 		ret = 1;
 	if (r_path)
 		free(r_path);

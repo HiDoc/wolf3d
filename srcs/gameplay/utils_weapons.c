@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 20:49:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 21:11:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	put_gun_load(t_env *env, int frame)
 	wpn_ref = &env->world.armory[weapon->current->ref];
 	frame /= 2.5;
 	if (frame < wpn_ref->time_reload - 1)
-		put_gun(env, wpn_ref->sprite_reload[frame]);
+		put_gun(env, wpn_ref->sprite_reload[frame].sprite,
+		&wpn_ref->sprite_reload[frame]);
 	else
 		env->player.actions.is_loading = 0;
 	if (frame == (int)(wpn_ref->time_reload / 2))
@@ -70,14 +71,15 @@ int	put_gun_shoot(t_env *env, int frame)
 	wpn_ref = &env->world.armory[weapon->current->ref];
 	frame /= 2.5;
 	if (frame < wpn_ref->time_shoot - 1)
-		put_gun(env, wpn_ref->sprite_shoot[frame]);
+		put_gun(env, wpn_ref->sprite_shoot[frame].sprite,
+		&wpn_ref->sprite_shoot[frame]);
 	else
 		env->player.actions.is_shooting = 0;
 	return (1);
 }
 
-int	put_gun(t_env *env, SDL_Surface *sprite)
+int	put_gun(t_env *env, SDL_Surface *sprite, t_bloc *bloc)
 {
-	draw_img(env, sprite, (t_ixy){0, 0}, (t_edge){{0, 0}, {W, H}});
+	draw_img(env, sprite, bloc, bloc->pxl);
 	return (1);
 }

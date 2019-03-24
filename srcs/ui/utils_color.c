@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:22:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/12 20:54:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 23:15:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Uint32			mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p)
 {
 	SDL_Color	c[2];
 	SDL_Color	color;
-
+	(void)env;
 	if (cr1 == cr2)
 		return (cr1);
 	c[0] = inttorgb(cr1);
@@ -54,7 +54,6 @@ Uint32			mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p)
 	// color.r *= 255;
 	// color.g *= 255;
 	// color.b *= 255;
-	env->player.hud.mix = 0;
 	return ((color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a));
 }
 // r.A = 1 - (1 - fg.A) * (1 - bg.A); // 0.75
