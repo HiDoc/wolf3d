@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "editor.insertSpaces": false,
     "files.trimTrailingWhitespace": true,
+<<<<<<< HEAD
     "todohighlight.keywords": [
         "t_edge",
         "t_sector",
@@ -83,4 +84,6 @@
         "backgroundColor": "transparent",
         "overviewRulerColor": "grey"
     }
+=======
+>>>>>>> 3202e69fbd1ead927163e9f2ed340ba5c7b0c57b
 }

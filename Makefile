@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/24 15:39:48 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/24 16:55:09 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRC_NAME 	= main.c \
 			musics.c \
 			edge.c \
 			function.c \
+			perspective.c \
 			vertex.c \
 			utils_vertex.c \
 			utils_pixels.c \
@@ -191,9 +192,11 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
+
 parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
 	./parser map.txt
+
 run: all
 	clear
 	./doom
@@ -203,4 +206,5 @@ lldb:
 		-L$(LIBFT) -lft
 	lldb ./doom
 
+.NOTPARALLEL:
 re: fclean all

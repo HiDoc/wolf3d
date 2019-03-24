@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 19:26:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 16:54:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 			SDL_Delay(300);
 		}
-		SDL_FlushEvent(SDL_KEYDOWN);
 	}
 	return (1);
 }

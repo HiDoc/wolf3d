@@ -6,24 +6,22 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 16:46:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 17:05:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-t_l_int	wonder_wall(t_raycast container, t_projec projct,
-		int *ytop, int *ybottom)
+t_l_int		wonder_wall(t_raycast ctn, t_projec projct, int *ytop, int *ybottom)
 {
 	t_l_int		limits;
 	t_l_int		coord;
-	int			diff_abs;
-	const int	diff_curr = container.x - container.x1;
+	const int	diff_abs = ctn.x2 - ctn.x1;
+	const int	diff_curr = ctn.x - ctn.x1;
 
 	/* Acquire the Y coordinates for our ceiling
 	& floor for this X coordinate. Clamp them. */
-	diff_abs = container.x2 - container.x1;
-	!diff_abs ? diff_abs = 1 : 0;
+	// !diff_abs ? diff_abs = 1 : 0;
 	coord.ceil = diff_curr * (projct.y2a - projct.y1a)
 		/ (diff_abs) + projct.y1a;
 	coord.floor = diff_curr * (projct.y2b - projct.y1b)
@@ -33,33 +31,33 @@ t_l_int	wonder_wall(t_raycast container, t_projec projct,
 	return (limits);
 }
 
-void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
+void	render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 {
 	t_l_int 	y_coord_curr;
 	t_l_int 	y_coord_next;
-	const int	equal = container.x == container.x1 || container.x == container.x2;
+	const int	equal = ctn.x == ctn.x1 || ctn.x == ctn.x2;
 
 	unsigned r1 = 0xFF00FF;
 	unsigned r2 = 0xBB4EFF;
 	/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-	y_coord_curr = wonder_wall(container, container.p, ytop, ybottom);
+	y_coord_curr = wonder_wall(ctn, ctn.p, ytop, ybottom);
 
 	/* Render ceiling: everything above this sector's ceiling height. */
-	render_ceil((t_drawline){(void *)&container, *ytop, y_coord_curr.ceil - 1,
+	render_ceil((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
 		0x111111 , 0x222222, 0x111111}, env);
 
 	/* Render floor: everything below this sector's floor height. */
-	render_floor((t_drawline){(void *)&container, y_coord_curr.floor + 1, *ybottom,
+	render_floor((t_drawline){(void *)&ctn, y_coord_curr.floor + 1, *ybottom,
 		0x0000FF, 0x0000AA, 0x0000FF}, env);
 
 	/* Is there another sector behind this edge? */
-	if (container.neighbor >= 0)
+	if (ctn.neighbor >= 0)
 	{
 		/* Same for _their_ floor and ceiling */
-		y_coord_next = wonder_wall(container, container.n, ytop, ybottom);
+		y_coord_next = wonder_wall(ctn, ctn.n, ytop, ybottom);
 
 		/* If our ceiling is higher than their ceiling, render upper wall */
-		render_nfloor((t_drawline){(void *)&container, y_coord_curr.ceil,
+		render_nfloor((t_drawline){(void *)&ctn, y_coord_curr.ceil,
 			y_coord_next.ceil - 1, 0, equal ? 0 : r1, 0}, env); // Between our and their ceiling
 
 		/* Shrink the remaining window below these ceilings */
@@ -67,7 +65,7 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 			y_coord_next.ceil), *ytop, H - 1);
 
 		/* If our floor is lower than their floor, render bottom wall */
-		render_nwall((t_drawline){(void *)&container, y_coord_next.floor + 1,
+		render_nwall((t_drawline){(void *)&ctn, y_coord_next.floor + 1,
 			y_coord_curr.floor, 0, equal ? 0 : r2, 0}, env); // Between their and our floor
 
 		/* Shrink the remaining window above these floors */
@@ -76,53 +74,25 @@ void	render_wall(t_env *env, t_raycast container, int *ytop, int *ybottom)
 	}
 	else
 	{
-		/* There's no container.neighbor. Render wall from top to bottom  */
-		render_cwall((t_drawline){(void *)&container, y_coord_curr.ceil,
+		/* There's no ctn.neighbor. Render wall from top to bottom  */
+		render_cwall((t_drawline){(void *)&ctn, y_coord_curr.ceil,
 			y_coord_curr.floor, 0, 0, 0}, env);
 	}
 }
 
-/*
-** Queue logic to render wall and add a new sector if it has a neighbour
-*/
-int		render_sector_edges(t_env *env, t_queue *q, int s)
+int		render_perspective(t_env *env, t_raycast *ctn)
 {
-	t_engine	*e;
-	t_raycast	container;
-	int			start;
-	int			end;
+	t_edge		bot;
+	t_edge		top;
 
-	e = &env->engine;
-	if (transform_vertex(e, q, &container, s) == 0)
-		return (0);
-
-	/* Get limits of ceil and floor of current sector */
-	acquire_limits(e, q, &container, s);
-
-	/* Render the wall. */
-	end = (int)fmin(container.x2, q->now.sx2);
-	start = (int)fmax(container.x1, q->now.sx1);
-
-	/*Initialise scaler*/
-	t_scaler ya_int = scaler_init(container.x1, start, container.x2, container.p.y1a, container.p.y2a);
-	t_scaler yb_int = scaler_init(container.x1, start, container.x2, container.p.y1b, container.p.y2b);
-	// t_scaler nya_int = scaler_init(container.x1, start, container.x2, container.n.y1a, container.n.y2a);
-	// t_scaler nyb_int = scaler_init(container.x1, start, container.x2, container.n.y1b, container.n.y2b);
-
-	container.x = start;
-	container.li_sector = (t_l_int){env->engine.sectors[q->now.sectorno].ceil,
-		env->engine.sectors[q->now.sectorno].floor};
-	while (container.x <= end)
-	{
-		int ya = scaler_next(&ya_int);
-    	int yb = scaler_next(&yb_int);
-		(void)ya;
-		(void)yb;
-		render_wall(env, container, &q->ytop[container.x], &q->ybottom[container.x]);
-		++container.x;
-	}
-	// ici
-	schedule_queue(q, container, start, end);
+	//bot
+	bot = (t_edge){(t_vtx){ctn->x1, 600}, (t_vtx){ctn->x2, 600}};
+	//top
+	const int max = ctn->p.y2b < ctn->p.y1b ? ctn->p.y2b : ctn->p.y1b;
+	top = (t_edge){(t_vtx){ctn->x1, max}, (t_vtx){ctn->x2, max}};
+	t_vtx horizon = {0, max};
+	t_vtx vanish = {W / 2, H - max};
+	draw_perspective(env->sdl.surface, (t_square){top, bot}, horizon, vanish);
 	return (1);
 }
 
@@ -132,21 +102,21 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 	t_drawline		drawline;
 	t_raycast		raycast;
 	t_edge			edge;
-	t_vtx player = {e->player.where.x, e->player.where.y};
+	const t_vtx		player = {e->player.where.x, e->player.where.y};
 
 	ft_bzero(&drawline, sizeof(t_drawline));
+	edge = (t_edge){
+		(t_vtx){obj->vertex.x - 1, obj->vertex.y},
+		(t_vtx){obj->vertex.x + 1, obj->vertex.y}
+	};
 	// if distance < value && obj not already picked, object is pickable
 	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
-	edge = (t_edge){
-	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
-	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
-
 	// translation
 	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
 	raycast.trsl = edge;
 
 	// rotation
-	edge = rotation_edge(env->engine.player, edge);
+	edge = rotation_edge(edge, e->player.anglecos, e->player.anglesin);
 	raycast.rot = edge;
 
 	// scale
@@ -158,14 +128,11 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 	raycast.li_sector.ceil = 15;
 	raycast.li_sector.floor = 0;
 	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
-	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+	raycast.p = calc_projec(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
-
 		raycast.x = raycast.x1;
 		drawline.container = (void *)&raycast;
-		int x = 0, y = 0;
-		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
 		drawline.from = 0;
 		drawline.to = 400;
 		drawline.bottom = 0xFFFFFFFF;
@@ -179,6 +146,96 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 	}
 }
 
+/*
+** Queue logic to render wall and add a new sector if it has a neighbour
+*/
+int		render_sector_edges(t_env *env, t_queue *q, int s)
+{
+	const t_vtx	*vertex = q->sect->vertex;
+	t_engine	*e;
+	t_raycast	ctn;
+	int			end;
+	int			start;
+
+	e = &env->engine;
+	if (transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]) == 0)
+		return (0);
+	if (ctn.x1 >= ctn.x2 || ctn.x2 < q->now.sx1 || ctn.x1 > q->now.sx2)
+		return (0);
+
+	/* Get limits of ceil and floor of current sector */
+	acquire_limits(e, q, &ctn, s);
+
+	/* Render the wall. */
+	end = (int)fmin(ctn.x2, q->now.sx2);
+	start = (int)fmax(ctn.x1, q->now.sx1);
+
+	/* Start at x, clamped with screen*/
+	ctn.x = start;
+	ctn.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
+		e->sectors[q->now.sectorno].floor};
+	while (ctn.x <= end)
+	{
+		render_wall(env, ctn, &q->ytop[ctn.x], &q->ybottom[ctn.x]);
+		++ctn.x;
+	}
+	schedule_queue(q, ctn, start, end);
+	return (1);
+}
+
+// static void		render_sprites(t_env *env, t_wrap_sect *obj)
+// {
+// 	const t_engine *e = &env->engine;
+// 	t_drawline		drawline;
+// 	t_raycast		raycast;
+// 	t_edge			edge;
+// 	t_vtx player = {e->player.where.x, e->player.where.y};
+
+// 	ft_bzero(&drawline, sizeof(t_drawline));
+// 	// if distance < value && obj not already picked, object is pickable
+// 	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
+// 	edge = (t_edge){
+// 	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
+// 	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
+
+// 	// translation
+// 	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
+// 	raycast.trsl = edge;
+
+// 	// rotation
+// 	edge = rotation_edge(env->engine.player, edge);
+// 	raycast.rot = edge;
+
+// 	// scale
+// 	edge = scale_edge(edge);
+// 	raycast.scale = edge;
+
+// 	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
+// 	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
+// 	raycast.li_sector.ceil = 15;
+// 	raycast.li_sector.floor = 0;
+// 	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
+// 	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+// 	if (raycast.x1 > 0 && raycast.x2 < W)
+// 	{
+
+// 		raycast.x = raycast.x1;
+// 		drawline.container = (void *)&raycast;
+// 		int x = 0, y = 0;
+// 		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
+// 		drawline.from = 0;
+// 		drawline.to = 400;
+// 		drawline.bottom = 0xFFFFFFFF;
+// 		drawline.middle = 0xFFFFFFFF;
+// 		drawline.top = 0xFFFFFFFF;
+// 		while (raycast.x < raycast.x2)
+// 		{
+// 			vline(drawline, env);
+// 			raycast.x++;
+// 		}
+// 	}
+// }
+
 void	dfs(t_env *env)
 {
 	t_queue		queue;
@@ -187,6 +244,8 @@ void	dfs(t_env *env)
 
 	engine = &env->engine;
 	ini_queue(engine, &queue);
+	SDL_memset(env->sdl.surface->pixels, 0,
+		env->sdl.surface->h * env->sdl.surface->pitch);
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)
