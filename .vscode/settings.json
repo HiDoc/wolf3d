@@ -1,5 +1,5 @@
 {
     "C_Cpp.errorSquiggles": "Disabled",
     "editor.insertSpaces": false,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
 }
