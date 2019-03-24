@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 20:29:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 17:07:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/24 14:39:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 	float			y;
 	float			x;
 	Uint32			color;
+	const float		angle = -plr.angle;
 
 	y = 0;
 	while (y < src_rect.h)
@@ -33,8 +34,11 @@ SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 		while (x < src_rect.w)
 		{
 			dest = (t_vtx) {
-			c.x + (x - c.x) * plr.anglecos + (y - c.y) * plr.anglesin,
-			c.y + (x - c.x) * plr.anglesin - (y - c.y) * plr.anglecos};
+				c.x + (x - c.x) * sin(angle)
+					- (y - c.y) * cos(angle),
+				c.y + (x - c.x) * cos(angle)
+					+ (y - c.y) * sin(angle)
+			};
 			if ((color = getpixel(src, src_rect.x + dest.x, src_rect.y + dest.y)))
 				setpixel(dst, origin.x + x, origin.y + y, color);
 			x++;

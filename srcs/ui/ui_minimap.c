@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/22 16:48:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/24 14:19:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static t_edge	translate_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 
 static t_edge	rotate_edge(t_player player, t_edge v)
 {
-	const float pcos = -player.anglecos;
-	const float psin = -player.anglesin;
+	const float pcos = player.anglecos;
+	const float psin = player.anglesin;
 	t_edge      edge;
 
 	edge.v1 = (t_vtx){
