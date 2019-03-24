@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 16:09:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/24 20:16:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,42 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 	return (1);
 }
 
-static void		render_sprites(t_env *env, t_wrap_sect *obj)
+void				oline(t_drawline l, t_env *env)
+{
+	SDL_Surface *sprite = env->world.enemies[0].sprite;
+	const t_raycast *ctn = (t_raycast *)l.container;
+	int		*pixels;
+	int		x;
+	int		iter;
+
+	x = ctn->x;
+	pixels	= (int *)env->sdl.surface->pixels;
+	l.from = clamp(l.from, 0, H - 1);
+	l.to = clamp(l.to, 0, H - 1);
+	const float height = l.to - l.from;
+	const float widht = ctn->x2 - ctn->x1;
+	printf("%f\n", height);
+	if (l.from == l.to)
+		pixels[l.from * W + x] = 0x00;
+	else if (l.to > l.from)
+	{
+		pixels[l.from * W + x] = 0x00;
+		iter = l.from + 1;
+		float y = 0;
+		while (iter < l.to)
+		{
+			const int pix = getpixel(sprite, (int)(x / widht * sprite->w) % sprite->w,
+				(int)(y / height * sprite->h) % sprite->h);
+			if (pix & 0xff)
+				pixels[iter * W + x] = pix;
+			y++;
+			iter++;
+		}
+		pixels[l.to * W + x] = 0x00;
+	}
+}
+
+static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 {
 	const t_engine *e = &env->engine;
 	t_drawline		drawline;
@@ -107,37 +142,24 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 		(t_vtx){obj->vertex.x - 1, obj->vertex.y},
 		(t_vtx){obj->vertex.x + 1, obj->vertex.y}
 	};
-
-	// translation
-	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
-	raycast.trsl = edge;
-
-	// rotation
-	edge = rotation_edge(edge, e->player.anglecos, e->player.anglesin);
-	raycast.rot = edge;
-
-	// scale
-	edge = scale_edge(edge);
-	raycast.scale = edge;
-
-	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
-	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
-	raycast.li_sector.ceil = 15;
-	raycast.li_sector.floor = 0;
-	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
-	raycast.p = calc_projec(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
+		return ;
+	raycast.neighbor = -1;
+	acquire_limits(&env->engine, &e->sectors[q->now.sectorno], &raycast);
+	raycast.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
+		e->sectors[q->now.sectorno].floor};
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
 		raycast.x = raycast.x1;
 		drawline.container = (void *)&raycast;
-		drawline.from = 0;
-		drawline.to = 400;
-		drawline.bottom = 0xFFFFFFFF;
-		drawline.middle = 0xFFFFFFFF;
-		drawline.top = 0xFFFFFFFF;
+		drawline.from = raycast.p.y1a;
+		drawline.to = raycast.p.y1b;
+		drawline.bottom = 0xFF;
+		drawline.middle = 0xFF;
+		drawline.top = 0xFF;
 		while (raycast.x < raycast.x2)
 		{
-			vline(drawline, env);
+			oline(drawline, env);
 			raycast.x++;
 		}
 	}
@@ -161,7 +183,12 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 		return (0);
 
 	/* Get limits of ceil and floor of current sector */
-	acquire_limits(e, q, &ctn, s);
+
+	/* Check the edge type. neighbor=-1 means wall,
+	** other=boundary between two e->sectors. */
+	ctn.neighbor = q->sect->neighbors[s];
+
+	acquire_limits(e, q->sect, &ctn);
 
 	/* Render the wall. */
 	end = (int)fmin(ctn.x2, q->now.sx2);
@@ -216,7 +243,7 @@ void	dfs(t_env *env)
 			current_obj = engine->sectors[engine->player.sector].head_object;
 			while (current_obj)
 			{
-				render_sprites(env, current_obj);
+				render_sprites(env, &queue, current_obj);
 				current_obj = current_obj->next;
 			}
 		} // for s in sector's edges

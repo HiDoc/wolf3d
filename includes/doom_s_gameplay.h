@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 21:06:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 20:05:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,6 @@ struct						s_container
 	t_surface	ceils[30];
 };
 
-struct						s_world
-{
-	t_weapon	armory[WORLD_NB_WEAPONS];
-	t_object	objects[WORLD_NB_OBJECTS];
-	t_container	surfaces;
-};
-
 struct						s_inventory
 {
 	t_wrap_wpn	*current;
@@ -130,6 +123,14 @@ struct						s_character
 	t_inventory	inventory;
 	t_actions	actions;
 	t_hud		hud;
+};
+
+struct						s_world
+{
+	t_weapon	armory[WORLD_NB_WEAPONS];
+	t_object	objects[WORLD_NB_OBJECTS];
+	t_character	enemies[3];
+	t_container	surfaces;
 };
 
 #endif
