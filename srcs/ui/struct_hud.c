@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 20:32:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 10:47:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,12 +188,12 @@ int	init_iobjects_bloc(t_env *env, t_uinv *inventory)
 	while (i < 6)
 	{
 		inventory->objects[i] = (t_bloc){(t_minibloc)
-		{(SDL_Rect){rect.x + rect.w / 5, rect.y, rect.w / 5, rect.w / 5},
-		env->player.hud.text.t_inv[0]},(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		{(SDL_Rect){rect.x + rect.w - rect.w / 5, rect.y, rect.w / 5, rect.w / 5},
+		env->player.hud.text.t_inv[2]},(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		env->world.surfaces.hud[BOX_E], env->world.surfaces.hud[BOX_F],
 		NULL, rect, i, 0};
 		rect.x = i == 2 ? W / 28 : rect.x + interx + rect.w;
-		rect.y = i < 2 ? intery : interx + intery + rect.w;
+		rect.y = i < 2 ? intery : interx + intery + rect.h;
 		i++;
 	}
 	return (1);

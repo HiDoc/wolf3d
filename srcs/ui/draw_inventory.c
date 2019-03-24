@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 22:21:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 10:13:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@
 // 	cross->v2 = (t_vtx){bloc.v2.x, bloc.v1.y + size_cross};
 // 	draw_flat_rect(env->sdl.surface, *cross, 0x0);
 // 	draw_scaled_string(
-// 		(t_font){WHITE, "X", env->ui.text, cross->v1, 25, -1, -1},
-// 		env->ui.t_inv[2], env->sdl.surface, (t_vtx){0, 0});
+// 		(t_font){WHITE, "X", env->player.hud.text.text, cross->v1, 25, -1, -1},
+// 		env->player.hud.text.t_inv[2], env->sdl.surface, (t_vtx){0, 0});
 
 // 	// udbox[1]->v1 = (t_vtx){bloc.v2.x - blocx / 2, bloc.v2.y - blocx / 2};
 // 	// udbox[1]->v2 = bloc.v2;
 // 	// draw_flat_rect(env->sdl.surface,
 // 	// env->player.inventory.objects[i].udbox[1], 0x0);
-// 	// draw_scaled_string((t_font){WHITE, "Use", env->ui.text,
-// 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1}, env->ui.t_inv[3], env->sdl.surface, (t_vtx){0, 0});
-// 	// ui_put_data(env, (t_font){c[0], "USE", env->ui.text,
+// 	// draw_scaled_string((t_font){WHITE, "Use", env->player.hud.text.text,
+// 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1}, env->player.hud.text.t_inv[3], env->sdl.surface, (t_vtx){0, 0});
+// 	// ui_put_data(env, (t_font){c[0], "USE", env->player.hud.text.text,
 // 	// (t_vtx){udbox[1]->v1.x + 2,	udbox[1]->v1.y}, 20, -1, -1});
-// 	// ui_put_data(env, (t_font){c[1], "", env->ui.number,
+// 	// ui_put_data(env, (t_font){c[1], "", env->player.hud.text.number,
 // 	// (t_vtx){bloc.v1.x + 8,	bloc.v1.y + 5}, 20, -1,
 // 	// env->player.inventory.objects[i].nb_stack});
 // 	return (0);
@@ -59,7 +59,7 @@ int		fill_bloc(t_env *env, int i)
 	}
 	else
 	{
-		draw_img(env, bloc->bg_empty, (t_ixy){bloc->rect.x, bloc->rect.y}, (t_edge){{0, 0}, {bloc->rect.w, bloc->cross.rect.h}});
+		draw_img(env, bloc->bg_empty, (t_ixy){bloc->rect.x, bloc->rect.y}, (t_edge){{0, 0}, {bloc->rect.w, bloc->rect.h}});
 	}
 	return (1);
 }

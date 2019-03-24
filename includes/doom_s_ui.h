@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/23 19:46:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 10:09:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,28 +94,6 @@ struct						s_hud
 	int					is_txt;
 	int					mix;
 };
-# define BG				0
-# define BOX_E			1
-# define BOX_F			2
-# define ICON_SLOT_1 	3
-# define ICON_SLOT_2 	4
-# define ICON_SLOT_3 	5
-# define FACE_1		 	6
-# define FACE_2		 	7
-# define FACE_3		 	8
-# define FACE_4		 	9
-# define HP_BAR_1	 	10
-# define HP_BAR_2	 	11
-# define W_SLOT_1		12
-# define W_SLOT_2		13
-# define W_SLOT_3		14
-# define INV_PISTOL		15
-# define INV_SHOTGUN	16
-# define INV_RIFLE		17
-# define HUD_PISTOL 	18
-# define HUD_SHOTGUN 	19
-# define HUD_RIFLE	 	20
-
 
 struct						s_circle
 {

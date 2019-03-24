@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/23 21:22:25 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 10:42:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sdl_render_game(t_env *env)
 void	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
-	// action_inventory(env, 0, 0);
+	action_inventory(env, 0, 0);
 	// (void)env;
 }
 
@@ -69,7 +69,7 @@ int sdl_loop(t_env *env)
 				sdl_render(env, &sdl_render_game);
 
 				// wpn_mouse_wheel(env, env->sdl.event);
-				// mouse_shoot(env);
+				mouse_shoot(env);
 				sdl_keyhook_game(env, env->sdl.event, keycodes);
 				player_move(e, v, keycodes);
 			}

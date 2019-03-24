@@ -19,12 +19,12 @@ void	init_floor(t_env *env)
 
 int		init_gameplay_env(t_env *env)
 {
-	return (init_fonts(&env->ui)
+	return (init_fonts(&env->player.hud.text)
 	&& init_consumable(env)
 	&& init_character(&env->player)
 	&& init_weapon(env)
-	&& init_hud_container(env)
-	&& set_simple_strings(env));
+	&& set_simple_strings(env)
+	&& init_hud_container(env));
 }
 
 int		main(void)
