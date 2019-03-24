@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 15:37:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/24 16:09:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,52 +104,37 @@ static void		render_sprites(t_env *env, t_wrap_sect *obj)
 
 	ft_bzero(&drawline, sizeof(t_drawline));
 	edge = (t_edge){
-	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
-	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
+		(t_vtx){obj->vertex.x - 1, obj->vertex.y},
+		(t_vtx){obj->vertex.x + 1, obj->vertex.y}
+	};
 
 	// translation
 	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
 	raycast.trsl = edge;
 
-	printf("translation\n");
-	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n",
-	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
-
 	// rotation
-	edge = rotation_edge(env->engine.player, edge);
+	edge = rotation_edge(edge, e->player.anglecos, e->player.anglesin);
 	raycast.rot = edge;
-
-	printf("rotation\n");
-	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n",
-	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
 
 	// scale
 	edge = scale_edge(edge);
 	raycast.scale = edge;
 
-	printf("scale\n");
-	printf("v1 : [%f][%f]\nv2 : [%f][%f]\n****************************\n",
-	edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
 	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
 	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
 	raycast.li_sector.ceil = 15;
 	raycast.li_sector.floor = 0;
 	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
-	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
+	raycast.p = calc_projec(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
-		printf("bot on sight\n");
-
 		raycast.x = raycast.x1;
 		drawline.container = (void *)&raycast;
-		int x = 0, y = 0;
-		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
 		drawline.from = 0;
 		drawline.to = 400;
 		drawline.bottom = 0xFFFFFFFF;
 		drawline.middle = 0xFFFFFFFF;
 		drawline.top = 0xFFFFFFFF;
-		printf("x1 : [%d]\nx2 : [%d]\n--------------------\n", raycast.x1, raycast.x2);
 		while (raycast.x < raycast.x2)
 		{
 			vline(drawline, env);
