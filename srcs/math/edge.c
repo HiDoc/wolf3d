@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/18 19:14:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/24 15:03:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ t_edge  translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
 /*
 ** Build an edge with same rotation as the player
 */
-t_edge  rotation_edge(t_player player, t_edge v)
+t_edge  rotation_edge(t_edge v, float pcos, float psin)
 {
 	t_edge		edge;
-	const float pcos = player.anglecos;
-	const float psin = player.anglesin;
 
 	edge.v1 = (t_vtx){
 		v.v1.x * psin - v.v1.y * pcos,
@@ -73,10 +71,12 @@ t_edge  scale_edge(t_edge t)
 void	clip_view(t_raycast *ctn)
 {
 	t_edge		*t = &ctn->rot;
-	const t_vtx i1 = intersect_vtx(t->v1, t->v2, (t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
-	const t_vtx i2 = intersect_vtx(t->v1, t->v2, (t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
 	const t_vtx org1 = {t->v1.x, t->v1.y};
 	const t_vtx org2 = {t->v2.x, t->v2.y};
+	const t_vtx i1 = intersect_vtx(t->v1, t->v2,
+		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
+	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
+		(t_vtx){NEARSIDE, NEARZ}, (t_vtx){FARSIDE, FARZ});
 
 	if (t->v1.y < NEARZ)
 	{
