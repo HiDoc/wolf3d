@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 17:01:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 15:09:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 			SDL_Delay(300);
 		}
-		SDL_FlushEvent(SDL_KEYDOWN);
 	}
 	return (1);
 }

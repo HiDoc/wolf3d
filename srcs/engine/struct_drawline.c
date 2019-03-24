@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 14:26:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 15:15:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void				render_floor(t_drawline l, t_env *env)
 	int			iter;
 	int			x;
 
+	return ;
 	ctn = ((t_raycast *)l.container);
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;
@@ -150,15 +151,19 @@ void				render_floor(t_drawline l, t_env *env)
 	{
 		pixels[l.from * W + x] = 0xff00ffff;
 		iter = l.from + 1;
+		float y = 0;
+		float height = l.to - l.from;
+		float scaley = (ctn->li_sector.ceil - ctn->li_sector.floor) / 20;
 		x = (ctn->li_texture.floor * ((ctn->x2 - ctn->x) * ctn->rot.v2.y)
 		+ ctn->li_texture.ceil * ((ctn->x - ctn->x1) * ctn->rot.v1.y))
 		/ ((ctn->x2 - ctn->x) * ctn->rot.v2.y + (ctn->x - ctn->x1) * ctn->rot.v1.y);
+		int pos;
 		while (iter < l.to)
 		{
-			t_vtx map = screen_to_map(&env->engine, ctn->li_sector.floor, ctn->x, iter);
-			t_vtx txt = {map.x * 1024, map.y * 1024};
-			pixels[iter * W + ctn->x] = getpixel(sprite, (int)txt.x % sprite->w, (int)txt.y % sprite->h);
+			pos = (y / height * scaley) * sprite->h;
+			pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
 			iter++;
+			y++;
 		}
 		pixels[l.to * W + ctn->x] = 0xff00ffff;
 	}
