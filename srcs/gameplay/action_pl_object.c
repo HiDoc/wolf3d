@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/23 22:13:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 16:12:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		}
 		obj->is_picked = 1;
 		env->player.hud.is_txt = 6;
-		return (5);
+		return (6);
 	}
-	return (!obj->is_wpn ? 6 : pick_weapon(env, obj));
+	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
 }
 
 int		drop_object(t_env *env, t_wrap_inv *object)

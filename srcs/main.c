@@ -23,7 +23,7 @@ int		init_gameplay_env(t_env *env)
 	&& init_consumable(env)
 	&& init_character(&env->player)
 	&& init_weapon(env)
-	&& set_simple_strings(env)
+	&& set_simple_strings(env, 0, 0)
 	&& init_hud_container(env));
 }
 

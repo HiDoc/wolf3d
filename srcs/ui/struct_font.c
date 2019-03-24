@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 10:17:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 14:39:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		init_fonts(t_uitxt *f)
 
 SDL_Surface	*str_join_text(t_font data)
 {
-	char		*strjoin;
+	char				*strjoin;
 	SDL_Surface	*new;
 
 	strjoin = NULL;
@@ -52,14 +52,10 @@ SDL_Surface *dst, t_vtx pos)
 	int		x;
 	int		y;
 	t_vtx	new_size;
-	float	ratio;
 	t_vtx	scale;
 
-	ratio = 100 / data.size;
-	new_size.x = src->w / ratio;
-	new_size.y = src->h / ratio;
-	scale.x = src->w / new_size.x;
-	scale.y = src->h / new_size.y;
+	new_size = (t_vtx){src->w / (100 / data.size), src->h / (100 / data.size)};
+	scale = (t_vtx){src->w / new_size.x, src->h / new_size.y};
 	x = 0;
 	pos.x = data.pos.x;
 	while (pos.x < data.pos.x + new_size.x && pos.x < W)
@@ -121,48 +117,32 @@ int    ui_put_data(t_env *env, t_font data)
 		SDL_FreeSurface(surface);
 	if (!ret)
 		return (0);
-    return (1);
+	return (1);
 }
 
-int		set_simple_strings(t_env *env)
+int		set_simple_strings(t_env *env, int i, int j)
 {
-	t_uitxt	*txt;
+	const char		*string[23] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
+	STRING_5, STRING_6, STRING_7, STRING_8, STRING_9, STRING_10, STRING_11,
+	STRING_12, STRING_13, STRING_14, STRING_15,	STRING_16, STRING_17, STRING_18,
+	STRING_19, STRING_20, STRING_21, STRING_22};
 
-	txt = &env->player.hud.text;
-	if ((txt->string[0] = ui_create_string((t_font){WHITE, "Already full shield !",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[1] = ui_create_string((t_font){WHITE, "No shield in stock, stop crying & find some",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[2] = ui_create_string((t_font){WHITE, "Already full of life, enjoy mate !",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[3] = ui_create_string((t_font){WHITE, "No heal in stock, hang on !",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[4] = ui_create_string((t_font){WHITE, "Too greedy man.. Already full stack of this item",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[5] = ui_create_string((t_font){WHITE, "New item placed in inventory",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[6] = ui_create_string((t_font){WHITE, "Inventory full - Max 6 different items",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[7] = ui_create_string((t_font){WHITE, "Item suppressed from inventory",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[8] = ui_create_string((t_font){WHITE, "Weapon already full",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[9] = ui_create_string((t_font){WHITE, "No ammo for this weapon",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[10] = ui_create_string((t_font){WHITE, "JetPack ON",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[11] = ui_create_string((t_font){WHITE, "JetPack OFF",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->string[12] = ui_create_string((t_font){WHITE, "No JetPack here, keep looking bro !",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->t_inv[0] = ui_create_string((t_font){WHITE, "Inventory",
-	txt->doom, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->t_inv[1] = ui_create_string((t_font){WHITE, "Weapons",
-	txt->doom, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->t_inv[2] = ui_create_string((t_font){WHITE, "X",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1}))
-	&& (txt->t_inv[3] = ui_create_string((t_font){WHITE, "Use",
-	txt->text, (t_vtx){0, 0}, 0, -1, -1})))
-		return (1);
-	return (0);
+	while (i < UI_NB_STRING)
+	{
+		if (i < UI_NB_STRING - UI_NB_STR_INV)
+		{
+			if (!(env->player.hud.text.string[i] = ui_create_string((t_font){WHITE,
+			string[i], env->player.hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+				return (0);
+		}
+		else
+		{
+			if (!(env->player.hud.text.t_inv[j] = ui_create_string((t_font){WHITE,
+			string[i], env->player.hud.text.doom, (t_vtx){0, 0}, 0, -1, -1})))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 10:12:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 16:43:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,54 +37,44 @@ int	check_wpn_stack(t_env *env, int ref)
 	{
 		rref = env->player.inventory.current->current->ref;
 		wpn = &env->world.armory[rref];
-		if (ref == env->world.armory[rref].type)
+		if (ref == wpn->type)
 			return (1);
 	}
 	return (0);
 }
 
-int	check_object_stack(t_env *env, int ref, t_ixy start)
+int	check_object_stack(t_env *env, int ref, int index)
 {
-	int	iter;
+	int			iter;
 	SDL_Surface	*sprite;
-	// t_bloc		*bloc;
+	t_bloc		*bloc;
 
-	// bloc = env->player.hud.objects[]
+	bloc = &env->player.hud.objects[index];
 	if ((iter = check_object_type(env, ref)) > -1)
 	{
 		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
-		{
-
-			sprite = env->player.hud.objects[ref].sprite;
-		}
+			sprite = env->world.objects[ref].sprite;
 		else
-			sprite = env->player.hud.empty_b;
-		draw_img(env, sprite, start,
-		(t_edge){{0, 0}, {sprite->w, sprite->h}});
+			sprite = bloc->bg_empty;
+		draw_img(env, sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
+		(t_edge){{0, 0}, {bloc->rect.w, bloc->rect.h}});
 	}
 	else
-		draw_img(env, env->player.hud.empty_b, start,
-		(t_edge){{0, 0}, {env->player.hud.empty_b->w, env->player.hud.empty_b->h}});
+		draw_img(env, bloc->bg_empty, (t_ixy){bloc->rect.x, bloc->rect.y},
+		(t_edge){{0, 0}, {bloc->rect.w, bloc->rect.h}});
 	return (0);
 }
 
 int	print_pad(t_env *env)
 {
-	int		size_b;
 	int		i;
-	t_ixy	start;
 
-	start = (t_ixy){W - W / 1.27, H - H  / 8};
-	size_b = env->player.hud.empty_b->w + 2;
-	check_object_stack(env, 0, start);
-	start.x += size_b;
-	check_object_stack(env, 1, start);
-	start.x += size_b;
+	check_object_stack(env, 0, 0);
+	check_object_stack(env, 1, 1);
+	check_object_stack(env, 5, 2);
 	i = 2;
 	while (i < 5)
-		check_object_stack(env, i++, start);
-	start.x += size_b;
-	check_object_stack(env, 5, start);
+		check_object_stack(env, i++, 3);
 	return (0);
 }
 
@@ -95,9 +85,9 @@ float	size_bar(int tmax, int datamax, int data)
 
 int print_hud(t_env *env)
 {
-	int	h;
-	int	limit_bar;
-	int	index;
+	int		h;
+	int		limit_bar;
+	int		index;
 	t_bloc	*bloc;
 
 	h = 200;
@@ -122,6 +112,6 @@ int print_hud(t_env *env)
 	env->player.max_shield, env->player.shield);
 	draw_img(env, bloc->sprite, (t_ixy){bloc->rect.x, bloc->rect.y},
 	(t_edge){{0, 0}, {limit_bar, bloc->rect.h}});
-	// print_pad(env);
+	print_pad(env);
 	return (1);
 }

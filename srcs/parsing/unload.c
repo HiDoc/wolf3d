@@ -123,7 +123,7 @@ void		free_surface_string(t_uitxt*ui)
 	int i;
 
 	i = 0;
-	while (i < UI_NB_STRING)
+	while (i < UI_NB_STRING - UI_NB_STR_INV)
 	{
 		free_img(ui->string[i]);
 		if (i < UI_NB_STR_INV)

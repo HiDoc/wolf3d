@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 10:13:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 13:29:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ int		fill_bloc(t_env *env, int i)
 		(t_edge){{0, 0}, {bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10}});
 		draw_img(env, bloc->cross.sprite, (t_ixy){bloc->cross.rect.x, bloc->cross.rect.y},
 		(t_edge){{0, 0}, {bloc->cross.rect.w, bloc->cross.rect.h}});
+		ui_put_data(env, (t_font){GOLD, "", env->player.hud.text.number,
+		(t_vtx){bloc->rect.x + W / 80,	bloc->rect.y + 5}, 20, -1,
+		env->player.inventory.objects[i].nb_stack});
 	}
 	else
 	{

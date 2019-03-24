@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/23 15:42:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 15:34:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int 		init_hud_container(t_env *env);
 int			init_fonts(t_uitxt*f);
 
 int    		ui_put_data(t_env *env, t_font data);
-int			set_simple_strings(t_env *env);
+int			set_simple_strings(t_env *env, int i, int j);
 int			draw_scaled_string(t_font data, SDL_Surface *src, SDL_Surface *dst, t_vtx pos);
 int         ui_txt_inv(t_env *env);
 SDL_Surface *ui_img(char *file, int i);

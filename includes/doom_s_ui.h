@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 10:09:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/24 14:07:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct						s_uitxt
 	TTF_Font			*doom;
 	TTF_Font			*text;
 	TTF_Font			*number;
-	SDL_Surface			*string[13];
+	SDL_Surface			*string[19];
 	SDL_Surface			*t_inv[4];
 };
 
