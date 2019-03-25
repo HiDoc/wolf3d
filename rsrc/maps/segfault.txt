@@ -1,15 +1,28 @@
-vertex  0	0
-vertex  0	20
-vertex  40	40
-vertex  35	5
-vertex  20	5
-vertex  10	5
+vertex	1	1
+vertex	40	1
+vertex	40	8
+vertex	40	16
+vertex	40	24
+vertex	1	24
+vertex	1	16
+vertex	1	8
+vertex	0	8
+vertex	0	16
+vertex	41	16
+vertex	41	24
+vertex	60	0
+vertex	60	40
 
-sector  0	20   5 4 3 2 1 0	-1 -1 -1 -1 -1 -1
+#sector ceil/floor 	n-vertex			n-neighbours
+sector 	0 40 		0 1 2 3 4 5 6 7		-1 -1 -1 -1 -1 -1 -1 -1
+sector 	0 20 		7 6 9 8				-1 -1 -1 -1
+sector 	0 40 		10 11 4 3			-1 -1 -1 -1
+sector 	10 40 		12 13 11 10			-1 -1 -1 -1
+
 
 # object	x	y
-object  	25	30	0	0 1
-object  	10 	30	0	5 0
+object  	15	15	0	0 1
+object  	10 	10	0	5 0
 
 # player 	x 	y	sectorno	angle
-player  	0 	0	0			0
+player  	1 	1	0			0

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:16:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/25 16:25:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 	const int max = ctn->p.y2b < ctn->p.y1b ? ctn->p.y2b : ctn->p.y1b;
 	top = (t_edge){(t_vtx){ctn->x1, max}, (t_vtx){ctn->x2, max}};
 	t_vtx horizon = {0, max};
-	t_vtx vanish = {W / 2, H - max};
+	t_vtx vanish = {W / 2, H / 2 - max / 2};
 	draw_perspective(env->sdl.surface, (t_square){top, bot}, horizon, vanish);
 	return (1);
 }
@@ -109,7 +109,6 @@ void				oline(t_drawline l, t_env *env)
 	l.to = clamp(l.to, 0, H - 1);
 	const float height = l.to - l.from;
 	const float widht = ctn->x2 - ctn->x1;
-	printf("%f\n", height);
 	if (l.from == l.to)
 		pixels[l.from * W + x] = 0x00;
 	else if (l.to > l.from)
@@ -119,7 +118,7 @@ void				oline(t_drawline l, t_env *env)
 		float y = 0;
 		while (iter < l.to)
 		{
-			const int pix = getpixel(sprite, (int)(x / widht * sprite->w) % sprite->w,
+			const int pix = getpixel(sprite, (int)((ctn->x - ctn->x1) / widht * sprite->w) % sprite->w,
 				(int)(y / height * sprite->h) % sprite->h);
 			if (pix & 0xff)
 				pixels[iter * W + x] = pix;
@@ -133,14 +132,15 @@ void				oline(t_drawline l, t_env *env)
 static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 {
 	const t_engine *e = &env->engine;
+	const t_player p = e->player;
 	t_drawline		drawline;
 	t_raycast		raycast;
 	t_edge			edge;
 
 	ft_bzero(&drawline, sizeof(t_drawline));
 	edge = (t_edge){
-		(t_vtx){obj->vertex.x - 1, obj->vertex.y},
-		(t_vtx){obj->vertex.x + 1, obj->vertex.y}
+		(t_vtx){obj->vertex.x - p.anglesin, obj->vertex.y + p.anglecos},
+		(t_vtx){obj->vertex.x + p.anglesin, obj->vertex.y - p.anglecos}
 	};
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
@@ -177,17 +177,14 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	int			start;
 
 	e = &env->engine;
-	if (transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]) == 0)
-		return (0);
-	if (ctn.x1 >= ctn.x2 || ctn.x2 < q->now.sx1 || ctn.x1 > q->now.sx2)
+	if (transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]) == 0
+		|| ctn.x1 >= ctn.x2 || ctn.x2 < q->now.sx1 || ctn.x1 > q->now.sx2)
 		return (0);
 
-	/* Get limits of ceil and floor of current sector */
-
-	/* Check the edge type. neighbor=-1 means wall,
-	** other=boundary between two e->sectors. */
+	/* get the neighbour of the current vertex if there*/
 	ctn.neighbor = q->sect->neighbors[s];
 
+	/* Get limits of ceil and floor of current sector */
 	acquire_limits(e, q->sect, &ctn);
 
 	/* Render the wall. */
@@ -203,6 +200,7 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 		render_wall(env, ctn, &q->ytop[ctn.x], &q->ybottom[ctn.x]);
 		++ctn.x;
 	}
+	// render_perspective(env, &ctn);
 	schedule_queue(q, ctn, start, end);
 	return (1);
 }
@@ -214,7 +212,8 @@ void	dfs(t_env *env)
 	int			s;
 
 	engine = &env->engine;
-	ini_queue(engine, &queue);
+	queue = engine->queue;
+	ini_queue(&queue, engine->nsectors);
 	SDL_memset(env->sdl.surface->pixels, 0,
 		env->sdl.surface->h * env->sdl.surface->pitch);
 	/* Begin whole-screen rendering from where the player is. */
@@ -249,5 +248,4 @@ void	dfs(t_env *env)
 		} // for s in sector's edges
 		++queue.renderedsectors[queue.now.sectorno];
 	}
-	free(queue.renderedsectors);
 }

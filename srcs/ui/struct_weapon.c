@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_weapon.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 14:37:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 11:38:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int     weapon_sprites(t_weapon *weapon, char *name, char *res)
 		free(s_path);
 	if (sprite)
 		free(sprite);
-		printf("%i\n", ret);
 	return (ret);
 }
 
@@ -85,13 +84,8 @@ int weapon_set(t_weapon *weapon, char *res, char *name, int dam)
 	weapon->ammo_current = weapon_mask(ref, 7);
 	weapon->ammo_magazine = weapon_mask(ref, 9);
 	weapon->damage = dam;
-	if (weapon_sprites(weapon, name, res)
-	&& load_sounds(weapon, name, "shot/"))
-	{
-		printf("c ok\n");
-		return (1);
-	}
-	return (0);
+	return (weapon_sprites(weapon, name, res)
+	&& load_sounds(weapon, name, "shot/"));
 }
 
 int		init_weapon(t_env *env, char *res)
