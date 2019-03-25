@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 22:25:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 18:43:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ struct					s_minibloc
 {
 	SDL_Rect			rect;
 	SDL_Surface			*sprite;
-	int					*pxl;
+	float				rscale;
 };
 
 struct					s_bloc
@@ -61,8 +61,8 @@ struct					s_bloc
 	SDL_Rect			rect;
 	int					type;
 	int					is_visible;
-	int					*pxl;
-	int					*pxl_obj;
+	float				r_scale;
+	float				r_ob_scale;
 };
 
 struct 						s_uinv

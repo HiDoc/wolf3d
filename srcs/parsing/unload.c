@@ -74,6 +74,7 @@ void		free_hud(t_container *surface)
 	while (i < NB_HUD_OBJ)
 	{
 		free_img(surface->hud[i]);
+		i++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 23:00:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 16:36:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int		current_sprite(t_bloc *bloc, char *sprite, int i)
 	if (!(bloc->sprite = ui_img(sprite, i)))
 		return (0);
 	bloc->rect = (SDL_Rect){0, 0, W, H};
-	bloc->pxl = need_scale(bloc->sprite, bloc->rect)
-	? scale_hud_img(bloc->sprite, bloc->rect)
-	: NULL;
+	bloc->r_scale = bloc->sprite->w / bloc->rect.w;
 	return (1);
 }
 
@@ -44,12 +42,6 @@ t_bloc *weapon_fill(char *path, int size)
 	{
 		if (!current_sprite(&weapons[i], path, i))
 			return (NULL);
-		// if (!(weapons[i].sprite = ui_img(path, i)))
-		// 	return (NULL);
-		// weapons[i].rect = (SDL_Rect){0, 0, W, H};
-		// weapons[i].pxl = need_scale(weapons[i].sprite, weapons[i].rect)
-		// ? scale_hud_img(weapons[i].sprite, weapons[i].rect)
-		// : NULL;
 		i++;
 	}
 	return (weapons);
@@ -73,9 +65,6 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	&& (current_sprite(&weapon->sprite, sprite, 0))
 	&& (weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload))
 	&& (weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot)))
-	// && (weapon->sprite.sprite = ui_img(sprite, 0))
-	// && (weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload))
-	// && (weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot)))
 		ret = 1;
 	if (r_path)
 		free(r_path);

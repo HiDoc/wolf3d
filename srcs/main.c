@@ -22,9 +22,9 @@ int		init_gameplay_env(t_env *env)
 	return (init_fonts(&env->player.hud.text)
 	&& init_consumable(env)
 	&& init_character(&env->player)
-	&& init_weapon(env)
 	&& set_simple_strings(env, 0, 0)
-	&& init_hud_container(env));
+	&& init_hud_container(env)
+	&& init_weapon(env));
 }
 
 int		main(void)
@@ -49,7 +49,7 @@ int		main(void)
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		W, H, SDL_WINDOW_SHOWN);
-	// SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
+	SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
 	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	env.sdl.texture = SDL_CreateTexture(env.sdl.renderer,
@@ -76,7 +76,6 @@ int		main(void)
 	////////////////////////////////////////////
 	// initialisation : blame -> sgalasso
 	// - penser a destroy ceci a la fin
-	printf("OKKKKKKKKKKKK\n");
 	if (!(env.arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
 	{
 		ft_putendl(TTF_GetError()); // provisoire

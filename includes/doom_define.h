@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 18:39:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 12:57:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@
 # define NB_HUD_OBJ			21
 # define UI_NB_STRING		23
 # define UI_NB_STR_INV		4
-# define SIZE_OBJ			235
+# define S_SCALE_TAB		2073600
 /*
 ** HUD index img
 */
@@ -111,6 +111,7 @@
 # define F_TEXT "rsrc/font/interbureau.ttf"
 # define F_NUMB "rsrc/font/5E.ttf"
 # define F_ARIAL "rsrc/font/Arial.ttf"
+
 /*
 ** Ui put string - STRING
 */

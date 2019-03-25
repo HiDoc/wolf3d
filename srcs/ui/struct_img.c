@@ -6,77 +6,35 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 00:18:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:12:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc, int *tab)
+int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc, float ratio)
 {
-	int		x;
-	int		y;
 	int		i;
-	int		sx;
+	int		j;
 
-	sx = bloc->rect.x;
-	x = 0;
-	while ((sx < bloc->rect.x + bloc->rect.w) && sx < W)
+	(void)ratio;
+	const float ratiox = img->w / (float)bloc->rect.w;
+	const float ratioy = img->h / (float)bloc->rect.h;
+	i = 0;
+	while (i < bloc->rect.w && i * ratiox < img->w)
 	{
-		y = 0;
-		i = bloc->rect.y;
-		while ((i < bloc->rect.y + bloc->rect.h) && (i < H))
+		j = 0;
+		while (j < bloc->rect.h && j * ratioy < img->h)
 		{
-			if (tab && tab[img->w * y + x] == 1)
-			{
-				if (getpixel(img, x, y) & img->format->Amask)
-					setpixel(env->sdl.surface, sx, i, getpixel(img, x, y));
-			}
-			// else if (!tab)
-			// {
-			// 	if (getpixel(img, x, y) & img->format->Amask)
-			// 		setpixel(env->sdl.surface, sx, i, getpixel(img, x, y));
-			// }
-			i++;
-			y++;
+			Uint32 color = getpixel(img, i * ratiox, j * ratioy);
+			if (color & 0xff)
+				setpixel(env->sdl.surface, i + bloc->rect.x, j + bloc->rect.y, color);
+			j++;
 		}
-		sx++;
-		x++;
+		i++;
 	}
 	return (1);
 }
-
-// int			draw_img(t_env *env, SDL_Surface *img, t_ixy start, t_edge limit_img)
-// {
-// 	int		y;
-// 	int		i;
-// 	int		sx;
-// 	t_vtx	scale;
-
-// 	if (img->w > limit_img.v2.x || img->h > limit_img.v2.y)
-// 	{
-// 		scale.x = fabs((float)img->w / limit_img.v2.x);
-// 		scale.y = fabs((float)img->h / limit_img.v2.y);
-// 	}
-// 	else
-// 		scale = (t_vtx){1, 1};
-// 	sx = start.x;
-// 	while ((start.x < sx + limit_img.v2.x) && start.x < W)
-// 	{
-// 		y = limit_img.v1.y;
-// 		i = start.y;
-// 		while ((i < start.y + limit_img.v2.y) && (i < H))
-// 		{
-// 			if (getpixel(img, limit_img.v1.x * scale.x, y * scale.y) & img->format->Amask)
-// 				setpixel(env->sdl.surface, start.x, i, getpixel(img, limit_img.v1.x * scale.x, y * scale.y));
-// 			i++;
-// 			y++;
-// 		}
-// 		start.x++;
-// 		limit_img.v1.x++;
-// 	}
-// 	return (1);
-// }
 
 int			copy_img(Uint32 *pxl, SDL_Surface *img)
 {
