@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 18:51:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 18:55:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	left_panel(t_pos origin, t_env *env)
 	// create new
 	rect = (t_rect){origin.x + 10, origin.y + 10, 0, 25, C_WHITE};
 	ui_make_string(rect, "Create a map", env->data);
-	ui_make_input(env->data->surface, get_element(M_I_NEW, env)->rect, env->data);
+	ui_make_input(env->data->surface, get_element(M_I_NEW, env), env->data);
 
 	// upload
 	rect = (t_rect){origin.x + 10, origin.y + 90, 0, 25, C_WHITE};

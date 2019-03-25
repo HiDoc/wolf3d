@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:37:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 19:10:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void		create_element(int id, int type, t_rect rect, t_env *env)
 	new->id = id;
 	new->type = type;
 	new->rect = rect;
+	new->str = ft_strdup(" "); // proteger
 	if (!(env->elements))
 	{
 		env->elements = new;
