@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 18:27:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/22 13:16:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			verify_hull(t_engine *e)
 	t_vtx		*v2;
 
 	chain.a = 0;
+	return (0);
 	while (chain.a < e->nsectors)
 	{
 		sect = &e->sectors[chain.a];

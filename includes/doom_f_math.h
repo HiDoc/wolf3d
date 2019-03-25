@@ -13,6 +13,9 @@
 #ifndef DOOM_F_MATH_H
 # define DOOM_F_MATH_H
 
+SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
+                SDL_Surface *dst, t_vtx origin, t_env *env);
+
 float		pointside(t_vtx p, t_vtx v0, t_vtx v1);
 float		cross_product(t_vtx v1, t_vtx v2);
 float		clamp(float a, float min, float max);
