@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:09:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 09:40:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ struct						s_minimap
 	int					xmax;
 	int					ymin;
 	int					ymax;
-	t_vtx				origin; 		// origin minimap
+
 	SDL_Surface			*surface;		// calque sectors
 	SDL_Surface			*background;	// calque background
+
+	t_vtx				origin; 		// origin minimap on sdl.surface
 };
 
 #endif

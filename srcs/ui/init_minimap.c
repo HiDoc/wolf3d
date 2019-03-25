@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:03:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/24 20:50:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 09:59:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,48 +26,6 @@
 	edge = (t_edge){(t_vtx){rect.x + 5, rect.y + 5},
 	(t_vtx){rect.x + 5, rect.y - 10}};
 	ui_draw_line(surface, edge, C_CYAN);
-}
-
-/*static*/ void     draw_compass(SDL_Surface *surface, t_env *env)
-{
-	SDL_Rect	rect;
-	t_vtx		vtx;
-	float		start;
-	float		size;
-	int			i;
-
-	i = 0;
-	while (i < 16)
-	{
-		vtx = (t_vtx){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2};
-
-		start = MINIMAP_SIZE / 2 - 30;
-		size = MINIMAP_SIZE / 2 - 20;
-
-		rect.x = vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle)
-		* size - 8;
-		rect.y = vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle)
-		* size - 15;
-		rect.w = 0;
-		rect.h = 30;
-
-		if (i == 0)
-			ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
-		else if (i == 4)
-			ui_draw_string(surface, rect, "E", 0xFFFFFFFF, env);
-		else if (i == 8)
-			ui_draw_string(surface, rect, "S", 0xFFFFFFFF, env);
-		else if (i == 12)
-			ui_draw_string(surface, rect, "O", 0xFFFFFFFF, env);
-
-		if (i % 4 != 0)
-		{
-			ui_draw_vector(surface, vtx,
-			i * (M_PI / 8)  - env->engine.player.angle,
-			start, size, C_WHITE);
-		}
-		i++;
-	}
 }
 
 static void		get_map_minmax(t_env *env)
@@ -159,17 +117,16 @@ int			init_minimap(t_env *env)
 	minimap->origin.y = 10;
 
 	if (!(minimap->surface = ui_make_surface(
-	(minimap->xmax - minimap->xmin) * COEF_MINIMAP + MINIMAP_SIZE + 1,
-	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE + 1)))
+	(minimap->xmax - minimap->xmin) * COEF_MINIMAP + MINIMAP_SIZE,
+	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE)))
 		return (0);
 	draw_sectors(minimap->surface, &(env->engine)); // a proteger ?
 
 	if (!(minimap->background = ui_make_surface(
-	MINIMAP_SIZE + 1, MINIMAP_SIZE + 1)))
+	MINIMAP_SIZE, MINIMAP_SIZE)))
 		return (0);
 	draw_background(minimap->background);
 	draw_player(minimap->background);
-	draw_compass(minimap->background, env);
 
 	return (1);
 }
