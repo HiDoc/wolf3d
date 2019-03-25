@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/24 16:37:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/25 14:51:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_edge		translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge  	rotation_edge(t_edge v, float pcos, float psin);
 t_edge 		scale_edge(t_edge to_scale);
 void		clip_view(t_raycast *ctn);
-int			ini_queue(t_engine *engine, t_queue *queue);
+int			ini_queue(t_queue *queue, unsigned size);
 int     	verify_map(t_engine *engine);
 int     	verify_hull(t_engine *engine);
 void		print_sect(t_sector *sect);

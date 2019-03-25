@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:20:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 18:02:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ int		pushing(const Uint8 *keyb)
 
 int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 {
-	float		accel;
 	t_vtx		move_vec;
+	t_vctr		*velocity;
 	const float	speed = keyb[SDL_SCANCODE_LSHIFT] ? SPEED_RUN : SPEED_WALK;
 	const float	sin_move = e->player.anglesin * speed;
 	const float	cos_move = e->player.anglecos * speed;
 
+	velocity = &e->player.velocity;
 	move_vec = (t_vtx){0.f, 0.f};
-	e->player.velocity.z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
+	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
 	v->ground = !keyb[SDL_SCANCODE_SPACE];
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
 	if (keyb[SDL_SCANCODE_W])
@@ -41,9 +42,8 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 		move_vec = add_vertex(move_vec, (t_vtx){sin_move, -cos_move});
 	if (keyb[SDL_SCANCODE_D])
 		move_vec = diff_vertex(move_vec, (t_vtx){sin_move, -cos_move});
-	accel = pushing(keyb) ? 0.4 : 0.2;
-	e->player.velocity.x = e->player.velocity.x * (1 - accel) + move_vec.x * accel;
-	e->player.velocity.y = e->player.velocity.y * (1 - accel) + move_vec.y * accel;
+	velocity->x = velocity->x * (1 - speed) + move_vec.x * speed;
+	velocity->y = velocity->y * (1 - speed) + move_vec.y * speed;
 	v->moving = pushing(keyb);
 	return (1);
 }
@@ -53,29 +53,28 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 */
 void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 {
+	const float	floor = e->sectors[e->player.sector].floor;
+	t_player	*plr;
 	float		nextz;
 	t_vtx		bezier;
-	t_vtx		c_point;
-	const float	floor = e->sectors[e->player.sector].floor;
-	const float	limit = floor + v->eyeheight * 2;
 
-	c_point = (t_vtx){0, 40};
-	e->player.velocity.z -= gravity;
-	bezier = bezier_curve((t_edge){(t_vtx){0, 6}, (t_vtx){20, 6}},
-			c_point, 1 - (e->player.velocity.z + 0.12f));
-	nextz = (e->player.velocity.z < 0) ? e->player.where.z + e->player.velocity.z : bezier.y;
-	if (e->player.velocity.z < 0 && nextz < (floor + v->eyeheight))
+	plr = &e->player;
+	plr->velocity.z -= gravity;
+	bezier = bezier_curve((t_edge){(t_vtx){0, EYEHEIGHT},
+		(t_vtx){20, EYEHEIGHT}}, (t_vtx){0, 40}, 1 - (plr->velocity.z + 0.12f));
+	nextz = (plr->velocity.z < 0) ? plr->where.z + plr->velocity.z : bezier.y;
+	if (plr->velocity.z < 0 && nextz < (floor + v->eyeheight))
 	{
-		e->player.where.z = floor + v->eyeheight;
-		e->player.velocity.z = 0;
+		plr->where.z = floor + v->eyeheight;
+		plr->velocity.z = 0;
 		v->falling = 0;
 		v->ground = 1;
 	}
-	else if (e->player.velocity.z > 0 && nextz > limit)
-		e->player.where.z = limit;
+	else if (plr->velocity.z > 0 && nextz > floor + v->eyeheight * 2)
+		plr->where.z = floor + v->eyeheight * 2;
 	if (v->falling)
 	{
-		e->player.where.z = bezier.y;
+		plr->where.z = bezier.y;
 		v->moving = 1;
 	}
 }
