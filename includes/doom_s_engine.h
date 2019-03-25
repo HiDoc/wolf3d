@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/20 15:02:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/24 16:13:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ struct						s_engine
 	t_sector		*sectors;
 	unsigned		nsectors;
 	t_player		player;
+	t_minimap		minimap;
 };
 #endif
