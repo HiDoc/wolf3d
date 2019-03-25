@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 14:32:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 12:28:20 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ SDL_Surface	*surface_fr_png(char *path)
 //	Uint32		*pxl;
 
 	new = NULL;
-	new = load_texture(path);
+	if (!(new = load_texture(path)))
+		printf("load_texture fail\n");
 /*	if ((new = IMG_Load(path))
 	&& (tmp = SDL_ConvertSurfaceFormat(new, SDL_PIXELFORMAT_RGBA32, 0)))
 	{
@@ -82,10 +83,10 @@ SDL_Surface	*surface_fr_png(char *path)
 		tmp = NULL;
 		return (new);
 	}
-	if (new)
-		free(new);
-	return (NULL);
 	*/
+//	if (new)
+//		free(new);
+//	return (NULL);
 	return (new);
 }
 
@@ -110,6 +111,7 @@ SDL_Surface *ui_img(char *res, char *doss, char *ssdoss, int i)
 		i = 1;
 	else
 		i = 0;
+	printf("i = %d", i);
 	if (nb)
 		free(nb);
 	if (path)

@@ -30,6 +30,7 @@ typedef struct		s_tga
 	int				bitspix;	// image bits per pixel 8,16,24,32
 	int				alpha;
 	int				len_cm;		// number of colours in palette
+	int				lenid;
 }					t_tga; 
 
 #endif

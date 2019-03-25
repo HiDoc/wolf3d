@@ -6,7 +6,7 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 18:35:19 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/22 16:53:22 by lomasse          ###   ########.fr       */
+/*   Updated: 2019/03/25 12:24:11 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int			loadnew(int bpp, unsigned char *new, unsigned char *file, int mode)
 	index = 0;
 
 	if (mode)
-	{
 		repet = (file[index] & 0x7F) + 1;
-	}
 	else
 		repet = 1;
 	while (loop <= repet)

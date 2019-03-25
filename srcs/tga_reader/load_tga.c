@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   load_tga.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/20 13:35:20 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/23 11:03:41 by lomasse          ###   ########.fr       */
+/*   Created: 2019/03/25 11:48:39 by jsauron           #+#    #+#             */
+/*   Updated: 2019/03/25 12:09:11 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void	tga2sur(t_tga *tga, SDL_Surface *surface)
+SDL_Surface		*tga2sur(t_tga *tga, SDL_Surface *surface)
 {
-	surface = SDL_CreateRGBSurfaceWithFormatFrom(tga->pxl,tga->w, tga->h, 32, 4 * tga->w, SDL_PIXELFORMAT_ARGB32);
+	if (tga->done == NULL)
+				printf("data == null\n");
+	if (!(surface = SDL_CreateRGBSurfaceWithFormatFrom(tga->pxl,tga->w, tga->h, 32, 4 * tga->w, SDL_PIXELFORMAT_ARGB32)))
+		printf("surface fail\n");
+	return (surface);
 }
 
 SDL_Surface		*load_texture(char *path)
@@ -27,7 +31,9 @@ SDL_Surface		*load_texture(char *path)
 	if (!(tga = (t_tga *)malloc(sizeof(t_tga))))
 		printf("Cant malloc tga\n");
 	tga_load(tga, path);
-	tga2sur(tga, surface);
-	printf("work\n");
-	return (surface);
+	return (tga2sur(tga, surface));
+//	if (!(surface))
+//		printf("NULL\n");
+//	printf("work\n");
+//	return (surface);
 }

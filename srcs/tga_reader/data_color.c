@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 11:33:52 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/23 11:04:31 by lomasse          ###   ########.fr       */
+/*   Updated: 2019/03/25 12:35:17 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	read_color(t_pixel *pxl, int bits, unsigned char *file, int pos)
 {
 	Uint16		value;
 	
-	pos < 100000 ? pos -= 1 : 0;
+//	pos < 100000 ? pos -= 1 : 0;
+	pos -= 1;
 	if (bits == 32)
 	{
 		pxl->a = file[pos + 3];
@@ -55,6 +56,7 @@ void	read_color(t_pixel *pxl, int bits, unsigned char *file, int pos)
 void	read_color_cm(t_pixel *pxl, int bits, unsigned char *file, int pos)
 {
 	Uint16		value;
+	pos < 100000 ? pos -= 1 : 0;
 	
 	if (bits == 32)
 	{
