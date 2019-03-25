@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:03:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 11:56:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void		create_sector(t_env *env)
 {
 	t_sct	*new;
 
-	if (!(new = (t_sct *)malloc(sizeof(t_sct))))
+	if (!(new = (t_sct *)ft_memalloc(sizeof(t_sct))))
 		ui_error_exit_sdl("Editor: Out of memory", env->data);
-	ft_bzero(new, sizeof(t_sct));
 	new->xmin = WIN_W + 1;
 	new->xmax = -1;
 	new->ymin = WIN_W + 1;
@@ -45,7 +44,7 @@ void		create_vertex(t_pos pos, t_env *env)
 {
 	t_vtx	*new;
 
-	if (!(new = (t_vtx *)malloc(sizeof(t_vtx))))
+	if (!(new = (t_vtx *)ft_memalloc(sizeof(t_vtx))))
 		ui_error_exit_sdl("Editor: Out of memory", env->data);
 	new->pos.x = pos.x;
 	new->pos.y = pos.y;

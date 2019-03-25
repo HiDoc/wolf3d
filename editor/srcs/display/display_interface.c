@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:15:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:15:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			display_interface(t_env *env)
 
 	// display interface area
 	rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
-	ui_make_rect(rect, env->data);
+	ui_make_rect(env->data->surface, rect);
 
 	display_infos(env);
 

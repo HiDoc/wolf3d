@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 15:11:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:21:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,18 @@ static void	left_panel(t_pos origin, t_env *env)
 
 	// square
 	rect = (t_rect){origin.x, origin.y, 400, 450, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_rect(env->data->surface, rect);
 
 	// create new
 	rect = (t_rect){origin.x + 10, origin.y + 10, 0, 25, C_WHITE};
 	ui_make_string(rect, "Create a map", env->data);
-	rect = (t_rect){origin.x + 10, origin.y + 40, 300, 25, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_input(env->data->surface, get_element(MENU_INPUT_NEW, env)->rect);
 
 	// upload
 	rect = (t_rect){origin.x + 10, origin.y + 90, 0, 25, C_WHITE};
 	ui_make_string(rect, "Upload a map", env->data);
 	rect = (t_rect){origin.x + 10, origin.y + 120, 380, 320, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_rect(env->data->surface, rect);
 
 	// display maps file
 	int			y;
@@ -58,17 +57,16 @@ static void	right_panel(t_pos origin, t_env *env)
 
 	// square
 	rect = (t_rect){origin.x + 400, origin.y, 400, 450, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_rect(env->data->surface, rect);
+
+	// preview
+	rect = (t_rect){origin.x + 410, origin.y + 10, 380, 350, C_WHITE};
+	ui_make_rect(env->data->surface, rect);
 
 	// start button
 	rect = (t_rect){origin.x + 410, origin.y + 400, 0, 25, C_WHITE};
 	ui_make_string(rect, "Start", env->data); 
-	rect = (t_rect){origin.x + 410, origin.y + 400, 150, 25, C_WHITE};
-	ui_make_rect(rect, env->data);
-
-	// preview
-	rect = (t_rect){origin.x + 410, origin.y + 10, 380, 350, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_input(env->data->surface, get_element(MENU_BUTTON_START, env)->rect);
 
 	// Cancel/Exit button
 	rect = (t_rect){origin.x + 610, origin.y + 400, 0, 25, C_WHITE};
@@ -77,7 +75,7 @@ static void	right_panel(t_pos origin, t_env *env)
 	else if (env->menu.state == 2)
 		ui_make_string(rect, "Cancel", env->data); 
 	rect = (t_rect){origin.x + 610, origin.y + 400, 150, 25, C_WHITE};
-	ui_make_rect(rect, env->data);
+	ui_make_rect(env->data->surface, rect);
 }
 
 void		menu(t_env *env)

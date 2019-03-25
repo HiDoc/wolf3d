@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_exit_sdl.c                                      :+:      :+:    :+:   */
+/*   ui_make_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 11:26:15 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/25 11:02:05 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/25 13:11:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		ui_exit_sdl(t_data *data)
+void		ui_make_input(SDL_Surface *surface, t_rect rect)
 {
-	// free maps files
-	// free images background
-	// free images cursor
-	// free sector + vertex
-	SDL_FreeSurface(data->surface);
-	TTF_CloseFont(data->font);
-	SDL_DestroyRenderer(data->sdl.renderer);
-	SDL_DestroyWindow(data->sdl.window);
-	TTF_Quit();
-	SDL_Quit();
-	exit(EXIT_SUCCESS);
+	ui_make_rect(surface, rect);
+	//ui_make_string(t_rect rect, char *text, t_data *data)
 }

@@ -6,40 +6,63 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/18 17:48:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:17:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDITOR_STRUCT_H
 # define EDITOR_STRUCT_H
 
+enum					e_type
+{
+	INPUT,
+	BUTTON
+};
+
+enum					e_elements
+{
+	MENU_INPUT_NEW,
+	MENU_BUTTON_START,
+	MENU_BUTTON_EXIT
+};
+
 typedef struct  s_vtx   t_vtx;
 typedef struct  s_sct   t_sct;
+typedef struct	s_elem	t_elem;
 typedef struct	s_menu	t_menu;
 typedef struct  s_env   t_env;
 
 struct					s_vtx
 {
-	t_pos		pos;
-	t_vtx		*next;
+	t_pos			pos;
+	t_vtx			*next;
 };
 
 struct					s_sct
 {
-	t_vtx		*vtx_current;
-	t_vtx		*vtx_start;
-	t_vtx		*vtx_end;
+	t_vtx			*vtx_current;
+	t_vtx			*vtx_start;
+	t_vtx			*vtx_end;
 
-	int			close;		// is sector close;
+	int				close;		// is sector close;
 
-	float		xmin;
-	float		xmax;
-	float		ymin;
-	float		ymax;
+	float			xmin;
+	float			xmax;
+	float			ymin;
+	float			ymax;
 
-	Uint32		color;
+	Uint32			color;
 
-	t_sct		*next;
+	t_sct			*next;
+};
+
+struct					s_elem
+{
+	int				id;
+	int				type;
+	t_rect			rect;
+	char			*str;	// if type == input
+	t_elem			*next;
 };
 
 struct					s_menu
@@ -58,7 +81,7 @@ struct					s_env
 
 	char			*map_name;
 
-	// sectors
+	// lst sectors
 	t_sct			*sct_current;
 	t_sct			*sct_start;
 	t_sct			*sct_end;
@@ -77,6 +100,9 @@ struct					s_env
 
 	// mouse handling
 	int				mouse_mode;
+
+	// lst elements
+	t_elem			*elements;
 };
 
 #endif

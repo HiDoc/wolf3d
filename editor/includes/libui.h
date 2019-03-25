@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:12:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:10:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void			ui_make_line(SDL_Surface *surface,
 				t_vec vec, Uint32 color);
 void			ui_make_dotted_line(SDL_Surface *surface,
 				t_vec vec, Uint32 color);
-void			ui_make_rect(t_rect rect, t_data *data);
+void			ui_make_rect(SDL_Surface *surface, t_rect rect);
 void    		ui_make_full_rect(SDL_Surface *surface, 
 				SDL_Rect rect, Uint32 color);
 void			ui_make_circle(t_circ circ, t_data *data);
 void			ui_make_string(t_rect rect, char *text, t_data *data);
 void			ui_make_nbrstring(t_rect rect, int value, t_data *data);
-
+void			ui_make_input(SDL_Surface *surface, t_rect rect);
 
 // Events handling
 
