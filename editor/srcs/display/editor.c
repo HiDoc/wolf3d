@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:06:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 18:52:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ void		editor(t_env *env)
 	display_selection(env);
 
 	// display new
-	ui_make_input(env->data->surface, get_element(E_B_NEW, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_NEW, env)->rect);
 	rect = (t_rect){45, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "New", env->data);	
 	// display upload
-	ui_make_input(env->data->surface, get_element(E_B_UPLOAD, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_UPLOAD, env)->rect);
 	rect = (t_rect){155, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "Upload", env->data);
 	// display save
-	ui_make_input(env->data->surface, get_element(E_B_SAVE, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_SAVE, env)->rect);
 	rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "Save", env->data);
 

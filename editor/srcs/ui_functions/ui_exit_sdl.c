@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 11:26:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 18:09:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		ui_exit_sdl(t_data *data)
 {
+	// free elements
 	// free maps files
 	// free images background
 	// free images cursor

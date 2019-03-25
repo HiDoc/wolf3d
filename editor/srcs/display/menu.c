@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:46:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 18:51:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	left_panel(t_pos origin, t_env *env)
 	// create new
 	rect = (t_rect){origin.x + 10, origin.y + 10, 0, 25, C_WHITE};
 	ui_make_string(rect, "Create a map", env->data);
-	ui_make_input(env->data->surface, get_element(M_I_NEW, env)->rect);
+	ui_make_input(env->data->surface, get_element(M_I_NEW, env)->rect, env->data);
 
 	// upload
 	rect = (t_rect){origin.x + 10, origin.y + 90, 0, 25, C_WHITE};
@@ -33,10 +33,10 @@ static void	left_panel(t_pos origin, t_env *env)
 	ui_make_rect(env->data->surface, rect);
 
 	// up	
-	ui_make_input(env->data->surface, get_element(M_B_UP, env)->rect);
+	ui_make_rect(env->data->surface, get_element(M_B_UP, env)->rect);
 
 	// down
-	ui_make_input(env->data->surface, get_element(M_B_DOWN, env)->rect);
+	ui_make_rect(env->data->surface, get_element(M_B_DOWN, env)->rect);
 
 	// display maps file
 	int			y;
@@ -72,19 +72,19 @@ static void	right_panel(t_pos origin, t_env *env)
 	// start button
 	rect = (t_rect){origin.x + 410, origin.y + 400, 0, 25, C_WHITE};
 	ui_make_string(rect, "Start", env->data);
-	ui_make_input(env->data->surface, get_element(M_B_START, env)->rect);
+	ui_make_rect(env->data->surface, get_element(M_B_START, env)->rect);
 
 	// Cancel/Exit button
 	rect = (t_rect){origin.x + 610, origin.y + 400, 150, 25, C_WHITE};
 	if (env->menu.state == 1)
 	{
 		ui_make_string(rect, "Exit", env->data); 
-		ui_make_input(env->data->surface, get_element(M_B_CANCEL, env)->rect);
+		ui_make_rect(env->data->surface, get_element(M_B_CANCEL, env)->rect);
 	}
 	else if (env->menu.state == 2)
 	{
 		ui_make_string(rect, "Cancel", env->data); 
-		ui_make_input(env->data->surface, get_element(M_B_EXIT, env)->rect);
+		ui_make_rect(env->data->surface, get_element(M_B_EXIT, env)->rect);
 	}
 }
 

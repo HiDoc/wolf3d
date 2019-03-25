@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:15:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 18:45:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    		ui_make_full_rect(SDL_Surface *surface,
 void			ui_make_circle(t_circ circ, t_data *data);
 void			ui_make_string(t_rect rect, char *text, t_data *data);
 void			ui_make_nbrstring(t_rect rect, int value, t_data *data);
-void			ui_make_input(SDL_Surface *surface, t_rect rect);
+void			ui_make_input(SDL_Surface *surface, t_rect rect, t_data *data);
 
 // Events handling
 
