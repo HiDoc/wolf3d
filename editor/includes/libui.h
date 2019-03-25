@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 13:10:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:15:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				ui_get_events(int (*event)(t_env *env), t_env *env);
 
 // Utils
 SDL_Color		ui_hex_to_rgb(int hexa);
-int				ui_mouseenter(int x, int y, t_square square);
+int				ui_mouseenter(int x, int y, t_rect rect);
 int				ui_close_to(t_pos a, t_pos b, float dist);
 
 // Exit

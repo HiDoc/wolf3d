@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:26:20 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/06 21:48:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:15:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,12 @@ struct					s_sdl
 	SDL_Renderer	*renderer;
 };
 
-struct					s_square
-{
-	int				index;
-	int				group;
-	t_rect			rect;
-};
-
-struct					s_round
-{
-	int				index;
-	int				group;
-	t_circ			circ;
-};
-
-struct					s_objs
-{
-	int				circle_index;
-	t_round			circle[200];
-	int				square_index;
-	t_square		square[200];
-};
-
 struct					s_data
 {
 	t_sdl			sdl;
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
 	TTF_Font		*font;
-
-	t_objs			objects;
 
 	const Uint8 *state;
 	int			mouse_x;

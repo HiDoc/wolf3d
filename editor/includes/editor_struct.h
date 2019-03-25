@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 13:31:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:01:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ enum					e_elements
 	M_I_NEW,
 	M_B_START,
 	M_B_CANCEL,
-	M_B_EXIT
+	M_B_EXIT,
+	E_B_NEW,
+	E_B_UPLOAD,
+	E_B_SAVE,
 };
 
 typedef struct  s_vtx   t_vtx;

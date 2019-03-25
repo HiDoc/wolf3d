@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:03:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:21:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,24 @@ int			menu_events(t_env *env)
 {
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		t_square    square;
-		t_square    exit_cancel;
-
-		square.rect = (t_rect){WIN_W / 2 + 10, WIN_H / 2 + 175,
-		150, 25, C_WHITE};
-		exit_cancel.rect = (t_rect){WIN_W / 2 + 210, WIN_H / 2 + 175,
-		150, 25, C_WHITE};
-		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, square))
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(M_B_START, env)->rect))
 		{
 			env->menu.state = 0;
 			return (1);
 		}
-		else if (ui_mouseenter(env->data->mouse.x,
-		env->data->mouse.y, exit_cancel))
+		else if (env->menu.state == 0
+		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(M_B_EXIT, env)->rect))
 		{
-			if (env->menu.state == 1)
-				ui_exit_sdl(env->data);
-			else
-				env->menu.state = 0;
+			ui_exit_sdl(env->data);
+			return (1);
+		}
+		else if (env->menu.state != 0
+		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(M_B_CANCEL, env)->rect))
+		{
+			env->menu.state = 0;
 			return (1);
 		}
 	}
