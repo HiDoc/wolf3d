@@ -15,6 +15,7 @@
 void	init_floor(t_env *env)
 {
 	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+	env->world.enemies[0].sprite = new_surface("enemies/enemy");
 }
 
 int		init_gameplay_env(t_env *env, char *res)
