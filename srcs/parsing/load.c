@@ -75,6 +75,8 @@ void			LoadData(t_engine *e, t_env *env)
 				break;
 		}
 	}
+	if ((e->queue.renderedsectors = (int *)malloc(e->nsectors * sizeof(int))) == NULL)
+		return;
 	fclose(fp);
 	free(vert);
 }

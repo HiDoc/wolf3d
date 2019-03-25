@@ -121,6 +121,7 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *windo
 		}
 		a++;
 	}
+	free(e->queue.renderedsectors);
 	free(e->sectors);
 	e->sectors = NULL;
 	e->nsectors = 0;

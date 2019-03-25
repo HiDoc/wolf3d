@@ -6,13 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 18:43:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:44:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_UI_H
 # define DOOM_F_UI_H
 
+int			init_minimap(t_env *env);
 void		ui_minimap(t_env *env);
 
 SDL_Surface	*ui_make_surface(int height, int width);

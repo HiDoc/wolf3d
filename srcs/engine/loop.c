@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 16:54:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:46:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int sdl_render(t_env *env, void (*f)(t_env *env))
 
 int sdl_loop(t_env *env)
 {
+	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	t_vision *v;
 	t_engine *e;
-	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 
 	ft_bzero(&env->time, sizeof(t_time));
 

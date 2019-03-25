@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:47:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/15 18:18:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 11:40:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		is_bumping(const t_sector *sect, t_vision *vision,
 			|| hole_low > e->player.where.z - vision->eyeheight + KNEEHEIGHT);
 }
 
-int		is_crossing(const t_vtx player, t_vtx dest, const t_vtx *vert, unsigned s)
+int		is_crossing(const t_vtx player, t_vtx dest,
+		const t_vtx *vert, unsigned s)
 {
 	const t_vtx	add = add_vertex(player, dest);
 

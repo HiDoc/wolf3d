@@ -6,17 +6,17 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/25 18:34:23 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/25 19:47:59 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -O3 #-g #-fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
-MAKEFLAGS		= --jobs=16
+MAKEFLAGS		= #--jobs=16
 #color
 YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"
@@ -127,7 +127,8 @@ SRC_NAME 	= main.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_string.c \
-			struct_font.c
+			struct_font.c \
+			init_minimap.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

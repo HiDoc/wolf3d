@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 12:57:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:43:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@
 /*
 ** Define visions constants
 */
-# define EYEHEIGHT		6
-# define DUCKHEIGHT		2.5
+# define EYEHEIGHT		8
+# define DUCKHEIGHT		3
 # define HEADMARGIN		1
-# define KNEEHEIGHT		2
+# define KNEEHEIGHT		3
 # define NEARZ			1e-4f
 # define NEARSIDE		1e-5f
 # define FARZ			5
@@ -60,8 +60,8 @@
 /*
 ** Movement
 */
-# define SPEED_WALK 0.2f
-# define SPEED_RUN	0.4f
+# define SPEED_WALK 0.4f
+# define SPEED_RUN	0.8f
 
 /*
 ** Field of view

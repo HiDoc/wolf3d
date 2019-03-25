@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 16:54:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/25 19:53:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[SDL_SCANCODE_TAB])
 		{
 			ui->is_active = !ui->is_active;
-			SDL_WarpMouseInWindow(env->sdl.window, W/2, H/2);
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 			SDL_Delay(300);
 		}
@@ -34,28 +33,20 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_character	*p;
+	t_engine	*e;
 	t_vision	*v;
 
+	e = &env->engine;
 	p = &env->player;
-	v = &env->engine.player.vision;
+	v = &e->player.vision;
 	(void)keycodes;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
-		/*if (keycodes[SDL_SCANCODE_C])
-			pick_object(env, env->engine.sectors[0].head_object);*/
+
 		if (keycodes[SDL_SCANCODE_E])
 			is_pickable_object(env, &env->engine.sectors[env->engine.player.sector]);
-		/*
-		if (keycodes[SDL_SCANCODE_LEFT])
-			p->hud.is_txt = give_health(env, p->hud.shortcut[0]);
-		if (keycodes[SDL_SCANCODE_RIGHT])
-			p->hud.is_txt = give_shield(env, p->hud.shortcut[1]);
-		if (keycodes[SDL_SCANCODE_UP])
-			p->hud.is_txt = give_jetpack(env, p->hud.shortcut[5]);
-		if (keycodes[SDL_SCANCODE_R])
-			load_weapon(env);
-		if (keycodes[SDL_SCANCODE_DOWN])
-			p->hud.is_txt = give_ammo(env, p->hud.shortcut[p->inventory.current->current->ref + 2]); */
+		if (keycodes[SDL_SCANCODE_G])
+			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
 		if (keycodes[SDL_SCANCODE_TAB])
 		{
 			p->hud.inventory.is_active = !p->hud.inventory.is_active;

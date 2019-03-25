@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 19:45:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/24 20:05:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_floor(t_env *env)
 {
 	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+	env->world.enemies[0].sprite = new_surface("enemies/enemy");
 }
 
 int		init_gameplay_env(t_env *env)
@@ -51,7 +52,8 @@ int		main(void)
 		W, H, SDL_WINDOW_SHOWN);
 	SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
-	env.sdl.surface = SDL_CreateRGBSurface(0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
+	env.sdl.surface = SDL_CreateRGBSurface(
+	0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	env.sdl.texture = SDL_CreateTexture(env.sdl.renderer,
 		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, W, H);
 
@@ -74,8 +76,9 @@ int		main(void)
 	verify_map(&env.engine);
 	init_floor(&env);
 	////////////////////////////////////////////
-	// initialisation : blame -> sgalasso
-	// - penser a destroy ceci a la fin
+	// blame -> sgalasso
+	// initialisation font :
+	// - penser a destroy la font a la fin
 	if (!(env.arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
 	{
 		ft_putendl(TTF_GetError()); // provisoire
@@ -84,6 +87,11 @@ int		main(void)
 	////////////////////////////////////////////
 
 	init_container(&env);
+	if (!(init_minimap(&env)))
+	{
+		// quitter sdl, ttf ,free, etc...
+		return (0);
+	}
 	sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	free_ui(&env);
