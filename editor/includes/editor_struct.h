@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:01:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:42:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ enum					e_elements
 	M_B_START,
 	M_B_CANCEL,
 	M_B_EXIT,
+	M_B_UP,
+	M_B_DOWN,
 	E_B_NEW,
 	E_B_UPLOAD,
 	E_B_SAVE,
@@ -80,6 +82,7 @@ struct					s_menu
 {
 	int				state;
 	int				nb_maps;
+	int				idx_map;
 	char			**maps;
 	SDL_Surface		*background;
 };

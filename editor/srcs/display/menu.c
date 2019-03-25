@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 15:37:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:46:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ static void	left_panel(t_pos origin, t_env *env)
 	rect = (t_rect){origin.x + 10, origin.y + 120, 380, 320, C_WHITE};
 	ui_make_rect(env->data->surface, rect);
 
+	// up	
+	ui_make_input(env->data->surface, get_element(M_B_UP, env)->rect);
+
+	// down
+	ui_make_input(env->data->surface, get_element(M_B_DOWN, env)->rect);
+
 	// display maps file
 	int			y;
 	int			i;
@@ -39,8 +45,8 @@ static void	left_panel(t_pos origin, t_env *env)
 	i = 0;
 	while (env->menu.maps[i])
 	{
-		y = 310 + 40 * i;
-		if (y >= 310 && y < 700)
+		y = origin.y + 130 + 40 * (i + env->menu.idx_map);
+		if (y >= origin.y + 130 && y < origin.y + 130 + 320)
 		{
 			sdlrect = (SDL_Rect){origin.x + 20, y, 300, 30};
 			ui_make_full_rect(env->data->surface, sdlrect, C_GREY);

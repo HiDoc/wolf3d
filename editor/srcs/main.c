@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:04:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:37:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ static void		init_elems(t_env *env)
 
 	rect = (t_rect){300, 20, 100, 40, C_WHITE};
 	create_element(E_B_SAVE, BUTTON, rect, env);
+
+	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 + 20,
+	20, 20, C_WHITE};
+	create_element(M_B_UP, BUTTON, rect, env);
+	
+	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 +	60,
+	20, 20, C_WHITE};
+	create_element(M_B_DOWN, BUTTON, rect, env);
 }
 
 static void		init_menu(t_env *env)
@@ -118,7 +126,7 @@ int				main(void)
 	init_menu(&env);
 	env.menu.state = 1;
 	env.menu.background = ui_load_image(
-			"ressources/images/doom-background.jpg", &env);
+	"ressources/images/doom-background.jpg", &env);
 
 	env.map_name = "map"; // to remove
 
