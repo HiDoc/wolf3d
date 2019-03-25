@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 13:22:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 15:35:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void		create_element(int id, int type, t_rect rect, t_env *env)
 	}
 	else
 	{
-		env->elements->next = new;
-		new->next = 0;
+		new->next = env->elements;
+		env->elements = new;
 	}
 }
 
@@ -45,11 +45,19 @@ static void		init_elems(t_env *env)
 
 	rect = (t_rect){WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 40,
 	300, 25, C_WHITE};
-	create_element(MENU_INPUT_NEW, INPUT, rect, env);
+	create_element(M_I_NEW, INPUT, rect, env);
 
 	rect = (t_rect){WIN_W / 2 - 400 + 410, WIN_H / 2 - 225 + 400,
 	150, 25, C_WHITE};
-	create_element(MENU_BUTTON_START, BUTTON, rect, env);
+	create_element(M_B_START, BUTTON, rect, env);
+
+	rect = (t_rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400,
+	150, 25, C_WHITE};
+	create_element(M_B_CANCEL, BUTTON, rect, env);
+
+	rect = (t_rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400,
+	150, 25, C_WHITE};
+	create_element(M_B_EXIT, BUTTON, rect, env);
 }
 
 static void		init_menu(t_env *env)

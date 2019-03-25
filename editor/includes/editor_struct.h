@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 13:17:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:31:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@ enum					e_type
 	BUTTON
 };
 
+/*
+** M_ : MENU
+** E_ : EDITOR
+** _I : INPUT
+** _B : BUTTON
+*/
+
 enum					e_elements
 {
-	MENU_INPUT_NEW,
-	MENU_BUTTON_START,
-	MENU_BUTTON_EXIT
+	M_I_NEW,
+	M_B_START,
+	M_B_CANCEL,
+	M_B_EXIT
 };
 
 typedef struct  s_vtx   t_vtx;
