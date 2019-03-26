@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 13:39:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 16:40:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ SDL_Surface *surface_fr_png(char *path);
 int			copy_img(Uint32 *pxl, SDL_Surface *img);
 SDL_Surface *ui_img(char *file, int i);
 int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
-int			*scale_hud_img(SDL_Surface *img, SDL_Rect rect, int *tab);
-int			need_scale(SDL_Surface *img, SDL_Rect rect);
-int			scale_tab(SDL_Surface *img, SDL_Rect rect, int *tab);
 int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 

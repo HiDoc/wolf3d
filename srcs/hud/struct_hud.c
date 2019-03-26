@@ -6,46 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 15:08:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 16:40:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int	*scale_hud_img(SDL_Surface *img, SDL_Rect rect, int *tab)
-{
-	int		x;
-	int		y;
-	t_vtx	scale;
-
-	scale.x = fabs((float)img->w / rect.w);
-	scale.y = fabs((float)img->h / rect.h);
-	bzero(tab, 20);
-	x = 0;
-	while (x < rect.w)
-	{
-		y = 0;
-		while (y < rect.h)
-		{
-			tab[img->w * (int)(y * scale.y) + (int)(x * scale.x)] = 1;
-			y++;
-		}
-		x++;
-	}
-	return (tab);
-}
-
-int	need_scale(SDL_Surface *img, SDL_Rect rect)
-{
-	return (img->w > rect.w || img->h > rect.h);
-}
-
-int	scale_tab(SDL_Surface *img, SDL_Rect rect, int *tab)
-{
-	tab = need_scale(img, rect) ? scale_hud_img(img, rect, tab) : NULL;
-	return (1);
-}
-
 
 int	init_icon_bloc(t_uinv *inventory, t_container *surfaces)
 {
@@ -114,7 +79,7 @@ int	init_hwpn_bloc(t_hud *hud, t_container *surfaces)
 	int			i;
 	SDL_Rect	rect;
 
-	rect = (SDL_Rect){W - W / 6, H / 1.2, W / 20, H / 14};
+	rect = (SDL_Rect){W - W / 6, H / 1.2, W / 10, H / 7};
 	i = HUD_PISTOL;
 	index = 0;
 	while (i <= HUD_RIFLE)
@@ -139,7 +104,7 @@ int	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 	int			inter;
 
 	inter = W / 64;
-	rect = (SDL_Rect){W / 32, H - H / 3, W / 7, H / 7};
+	rect = (SDL_Rect){W / 32, H - H / 3, W / 8, H / 8};
 	i = W_SLOT_1;
 	j = INV_PISTOL;
 	index = 0;

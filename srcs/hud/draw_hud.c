@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 12:40:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 16:49:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	bloc = &env->hud.hud_wpn[wpn->current->ref];
 	draw_img(env, bloc->sprite, bloc);
 	ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
-	(t_vtx){W - W / 7, H / 1.3}, 30,
+	(t_vtx){W - W / 7, H / 1.3}, W / 40,
 	env->player.inventory.current->ammo_current, -1});
 	ui_put_data(env, (t_font){GOLD, "/", env->hud.text.number,
-	(t_vtx){W - W / 8.5, H / 1.22}, 30,
+	(t_vtx){W - W / 8.5, H / 1.22}, W / 40,
 	-1, env->player.inventory.current->ammo_magazine});
 	return (1);
 }
@@ -52,13 +52,10 @@ int	check_object_stack(t_env *env, int ref, int index)
 	if ((iter = check_object_type(env, ref)) > -1)
 	{
 		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
-		{
 			sprite = env->world.objects[ref].sprite;
-		}
 		else
-		{
 			sprite = bloc->bg_empty;
-		}
+		draw_img(env, bloc->bg_fill, bloc);
 		draw_img(env, sprite, bloc);
 	}
 	else

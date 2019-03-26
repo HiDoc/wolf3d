@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 12:42:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 16:33:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		fill_icon(t_env *env, int iter)
 
 	bloc = &env->hud.inventory.icons[iter];
 	draw_img(env, bloc->sprite, bloc);
-	// ui_icon_data(env, (t_vtx){n->x + W / 20, bloc->v1.y + H / 70}, iter);
+	ui_icon_data(env, (t_vtx){bloc->rect.x + W / 15, bloc->rect.y + H / 60}, iter);
 	return (1);
 }
 

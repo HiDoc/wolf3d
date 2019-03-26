@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 16:04:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.current->ammo_magazine = env->world.armory[obj->ref].ammo_mag_max;
 		}
 		else
-			return (15);
+			return (16);
 		obj->is_picked = 1;
-		return (16);
+		return (15);
 	}
 	return (17);
 }
