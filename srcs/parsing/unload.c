@@ -98,8 +98,8 @@ void		free_ui(t_env *env)
 	// free_inventory_img(&env->player.inventory.ui);
 	free_world_img(&env->world);
 	// free_all_sounds(env);
-	free_fonts(&env->player.hud.text);
-	free_surface_string(&env->player.hud.text);
+	free_fonts(&env->hud.text);
+	free_surface_string(&env->hud.text);
 }
 
 void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e)

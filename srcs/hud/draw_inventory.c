@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 17:58:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		fill_bloc(t_env *env, int i)
 	t_bloc		*bloc;
 	SDL_Rect	rect;
 
-	bloc = &env->player.hud.inventory.objects[i];
+	bloc = &env->hud.inventory.objects[i];
 	if (env->player.inventory.objects[i].current)
 	{
 		rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16,
@@ -33,7 +33,7 @@ int		fill_bloc(t_env *env, int i)
 		draw_img(env, bloc->use.sprite,
 		&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
 		bloc->use.rect, 0, 0, 0, 0}), bloc->use.rscale);
-		ui_put_data(env, (t_font){GOLD, "", env->player.hud.text.number,
+		ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 		(t_vtx){bloc->rect.x + W / 80,	bloc->rect.y + 5}, 20, -1,
 		env->player.inventory.objects[i].nb_stack});
 	}
@@ -47,7 +47,7 @@ int		fill_wpn(t_env *env, int iter)
 	SDL_Surface	*mwpn;
 	t_bloc		*bloc;
 
-	bloc = &env->player.hud.inventory.wpn[iter];
+	bloc = &env->hud.inventory.wpn[iter];
 	if (env->player.inventory.weapons[iter].current)
 		mwpn = bloc->bg_fill;
 	else
@@ -60,7 +60,7 @@ int		fill_icon(t_env *env, int iter)
 {
 	t_bloc	*bloc;
 
-	bloc = &env->player.hud.inventory.icons[iter];
+	bloc = &env->hud.inventory.icons[iter];
 	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
 	// ui_icon_data(env, (t_vtx){n->x + W / 20, bloc->v1.y + H / 70}, iter);
 	return (1);
@@ -94,7 +94,7 @@ int		print_inventory(t_env *env)
 {
 	t_bloc	*bloc;
 
-	bloc = &env->player.hud.inventory.bg;
+	bloc = &env->hud.inventory.bg;
 	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
 	fill_inventory(env);
 	ui_txt_inv(env);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 10:40:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ int	action_inventory(t_env *env, int x, int y)
 	drag_sprite = NULL;
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(1))
 	{
-		if ((index = select_object(env->player.inventory.objects, x, y, env->player.hud.inventory.objects)) > -1)
+		if ((index = select_object(env->player.inventory.objects, x, y, env->hud.inventory.objects)) > -1)
 		{
 			object = &env->player.inventory.objects[index];
-			bloc = &env->player.hud.objects[index];
+			bloc = &env->hud.objects[index];
 			if (select_action(bloc->cross, x, y))
 				drop_object(env, object);
 			// else if (select_action(bloc->use, x, y))
-			// 	env->player.hud.is_txt = object->current->action((void*)env, object);
+			// 	env->hud.is_txt = object->current->action((void*)env, object);
 		}
 		SDL_FlushEvents(SDL_MOUSEBUTTONDOWN, SDL_MOUSEBUTTONUP);
 	}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 19:49:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:34:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 	return (1);
 }
 
-void				oline(t_drawline l, t_env *env)
+void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
-	SDL_Surface *sprite = env->world.enemies[0].sprite;
+	// SDL_Surface *sprite = env->world.enemies[0].sprite;
 	const t_raycast *ctn = (t_raycast *)l.container;
 	int		*pixels;
 	int		x;
@@ -109,7 +109,7 @@ void				oline(t_drawline l, t_env *env)
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 	const float height = l.to - l.from;
-	const float widht = ctn->x2 - ctn->x1;
+	const float width = ctn->x2 - ctn->x1;
 	if (l.from == l.to)
 		pixels[l.from * W + x] = 0x00;
 	else if (l.to > l.from)
@@ -119,7 +119,7 @@ void				oline(t_drawline l, t_env *env)
 		float y = 0;
 		while (iter < l.to)
 		{
-			const int pix = getpixel(sprite, (int)((ctn->x - ctn->x1) / widht * sprite->w) % sprite->w,
+			const int pix = getpixel(sprite, (int)((ctn->x - ctn->x1) / width * sprite->w) % sprite->w,
 				(int)(y / height * sprite->h) % sprite->h);
 			if (pix & 0xff)
 				pixels[iter * W + x] = pix;
@@ -138,6 +138,7 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 	t_raycast		raycast;
 	t_edge			edge;
 	const t_vtx		player = {e->player.where.x, e->player.where.y};
+	int				ref;
 
 	ft_bzero(&drawline, sizeof(t_drawline));
 	edge = (t_edge){
@@ -161,9 +162,10 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		drawline.bottom = 0xFF;
 		drawline.middle = 0xFF;
 		drawline.top = 0xFF;
-		while (raycast.x < raycast.x2)
+		while (raycast.x < raycast.x2 && !obj->is_picked)
 		{
-			oline(drawline, env);
+			ref = obj->is_wpn ? obj->ref + 6 : obj->ref;
+			oline(drawline, env, env->world.objects[ref].sprite);
 			raycast.x++;
 		}
 	}

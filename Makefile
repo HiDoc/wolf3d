@@ -6,13 +6,13 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/25 19:47:59 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/26 12:17:10 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g #-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -99,9 +99,9 @@ SRC_NAME 	= main.c \
 			projection.c \
 			checking.c \
 			unload.c \
-			struct_img.c \
-			utils_img.c \
 			struct_character.c \
+			struct_hud_img.c \
+			utils_hud_img.c \
 			struct_object.c \
 			parse_objects.c \
 			action_object.c \
@@ -111,10 +111,9 @@ SRC_NAME 	= main.c \
 			action_inventory.c \
 			draw_inventory.c \
 			weapons_inventory.c \
-			utils_draw_inventory.c \
 			struct_weapon.c \
 			utils_weapons.c \
-			utils_ui.c \
+			hud_data.c \
 			struct_hud.c \
 			draw_hud.c 	\
 			utils_color.c \

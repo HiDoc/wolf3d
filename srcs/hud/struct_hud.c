@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 18:32:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 12:09:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	*scale_hud_img(SDL_Surface *img, SDL_Rect rect, int *tab)
 
 	scale.x = fabs((float)img->w / rect.w);
 	scale.y = fabs((float)img->h / rect.h);
-	bzero(tab, S_SCALE_TAB);
+	bzero(tab, 20);
 	x = 0;
 	while (x < rect.w)
 	{
@@ -235,8 +235,8 @@ int	init_hud_blocs(t_env *env)
 	t_uinv	*inv;
 
 	i_tab = 0;
-	hud = &env->player.hud;
-	inv = &env->player.hud.inventory;
+	hud = &env->hud;
+	inv = &env->hud.inventory;
 	return (init_inv_bg(inv, env->world.surfaces.hud[0])
 	&& init_icon_bloc(inv, &env->world.surfaces)
 	&& init_iwpn_bloc(inv, &env->world.surfaces)

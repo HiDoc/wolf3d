@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 14:39:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,14 @@ int		set_simple_strings(t_env *env, int i, int j)
 	{
 		if (i < UI_NB_STRING - UI_NB_STR_INV)
 		{
-			if (!(env->player.hud.text.string[i] = ui_create_string((t_font){WHITE,
-			string[i], env->player.hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+			if (!(env->hud.text.string[i] = ui_create_string((t_font){WHITE,
+			string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
 				return (0);
 		}
 		else
 		{
-			if (!(env->player.hud.text.t_inv[j] = ui_create_string((t_font){WHITE,
-			string[i], env->player.hud.text.doom, (t_vtx){0, 0}, 0, -1, -1})))
+			if (!(env->hud.text.t_inv[j] = ui_create_string((t_font){WHITE,
+			string[i], env->hud.text.doom, (t_vtx){0, 0}, 0, -1, -1})))
 				return (0);
 			j++;
 		}

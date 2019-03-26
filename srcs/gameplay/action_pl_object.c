@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 16:12:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		is_pickable_object(t_env *env, t_sector *sector)
 		{
 			if (current->is_pickable)
 			{
-				env->player.hud.is_txt = pick_object(env, current);
+				env->hud.is_txt = pick_object(env, current);
 				return (1);
 			}
 		}
@@ -87,12 +87,12 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.objects[index].current = obj;
 			env->player.inventory.objects[index].nb_stack++;
 			env->player.inventory.nb_current_obj++;
-			env->player.hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
+			env->hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
 			if (obj->ref < 6)
-				env->player.hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
+				env->hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
 		}
 		obj->is_picked = 1;
-		env->player.hud.is_txt = 6;
+		env->hud.is_txt = 6;
 		return (6);
 	}
 	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
@@ -117,12 +117,12 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 		else
 		{
 			if (object->current->ref < 6)
-				env->player.hud.shortcut[object->current->ref] = NULL;
+				env->hud.shortcut[object->current->ref] = NULL;
 			*object = (t_wrap_inv)
 			{NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
 			env->player.inventory.nb_current_obj--;
 		}
 	}
-	env->player.hud.is_txt = 8;
+	env->hud.is_txt = 8;
 	return (1);
 }

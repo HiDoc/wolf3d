@@ -20,7 +20,7 @@ void	init_floor(t_env *env)
 
 int		init_gameplay_env(t_env *env)
 {
-	return (init_fonts(&env->player.hud.text)
+	return (init_fonts(&env->hud.text)
 	&& init_consumable(env)
 	&& init_character(&env->player)
 	&& set_simple_strings(env, 0, 0)
@@ -50,7 +50,7 @@ int		main(void)
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		W, H, SDL_WINDOW_SHOWN);
-	SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
+	// SDL_SetWindowFullscreen(env.sdl.window, SDL_WINDOW_FULLSCREEN);
 	env.sdl.renderer = SDL_CreateRenderer(env.sdl.window, -1, 0);
 	env.sdl.surface = SDL_CreateRGBSurface(
 	0, W, H, 32, 0xff000000, 0xff0000, 0xff00, 0xff);

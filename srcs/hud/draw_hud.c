@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 17:49:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
 	t_bloc	*bloc;
 
-	bloc = &env->player.hud.hud_wpn[wpn->current->ref];
+	bloc = &env->hud.hud_wpn[wpn->current->ref];
 	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
-	ui_put_data(env, (t_font){GOLD, "", env->player.hud.text.number,
+	ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 	(t_vtx){W - W / 7, H / 1.3}, 30,
 	env->player.inventory.current->ammo_current, -1});
-	ui_put_data(env, (t_font){GOLD, "/", env->player.hud.text.number,
+	ui_put_data(env, (t_font){GOLD, "/", env->hud.text.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, 30,
 	-1, env->player.inventory.current->ammo_magazine});
 	return (1);
@@ -49,7 +49,7 @@ int	check_object_stack(t_env *env, int ref, int index)
 	t_bloc		*bloc;
 	int			ratio;
 
-	bloc = &env->player.hud.objects[index];
+	bloc = &env->hud.objects[index];
 	if ((iter = check_object_type(env, ref)) > -1)
 	{
 		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
@@ -114,10 +114,10 @@ int print_hud(t_env *env)
 			return (0);
 	}
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
-	bloc = &env->player.hud.faces[index];
+	bloc = &env->hud.faces[index];
 	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
-	draw_hp_bars(env, &env->player.hud.bar[0], env->player.max_health, env->player.health);
-	draw_hp_bars(env, &env->player.hud.bar[1], env->player.max_shield, env->player.shield);
+	draw_hp_bars(env, &env->hud.bar[0], env->player.max_health, env->player.health);
+	draw_hp_bars(env, &env->hud.bar[1], env->player.max_shield, env->player.shield);
 	print_pad(env);
 	return (1);
 }
