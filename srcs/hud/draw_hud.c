@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 12:40:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	t_bloc	*bloc;
 
 	bloc = &env->hud.hud_wpn[wpn->current->ref];
-	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
+	draw_img(env, bloc->sprite, bloc);
 	ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 	(t_vtx){W - W / 7, H / 1.3}, 30,
 	env->player.inventory.current->ammo_current, -1});
@@ -47,7 +47,6 @@ int	check_object_stack(t_env *env, int ref, int index)
 	int			iter;
 	SDL_Surface	*sprite;
 	t_bloc		*bloc;
-	int			ratio;
 
 	bloc = &env->hud.objects[index];
 	if ((iter = check_object_type(env, ref)) > -1)
@@ -55,17 +54,15 @@ int	check_object_stack(t_env *env, int ref, int index)
 		if (((ref > 1 && ref < 5) && check_wpn_stack(env, ref)) || ref < 2 || ref == 5)
 		{
 			sprite = env->world.objects[ref].sprite;
-			ratio = bloc->r_ob_scale;
 		}
 		else
 		{
 			sprite = bloc->bg_empty;
-			ratio = bloc->r_scale;
 		}
-		draw_img(env, sprite, bloc, ratio);
+		draw_img(env, sprite, bloc);
 	}
 	else
-		draw_img(env, bloc->bg_empty, bloc, bloc->r_scale);
+		draw_img(env, bloc->bg_empty, bloc);
 	return (0);
 }
 
@@ -94,7 +91,7 @@ int	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 	rectw_save = bloc->rect.w;
 	if (data < max)
 		bloc->rect.w = size_bar(bloc->rect.w, max, data);
-	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
+	draw_img(env, bloc->sprite, bloc);
 	bloc->rect.w = rectw_save;
 	return (1);
 }
@@ -115,7 +112,7 @@ int print_hud(t_env *env)
 	}
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];
-	draw_img(env, bloc->sprite, bloc, bloc->r_scale);
+	draw_img(env, bloc->sprite, bloc);
 	draw_hp_bars(env, &env->hud.bar[0], env->player.max_health, env->player.health);
 	draw_hp_bars(env, &env->hud.bar[1], env->player.max_shield, env->player.shield);
 	print_pad(env);

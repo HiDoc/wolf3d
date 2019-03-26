@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 17:48:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 14:32:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,27 @@ int	put_gun_shoot(t_env *env, int frame)
 	return (1);
 }
 
+int	select_limit(t_env *env, t_bloc *bloc)
+{
+	const int	ref = env->player.inventory.current->current->ref;
+	if ((!env->player.actions.is_loading && !env->player.actions.is_shooting)
+	|| (ref == 2 && env->player.actions.is_shooting))
+		bloc->limit = (t_vtx){W / 2, H / 2};
+	else
+	{
+		if (ref == 0)
+			bloc->limit = (t_vtx){W / 2, H / 3};
+		else if (ref == 1)
+			bloc->limit = (t_vtx){W / 3, 0};
+		else if (ref == 2 && env->player.actions.is_loading)
+			bloc->limit = (t_vtx){0, H / 3};
+	}
+	return (1);
+}
+
 int	put_gun(t_env *env, SDL_Surface *sprite, t_bloc *bloc)
 {
-	draw_img(env, sprite, bloc, bloc->r_scale);
+	select_limit(env, bloc);
+	draw_img(env, sprite, bloc);
 	return (1);
 }

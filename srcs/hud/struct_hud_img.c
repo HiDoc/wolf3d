@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_img.c                                       :+:      :+:    :+:   */
+/*   struct_hud_img.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 19:12:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 13:51:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc, float ratio)
+int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 {
 	int		i;
 	int		j;
 
-	(void)ratio;
 	const float ratiox = img->w / (float)bloc->rect.w;
 	const float ratioy = img->h / (float)bloc->rect.h;
-	i = 0;
-	while (i < bloc->rect.w && i * ratiox < img->w)
+
+	i = bloc->limit.x;
+	while (i < bloc->rect.w && (ratiox > 1 ? (i * ratiox) : i) < img->w)
 	{
-		j = 0;
-		while (j < bloc->rect.h && j * ratioy < img->h)
+		j = bloc->limit.y;
+		while (j < bloc->rect.h && (ratioy > 1 ? (j * ratioy) : j) < img->h)
 		{
-			Uint32 color = getpixel(img, i * ratiox, j * ratioy);
+			Uint32 color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
+			(ratioy > 1 ? (j * ratioy) : j));
 			if (color & 0xff)
-				setpixel(env->sdl.surface, i + bloc->rect.x, j + bloc->rect.y, color);
+				setpixel(env->sdl.surface, i + bloc->rect.x,
+				j + bloc->rect.y, color);
 			j++;
 		}
 		i++;

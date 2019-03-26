@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_img.c                                        :+:      :+:    :+:   */
+/*   utils_hud_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:21:37 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/10 22:22:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 13:32:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
+int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img)
 {
 	int		x;
 	int		y;
@@ -21,16 +21,16 @@ int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img, t_ixy padding)
     Uint32  *src;
 
     src = img->pixels;
-	scale.x = fabs((float)img->w / (float)(rect.w - rect.x));
-	scale.y = fabs((float)img->h / (float)(rect.h - rect.y));
+	scale.x = fabs((float)img->w / (float)(rect.w));
+	scale.y = fabs((float)img->h / (float)(rect.h));
 	x = 0;
-	while (x < rect.w - rect.x)
+	while (x < rect.w && x < img->w)
 	{
 		y = 0;
-		while (y < rect.h - rect.y)
+		while (y < rect.h && y < img->h)
 		{
 			p = src[img->w * (int)(y * scale.y) + (int)(x * scale.x)];
-			dest[rect.w * (y + padding.y) + (x + padding.x)] = p;
+			dest[rect.w * y + x] = p;
 			y++;
 		}
 		x++;

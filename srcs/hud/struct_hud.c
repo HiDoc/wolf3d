@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 12:09:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 15:08:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	init_icon_bloc(t_uinv *inventory, t_container *surfaces)
 	while (i < FACE_1)
 	{
 		inventory->icons[ref] = (t_bloc){
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		NULL, NULL, surfaces->hud[i], rect, ref, 1,
-		surfaces->hud[i]->w / rect.w, 0};
+		(t_vtx){0, 0}};
 		rect.x += rect.w + inter;
 		i++;
 		ref++;
@@ -88,19 +88,19 @@ int	init_hp_bloc(t_hud *hud, t_container *surfaces)
 		if (i < HP_BAR_1)
 		{
 			hud->faces[rfaces] = (t_bloc){
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			NULL, NULL, surfaces->hud[i], rect, rfaces, 0,
-			surfaces->hud[i]->w / rect.w, 0};
+			(t_vtx){0, 0}};
 			rfaces++;
 		}
 		else
 		{
 			hud->bar[rbars] = (t_bloc){
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			NULL, NULL, surfaces->hud[i], rect, rbars, 0,
-			surfaces->hud[i]->w / rect.w, 0};
+			(t_vtx){0, 0}};
 			rbars++;
 		}
 		i++;
@@ -120,10 +120,10 @@ int	init_hwpn_bloc(t_hud *hud, t_container *surfaces)
 	while (i <= HUD_RIFLE)
 	{
 		hud->hud_wpn[index] = (t_bloc){
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		NULL, NULL, surfaces->hud[i], rect, index, 0,
-		surfaces->hud[i]->w / rect.w, 0};
+		(t_vtx){0, 0}};
 		i++;
 		index++;
 	}
@@ -146,10 +146,10 @@ int	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 	while (i < INV_PISTOL && j < HUD_PISTOL)
 	{
 		inventory->wpn[index] = (t_bloc){
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		surfaces->hud[i], surfaces->hud[j], NULL, rect, index, 0,
-		surfaces->hud[i]->w / rect.w, 0};
+		(t_vtx){0, 0}};
 		rect.x += rect.w + inter;
 		i++;
 		j++;
@@ -166,7 +166,7 @@ t_minibloc	fill_minibloc(SDL_Rect brect, SDL_Surface *img, t_vctr size)
 	rect = (SDL_Rect){brect.x + brect.w - brect.w / size.x,
 	size.z, brect.w / size.x, brect.h / size.y};
 
-	new = (t_minibloc) {rect, img, img->w / rect.w};
+	new = (t_minibloc) {rect, img};
 	return (new);
 }
 
@@ -188,7 +188,7 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){5, 4, rect.y}),
 		fill_minibloc(rect, hud->text.t_inv[3], (t_vctr){4, 4, rect.y + rect.h - rect.h / 4}),
 		env->world.surfaces.hud[BOX_E], env->world.surfaces.hud[BOX_F],
-		NULL, rect, i, 0, env->world.surfaces.hud[BOX_E]->w / rect.w, env->world.objects[0].sprite->w / rect.w};
+		NULL, rect, i, 0, (t_vtx){0, 0}};
 		rect.x = i == 2 ? W / 28 : rect.x + interx + rect.w;
 		rect.y = i < 2 ? intery : interx + intery + rect.h;
 		i++;
@@ -196,7 +196,7 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 	return (1);
 }
 
-int	init_hobjects_bloc(t_env *env, t_hud *hud, t_container *surfaces)
+int	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 {
 	int			i;
 	SDL_Rect	rect;
@@ -207,10 +207,10 @@ int	init_hobjects_bloc(t_env *env, t_hud *hud, t_container *surfaces)
 	i = 0;
 	while (i < 4)
 	{
-		hud->objects[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
+		hud->objects[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		surfaces->hud[BOX_E], surfaces->hud[BOX_F],
-		NULL, rect, i, 0, surfaces->hud[BOX_E]->w / rect.w, env->world.objects[0].sprite->w / rect.w};
+		NULL, rect, i, 0, (t_vtx){0, 0}};
 		rect.x += interx + rect.w;
 		i++;
 	}
@@ -222,9 +222,9 @@ int	init_inv_bg(t_uinv *inventory, SDL_Surface *img)
 	SDL_Rect	rect;
 
 	rect = (SDL_Rect){0, 0, W, H};
-	inventory->bg = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, 0},
-	(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL, img->w / rect.w},
-	NULL, NULL, img, rect, 0, 0, 0, 0};
+	inventory->bg = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+	(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+	NULL, NULL, img, rect, 0, 0, (t_vtx){0, 0}};
 	return (1);
 }
 
@@ -243,7 +243,7 @@ int	init_hud_blocs(t_env *env)
 	&& init_iobjects_bloc(env, hud, inv)
 	&& init_hp_bloc(hud, &env->world.surfaces)
 	&& init_hwpn_bloc(hud, &env->world.surfaces)
-	&& init_hobjects_bloc(env, hud, &env->world.surfaces));
+	&& init_hobjects_bloc(hud, &env->world.surfaces));
 }
 
 int init_hud_container(t_env *env)
@@ -251,6 +251,7 @@ int init_hud_container(t_env *env)
 	int	i;
 
 	i = 0;
+    env->hud.is_txt = 0;
 	while (i < NB_HUD_OBJ)
 	{
 		if (!(env->world.surfaces.hud[i] = ui_img("hud/", i)))

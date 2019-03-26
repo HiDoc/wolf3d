@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 19:44:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 15:07:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ struct						s_character
 	SDL_Surface	*sprite;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_hud		hud;
 };
 
 struct						s_world
