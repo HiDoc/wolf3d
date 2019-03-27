@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/25 12:32:32 by jsauron          ###   ########.fr        #
+#    Updated: 2019/03/27 19:20:31 by jsauron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g #-O3 -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror #-g -O3 -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/tga_reader
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/tga
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -128,14 +128,12 @@ SRC_NAME 	= main.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_string.c \
-			data_color.c \
-			ft_strjoin2.c \
+			data.c \
 			load_tga.c \
-			read_data.c \
-			rle_color.c \
-			rle.c \
-			set_data_pxl.c \
-			set_pxl_color.c \
+			createpxl.c \
+			filldata.c \
+			rot.c \
+			uncompress.c \
 			tga_main.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)

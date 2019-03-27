@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_pxl_color.c                                    :+:      :+:    :+:   */
+/*   load_tga.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 16:47:12 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/25 12:24:26 by jsauron          ###   ########.fr       */
+/*   Created: 2019/03/25 11:48:39 by jsauron           #+#    #+#             */
+/*   Updated: 2019/03/27 19:45:29 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		fill_value(t_pixel *pxl, t_pixel *cm)
+SDL_Surface		*tga2sur(t_tga *tga, SDL_Surface *surface)
 {
-	pxl->a = cm->a;
-	pxl->r = cm->r;
-	pxl->g = cm->g;
-	pxl->b = cm->b;
+	if (tga->done == NULL)
+				printf("data == null\n");
+	if (!(surface = SDL_CreateRGBSurfaceWithFormatFrom(&(tga->data[1]),tga->w, tga->h, 32, 4 * tga->w, SDL_PIXELFORMAT_ARGB32)))
+		printf("surface fail\n");
+	return (surface);
 }
 
-void		fill_pxl_from_cm(t_tga *tga)
+SDL_Surface		*load_texture(const char *path)
 {
-	int		i;
-	int ref;
+	SDL_Surface	*surface;
 
-	i = 0;
-	ref = 0;
-	while (i < (tga->w * tga->h))
-	{
-		ref = tga->file[i];
-		fill_value(&tga->pxl[i], &tga->cm[ref]);
-		i++;
-	}
-}
-
-void		range_pxl(t_tga *tga)
-{
-	if (tga->len_cm != 0)
-		fill_pxl_from_cm(tga);
+	surface = NULL;
+	return (tga2sur(load_tga(path), surface));
 }

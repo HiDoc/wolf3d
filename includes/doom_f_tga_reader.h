@@ -1,43 +1,21 @@
 
-
 #ifndef DOOM_F_TGA_READER_H
 # define DOOM_F_TGA_READER_H
 
-//load_tga.c
-SDL_Surface                *load_texture(char *path);
-//rle.c
-void				rle_uncompress(t_tga *tga);
+SDL_Surface		*load_texture(const char *path);
+void			sym_vert(t_tga *tga);
+void			rotatepxl(t_tga *tga);
+void			fill(t_tga *tga, unsigned char *base, unsigned char *tofill, int bpp);
+unsigned char	*pxlbasecm(t_tga *tga, unsigned char *newstr);
+unsigned char	*pxlbase(t_tga *tga, unsigned char *newstr);
+int				createpxl(t_tga *tga);
+int				uncompress(t_tga *tga);
+int				getheader(t_tga *tga);
+int				getcm(t_tga *tga);
+int				getdata(t_tga *tga);
+int				getfile(t_tga *tga, const char *path);
+void			*cleartga(t_tga *tga);
+int				inittga(t_tga *tga);
+t_tga			*load_tga(const char *path);
 
-// tga_reader_file.c
-void				hdr_parser(t_tga *tga, unsigned char *hdr);
-int					count_n_malloc(t_tga *tga, char *str);
-int					get_data_tga(t_tga *tga, const char *path);
-int					tga_load(t_tga *tga, const char *path);
-int					read_hdr(t_tga *tga, int fd);
-int					check_tv_signature(t_tga *tga);
-int					get_data_tga(t_tga *tga, const char *path);
-int					read_data(t_tga *tga, int fd);
-int					read_cm(t_tga *tga, int fd);
-
-//set_pxl_color.c
-void				range_pxl(t_tga *tga);
-
-//set_data_pxl.c.c
-void				fill_pxl(t_tga *tga, int i, int mode);
-void				fille_pxl_from_cm(t_tga *tga);
-void				fill_data(t_tga *tga, int mode);
-void				create_pxl(t_tga *tga);
-
-//tga_type_read.c
-void				read_color(t_pixel *tab, int bits, unsigned char *file, int pos);
-void				read_color_cm(t_pixel *tab, int bits, unsigned char *file, int pos);
-
-//rle_color.c
-int					loadnew(int bpp, unsigned char *n, unsigned char *file, int mode);
-
-SDL_Surface			*set_surface(t_tga *tga);
-SDL_Surface			*ui_make_surface(int height, int width);
-SDL_PixelFormat		*fill_pxlformat(SDL_PixelFormat *fmt);
-
-unsigned char *ft_strjoin2(unsigned char *str, unsigned char *buff, int len_total, int len_buff);
 #endif

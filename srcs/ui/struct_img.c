@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/25 12:28:20 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/26 18:45:26 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ SDL_Surface	*surface_fr_png(char *path)
 //	Uint32		*pxl;
 
 	new = NULL;
-	if (!(new = load_texture(path)))
+	if (!(new = load_texture((const char *)path)))
 		printf("load_texture fail\n");
 /*	if ((new = IMG_Load(path))
 	&& (tmp = SDL_ConvertSurfaceFormat(new, SDL_PIXELFORMAT_RGBA32, 0)))
