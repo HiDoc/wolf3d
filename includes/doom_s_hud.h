@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 17:24:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/27 00:22:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ struct						s_hud
 	t_bloc				hud_wpn[3];
 	t_bloc				objects[6];
 	t_wrap_inv			*shortcut[6];
-	t_bloc				achievments[8];
 	t_uitxt				text;
 	int					is_txt;
 };
