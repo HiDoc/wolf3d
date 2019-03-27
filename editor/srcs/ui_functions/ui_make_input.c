@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 11:02:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/26 15:44:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 17:05:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,22 @@
 
 void		ui_make_input(SDL_Surface *surface, t_elem *elem, t_data *data)
 {
+	SDL_Rect			sdl_rect;
+	SDL_Surface			*srf;
+	SDL_Color			color;
+
 	ui_make_rect(surface, elem->rect);
 	if (elem->str)
 	{
-		if (!(ui_make_string(elem->rect, elem->str, data)))
-			elem->str_max = 1;
-		else
-			elem->str_max = 0;
+		sdl_rect = (SDL_Rect){
+		elem->rect.x, elem->rect.y,
+		elem->rect.w, elem->rect.h};
+		color = ui_hex_to_rgb(elem->rect.color);
+		if (!(srf = TTF_RenderText_Blended(data->font, elem->str, color)))
+			ui_error_exit_sdl("Libui: Error while making surface", data);
+		sdl_rect.w = (sdl_rect.h * srf->w) / srf->h;
+		elem->str_max = (sdl_rect.w + sdl_rect.h > elem->rect.w) ? 1 : 0;
+		SDL_BlitScaled(srf, 0, data->surface, &sdl_rect);
+		SDL_FreeSurface(srf);
 	}
 }

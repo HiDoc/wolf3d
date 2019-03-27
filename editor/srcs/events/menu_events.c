@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 14:58:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:59:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ int			menu_events(t_env *env)
 		} 
 	}
 
-	// k0-k9	= 89-98 
-	// a-z		= 4-29
-	// 0-9		= 30-39
-
 	if (get_element(M_I_NEW, env)->clicked == 1
 	&& env->data->sdl.event.type == SDL_KEYDOWN)
 	{
+		char *tmp;
 		char *key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
-		env->data->sdl.event.key.keysym.scancode)); // proteger
+		env->data->sdl.event.key.keysym.scancode));
 
 		if (env->data->sdl.event.key.keysym.scancode >= 89
 		&& env->data->sdl.event.key.keysym.scancode <= 98)
@@ -80,15 +77,18 @@ int			menu_events(t_env *env)
 		{ // alpha numeric
 			if (get_element(M_I_NEW, env)->str_max == 0)
 			{
-				get_element(M_I_NEW, env)->str =
-				ft_strjoin(get_element(M_I_NEW, env)->str, key); // proteger
+				tmp = get_element(M_I_NEW, env)->str;
+				if (!(get_element(M_I_NEW, env)->str =
+				ft_strjoin(get_element(M_I_NEW, env)->str, key)))
+					ui_error_exit_sdl("Editor: Out of memory", env->data);
+				free(tmp);
 			}
 		}
 		else if (env->data->sdl.event.key.keysym.scancode == 42)
 		{ // backspace
-			/*get_element(M_I_NEW, env)->str =
-			ft_strsub(get_element(M_I_NEW, env)->str, // HEEEERE
-			0, ft_strlen(get_element(M_I_NEW, env)->str - 2)); // proteger*/
+			if (ft_strlen(get_element(M_I_NEW, env)->str) > 1)
+				get_element(M_I_NEW, env)->str[ft_strlen(
+				get_element(M_I_NEW, env)->str) - 1] = 0;
 		}
 		return (1);
 	}
