@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 15:59:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 17:39:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,22 @@ int			menu_events(t_env *env)
 		{ // numeric keypad
 			key += 7;
 		}
+		else if (env->data->sdl.event.key.keysym.scancode == 44)
+		{ // numeric keypad
+			key = "_";
+		}
+		else if (env->data->sdl.event.key.keysym.scancode >= 4
+		&& env->data->sdl.event.key.keysym.scancode <= 29)
+		{
+			*key += 32;
+		}
 		if ((env->data->sdl.event.key.keysym.scancode >= 89
 		&& env->data->sdl.event.key.keysym.scancode <= 98)
 		|| (env->data->sdl.event.key.keysym.scancode >= 4
 		&& env->data->sdl.event.key.keysym.scancode <= 29)
 		|| (env->data->sdl.event.key.keysym.scancode >= 30
-		&& env->data->sdl.event.key.keysym.scancode <= 39))
+		&& env->data->sdl.event.key.keysym.scancode <= 39)
+		|| env->data->sdl.event.key.keysym.scancode == 44)
 		{ // alpha numeric
 			if (get_element(M_I_NEW, env)->str_max == 0)
 			{
