@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_make_line.c                                     :+:      :+:    :+:   */
+/*   ui_make_dotted_line.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 21:07:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:16:10 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/16 15:39:43 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/16 16:16:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ static void		bresenham_tab(int *tab, t_pos p1, t_pos p2)
 	tab[4] = (tab[0] > tab[2] ? tab[0] : -tab[2]) / 2;
 }
 
-void		ui_make_line(SDL_Surface *surface, t_vec vec, Uint32 color)
+void		ui_make_dotted_line(SDL_Surface *surface, t_vec vec, Uint32 color)
 {
 	int e2;
 	int tab[5];
+	int	cpt;
 
+	cpt = 0;
 	bresenham_tab(tab, vec.a, vec.b);
 	while (!((int)vec.a.x == (int)vec.b.x && (int)vec.a.y == (int)vec.b.y))
 	{
-		ui_set_pixel(surface, (int)vec.a.x, (int)vec.a.y, color);
+		if (cpt % 6 == 0)
+			ui_set_pixel(surface, (int)vec.a.x, (int)vec.a.y, color);
 		e2 = tab[4];
 		if (e2 > -tab[0] && (int)vec.a.x != (int)vec.b.x)
 		{
@@ -41,5 +44,6 @@ void		ui_make_line(SDL_Surface *surface, t_vec vec, Uint32 color)
 			tab[4] += tab[0];
 			vec.a.y = (int)vec.a.y + tab[3];
 		}
+		cpt++;
 	}
 }

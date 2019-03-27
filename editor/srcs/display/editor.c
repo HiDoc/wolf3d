@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:12:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:16:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		editor(t_env *env)
 {
+	SDL_Cursor* cursor;
 	t_rect		rect;
 
 	if (env->menu.state > 0)
@@ -23,32 +24,37 @@ void		editor(t_env *env)
 	}
 
 	if (env->mouse_mode == 0)
-		SDL_ShowCursor(1);
+	{
+		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
+			ui_error_exit_sdl("Libui: error cursor texture", env->data);
+		SDL_SetCursor(cursor);
+	}
 	else if (env->mouse_mode == 1)
 	{
-		SDL_ShowCursor(0);
-		SDL_BlitScaled(env->draw_cursor, 0, env->data->surface,
-		&((SDL_Rect){env->data->mouse.x, env->data->mouse.y, 23, 34}));
+		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR)))
+			ui_error_exit_sdl("Libui: error cursor texture", env->data);
+		SDL_SetCursor(cursor);
 	}
 
 	display_interface(env);
 	display_selection(env);
 
-	// display buttons
-	rect = (t_rect){20, 20, 100, 40, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	// display new
+	ui_make_rect(env->data->surface, get_element(E_B_NEW, env)->rect);
 	rect = (t_rect){45, 30, 0, 25, 0xFFFFFFFF};
-	ui_make_string(rect, "New", env->data);
-	//
-	rect = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
+	ui_make_string(rect, "New", env->data);	
+	// display upload
+	ui_make_rect(env->data->surface, get_element(E_B_UPLOAD, env)->rect);
 	rect = (t_rect){155, 30, 0, 25, 0xFFFFFFFF};
 	ui_make_string(rect, "Upload", env->data);
-	//
-	rect = (t_rect){300, 20, 100, 40, 0xFFFFFFFF};
-	ui_make_square(rect, 0, 0, env->data);
-	rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
-	ui_make_string(rect, "Save", env->data);
+	// display save
+	ui_make_rect(env->data->surface, get_element(E_B_SAVE, env)->rect);
+	rect = (t_rect){324, 30, 0, 25, 0xffffffff};
+	ui_make_string(rect, "save", env->data);
+
+	// display map name
+	rect = (t_rect){450, 30, 0, 25, 0xffffffff};
+	ui_make_string(rect, env->map_name, env->data);
 
 	// display nb frames
 	rect = (t_rect){1100, 20, 0, 20, 0xFFFFFFFF};

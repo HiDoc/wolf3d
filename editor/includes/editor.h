@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:11:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 14:54:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define C_RED 0xFF0000FF
 # define C_GREEN 0xFF00FF00
 # define C_BLUE 0xFFFF0000
+
+# define C_GREY 0xFF8C8C8C
 
 # define VRX_MAX 500
 # define EDG_MAX 250
@@ -67,5 +69,6 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 
 int			export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
+t_elem		*get_element(int id, t_env *env);
 
 #endif
