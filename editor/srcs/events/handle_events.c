@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:14:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:44:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ int		handle_events(t_env *env)
 
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		t_square    square;
-		t_square    new;
-		t_square    upload;
-		t_square	save;
+		t_rect		rect;
+		t_rect		new;
+		t_rect		upload;
+		t_rect		save;
 
-		square.rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
-		new.rect = (t_rect){20, 20, 100, 40, 0xFFFFFFFF};
-		upload.rect = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
-		save.rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
-		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, square))
+		rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
+		new = (t_rect){20, 20, 100, 40, 0xFFFFFFFF};
+		upload = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
+		save = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 		{ // if on interface
 			if (env->mouse_mode == 0)
 				return (select_mode(env));
