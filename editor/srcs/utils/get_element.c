@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_exit_sdl.c                                      :+:      :+:    :+:   */
+/*   get_element.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 18:09:42 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/03/25 11:58:37 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/03/25 16:13:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		ui_exit_sdl(t_data *data)
+t_elem		*get_element(int id, t_env *env)
 {
-	// free elements
-	// free maps files
-	// free images background
-	// free images cursor
-	// free sector + vertex
-	SDL_FreeSurface(data->surface);
-	TTF_CloseFont(data->font);
-	SDL_DestroyRenderer(data->sdl.renderer);
-	SDL_DestroyWindow(data->sdl.window);
-	TTF_Quit();
-	SDL_Quit();
-	exit(EXIT_SUCCESS);
+	t_elem		*current;
+
+	current = env->elements;
+	while (current)
+	{
+		if (current->id == id)
+			return (current);
+		current = current->next;
+	}
+	return (0);
 }
