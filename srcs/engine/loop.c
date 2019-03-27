@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 12:49:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/26 15:00:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ void	sdl_render_game(t_env *env)
 	dfs(env);
 	loop_frames(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-	//print_hud(env);
-	ui_minimap(env);
-	//ui_draw_msg(env, &env->player.hud.is_txt, &env->time.tframe);
+	// ui_minimap(env);
+	print_hud(env);
+	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 }
 
 void	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
 	action_inventory(env, 0, 0);
+	// (void)env;
 }
 
 int sdl_render(t_env *env, void (*f)(t_env *env))
@@ -63,11 +64,11 @@ int sdl_loop(t_env *env)
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
 			SDL_PollEvent(&env->sdl.event);
-			if (!env->player.inventory.ui.is_active)
+			if (!env->hud.inventory.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
 
-				//wpn_mouse_wheel(env, ev);
+				// wpn_mouse_wheel(env, env->sdl.event);
 				mouse_shoot(env);
 				sdl_keyhook_game(env, env->sdl.event, keycodes);
 				player_move(e, v, keycodes);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_mouse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/20 15:11:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 00:37:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	mouse_shoot(t_env *env)
 
 	if (env->sdl.event.type == SDL_MOUSEBUTTONDOWN
 	&& env->player.inventory.current
-	&& !env->player.inventory.ui.is_active
+	&& !env->hud.inventory.is_active
 	&& !env->player.actions.is_loading
 	&& !env->player.actions.mouse_state)
 	{
@@ -27,7 +27,7 @@ int	mouse_shoot(t_env *env)
 		{
 			env->player.actions.is_shooting = !env->player.actions.is_shooting;
 			env->player.actions.mouse_state = rwpn->time_shoot_between;
-			Mix_PlayChannel(0,	rwpn->shot,	0);
+			// Mix_PlayChannel(0,	rwpn->shot,	0);
 			env->player.inventory.current->ammo_current--;
 		}
 		else

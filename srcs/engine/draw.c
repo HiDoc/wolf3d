@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 16:25:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 12:21:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_l_int		wonder_wall(t_raycast ctn, t_projec projct, int *ytop, int *ybottom)
 
 	/* Acquire the Y coordinates for our ceiling
 	& floor for this X coordinate. Clamp them. */
+	// !diff_abs ? diff_abs = 1 : 0;
 	coord.ceil = diff_curr * (projct.y2a - projct.y1a)
 		/ (diff_abs) + projct.y1a;
 	coord.floor = diff_curr * (projct.y2b - projct.y1b)
@@ -95,9 +96,8 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 	return (1);
 }
 
-void				oline(t_drawline l, t_env *env)
+void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
-	SDL_Surface *sprite = env->world.enemies[0].sprite;
 	const t_raycast *ctn = (t_raycast *)l.container;
 	int		*pixels;
 	int		x;
@@ -108,7 +108,7 @@ void				oline(t_drawline l, t_env *env)
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 	const float height = l.to - l.from;
-	const float widht = ctn->x2 - ctn->x1;
+	const float width = ctn->x2 - ctn->x1;
 	if (l.from == l.to)
 		pixels[l.from * W + x] = 0x00;
 	else if (l.to > l.from)
@@ -116,9 +116,10 @@ void				oline(t_drawline l, t_env *env)
 		pixels[l.from * W + x] = 0x00;
 		iter = l.from + 1;
 		float y = 0;
-		while (iter < l.to)
+		while (iter < l.to && y < sprite->h)
 		{
-			const int pix = getpixel(sprite, (int)((ctn->x - ctn->x1) / widht * sprite->w) % sprite->w,
+			const int pix = getpixel(sprite,
+			(int)((ctn->x - ctn->x1)/ width * sprite->w) % sprite->w,
 				(int)(y / height * sprite->h) % sprite->h);
 			if (pix & 0xff)
 				pixels[iter * W + x] = pix;
@@ -131,25 +132,33 @@ void				oline(t_drawline l, t_env *env)
 
 static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 {
-	const t_engine *e = &env->engine;
-	const t_player p = e->player;
+	const t_engine	*e = &env->engine;
+	const t_player	p = e->player;
+	const t_vtx		player = {p.where.x, p.where.y};
 	t_drawline		drawline;
 	t_raycast		raycast;
 	t_edge			edge;
+	int				ref;
 
 	ft_bzero(&drawline, sizeof(t_drawline));
 	edge = (t_edge){
 		(t_vtx){obj->vertex.x - p.anglesin, obj->vertex.y + p.anglecos},
 		(t_vtx){obj->vertex.x + p.anglesin, obj->vertex.y - p.anglecos}
 	};
+		// if distance < value && obj not already picked, object is pickable
+	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
 	raycast.neighbor = -1;
-	acquire_limits(&env->engine, &e->sectors[q->now.sectorno], &raycast);
-	raycast.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
-		e->sectors[q->now.sectorno].floor};
+
+	t_sector limits;
+	limits.ceil = e->sectors[q->now.sectorno].floor + 5;
+	limits.floor = e->sectors[q->now.sectorno].floor;
+
+	acquire_limits(&env->engine, &limits, &raycast);
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
+		ref = obj->is_wpn ? obj->ref + 6 : obj->ref;
 		raycast.x = raycast.x1;
 		drawline.container = (void *)&raycast;
 		drawline.from = raycast.p.y1a;
@@ -159,7 +168,7 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		drawline.top = 0xFF;
 		while (raycast.x < raycast.x2)
 		{
-			oline(drawline, env);
+			oline(drawline, env, env->world.objects[ref].sprite);
 			raycast.x++;
 		}
 	}
@@ -242,7 +251,8 @@ void	dfs(t_env *env)
 			current_obj = engine->sectors[engine->player.sector].head_object;
 			while (current_obj)
 			{
-				render_sprites(env, &queue, current_obj);
+				if (!current_obj->is_picked)
+					render_sprites(env, &queue, current_obj);
 				current_obj = current_obj->next;
 			}
 		} // for s in sector's edges

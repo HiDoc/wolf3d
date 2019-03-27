@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_wrapper.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:09:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:23:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct					s_wrap_sect
 	int			ref;
 	int			is_wpn;
     int         (*action)(void *, t_wrap_inv *);
+	int			is_pickable;
 	t_wrap_sect	*next;
 };
 

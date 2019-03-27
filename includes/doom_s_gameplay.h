@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:05:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/26 15:07:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ struct						s_object
 */
 struct						s_weapon
 {
-	SDL_Surface			*sprite;
-	SDL_Surface			*sprite_bullet;
-	SDL_Surface			**sprite_reload;
-	SDL_Surface			**sprite_shoot;
+	t_bloc				sprite;
+	t_bloc				sprite_bullet;
+	t_bloc				*sprite_reload;
+	t_bloc				*sprite_shoot;
+	// SDL_Surface			*sprite;
+	// SDL_Surface			*sprite_bullet;
+	// SDL_Surface			**sprite_reload;
+	// SDL_Surface			**sprite_shoot;
 	long				ref;
 	int					type;
 	int					time_reload;
@@ -81,6 +85,7 @@ struct						s_container
 	t_surface	walls[30];
 	t_surface	floors[30];
 	t_surface	ceils[30];
+	SDL_Surface	*hud[NB_HUD_OBJ];
 };
 
 struct						s_inventory
@@ -89,7 +94,6 @@ struct						s_inventory
 	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
 	int			nb_current_obj;
-	t_uinv		ui;
 };
 
 struct						s_actions
@@ -122,7 +126,6 @@ struct						s_character
 	SDL_Surface	*sprite;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_hud		hud;
 };
 
 struct						s_world
