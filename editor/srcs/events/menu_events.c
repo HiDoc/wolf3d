@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 17:39:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:19:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int			menu_events(t_env *env)
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_START, env)->rect))
 		{
+			if (get_element(M_I_NEW, env)->str)
+				env->map_name = get_element(M_I_NEW, env)->str;
 			env->menu.state = 0;
 			return (1);
 		}

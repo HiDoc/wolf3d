@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 18:52:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:16:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void		editor(t_env *env)
 	ui_make_string(rect, "Upload", env->data);
 	// display save
 	ui_make_rect(env->data->surface, get_element(E_B_SAVE, env)->rect);
-	rect = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
-	ui_make_string(rect, "Save", env->data);
+	rect = (t_rect){324, 30, 0, 25, 0xffffffff};
+	ui_make_string(rect, "save", env->data);
+
+	// display map name
+	rect = (t_rect){450, 30, 0, 25, 0xffffffff};
+	ui_make_string(rect, env->map_name, env->data);
 
 	// display nb frames
 	rect = (t_rect){1100, 20, 0, 20, 0xFFFFFFFF};

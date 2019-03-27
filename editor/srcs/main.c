@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/26 14:43:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:15:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int				main(void)
 	env.menu.background = ui_load_image(
 	"ressources/images/doom-background.jpg", &env);
 
-	env.map_name = "map"; // to remove
+	env.map_name = "new_map";
 
 	ui_make_window("EDITOR", &data);
 	ui_load_font("ressources/fonts/Arial.ttf", &data);
