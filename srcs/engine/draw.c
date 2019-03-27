@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 12:21:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 18:36:51 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 
 void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
-	const t_raycast *ctn = (t_raycast *)l.container;
-	int		*pixels;
-	int		x;
-	int		iter;
+	const t_raycast	*ctn = (t_raycast *)l.container;
+	int				*pixels;
+	int				iter;
+	int				x;
 
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;
@@ -151,11 +151,9 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		return ;
 	raycast.neighbor = -1;
 
-	t_sector limits;
-	limits.ceil = e->sectors[q->now.sectorno].floor + 5;
-	limits.floor = e->sectors[q->now.sectorno].floor;
-
-	acquire_limits(&env->engine, &limits, &raycast);
+	acquire_limits(&env->engine, &raycast,
+		(t_l_float){e->sectors[q->now.sectorno].floor + 5,
+		e->sectors[q->now.sectorno].floor});
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
 		ref = obj->is_wpn ? obj->ref + 6 : obj->ref;
@@ -194,7 +192,7 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	ctn.neighbor = q->sect->neighbors[s];
 
 	/* Get limits of ceil and floor of current sector */
-	acquire_limits(e, q->sect, &ctn);
+	acquire_limits(e, &ctn, (t_l_float){q->sect->ceil, q->sect->floor});
 
 	/* Render the wall. */
 	end = (int)fmin(ctn.x2, q->now.sx2);

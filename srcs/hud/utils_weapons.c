@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 14:32:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/27 19:21:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	load_weapon(t_env *env)
 		if (wpn->ammo_magazine && wpn->ammo_current < curr_max)
 			env->player.actions.is_loading = 1;
 	}
-	SDL_FlushEvent(SDL_KEYDOWN | SDL_KEYUP);
 	return (0);
 }
 

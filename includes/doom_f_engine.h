@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 19:44:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/27 18:27:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ t_scaler	scaler_init(int a, int b, int c, int d, int f);
 int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
-void		acquire_limits(t_engine *e, t_sector *sect, t_raycast *ctn);
+void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
 #endif
