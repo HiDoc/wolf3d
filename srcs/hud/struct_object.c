@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 17:34:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	init_inventory(t_env *env)
 	i = 0;
 	while (i < 6)
 	{
-		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
+		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0};
 		i++;
 	}
 	env->hud.inventory.is_active = 0;
@@ -46,12 +46,16 @@ int	init_consumable(t_env *env)
 			if (!object_new(&env->world.objects[i], i, i == 5 ? 1 : 5))
 				return (0);
 		}
-		else
+		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
 			if (!object_new(&env->world.objects[i], i, 0))
 				return (0);
 		}
-
+		else
+		{
+			if (!object_new(&env->world.objects[i], i, -1))
+				return (0);
+		}
 		i++;
 	}
 	return (init_inventory(env));

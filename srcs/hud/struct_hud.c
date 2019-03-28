@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:40:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 18:44:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_icon_bloc(t_uinv *inventory, t_container *surfaces)
 		inventory->icons[ref] = (t_bloc){
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		NULL, NULL, surfaces->hud[i], rect, ref, 1,
+		NULL, NULL, surfaces->hud[i].sprite, rect, ref, 1,
 		(t_vtx){0, 0}};
 		rect.x += rect.w + inter;
 		i++;
@@ -55,7 +55,7 @@ int	init_hp_bloc(t_hud *hud, t_container *surfaces)
 			hud->faces[rfaces] = (t_bloc){
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			NULL, NULL, surfaces->hud[i], rect, rfaces, 0,
+			NULL, NULL, surfaces->hud[i].sprite, rect, rfaces, 0,
 			(t_vtx){0, 0}};
 			rfaces++;
 		}
@@ -64,7 +64,7 @@ int	init_hp_bloc(t_hud *hud, t_container *surfaces)
 			hud->bar[rbars] = (t_bloc){
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			NULL, NULL, surfaces->hud[i], rect, rbars, 0,
+			NULL, NULL, surfaces->hud[i].sprite, rect, rbars, 0,
 			(t_vtx){0, 0}};
 			rbars++;
 		}
@@ -87,7 +87,7 @@ int	init_hwpn_bloc(t_hud *hud, t_container *surfaces)
 		hud->hud_wpn[index] = (t_bloc){
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		NULL, NULL, surfaces->hud[i], rect, index, 0,
+		NULL, NULL, surfaces->hud[i].sprite, rect, index, 0,
 		(t_vtx){0, 0}};
 		i++;
 		index++;
@@ -113,7 +113,7 @@ int	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 		inventory->wpn[index] = (t_bloc){
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		surfaces->hud[i], surfaces->hud[j], NULL, rect, index, 0,
+		surfaces->hud[i].sprite, surfaces->hud[j].sprite, NULL, rect, index, 0,
 		(t_vtx){0, 0}};
 		rect.x += rect.w + inter;
 		i++;
@@ -152,7 +152,7 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 		inventory->objects[i] = (t_bloc){
 		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){5, 4, rect.y}),
 		fill_minibloc(rect, hud->text.t_inv[3], (t_vctr){4, 4, rect.y + rect.h - rect.h / 4}),
-		env->world.surfaces.hud[BOX_E], env->world.surfaces.hud[BOX_F],
+		env->world.surfaces.hud[BOX_E].sprite, env->world.surfaces.hud[BOX_F].sprite,
 		NULL, rect, i, 0, (t_vtx){0, 0}};
 		rect.x = i == 2 ? W / 28 : rect.x + interx + rect.w;
 		rect.y = i < 2 ? intery : interx + intery + rect.h;
@@ -168,13 +168,13 @@ int	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 	int			interx;
 
 	interx = W / 404;
-	rect = (SDL_Rect){W - W / 1.27, H - H  / 8, W / 20, W / 20};
+	rect = (SDL_Rect){W - W / 1.17, H - H  / 8, W / 20, W / 20};
 	i = 0;
-	while (i < 4)
+	while (i < 7)
 	{
 		hud->objects[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		surfaces->hud[BOX_E], surfaces->hud[BOX_F],
+		surfaces->hud[BOX_E].sprite, surfaces->hud[BOX_F].sprite,
 		NULL, rect, i, 0, (t_vtx){0, 0}};
 		rect.x += interx + rect.w;
 		i++;
@@ -202,27 +202,12 @@ int	init_hud_blocs(t_env *env)
 	i_tab = 0;
 	hud = &env->hud;
 	inv = &env->hud.inventory;
-	return (init_inv_bg(inv, env->world.surfaces.hud[0])
+    env->hud.is_txt = 0;
+	return (init_inv_bg(inv, env->world.surfaces.hud[0].sprite)
 	&& init_icon_bloc(inv, &env->world.surfaces)
 	&& init_iwpn_bloc(inv, &env->world.surfaces)
 	&& init_iobjects_bloc(env, hud, inv)
 	&& init_hp_bloc(hud, &env->world.surfaces)
 	&& init_hwpn_bloc(hud, &env->world.surfaces)
 	&& init_hobjects_bloc(hud, &env->world.surfaces));
-}
-
-int init_hud_container(t_env *env)
-{
-	int	i;
-
-	i = 0;
-    env->hud.is_txt = 0;
-	while (i < NB_HUD_OBJ)
-	{
-		if (!(env->world.surfaces.hud[i] = ui_img("hud/", i)))
-			return (0);
-		i++;
-	}
-	init_hud_blocs(env);
-	return (1);
 }

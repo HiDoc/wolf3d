@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 19:35:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,32 @@ int		get_inventory_place(t_env *env)
 	return (i);
 }
 
-int		check_object_type(t_env *env, int ref)
+int		check_object_type(t_wrap_inv *pack, int ref, int limit)
 {
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < limit)
 	{
-		if (env->player.inventory.objects[i].current != NULL)
+		if (pack[i].current != NULL)
 		{
-			if (ref == env->player.inventory.objects[i].current->ref)
+			if (ref == pack[i].current->ref)
 				return (i);
 		}
 		i++;
 	}
 	return (-1);
+}
+
+int		pick_gem(t_env *env, t_wrap_sect *obj)
+{
+	int	i;
+
+	(i = check_object_type(env->player.inventory.gems, obj->ref, 4)) == -1
+	? env->player.inventory.gems[obj->ref - WORLD_NB_CSMBLE].current = obj : 0;
+	env->player.inventory.gems[i].nb_stack++;
+	obj->is_picked = 1;
+	return (6);
 }
 
 int		pick_object(t_env *env, t_wrap_sect *obj)
@@ -71,30 +82,30 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	int	iter;
 
 	iter = 0;
-	if (env->player.inventory.nb_current_obj < 6
+	if (((iter = check_object_type(env->player.inventory.objects, obj->ref, 6)) > -1)
 	&& !obj->is_wpn)
 	{
-		iter = check_object_type(env, obj->ref);
-		if (iter > -1)
-		{
-			if (env->player.inventory.objects[iter].nb_stack >= env->world.objects[obj->ref].max_stack)
-				return (5);
-			env->player.inventory.objects[iter].nb_stack++;
-		}
-		else
-		{
-			index = get_inventory_place(env);
-			env->player.inventory.objects[index].current = obj;
-			env->player.inventory.objects[index].nb_stack++;
-			env->player.inventory.nb_current_obj++;
-			env->hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
-			if (obj->ref < 6)
-				env->hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
-		}
+		if (env->player.inventory.objects[iter].nb_stack >= env->world.objects[obj->ref].max_stack)
+			return (5);
+		env->player.inventory.objects[iter].nb_stack++;
 		obj->is_picked = 1;
-		env->hud.is_txt = 6;
 		return (6);
 	}
+	else if (env->player.inventory.nb_current_obj < 6
+	&& obj->ref < WORLD_NB_CSMBLE && !obj->is_wpn)
+	{
+		index = get_inventory_place(env);
+		env->player.inventory.objects[index].current = obj;
+		env->player.inventory.objects[index].nb_stack++;
+		env->player.inventory.nb_current_obj++;
+		env->hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
+		if (obj->ref < 6)
+			env->hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
+		obj->is_picked = 1;
+		return (6);
+	}
+	if (obj->ref >= WORLD_NB_CSMBLE && !obj->is_wpn)
+		return (pick_gem(env, obj));
 	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
 }
 
@@ -118,8 +129,7 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 		{
 			if (object->current->ref < 6)
 				env->hud.shortcut[object->current->ref] = NULL;
-			*object = (t_wrap_inv)
-			{NULL, 0, 0, {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}}};
+			*object = (t_wrap_inv){NULL, 0, 0};
 			env->player.inventory.nb_current_obj--;
 		}
 	}

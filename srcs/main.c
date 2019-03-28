@@ -12,19 +12,13 @@
 
 #include "doom.h"
 
-void	init_floor(t_env *env)
-{
-	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
-	env->world.enemies[0].sprite = new_surface("enemies/enemy");
-}
-
 int		init_gameplay_env(t_env *env)
 {
 	return (init_fonts(&env->hud.text)
 	&& init_consumable(env)
 	&& init_character(&env->player)
 	&& set_simple_strings(env, 0, 0)
-	&& init_hud_container(env)
+	&& init_hud_blocs(env)
 	&& init_weapon(env));
 }
 
@@ -67,32 +61,9 @@ int		main(void)
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
 	LoadData(&env.engine, &env);
-	if (!init_gameplay_env(&env))
-	{
-		UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
-		free_ui(&env);
-		return (0);
-	}
 	verify_map(&env.engine);
-	init_floor(&env);
-	////////////////////////////////////////////
-	// blame -> sgalasso
-	// initialisation font :
-	// - penser a destroy la font a la fin
-	if (!(env.arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
-	{
-		ft_putendl(TTF_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire, erreur a rediriger
-	}
-	////////////////////////////////////////////
-
-	init_container(&env);
-	if (!(init_minimap(&env)))
-	{
-		// quitter sdl, ttf ,free, etc...
-		return (0);
-	}
-	sdl_loop(&env);
+	if (init_container(&env) && init_gameplay_env(&env) && init_minimap(&env))
+		sdl_loop(&env);
 	UnloadData(env.sdl.texture, env.sdl.renderer, env.sdl.window, &env.engine);
 	free_ui(&env);
 	Mix_CloseAudio();

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 10:32:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:13:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 
 void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
-	// SDL_Surface *sprite = env->world.enemies[0].sprite;
 	const t_raycast *ctn = (t_raycast *)l.container;
 	int		*pixels;
 	int		x;
@@ -117,9 +116,10 @@ void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 		pixels[l.from * W + x] = 0x00;
 		iter = l.from + 1;
 		float y = 0;
-		while (iter < l.to)
+		while (iter < l.to && y < sprite->h)
 		{
-			const int pix = getpixel(sprite, (int)((ctn->x - ctn->x1) / width * sprite->w) % sprite->w,
+			const int pix = getpixel(sprite,
+			(int)((ctn->x - ctn->x1)/ width * sprite->w) % sprite->w,
 				(int)(y / height * sprite->h) % sprite->h);
 			if (pix & 0xff)
 				pixels[iter * W + x] = pix;
@@ -132,12 +132,12 @@ void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 
 static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 {
-	const t_engine *e = &env->engine;
-	const t_player p = e->player;
+	const t_engine	*e = &env->engine;
+	const t_player	p = e->player;
+	const t_vtx		player = {p.where.x, p.where.y};
 	t_drawline		drawline;
 	t_raycast		raycast;
 	t_edge			edge;
-	const t_vtx		player = {e->player.where.x, e->player.where.y};
 	int				ref;
 
 	ft_bzero(&drawline, sizeof(t_drawline));
@@ -147,12 +147,16 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 	};
 		// if distance < value && obj not already picked, object is pickable
 	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
+	ref = obj->is_wpn ? obj->ref + WORLD_NB_CSMBLE + WORLD_NB_GEMS : obj->ref;
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
 	raycast.neighbor = -1;
-	acquire_limits(&env->engine, &e->sectors[q->now.sectorno], &raycast);
-	raycast.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
-		e->sectors[q->now.sectorno].floor};
+
+	t_sector limits;
+	limits.ceil = e->sectors[q->now.sectorno].floor + 5;
+	limits.floor = e->sectors[q->now.sectorno].floor;
+
+	acquire_limits(&env->engine, &limits, &raycast);
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
 		raycast.x = raycast.x1;
@@ -162,13 +166,13 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		drawline.bottom = 0xFF;
 		drawline.middle = 0xFF;
 		drawline.top = 0xFF;
-		while (raycast.x < raycast.x2 && !obj->is_picked)
+		while (raycast.x < raycast.x2)
 		{
-			ref = obj->is_wpn ? obj->ref + 6 : obj->ref;
 			oline(drawline, env, env->world.objects[ref].sprite);
 			raycast.x++;
 		}
 	}
+	draw_pick_infos(env, obj, ref);
 }
 
 /*
@@ -210,59 +214,6 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	schedule_queue(q, ctn, start, end);
 	return (1);
 }
-
-// static void		render_sprites(t_env *env, t_wrap_sect *obj)
-// {
-// 	const t_engine *e = &env->engine;
-// 	t_drawline		drawline;
-// 	t_raycast		raycast;
-// 	t_edge			edge;
-// 	t_vtx player = {e->player.where.x, e->player.where.y};
-
-// 	ft_bzero(&drawline, sizeof(t_drawline));
-// 	// if distance < value && obj not already picked, object is pickable
-// 	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
-// 	edge = (t_edge){
-// 	(t_vtx){obj->vertex.x - 1, obj->vertex.y},
-// 	(t_vtx){obj->vertex.x + 1, obj->vertex.y}};
-
-// 	// translation
-// 	edge = translation_edge(env->engine.player.where, edge.v1, edge.v2);
-// 	raycast.trsl = edge;
-
-// 	// rotation
-// 	edge = rotation_edge(env->engine.player, edge);
-// 	raycast.rot = edge;
-
-// 	// scale
-// 	edge = scale_edge(edge);
-// 	raycast.scale = edge;
-
-// 	raycast.x2 = W/2 - (int)(raycast.rot.v1.x * raycast.scale.v1.x);
-// 	raycast.x1 = W/2 - (int)(raycast.rot.v2.x * raycast.scale.v2.x);
-// 	raycast.li_sector.ceil = 15;
-// 	raycast.li_sector.floor = 0;
-// 	raycast.lf_current = (t_l_float){15 - e->player.where.z, 0 - e->player.where.z};
-// 	raycast.p = calc_projection(e->player.yaw, raycast.lf_current, raycast.rot, raycast.scale);
-// 	if (raycast.x1 > 0 && raycast.x2 < W)
-// 	{
-
-// 		raycast.x = raycast.x1;
-// 		drawline.container = (void *)&raycast;
-// 		int x = 0, y = 0;
-// 		raycast.li_sector = wonder_wall(raycast, raycast.p, &x, &y);
-// 		drawline.from = 0;
-// 		drawline.to = 400;
-// 		drawline.bottom = 0xFFFFFFFF;
-// 		drawline.middle = 0xFFFFFFFF;
-// 		drawline.top = 0xFFFFFFFF;
-// 		while (raycast.x < raycast.x2)
-// 		{
-// 			vline(drawline, env);
-// 			raycast.x++;
-// 		}
-// 	}
-// }
 
 void	dfs(t_env *env)
 {

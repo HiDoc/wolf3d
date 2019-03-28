@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/21 17:23:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 17:34:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ struct					s_wrap_inv
 	t_wrap_sect		*current;
 	int				nb_stack;
     int             is_used;
-	t_edge			udbox[2];
 };
 
 struct					s_wrap_wpn

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/27 00:22:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 18:25:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct 						s_uinv
 	t_bloc				wpn[3];
 	t_bloc				icons[2];
 	t_bloc				objects[6];
+	t_bloc				shortcut[4];
 	int					is_active;
 	int					wwheel;
 	int					nb_wpn;
@@ -54,10 +55,12 @@ struct						s_hud
 	t_bloc				bar[2];
 	t_bloc				faces[4];
 	t_bloc				hud_wpn[3];
-	t_bloc				objects[6];
-	t_wrap_inv			*shortcut[6];
+	t_bloc				objects[7];
+	t_wrap_inv			*shortcut[7];
 	t_uitxt				text;
 	int					is_txt;
+	int					txt_inv;
+	int					txt_pick;
 };
 
 #endif

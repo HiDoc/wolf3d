@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/26 15:07:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 17:32:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ struct						s_weapon
 
 struct						s_container
 {
-	t_surface	walls[30];
+	t_surface	walls[WORLD_NB_WALLS];
 	t_surface	floors[30];
 	t_surface	ceils[30];
-	SDL_Surface	*hud[NB_HUD_OBJ];
+	t_surface	hud[NB_HUD_OBJ];
+	t_surface	poster[WORLD_NB_POSTERS];
 };
 
 struct						s_inventory
@@ -93,6 +94,7 @@ struct						s_inventory
 	t_wrap_wpn	*current;
 	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
+	t_wrap_inv	gems[4];
 	int			nb_current_obj;
 };
 

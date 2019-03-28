@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/26 16:02:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/27 15:29:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 
 	sdl_rect = (SDL_Rect){rect.x, rect.y, rect.w, rect.h};
 	sdlcolor = ui_hex_to_rgb(color);
-	if (!(surface = TTF_RenderText_Blended(env->arial_font, text, sdlcolor)))
+	if (!(surface = TTF_RenderText_Blended(env->hud.text.arial, text, sdlcolor)))
 	{
 		ft_putendl(TTF_GetError()); // provisoire
 		exit(EXIT_FAILURE); // provisoire : rediriger erreur

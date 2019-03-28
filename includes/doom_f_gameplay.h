@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/24 22:44:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 17:38:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		    give_shield(void *e, t_wrap_inv *object);
 int		    give_health(void *e, t_wrap_inv *object);
 int			give_ammo(void *e, t_wrap_inv *obj);
 int			give_jetpack(void *e, t_wrap_inv *obj);
-int			check_object_type(t_env *env, int ref);
+int			check_object_type(t_wrap_inv *pack, int ref, int limit);
 int         action_inventory(t_env *env, int x, int y);
 
 int			pick_weapon(t_env *env, t_wrap_sect *obj);
