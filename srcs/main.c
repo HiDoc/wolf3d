@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:05:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:50:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		main(void)
 	}
 	verify_map(&env.engine);
 	init_floor(&env);
+	init_skybox(&env);
+
 	init_container(&env);
 	if (!(init_minimap(&env)))
 	{
