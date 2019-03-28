@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 18:15:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/28 21:32:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,43 @@ static void		init_menu(t_env *env)
 	closedir(dr);
 }
 
+static void		init_editor(t_env *env)
+{
+	t_data				*data = env->data;
+	struct dirent		*de;
+	DIR					*dr;
+	int					i;
+
+	i = 0;
+	// compteur nb wall textures
+	if (!(dr = opendir("ressources/images/wall/")))
+		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/", data);
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+			env->editor.nb_wall_txtr++;
+	}
+	closedir(dr);
+
+	// stockage des wall textures
+	if (!(env->editor.wall_txtr = (char **)ft_memalloc(sizeof(char *)
+	* (env->editor.nb_wall_txtr + 1))))
+		ui_error_exit_sdl("Libui: Out of memory", data);
+
+	if (!(dr = opendir("ressources/images/wall/")))
+		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/", data);
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(env->editor.wall_txtr[i] = ft_strdup(de->d_name)))
+				ui_error_exit_sdl("Editor: Out of memory", data);
+			i++;
+		}
+	}
+	closedir(dr);
+}
+
 int				main(void)
 {
 	t_data		data;
@@ -124,6 +161,7 @@ int				main(void)
 
 	init_env(&env, &data);
 	init_elems(&env);
+	init_editor(&env);
 	init_menu(&env);
 	env.menu.state = 1;
 	env.menu.background = ui_load_image(

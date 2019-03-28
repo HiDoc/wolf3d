@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/26 15:44:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/28 22:14:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ enum					e_elements
 	M_B_DOWN,
 	E_B_NEW,
 	E_B_UPLOAD,
-	E_B_SAVE,
+	E_B_SAVE/*,
+	E_B_UP,
+	E_B_DOWN*/
 };
 
-typedef struct  s_vtx   t_vtx;
-typedef struct  s_sct   t_sct;
-typedef struct	s_elem	t_elem;
-typedef struct	s_menu	t_menu;
-typedef struct  s_env   t_env;
+typedef struct  s_vtx   	t_vtx;
+typedef struct  s_sct   	t_sct;
+typedef struct	s_elem		t_elem;
+typedef struct	s_menu		t_menu;
+typedef struct	s_editor	t_editor;
+typedef struct  s_env   	t_env;
 
 struct					s_vtx
 {
@@ -90,10 +93,19 @@ struct					s_menu
 	SDL_Surface		*background;
 };
 
+struct					s_editor
+{
+	// wall textures
+	int             nb_wall_txtr;
+	int             idx_wall_txtr;
+	char            **wall_txtr;
+};
+
 struct					s_env
 {
 	t_data          *data;
 
+	t_editor		editor;
 	t_menu			menu;
 
 	char			*map_name;
@@ -116,7 +128,7 @@ struct					s_env
 	int				drawing;		// am i drawing an edge
 
 	// mouse handling
-	int				mouse_mode;
+	int				mouse_mode; // 0 : selection / 1 : draw
 
 	// lst elements
 	t_elem			*elements;

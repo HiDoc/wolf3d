@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 18:16:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/28 20:36:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void		editor(t_env *env)
 	}
 
 	display_interface(env);
-	display_selection(env);
+	if (env->mouse_mode == 0)
+		display_selection(env);
+	else if (env->mouse_mode == 1)
+		display_drawing(env);
 
 	// display new
 	ui_make_rect(env->data->surface, get_element(E_B_NEW, env)->rect);

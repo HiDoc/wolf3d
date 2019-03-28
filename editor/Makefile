@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/25 12:13:16 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/28 20:46:12 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC_NAME 	=	main.c \
 				vertex_in_sector.c \
 				display_interface.c \
 				display_selection.c \
+				display_drawing.c \
 				menu_events.c \
 				get_element.c \
 				#export_map.c \
