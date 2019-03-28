@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 18:27:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:31:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,6 @@ int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
 void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
+
+int 		initialisation(t_env *env);
 #endif

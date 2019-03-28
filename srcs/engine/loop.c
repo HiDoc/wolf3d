@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 14:38:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:20:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ int YourEventFilter(void *userdata, SDL_Event *event)
 
 	env = (t_env *)userdata;
 	if (event->type == SDL_MOUSEBUTTONDOWN && !env->player.actions.mouse_state)
-	{
 		mouse_shoot(env);
-		printf("logic error\n");
-	}
 	return (1);
 }
 

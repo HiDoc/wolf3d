@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/28 14:38:51 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/28 15:31:08 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC_NAME 	= main.c \
 			no_op.c \
 			queue.c \
 			sdl_hook.c \
+			init.c \
 			utils.c \
 			sdl_mouse.c \
 			musics.c \
