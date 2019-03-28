@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 15:48:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:53:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ void	render_skybox(t_env *env, t_sector *skybox)
 	ybot = H;
 	ytop = 0;
 	ctn.neighbor = -1;
+	ctn.li_sector = (t_l_int){skybox.ceil, skybox.floor};
 	while (++s < (int)skybox->npoints)
 	{
 		transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]);

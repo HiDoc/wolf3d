@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:42:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/03 18:14:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:52:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ struct						s_drawline
 	int			bottom;
 	int			middle;
 	int			top;
+	SDL_Surface	*sprite;
 };
 #endif
