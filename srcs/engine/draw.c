@@ -195,8 +195,8 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	acquire_limits(e, &ctn, (t_l_float){q->sect->ceil, q->sect->floor});
 
 	/* Render the wall. */
-	end = (int)fmin(ctn.x2, q->now.sx2);
 	start = (int)fmax(ctn.x1, q->now.sx1);
+	end = (int)fmin(ctn.x2, q->now.sx2);
 
 	/* Start at x, clamped with screen*/
 	ctn.x = start;
@@ -212,8 +212,34 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	return (1);
 }
 
+void	render_skybox(t_env *env, t_sector *skybox)
+{
+	int			s;
+	int			ytop;
+	int			ybot;
+	t_raycast	ctn;
+
+	s = -1;
+	ybot = H;
+	ytop = 0;
+	ctn.neighbor = -1;
+	while (++s < (int)skybox->npoints)
+	{
+		transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]);
+		acquire_limits(env->engine, &ctn, (t_l_float){skybox->ceil, skybox->floor});
+		ctn.x = ctn.x1;
+		while (ctn.x <= ctn.x2)
+		{
+			render_wall(env, ctn, &ytop, &ybot);
+			++ctn.x;
+		}
+		return (0);
+	}
+}
+
 void	dfs(t_env *env)
 {
+	t_wrap_sect	*current_obj;
 	t_queue		queue;
 	t_engine	*engine;
 	int			s;
@@ -229,6 +255,7 @@ void	dfs(t_env *env)
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)
 		queue.head = queue.queue;
+
 	while (queue.head != queue.tail)
 	{
 		/* Pick a sector & slice from the queue to draw */
@@ -246,8 +273,8 @@ void	dfs(t_env *env)
 		while (++s < (int)queue.sect->npoints)
 		{
 			render_sector_edges(env, &queue, s);
+
 			// Render objects/bots sprites //
-			t_wrap_sect *current_obj;
 			current_obj = engine->sectors[engine->player.sector].head_object;
 			while (current_obj)
 			{

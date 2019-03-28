@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/27 19:42:41 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:15:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,12 @@
 int	mouse_shoot(t_env *env)
 {
 	t_weapon	*rwpn;
-	// t_actions	*actions;
 
-	// actions = &env->player.actions;
-	printf("\nlogic\n");
-	printf("%p\n", &env->player.inventory.current);
-	printf("%d\n", env->hud.inventory.is_active);
-	printf("%d\n", env->player.actions.is_loading);
-	printf("%d\n", env->player.actions.mouse_state);
 	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)
-	&& env->player.inventory.current
-	&& !env->hud.inventory.is_active
-	&& !env->player.actions.is_loading
-	&& !env->player.actions.mouse_state)
+		&& env->player.inventory.current
+		&& !env->hud.inventory.is_active
+		&& !env->player.actions.is_loading
+		&& !env->player.actions.mouse_state)
 	{
 		rwpn = &env->world.armory[env->player.inventory.current->current->ref];
 		if (env->player.inventory.current->ammo_current)

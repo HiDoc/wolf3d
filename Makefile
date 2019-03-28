@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
 #    Updated: 2019/03/28 15:31:04 by sgalasso         ###   ########.fr        #
@@ -72,10 +72,11 @@ HED_NAME	= doom.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
-			loop_frames.c \
+			handle_weapon.c \
 			no_op.c \
 			queue.c \
 			sdl_hook.c \
+			init.c \
 			utils.c \
 			sdl_mouse.c \
 			musics.c \

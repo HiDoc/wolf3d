@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_inventory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:33:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:12:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,28 @@
 int		fill_bloc(t_env *env, int i)
 {
 	t_bloc		*bloc;
+	t_bloc		fill;
 	SDL_Rect	rect;
 
 	bloc = &env->hud.inventory.objects[i];
 	if (env->player.inventory.objects[i].current)
 	{
-		rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16,
-		bloc->rect.y + bloc->rect.w / 16,
-		bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
+		rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16, bloc->rect.y + bloc->rect.w / 16,
+			bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
 		draw_img(env, bloc->bg_fill, bloc);
-		draw_img(env, bloc->sprite,
-		&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
-		rect, 0, 0, (t_vtx){0, 0}}));
-		draw_img(env, bloc->cross.sprite,
-		&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
-		bloc->cross.rect, 0, 0, (t_vtx){0, 0}}));
-		draw_img(env, bloc->use.sprite,
-		&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
-		bloc->use.rect, 0, 0, (t_vtx){0, 0}}));
+
+		fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}};
+		draw_img(env, bloc->sprite, &fill);
+		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}}));
+
+		fill.rect = bloc->cross.rect;
+		draw_img(env, bloc->cross.sprite, &fill);
+		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, bloc->cross.rect, 0, 0, (t_vtx){0, 0}}));
+
+		fill.rect = bloc->use.rect;
+		draw_img(env, bloc->use.sprite, &fill);
+		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, bloc->use.rect, 0, 0, (t_vtx){0, 0}}));
+
 		ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 		(t_vtx){bloc->rect.x + W / 80,	bloc->rect.y + 5}, 20, -1,
 		env->player.inventory.objects[i].nb_stack});

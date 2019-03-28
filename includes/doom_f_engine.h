@@ -63,4 +63,6 @@ int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
 void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
+
+int 		initialisation(t_env *env);
 #endif
