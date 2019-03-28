@@ -6,18 +6,43 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 00:22:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 18:32:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_ENV_H
 # define DOOM_S_ENV_H
 
-typedef struct s_env				t_env;
-typedef struct s_sdl				t_sdl;
-typedef struct s_msc				t_msc;
-typedef struct s_time				t_time;
-typedef struct s_stats				t_stats;
+enum								e_tileset
+{
+	ENUM_0,
+	ENUM_1,
+	ENUM_2,
+	ENUM_3,
+	ENUM_4,
+	ENUM_5,
+	ENUM_6,
+	ENUM_7,
+	ENUM_8,
+	ENUM_9,
+	ENUM_10,
+	ENUM_11,
+	ENUM_12,
+	ENUM_13,
+	ENUM_14,
+	ENUM_15,
+	ENUM_16,
+	ENUM_17,
+	ENUM_18,
+	ENUM_19
+};
+
+typedef struct	s_env				t_env;
+typedef struct	s_sdl				t_sdl;
+typedef struct	s_msc				t_msc;
+typedef struct	s_time				t_time;
+typedef struct	s_stats				t_stats;
+typedef struct	s_tiletab			t_tiletab;
 
 struct 								s_stats
 {
@@ -55,6 +80,16 @@ struct s_time
 	int				tframe;
 };
 
+struct								s_tiletab
+{
+	char			*path;
+	SDL_Surface		*tileset;
+	int				nb_column;
+	int				nb_tiles;
+	int				tile_size;
+	SDL_Surface		**surface;
+};
+
 struct								s_env
 {
 	int				map_w;
@@ -70,7 +105,12 @@ struct								s_env
 
 	// font sgalasso, a ranger je sais pas ou
 	TTF_Font		*arial_font;
+
+	// tileset handler
+	t_tiletab		tiletab;
 };
+
+void			load_tilesets(t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));

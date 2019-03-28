@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 14:50:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/28 18:34:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		main(void)
 	initialisation(&env);
 	ft_bzero(&env.engine, sizeof(t_engine));
 
+	load_tilesets(&env);
 	LoadData(&env.engine, &env);
 	if (!init_gameplay_env(&env))
 	{
