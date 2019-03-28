@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 18:36:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:30:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ void	dfs(t_env *env)
 	ini_queue(&queue, engine->nsectors);
 	SDL_memset(env->sdl.surface->pixels, 0,
 		env->sdl.surface->h * env->sdl.surface->pitch);
+	// skybox sector rendering
+		//render_sector_edges(env, t_queue *q, int s);
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)

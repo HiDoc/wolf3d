@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/26 13:53:30 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/28 15:31:04 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,7 +127,8 @@ SRC_NAME 	= main.c \
 			ui_draw_full_circle.c \
 			ui_draw_string.c \
 			struct_font.c \
-			init_minimap.c
+			init_minimap.c \
+			init_skybox.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
