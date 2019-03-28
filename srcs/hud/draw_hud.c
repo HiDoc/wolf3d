@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 18:33:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 20:55:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ int	print_pad(t_env *env)
 {
 	int	i;
 
-	check_object_stack(env, env->player.inventory.objects, (t_ixy){0, 0}, 6);
-	check_object_stack(env, env->player.inventory.objects, (t_ixy){1, 1}, 6);
-	check_object_stack(env, env->player.inventory.objects, (t_ixy){5, 2}, 6);
+	check_object_stack(env, env->player.inventory.objects, (t_ixy){5, 0}, 6);
 	i = 6;
 	while (i < 10)
 	{
-		check_object_stack(env, env->player.inventory.gems, (t_ixy){i, i - 3}, 4);
+		check_object_stack(env, env->player.inventory.gems, (t_ixy){i, i - 5}, 4);
 		i++;
 	}
 	return (1);

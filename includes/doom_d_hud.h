@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 15:03:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 22:35:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 ** HUD related constants
 */
 # define NB_HUD_OBJ		21
-# define UI_NB_STRING	23
-# define UI_NB_STR_INV	4
+# define UI_NB_STRING	24
+# define UI_NB_STR_INV	5
 # define HUD_PICK_OBJ	14
 # define DSCRIP_STR_INV	12
 
@@ -73,6 +73,7 @@
 # define STRING_20		"Weapons"
 # define STRING_21		"X"
 # define STRING_22		"Use"
+# define STRING_23		"Gems"
 
 /*
 ** INV string - Objects description

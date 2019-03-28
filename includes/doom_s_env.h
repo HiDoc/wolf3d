@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 19:03:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 22:49:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ struct								s_msc
 	Mix_Music		*load;
 };
 
-struct s_time
+struct 								s_time
 {
 	int				fps;
 	Uint32			time_a;
 	Uint32			time_b;
 	int				frame;
 	int				tframe;
+	int				t_blue;
+	int				t_green;
+	int				t_red;
+	int				t_purple;
 };
 
 struct								s_env

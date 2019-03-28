@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/27 19:44:43 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/28 23:38:26 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,7 @@ SRC_NAME 	= main.c \
 			action_pl_weapon.c \
 			struct_inventory.c \
 			action_inventory.c \
+			action_gems.c \
 			draw_inventory.c \
 			weapons_inventory.c \
 			struct_weapon.c \

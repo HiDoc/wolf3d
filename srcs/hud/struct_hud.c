@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 18:44:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 22:44:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 	int			inter;
 
 	inter = W / 64;
-	rect = (SDL_Rect){W / 32, H - H / 3, W / 8, H / 8};
+	rect = (SDL_Rect){W / 32, H / 1.4, W / 10, H / 10};
 	i = W_SLOT_1;
 	j = INV_PISTOL;
 	index = 0;
@@ -145,7 +145,7 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 
 	interx = W / 128;
 	intery = H / 6;
-	rect = (SDL_Rect){W / 28, intery, W / 8, W / 8};
+	rect = (SDL_Rect){W / 28, intery, W / 11, W / 11};
 	i = 0;
 	while (i < 6)
 	{
@@ -168,9 +168,9 @@ int	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 	int			interx;
 
 	interx = W / 404;
-	rect = (SDL_Rect){W - W / 1.17, H - H  / 8, W / 20, W / 20};
+	rect = (SDL_Rect){W - W / 1.22, H - H  / 8, W / 20, W / 20};
 	i = 0;
-	while (i < 7)
+	while (i < 5)
 	{
 		hud->objects[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
@@ -193,6 +193,29 @@ int	init_inv_bg(t_uinv *inventory, SDL_Surface *img)
 	return (1);
 }
 
+int	init_igems_bloc(t_uinv *inventory, t_container *surfaces)
+{
+	int			i;
+	SDL_Rect	rect;
+	int			inter;
+	int			size;
+
+	inter = W / 132;
+	size = W / 17;
+	rect = (SDL_Rect){W / 32, H / 1.9, size, size};
+	i = 0;
+	while (i < WORLD_NB_GEMS)
+	{
+		inventory->gems[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
+		surfaces->hud[BOX_E].sprite, surfaces->hud[BOX_F].sprite, NULL,
+		rect, i, 0, (t_vtx){0, 0}};
+		rect.x += inter + size;
+		i++;
+	}
+	return (1);
+}
+
 int	init_hud_blocs(t_env *env)
 {
 	int	i_tab;
@@ -204,6 +227,7 @@ int	init_hud_blocs(t_env *env)
 	inv = &env->hud.inventory;
     env->hud.is_txt = 0;
 	return (init_inv_bg(inv, env->world.surfaces.hud[0].sprite)
+	&& init_igems_bloc(inv, &env->world.surfaces)
 	&& init_icon_bloc(inv, &env->world.surfaces)
 	&& init_iwpn_bloc(inv, &env->world.surfaces)
 	&& init_iobjects_bloc(env, hud, inv)

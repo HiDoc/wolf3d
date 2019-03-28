@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 19:35:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 23:33:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,12 @@ int		check_object_type(t_wrap_inv *pack, int ref, int limit)
 int		pick_gem(t_env *env, t_wrap_sect *obj)
 {
 	int	i;
+	int	ref;
 
+	ref = obj->ref - WORLD_NB_CSMBLE;
 	(i = check_object_type(env->player.inventory.gems, obj->ref, 4)) == -1
-	? env->player.inventory.gems[obj->ref - WORLD_NB_CSMBLE].current = obj : 0;
+	? env->player.inventory.gems[ref].current = obj : 0;
+	i == -1 ? env->hud.shortcut[ref + 1] = &env->player.inventory.gems[ref] : 0;
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
 	return (6);
@@ -99,8 +102,8 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		env->player.inventory.objects[index].nb_stack++;
 		env->player.inventory.nb_current_obj++;
 		env->hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
-		if (obj->ref < 6)
-			env->hud.shortcut[obj->ref] = &env->player.inventory.objects[index];
+		if (obj->ref == 5)
+			env->hud.shortcut[0] = &env->player.inventory.objects[index];
 		obj->is_picked = 1;
 		return (6);
 	}

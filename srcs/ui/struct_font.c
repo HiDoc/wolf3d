@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 15:07:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 22:37:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	set_pick_strings(t_env *env)
 
 int			set_simple_strings(t_env *env, int i, int j)
 {
-	const char		*string[23] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
+	const char		*string[24] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
 	STRING_5, STRING_6, STRING_7, STRING_8, STRING_9, STRING_10, STRING_11,
 	STRING_12, STRING_13, STRING_14, STRING_15,	STRING_16, STRING_17, STRING_18,
-	STRING_19, STRING_20, STRING_21, STRING_22};
+	STRING_19, STRING_20, STRING_21, STRING_22, STRING_23};
 
 	while (i < UI_NB_STRING)
 	{
