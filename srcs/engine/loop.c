@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/27 19:43:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 14:38:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sdl_render_game(t_env *env)
 {
 	dfs(env);
-	loop_frames(env, &env->time.frame);
+	handle_weapon(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	// ui_minimap(env);
 	print_hud(env);
@@ -49,13 +49,11 @@ int YourEventFilter(void *userdata, SDL_Event *event)
 	t_env *env;
 
 	env = (t_env *)userdata;
-	if (event->type == SDL_MOUSEBUTTONDOWN)
+	if (event->type == SDL_MOUSEBUTTONDOWN && !env->player.actions.mouse_state)
 	{
 		mouse_shoot(env);
 		printf("logic error\n");
 	}
-	if (event->type == SDL_MOUSEBUTTONUP && env->player.actions.mouse_state)
-		env->player.actions.mouse_state = 0;
 	return (1);
 }
 
@@ -84,7 +82,6 @@ int sdl_loop(t_env *env)
 			if (!env->hud.inventory.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
-
 				// wpn_mouse_wheel(env, env->sdl.event);
 				sdl_keyhook_game(env, env->sdl.event, keycodes);
 				player_move(e, v, keycodes);
