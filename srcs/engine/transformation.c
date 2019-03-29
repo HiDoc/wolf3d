@@ -6,19 +6,19 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 22:08:34 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 17:38:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 18:39:36 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	acquire_limits(t_engine *e, t_sector *sect, t_raycast *ctn)
+void	acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit)
 {
 	const float z = e->player.where.z;
 
 	/* Acquire the floor and ceiling heights,
 	** relative to where the player's view is */
-	ctn->lf_current = (t_l_float){sect->ceil - z, sect->floor - z};
+	ctn->lf_current = (t_l_float){limit.ceil - z, limit.floor - z};
 	ctn->lf_next = (t_l_float){0, 0};
 	if (ctn->neighbor >= 0 && ctn->neighbor < (int)e->nsectors)
 	{

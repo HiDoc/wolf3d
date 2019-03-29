@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:05:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:06:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ typedef struct s_character	t_character;
 
 struct						s_object
 {
-	SDL_Surface	*sprite;
-
-	int			nb_use;
-	int			max_stack;
-	int			ref;
-	int			sectorno;
-	t_vtx		vertex;
+	SDL_Surface		*sprite;
+	int				nb_use;
+	int				max_stack;
+	int				ref;
+	int				sectorno;
+	t_vtx			vertex;
 };
 
 /*
@@ -58,29 +57,31 @@ struct						s_object
 */
 struct						s_weapon
 {
-	SDL_Surface			*sprite;
-	SDL_Surface			*sprite_bullet;
-	SDL_Surface			**sprite_reload;
-	SDL_Surface			**sprite_shoot;
-	long				ref;
-	int					type;
-	int					time_reload;
-	int					time_shoot;
-	double				time_shoot_between;
-	int					ammo_current;
-	int					ammo_curr_max;
-	int					ammo_magazine;
-	int					ammo_mag_max;
-	int					ammo_max;
-	int					damage;
-	Mix_Chunk			*shot;
+	t_bloc			sprite;
+	t_bloc			sprite_bullet;
+	t_bloc			*sprite_reload;
+	t_bloc			*sprite_shoot;
+	long			ref;
+	int				type;
+	int				time_reload;
+	int				time_shoot;
+	double			time_shoot_between;
+	int				ammo_current;
+	int				ammo_curr_max;
+	int				ammo_magazine;
+	int				ammo_mag_max;
+	int				ammo_max;
+	int				damage;
+	Mix_Chunk		*shot;
 };
 
 struct						s_container
 {
-	t_surface	walls[30];
-	t_surface	floors[30];
+	t_surface	walls[WORLD_NB_WALLS];
+	t_surface	floors[WORLD_NB_FLOORS];
 	t_surface	ceils[30];
+	t_surface	hud[NB_HUD_OBJ];
+	t_surface	poster[WORLD_NB_POSTERS];
 };
 
 struct						s_inventory
@@ -88,8 +89,8 @@ struct						s_inventory
 	t_wrap_wpn	*current;
 	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
+	t_wrap_inv	gems[4];
 	int			nb_current_obj;
-	t_uinv		ui;
 };
 
 struct						s_actions
@@ -103,11 +104,21 @@ struct						s_actions
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;
+	int			is_superfast;
+	int			is_invulnerable;
+	int			is_invisible;
+	int			is_superstrong;
 	int			mouse_state;
 };
 
 struct						s_character
 {
+	int			type;
+	long		ref;
+	int			tshoot_between;
+	int			salve_shoot;
+	int			tspeed;
+	int			damage;
 	int			health;
 	int			shield;
 	int			max_health;
@@ -122,14 +133,13 @@ struct						s_character
 	SDL_Surface	*sprite;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_hud		hud;
 };
 
 struct						s_world
 {
 	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
-	t_character	enemies[3];
+	t_character	enemies[1];
 	t_container	surfaces;
 };
 

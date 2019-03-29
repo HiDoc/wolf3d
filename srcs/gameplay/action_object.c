@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/16 14:19:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/27 00:31:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 		ammo = obj->current->ref * 10;
 		wpn = &env->player.inventory.weapons[obj->current->ref - 2];
 		stack = wpn->ammo_current + wpn->ammo_magazine;
-		wpn_ref = &env->world.armory[obj->current->ref];
+		wpn_ref = &env->world.armory[obj->current->ref - 2];
 		if (wpn && stack < wpn_ref->ammo_curr_max + wpn_ref->ammo_mag_max)
 		{
 			ammo -= wpn_ref->ammo_curr_max - wpn->ammo_current;
@@ -84,7 +84,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 		}
 		return (wpn ? 9 : 10);
 	}
-	return (4);
+	return (14);
 }
 
 int	give_jetpack(void *e, t_wrap_inv *obj)

@@ -6,17 +6,17 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/22 15:24:36 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/29 18:54:00 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g #-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
-MAKEFLAGS		= #--jobs=16
+MAKEFLAGS		= --jobs=16
 #color
 YELLOW			= "\\033[33m"
 BLUE			= "\\033[34m"
@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -70,64 +70,71 @@ HED_NAME	= doom.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
-			load.c \
-			loop.c \
-			loop_frames.c \
-			no_op.c \
-			queue.c \
-			sdl_hook.c \
-			utils.c \
-			sdl_mouse.c \
-			musics.c \
-			edge.c \
-			function.c \
-			perspective.c \
-			vertex.c \
-			utils_vertex.c \
-			utils_pixels.c \
-			map.c \
-			hull.c \
-			utils_edge.c \
-			utils_surface.c \
-			transformation.c \
-			move.c \
-			position.c \
-			draw.c \
-			print_bug.c \
-			struct_drawline.c \
-			struct_container.c \
-			projection.c \
-			checking.c \
-			unload.c \
-			struct_img.c \
-			utils_img.c \
-			struct_character.c \
-			struct_object.c \
-			parse_objects.c \
+			action_enemies.c \
+			action_gems.c \
+			action_inventory.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
-			struct_inventory.c \
-			action_inventory.c \
-			draw_inventory.c \
-			weapons_inventory.c \
-			utils_draw_inventory.c \
-			struct_weapon.c \
-			utils_weapons.c \
-			utils_ui.c \
-			struct_hud.c \
+			checking.c \
+			draw.c \
 			draw_hud.c 	\
-			utils_color.c \
-			ui_minimap.c \
-			ui_make_surface.c \
-			ui_draw_line.c \
-			ui_draw_vector.c \
-			ui_draw_rect.c \
-			ui_draw_full_rect.c \
+			draw_inventory.c \
+			edge.c \
+			function.c \
+			handle_weapon.c \
+			hud_data.c \
+			hull.c \
+			init.c \
+			init_enemies.c \
+			init_minimap.c \
+			init_skybox.c \
+			load.c \
+			loop.c \
+			map.c \
+			move.c \
+			musics.c \
+			no_op.c \
+			parse_enemies.c \
+			parse_objects.c \
+			perspective.c \
+			position.c \
+			print_bug.c \
+			projection.c \
+			queue.c \
+			render_sect.c \
+			sdl_hook.c \
+			sdl_mouse.c \
+			struct_character.c \
+			struct_container.c \
+			struct_drawline.c \
+			struct_font.c \
+			struct_hud.c \
+			struct_hud_img.c \
+			struct_inventory.c \
+			struct_object.c \
+			struct_weapon.c \
+			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
+			ui_draw_full_rect.c \
+			ui_draw_line.c \
+			ui_draw_rect.c \
 			ui_draw_string.c \
-			init_minimap.c \
+			ui_draw_vector.c \
+			ui_make_surface.c \
+			ui_minimap.c \
+			unload.c \
+			utils.c \
+			utils_color.c \
+			utils_edge.c \
+			utils_hud_img.c \
+			utils_pixels.c \
+			utils_surface.c \
+			utils_vertex.c \
+			utils_weapons.c \
+			vertex.c \
+			weapons_inventory.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

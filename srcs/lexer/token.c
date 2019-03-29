@@ -1,4 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/28 16:31:56 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
+
+int (*get_token[8])(int) = {
+	&is_spc,
+	&is_tab,
+	&ft_isdigit,
+	&is_min,
+	&is_end,
+	&is_sec,
+	&is_vtx,
+	&is_plr
+};
 
 t_parseline *new_line(unsigned nline)
 {
@@ -40,7 +63,7 @@ t_token	*new_token(char c, unsigned pos)
 	(c == 'p') ? new->name = TOK_NPLR : 0;
 	new->next = NULL;
 	new->pos = pos;
-	new->value = c;	
+	new->value = c;
 	return (new);
 }
 

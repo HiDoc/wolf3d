@@ -1,5 +1,5 @@
 CC = gcc
-VPATH = ./../../libft:./../../includes
+VPATH = ./../../libft
 LIBFT = -L ../../libft -lft
 INC = -I ../../libft/includes -I ./../../includes
 all: parser
@@ -12,5 +12,3 @@ all: $(NAME)
 $(NAME):
 	$(CC) $(SRC) $(INC) $(CFLAGS) $(LIB) -o parser $(LIBFT)
 	./parser map.txt
-
-$(OBJ)%.o: %.c

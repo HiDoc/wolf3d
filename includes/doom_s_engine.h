@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/24 16:13:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:05:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
+typedef struct	s_skybox	t_skybox;
 
 
 struct						s_scaler
@@ -59,8 +60,9 @@ struct						s_sector
 	t_vtx		*vertex;
 	signed char	*neighbors;
 	unsigned	npoints;
-	t_wrap_sect	*head_object;
 	int			nb_objects;
+	t_wrap_sect	*head_object;
+	t_wrap_enmy	*head_enemy;
 };
 
 struct						s_vision
@@ -115,11 +117,24 @@ struct						s_raycast
 	int				neighbor;
 };
 
+struct						s_skybox
+{
+	SDL_Surface		*top;
+	SDL_Surface		*bot;
+	SDL_Surface		*left;
+	SDL_Surface		*right;
+	SDL_Surface		*front;
+	SDL_Surface		*back;
+	t_sector		sector;
+};
+
 struct						s_engine
 {
 	t_sector		*sectors;
 	unsigned		nsectors;
 	t_player		player;
+	t_queue			queue;
 	t_minimap		minimap;
+	t_skybox		skybox;
 };
 #endif

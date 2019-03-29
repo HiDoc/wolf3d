@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/28 16:32:08 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
+
+const t_op op[3] = {
+	{TOK_VTX, TOK_NVTX, TOK_INT, 2},
+	{TOK_SEC, TOK_NSEC, TOK_MIN | TOK_INT, 20},
+	{TOK_PLR, TOK_NPLR, TOK_INT, 4}
+};
 
 int	lexer_vertex(t_token *iter)
 {
@@ -47,7 +65,7 @@ int	lexer(t_parseline *line)
 void	print_err(t_parseline *line)
 {
 	t_token	*iter;
-	
+
 	iter = line->first;
 	printf("\033[31mparsing error\033[0m at line %d:\n", line->nline);
 	while (iter)
@@ -55,7 +73,7 @@ void	print_err(t_parseline *line)
 		printf("%c", iter->value);
 		iter = iter->next;
 	}
-	iter = line->first;	
+	iter = line->first;
 	while (iter)
 	{
 		if (iter->type == TOK_ERR)
@@ -180,7 +198,7 @@ int main(int argc, char **argv)
 	t_engine e;
 
 	if (argc > 1)
-	{	
+	{
 		if (argv[1])
 			parser(&e, argv[1]);
 	}
