@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:40:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 15:39:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,30 @@ void		display_element(t_env *env)
 	ui_make_rect(env->data->surface, rect);
 
 	// display categories
-	// wall_objects // sprites (posters)
-	// consumables // sprites (gun / ammo / shield ...)
-	// bots // sprites (monsters)
-	// prefabs // sector (table / plan incline)
-	// specials // (spawn / interest / teleport)
+	rect = (t_rect){900, 110, 270, 20, 0xFFFFFFFF};
+	ui_make_rect(env->data->surface, rect);
+	rect = (t_rect){910, 110, 0, 20, 0xffffffff};
+	ui_make_string(rect, "[sprites] wall_objects", env->data); // posters
+	
+	rect = (t_rect){900, 140, 270, 20, 0xFFFFFFFF};
+	ui_make_rect(env->data->surface, rect);
+	rect = (t_rect){910, 140, 0, 20, 0xffffffff};
+	ui_make_string(rect, "[sprites] consumables", env->data); // gun / shield / ...
+
+	rect = (t_rect){900, 170, 270, 20, 0xFFFFFFFF};
+	ui_make_rect(env->data->surface, rect);
+	rect = (t_rect){910, 170, 0, 20, 0xffffffff};
+	ui_make_string(rect, "[sprites] entity", env->data); // bots
+
+	rect = (t_rect){900, 200, 270, 20, 0xFFFFFFFF};
+	ui_make_rect(env->data->surface, rect);
+	rect = (t_rect){910, 200, 0, 20, 0xffffffff};
+	ui_make_string(rect, "[sectors] prefabs", env->data); // table / rampe
+
+	rect = (t_rect){900, 230, 270, 20, 0xFFFFFFFF};
+	ui_make_rect(env->data->surface, rect);
+	rect = (t_rect){910, 230, 0, 20, 0xffffffff};
+	ui_make_string(rect, "[sectors] specials", env->data); // spawn / interest / teleport
 
 	// up
 	//rect = (t_rect){1130, 350, 20, 20, 0xFFFFFFFF};

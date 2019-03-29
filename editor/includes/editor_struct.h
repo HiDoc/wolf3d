@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:10:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 16:23:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct  s_env   	t_env;
 struct					s_vtx
 {
 	t_pos			pos;
+	t_sct			*sector;
 	t_vtx			*next;
 };
 
