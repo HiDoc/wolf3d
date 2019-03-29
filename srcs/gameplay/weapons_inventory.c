@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   weapons_inventory.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:15 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 11:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:36:47 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,26 @@
 
 int     wpn_mouse_wheel(t_env *env, SDL_Event event)
 {
+	t_wrap_wpn  *current;
+    int         *wheel;
+
+    current = env->player.inventory.current;
+    wheel = &env->hud.inventory.wwheel;
     if (event.type == SDL_MOUSEWHEEL)
     {
-        if (env->player.inventory.current)
+        if (current)
         {
-            if (event.wheel.y > 0 && env->hud.inventory.wwheel < env->hud.inventory.nb_wpn - 1)
+            if (event.wheel.y > 0 && *wheel < env->hud.inventory.nb_wpn - 1)
             {
-                env->hud.inventory.wwheel++;
-                if (env->player.inventory.weapons[env->hud.inventory.wwheel].current)
-                    env->player.inventory.current->current = env->player.inventory.weapons[env->hud.inventory.wwheel].current;
+                (*wheel)++;
+                if (env->player.inventory.weapons[*wheel].current)
+                    current->current = env->player.inventory.weapons[*wheel].current;
             }
-            else if (event.wheel.y < 0 && env->hud.inventory.wwheel > 0)
+            else if (event.wheel.y < 0 && *wheel > 0)
             {
-                env->hud.inventory.wwheel--;
-                if (env->player.inventory.weapons[env->hud.inventory.wwheel].current)
-                    env->player.inventory.current->current = env->player.inventory.weapons[env->hud.inventory.wwheel].current;
+                (*wheel)--;
+                if (env->player.inventory.weapons[*wheel].current)
+                    current->current = env->player.inventory.weapons[*wheel].current;
             }
         }
     }

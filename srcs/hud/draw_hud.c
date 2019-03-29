@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_hud.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 11:37:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:35:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ int	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 
 int	print_cross(t_env *env)
 {
-	Uint32	*dst;
-	int		x;
-	int		y;
+	Uint32		*dst;
+	int			x;
+	int			y;
+	const int	w = env->sdl.surface->w;
+	const int	h = env->sdl.surface->h;
 
 	dst = (Uint32*)env->sdl.surface->pixels;
 	x = 0;
@@ -90,7 +92,7 @@ int	print_cross(t_env *env)
 		y = 0;
 		while (y < 20)
 		{
-			dst[env->sdl.surface->w * (y + env->sdl.surface->h / 2 - 10) + (x + env->sdl.surface->w / 2 - 10)] = 0xBB4EFF;
+			dst[w * (y + h / 2 - 10) + (x + w / 2 - 10)] = 0xBB4EFF;
 			y++;
 		}
 		x++;
@@ -100,23 +102,25 @@ int	print_cross(t_env *env)
 
 int print_hud(t_env *env)
 {
-	int		h;
-	int		index;
-	t_bloc	*bloc;
+	t_character *player;
+	t_bloc		*bloc;
+	int			h;
+	int			index;
 
-	h = env->player.max_health;
-	while (h > env->player.health)
+	player = &env->player;
+	h = player->max_health;
+	while (h > player->health)
 		h -= 50;
-	if (env->player.inventory.current)
+	if (player->inventory.current)
 	{
-		if (!print_wpn_hud(env, env->player.inventory.current))
+		if (!print_wpn_hud(env, player->inventory.current))
 			return (0);
 	}
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];
 	draw_img(env, bloc->sprite, bloc);
-	draw_hp_bars(env, &env->hud.bar[0], env->player.max_health, env->player.health);
-	draw_hp_bars(env, &env->hud.bar[1], env->player.max_shield, env->player.shield);
+	draw_hp_bars(env, &env->hud.bar[0], player->max_health, player->health);
+	draw_hp_bars(env, &env->hud.bar[1], player->max_shield, player->shield);
 	print_pad(env);
 	print_cross(env);
 	return (1);

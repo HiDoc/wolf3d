@@ -6,13 +6,14 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 18:20:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:42:04 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		render_sprites(t_env *env, t_queue *q, SDL_Surface *sprite, t_vtx vertex)
+void		render_sprites(t_env *env, t_queue *q,
+			SDL_Surface *sprite, t_vtx vertex)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
@@ -28,7 +29,6 @@ void		render_sprites(t_env *env, t_queue *q, SDL_Surface *sprite, t_vtx vertex)
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
 	raycast.neighbor = -1;
-
 	acquire_limits(&env->engine, &raycast,
 		(t_l_float){q->sect->floor + 5, q->sect->floor});
 	if (raycast.x1 > 0 && raycast.x2 < W)
@@ -76,8 +76,7 @@ int			render_sector_edges(t_env *env, t_queue *q, int s)
 
 	/* Start at x, clamped with screen*/
 	ctn.x = start;
-	ctn.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
-		e->sectors[q->now.sectorno].floor};
+	ctn.li_sector = (t_l_int){q->sect->ceil, q->sect->floor};
 	while (ctn.x <= end)
 	{
 		render_wall(env, ctn, &q->ytop[ctn.x], &q->ybottom[ctn.x]);
@@ -90,9 +89,9 @@ int			render_sector_edges(t_env *env, t_queue *q, int s)
 
 void		render_object(t_env *env, t_queue *queue)
 {
-	t_wrap_sect		*object;
 	const t_object	*ctn = env->world.objects;
 	const int		gem = WORLD_NB_CSMBLE + WORLD_NB_GEMS;
+	t_wrap_sect		*object;
 	int				ref;
 	t_vtx 			p;
 
