@@ -131,6 +131,7 @@ SRC_NAME 	= main.c \
 			ui_draw_string.c \
 			struct_font.c \
 			init_minimap.c \
+			load_tilesets.c \
 			init_enemies.c \
 			action_enemies.c \
 			init_skybox.c
