@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:21:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 20:06:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 **	utils/
 */
 
-int			export_map(t_env *env);
+void		export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
 t_elem		*get_element(int id, t_env *env);
 

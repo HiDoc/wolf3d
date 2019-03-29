@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:11:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 21:30:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ int				main(void)
 {
 	t_data		data;
 	t_env		env;
+
+// probleme map name dans export : il y a un +1 parce que sinon
+// la map name commence par un espace, trouver pourquoi
 
 	ui_init_sdl(&data);
 

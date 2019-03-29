@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:18:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 20:18:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,8 @@ int		handle_events(t_env *env)
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		t_rect		rect;
-		t_rect		new;
-		t_rect		upload;
-		t_rect		save;
 
 		rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
-		new = (t_rect){20, 20, 100, 40, 0xFFFFFFFF};
-		upload = (t_rect){130, 20, 125, 40, 0xFFFFFFFF};
-		save = (t_rect){324, 30, 0, 25, 0xFFFFFFFF};
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(E_B_MODE_SELECT, env)->rect))
 		{ // button select mode
@@ -60,15 +54,14 @@ int		handle_events(t_env *env)
 			else if (env->mouse_mode == 2)
 				return (elem_mode(env));
 		}
-		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, new)
-		|| ui_mouseenter(env->data->mouse.x, env->data->mouse.y, upload))
-		{ // else if on new or upload
+		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(E_B_NEW, env)->rect)
+		|| ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(E_B_UPLOAD, env)->rect))
 			env->menu.state = 2;
-		}
-		/*else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, save))
-		{ // else if on save button
+		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(E_B_SAVE, env)->rect))
 			export_map(env);
-		}*/
 	}
 	
 	if (env->data->mouse.x || env->data->mouse.y)
