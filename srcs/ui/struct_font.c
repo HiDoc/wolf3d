@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_font.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:02:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 16:59:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ int			set_simple_strings(t_env *env, int i, int j)
 		}
 		i++;
 	}
+	printf("time font: %u\n", SDL_GetTicks());
 	return (1);
 }
