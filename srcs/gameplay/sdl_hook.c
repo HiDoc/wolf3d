@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 15:28:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 11:21:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_uinv		*ui;
 
@@ -30,7 +30,7 @@ int			sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	return (1);
 }
 
-int			sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
 	t_vision	*v;

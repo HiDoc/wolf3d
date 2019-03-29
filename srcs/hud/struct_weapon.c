@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_weapon.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 16:59:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:10:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,10 @@ int weapon_set(t_weapon *weapon, char *name, int dam)
 	weapon->ammo_current = weapon_mask(ref, 7);
 	weapon->ammo_magazine = weapon_mask(ref, 9);
 	weapon->damage = dam;
-	if (weapon_sprites(weapon, name))
-		return (1);
-	return (0);
+	(void)name;
+	// if (weapon_sprites(weapon, name))
+	// 	return (1);
+	return (1);
 }
 
 int		init_weapon(t_env *env)

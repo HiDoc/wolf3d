@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/28 15:31:04 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/29 17:20:23 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g #-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -flto -Ofast
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -105,11 +105,13 @@ SRC_NAME 	= main.c \
 			utils_hud_img.c \
 			struct_object.c \
 			parse_objects.c \
+			parse_enemies.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
 			struct_inventory.c \
 			action_inventory.c \
+			action_gems.c \
 			draw_inventory.c \
 			weapons_inventory.c \
 			struct_weapon.c \
@@ -129,7 +131,9 @@ SRC_NAME 	= main.c \
 			ui_draw_string.c \
 			struct_font.c \
 			init_minimap.c \
-			init_skybox.c \
+			init_enemies.c \
+			action_enemies.c \
+			init_skybox.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

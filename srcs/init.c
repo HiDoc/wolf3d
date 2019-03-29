@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:27:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:30:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		initialisation_cursor(t_env *env)
 
 int		initialisation_sound_text(t_env *env)
 {
+	(void)env;
 	if (TTF_Init() < 0)
 	{
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
@@ -39,11 +40,6 @@ int		initialisation_sound_text(t_env *env)
 	}
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
-	if (!(env->arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
-	{
-		ft_putendl(TTF_GetError()); // provisoire
-		return (0);
-	}
 	return (1);
 }
 

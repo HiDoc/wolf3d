@@ -34,7 +34,7 @@ void		free_img(SDL_Surface *sprite)
 	}
 }
 
-void		free_world_img(t_world *world)
+void		free_obj_wpn_img(t_world *world)
 {
 	int	i;
 	int	j;
@@ -73,12 +73,12 @@ void		free_hud(t_container *surface)
 	i = 0;
 	while (i < NB_HUD_OBJ)
 	{
-		free_img(surface->hud[i]);
+		free_img(surface->hud[i].sprite);
 		i++;
 	}
 }
 
-void		free_surface_string(t_uitxt*ui)
+void		free_surface_string(t_uitxt *ui)
 {
 	int i;
 
@@ -90,16 +90,58 @@ void		free_surface_string(t_uitxt*ui)
 			free_img(ui->t_inv[i]);
 		i++;
 	}
+	i = 0;
+	while (i < HUD_PICK_OBJ)
+	{
+		free_img(ui->pick_objects[i]);
+		i++;
+	}
+	i = 0;
+	while (i < DSCRIP_STR_INV)
+	{
+		free_img(ui->i_obj_description[i]);
+		i++;
+	}
+}
+
+void		free_posters(t_container *surface)
+{
+	int	i;
+
+	i = 0;
+	while (i < WORLD_NB_POSTERS)
+	{
+		free_img(surface->poster[i].sprite);
+		i++;
+	}
+}
+
+void		free_walls(t_container *surface)
+{
+	int	i;
+
+	i = 0;
+	while (i < WORLD_NB_WALLS)
+	{
+		free_img(surface->walls[i].sprite);
+		i++;
+	}
+}
+
+void		free_world_surfaces(t_container *surface)
+{
+	free_posters(surface);
+	free_walls(surface);
+	free_hud(surface);
 }
 
 void		free_ui(t_env *env)
 {
-	free_hud(&env->world.surfaces);
-	// free_inventory_img(&env->player.inventory.ui);
-	free_world_img(&env->world);
-	// free_all_sounds(env);
 	free_fonts(&env->hud.text);
 	free_surface_string(&env->hud.text);
+	free_world_surfaces(&env->world.surfaces);
+	free_obj_wpn_img(&env->world);
+	// free_all_sounds(env);
 }
 
 void		free_env(t_env *env)
@@ -107,6 +149,7 @@ void		free_env(t_env *env)
 	unsigned	a;
 	t_engine	*e;
 	t_wrap_sect	*b;
+	t_wrap_enmy	*en;
 
 	a = 0;
 	e = &env->engine;
@@ -120,6 +163,13 @@ void		free_env(t_env *env)
 			e->sectors[a].head_object = b->next;
 			free(b);
 			b = e->sectors[a].head_object;
+		}
+		en = e->sectors[a].head_enemy;
+		while (en != NULL)
+		{
+			e->sectors[a].head_enemy = en->next;
+			free(b);
+			en = e->sectors[a].head_enemy;
 		}
 		a++;
 	}

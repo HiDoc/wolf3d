@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 14:38:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:09:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	sdl_render_game(t_env *env)
 	ui_put_fps(env, env->time.fps);
 	// ui_minimap(env);
 	print_hud(env);
+	action_gems(env);
 	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 }
 
