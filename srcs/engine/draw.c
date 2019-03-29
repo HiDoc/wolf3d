@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 16:16:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:01:29 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_l_int		wonder_wall(t_raycast ctn, t_projec projct, int *ytop, int *ybottom)
 	return (limits);
 }
 
-void	render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
+void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 {
 	t_l_int 	y_coord_curr;
 	t_l_int 	y_coord_next;
@@ -80,7 +80,7 @@ void	render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 	}
 }
 
-int		render_perspective(t_env *env, t_raycast *ctn)
+int			render_perspective(t_env *env, t_raycast *ctn)
 {
 	t_edge		bot;
 	t_edge		top;
@@ -96,7 +96,7 @@ int		render_perspective(t_env *env, t_raycast *ctn)
 	return (1);
 }
 
-void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
+void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
 	const t_raycast	*ctn = (t_raycast *)l.container;
 	int				*pixels;
@@ -130,7 +130,7 @@ void				oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	}
 }
 
-static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
+static void	render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
@@ -175,7 +175,7 @@ static void		render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 /*
 ** Queue logic to render wall and add a new sector if it has a neighbour
 */
-int		render_sector_edges(t_env *env, t_queue *q, int s)
+int			render_sector_edges(t_env *env, t_queue *q, int s)
 {
 	const t_vtx	*vertex = q->sect->vertex;
 	t_engine	*e;
@@ -212,8 +212,10 @@ int		render_sector_edges(t_env *env, t_queue *q, int s)
 	return (1);
 }
 
-void	render_skybox(t_env *env, t_sector *skybox)
+void		render_skybox(t_env *env, t_sector *skybox)
 {
+	const t_vtx	*vertex = skybox->vertex;
+	t_drawline	drawline;
 	int			s;
 	int			ytop;
 	int			ybot;
@@ -223,22 +225,30 @@ void	render_skybox(t_env *env, t_sector *skybox)
 	ybot = H;
 	ytop = 0;
 	ctn.neighbor = -1;
-	ctn.li_sector = (t_l_int){skybox.ceil, skybox.floor};
+	ctn.li_sector = (t_l_int){skybox->ceil, skybox->floor};
 	while (++s < (int)skybox->npoints)
 	{
-		transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]);
-		acquire_limits(env->engine, &ctn, (t_l_float){skybox->ceil, skybox->floor});
+
+		if (transform_vertex(&ctn, env->engine.player, vertex[s], vertex[s + 1]) == 0
+		|| ctn.x1 >= ctn.x2)
+			continue ;
+		acquire_limits(&env->engine, &ctn, (t_l_float){skybox->ceil, skybox->floor});
 		ctn.x = ctn.x1;
+		drawline.container = (void *)&ctn;
+		drawline.from = 0;
+		drawline.to = 800;
+		drawline.bottom = 0xFFFF;
+		drawline.middle = 0xFF + (0xFF00 * s);
+		drawline.top = 0xFF;
 		while (ctn.x <= ctn.x2)
 		{
-			render_wall(env, ctn, &ytop, &ybot);
-			++ctn.x;
+			vline(drawline, env);
+			ctn.x++;
 		}
-		return (0);
 	}
 }
 
-void	dfs(t_env *env)
+void		dfs(t_env *env)
 {
 	t_wrap_sect	*current_obj;
 	t_queue		queue;
@@ -251,7 +261,8 @@ void	dfs(t_env *env)
 	SDL_memset(env->sdl.surface->pixels, 0,
 		env->sdl.surface->h * env->sdl.surface->pitch);
 	// skybox sector rendering
-		//render_sector_edges(env, t_queue *q, int s);
+	//render_skybox(env, &env->engine.skybox.sector);
+
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)

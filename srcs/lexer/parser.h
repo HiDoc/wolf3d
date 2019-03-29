@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
+/*   Updated: 2019/03/28 16:36:30 by fmadura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "doom.h"
 #define TOK_SPC		(1U << 0)
 #define TOK_NSPC	"space"
 #define	TOK_TAB		(1U << 1)
@@ -64,29 +75,12 @@ struct	s_op
 int	is_spc(int c);
 int	is_tab(int c);
 int	is_min(int c);
-int	is_end(int c); 
+int	is_end(int c);
 int	is_sec(int c);
 int	is_vtx(int c);
-int	is_plr(int c); 
+int	is_plr(int c);
 
 t_token	*new_token(char c, unsigned pos);
 t_parseline *new_line(unsigned nline);
-
-const t_op op[3] = {
-	{TOK_VTX, TOK_NVTX, TOK_INT, 2},
-	{TOK_SEC, TOK_NSEC, TOK_MIN | TOK_INT, 20},
-	{TOK_PLR, TOK_NPLR, TOK_INT, 4}
-};
-
-int (*get_token[8])(int) = {
-	&is_spc,
-	&is_tab,
-	&ft_isdigit,
-	&is_min,
-	&is_end,
-	&is_sec,
-	&is_vtx,
-	&is_plr
-};
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_hud.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:40:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 16:49:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,13 +202,18 @@ int	init_hud_blocs(t_env *env)
 	i_tab = 0;
 	hud = &env->hud;
 	inv = &env->hud.inventory;
-	return (init_inv_bg(inv, env->world.surfaces.hud[0])
+	if (init_inv_bg(inv, env->world.surfaces.hud[0])
 	&& init_icon_bloc(inv, &env->world.surfaces)
 	&& init_iwpn_bloc(inv, &env->world.surfaces)
 	&& init_iobjects_bloc(env, hud, inv)
 	&& init_hp_bloc(hud, &env->world.surfaces)
 	&& init_hwpn_bloc(hud, &env->world.surfaces)
-	&& init_hobjects_bloc(hud, &env->world.surfaces));
+	&& init_hobjects_bloc(hud, &env->world.surfaces))
+	{
+		printf("time blocks: %u\n", SDL_GetTicks());
+		return (1);
+	}
+	return (0);
 }
 
 int init_hud_container(t_env *env)
