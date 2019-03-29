@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:23:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 18:21:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,117 +96,6 @@ int			render_perspective(t_env *env, t_raycast *ctn)
 	return (1);
 }
 
-void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
-{
-	const t_raycast	*ctn = (t_raycast *)l.container;
-	int				*pixels;
-	int				iter;
-	int				x;
-
-	x = ctn->x;
-	pixels	= (int *)env->sdl.surface->pixels;
-	l.from = clamp(l.from, 0, H - 1);
-	l.to = clamp(l.to, 0, H - 1);
-	const float height = l.to - l.from;
-	const float width = ctn->x2 - ctn->x1;
-	if (l.from == l.to)
-		pixels[l.from * W + x] = 0x00;
-	else if (l.to > l.from)
-	{
-		pixels[l.from * W + x] = 0x00;
-		iter = l.from + 1;
-		float y = 0;
-		while (iter < l.to && y < sprite->h)
-		{
-			const int pix = getpixel(sprite,
-			(int)((ctn->x - ctn->x1)/ width * sprite->w) % sprite->w,
-				(int)(y / height * sprite->h) % sprite->h);
-			if (pix & 0xff)
-				pixels[iter * W + x] = pix;
-			y++;
-			iter++;
-		}
-		pixels[l.to * W + x] = 0x00;
-	}
-}
-
-static void		render_sprites(t_env *env, t_queue *q, SDL_Surface *sprite, t_vtx vertex)
-{
-	const t_engine	*e = &env->engine;
-	const t_player	p = e->player;
-	t_drawline		drawline;
-	t_raycast		raycast;
-	t_edge			edge;
-
-	ft_bzero(&drawline, sizeof(t_drawline));
-	edge = (t_edge){
-		(t_vtx){vertex.x - p.anglesin, vertex.y + p.anglecos},
-		(t_vtx){vertex.x + p.anglesin, vertex.y - p.anglecos}
-	};
-	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
-		return ;
-	raycast.neighbor = -1;
-
-	acquire_limits(&env->engine, &raycast,
-		(t_l_float){e->sectors[q->now.sectorno].floor + 5,
-		e->sectors[q->now.sectorno].floor});
-	if (raycast.x1 > 0 && raycast.x2 < W)
-	{
-		raycast.x = raycast.x1;
-		drawline.container = (void *)&raycast;
-		drawline.from = raycast.p.y1a;
-		drawline.to = raycast.p.y1b;
-		drawline.bottom = 0xFF;
-		drawline.middle = 0xFF;
-		drawline.top = 0xFF;
-		while (raycast.x < raycast.x2)
-		{
-			oline(drawline, env, sprite);
-			raycast.x++;
-		}
-	}
-}
-
-/*
-** Queue logic to render wall and add a new sector if it has a neighbour
-*/
-int			render_sector_edges(t_env *env, t_queue *q, int s)
-{
-	const t_vtx	*vertex = q->sect->vertex;
-	t_engine	*e;
-	t_raycast	ctn;
-	int			end;
-	int			start;
-
-	e = &env->engine;
-	if (transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]) == 0
-		|| ctn.x1 >= ctn.x2 || ctn.x2 < q->now.sx1 || ctn.x1 > q->now.sx2)
-		return (0);
-
-	/* get the neighbour of the current vertex if there*/
-	ctn.neighbor = q->sect->neighbors[s];
-
-	/* Get limits of ceil and floor of current sector */
-	acquire_limits(e, &ctn, (t_l_float){q->sect->ceil, q->sect->floor});
-
-	/* Render the wall. */
-	start = (int)fmax(ctn.x1, q->now.sx1);
-	end = (int)fmin(ctn.x2, q->now.sx2);
-
-	/* Start at x, clamped with screen*/
-	ctn.x = start;
-	ctn.li_sector = (t_l_int){e->sectors[q->now.sectorno].ceil,
-		e->sectors[q->now.sectorno].floor};
-	while (ctn.x <= end)
-	{
-		render_wall(env, ctn, &q->ytop[ctn.x], &q->ybottom[ctn.x]);
-		++ctn.x;
-	}
-	// render_perspective(env, &ctn);
-	schedule_queue(q, ctn, start, end);
-	return (1);
-}
-
 void		render_skybox(t_env *env, t_sector *skybox)
 {
 	const t_vtx	*vertex = skybox->vertex;
@@ -245,12 +134,8 @@ void		render_skybox(t_env *env, t_sector *skybox)
 
 void		dfs(t_env *env)
 {
-	t_wrap_sect	*current_obj;
 	t_queue		queue;
 	t_engine	*engine;
-	int			s;
-	int			ref;
-	const t_vtx		player = {env->engine.player.where.x, env->engine.player.where.y};
 
 	engine = &env->engine;
 	queue = engine->queue;
@@ -278,33 +163,7 @@ void		dfs(t_env *env)
 		queue.sect = &engine->sectors[queue.now.sectorno];
 
 		/* Render each wall of this sector that is facing towards player. */
-		s = -1;
-		while (++s < (int)queue.sect->npoints)
-		{
-			render_sector_edges(env, &queue, s);
-
-			// Render objects/bots sprites //
-			current_obj = engine->sectors[engine->player.sector].head_object;
-			while (current_obj)
-			{
-				if (!current_obj->is_picked)
-				{
-					current_obj->is_pickable = (dist_vertex(player, current_obj->vertex) < 5 && !current_obj->is_picked);
-					ref = current_obj->is_wpn ? current_obj->ref + WORLD_NB_CSMBLE + WORLD_NB_GEMS : current_obj->ref;
-					render_sprites(env, &queue, env->world.objects[ref].sprite, current_obj->vertex);
-					draw_pick_infos(env, current_obj, ref);
-				}
-				current_obj = current_obj->next;
-			}
-			t_wrap_enmy	*current_enmy;
-			current_enmy = engine->sectors[engine->player.sector].head_enemy;
-			while (current_enmy)
-			{
-				if (current_enmy->is_alive)
-					render_sprites(env, &queue, env->world.enemies[current_enmy->ref].sprite, current_enmy->where);
-				current_enmy = current_enmy->next;
-			}
-		} // for s in sector's edges
+		render_sector(env, &queue);
 		++queue.renderedsectors[queue.now.sectorno];
 	}
 }
