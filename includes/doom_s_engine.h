@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 15:03:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:05:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ struct						s_sector
 	t_vtx		*vertex;
 	signed char	*neighbors;
 	unsigned	npoints;
-	t_wrap_sect	*head_object;
 	int			nb_objects;
+	t_wrap_sect	*head_object;
+	t_wrap_enmy	*head_enemy;
 };
 
 struct						s_vision

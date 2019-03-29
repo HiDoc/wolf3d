@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:04:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 23:17:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
 			env->player.inventory.current->ammo_current = env->world.armory[obj->ref].ammo_curr_max;
 			env->player.inventory.current->ammo_magazine = env->world.armory[obj->ref].ammo_mag_max;
+			env->player.inventory.current->damage = env->world.armory[obj->ref].damage;
 		}
 		else
 			return (16);
@@ -63,7 +64,7 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		vertex.y = env->engine.player.where.y;
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 		vertex, wpn->current->ref, wpn->current->is_wpn);
-		*wpn = (t_wrap_wpn) {NULL, 0, 0};
+		*wpn = (t_wrap_wpn) {NULL, 0, 0, 0};
 		env->hud.inventory.nb_wpn--;
 	}
 	env->hud.is_txt = 17;

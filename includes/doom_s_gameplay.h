@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 13:42:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:06:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,58 +77,70 @@ struct						s_weapon
 
 struct						s_container
 {
-	t_surface		walls[30];
-	t_surface		floors[30];
-	t_surface		ceils[30];
-	SDL_Surface		*hud[NB_HUD_OBJ];
+	t_surface	walls[WORLD_NB_WALLS];
+	t_surface	floors[WORLD_NB_FLOORS];
+	t_surface	ceils[30];
+	t_surface	hud[NB_HUD_OBJ];
+	t_surface	poster[WORLD_NB_POSTERS];
 };
 
 struct						s_inventory
 {
-	t_wrap_wpn		*current;
-	t_wrap_wpn		weapons[WORLD_NB_WEAPONS];
-	t_wrap_inv		objects[6];
-	int				nb_current_obj;
+	t_wrap_wpn	*current;
+	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
+	t_wrap_inv	objects[6];
+	t_wrap_inv	gems[4];
+	int			nb_current_obj;
 };
 
 struct						s_actions
 {
-	t_edge			edge;
-    int         	is_shield;
-    int         	is_health;
-    int         	is_ammo;
-	int				is_running;
-	int				sub_action;
-	int				is_shooting;
-	int				is_loading;
-	int				is_flying;
-	int				mouse_state;
+	t_edge		edge;
+    int         is_shield;
+    int         is_health;
+    int         is_ammo;
+	int			is_running;
+	int			sub_action;
+	int			is_shooting;
+	int			is_loading;
+	int			is_flying;
+	int			is_superfast;
+	int			is_invulnerable;
+	int			is_invisible;
+	int			is_superstrong;
+	int			mouse_state;
 };
 
 struct						s_character
 {
-	int				health;
-	int				shield;
-	int				max_health;
-	int				max_shield;
-	int				max_weapons;
-	int				max_objects;
-	float			angle;
-	float			anglecos;
-	float			anglesin;
-	float			yaw;
-	float			eyeheight;
-	SDL_Surface		*sprite;
-	t_inventory		inventory;
-	t_actions		actions;
+	int			type;
+	long		ref;
+	int			tshoot_between;
+	int			salve_shoot;
+	int			tspeed;
+	int			damage;
+	int			health;
+	int			shield;
+	int			max_health;
+	int			max_shield;
+	int			max_weapons;
+	int			max_objects;
+	float		angle;
+	float		anglecos;
+	float		anglesin;
+	float		yaw;
+	float		eyeheight;
+	SDL_Surface	*sprite;
+	t_inventory	inventory;
+	t_actions	actions;
 };
 
 struct						s_world
 {
-	t_weapon		armory[WORLD_NB_WEAPONS];
-	t_object		objects[WORLD_NB_OBJECTS];
-	t_character		enemies[3];
-	t_container		surfaces;
+	t_weapon	armory[WORLD_NB_WEAPONS];
+	t_object	objects[WORLD_NB_OBJECTS];
+	t_character	enemies[1];
+	t_container	surfaces;
 };
 
 #endif

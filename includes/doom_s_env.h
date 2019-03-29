@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:20:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 12:11:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,17 @@ struct								s_msc
 	Mix_Music		*load;
 };
 
-struct s_time
+struct 								s_time
 {
 	int				fps;
 	Uint32			time_a;
 	Uint32			time_b;
 	int				frame;
 	int				tframe;
+	int				t_blue;
+	int				t_green;
+	int				t_red;
+	int				t_purple;
 };
 
 struct								s_tiletab
@@ -102,12 +106,6 @@ struct								s_env
 	t_engine		engine;
 	t_hud			hud;
 	t_stats			stats;
-
-	// font sgalasso, a ranger je sais pas ou
-	TTF_Font		*arial_font;
-
-	// tileset handler
-	t_tiletab		tiletab;
 };
 
 void			load_tilesets(t_env *env);
@@ -115,7 +113,6 @@ void			load_tilesets(t_env *env);
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));
 int				sdl_loop(t_env *env);
-int				init_container(t_env *env);
 
 SDL_Surface		*new_surface(char *filename);
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);

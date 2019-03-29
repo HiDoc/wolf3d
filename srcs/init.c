@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 15:32:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:40:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		initialisation_cursor(t_env *env)
 
 int		initialisation_sound_text(t_env *env)
 {
+	(void)env;
 	if (TTF_Init() < 0)
 	{
 		fprintf(stderr, "init TTF failed: %s\n", SDL_GetError());
@@ -33,12 +34,17 @@ int		initialisation_sound_text(t_env *env)
 	}
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096))
 		return (0);
-	if (!(env->arial_font = TTF_OpenFont("rsrc/font/Arial.ttf", 100)))
-	{
-		ft_putendl(TTF_GetError()); // provisoire
-		return (0);
-	}
 	return (1);
+}
+
+int		init_gameplay_env(t_env *env)
+{
+	return (init_fonts(&env->hud.text)
+	&& init_consumable(env)
+	&& init_character(&env->player)
+	&& set_simple_strings(env, 0, 0)
+	&& init_hud_blocs(env)
+	&& init_weapon(env));
 }
 
 int		initialisation_sdl(t_env *env)
@@ -66,9 +72,11 @@ int		initialisation_sdl(t_env *env)
 
 int		initialisation(t_env *env)
 {
-
 	initialisation_sdl(env);
 	initialisation_sound_text(env);
 	initialisation_cursor(env);
+	init_container(env);
+	init_gameplay_env(env);
+	init_skybox(env);
 	return (1);
 }
