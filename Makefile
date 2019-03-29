@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/29 15:32:44 by abaille          ###   ########.fr        #
+#    Updated: 2019/03/29 17:20:23 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,10 +72,11 @@ HED_NAME	= doom.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
-			loop_frames.c \
+			handle_weapon.c \
 			no_op.c \
 			queue.c \
 			sdl_hook.c \
+			init.c \
 			utils.c \
 			sdl_mouse.c \
 			musics.c \
@@ -131,7 +132,8 @@ SRC_NAME 	= main.c \
 			struct_font.c \
 			init_minimap.c \
 			init_enemies.c \
-			action_enemies.c
+			action_enemies.c \
+			init_skybox.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

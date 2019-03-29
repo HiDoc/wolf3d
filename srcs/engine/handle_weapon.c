@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_frames.c                                      :+:      :+:    :+:   */
+/*   handle_weapon.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:32:57 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 22:50:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 13:44:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	loop_frames(t_env *env, int *frame)
+int	handle_weapon(t_env *env, int *frame)
 {
-	t_bloc	*bloc;
+	t_bloc				*bloc;
+	t_actions			*actions;
+	const t_wrap_wpn	*curr = env->player.inventory.current;
 
-	if (env->player.inventory.current)
+	actions = &env->player.actions;
+	if (curr)
 	{
-		if (env->player.actions.is_loading)
+		if (actions->is_loading)
 		{
-			if (env->player.actions.is_shooting)
-			{
-				*frame = 0;
-				env->player.actions.is_shooting = 0;
-			}
+			actions->is_shooting = !actions->is_shooting;
 			put_gun_load(env, *frame);
 			++(*frame);
 		}
-		else if (env->player.actions.is_shooting)
+		else if (actions->is_shooting)
 		{
 			put_gun_shoot(env, *frame);
 			++(*frame);
 		}
-		else
+		else if (curr)
 		{
-			if (env->player.inventory.current)
-			{
-				bloc = &env->world.armory[env->player.inventory.current->current->ref].sprite;
-				put_gun(env, bloc->sprite, bloc);
-			}
+			bloc = &env->world.armory[curr->current->ref].sprite;
+			put_gun(env, bloc);
 			*frame = 0;
 		}
 	}

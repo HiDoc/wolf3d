@@ -6,15 +6,15 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 15:31:17 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 18:32:15 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_MATH_H
 # define DOOM_F_MATH_H
 
-SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-                SDL_Surface *dst, t_vtx origin, t_env *env);
+SDL_Surface	*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
+            SDL_Surface *dst, t_vtx origin, t_env *env);
 
 float		pointside(t_vtx p, t_vtx v0, t_vtx v1);
 float		cross_product(t_vtx v1, t_vtx v2);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 15:35:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:06:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ typedef struct s_character	t_character;
 
 struct						s_object
 {
-	SDL_Surface	*sprite;
-
-	int			nb_use;
-	int			max_stack;
-	int			ref;
-	int			sectorno;
-	t_vtx		vertex;
+	SDL_Surface		*sprite;
+	int				nb_use;
+	int				max_stack;
+	int				ref;
+	int				sectorno;
+	t_vtx			vertex;
 };
 
 /*
@@ -58,26 +57,22 @@ struct						s_object
 */
 struct						s_weapon
 {
-	t_bloc				sprite;
-	t_bloc				sprite_bullet;
-	t_bloc				*sprite_reload;
-	t_bloc				*sprite_shoot;
-	// SDL_Surface			*sprite;
-	// SDL_Surface			*sprite_bullet;
-	// SDL_Surface			**sprite_reload;
-	// SDL_Surface			**sprite_shoot;
-	long				ref;
-	int					type;
-	int					time_reload;
-	int					time_shoot;
-	double				time_shoot_between;
-	int					ammo_current;
-	int					ammo_curr_max;
-	int					ammo_magazine;
-	int					ammo_mag_max;
-	int					ammo_max;
-	int					damage;
-	Mix_Chunk			*shot;
+	t_bloc			sprite;
+	t_bloc			sprite_bullet;
+	t_bloc			*sprite_reload;
+	t_bloc			*sprite_shoot;
+	long			ref;
+	int				type;
+	int				time_reload;
+	int				time_shoot;
+	double			time_shoot_between;
+	int				ammo_current;
+	int				ammo_curr_max;
+	int				ammo_magazine;
+	int				ammo_mag_max;
+	int				ammo_max;
+	int				damage;
+	Mix_Chunk		*shot;
 };
 
 struct						s_container

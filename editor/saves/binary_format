@@ -1,0 +1,90 @@
+# filesize w,h
+
+# ------------------------------------------------------------------------------
+
+## LEVEL_NAME       ############################################################
+# nb vertex
+
+# vertex x,y
+
+# nb sectors
+
+# sector ceil,floor,vertex,v1,v2...,neighbours,n1,n2...
+
+# nb objects
+
+# object x,y,ref
+
+# nb prefabs
+
+# prefab x,y,ref
+
+# nb ennemies
+
+# ennemy spawn,x,y,z,type
+
+# player spawm,interest
+
+## LEVEL_NAME       ############################################################
+# nb vertex
+
+# vertex x,y
+
+# nb sectors
+
+# sector ceil,floor,vertex,v1,v2...,neighbours,n1,n2...
+
+# nb objects
+
+# object x,y,ref
+
+# nb prefabs
+
+# prefab x,y,ref
+
+# nb ennemies
+
+# ennemy spawn,x,y,z,type
+
+# player spawm,interest
+
+# ------------------------------------------------------------------------------
+
+## IMAGE CATEGORY   ############################################################
+
+# label
+# tga image
+
+# label
+# tga image
+
+## IMAGE CATEGORY   ############################################################
+
+# label
+# tga image
+
+# ------------------------------------------------------------------------------
+
+## AUDIO CATEGORY   ############################################################
+
+# label
+# wav audio
+
+## AUDIO CATEGORY   ############################################################
+
+# label
+# wav audio
+
+# ------------------------------------------------------------------------------
+
+## FONT CATEGORY   #############################################################
+
+# label
+# ttf font
+
+## FONT CATEGORY   #############################################################
+
+# label
+# ttf font
+
+# ------------------------------------------------------------------------------

@@ -6,12 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 19:10:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:05:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_ENGINE_H
 # define DOOM_F_ENGINE_H
+
+void        init_skybox(t_env *env);
 
 void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
@@ -60,5 +62,7 @@ t_scaler	scaler_init(int a, int b, int c, int d, int f);
 int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
-void		acquire_limits(t_engine *e, t_sector *sect, t_raycast *ctn);
+void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
+
+int 		initialisation(t_env *env);
 #endif

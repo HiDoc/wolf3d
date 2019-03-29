@@ -6,46 +6,86 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/15 18:10:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/26 15:44:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDITOR_STRUCT_H
 # define EDITOR_STRUCT_H
 
+enum					e_type
+{
+	INPUT,
+	BUTTON
+};
+
+/*
+** M_ : MENU
+** E_ : EDITOR
+** _I : INPUT
+** _B : BUTTON
+*/
+
+enum					e_elements
+{
+	M_I_NEW,
+	M_B_START,
+	M_B_CANCEL,
+	M_B_EXIT,
+	M_B_UP,
+	M_B_DOWN,
+	E_B_NEW,
+	E_B_UPLOAD,
+	E_B_SAVE,
+};
+
 typedef struct  s_vtx   t_vtx;
 typedef struct  s_sct   t_sct;
+typedef struct	s_elem	t_elem;
 typedef struct	s_menu	t_menu;
 typedef struct  s_env   t_env;
 
 struct					s_vtx
 {
-	t_pos		pos;
-	t_vtx		*next;
+	t_pos			pos;
+	t_vtx			*next;
 };
 
 struct					s_sct
 {
-	t_vtx		*vtx_current;
-	t_vtx		*vtx_start;
-	t_vtx		*vtx_end;
+	t_vtx			*vtx_current;
+	t_vtx			*vtx_start;
+	t_vtx			*vtx_end;
 
-	int			close;		// is sector close;
+	int				close;		// is sector close;
 
-	float		xmin;
-	float		xmax;
-	float		ymin;
-	float		ymax;
+	float			xmin;
+	float			xmax;
+	float			ymin;
+	float			ymax;
 
-	Uint32		color;
+	Uint32			color;
 
-	t_sct		*next;
+	t_sct			*next;
+};
+
+struct					s_elem
+{
+	int				id;
+	int				type;
+	t_rect			rect;
+	char			*str;			// if type == input
+	int				str_max;		// if type == input
+	int				clicked;
+	int				hovered;
+	t_elem			*next;
 };
 
 struct					s_menu
 {
 	int				state;
 	int				nb_maps;
+	int				idx_map;
 	char			**maps;
 	SDL_Surface		*background;
 };
@@ -58,7 +98,7 @@ struct					s_env
 
 	char			*map_name;
 
-	// sectors
+	// lst sectors
 	t_sct			*sct_current;
 	t_sct			*sct_start;
 	t_sct			*sct_end;
@@ -77,7 +117,9 @@ struct					s_env
 
 	// mouse handling
 	int				mouse_mode;
-	SDL_Surface		*draw_cursor;
+
+	// lst elements
+	t_elem			*elements;
 };
 
 #endif

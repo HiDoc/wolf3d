@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 12:47:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:10:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,12 @@ int		init_weapon(t_env *env)
 	env->world.armory[0].ref = 0xa2a0601042a2;
 	env->world.armory[1].ref = 0xa2a020105123;
 	env->world.armory[2].ref = 0xa8e2000042a4;
-	if (weapon_set(&env->world.armory[0], "weapons/magnum", 56)
-	&& weapon_set(&env->world.armory[1], "weapons/pompe", 100)
-	&& weapon_set(&env->world.armory[2], "weapons/rifle", 30))
-		return (1);
-	return (0);
+	printf("time weapon: %u\n", SDL_GetTicks());
+	weapon_set(&env->world.armory[0], "weapons/magnum", 56);
+	printf("time weapon: %u\n", SDL_GetTicks());
+	weapon_set(&env->world.armory[1], "weapons/pompe", 100);
+	printf("time weapon: %u\n", SDL_GetTicks());
+	weapon_set(&env->world.armory[2], "weapons/rifle", 30);
+	printf("time weapon: %u\n", SDL_GetTicks());
+	return (1);
 }

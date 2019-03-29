@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 17:34:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:10:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ int	init_consumable(t_env *env)
 		}
 		i++;
 	}
-	return (init_inventory(env));
+	env->hud.inventory.is_active = 0;
+	ft_bzero(&env->player.inventory, sizeof(t_inventory));
+	printf("time consumable: %u\n", SDL_GetTicks());
+	return (1);
 }
