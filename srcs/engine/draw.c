@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:01:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:23:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,23 +130,19 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	}
 }
 
-static void	render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
+static void		render_sprites(t_env *env, t_queue *q, SDL_Surface *sprite, t_vtx vertex)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
-	const t_vtx		player = {p.where.x, p.where.y};
 	t_drawline		drawline;
 	t_raycast		raycast;
 	t_edge			edge;
-	int				ref;
 
 	ft_bzero(&drawline, sizeof(t_drawline));
 	edge = (t_edge){
-		(t_vtx){obj->vertex.x - p.anglesin, obj->vertex.y + p.anglecos},
-		(t_vtx){obj->vertex.x + p.anglesin, obj->vertex.y - p.anglecos}
+		(t_vtx){vertex.x - p.anglesin, vertex.y + p.anglecos},
+		(t_vtx){vertex.x + p.anglesin, vertex.y - p.anglecos}
 	};
-		// if distance < value && obj not already picked, object is pickable
-	obj->is_pickable = (dist_vertex(player, obj->vertex) < 5 && !obj->is_picked);
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
 	raycast.neighbor = -1;
@@ -156,7 +152,6 @@ static void	render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		e->sectors[q->now.sectorno].floor});
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
-		ref = obj->is_wpn ? obj->ref + 6 : obj->ref;
 		raycast.x = raycast.x1;
 		drawline.container = (void *)&raycast;
 		drawline.from = raycast.p.y1a;
@@ -166,7 +161,7 @@ static void	render_sprites(t_env *env, t_queue *q, t_wrap_sect *obj)
 		drawline.top = 0xFF;
 		while (raycast.x < raycast.x2)
 		{
-			oline(drawline, env, env->world.objects[ref].sprite);
+			oline(drawline, env, sprite);
 			raycast.x++;
 		}
 	}
@@ -254,6 +249,8 @@ void		dfs(t_env *env)
 	t_queue		queue;
 	t_engine	*engine;
 	int			s;
+	int			ref;
+	const t_vtx		player = {env->engine.player.where.x, env->engine.player.where.y};
 
 	engine = &env->engine;
 	queue = engine->queue;
@@ -291,8 +288,21 @@ void		dfs(t_env *env)
 			while (current_obj)
 			{
 				if (!current_obj->is_picked)
-					render_sprites(env, &queue, current_obj);
+				{
+					current_obj->is_pickable = (dist_vertex(player, current_obj->vertex) < 5 && !current_obj->is_picked);
+					ref = current_obj->is_wpn ? current_obj->ref + WORLD_NB_CSMBLE + WORLD_NB_GEMS : current_obj->ref;
+					render_sprites(env, &queue, env->world.objects[ref].sprite, current_obj->vertex);
+					draw_pick_infos(env, current_obj, ref);
+				}
 				current_obj = current_obj->next;
+			}
+			t_wrap_enmy	*current_enmy;
+			current_enmy = engine->sectors[engine->player.sector].head_enemy;
+			while (current_enmy)
+			{
+				if (current_enmy->is_alive)
+					render_sprites(env, &queue, env->world.enemies[current_enmy->ref].sprite, current_enmy->where);
+				current_enmy = current_enmy->next;
 			}
 		} // for s in sector's edges
 		++queue.renderedsectors[queue.now.sectorno];

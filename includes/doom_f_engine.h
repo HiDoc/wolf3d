@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 15:31:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:05:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void		render_nceil(t_drawline line, t_env *env);
 
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
-int         init_hud(t_env *env);
-// int         init_inventory_ui(t_env *env, char *res);
+int			init_pack_img(t_surface **pack, char *name, int limit);
+int			init_container(t_env *env);
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);
 int         init_consumable(t_env *env);

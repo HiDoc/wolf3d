@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/26 12:00:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/28 13:43:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,14 @@
 ** World related constants
 */
 # define WORLD_NB_WEAPONS	3
-# define WORLD_NB_OBJECTS	9
+# define WORLD_NB_OBJECTS	13
+# define WORLD_NB_GEMS		4
 # define WORLD_NB_CSMBLE	6
 # define WORLD_NB_SURFACE	15
+# define WORLD_NB_POSTERS	10
+# define WORLD_NB_WALLS		5
+# define WORLD_NB_FLOORS	4
+# define WORLD_NB_ENEMIES	1
 
 /*
 ** Colors
