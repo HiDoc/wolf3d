@@ -1,6 +1,6 @@
 #include "doom.h"
 
-void			LoadData(t_engine *e, t_env *env)
+void			load_map(t_engine *e, t_env *env)
 {
 	FILE		*fp;
 	char	Buf[256];
@@ -79,4 +79,6 @@ void			LoadData(t_engine *e, t_env *env)
 		return;
 	fclose(fp);
 	free(vert);
+	verify_map(e);
+	init_minimap(env);
 }

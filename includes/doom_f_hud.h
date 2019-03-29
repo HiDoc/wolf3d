@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_hud.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 16:40:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:10:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
 int 		init_hud_container(t_env *env);
+int			init_gameplay_env(t_env *env);
 int         print_hud(t_env *env);
 int			print_inventory(t_env *env);
 

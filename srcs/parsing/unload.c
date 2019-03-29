@@ -102,12 +102,14 @@ void		free_ui(t_env *env)
 	free_surface_string(&env->hud.text);
 }
 
-void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *window, t_engine *e)
+void		free_env(t_env *env)
 {
 	unsigned	a;
+	t_engine	*e;
 	t_wrap_sect	*b;
 
 	a = 0;
+	e = &env->engine;
 	while (a < e->nsectors)
 	{
 		free(e->sectors[a].vertex);
@@ -125,10 +127,14 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *windo
 	free(e->sectors);
 	e->sectors = NULL;
 	e->nsectors = 0;
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	texture = NULL;
-	window = NULL;
-	renderer = NULL;
+	SDL_DestroyTexture(env->sdl.texture);
+	SDL_DestroyRenderer(env->sdl.renderer);
+	SDL_DestroyWindow(env->sdl.window);
+	env->sdl.texture = NULL;
+	env->sdl.window = NULL;
+	env->sdl.renderer = NULL;
+	free_ui(env);
+	Mix_CloseAudio();
+	TTF_Quit();
+	SDL_Quit();
 }

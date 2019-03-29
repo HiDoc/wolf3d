@@ -6,11 +6,17 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 15:32:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:27:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "doom.h"
+
+void	init_floor(t_env *env)
+{
+	env->world.surfaces.floors[0].sprite = new_surface("floor/01");
+	env->world.enemies[0].sprite = new_surface("enemies/enemy");
+}
 
 int		initialisation_cursor(t_env *env)
 {
@@ -41,6 +47,16 @@ int		initialisation_sound_text(t_env *env)
 	return (1);
 }
 
+int		init_gameplay_env(t_env *env)
+{
+	return (init_fonts(&env->hud.text)
+	&& init_consumable(env)
+	&& init_character(&env->player)
+	&& set_simple_strings(env, 0, 0)
+	&& init_hud_container(env)
+	&& init_weapon(env));
+}
+
 int		initialisation_sdl(t_env *env)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
@@ -66,9 +82,12 @@ int		initialisation_sdl(t_env *env)
 
 int		initialisation(t_env *env)
 {
-
 	initialisation_sdl(env);
 	initialisation_sound_text(env);
 	initialisation_cursor(env);
+	init_gameplay_env(env);
+	init_floor(env);
+	init_skybox(env);
+	init_container(env);
 	return (1);
 }
