@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 20:55:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 11:37:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,27 @@ int	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 	return (1);
 }
 
+int	print_cross(t_env *env)
+{
+	Uint32	*dst;
+	int		x;
+	int		y;
+
+	dst = (Uint32*)env->sdl.surface->pixels;
+	x = 0;
+	while (x < 20)
+	{
+		y = 0;
+		while (y < 20)
+		{
+			dst[env->sdl.surface->w * (y + env->sdl.surface->h / 2 - 10) + (x + env->sdl.surface->w / 2 - 10)] = 0xBB4EFF;
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
+
 int print_hud(t_env *env)
 {
 	int		h;
@@ -97,5 +118,6 @@ int print_hud(t_env *env)
 	draw_hp_bars(env, &env->hud.bar[0], env->player.max_health, env->player.health);
 	draw_hp_bars(env, &env->hud.bar[1], env->player.max_shield, env->player.shield);
 	print_pad(env);
+	print_cross(env);
 	return (1);
 }

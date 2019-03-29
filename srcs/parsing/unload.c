@@ -148,6 +148,7 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *windo
 {
 	unsigned	a;
 	t_wrap_sect	*b;
+	t_wrap_enmy	*en;
 
 	a = 0;
 	while (a < e->nsectors)
@@ -160,6 +161,13 @@ void		UnloadData(SDL_Texture *texture, SDL_Renderer *renderer, SDL_Window *windo
 			e->sectors[a].head_object = b->next;
 			free(b);
 			b = e->sectors[a].head_object;
+		}
+		en = e->sectors[a].head_enemy;
+		while (en != NULL)
+		{
+			e->sectors[a].head_enemy = en->next;
+			free(b);
+			en = e->sectors[a].head_enemy;
 		}
 		a++;
 	}

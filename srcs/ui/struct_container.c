@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 17:07:40 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 12:38:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 15:00:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		init_hud(t_container *surface)
 	return (1);
 }
 
-int		init_enemies(t_world *container)
+int		load_enemies(t_world *container)
 {
 	int	i;
 
@@ -122,5 +122,5 @@ int		init_container(t_env *env)
 	&& init_floors(surface)
 	&& init_posters(surface)
 	&& init_hud(surface)
-	&& init_enemies(&env->world));
+	&& load_enemies(&env->world));
 }

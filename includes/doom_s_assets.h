@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_assets.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:42:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/03 18:14:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 11:58:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ struct						s_surface
 {
 	SDL_Surface	*sprite;
 	int			health;
+	int			shield;
 	int			height;
+	int			damage;
 	int			width;
 	double		angle;
 };

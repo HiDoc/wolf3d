@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 22:51:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 15:35:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ struct						s_weapon
 struct						s_container
 {
 	t_surface	walls[WORLD_NB_WALLS];
-	t_surface	floors[30];
+	t_surface	floors[WORLD_NB_FLOORS];
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
@@ -118,6 +118,12 @@ struct						s_actions
 
 struct						s_character
 {
+	int			type;
+	long		ref;
+	int			tshoot_between;
+	int			salve_shoot;
+	int			tspeed;
+	int			damage;
 	int			health;
 	int			shield;
 	int			max_health;
@@ -138,7 +144,7 @@ struct						s_world
 {
 	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
-	t_character	enemies[3];
+	t_character	enemies[1];
 	t_container	surfaces;
 };
 

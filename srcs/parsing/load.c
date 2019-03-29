@@ -48,6 +48,7 @@ void			LoadData(t_engine *e, t_env *env)
 				sect->neighbors = malloc(m * sizeof(*sect->neighbors));
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
 				sect->head_object = NULL;
+				sect->head_enemy = NULL;
 				for (n=0; n<m; ++n)
 				{
 					sect->neighbors[n] = num[m + n];
@@ -66,6 +67,10 @@ void			LoadData(t_engine *e, t_env *env)
 				int		is_wpn = 0;
 				sscanf(ptr += n, "%f %f %d %d %d%n", &vertex.x, &vertex.y, &s, &ref, &is_wpn, &n);
 				fill_objects_sector(&e->sectors[s], vertex, ref, is_wpn);
+				break;
+			case 'e':; // enemy
+				sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);
+				fill_enemies_sector(env, &e->sectors[s], vertex, ref);
 				break;
 			case 'p':; // player
 				float angle;
