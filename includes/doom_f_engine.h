@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 17:05:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 18:25:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ int     	verify_hull(t_engine *engine);
 void		print_sect(t_sector *sect);
 
 void		vline(t_drawline line, t_env *env);
+void		oline(t_drawline l, t_env *env, SDL_Surface *sprite);
 void		render_cwall(t_drawline line, t_env *env);
 void		render_nwall(t_drawline line, t_env *env);
 void		render_floor(t_drawline line, t_env *env);
 void		render_nfloor(t_drawline line, t_env *env);
 void		render_ceil(t_drawline line, t_env *env);
 void		render_nceil(t_drawline line, t_env *env);
-
+void		render_sector(t_env *env, t_queue *queue);
+void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybot);
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
 int			init_pack_img(t_surface **pack, char *name, int limit);
