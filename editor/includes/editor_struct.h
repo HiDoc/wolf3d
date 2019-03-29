@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 22:14:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 14:10:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ enum					e_elements
 	M_B_DOWN,
 	E_B_NEW,
 	E_B_UPLOAD,
-	E_B_SAVE/*,
+	E_B_SAVE,
+	E_B_MODE_SELECT,
+	E_B_MODE_DRAW,
+	E_B_MODE_ELEM/*,
 	E_B_UP,
 	E_B_DOWN*/
 };

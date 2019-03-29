@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/28 20:46:12 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/03/29 14:21:40 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,8 @@ SRC_NAME 	=	main.c \
 				display_drawing.c \
 				menu_events.c \
 				get_element.c \
+				elem_mode.c \
+				display_element.c \
 				#export_map.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)

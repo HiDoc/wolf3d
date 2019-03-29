@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 20:47:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 14:21:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		editor(t_env *env);
 void		display_interface(t_env *env);
 void		display_selection(t_env *env);
 void		display_drawing(t_env *env);
+void		display_element(t_env *env);
 
 /*
 **	events/
@@ -58,6 +59,7 @@ int	        menu_events(t_env *env);
 int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
 int			select_mode(t_env *env);
+int			elem_mode(t_env *env);
 t_vtx		*target_vertex(t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 int			vertex_in_sector(t_sct *sector, t_pos pos, t_env *env);

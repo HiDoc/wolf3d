@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 21:32:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 14:11:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,15 @@ static void		init_elems(t_env *env)
 	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 +	60,
 	20, 20, C_WHITE};
 	create_element(M_B_DOWN, BUTTON, rect, env);
+
+	rect = (t_rect){600, 20, 40, 40, 0xFFFFFFFF};
+	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
+
+	rect = (t_rect){650, 20, 40, 40, 0xffffffff};
+	create_element(E_B_MODE_DRAW, BUTTON, rect, env);
+
+	rect = (t_rect){700, 20, 40, 40, 0xffffffff};
+	create_element(E_B_MODE_ELEM, BUTTON, rect, env);
 }
 
 static void		init_menu(t_env *env)
