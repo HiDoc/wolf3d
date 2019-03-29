@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 12:11:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:46:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ struct								s_env
 	t_engine		engine;
 	t_hud			hud;
 	t_stats			stats;
+	t_tiletab		tiletab;
+	// ...
 };
 
 void			load_tilesets(t_env *env);
