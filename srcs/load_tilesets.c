@@ -6,26 +6,26 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 17:23:20 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/28 18:38:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:28:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-SDL_Surface		*tile_blit(t_tiletab *tiletab, int index, t_env *env)
+SDL_Surface		*tile_blit(t_tiletab *tiletab, int index)
 {
 	SDL_Surface		*surface;
 	SDL_Rect		srcrect;
 
 	srcrect = (SDL_Rect){
 	index % tiletab->tile_size, index % tiletab->nb_column,
-	if (!(surface = ui_make_surface(tiletab->tile_size, tiletab->tilesize)))
+	tiletab->tile_size, tiletab->tile_size};
+	if (!(surface = ui_make_surface(tiletab->tile_size, tiletab->tile_size)))
 	{
 		printf("Doom_nukem: tile_blit error\n");
 		exit(EXIT_FAILURE); // recup error
 	}
-	tiletab->tile_size, tiletab->tile_size};
-	if ((SDL_BlitScaled(surface, srcrect, tiletab->tileset, 0)) < 0)
+	if ((SDL_BlitScaled(surface, &srcrect, tiletab->tileset, 0)) < 0)
 	{
 		printf("Doom_nukem: tile_blit error\n");
 		exit(EXIT_FAILURE); // recup error
@@ -39,7 +39,7 @@ SDL_Surface		*tile_blit(t_tiletab *tiletab, int index, t_env *env)
 ** nb		: nb of tiles
 ** size		: w/h of a tile
 */
-void			parse_tileset(t_tiletab *tiletab, t_env *env)
+void			parse_tileset(t_tiletab *tiletab)
 {
 	int				i;
 
@@ -57,13 +57,13 @@ void			parse_tileset(t_tiletab *tiletab, t_env *env)
 	}
 	while (i < tiletab->nb_tiles)
 	{
-		tiletab->surface[i] = tile_blit(tiletab, i, env);
+		tiletab->surface[i] = tile_blit(tiletab, i);
 		i++;
 	}
 }
 
 void		load_tilesets(t_env *env)
 {
-	env->tiletab (t_tiletab){"rsrc/tileset", 0, 23, 20, 32, 0};
-	parse_tileset(&tiletab, env);
+	env->tiletab = (t_tiletab){"rsrc/tilesets/tileset.png", 0, 23, 20, 32, 0};
+	parse_tileset(&(env->tiletab));
 }
