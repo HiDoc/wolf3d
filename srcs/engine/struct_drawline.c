@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 15:15:18 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 16:37:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,9 @@ void				render_cwall(t_drawline l, t_env *env)
 
 void				render_ceil(t_drawline l, t_env *env)
 {
-	vline(l, env);
+	(void)env;
+	(void)l;
+	// vline(l, env);
 }
 
 void				render_floor(t_drawline l, t_env *env)

@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/22 15:24:36 by fmadura          ###   ########.fr        #
+#    Updated: 2019/03/28 15:31:04 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
 CELLAR		= /Users/$(ID_UN)/.brew/Cellar
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/
@@ -72,10 +72,11 @@ HED_NAME	= doom.h \
 SRC_NAME 	= main.c \
 			load.c \
 			loop.c \
-			loop_frames.c \
+			handle_weapon.c \
 			no_op.c \
 			queue.c \
 			sdl_hook.c \
+			init.c \
 			utils.c \
 			sdl_mouse.c \
 			musics.c \
@@ -99,9 +100,9 @@ SRC_NAME 	= main.c \
 			projection.c \
 			checking.c \
 			unload.c \
-			struct_img.c \
-			utils_img.c \
 			struct_character.c \
+			struct_hud_img.c \
+			utils_hud_img.c \
 			struct_object.c \
 			parse_objects.c \
 			action_object.c \
@@ -111,10 +112,9 @@ SRC_NAME 	= main.c \
 			action_inventory.c \
 			draw_inventory.c \
 			weapons_inventory.c \
-			utils_draw_inventory.c \
 			struct_weapon.c \
 			utils_weapons.c \
-			utils_ui.c \
+			hud_data.c \
 			struct_hud.c \
 			draw_hud.c 	\
 			utils_color.c \
@@ -127,7 +127,9 @@ SRC_NAME 	= main.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_string.c \
+			struct_font.c \
 			init_minimap.c \
+			init_skybox.c \
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \

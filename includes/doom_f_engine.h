@@ -6,12 +6,14 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/24 16:37:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/28 15:31:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_ENGINE_H
 # define DOOM_F_ENGINE_H
+
+void        init_skybox(t_env *env);
 
 void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
@@ -32,7 +34,7 @@ t_edge		translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge  	rotation_edge(t_edge v, float pcos, float psin);
 t_edge 		scale_edge(t_edge to_scale);
 void		clip_view(t_raycast *ctn);
-int			ini_queue(t_engine *engine, t_queue *queue);
+int			ini_queue(t_queue *queue, unsigned size);
 int     	verify_map(t_engine *engine);
 int     	verify_hull(t_engine *engine);
 void		print_sect(t_sector *sect);
@@ -47,11 +49,11 @@ void		render_nceil(t_drawline line, t_env *env);
 
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
-int         init_hud(t_env *env, char *res);
-int         init_inventory_ui(t_env *env, char *res);
+int         init_hud(t_env *env);
+// int         init_inventory_ui(t_env *env, char *res);
 int         init_character(t_character *new);
-int		    init_weapon(t_env *env, char *res);
-int         init_consumable(t_env *env, char *res);
+int		    init_weapon(t_env *env);
+int         init_consumable(t_env *env);
 t_sector	*pick_sector(t_env *env, unsigned sector);
 void		print_sct(t_env *env);
 void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
@@ -60,5 +62,7 @@ t_scaler	scaler_init(int a, int b, int c, int d, int f);
 int			scaler_next(t_scaler *i);
 t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
-void		acquire_limits(t_engine *e, t_sector *sect, t_raycast *ctn);
+void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
+
+int 		initialisation(t_env *env);
 #endif

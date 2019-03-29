@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_env.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/20 15:09:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/27 00:22:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@ typedef struct s_env				t_env;
 typedef struct s_sdl				t_sdl;
 typedef struct s_msc				t_msc;
 typedef struct s_time				t_time;
+typedef struct s_stats				t_stats;
+
+struct 								s_stats
+{
+	int				k_enemies;
+	int				k_boss;
+	int				k_magnum;
+	int				k_shotgun;
+	int				k_rifle;
+	int				headshot;
+	int				time_play;
+	int				death;
+	t_bloc			achievments[8];
+};
 
 struct								s_sdl
 {
@@ -41,7 +55,6 @@ struct s_time
 	int				tframe;
 };
 
-
 struct								s_env
 {
 	int				map_w;
@@ -52,6 +65,8 @@ struct								s_env
 	t_world			world;
 	t_sdl			sdl;
 	t_engine		engine;
+	t_hud			hud;
+	t_stats			stats;
 
 	// font sgalasso, a ranger je sais pas ou
 	TTF_Font		*arial_font;

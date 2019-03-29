@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/19 22:57:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/26 12:00:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 */
 
 # define W_TEXTURE		256
-# define W				800
-# define H				600
+# define W				1200
+# define H				800
 
 /*
 ** FPS frames
@@ -48,10 +48,10 @@
 /*
 ** Define visions constants
 */
-# define EYEHEIGHT		6
-# define DUCKHEIGHT		2.5
+# define EYEHEIGHT		8
+# define DUCKHEIGHT		3
 # define HEADMARGIN		1
-# define KNEEHEIGHT		2
+# define KNEEHEIGHT		3
 # define NEARZ			1e-4f
 # define NEARSIDE		1e-5f
 # define FARZ			5
@@ -60,8 +60,8 @@
 /*
 ** Movement
 */
-# define SPEED_WALK 0.2f
-# define SPEED_RUN	0.4f
+# define SPEED_WALK 0.4f
+# define SPEED_RUN	0.8f
 
 /*
 ** Field of view
@@ -72,17 +72,10 @@
 /*
 ** World related constants
 */
-# define WORLD_NB_WEAPONS 3
-# define WORLD_NB_OBJECTS 6
-# define WORLD_NB_SURFACE 15
-
-/*
-** Ui put string
-*/
-
-#define F_DOOM "rsrc/font/AmazDooMLeft2.ttf"
-#define F_TEXT "rsrc/font/interbureau.ttf"
-#define F_NUMB "rsrc/font/5E.ttf"
+# define WORLD_NB_WEAPONS	3
+# define WORLD_NB_OBJECTS	9
+# define WORLD_NB_CSMBLE	6
+# define WORLD_NB_SURFACE	15
 
 /*
 ** Colors
@@ -93,5 +86,12 @@
 #define BLUE		(SDL_Color){8, 8, 255, 0}
 #define	GOLD		(SDL_Color){242, 204, 42, 255}
 #define TRANSPARENT	(SDL_Color){0, 0, 0, 0}
+
+/*
+** Sounds
+*/
+# define SHOT_MAGNUM "rsrc/sound/shot/magnum.wav"
+# define SHOT_SHOTGUN "rsrc/sound/shot/shotgun.wav"
+# define SHOT_RIFLE "rsrc/sound/shot/rifle.wav"
 
 #endif
