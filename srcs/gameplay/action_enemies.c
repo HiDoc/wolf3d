@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/30 14:17:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 16:53:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,21 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 		enemy->has_detected = (dist_vertex(player, enemy->where) < 200
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
 		enemy->close_seen = (dist_vertex(player, enemy->where) < 100);
-		if (enemy->is_alerted)
+		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
 		{
-			printf("alerted %i \n", enemy->is_alerted);
-
+			enemy->is_shooting = enemy->has_detected || enemy->close_seen;
+			if (dist_vertex(player, enemy->where) > 50)
+			{
+				enemy->where.x -= env->engine.player.velocity.x;
+				enemy->where.y -= env->engine.player.velocity.y;
+				printf("shooting %i \n", enemy->is_shooting);
+			}
 		}
-		if (enemy->has_detected)
+		else
 		{
-			printf("detected %i \n", enemy->has_detected);
-			// enemy->where = diff_vertex(enemy->origin, player);
-			// printf("enemy where %f, %f\n", enemy->where.x, enemy->where.y);
-
+			enemy->where = enemy->origin;
 		}
-		if (enemy->close_seen)
-			printf("close\n");
-		// printf("angle cos : %f\n", env->engine.player.anglecos);
-		// printf("angle sin : %f\n", env->engine.player.anglesin);
-		// printf("yaw : %f\n", env->engine.player.yaw);
-		// system("clear");
+
 	}
 }
 // void			handle_bots(t_env *env, t_vtx player, t_wrap_enmy *enemy)

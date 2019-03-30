@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 14:16:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 16:30:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ struct 					s_wrap_enmy
 	int				close_seen;
 	int				is_shooting;
 	int				frame;
+	t_vtx			origin;
 	t_vtx			where;
 	t_vtx			whereto;
+	t_vtx			velocity;
 	t_wrap_enmy		*next;
 };
 

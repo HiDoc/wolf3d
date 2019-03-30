@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 16:34:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 16:33:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 	ft_bzero(new, sizeof(new));
 	renemy = &env->world.enemies[ref];
 	new->where = v;
+	new->origin = v;
+	new->velocity = (t_vtx){0, 0};
 	new->ref = ref;
 	new->health = renemy->health;
 	new->shield = renemy->shield;
