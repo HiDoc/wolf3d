@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 12:45:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 16:25:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ enum					e_type
 ** E_ : EDITOR
 ** _I : INPUT
 ** _B : BUTTON
+** _ELM_ : 
 */
 
 enum					e_elements
@@ -39,7 +40,15 @@ enum					e_elements
 	E_B_SAVE,
 	E_B_MODE_SELECT,
 	E_B_MODE_DRAW,
-	E_B_MODE_ELEM/*,
+	E_B_MODE_ELEM,
+	E_B_PLAY,
+	E_B_ELM_UP,
+	E_B_ELM_DOWN,
+	E_B_ELM_OBWL,
+	E_B_ELM_CONS,
+	E_B_ELM_NTTY,
+	E_B_ELM_PRFB,
+	E_B_ELM_SPEC/*,
 	E_B_UP,
 	E_B_DOWN*/
 };
@@ -133,9 +142,20 @@ struct					s_env
 
 	// mouse handling
 	int				mouse_mode; // 0 : selection / 1 : draw
+	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// lst elements
 	t_elem			*elements;
+	// lst wall_objects
+	char			**wall_objects;
+	// lst consumables
+	char			**consumables;
+	// lst entities
+	char			**entities;
+	// lst prefabs
+	char			**prefabs;
+	// lst specials
+	char			**specials;
 };
 
 #endif

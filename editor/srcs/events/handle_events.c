@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 12:52:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 16:37:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int		handle_events(t_env *env)
 				return (select_mode(env));
 			else if (env->mouse_mode == 1)
 				return (draw_mode(env));
-			else if (env->mouse_mode == 2)
-				return (elem_mode(env));
 		}
+		else if (env->mouse_mode == 2)
+			return (elem_mode(env));
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(E_B_NEW, env)->rect)
 		|| ui_mouseenter(env->data->mouse.x, env->data->mouse.y,

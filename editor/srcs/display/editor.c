@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 14:25:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 13:38:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,9 @@ void		editor(t_env *env)
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_SELECT, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_DRAW, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_ELEM, env)->rect);
+
+	// display play
+	rect = (t_rect){850, 20, 0, 40, 0xffffffff};
+	ui_make_string(rect, "PLAY", env->data);
+	ui_make_rect(env->data->surface, get_element(E_B_PLAY, env)->rect);	
 }

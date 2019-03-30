@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 13:26:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 13:54:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void        export_map(t_env *env)
 	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 		ui_error_exit_sdl("Editor: Error while opening file", env->data);
 	free(path);	
-
 
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);

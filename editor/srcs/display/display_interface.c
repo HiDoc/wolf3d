@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:04:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 13:32:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			display_interface(t_env *env)
 			while (vtx->next)
 			{
 				vec = (t_vec){vtx->pos, vtx->next->pos};
-				ui_make_dotted_line(env->data->surface, vec, color);
+				ui_make_line(env->data->surface, vec, color);
 				vtx = vtx->next;
 			}
 			if (sct->close)
