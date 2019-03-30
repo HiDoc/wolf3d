@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 21:30:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 12:56:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void		create_element(int id, int type, t_rect rect, t_env *env)
 	new->id = id;
 	new->type = type;
 	new->rect = rect;
-	new->str = ft_strdup(" "); // proteger
 	if (!(env->elements))
 	{
 		env->elements = new;
@@ -166,9 +165,6 @@ int				main(void)
 	t_data		data;
 	t_env		env;
 
-// probleme map name dans export : il y a un +1 parce que sinon
-// la map name commence par un espace, trouver pourquoi
-
 	ui_init_sdl(&data);
 
 	init_env(&env, &data);
@@ -179,7 +175,8 @@ int				main(void)
 	env.menu.background = ui_load_image(
 	"ressources/images/doom-background.jpg", &env);
 
-	env.map_name = "new_map";
+	if (!(env.map_name = ft_strdup("new_map")))
+		ui_error_exit_sdl("Editor: out of memory", &data);
 
 	ui_make_window("EDITOR", &data);
 	ui_load_font("ressources/fonts/Arial.ttf", &data);

@@ -1,0 +1,11 @@
+##new_map
+# nb vertex:
+# vertex: x y
+# nb sectors:
+# sector: ceil floor n-vertex n-neighbors
+# nb objects:
+# object: x y sector ref is_wpn
+# nb entities:
+# entity: x y sector ref
+# nb specials:
+# special: x y ref

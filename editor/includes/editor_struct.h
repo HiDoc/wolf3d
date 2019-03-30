@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 16:23:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 12:45:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ struct					s_elem
 	int				id;
 	int				type;
 	t_rect			rect;
-	char			*str;			// if type == input
+	char			*str;		// if type == input
 	int				str_max;		// if type == input
 	int				clicked;
 	int				hovered;

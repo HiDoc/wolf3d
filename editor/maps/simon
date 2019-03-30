@@ -1,7 +1,10 @@
-## test
+# map name
+simon
 # nb vertex:
-# vertex: x y)
+22
+# vertex: x y
 # nb sectors:
+3
 # sector: ceil floor n-vertex n-neighbors
 # nb objects:
 # object: x y sector ref is_wpn
