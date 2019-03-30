@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:05:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 14:15:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ int			reload_ammo(t_env *env);
 int			sdl_keyhook_game(t_env *env, SDL_Event event, const Uint8 *keycodes);
 int			sdl_keyhook_inventory(t_env *env, SDL_Event event, const Uint8 *keycodes);
 int			mouse_shoot(t_env *env);
+
+void		bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes);
 #endif

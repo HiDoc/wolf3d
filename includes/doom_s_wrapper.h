@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 16:17:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 14:16:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct 					s_wrap_enmy
 	int				is_alive;
 	int				is_alerted;
 	int				has_detected;
+	int				close_seen;
 	int				is_shooting;
 	int				frame;
 	t_vtx			where;

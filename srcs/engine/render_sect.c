@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 19:42:04 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/30 14:15:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,17 @@ void		render_enemies(t_env *env, t_queue *queue)
 {
 	const t_character	*ctn = env->world.enemies;
 	t_wrap_enmy			*enemy;
+	t_vtx 			p;
 
+	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = queue->sect->head_enemy;
 	while (enemy)
 	{
 		if (enemy->is_alive)
+		{
+			bot_status(env, p, enemy, env->sdl.keycodes);
 			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->where);
+		}
 		enemy = enemy->next;
 	}
 }

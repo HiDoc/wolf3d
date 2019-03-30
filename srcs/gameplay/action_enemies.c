@@ -6,12 +6,41 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:04:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/30 14:17:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
+void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
+{
+	if (!env->player.actions.is_invisible)
+	{
+		enemy->is_alerted = (dist_vertex(player, enemy->where) < 500
+		&& keycodes[SDL_SCANCODE_LSHIFT]);
+		enemy->has_detected = (dist_vertex(player, enemy->where) < 200
+		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
+		enemy->close_seen = (dist_vertex(player, enemy->where) < 100);
+		if (enemy->is_alerted)
+		{
+			printf("alerted %i \n", enemy->is_alerted);
+
+		}
+		if (enemy->has_detected)
+		{
+			printf("detected %i \n", enemy->has_detected);
+			// enemy->where = diff_vertex(enemy->origin, player);
+			// printf("enemy where %f, %f\n", enemy->where.x, enemy->where.y);
+
+		}
+		if (enemy->close_seen)
+			printf("close\n");
+		// printf("angle cos : %f\n", env->engine.player.anglecos);
+		// printf("angle sin : %f\n", env->engine.player.anglesin);
+		// printf("yaw : %f\n", env->engine.player.yaw);
+		// system("clear");
+	}
+}
 // void			handle_bots(t_env *env, t_vtx player, t_wrap_enmy *enemy)
 // {
 // 	enemy->has_detected = dist_vertex(player, enemy->where) < 20;
