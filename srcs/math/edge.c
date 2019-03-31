@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 20:36:30 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/31 17:13:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_edge  scale_edge(t_edge t)
 void	clip_view(t_raycast *ctn)
 {
 	t_edge		*t = &ctn->rot;
-	const t_vtx org1 = {t->v1.x, t->v1.y};
-	const t_vtx org2 = {t->v2.x, t->v2.y};
+	const t_vtx v1 = {t->v1.x, t->v1.y};
+	const t_vtx v2 = {t->v2.x, t->v2.y};
 	const t_vtx i1 = intersect_vtx(t->v1, t->v2,
 		(t_vtx){-NEARSIDE, NEARZ}, (t_vtx){-FARSIDE, FARZ});
 	const t_vtx i2 = intersect_vtx(t->v1, t->v2,
@@ -90,12 +90,12 @@ void	clip_view(t_raycast *ctn)
 	}
 	if (fabs(t->v2.x - t->v1.x) > fabs(t->v2.y - t->v1.y))
 	{
-		ctn->li_texture.floor = (t->v1.x - org1.x) * W_TEXT / (org2.x - org1.x);
-		ctn->li_texture.ceil = (t->v2.x - org1.x) * W_TEXT / (org2.x - org1.x);
+		ctn->li_texture.floor = (t->v1.x - v1.x) * W_TEXT / (v2.x - v1.x);
+		ctn->li_texture.ceil = (t->v2.x - v1.x) * W_TEXT / (v2.x - v1.x);
 	}
 	else
 	{
-		ctn->li_texture.floor = (t->v1.y - org1.y) * W_TEXT / (org2.y - org1.y);
-		ctn->li_texture.ceil = (t->v2.y - org1.y) * W_TEXT / (org2.y - org1.y);
+		ctn->li_texture.floor = (t->v1.y - v1.y) * W_TEXT / (v2.y - v1.y);
+		ctn->li_texture.ceil = (t->v2.y - v1.y) * W_TEXT / (v2.y - v1.y);
 	}
 }
