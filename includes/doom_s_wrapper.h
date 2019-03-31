@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 16:30:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 14:59:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ struct 					s_wrap_enmy
 	int				close_seen;
 	int				is_shooting;
 	int				frame;
+	float			angle;
+	float			anglecos;
+	float			anglesin;
+	float			yaw;
 	t_vtx			origin;
 	t_vtx			where;
 	t_vtx			whereto;

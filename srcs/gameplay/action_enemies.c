@@ -6,11 +6,38 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/30 16:53:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 17:46:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	bot_move(t_vtx p, t_wrap_enmy *enemy)
+{
+	t_vtx		move;
+
+	move = (t_vtx){0.f, 0.f};
+	enemy->angle = -p.x * 0.02f;
+	enemy->anglesin = -sinf(enemy->angle);
+	enemy->anglecos = -cosf(enemy->angle);
+	if (dist_vertex(p, enemy->where) > 100)
+	{
+		float	sin_move = enemy->anglesin * 0.2f;
+		float	cos_move = enemy->anglecos * 0.2f;
+		if (enemy->where.x < p.x && enemy->where.y < p.y)
+			move = add_vertex(move, (t_vtx){sin_move, -cos_move});
+		else if (enemy->where.x > p.x && enemy->where.y > p.y)
+			move = diff_vertex(move, (t_vtx){sin_move, -cos_move});
+		else if (enemy->where.x > p.x && enemy->where.y < p.y)
+			move = add_vertex(move, (t_vtx){cos_move, sin_move});
+		else if (enemy->where.x < p.x && enemy->where.y > p.y)
+			move = diff_vertex(move, (t_vtx){cos_move, sin_move});
+		enemy->velocity.x = enemy->velocity.x * (1 - 0.2f) + move.x * 0.2f;
+		enemy->velocity.y = enemy->velocity.y * (1 - 0.2f) + move.y * 0.2f;
+		enemy->where.x += enemy->velocity.x;
+		enemy->where.y += enemy->velocity.y;
+	}
+}
 
 void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 {
@@ -18,23 +45,25 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 	{
 		enemy->is_alerted = (dist_vertex(player, enemy->where) < 500
 		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		enemy->has_detected = (dist_vertex(player, enemy->where) < 200
+		enemy->has_detected = (dist_vertex(player, enemy->where) < 500
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
 		enemy->close_seen = (dist_vertex(player, enemy->where) < 100);
 		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
 		{
 			enemy->is_shooting = enemy->has_detected || enemy->close_seen;
-			if (dist_vertex(player, enemy->where) > 50)
-			{
-				enemy->where.x -= env->engine.player.velocity.x;
-				enemy->where.y -= env->engine.player.velocity.y;
-				printf("shooting %i \n", enemy->is_shooting);
-			}
+			bot_move(player, enemy);
+			// if (dist_vertex(player, enemy->where) > 50)
+			// {
+			// 	// enemy->whereto = dist_vertex(player, enemy->where);
+			// 	enemy->where.x -= env->engine.player.velocity.x;
+			// 	enemy->where.y -= env->engine.player.velocity.y;
+			// 	printf("shooting %i \n", enemy->is_shooting);
+			// }
 		}
-		else
-		{
-			enemy->where = enemy->origin;
-		}
+		// else
+		// {
+		// 	enemy->where = enemy->origin;
+		// }
 
 	}
 }
