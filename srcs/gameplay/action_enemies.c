@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 17:46:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 21:01:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	bot_move(t_vtx p, t_wrap_enmy *enemy)
+void	bot_move(t_vtx p, t_wrap_enmy *enemy, float speed)
 {
 	t_vtx		move;
 
@@ -20,22 +20,86 @@ void	bot_move(t_vtx p, t_wrap_enmy *enemy)
 	enemy->angle = -p.x * 0.02f;
 	enemy->anglesin = -sinf(enemy->angle);
 	enemy->anglecos = -cosf(enemy->angle);
-	if (dist_vertex(p, enemy->where) > 100)
+	float	sin_move = enemy->anglesin * speed;
+	float	cos_move = enemy->anglecos * speed;
+	if (enemy->where.x < p.x && enemy->where.y < p.y)
+		move = add_vertex(move, (t_vtx){sin_move, -cos_move});
+	else if (enemy->where.x > p.x && enemy->where.y > p.y)
+		move = diff_vertex(move, (t_vtx){sin_move, -cos_move});
+	else if (enemy->where.x > p.x && enemy->where.y < p.y)
+		move = add_vertex(move, (t_vtx){cos_move, sin_move});
+	else if (enemy->where.x < p.x && enemy->where.y > p.y)
+		move = diff_vertex(move, (t_vtx){cos_move, sin_move});
+	enemy->velocity.x = enemy->velocity.x * (1 - speed) + move.x * speed;
+	enemy->velocity.y = enemy->velocity.y * (1 - speed) + move.y * speed;
+	enemy->where.x += enemy->velocity.x;
+	enemy->where.y += enemy->velocity.y;
+}
+
+void	bot_check_where(t_wrap_enmy *enemy, t_wrap_enmy *next)
+{
+	if (dist_vertex(enemy->where, next->where) <= 5)
 	{
-		float	sin_move = enemy->anglesin * 0.2f;
-		float	cos_move = enemy->anglecos * 0.2f;
-		if (enemy->where.x < p.x && enemy->where.y < p.y)
-			move = add_vertex(move, (t_vtx){sin_move, -cos_move});
-		else if (enemy->where.x > p.x && enemy->where.y > p.y)
-			move = diff_vertex(move, (t_vtx){sin_move, -cos_move});
-		else if (enemy->where.x > p.x && enemy->where.y < p.y)
-			move = add_vertex(move, (t_vtx){cos_move, sin_move});
-		else if (enemy->where.x < p.x && enemy->where.y > p.y)
-			move = diff_vertex(move, (t_vtx){cos_move, sin_move});
-		enemy->velocity.x = enemy->velocity.x * (1 - 0.2f) + move.x * 0.2f;
-		enemy->velocity.y = enemy->velocity.y * (1 - 0.2f) + move.y * 0.2f;
-		enemy->where.x += enemy->velocity.x;
-		enemy->where.y += enemy->velocity.y;
+		if (enemy->where.x >= next->where.x)
+			next->where.x -= next->velocity.x;
+		else if (enemy->where.y >= next->where.y)
+			next->where.x += next->velocity.x;
+	}
+}
+
+void	bot_shoot(t_env *env, t_wrap_enmy *enemy)
+{
+	const t_vtx	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
+
+	if (!enemy->shoot->is_shooting)
+	{
+		enemy->shoot->where = enemy->where;
+		enemy->shoot->whereto = p;
+		enemy->shoot->is_shooting = 1;
+		enemy->shoot->is_alive = 1;
+	}
+	else if (enemy->shoot->is_alive)
+	{
+
+		if (dist_vertex(enemy->shoot->where, enemy->shoot->whereto) > 1)
+		{
+			bot_move(enemy->shoot->whereto, enemy->shoot, 0.4f);
+			enemy->shoot->where.x += enemy->shoot->velocity.x;
+			enemy->shoot->where.y += enemy->shoot->velocity.y;
+		}
+		else
+		{
+			if (enemy->shoot->whereto.x == p.x && enemy->shoot->whereto.y == p.y)
+			{
+				if (env->player.shield)
+					env->player.shield -= 10;
+				else
+					env->player.health -= 10;
+				if (env->player.health <= 10)
+					env->player.health = 200;
+			}
+			enemy->shoot->is_alive = 0;
+			enemy->shoot->is_shooting = 0;
+		}
+	}
+}
+
+void	bot_action(t_env *env, t_sector *sector)
+{
+	t_wrap_enmy	*enemy;
+
+	(void)env;
+	enemy = sector->head_enemy;
+	while (enemy)
+	{
+		if (enemy->is_alive)
+		{
+			if (enemy->next && enemy->next->is_alive)
+				bot_check_where(enemy, enemy->next);
+			if (enemy->is_shooting)
+				bot_shoot(env, enemy);
+		}
+		enemy = enemy->next;
 	}
 }
 
@@ -50,115 +114,11 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 		enemy->close_seen = (dist_vertex(player, enemy->where) < 100);
 		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
 		{
-			enemy->is_shooting = enemy->has_detected || enemy->close_seen;
-			bot_move(player, enemy);
-			// if (dist_vertex(player, enemy->where) > 50)
-			// {
-			// 	// enemy->whereto = dist_vertex(player, enemy->where);
-			// 	enemy->where.x -= env->engine.player.velocity.x;
-			// 	enemy->where.y -= env->engine.player.velocity.y;
-			// 	printf("shooting %i \n", enemy->is_shooting);
-			// }
+			if (dist_vertex(player, enemy->where) > 100)
+				bot_move(player, enemy, 0.2f);
+			else
+				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
 		}
-		// else
-		// {
-		// 	enemy->where = enemy->origin;
-		// }
-
 	}
 }
-// void			handle_bots(t_env *env, t_vtx player, t_wrap_enmy *enemy)
-// {
-// 	enemy->has_detected = dist_vertex(player, enemy->where) < 20;
-// 	enemy->is_alerted
-// }
 
-// static int		is_player_ahead(t_env *env, int bot)
-// {
-// 	t_point		pos;
-// 	double		try;
-
-// 	pos.x = env->bots[bot]->position.x;
-// 	pos.y = env->bots[bot]->position.y;
-
-// 	try = 0.2;
-// 	if (fabs(env->bots[bot]->player_angl - env->bots[bot]->direction) < 30)
-// 	{
-// 		while (try < env->bots[bot]->player_dist)
-// 		{
-// 			if (env->w_map[(int)(env->bots[bot]->position.y
-// 			+ pos.y)][(int)(env->bots[bot]->position.x + pos.x)] & 0x0010)
-// 				return (0);
-
-// 			pos.x = cos(env->bots[bot]->player_angl * M_PI / 180) * try;
-// 			pos.y = sin(env->bots[bot]->player_angl * M_PI / 180) * try;
-
-// 			printf("pos.x : %f\n", pos.x);
-// 			printf("pos.y : %f\n", pos.y);
-
-// 			env->bots[bot]->debug.x = pos.x;
-// 			env->bots[bot]->debug.y = pos.y;
-
-// 			try += 0.2;
-// 		}
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// void			handle_botssss(t_env *env)
-// {
-// 	t_point		last_pos;
-// 	int			i;
-
-// 	i = 0;
-// 	ft_bzero(&last_pos, sizeof(t_point));
-// 	while (env->bots[i])
-// 	{
-// 		get_player_dist(env, i);
-// 		get_player_angl(env, i);
-// 		if (is_player_ahead(env, i))
-// 		{
-// 			/*env->bots[i]->position.x +=
-// 			cos(env->bots[i]->direction * M_PI / 180) * 0.05;
-// 			env->bots[i]->position.y +=
-// 			cos(env->bots[i]->direction * M_PI / 180) * 0.05;*/
-
-// 			last_pos.x = env->player.pos.x;
-// 			last_pos.y = env->player.pos.y;
-
-// 			env->bots[i]->direction = env->bots[i]->player_angl;
-// 			env->bots[i]->detected = 1;
-// 		}
-// 		else
-// 			env->bots[i]->detected = 0;
-// 		/*else if (env->bots[i]->detected == 1)
-// 		{
-// 			move_bot(env, i, last_pos);
-// 			if (env->pos_x == last_pos.x
-// 			&& env->pos_y == last_pos.y)
-// 			{
-// 				//while ( 360 degres )
-// 				{
-// 					rotate_bot(env, i,  //new degre);
-// 					if (is_player_ahead(env, i))
-// 						return ;
-// 				}
-// 				env->bots[i]->detected = 0;
-// 				move_bot(env, i, env->bots[i]->init_pos);
-// 			}
-// 		}*/
-// 		if (env->bots[i]->player_dist < 4)
-// 		// 4 arbitraire, peut servir de niveau de difficulte
-// 		{
-// 			env->bots[i]->direction = env->bots[i]->player_angl;
-// 			env->bots[i]->alerted = 1;
-// 		}
-// 		else if (env->bots[i]->alerted == 1)
-// 		{
-// 			env->bots[i]->direction = env->bots[i]->init_dir;
-// 			env->bots[i]->alerted = 0;
-// 		}
-// 		i++;
-// 	}
-// }

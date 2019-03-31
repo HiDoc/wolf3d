@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 14:14:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 18:29:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	sdl_render_game(t_env *env)
 	// ui_minimap(env);
 	print_hud(env);
 	action_gems(env);
+	bot_action(env, &env->engine.sectors[env->engine.player.sector]);
 	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 }
 

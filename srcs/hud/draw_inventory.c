@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:09:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:55:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		fill_bloc(t_env *env, int i)
 			bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
 		draw_img(env, bloc->bg_fill, bloc);
 
-		fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}};
+		fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_edge){{0, 0}, {0, 0}}};
 		draw_img(env, bloc->sprite, &fill);
 		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}}));
 
@@ -80,7 +80,7 @@ int		fill_gems(t_env *env, int iter)
 	bloc = &env->hud.inventory.gems[iter];
 	rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16,	bloc->rect.y + bloc->rect.w / 16,
 	bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
-	fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}};
+	fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_edge){{0, 0}, {0, 0}}};
 	if (env->player.inventory.gems[iter].current)
 	{
 		g_ref = env->player.inventory.gems[iter].current;

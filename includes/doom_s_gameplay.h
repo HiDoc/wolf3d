@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/31 15:07:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 19:08:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
+typedef struct s_impact		t_impact;
 
 struct						s_object
 {
@@ -56,6 +57,18 @@ struct						s_object
 ** ammo_magazine = ff
 ** damage = g
 */
+struct 						s_impact
+{
+	SDL_Surface			*sprite;
+	int					is_shot;
+	t_vctr				target;
+	t_vctr				where;
+	float				angle;
+	float				anglecos;
+	float				anglesin;
+
+};
+
 struct						s_weapon
 {
 	t_bloc				sprite;

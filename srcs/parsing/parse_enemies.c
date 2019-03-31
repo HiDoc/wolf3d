@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 15:00:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:02:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 	if (!(new = malloc(sizeof(t_wrap_enmy))))
 		return (NULL);
 	ft_bzero(new, sizeof(new));
+	if (!(new->shoot = malloc(sizeof(t_wrap_enmy))))
+		return (NULL);
 	renemy = &env->world.enemies[ref];
 	new->where = v;
 	new->origin = v;
