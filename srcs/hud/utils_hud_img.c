@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_hud_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:21:37 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 13:32:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:36:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img)
 {
+	t_vtx	scale;
+    Uint32  *src;
+	Uint32	p;
 	int		x;
 	int		y;
-	t_vtx	scale;
-	Uint32	p;
-    Uint32  *src;
 
     src = img->pixels;
 	scale.x = fabs((float)img->w / (float)(rect.w));

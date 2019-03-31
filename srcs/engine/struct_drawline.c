@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 16:37:50 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 18:52:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,40 @@ void				render_ceil(t_drawline l, t_env *env)
 	// vline(l, env);
 }
 
+void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
+{
+	const t_raycast	*ctn = (t_raycast *)l.container;
+	int				*pixels;
+	int				iter;
+	int				x;
+
+	x = ctn->x;
+	pixels	= (int *)env->sdl.surface->pixels;
+	l.from = clamp(l.from, 0, H - 1);
+	l.to = clamp(l.to, 0, H - 1);
+	const float height = l.to - l.from;
+	const float width = ctn->x2 - ctn->x1;
+	if (l.from == l.to)
+		pixels[l.from * W + x] = 0x00;
+	else if (l.to > l.from)
+	{
+		pixels[l.from * W + x] = 0x00;
+		iter = l.from + 1;
+		float y = 0;
+		while (iter < l.to && y < sprite->h)
+		{
+			const int pix = getpixel(sprite,
+			(int)((ctn->x - ctn->x1)/ width * sprite->w) % sprite->w,
+				(int)(y / height * sprite->h) % sprite->h);
+			if (pix & 0xff)
+				pixels[iter * W + x] = pix;
+			y++;
+			iter++;
+		}
+		pixels[l.to * W + x] = 0x00;
+	}
+}
+
 void				render_floor(t_drawline l, t_env *env)
 {
 	t_raycast	*ctn;
@@ -183,5 +217,5 @@ void				render_nceil(t_drawline l, t_env *env)
 
 void				render_nwall(t_drawline l, t_env *env)
 {
-	vline(l, env);
+	render_cwall(l, env);
 }
