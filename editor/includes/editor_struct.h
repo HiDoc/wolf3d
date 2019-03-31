@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/31 17:01:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/31 17:12:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ enum					e_elements
 typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
+typedef struct	s_object	t_object;
 typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
@@ -95,6 +96,16 @@ struct					s_elem
 	int				clicked;
 	int				hovered;
 	t_elem			*next;
+};
+
+struct					s_object
+{
+	t_pos			pos;
+	float			dir;	// if entity
+	int				sct;
+	int				ref;
+	int				category;
+	t_object		*next;
 };
 
 struct					s_menu

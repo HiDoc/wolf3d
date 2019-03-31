@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/31 17:02:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/31 17:08:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void        export_map(t_env *env)
 	ft_putendl_fd("# sector: ceil floor n-vertex n-neighbors", fd);
 	//
 
-	ft_putendl_fd("# nb wall onjects:", fd);
+	ft_putendl_fd("# nb wall objects:", fd);
 	ft_putnbr_fd(env->nb_wall_objs, fd);
 	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# wall_object: x y sector ref", fd);
