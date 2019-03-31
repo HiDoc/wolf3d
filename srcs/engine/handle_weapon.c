@@ -12,11 +12,11 @@
 
 #include "doom.h"
 
-int	handle_weapon(t_env *env, int *frame)
+int		handle_weapon(t_env *env, int *frame)
 {
-	t_bloc				*bloc;
-	t_actions			*actions;
 	const t_wrap_wpn	*curr = env->player.inventory.current;
+	t_actions			*actions;
+	t_bloc				*bloc;
 
 	actions = &env->player.actions;
 	if (curr)

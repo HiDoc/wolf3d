@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/25 18:02:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:40:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 ** Verify is player is not in a wall
 */
 // TODO: Change collision
-static int sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
+int		sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
 {
 	const t_vtx	b = diff_vertex(wall.v2, wall.v1);
 	float		scale;
@@ -100,11 +100,11 @@ static int sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
 */
 void	collision(t_vision *v, t_engine *e, t_sector *sect)
 {
-	int				s;
-	t_vtx			dest;
-	t_edge			wall;
 	const t_vtx		player = {e->player.where.x, e->player.where.y};
 	const t_vtx		*vert = sect->vertex;
+	t_vtx			dest;
+	t_edge			wall;
+	int				s;
 
 	s = -1;
 	dest = (t_vtx){e->player.velocity.x, e->player.velocity.y};
