@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/31 17:12:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/31 20:17:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ struct					s_object
 	int				sct;
 	int				ref;
 	int				category;
+	Uint32			icon_color; // replace by image
 	t_object		*next;
 };
 
@@ -142,6 +143,11 @@ struct					s_env
 	// hover / select hud
 	t_sct			*sct_hover;
 	t_vtx			*vtx_hover;
+
+	// lst objects
+	t_sct			*obj_current;
+	t_sct			*obj_start;
+	t_sct			*obj_end;
 
 	// data infos
 	int				nb_vtx;
