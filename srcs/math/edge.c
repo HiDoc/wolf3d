@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:44:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 15:03:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 20:36:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 */
 int		intersec_edge(t_vtx v0, t_vtx v1, t_vtx v2, t_vtx v3)
 {
-    return (intersect_rect(v0, v1, v2, v3)
-        && fabs(pointside(v2, v0, v1) + pointside(v3, v0, v1)) != 2
-        && fabs(pointside(v0, v2, v3) + pointside(v1, v2, v3)) != 2);
+	return (intersect_rect(v0, v1, v2, v3)
+	&& fabs(pointside(v2, v0, v1) + pointside(v3, v0, v1)) != 2
+	&& fabs(pointside(v0, v2, v3) + pointside(v1, v2, v3)) != 2);
 }
 
 /*
@@ -90,12 +90,12 @@ void	clip_view(t_raycast *ctn)
 	}
 	if (fabs(t->v2.x - t->v1.x) > fabs(t->v2.y - t->v1.y))
 	{
-		ctn->li_texture.floor = (t->v1.x - org1.x) * W_TEXTURE / (org2.x - org1.x);
-		ctn->li_texture.ceil = (t->v2.x - org1.x) * W_TEXTURE / (org2.x - org1.x);
+		ctn->li_texture.floor = (t->v1.x - org1.x) * W_TEXT / (org2.x - org1.x);
+		ctn->li_texture.ceil = (t->v2.x - org1.x) * W_TEXT / (org2.x - org1.x);
 	}
 	else
 	{
-		ctn->li_texture.floor = (t->v1.y - org1.y) * W_TEXTURE / (org2.y - org1.y);
-		ctn->li_texture.ceil = (t->v2.y - org1.y) * W_TEXTURE / (org2.y - org1.y);
+		ctn->li_texture.floor = (t->v1.y - org1.y) * W_TEXT / (org2.y - org1.y);
+		ctn->li_texture.ceil = (t->v2.y - org1.y) * W_TEXT / (org2.y - org1.y);
 	}
 }
