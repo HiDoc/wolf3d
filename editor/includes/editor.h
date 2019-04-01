@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 13:15:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:26:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 # include "libui_struct.h"
 # include "editor_struct.h"
 # include "libui.h"
+
+/*
+**	init/
+*/
+
+void		init_env(t_env *env, t_data *data);
 
 /*
 **	display/

@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/03/30 13:28:43 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/01 15:24:54 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS 		=	-Wall -Wextra -Werror -g #-fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \
-				:srcs/utils
+				:srcs/utils:./srcs/init
 OBJ_PATH 	=	objs/
 INC_PATH	=	includes/ \
 				libft/includes/
@@ -74,6 +74,7 @@ SRC_NAME 	=	main.c \
 				elem_mode.c \
 				display_element.c \
 				export_map.c \
+				init_env.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image
