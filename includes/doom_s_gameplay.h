@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/31 23:25:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 22:33:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct s_impact		t_impact;
-
-struct						s_object
-{
-	SDL_Surface	*sprite;
-
-	int			nb_use;
-	int			max_stack;
-	int			ref;
-	int			sectorno;
-	t_vtx		vertex;
-};
 
 /*
 ** Weapon struct
@@ -61,12 +49,10 @@ struct 						s_impact
 {
 	SDL_Surface			*sprite;
 	int					is_shot;
-	t_vctr				target;
-	t_vctr				where;
-	float				angle;
-	float				anglecos;
-	float				anglesin;
-
+	t_player			position;
+	int					is_alive;
+	int					is_shooting;
+	int					ref;
 };
 
 struct						s_weapon
@@ -138,15 +124,12 @@ struct						s_character
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	float		angle;
-	float		anglecos;
-	float		anglesin;
-	float		yaw;
-	float		eyeheight;
 	SDL_Surface	*sprite;
+	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_wrap_enmy	shoot;
+	t_impact	*shot;
+	int			nb_shot;
 };
 
 struct						s_world

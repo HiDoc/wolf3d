@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 17:05:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 16:10:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 typedef struct	s_scaler	t_scaler;
 typedef struct	s_sector	t_sector;
-typedef struct	s_player	t_player;
 typedef struct	s_item		t_item;
 typedef struct	s_engine	t_engine;
-typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
@@ -63,28 +61,6 @@ struct						s_sector
 	int			nb_objects;
 	t_wrap_sect	*head_object;
 	t_wrap_enmy	*head_enemy;
-};
-
-struct						s_vision
-{
-	int			ground;
-	int			falling;
-	int			moving;
-	int			ducking;
-	float		yaw;
-	float		eyeheight;
-};
-
-struct						s_player
-{
-	t_vctr		where;
-	t_vctr		velocity;
-	t_vision	vision;
-	float		angle;
-	float		anglesin;
-	float		anglecos;
-	float		yaw;
-	unsigned 	sector;
 };
 
 struct						s_queue

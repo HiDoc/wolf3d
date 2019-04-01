@@ -167,7 +167,6 @@ void		free_env(t_env *env)
 		en = e->sectors[a].head_enemy;
 		while (en != NULL)
 		{
-			free(e->sectors[a].head_enemy->shoot);
 			e->sectors[a].head_enemy = en->next;
 			free(en);
 			en = e->sectors[a].head_enemy;

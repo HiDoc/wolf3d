@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 11:15:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 00:13:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,46 @@ typedef struct s_wrap_inv		t_wrap_inv;
 typedef struct s_wrap_wpn		t_wrap_wpn;
 typedef struct s_wrap_sect      t_wrap_sect;
 typedef struct s_wrap_enmy      t_wrap_enmy;
+typedef struct	s_vision		t_vision;
+typedef struct	s_player		t_player;
+typedef struct s_impact			t_impact;
+
+struct						s_object
+{
+	SDL_Surface	*sprite;
+
+	int			nb_use;
+	int			max_stack;
+	int			ref;
+	int			sectorno;
+	t_vtx		vertex;
+};
+
+struct						s_vision
+{
+	int			ground;
+	int			falling;
+	int			moving;
+	int			ducking;
+	float		yaw;
+	float		eyeheight;
+};
+
+struct						s_player
+{
+	t_vctr		origin;
+	t_vctr		where;
+	t_vctr		whereto;
+	t_vctr		velocity;
+	t_vision	vision;
+	float		angle;
+	float		anglesin;
+	float		anglecos;
+	float		yaw;
+	int		 	nb_shot;
+	unsigned 	sector;
+	SDL_Surface	*sprite;
+};
 
 struct					s_wrap_sect
 {
@@ -44,16 +84,8 @@ struct 					s_wrap_enmy
 	int				close_seen;
 	int				is_shooting;
 	int				frame;
-	float			angle;
-	float			anglecos;
-	float			anglesin;
-	float			yaw;
-	t_vtx			origin;
-	t_vtx			where;
-	t_vtx			whereto;
-	t_vtx			velocity;
-	t_edge			edge;
-	t_wrap_enmy		*shoot;
+	t_player		player;
+	t_impact		*shot;
 	t_wrap_enmy		*next;
 };
 

@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 11:18:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:22:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
 void		render_sprites(t_env *env, t_queue *q,
-			SDL_Surface *sprite, t_vtx vertex)
+			SDL_Surface *sprite, t_vctr vertex)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
@@ -103,10 +103,24 @@ void		render_object(t_env *env, t_queue *queue)
 		{
 			object->is_pickable = (dist_vertex(p, object->vertex) < 5);
 			ref = object->ref + ((object->is_wpn) ? gem : 0);
-			render_sprites(env, queue, ctn[ref].sprite, object->vertex);
+			render_sprites(env, queue, ctn[ref].sprite,
+			(t_vctr){object->vertex.x, object->vertex.y, 0});
 			draw_pick_infos(env, object, ref);
 		}
 		object = object->next;
+	}
+}
+
+void		render_bullet(t_env *env, t_wrap_enmy *headshot, t_queue *queue)
+{
+	t_wrap_enmy	*shot;
+
+	shot = headshot;
+	while (shot)
+	{
+		if (shot->is_alive)
+			render_sprites(env, queue, shot->sprite, shot->player.where);
+		shot = shot->next;
 	}
 }
 
@@ -123,7 +137,8 @@ void		render_enemies(t_env *env, t_queue *queue)
 		if (enemy->is_alive)
 		{
 			bot_status(env, p, enemy, env->sdl.keycodes);
-			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->where);
+			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->player.where);
+			// render_bullet(env, enemy->headshot, queue);
 		}
 		enemy = enemy->next;
 	}
@@ -138,4 +153,5 @@ void		render_sector(t_env *env, t_queue *queue)
 		render_sector_edges(env, queue, s);
 	render_object(env, queue);
 	render_enemies(env, queue);
+	// render_bullet(env, env->player.headshot, queue);
 }

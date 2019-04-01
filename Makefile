@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/03/29 18:54:00 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/01 22:18:23 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC_NAME 	= main.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
+			action_shoot.c \
 			checking.c \
 			draw.c \
 			draw_hud.c 	\
