@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 15:33:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 16:44:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void		init_elems(t_env *env)
 {
 	t_rect		rect;
 
-	rect = (t_rect){WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 40,
+	rect = (t_rect){WIN_W / 2 - 390, WIN_H / 2 - 225 + 40,
 	300, 25, C_WHITE};
 	create_element(M_I_NEW, INPUT, rect, env);
 
@@ -127,7 +127,7 @@ static void		init_elems(t_env *env)
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
 }
 
-static void		init_objs(t_env *env)
+static void		load_obj(char *path, int type, t_env *env)
 {
 	t_rect		rect;
 	char		**stock;
@@ -136,95 +136,38 @@ static void		init_objs(t_env *env)
 	int			i;
 
 	// wall_objects
-	if ((fd = open("ressources/objects/wall_objects", O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, bad fd", env->data);
+	if ((fd = open(path, O_RDONLY)) == -1)
+		ui_error_exit_sdl("Editor: load_obj, bad fd", env->data);
 	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
+		ui_error_exit_sdl("Editor: load_obj, out of memory", env->data);
 	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
+		ui_error_exit_sdl("Editor: laod_obj, out of memory", env->data);
 	free(line);
 	i = 0;
 	while (stock[i])
 	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr), 200, 30, C_WHITE};
-		create_btn_obj(i, WALL_OBJ, stock[i], rect, env);
+		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr),
+		200, 30, C_WHITE};
+		create_btn_obj(i, type, stock[i], rect, env);
 		free(stock[i]);
 		i++;	
 	}
 	free(stock);
 	close(fd);
+}
+
+static void		init_objs(t_env *env)
+{
+	// wall_objects
+	load_obj("ressources/objects/wall_objects", WALL_OBJ, env);
 	// consumables
-	if ((fd = open("ressources/objects/consumables", O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, bad fd", env->data);
-	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	free(line);
-	i = 0;
-	while (stock[i])
-	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr), 200, 30, C_WHITE};
-		create_btn_obj(i, CONSUMABLE, stock[i], rect, env);
-		free(stock[i]);
-		i++;	
-	}
-	free(stock);
-	close(fd);
+	load_obj("ressources/objects/consumables", CONSUMABLE, env);
 	// entities
-	if ((fd = open("ressources/objects/entities", O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, bad fd", env->data);
-	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	free(line);
-	i = 0;
-	while (stock[i])
-	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr), 200, 30, C_WHITE};
-		create_btn_obj(i, ENTITY, stock[i], rect, env);
-		free(stock[i]);
-		i++;	
-	}
-	free(stock);
-	close(fd);
+	load_obj("ressources/objects/entities", CONSUMABLE, env);
 	// prefabs
-	if ((fd = open("ressources/objects/prefabs", O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, bad fd", env->data);
-	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	free(line);
-	i = 0;
-	while (stock[i])
-	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr), 200, 30, C_WHITE};
-		create_btn_obj(i, PREFAB, stock[i], rect, env);
-		free(stock[i]);
-		i++;	
-	}
-	free(stock);
-	close(fd);
+	load_obj("ressources/objects/prefabs", PREFAB, env);
 	// specials
-	if ((fd = open("ressources/objects/specials", O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, bad fd", env->data);
-	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: init_objs, out of memory", env->data);
-	free(line);
-	i = 0;
-	while (stock[i])
-	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr), 200, 30, C_WHITE};
-		create_btn_obj(i, SPECIAL, stock[i], rect, env);
-		free(stock[i]);
-		i++;	
-	}
-	free(stock);
-	close(fd);
+	load_obj("ressources/objects/specials", SPECIAL, env);
 }
 
 static void		init_menu(t_env *env)
@@ -262,6 +205,9 @@ static void		init_menu(t_env *env)
 		}
 	}
 	closedir(dr);
+	env->menu.state = 1;
+	env->menu.background = ui_load_image(
+	"ressources/images/doom-background.jpg", env);
 }
 
 static void		init_editor(t_env *env)
@@ -309,9 +255,6 @@ void		init_env(t_env *env, t_data *data)
 	init_objs(env);
 	init_editor(env);
 	init_menu(env);
-	env->menu.state = 1;
-	env->menu.background = ui_load_image(
-	"ressources/images/doom-background.jpg", env);
 
 	if (!(env->map_name = ft_strdup("new_map")))
 		ui_error_exit_sdl("Editor: out of memory", data);

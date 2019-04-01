@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/31 18:02:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 16:51:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,20 @@
 
 int			elem_mode(t_env *env)
 {
-	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-	get_element(E_B_ELM_OBWL, env)->rect))
-	{ // button select mode
-		env->obj_mode = 0;
+	int			i;
+	const int	tab[] = {
+	E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
+
+	i = 0;
+	while (tab[i])
+	{
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		get_element(tab[i], env)->rect))
+		{
+			env->obj_mode = i;
+			return (1);
+		}
+		i++;
 	}
-	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-	get_element(E_B_ELM_CONS, env)->rect))
-	{ // button select mode
-		env->obj_mode = 1;
-	}
-	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-	get_element(E_B_ELM_NTTY, env)->rect))
-	{ // button select mode
-		env->obj_mode = 2;
-	}
-	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-	get_element(E_B_ELM_PRFB, env)->rect))
-	{ // button select mode
-		env->obj_mode = 3;
-	}
-	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-	get_element(E_B_ELM_SPEC, env)->rect))
-	{ // button select mode
-		env->obj_mode = 4;
-	}
-	return (1);
+	return (0);
 }
