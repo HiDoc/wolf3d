@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 13:32:39 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:11:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,31 @@ static void		display_infos(t_env *env)
 
 void			display_interface(t_env *env)
 {
+	t_vec		vec;
 	t_rect		rect;
+	int			i;
 
-	// display interface area
+	// display interface area + grid
 	rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
+	i = 20;
+	while (i < 870)
+	{
+		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
+		ui_make_line(env->data->surface, vec, 0X30FFFFFF);
+		i += 20;
+	}
+	i = 100;
+	while (i < 780)
+	{
+		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
+		ui_make_line(env->data->surface, vec, 0X30FFFFFF);
+		i += 20;
+	}
 	ui_make_rect(env->data->surface, rect);
 
 	display_infos(env);
 
 	// display all edges
-	t_vec	vec;
 	t_sct	*sct;
 	t_vtx	*vtx;
 	Uint32	color;
