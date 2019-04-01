@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/26 15:39:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:22:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ static void	right_panel(t_pos origin, t_env *env)
 	// preview
 	rect = (t_rect){origin.x + 410, origin.y + 10, 380, 350, C_WHITE};
 	ui_make_rect(env->data->surface, rect);
+
+	// current map
+	rect = (t_rect){origin.x + 420, origin.y + 10, 380, 30, C_WHITE};
+	ui_make_string(rect, env->map_name, env->data);
 
 	// start button
 	rect = (t_rect){origin.x + 410, origin.y + 400, 0, 25, C_WHITE};

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:09:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 18:29:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	sdl_render_game(t_env *env)
 	 ui_minimap(env);
 	print_hud(env);
 	action_gems(env);
+	bot_action(env, &env->engine.sectors[env->engine.player.sector]);
 	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 }
 
@@ -57,7 +58,6 @@ int YourEventFilter(void *userdata, SDL_Event *event)
 
 int sdl_loop(t_env *env)
 {
-	const Uint8	*keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	t_vision *v;
 	t_engine *e;
 
@@ -66,10 +66,11 @@ int sdl_loop(t_env *env)
 	e = &env->engine;
 	v = &e->player.vision;
 	v->falling = 1;
+	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	SDL_SetEventFilter(&YourEventFilter, (void *)env);
 	while (1)
 	{
-		if (keycodes[SDL_SCANCODE_Q])
+		if (env->sdl.keycodes[SDL_SCANCODE_Q])
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
@@ -81,14 +82,14 @@ int sdl_loop(t_env *env)
 			{
 				sdl_render(env, &sdl_render_game);
 				// wpn_mouse_wheel(env, env->sdl.event);
-				sdl_keyhook_game(env, env->sdl.event, keycodes);
-				player_move(e, v, keycodes);
+				sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
+				player_move(e, v, env->sdl.keycodes);
 
 			}
 			else
 			{
 				sdl_render(env, &sdl_render_inventory);
-				sdl_keyhook_inventory(env, env->sdl.event, keycodes);
+				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 			}
 		}
 		ft_bzero(&env->sdl.event, sizeof(SDL_Event));

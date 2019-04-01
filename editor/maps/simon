@@ -1,0 +1,14 @@
+# map name
+simon
+# nb vertex:
+4
+# vertex: x y
+# nb sectors:
+1
+# sector: ceil floor n-vertex n-neighbors
+# nb objects:
+# object: x y sector ref is_wpn
+# nb entities:
+# entity: x y sector ref
+# nb specials:
+# special: x y ref

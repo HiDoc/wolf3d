@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 14:54:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:26:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@
 # include "libui.h"
 
 /*
+**	init/
+*/
+
+void		init_env(t_env *env, t_data *data);
+
+/*
 **	display/
 */
 
@@ -48,6 +54,8 @@ void        menu(t_env *env);
 void		editor(t_env *env);
 void		display_interface(t_env *env);
 void		display_selection(t_env *env);
+void		display_drawing(t_env *env);
+void		display_element(t_env *env);
 
 /*
 **	events/
@@ -57,6 +65,7 @@ int	        menu_events(t_env *env);
 int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
 int			select_mode(t_env *env);
+int			elem_mode(t_env *env);
 t_vtx		*target_vertex(t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 int			vertex_in_sector(t_sct *sector, t_pos pos, t_env *env);
@@ -67,8 +76,9 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 **	utils/
 */
 
-int			export_map(t_env *env);
+void		export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
 t_elem		*get_element(int id, t_env *env);
+char		*ft_zstrjoin(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 18:16:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:22:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,29 @@ void		editor(t_env *env)
 		return ;
 	}
 
+	display_interface(env);
+
 	if (env->mouse_mode == 0)
 	{
 		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
 			ui_error_exit_sdl("Libui: error cursor texture", env->data);
 		SDL_SetCursor(cursor);
+		display_selection(env);
 	}
 	else if (env->mouse_mode == 1)
 	{
 		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR)))
 			ui_error_exit_sdl("Libui: error cursor texture", env->data);
 		SDL_SetCursor(cursor);
+		display_drawing(env);
 	}
-
-	display_interface(env);
-	display_selection(env);
+	else if (env->mouse_mode == 2)
+	{
+		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
+			ui_error_exit_sdl("Libui: error cursor texture", env->data);
+		SDL_SetCursor(cursor);
+		display_element(env);
+	}
 
 	// display new
 	ui_make_rect(env->data->surface, get_element(E_B_NEW, env)->rect);
@@ -74,12 +82,13 @@ void		editor(t_env *env)
 	rect = (t_rect){1040, 660, 0, 20, 0xFFFFFFFF};
 	ui_make_nbrstring(rect, env->nb_vtx, env->data);
 
-	// display mouse mode
-	rect = (t_rect){720, 20, 0, 20, 0xFFFFFFFF};
-	ui_make_string(rect, "Mouse mode : ", env->data);
-	rect = (t_rect){850, 20, 0, 20, 0xFFFFFFFF};
-	if (env->mouse_mode == 0)
-		ui_make_string(rect, "select", env->data);
-	else
-		ui_make_string(rect, "draw", env->data);
+	// display mouse mode buttons
+	ui_make_rect(env->data->surface, get_element(E_B_MODE_SELECT, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_MODE_DRAW, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_MODE_ELEM, env)->rect);
+
+	// display play
+	rect = (t_rect){850, 20, 0, 40, 0xffffffff};
+	ui_make_string(rect, "PLAY", env->data);
+	ui_make_rect(env->data->surface, get_element(E_B_PLAY, env)->rect);	
 }
