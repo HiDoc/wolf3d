@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_hud.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 19:35:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:59:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,10 @@ float	size_bar(int tmax, int datamax, int data)
 
 int	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 {
-	int	rectw_save;
-
-	rectw_save = bloc->rect.w;
 	if (data < max)
-		bloc->rect.w = size_bar(bloc->rect.w, max, data);
+		bloc->limit.v2.x = bloc->rect.w - size_bar(bloc->rect.w, max, data);
 	draw_img(env, bloc->sprite, bloc);
-	bloc->rect.w = rectw_save;
+	bloc->limit.v2.x = 0;
 	return (1);
 }
 

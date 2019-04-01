@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 16:17:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 11:15:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct					s_wrap_sect
 
 struct 					s_wrap_enmy
 {
+	SDL_Surface		*sprite;
 	int				ref;
 	int				health;
 	int				shield;
@@ -40,13 +41,21 @@ struct 					s_wrap_enmy
 	int				is_alive;
 	int				is_alerted;
 	int				has_detected;
+	int				close_seen;
 	int				is_shooting;
 	int				frame;
+	float			angle;
+	float			anglecos;
+	float			anglesin;
+	float			yaw;
+	t_vtx			origin;
 	t_vtx			where;
 	t_vtx			whereto;
+	t_vtx			velocity;
+	t_edge			edge;
+	t_wrap_enmy		*shoot;
 	t_wrap_enmy		*next;
 };
-
 
 struct					s_wrap_inv
 {

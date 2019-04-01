@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 15:13:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:53:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int		put_gun(t_env *env, t_bloc *bloc)
 	const t_actions *a = &env->player.actions;
 
 	if ((!a->is_loading && !a->is_shooting) || (ref == 2 && a->is_shooting))
-		bloc->limit = (t_vtx){W / 2, H / 2};
+		bloc->limit.v1 = (t_vtx){W / 2, H / 2};
 	else if (ref == 0)
-		bloc->limit = (t_vtx){W / 2, H / 3};
+		bloc->limit.v1 = (t_vtx){W / 2, H / 3};
 	else if (ref == 1)
-		bloc->limit = (t_vtx){W / 3, 0};
+		bloc->limit.v1 = (t_vtx){W / 3, 0};
 	else if (ref == 2 && a->is_loading)
-		bloc->limit = (t_vtx){0, H / 3};
+		bloc->limit.v1 = (t_vtx){0, H / 3};
 	draw_img(env, bloc->sprite, bloc);
 	return (1);
 }

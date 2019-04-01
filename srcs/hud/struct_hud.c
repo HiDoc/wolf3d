@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:24:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:52:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_icon_bloc(t_uinv *inventory, t_container *surfaces)
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		NULL, NULL, surfaces->hud[i].sprite, rect, ref, 1,
-		(t_vtx){0, 0}};
+		(t_edge){{0, 0}, {0, 0}}};
 		rect.x += rect.w + inter;
 		i++;
 		ref++;
@@ -56,7 +56,7 @@ int	init_hp_bloc(t_hud *hud, t_container *surfaces)
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			NULL, NULL, surfaces->hud[i].sprite, rect, rfaces, 0,
-			(t_vtx){0, 0}};
+			(t_edge){{0, 0}, {0, 0}}};
 			rfaces++;
 		}
 		else
@@ -65,7 +65,7 @@ int	init_hp_bloc(t_hud *hud, t_container *surfaces)
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 			NULL, NULL, surfaces->hud[i].sprite, rect, rbars, 0,
-			(t_vtx){0, 0}};
+			(t_edge){{0, 0}, {0, 0}}};
 			rbars++;
 		}
 		i++;
@@ -88,7 +88,7 @@ int	init_hwpn_bloc(t_hud *hud, t_container *surfaces)
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		NULL, NULL, surfaces->hud[i].sprite, rect, index, 0,
-		(t_vtx){0, 0}};
+		(t_edge){{0, 0}, {0, 0}}};
 		i++;
 		index++;
 	}
@@ -114,7 +114,7 @@ int	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		surfaces->hud[i].sprite, surfaces->hud[j].sprite, NULL, rect, index, 0,
-		(t_vtx){0, 0}};
+		(t_edge){{0, 0}, {0, 0}}};
 		rect.x += rect.w + inter;
 		i++;
 		j++;
@@ -153,7 +153,7 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){5, 4, rect.y}),
 		fill_minibloc(rect, hud->text.t_inv[3], (t_vctr){4, 4, rect.y + rect.h - rect.h / 4}),
 		env->world.surfaces.hud[BOX_E].sprite, env->world.surfaces.hud[BOX_F].sprite,
-		NULL, rect, i, 0, (t_vtx){0, 0}};
+		NULL, rect, i, 0, (t_edge){{0, 0}, {0, 0}}};
 		rect.x = i == 2 ? W / 28 : rect.x + interx + rect.w;
 		rect.y = i < 2 ? intery : interx + intery + rect.h;
 		i++;
@@ -175,7 +175,7 @@ int	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 		hud->objects[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		surfaces->hud[BOX_E].sprite, surfaces->hud[BOX_F].sprite,
-		NULL, rect, i, 0, (t_vtx){0, 0}};
+		NULL, rect, i, 0, (t_edge){{0, 0}, {0, 0}}};
 		rect.x += interx + rect.w;
 		i++;
 	}
@@ -189,7 +189,7 @@ int	init_inv_bg(t_uinv *inventory, SDL_Surface *img)
 	rect = (SDL_Rect){0, 0, W, H};
 	inventory->bg = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 	(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-	NULL, NULL, img, rect, 0, 0, (t_vtx){0, 0}};
+	NULL, NULL, img, rect, 0, 0, (t_edge){{0, 0}, {0, 0}}};
 	return (1);
 }
 
@@ -209,7 +209,7 @@ int	init_igems_bloc(t_uinv *inventory, t_container *surfaces)
 		inventory->gems[i] = (t_bloc){(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
 		surfaces->hud[BOX_E].sprite, surfaces->hud[BOX_F].sprite, NULL,
-		rect, i, 0, (t_vtx){0, 0}};
+		rect, i, 0, (t_edge){{0, 0}, {0, 0}}};
 		rect.x += inter + size;
 		i++;
 	}

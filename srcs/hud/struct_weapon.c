@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:10:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:54:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		current_sprite(t_bloc *bloc, char *file, int i)
 		0xff000000, 0xff0000, 0xff00, 0xff)))
 		return (0);
 	bloc->rect = (SDL_Rect){0, 0, W, H};
-	bloc->limit = (t_vtx){0, 0};
+	bloc->limit.v1 = (t_vtx){0, 0};
 	SDL_LockSurface(bloc->sprite);
 	p = (Uint32*)bloc->sprite->pixels;
 	scale_img(p, bloc->rect, sprite);

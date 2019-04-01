@@ -6,104 +6,213 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:04:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 11:26:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-// void			handle_bots(t_env *env, t_vtx player, t_wrap_enmy *enemy)
+void	bot_move(t_vtx p, t_wrap_enmy *enemy, float speed)
+{
+	t_vtx		move;
+
+	move = (t_vtx){0.f, 0.f};
+	enemy->angle = -p.x * 0.02f;
+	enemy->anglesin = -sinf(enemy->angle);
+	enemy->anglecos = -cosf(enemy->angle);
+	float	sin_move = enemy->anglesin * speed;
+	float	cos_move = enemy->anglecos * speed;
+	if (enemy->where.x < p.x && enemy->where.y < p.y)
+		move = add_vertex(move, (t_vtx){sin_move, -cos_move});
+	else if (enemy->where.x > p.x && enemy->where.y > p.y)
+		move = diff_vertex(move, (t_vtx){sin_move, -cos_move});
+	else if (enemy->where.x > p.x && enemy->where.y < p.y)
+		move = add_vertex(move, (t_vtx){cos_move, sin_move});
+	else if (enemy->where.x < p.x && enemy->where.y > p.y)
+		move = diff_vertex(move, (t_vtx){cos_move, sin_move});
+	enemy->velocity.x = enemy->velocity.x * (1 - speed) + move.x * speed;
+	enemy->velocity.y = enemy->velocity.y * (1 - speed) + move.y * speed;
+	enemy->where.x += enemy->velocity.x;
+	enemy->where.y += enemy->velocity.y;
+}
+
+void	bot_check_where(t_wrap_enmy *enemy, t_wrap_enmy *next)
+{
+	if (dist_vertex(enemy->where, next->where) <= 5)
+	{
+		if (enemy->where.x <= next->where.x
+		&& enemy->where.y <= next->where.y)
+			next->where.x -= next->velocity.x;
+		else if (enemy->where.x >= next->where.x
+		&& enemy->where.y >= next->where.y)
+			next->where.x -= next->velocity.x;
+		else if (enemy->where.x >= next->where.x
+		&& enemy->where.y <= next->where.y)
+			next->where.y += next->velocity.y;
+		else if (enemy->where.x <= next->where.x
+		&& enemy->where.y >= next->where.y)
+			next->where.y += next->velocity.y;
+	}
+}
+
+void	bot_shoot(t_env *env, t_wrap_enmy *enemy)
+{
+	const t_vtx	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
+
+	if (!enemy->shoot->is_shooting)
+	{
+		enemy->shoot->where = enemy->where;
+		enemy->shoot->whereto = p;
+		enemy->shoot->is_shooting = 1;
+	}
+	else
+	{
+		if (dist_vertex(enemy->shoot->where, enemy->shoot->whereto) > 1)
+			bot_move(enemy->shoot->whereto, enemy->shoot, 0.4f);
+		else
+		{
+			if (enemy->shoot->whereto.x == p.x && enemy->shoot->whereto.y == p.y)
+			{
+				if (env->player.shield)
+					env->player.shield -= enemy->damage;
+				else
+					env->player.health -= enemy->damage;
+				if (env->player.health <= 10)
+					env->player.health = 200;
+			}
+			enemy->shoot->is_shooting = 0;
+		}
+	}
+}
+
+void	bot_action(t_env *env, t_sector *sector)
+{
+	t_wrap_enmy	*enemy;
+
+	(void)env;
+	enemy = sector->head_enemy;
+	while (enemy)
+	{
+		if (enemy->is_alive)
+		{
+			if (enemy->next && enemy->next->is_alive)
+				bot_check_where(enemy, enemy->next);
+			if (enemy->is_shooting)
+				bot_shoot(env, enemy);
+		}
+		enemy = enemy->next;
+	}
+}
+
+void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
+{
+	if (!env->player.actions.is_invisible)
+	{
+		enemy->is_alerted = (dist_vertex(player, enemy->where) < 500
+		&& keycodes[SDL_SCANCODE_LSHIFT]);
+		enemy->has_detected = (dist_vertex(player, enemy->where) < 500
+		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
+		enemy->close_seen = (dist_vertex(player, enemy->where) < 100);
+		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
+		{
+			if (dist_vertex(player, enemy->where) > 100)
+				bot_move(player, enemy, 0.2f);
+			else
+				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
+		}
+	}
+}
+
+/*
+// ** Verify is player is not in a wall
+// */
+// // TODO: Change collision
+// int		sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
 // {
-// 	enemy->has_detected = dist_vertex(player, enemy->where) < 20;
-// 	enemy->is_alerted
+// 	const t_vtx	b = diff_vertex(wall.v2, wall.v1);
+// 	float		scale;
+
+// 	scale = (dest->x * b.x + b.y * dest->y) / (b.x * b.x + b.y * b.y);
+// 	dest->x = b.x * scale;
+// 	dest->y = b.y * scale;
+// 	return (pointside(add_vertex(player, *dest), wall.v1, wall.v2) < 0.3);
 // }
 
-// static int		is_player_ahead(t_env *env, int bot)
+/*
+** Collision detection.
+** Check if the player is crossing an edge and if this edge has a neighbour
+*/
+// void	impact_collision(t_wrap_enmy *shot, t_sector *sect)
 // {
-// 	t_point		pos;
-// 	double		try;
+// 	const t_vtx		impact = {shot->where.x, shot->where.y};
+// 	const t_vtx		*vert = sect->vertex;
+// 	t_vtx			dest;
+// 	t_edge			wall;
+// 	int				s;
 
-// 	pos.x = env->bots[bot]->position.x;
-// 	pos.y = env->bots[bot]->position.y;
-
-// 	try = 0.2;
-// 	if (fabs(env->bots[bot]->player_angl - env->bots[bot]->direction) < 30)
+// 	s = -1;
+// 	dest = (t_vtx){shot->velocity.x, shot->velocity.y};
+// 	while (++s < (int)sect->npoints)
 // 	{
-// 		while (try < env->bots[bot]->player_dist)
+// 		wall = (t_edge){vert[s], vert[s + 1]};
+// 		if (is_crossing(impact, dest, vert, s))
 // 		{
-// 			if (env->w_map[(int)(env->bots[bot]->position.y
-// 			+ pos.y)][(int)(env->bots[bot]->position.x + pos.x)] & 0x0010)
-// 				return (0);
-
-// 			pos.x = cos(env->bots[bot]->player_angl * M_PI / 180) * try;
-// 			pos.y = sin(env->bots[bot]->player_angl * M_PI / 180) * try;
-
-// 			printf("pos.x : %f\n", pos.x);
-// 			printf("pos.y : %f\n", pos.y);
-
-// 			env->bots[bot]->debug.x = pos.x;
-// 			env->bots[bot]->debug.y = pos.y;
-
-// 			try += 0.2;
+// 			if (sector_collision(impact, &dest, wall))
+// 				shot->is_shooting = 0;
 // 		}
-// 		return (1);
 // 	}
-// 	return (0);
+// 	// s = -1;
+// 	// while (++s < (int)sect->npoints)
+// 	// {
+// 	// 	if (sect->neighbors[s] >= 0 && is_crossing(where, dest, vert, s))
+// 	// 	{
+// 	// 		e->player.sector = sect->neighbors[s];
+// 	// 		break;
+// 	// 	}
+// 	// }
 // }
 
-// void			handle_botssss(t_env *env)
+// void	impact_bot(t_wrap_enmy *shot, t_sector *sector)
 // {
-// 	t_point		last_pos;
-// 	int			i;
 
-// 	i = 0;
-// 	ft_bzero(&last_pos, sizeof(t_point));
-// 	while (env->bots[i])
+// 	enemy = sector->head_enemy;
+// 	while (enemy)
 // 	{
-// 		get_player_dist(env, i);
-// 		get_player_angl(env, i);
-// 		if (is_player_ahead(env, i))
+// 		enemy = enemy->next;
+// 	}
+// }
+
+// void	pl_kill_bot(t_env *env, t_ixy mouse, t_sector *sector)
+// {
+// 	t_wrap_enmy	*enemy;
+// 	t_wrap_enmy	*shot;
+// 	t_vtx		step;
+// 	const t_player	p = env->engine.player;
+
+// 	if (env->player.actions.is_shooting)
+// 	{
+// 		shot = &env->player.shoot;
+// 		enemy = sector->head_enemy;
+// 		if (!shot->is_shooting)
 // 		{
-// 			/*env->bots[i]->position.x +=
-// 			cos(env->bots[i]->direction * M_PI / 180) * 0.05;
-// 			env->bots[i]->position.y +=
-// 			cos(env->bots[i]->direction * M_PI / 180) * 0.05;*/
-
-// 			last_pos.x = env->player.pos.x;
-// 			last_pos.y = env->player.pos.y;
-
-// 			env->bots[i]->direction = env->bots[i]->player_angl;
-// 			env->bots[i]->detected = 1;
+// 			shot->origin = p.where;
+// 			shot->where = p.where;
+// 			shot->is_shooting = 1;
+// 			step = (t_vtx){p.anglecos, p.anglesin};
 // 		}
 // 		else
-// 			env->bots[i]->detected = 0;
-// 		/*else if (env->bots[i]->detected == 1)
 // 		{
-// 			move_bot(env, i, last_pos);
-// 			if (env->pos_x == last_pos.x
-// 			&& env->pos_y == last_pos.y)
+// 			shot->velocity.x = shot->velocity.x * (1 - 0.4f) + step.x * 0.4f;
+// 			shot->velocity.y = shot->velocity.y * (1 - 0.4f) + step.y * 0.4f;
+// 			impact_collision(shot, sector);
+// 			impact_bot(shot, sector);
+// 			if (shot->is_shooting)
 // 			{
-// 				//while ( 360 degres )
-// 				{
-// 					rotate_bot(env, i,  //new degre);
-// 					if (is_player_ahead(env, i))
-// 						return ;
-// 				}
-// 				env->bots[i]->detected = 0;
-// 				move_bot(env, i, env->bots[i]->init_pos);
+// 				shot->where.x += dest.x;
+// 				shot->where.y += dest.y;
 // 			}
-// 		}*/
-// 		if (env->bots[i]->player_dist < 4)
-// 		// 4 arbitraire, peut servir de niveau de difficulte
-// 		{
-// 			env->bots[i]->direction = env->bots[i]->player_angl;
-// 			env->bots[i]->alerted = 1;
+
 // 		}
-// 		else if (env->bots[i]->alerted == 1)
-// 		{
-// 			env->bots[i]->direction = env->bots[i]->init_dir;
-// 			env->bots[i]->alerted = 0;
-// 		}
-// 		i++;
+
 // 	}
 // }

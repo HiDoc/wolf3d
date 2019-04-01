@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/26 13:51:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 20:51:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 	const float ratiox = img->w / (float)bloc->rect.w;
 	const float ratioy = img->h / (float)bloc->rect.h;
 
-	i = bloc->limit.x;
-	while (i < bloc->rect.w && (ratiox > 1 ? (i * ratiox) : i) < img->w)
+	i = bloc->limit.v1.x;
+	while (i < bloc->rect.w - bloc->limit.v2.x && (ratiox > 1 ? (i * ratiox) : i) < img->w)
 	{
-		j = bloc->limit.y;
-		while (j < bloc->rect.h && (ratioy > 1 ? (j * ratioy) : j) < img->h)
+		j = bloc->limit.v1.y;
+		while (j < bloc->rect.h - bloc->limit.v2.y && (ratioy > 1 ? (j * ratioy) : j) < img->h)
 		{
 			Uint32 color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
 			(ratioy > 1 ? (j * ratioy) : j));

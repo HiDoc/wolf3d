@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:46:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/30 14:13:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct								s_sdl
 	SDL_Texture		*texture;
 	SDL_Surface		*surface;
 	SDL_Event		event;
+	Uint8			*keycodes;
 };
 
 struct								s_msc
