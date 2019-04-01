@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 16:44:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 16:57:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ static void		init_objs(t_env *env)
 	// consumables
 	load_obj("ressources/objects/consumables", CONSUMABLE, env);
 	// entities
-	load_obj("ressources/objects/entities", CONSUMABLE, env);
+	load_obj("ressources/objects/entities", ENTITY, env);
 	// prefabs
 	load_obj("ressources/objects/prefabs", PREFAB, env);
 	// specials
