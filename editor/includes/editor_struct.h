@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/31 20:17:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 13:51:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum					e_type
 ** E_ : EDITOR
 ** _I : INPUT
 ** _B : BUTTON
-** _ELM_ : 
+** _ELM_ : element page
 */
 
 enum					e_elements
@@ -51,6 +51,15 @@ enum					e_elements
 	E_B_ELM_SPEC/*,
 	E_B_UP,
 	E_B_DOWN*/
+};
+
+enum					e_obj_category
+{
+	WALL_OBJ,
+	CONSUMABLE,
+	ENTITY,
+	PREFAB,
+	SPECIAL
 };
 
 typedef struct  s_vtx   	t_vtx;
@@ -169,16 +178,9 @@ struct					s_env
 
 	// lst elements
 	t_elem			*elements;
-	// lst wall_objects
-	char			**wall_objects;
-	// lst consumables
-	char			**consumables;
-	// lst entities
-	char			**entities;
-	// lst prefabs
-	char			**prefabs;
-	// lst specials
-	char			**specials;
+
+	// lst button objects
+	t_elem			*btn_objs;
 };
 
 #endif

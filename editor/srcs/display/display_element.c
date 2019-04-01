@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 16:34:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:15:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,23 @@ void		display_element(t_env *env)
 	ui_make_rect(env->data->surface, get_element(E_B_ELM_DOWN, env)->rect);
 
 	// display wall_texture file
-	char		**tab;
-	int         y;
-	int         i;
+	t_elem		*elem;
 	SDL_Rect    sdlrect;
-	t_pos       origin;
-
-	origin.x = 890;
-	origin.y = 250;
+	int         i;
 
 	i = 0;
-	tab = env->wall_objects;
-	if (env->obj_mode == 1)
-		tab = env->consumables;
-	else if (env->obj_mode == 2)
-		tab = env->entities;
-	else if (env->obj_mode == 3)
-		tab = env->prefabs;
-	else if (env->obj_mode == 4)
-		tab = env->specials;
-	while (tab[i])
+	elem = env->btn_objs;
+	while (elem)
 	{
-		y = origin.y + 80 + 40 * (i + env->editor.idx_wall_txtr);
-		if (y >= origin.y + 80 && y < origin.y + 130 + 320)
+		if (elem->type == env->obj_mode
+		&& elem->rect.y >= 330 && elem->rect.y < 700)
 		{
-			sdlrect = (SDL_Rect){origin.x + 20, y, 200, 30};
-			ui_make_full_rect(env->data->surface, sdlrect, C_GREY);
-			rect = (t_rect){origin.x + 20, y, 300, 30, C_WHITE};
-			ui_make_string(rect, tab[i], env->data);
+			sdlrect = (SDL_Rect){
+			elem->rect.x, elem->rect.y, elem->rect.w, elem->rect.h};
+			ui_make_full_rect(env->data->surface, sdlrect, C_GREY);;
+			ui_make_string(elem->rect, elem->str, env->data);
+			i++;
 		}
-		i++;
+		elem = elem->next;
 	}
 }
