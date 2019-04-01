@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 11:56:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 16:40:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void		create_vertex(t_pos pos, t_env *env)
 		ui_error_exit_sdl("Editor: Out of memory", env->data);
 	new->pos.x = pos.x;
 	new->pos.y = pos.y;
+	new->sector = env->sct_current;
 	new->next = 0;
 
 	if (!(env->sct_current->vtx_start))
@@ -103,7 +104,7 @@ int			draw_mode(t_env *env)
 		if (!(current = target_vertex(env))) // no dock
 		{
 			if (!(target_sector(env->data->mouse, env)))
-			{
+			{// not in another sector
 				env->drawing = 1;
 				create_sector(env);
 				create_vertex(env->data->mouse, env);
@@ -123,16 +124,17 @@ int			draw_mode(t_env *env)
 		{
 			if ((current = target_vertex(env))) // dock
 			{
-				if (poscmp(current->pos,
-				env->sct_current->vtx_start->pos)) // dock start
+				if (current == env->sct_current->vtx_start) // dock start
 				{
 					env->sct_current->close = 1;
 					env->sct_current->vtx_current = 0;
 					env->sct_current = 0;
 					env->drawing = 0;
 				}
-				else // dock other
-					create_vertex(current->pos, env);
+				else if (current->sector != env->sct_current)
+				{// dock (different sector)
+					create_vertex(current->pos, env); // assign
+				}
 			}
 			else // no dock
 				create_vertex(env->data->mouse, env);
