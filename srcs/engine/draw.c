@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 18:21:27 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/29 20:07:57 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ t_l_int		wonder_wall(t_raycast ctn, t_projec projct, int *ytop, int *ybottom)
 	/* Acquire the Y coordinates for our ceiling
 	& floor for this X coordinate. Clamp them. */
 	// !diff_abs ? diff_abs = 1 : 0;
-	coord.ceil = diff_curr * (projct.y2a - projct.y1a)
-		/ (diff_abs) + projct.y1a;
+	coord.ceil = diff_curr * (projct.y2a - projct.y1a) / (diff_abs) + projct.y1a;
 	coord.floor = diff_curr * (projct.y2b - projct.y1b)
 		/ (diff_abs) + projct.y1b;
 	limits.ceil = clamp(coord.ceil, *ytop, *ybottom);
