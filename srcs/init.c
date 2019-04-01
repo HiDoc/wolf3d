@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:40:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/03/31 21:21:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int		init_gameplay_env(t_env *env)
 	&& init_character(&env->player)
 	&& set_simple_strings(env, 0, 0)
 	&& init_hud_blocs(env)
-	&& init_weapon(env));
+	&& init_weapon(env)
+	&& init_enemies(env));
 }
 
 int		initialisation_sdl(t_env *env)

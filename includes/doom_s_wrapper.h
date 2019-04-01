@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/31 19:40:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/01 11:15:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct 					s_wrap_enmy
 	t_vtx			where;
 	t_vtx			whereto;
 	t_vtx			velocity;
+	t_edge			edge;
 	t_wrap_enmy		*shoot;
 	t_wrap_enmy		*next;
 };

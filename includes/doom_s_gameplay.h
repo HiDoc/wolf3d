@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/31 19:08:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/03/31 23:25:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,6 @@ struct						s_weapon
 	t_bloc				sprite_bullet;
 	t_bloc				*sprite_reload;
 	t_bloc				*sprite_shoot;
-	// SDL_Surface			*sprite;
-	// SDL_Surface			*sprite_bullet;
-	// SDL_Surface			**sprite_reload;
-	// SDL_Surface			**sprite_shoot;
 	long				ref;
 	int					type;
 	int					time_reload;
@@ -150,6 +146,7 @@ struct						s_character
 	SDL_Surface	*sprite;
 	t_inventory	inventory;
 	t_actions	actions;
+	t_wrap_enmy	shoot;
 };
 
 struct						s_world
