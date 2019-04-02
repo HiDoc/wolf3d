@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 01:25:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 02:03:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	bot_move(t_vtx p, t_wrap_enmy *enemy, float speed)
 	t_vtx		move;
 
 	enemy->player.whereto = (t_vctr){p.x, p.y, 0};
-	enemy->player.angle = -p.x * 0.02f;
+	enemy->player.angle = -p.x * 0.03f;
 	enemy->player.anglesin = -sinf(enemy->player.angle);
 	enemy->player.anglecos = -cosf(enemy->player.angle);
 	move = bot_orientation(&enemy->player, enemy->player.whereto, speed);
@@ -88,11 +88,26 @@ int		action_bot_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 	return (1);
 }
 
-void	bot_new_shoot(t_wrap_enmy *enemy)
+t_player	bot_angle(t_player src)
 {
+	t_player	new;
+
+	new.where = src.where;
+	new.angle = -src.where.x * 0.03f;
+	new.anglecos = -sinf(src.angle);
+	new.anglecos = -cosf(src.angle);
+	new.sprite = src.sprite;
+	return (new);
+}
+
+void	bot_new_shoot(t_wrap_enmy *enemy, t_player p)
+{
+	t_player	new_look;
+
 	if (enemy->frame > 60)
 	{
-		action_bot_kill(enemy->is_shooting, &enemy->player, enemy);
+		new_look = bot_angle(p);
+		action_bot_kill(enemy->is_shooting, &new_look, enemy);
 		enemy->frame = 0;
 	}
 	else
@@ -143,7 +158,7 @@ void	bot_action(t_env *env, t_sector *sector)
 			if (enemy->next && enemy->next->is_alive)
 				bot_check_where(enemy, enemy->next);
 			if (enemy->is_shooting)
-				bot_new_shoot(enemy);
+				bot_new_shoot(enemy, env->engine.player);
 			handle_bot_bul(env, enemy, enemy->damage);
 		}
 		enemy = enemy->next;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 01:28:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 01:38:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 	where = (t_vtx){shot->position.where.x, shot->position.where.y};
 	if (dist_vertex(where, player) < 1)
 	{
-		printf("shoot player\n");
 		if (env->player.shield)
 			env->player.shield -= damage;
 		else
@@ -113,11 +112,7 @@ void	handle_bullets(t_env *env, t_impact **shot, int damage)
 			shot[i]->position.velocity.x = shot[i]->position.velocity.x * (1 - 0.7f) + move.x * 0.7f;
 			shot[i]->position.velocity.y = shot[i]->position.velocity.y * (1 - 0.7f) + move.y * 0.7f;
 			impact_collision(shot[i], sector);
-			if (p == 'p')
-				impact_bot(shot[i], sector, damage);
-			else
-				impact_player(env, shot[i], (t_vtx){env->engine.player.where.x,
-				env->engine.player.where.y}, damage);
+			impact_bot(shot[i], sector, damage);
 			if (shot[i]->is_shooting)
 			{
 				shot[i]->position.where.x += shot[i]->position.velocity.x;
