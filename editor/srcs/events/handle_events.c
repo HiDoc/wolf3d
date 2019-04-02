@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 18:02:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:17:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int		handle_events(t_env *env)
 				return (draw_mode(env));
 			else if (env->mouse_mode == 2 && env->obj_type > -1)
 			{
-				create_object(env->obj_type, env);
+				if (env->sct_hover)
+					create_object(env->obj_type, env);
 			}
 		}
 		else if (env->mouse_mode == 2)

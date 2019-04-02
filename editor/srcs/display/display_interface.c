@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 16:09:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:13:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,16 @@ void			display_interface(t_env *env)
 		ui_make_line(env->data->surface, vec, C_CYAN);
 	}
 
-	// dusplay objects
+	// display objects
 	t_object	*obj = env->objects;
+	color = C_WHITE;
 	while (obj)
 	{
-		rect = (t_rect){obj->pos.x - 5, obj->pos.y - 5, 10, 10, 0xFF00FF00};
+		if (obj->category == CONSUMABLE)
+			color = C_GREEN;
+		else if (obj->category == ENTITY)
+			color = C_RED;
+		rect = (t_rect){obj->pos.x - 5, obj->pos.y - 5, 10, 10, color};
 		ui_make_rect(env->data->surface, rect);
 		obj = obj->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 16:06:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:11:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ int			elem_mode(t_env *env)
 	{
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, obj_btn->rect)
 				&& obj_btn->type == env->obj_mode)
-		{
-			if (obj_btn->type == CONSUMABLE)
-			{
-				env->obj_type = CONSUMABLE; // replace by ref
-			}
-		}
+			env->obj_type = obj_btn->type; // replace by ref
 		obj_btn = obj_btn->next;
 	}
 	return (0);
