@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 16:11:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:02:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int		handle_events(t_env *env)
 
 		// targetting sector
 		env->sct_hover = target_sector(env->data->mouse, env);
+
+		// targetting object
+		env->obj_hover = target_object(env->data->mouse, env);
 
 		// calc vrx distance
 		if (env->sct_current)

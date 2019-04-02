@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 16:11:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:07:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,10 @@ struct					s_env
 	t_sct			*sct_start;
 	t_sct			*sct_end;
 
-	// hover / select hud
+	// hover / select
 	t_sct			*sct_hover;
 	t_vtx			*vtx_hover;
+	t_object		*obj_hover;
 
 	// current obj_button
 	int				obj_type;
