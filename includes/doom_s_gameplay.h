@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 22:33:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 10:19:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,6 @@ typedef struct s_character	t_character;
 ** ammo_magazine = ff
 ** damage = g
 */
-struct 						s_impact
-{
-	SDL_Surface			*sprite;
-	int					is_shot;
-	t_player			position;
-	int					is_alive;
-	int					is_shooting;
-	int					ref;
-};
 
 struct						s_weapon
 {

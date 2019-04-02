@@ -17,7 +17,7 @@ void	sdl_render_game(t_env *env)
 	dfs(env);
 	handle_weapon(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
-	// ui_minimap(env);
+	 ui_minimap(env);
 	print_hud(env);
 	action_gems(env);
 	bot_action(env, &env->engine.sectors[env->engine.player.sector]);

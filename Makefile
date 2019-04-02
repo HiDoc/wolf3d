@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/01/25 00:22:44 by abaille           #+#    #+#              #
-#    Updated: 2019/04/01 22:18:23 by abaille          ###   ########.fr        #
+#    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
+#    Updated: 2019/04/02 10:09:11 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,19 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-CELLAR		= /Users/$(ID_UN)/.brew/Cellar
 VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
-			  ./libft/includes/
+			  ./libft/includes/	\
+
+BREW		= ~/.brew
+BREW_SDL	= ~/.brew/Cellar/sdl2
+BREW_TTF	= ~/.brew/Cellar/sdl2_ttf
+BREW_FT		= ~/.brew/Cellar/freetype
+BREW_IMG	= ~/.brew/Cellar/sdl2_image
+BREW_MIX	= ~/.brew/Cellar/sdl2_mixer
+
+SDL_LIB		= -lSDL2_ttf -lSDL2 -lSDL2_mixer -lSDL2_image
 
 UNAME 		:= $(shell uname)
 
@@ -43,19 +51,6 @@ ifeq ($(UNAME), Linux)
 CC 			= clang -std=c99
 INC_PATH 	+= /usr/include/SDL2/
 OPEN 		= -L/usr/lib/x86_64-linux-gnu -lm -lpthread
-else
-SDL_V		= $(shell ls $(CELLAR)/sdl2/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/SDL2/
-INC_PATH 	+= $(CELLAR)/sdl2/$(SDL_V)/include/
-
-SDL_TTF		= $(shell ls $(CELLAR)/sdl2_ttf/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2_ttf/$(SDL_TTF)/include/
-
-SDL_IMG		= $(shell ls $(CELLAR)/sdl2_image/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2_image/$(SDL_IMG)/include/
-
-SDL_MIX		= $(shell ls $(CELLAR)/sdl2_mixer/ | head -1)
-INC_PATH 	+= $(CELLAR)/sdl2_mixer/$(SDL_MIX)/include/
 endif
 
 HED_NAME	= doom.h \
@@ -138,8 +133,6 @@ SRC_NAME 	= main.c \
 			weapons_inventory.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
-LSDL2		= -L/Users/$(ID_UN)/.brew/lib/ \
-			  -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 OBJ			= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC			= $(addprefix -I , $(INC_PATH))
@@ -152,13 +145,47 @@ SHELL		:=	bash
 
 .PHONY: all re clean fclean
 
-all: $(NAME)
+all: $(BREW) $(BREW_SDL) $(BREW_FT) $(BREW_TTF) $(BREW_MIX) $(BREW_IMG) COMPILE
 
 $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $(LSDL2) $(OBJ) -o $(NAME) -L$(LIBFT) $(OPEN) -lft
+	@$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) -L$(LIBFT) $(SDL2LIB) $(SDL_LIB) $(OPEN) -lft
+
+COMPILE : sdl2lib sdl2cflags $(NAME)
+
+sdl2lib:
+		$(eval SDL2LIB = $(shell sdl2-config --libs))
+
+sdl2cflags:
+		$(eval SDL2CFLAGS = $(shell sdl2-config --cflags))
+
+$(BREW) :
+		$(shell /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
+		brew upgrade
+		brew -v install pkg-config
+
+
+cleanbrew:
+	brew uninstall -f sdl2_ttf
+	brew uninstall -f freetype
+	brew uninstall -f pkg-config
+	brew uninstall -f libgpng
+	brew uninstall -f sdl2_image
+	brew uninstall -f sdl2_mixer
+	brew uninstall -f sdl2
+
+$(BREW_SDL) :
+		brew -v install sdl2
+$(BREW_FT) :
+		brew -v install freetype
+$(BREW_TTF) :
+		brew -v install sdl2_ttf
+$(BREW_MIX) :
+		brew -v	install sdl2_mixer
+$(BREW_IMG) :
+		brew -v install sdl2_image
 
 $(OBJ_PATH) :
 	@mkdir -p $@
@@ -169,7 +196,7 @@ $(OBJ_PATH)%.o: %.c | $(OBJ_PATH)
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46);index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
 	@printf "\r\033[38;5;%dm⌛ [%s]: %2d%% `printf '█%.0s' {0..$(DONE)}`%*s❙%*.*s\033[0m\033[K" $(COLOR) $(NAME) $(PERCENT) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
-	@$(CC) -MMD $(CFLAGS) $(INC) -o $@ -c $<
+	@$(CC) -MMD $(CFLAGS) $(INC) -o $@ -c $< $(SDL2CFLAGS)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 norminette:
@@ -200,6 +227,8 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
+
+fcleansdl: cleanbrew fclean
 
 parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft

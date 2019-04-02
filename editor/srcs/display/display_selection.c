@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:04:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:22:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		display_selection(t_env *env)
 	ui_make_nbrstring(rect, 2, env->data); /**/
 	rect = (t_rect){1100, 110, 0, 20, 0xffffffff};
 	ui_make_string(rect, "]", env->data);
-
 
 	rect = (t_rect){900, 150, 0, 20, 0xffffffff};
 	ui_make_string(rect, "Height", env->data);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 02:25:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 10:19:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_wrap_enmy      t_wrap_enmy;
 typedef struct	s_vision		t_vision;
 typedef struct	s_player		t_player;
 typedef struct s_impact			t_impact;
+
 
 struct						s_object
 {
@@ -60,6 +61,15 @@ struct						s_player
 	SDL_Surface	*sprite;
 };
 
+struct 						s_impact
+{
+	SDL_Surface			*sprite;
+	int					is_shot;
+	t_player			position;
+	int					is_alive;
+	int					is_shooting;
+	int					ref;
+};
 struct					s_wrap_sect
 {
 	t_vtx		vertex;
