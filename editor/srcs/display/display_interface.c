@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 15:11:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:05:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,14 @@ void			display_interface(t_env *env)
 	{
 		vec = (t_vec){env->sct_current->vtx_current->pos, env->data->mouse};
 		ui_make_line(env->data->surface, vec, C_CYAN);
+	}
+
+	// dusplay objects
+	t_object	*obj = env->objects;
+	while (obj)
+	{
+		rect = (t_rect){obj->pos.x, obj->pos.y, 10, 10, 0xFF00FF00};
+		ui_make_rect(env->data->surface, rect);
+		obj = obj->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 16:57:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:03:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,10 @@ static void		init_elems(t_env *env)
 	150, 25, C_WHITE};
 	create_element(M_B_EXIT, BUTTON, rect, env);
 
-	rect = (t_rect){20, 20, 100, 40, C_WHITE};
-	create_element(E_B_NEW, BUTTON, rect, env);
+	rect = (t_rect){20, 20, 125, 40, C_WHITE};
+	create_element(E_B_MENU, BUTTON, rect, env);
 
-	rect = (t_rect){130, 20, 125, 40, C_WHITE};
-	create_element(E_B_UPLOAD, BUTTON, rect, env);
-
-	rect = (t_rect){300, 20, 100, 40, C_WHITE};
+	rect = (t_rect){170, 20, 100, 40, C_WHITE};
 	create_element(E_B_SAVE, BUTTON, rect, env);
 
 	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 + 20,
@@ -102,7 +99,7 @@ static void		init_elems(t_env *env)
 	rect = (t_rect){700, 20, 40, 40, 0xffffffff};
 	create_element(E_B_MODE_ELEM, BUTTON, rect, env);
 
-	rect = (t_rect){850, 20, 150, 40, 0xffffffff};
+	rect = (t_rect){1030, 20, 150, 40, 0xffffffff};
 	create_element(E_B_PLAY, BUTTON, rect, env);
 
 	rect = (t_rect){1130, 350, 20, 20, 0xFFFFFFFF};
@@ -146,7 +143,7 @@ static void		load_obj(char *path, int type, t_env *env)
 	i = 0;
 	while (stock[i])
 	{
-		rect = (t_rect){910, 330 + 40 * (i + env->editor.idx_wall_txtr),
+		rect = (t_rect){910, 330 + 40 * (i /*+ var arrow */),
 		200, 30, C_WHITE};
 		create_btn_obj(i, type, stock[i], rect, env);
 		free(stock[i]);
@@ -216,6 +213,8 @@ static void		init_editor(t_env *env)
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
+
+	env->obj_type = -1;
 
 	i = 0;
 	// compteur nb wall textures
