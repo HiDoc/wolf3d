@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 01:28:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 02:36:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sdl_render_game(t_env *env)
 	print_hud(env);
 	action_gems(env);
 	bot_action(env, &env->engine.sectors[env->engine.player.sector]);
-	handle_bullets(env, &env->player.shot, 30);
+	player_bullet(env, &env->player.shot, 30);
 	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 }
 

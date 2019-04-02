@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 01:38:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 02:36:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,26 @@ int		new_bullet(t_impact *new, t_player *p, int i)
 ** Collision detection.
 ** Check if the player is crossing an edge and if this edge has a neighbour
 */
-void	impact_collision(t_impact *shot, t_sector *sect)
+int		bot_wall_collision(t_player *bot, t_sector *sect)
 {
-	const t_vtx		impact = {shot->position.where.x, shot->position.where.y};
+	const t_vtx		vertex = {bot->where.x, bot->where.y};
 	const t_vtx		*vert = sect->vertex;
 	t_vtx			dest;
 	t_edge			wall;
 	int				s;
 
 	s = -1;
-	dest = (t_vtx){shot->position.velocity.x, shot->position.velocity.y};
+	dest = (t_vtx){bot->velocity.x, bot->velocity.y};
 	while (++s < (int)sect->npoints)
 	{
 		wall = (t_edge){vert[s], vert[s + 1]};
-		if (is_crossing(impact, dest, vert, s))
+		if (is_crossing(vertex, dest, vert, s))
 		{
-			if (sector_collision(impact, &dest, wall))
-			{
-				shot->is_shooting = 0;
-				shot->is_alive = 0;
-				printf("wall hit\n");
-			}
+			if (sector_collision(vertex, &dest, wall))
+				return (1);
 		}
 	}
+	return (0);
 }
 
 void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
@@ -95,7 +92,7 @@ void	impact_bot(t_impact *shot, t_sector *sector, int damage)
 	}
 }
 
-void	handle_bullets(t_env *env, t_impact **shot, int damage)
+void	player_bullet(t_env *env, t_impact **shot, int damage)
 {
 	t_vtx		move;
 	int			i;
@@ -111,7 +108,11 @@ void	handle_bullets(t_env *env, t_impact **shot, int damage)
 			move = add_vertex(move, (t_vtx){shot[i]->position.anglecos, shot[i]->position.anglesin});
 			shot[i]->position.velocity.x = shot[i]->position.velocity.x * (1 - 0.7f) + move.x * 0.7f;
 			shot[i]->position.velocity.y = shot[i]->position.velocity.y * (1 - 0.7f) + move.y * 0.7f;
-			impact_collision(shot[i], sector);
+			if (bot_wall_collision(&shot[i]->position, sector))
+			{
+				shot[i]->is_alive = 0;
+				shot[i]->is_shooting = 0;
+			}
 			impact_bot(shot[i], sector, damage);
 			if (shot[i]->is_shooting)
 			{
@@ -125,9 +126,9 @@ void	handle_bullets(t_env *env, t_impact **shot, int damage)
 	}
 }
 
-int		action_kill(int shooting, t_player *p, t_character *player)
+int		pl_new_kill(int shooting, t_player *p, t_character *player)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	if (shooting)

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 00:41:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 02:35:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		mouse_shoot(t_env *env)
 	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
 		actions->is_shooting = !actions->is_shooting;
-		action_kill(actions->is_shooting, &env->engine.player, &env->player);
+		pl_new_kill(actions->is_shooting, &env->engine.player, &env->player);
 		actions->mouse_state = 1;
 		printf("shoot\n");
 	}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 02:03:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 02:33:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_vtx	bot_orientation(t_player *bot, t_vctr p_where, float speed)
 	return (move);
 }
 
-void	bot_move(t_vtx p, t_wrap_enmy *enemy, float speed)
+void	bot_move(t_env *env, t_vtx p, t_wrap_enmy *enemy, float speed)
 {
 	t_vtx		move;
 
@@ -41,11 +41,14 @@ void	bot_move(t_vtx p, t_wrap_enmy *enemy, float speed)
 	move = bot_orientation(&enemy->player, enemy->player.whereto, speed);
 	enemy->player.velocity.x = enemy->player.velocity.x * (1 - speed) + move.x * speed;
 	enemy->player.velocity.y = enemy->player.velocity.y * (1 - speed) + move.y * speed;
-	enemy->player.where.x += enemy->player.velocity.x;
-	enemy->player.where.y += enemy->player.velocity.y;
+	if (!bot_wall_collision(&enemy->player, &env->engine.sectors[env->engine.player.sector]))
+	{
+		enemy->player.where.x += enemy->player.velocity.x;
+		enemy->player.where.y += enemy->player.velocity.y;
+	}
 }
 
-void	bot_check_where(t_wrap_enmy *enemy, t_wrap_enmy *next)
+void	bot_check_friend(t_wrap_enmy *enemy, t_wrap_enmy *next)
 {
 	t_vtx	first;
 	t_vtx	secd;
@@ -65,7 +68,7 @@ void	bot_check_where(t_wrap_enmy *enemy, t_wrap_enmy *next)
 	}
 }
 
-int		action_bot_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
+int		bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 {
 	int	i;
 
@@ -100,14 +103,14 @@ t_player	bot_angle(t_player src)
 	return (new);
 }
 
-void	bot_new_shoot(t_wrap_enmy *enemy, t_player p)
+void	bot_shoot_cadence(t_wrap_enmy *enemy, t_player p)
 {
 	t_player	new_look;
 
 	if (enemy->frame > 60)
 	{
 		new_look = bot_angle(p);
-		action_bot_kill(enemy->is_shooting, &new_look, enemy);
+		bot_new_kill(enemy->is_shooting, &new_look, enemy);
 		enemy->frame = 0;
 	}
 	else
@@ -115,7 +118,7 @@ void	bot_new_shoot(t_wrap_enmy *enemy, t_player p)
 }
 
 
-void	handle_bot_bul(t_env *env, t_wrap_enmy *enemy, int damage)
+void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
 {
 	t_vtx		move;
 	int			i;
@@ -130,7 +133,7 @@ void	handle_bot_bul(t_env *env, t_wrap_enmy *enemy, int damage)
 			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, 0.7f);
 			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - 0.7f) + move.x * 0.7f;
 			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - 0.7f) + move.y * 0.7f;
-			impact_collision(&enemy->shot[i], sector);
+			bot_wall_collision(&enemy->shot[i].position, sector);
 			impact_player(env, &enemy->shot[i], (t_vtx){env->engine.player.where.x,
 			env->engine.player.where.y}, damage);
 			if (enemy->shot[i].is_shooting)
@@ -156,10 +159,10 @@ void	bot_action(t_env *env, t_sector *sector)
 		if (enemy->is_alive)
 		{
 			if (enemy->next && enemy->next->is_alive)
-				bot_check_where(enemy, enemy->next);
+				bot_check_friend(enemy, enemy->next);
 			if (enemy->is_shooting)
-				bot_new_shoot(enemy, env->engine.player);
-			handle_bot_bul(env, enemy, enemy->damage);
+				bot_shoot_cadence(enemy, env->engine.player);
+			bot_bullet(env, enemy, enemy->damage);
 		}
 		enemy = enemy->next;
 	}
@@ -180,7 +183,7 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
 		{
 			if (dist_vertex(player, where) > 100)
-				bot_move(player, enemy, 0.2f);
+				bot_move(env, player, enemy, 0.2f);
 			if (dist_vertex(player, where) < 400)
 				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
 		}
