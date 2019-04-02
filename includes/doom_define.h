@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 16:26:14 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/04/02 13:23:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@
 #define WHITE		(SDL_Color){255, 255, 255, 255}
 #define BLACK		(SDL_Color){0, 0, 0, 255}
 #define BLUE		(SDL_Color){8, 8, 255, 0}
+#define GREEN		(SDL_Color){8, 255, 8, 0}
 #define	GOLD		(SDL_Color){242, 204, 42, 255}
 #define TRANSPARENT	(SDL_Color){0, 0, 0, 0}
 

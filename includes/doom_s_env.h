@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 14:13:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 22:50:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ struct 								s_stats
 {
 	int				k_enemies;
 	int				k_boss;
-	int				k_magnum;
-	int				k_shotgun;
-	int				k_rifle;
+	int				k_wpn[WORLD_NB_WEAPONS];
 	int				headshot;
 	int				time_play;
 	int				death;

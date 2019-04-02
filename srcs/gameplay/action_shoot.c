@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 02:36:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 23:09:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ int		bot_wall_collision(t_player *bot, t_sector *sect)
 	{
 		wall = (t_edge){vert[s], vert[s + 1]};
 		if (is_crossing(vertex, dest, vert, s))
-		{
-			if (sector_collision(vertex, &dest, wall))
-				return (1);
-		}
+			return (1);
+		if (sect->neighbors[s] >= 0 && is_crossing(vertex, dest, vert, s))
+			return (1);
 	}
 	return (0);
 }
@@ -65,14 +64,16 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 		if (env->player.health <= 10)
 			env->player.health = 200;
 		shot->is_shooting = 0;
+		shot->is_alive = 0;
 	}
 }
 
-void	impact_bot(t_impact *shot, t_sector *sector, int damage)
+void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 {
 	t_wrap_enmy	*enemy;
 	t_vtx		first;
 	t_vtx		scd;
+	// int			wpn;
 
 	enemy = sector->head_enemy;
 	while (enemy && shot->is_shooting)
@@ -84,7 +85,11 @@ void	impact_bot(t_impact *shot, t_sector *sector, int damage)
 			enemy->health -= damage;
 			printf("vie bot : %i\n", enemy->health);
 			if (enemy->health < 10)
+			{
 				enemy->is_alive = 0;
+				env->stats.k_enemies++;
+				// env->stats.k_wpn[wpn]++;
+			}
 			shot->is_shooting = 0;
 			shot->is_alive = 0;
 		}
@@ -101,19 +106,19 @@ void	player_bullet(t_env *env, t_impact **shot, int damage)
 	i = 0;
 	sector = &env->engine.sectors[env->engine.player.sector];
 	move = (t_vtx){0.f, 0.f};
-	while (i < 12)
+	while (i < env->engine.player.nb_shot)
 	{
 		if (shot[i] && shot[i]->is_shooting)
 		{
 			move = add_vertex(move, (t_vtx){shot[i]->position.anglecos, shot[i]->position.anglesin});
-			shot[i]->position.velocity.x = shot[i]->position.velocity.x * (1 - 0.7f) + move.x * 0.7f;
-			shot[i]->position.velocity.y = shot[i]->position.velocity.y * (1 - 0.7f) + move.y * 0.7f;
+			shot[i]->position.velocity.x = shot[i]->position.velocity.x * (1 - 1.9f) + move.x * 1.9f;
+			shot[i]->position.velocity.y = shot[i]->position.velocity.y * (1 - 1.9f) + move.y * 1.9f;
 			if (bot_wall_collision(&shot[i]->position, sector))
 			{
 				shot[i]->is_alive = 0;
 				shot[i]->is_shooting = 0;
 			}
-			impact_bot(shot[i], sector, damage);
+			impact_bot(env, shot[i], sector, damage);
 			if (shot[i]->is_shooting)
 			{
 				shot[i]->position.where.x += shot[i]->position.velocity.x;
@@ -133,7 +138,7 @@ int		pl_new_kill(int shooting, t_player *p, t_character *player)
 	i = 0;
 	if (shooting)
 	{
-		while (i < 12)
+		while (i < p->nb_shot)
 		{
 			if (!player->shot[i].is_alive)
 			{

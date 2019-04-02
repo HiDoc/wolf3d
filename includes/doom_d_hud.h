@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 22:35:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 13:17:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@
 # define I_STRING_3		"Give ammo for Shotgun"
 # define I_STRING_4		"Give ammo for Pulsar Rifle"
 # define I_STRING_5		"Turn JetPack ON/OFF"
-# define I_STRING_6		"Give Gills - for 2 minutes"
+# define I_STRING_6		"Give Super Speed - for 2 minutes"
 # define I_STRING_7		"Give Invisibility - for 2 minutes"
 # define I_STRING_8		"Give Super Strength - for 2 minutes"
 # define I_STRING_9		"Give Invulnerability - for 2 minutes"

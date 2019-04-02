@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 02:33:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 20:03:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 	i = 0;
 	if (shooting)
 	{
-		while (i < 12)
+		while (i < BOT_NB_SHOT)
 		{
 			if (!enemy->shot[i].is_alive)
 			{
@@ -117,7 +117,6 @@ void	bot_shoot_cadence(t_wrap_enmy *enemy, t_player p)
 		enemy->frame++;
 }
 
-
 void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
 {
 	t_vtx		move;
@@ -126,14 +125,18 @@ void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
 
 	i = 0;
 	sector = &env->engine.sectors[env->engine.player.sector];
-	while (i < 12)
+	while (i < BOT_NB_SHOT)
 	{
 		if (enemy->shot[i].is_shooting)
 		{
-			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, 0.7f);
-			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - 0.7f) + move.x * 0.7f;
-			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - 0.7f) + move.y * 0.7f;
-			bot_wall_collision(&enemy->shot[i].position, sector);
+			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, 0.1f);
+			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - 0.1f) + move.x * 0.1f;
+			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - 0.1f) + move.y * 0.1f;
+			if (bot_wall_collision(&enemy->shot[i].position, sector))
+			{
+				enemy->shot[i].is_alive = 0;
+				enemy->shot[i].is_shooting = 0;
+			}
 			impact_player(env, &enemy->shot[i], (t_vtx){env->engine.player.where.x,
 			env->engine.player.where.y}, damage);
 			if (enemy->shot[i].is_shooting)

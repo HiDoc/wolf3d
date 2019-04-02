@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 16:10:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 10:55:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "doom_define.h"
 # include "doom_d_ui.h"
 # include "doom_d_hud.h"
+# include "doom_d_gameplay.h"
 
 /*
 ** Include all structures

@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/02 10:09:11 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/02 15:07:39 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -241,7 +241,7 @@ run: all
 lldb:
 	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
-	lldb ./doom
+	./doom
 
 .NOTPARALLEL:
 re: fclean all

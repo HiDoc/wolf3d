@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 17:22:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 20:04:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,16 @@ void		render_object(t_env *env, t_queue *queue)
 	}
 }
 
-void		render_bullet(t_env *env, t_wrap_enmy *headshot, t_queue *queue)
+void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 {
-	t_wrap_enmy	*shot;
+	int	i;
 
-	shot = headshot;
-	while (shot)
+	i = 0;
+	while (i < p.nb_shot)
 	{
-		if (shot->is_alive)
-			render_sprites(env, queue, shot->sprite, shot->player.where);
-		shot = shot->next;
+		if (shot[i].is_alive)
+			render_sprites(env, queue, p.sprite, shot[i].position.where);
+		i++;
 	}
 }
 
@@ -128,7 +128,7 @@ void		render_enemies(t_env *env, t_queue *queue)
 {
 	const t_character	*ctn = env->world.enemies;
 	t_wrap_enmy			*enemy;
-	t_vtx 			p;
+	t_vtx 				p;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = queue->sect->head_enemy;
@@ -138,7 +138,7 @@ void		render_enemies(t_env *env, t_queue *queue)
 		{
 			bot_status(env, p, enemy, env->sdl.keycodes);
 			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->player.where);
-			// render_bullet(env, enemy->headshot, queue);
+			render_bullet(env, enemy->player, enemy->shot, queue);
 		}
 		enemy = enemy->next;
 	}
@@ -153,5 +153,5 @@ void		render_sector(t_env *env, t_queue *queue)
 		render_sector_edges(env, queue, s);
 	render_object(env, queue);
 	render_enemies(env, queue);
-	// render_bullet(env, env->player.headshot, queue);
+	render_bullet(env, env->engine.player, env->player.shot, queue);
 }
