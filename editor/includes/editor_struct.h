@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 15:59:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:11:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,6 @@ struct					s_env
 	// data infos
 	int				nb_vtx;
 	int				nb_sct;
-	int				nb_wall_objs;
-	int				nb_consumables;
-	int				nb_entities;
-	int				nb_specials;
 
 	// size current edge draw
 	int				vtx_size;
