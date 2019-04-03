@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 16:03:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 18:10:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,28 @@ static void		create_btn_obj(int id, int type, char *str, t_rect rect, t_env *env
 	{
 		new->next = env->btn_objs;
 		env->btn_objs = new;
+	}
+}
+
+static void		create_btn_map(char *str, t_rect rect, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = (t_elem *)ft_memalloc(sizeof(t_elem))))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory", env->data);
+	// ...
+	if (!(new->str = ft_strdup(str)))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory", env->data);
+	new->rect = rect;
+	if (!(env->menu.btn_maps))
+	{
+		env->menu.btn_maps = new;
+		env->menu.btn_maps->next = 0;
+	}
+	else
+	{
+		new->next = env->menu.btn_maps;
+		env->menu.btn_maps = new;
 	}
 }
 
@@ -132,7 +154,6 @@ static void		load_obj(char *path, int type, t_env *env)
 	int			fd;
 	int			i;
 
-	// wall_objects
 	if ((fd = open(path, O_RDONLY)) == -1)
 		ui_error_exit_sdl("Editor: load_obj, bad fd", env->data);
 	if ((get_next_line(fd, &line)) == -1)
@@ -170,6 +191,7 @@ static void		init_objs(t_env *env)
 static void		init_menu(t_env *env)
 {
 	t_data				*data = env->data;
+	t_rect				rect;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
@@ -181,23 +203,10 @@ static void		init_menu(t_env *env)
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
-			env->menu.nb_maps++;
-	}
-	closedir(dr);
-
-	// stockage des maps name
-	if (!(env->menu.maps = (char **)ft_memalloc(sizeof(char *)
-					* (env->menu.nb_maps + 1))))
-		ui_error_exit_sdl("Libui: Out of memory", data);
-
-	if (!(dr = opendir("maps/")))
-		ui_error_exit_sdl("Editor: Unable to open maps/", data);
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.')
 		{
-			if (!(env->menu.maps[i] = ft_strdup(de->d_name)))
-				ui_error_exit_sdl("Editor: Out of memory", data);
+			rect = (t_rect){220, 310 + (40 * i), 300, 25, C_WHITE};
+			env->menu.nb_maps++;
+			create_btn_map(de->d_name, rect, env);
 			i++;
 		}
 	}
