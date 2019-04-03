@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 13:51:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:14:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ enum					e_elements
 	M_B_EXIT,
 	M_B_UP,
 	M_B_DOWN,
-	E_B_NEW,
-	E_B_UPLOAD,
+	E_B_MENU,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
 	E_B_MODE_DRAW,
@@ -48,9 +47,7 @@ enum					e_elements
 	E_B_ELM_CONS,
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
-	E_B_ELM_SPEC/*,
-	E_B_UP,
-	E_B_DOWN*/
+	E_B_ELM_SPEC
 };
 
 enum					e_obj_category
@@ -101,7 +98,7 @@ struct					s_elem
 	int				type;
 	t_rect			rect;
 	char			*str;		// if type == input
-	int				str_max;		// if type == input
+	int				str_max;	// if type == input
 	int				clicked;
 	int				hovered;
 	t_elem			*next;
@@ -149,22 +146,19 @@ struct					s_env
 	t_sct			*sct_start;
 	t_sct			*sct_end;
 
-	// hover / select hud
+	// hover / select
 	t_sct			*sct_hover;
 	t_vtx			*vtx_hover;
+	t_object		*obj_hover;
 
+	// current obj_button
+	int				obj_type;
 	// lst objects
-	t_sct			*obj_current;
-	t_sct			*obj_start;
-	t_sct			*obj_end;
+	t_object		*objects;
 
 	// data infos
 	int				nb_vtx;
 	int				nb_sct;
-	int				nb_wall_objs;
-	int				nb_consumables;
-	int				nb_entities;
-	int				nb_specials;
 
 	// size current edge draw
 	int				vtx_size;
