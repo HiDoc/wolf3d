@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 10:19:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 11:14:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,29 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
+typedef struct	s_stats		t_stats;
+typedef struct s_save		t_save;
+
+struct						s_save
+{
+	t_player				player; //position + angle view
+	int						health;
+	int						shield;
+	t_inventory				inventory; // objects + gems + weapon + current wpn
+	t_sector				*sector; // all sectors (with objects + enemies) to know wich are still visible
+	t_stats					stats; // game stats
+};
+
+struct 						s_stats
+{
+	int				k_enemies;
+	int				k_boss;
+	int				k_wpn[WORLD_NB_WEAPONS];
+	int				headshot;
+	int				time_play;
+	int				death;
+	t_bloc			achievments[8];
+};
 
 /*
 ** Weapon struct
