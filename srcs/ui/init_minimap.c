@@ -6,26 +6,25 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:03:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 09:59:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/03/29 18:27:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-/*static*/ void		draw_player(SDL_Surface *surface)
+static void		draw_player(SDL_Surface *surface)
 {
-	SDL_Rect	rect;
-	t_edge		edge;
+	t_circle	circle;
 
 	// player position
-	//rect = (SDL_Rect){minimap->player.x - 5, minimap->player.y + 5, 10, 10};
-	rect = (SDL_Rect){MINIMAP_SIZE / 2 - 5, MINIMAP_SIZE / 2 - 5, 10, 10};
-	ui_draw_full_rect(surface, rect, C_BLUE);
+	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 5, C_CYAN};
+	ui_draw_full_circle(surface, circle);
 
-	// player direction
-	edge = (t_edge){(t_vtx){rect.x + 5, rect.y + 5},
-	(t_vtx){rect.x + 5, rect.y - 10}};
-	ui_draw_line(surface, edge, C_CYAN);
+	// player fov
+	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
+	240 * M_PI / 180, 0, 30, 0xFBFCAEFF);
+	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
+	300 * M_PI / 180, 0, 30, 0xFBFCAEFF);
 }
 
 static void		get_map_minmax(t_env *env)
