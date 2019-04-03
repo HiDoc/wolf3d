@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 16:10:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 11:19:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
 typedef struct	s_skybox	t_skybox;
+typedef struct	s_save		t_save;
+
+
+struct						s_save
+{
+	t_player				player; //position + angle view
+	int						health;
+	int						shield;
+	t_inventory				inventory; // objects + gems + weapon + current wpn
+	t_sector				*sector; // all sectors (with objects + enemies) to know wich are still visible
+	t_stats					stats; // game stats
+};
 
 
 struct						s_scaler

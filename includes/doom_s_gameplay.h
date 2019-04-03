@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 11:14:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 11:18:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,6 @@ typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
 typedef struct	s_stats		t_stats;
-typedef struct s_save		t_save;
-
-struct						s_save
-{
-	t_player				player; //position + angle view
-	int						health;
-	int						shield;
-	t_inventory				inventory; // objects + gems + weapon + current wpn
-	t_sector				*sector; // all sectors (with objects + enemies) to know wich are still visible
-	t_stats					stats; // game stats
-};
 
 struct 						s_stats
 {
@@ -55,6 +44,15 @@ struct 						s_stats
 	int				time_play;
 	int				death;
 	t_bloc			achievments[8];
+};
+
+struct						s_inventory
+{
+	t_wrap_wpn	*current;
+	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
+	t_wrap_inv	objects[6];
+	t_wrap_inv	gems[4];
+	int			nb_current_obj;
 };
 
 /*
@@ -96,15 +94,6 @@ struct						s_container
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
-};
-
-struct						s_inventory
-{
-	t_wrap_wpn	*current;
-	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
-	t_wrap_inv	objects[6];
-	t_wrap_inv	gems[4];
-	int			nb_current_obj;
 };
 
 struct						s_actions
