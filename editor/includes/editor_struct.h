@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 17:49:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:04:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ struct					s_menu
 	int				state;
 	int				nb_maps;
 	int				idx_map;
-	t_elem			*btn_maps;
+	t_elem			*btn_maps;		// upload list
+	t_elem			*selected;		// upload selected
 	SDL_Surface		*background;
 };
 

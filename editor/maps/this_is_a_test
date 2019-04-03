@@ -1,0 +1,38 @@
+# map name
+this_is_a_test
+# nb vertex:
+9
+# vertex: x y
+vertex 54 0
+vertex 0 161
+vertex 91 193
+vertex 124 132
+vertex 144 207
+vertex 205 190
+vertex 180 113
+vertex 100 62
+vertex 122 22
+# nb sectors:
+1
+# sector: ceil floor n-vertex n-neighbors
+sector /**/ /**//**/
+# nb wall objects:
+0
+# wall_object: x y sector ref
+# nb consumables:
+2
+# consumable: x y sector ref is_wpn
+consumable 77 21 /**/ /**/ /**/
+consumable 59 16 /**/ /**/ /**/
+# nb entities:
+3
+# entity: x y sector ref
+entity 84 177 /**/ /**/
+entity 184 164 /**/ /**/
+entity 55 43 /**/ /**/
+# nb specials:
+3
+# special: x y ref
+special 141 131 /**/
+special 94 106 /**/
+special 34 129 /**/

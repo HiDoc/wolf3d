@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 18:57:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:51:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@ static void		reset_values(t_env *env)
 	get_element(M_I_NEW, env)->rect.color = C_WHITE;
 
 	// reset menu upload
-	t_elem	*obj_map = env->menu.btn_maps;
-	while (obj_map)
-	{
-		obj_map->rect.color = C_WHITE;
-		obj_map = obj_map->next;
-	}
+	env->menu.selected = 0;
 }
 
 int			menu_events(t_env *env)
@@ -37,6 +32,11 @@ int			menu_events(t_env *env)
 		{
 			if (get_element(M_I_NEW, env)->str)
 				env->map_name = get_element(M_I_NEW, env)->str;
+			else if (env->menu.selected)
+			{
+				// do parsing
+				exit(0); // temporary
+			}
 			env->menu.state = 0;
 		}
 		else if (env->menu.state == 1
@@ -67,16 +67,21 @@ int			menu_events(t_env *env)
 			get_element(M_I_NEW, env)->clicked = 1;
 			get_element(M_I_NEW, env)->rect.color = C_GREEN;
 		}
-		t_elem	*obj_map = env->menu.btn_maps;
-		while (obj_map)
-		{
-			if (ui_mouseenter(
-			env->data->mouse.x, env->data->mouse.y, obj_map->rect))
+		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+		(t_rect){WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 120, 350, 320, C_WHITE}))
+		{ // mouse in upload
+			t_elem	*obj_map = env->menu.btn_maps;
+			t_rect	rect;
+			while (obj_map)
 			{
-				env->map_name = obj_map->str; // replace by ref
-				obj_map->rect.color = C_GREEN;
+				rect = (t_rect){
+				obj_map->rect.x, obj_map->rect.y + env->menu.idx_map * 40,
+				obj_map->rect.w, obj_map->rect.h, obj_map->rect.color};
+				if (ui_mouseenter(
+				env->data->mouse.x, env->data->mouse.y, rect))
+					env->menu.selected = obj_map;
+				obj_map = obj_map->next;
 			}
-			obj_map = obj_map->next;
 		}
 		return (1);
 	}

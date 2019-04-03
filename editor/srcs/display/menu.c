@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 18:46:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:40:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ static void	left_panel(t_pos origin, t_env *env)
 	{
 		rect = (t_rect){elem->rect.x, elem->rect.y + env->menu.idx_map * 40,
 		elem->rect.w, elem->rect.h, elem->rect.color};
+		if (elem == env->menu.selected)
+			rect.color = C_GREEN;
 		if (rect.y >= origin.y + 100 && rect.y <= origin.y + 420)
-		{	
+		{
 			ui_make_rect(env->data->surface, rect);
 			ui_make_string(rect, elem->str, env->data);
 		}
@@ -68,7 +70,12 @@ static void	right_panel(t_pos origin, t_env *env)
 
 	// current map
 	rect = (t_rect){origin.x + 420, origin.y + 10, 380, 30, C_WHITE};
-	ui_make_string(rect, env->map_name, env->data);
+	if (env->menu.selected)
+		ui_make_string(rect, env->menu.selected->str, env->data);
+	else if (get_element(M_I_NEW, env)->str)
+		ui_make_string(rect, get_element(M_I_NEW, env)->str, env->data);
+	else
+		ui_make_string(rect, env->map_name, env->data);
 
 	// start button
 	rect = (t_rect){origin.x + 410, origin.y + 400, 0, 25, C_WHITE};
