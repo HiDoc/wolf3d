@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 11:21:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/02 13:40:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	return (1);
 }
 
+int	keyhook_gems(t_env *env, const Uint8 *keycodes)
+{
+
+	if (keycodes[SDL_SCANCODE_1])
+		action_gems(env, env->hud.shortcut[0], 0);
+	if (keycodes[SDL_SCANCODE_2])
+		action_gems(env, env->hud.shortcut[1], 1);
+	if (keycodes[SDL_SCANCODE_3])
+		action_gems(env, env->hud.shortcut[2], 2);
+	if (keycodes[SDL_SCANCODE_4])
+		action_gems(env, env->hud.shortcut[3], 3);
+	if (keycodes[SDL_SCANCODE_5])
+		action_gems(env, env->hud.shortcut[4], 4);
+	return (1);
+}
+
 int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
@@ -37,10 +53,9 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 
 	e = &env->engine;
 	v = &e->player.vision;
-	(void)keycodes;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
-
+		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_E])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[SDL_SCANCODE_G])

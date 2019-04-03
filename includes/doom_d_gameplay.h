@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   select_mode.c                                      :+:      :+:    :+:   */
+/*   doom_d_gameplay.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:47:34 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
+/*   Updated: 2019/04/02 10:50:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "editor.h"
+#ifndef DOOM_D_GAMEPLAY_H
+# define DOOM_D_GAMEPLAY_H
 
-void		unselect_all(t_env *env)
-{
-	(void)env;
-}
+# define BOT_NB_SHOT	12
 
-int			select_mode(t_env *env)
-{
-	(void)env;
-	return (1);
-}
+#endif

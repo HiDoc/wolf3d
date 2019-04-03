@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/31 23:25:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 11:18:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,26 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct s_impact		t_impact;
+typedef struct	s_stats		t_stats;
 
-struct						s_object
+struct 						s_stats
 {
-	SDL_Surface	*sprite;
+	int				k_enemies;
+	int				k_boss;
+	int				k_wpn[WORLD_NB_WEAPONS];
+	int				headshot;
+	int				time_play;
+	int				death;
+	t_bloc			achievments[8];
+};
 
-	int			nb_use;
-	int			max_stack;
-	int			ref;
-	int			sectorno;
-	t_vtx		vertex;
+struct						s_inventory
+{
+	t_wrap_wpn	*current;
+	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
+	t_wrap_inv	objects[6];
+	t_wrap_inv	gems[4];
+	int			nb_current_obj;
 };
 
 /*
@@ -57,17 +66,6 @@ struct						s_object
 ** ammo_magazine = ff
 ** damage = g
 */
-struct 						s_impact
-{
-	SDL_Surface			*sprite;
-	int					is_shot;
-	t_vctr				target;
-	t_vctr				where;
-	float				angle;
-	float				anglecos;
-	float				anglesin;
-
-};
 
 struct						s_weapon
 {
@@ -96,15 +94,6 @@ struct						s_container
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
-};
-
-struct						s_inventory
-{
-	t_wrap_wpn	*current;
-	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
-	t_wrap_inv	objects[6];
-	t_wrap_inv	gems[4];
-	int			nb_current_obj;
 };
 
 struct						s_actions
@@ -138,15 +127,12 @@ struct						s_character
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	float		angle;
-	float		anglecos;
-	float		anglesin;
-	float		yaw;
-	float		eyeheight;
 	SDL_Surface	*sprite;
+	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_wrap_enmy	shoot;
+	t_impact	*shot;
+	int			nb_shot;
 };
 
 struct						s_world

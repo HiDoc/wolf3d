@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 14:13:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 11:18:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,7 @@ typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
-typedef struct	s_stats				t_stats;
 typedef struct	s_tiletab			t_tiletab;
-
-struct 								s_stats
-{
-	int				k_enemies;
-	int				k_boss;
-	int				k_magnum;
-	int				k_shotgun;
-	int				k_rifle;
-	int				headshot;
-	int				time_play;
-	int				death;
-	t_bloc			achievments[8];
-};
 
 struct								s_sdl
 {

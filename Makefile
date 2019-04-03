@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsauron <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/01 16:23:28 by jsauron          ###   ########.fr        #
+#    Updated: 2019/04/02 15:07:39 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SRC_NAME 	= main.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
+			action_shoot.c \
 			checking.c \
 			draw.c \
 			draw_hud.c 	\
@@ -240,7 +241,7 @@ run: all
 lldb:
 	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
-	lldb ./doom
+	./doom
 
 .NOTPARALLEL:
 re: fclean all

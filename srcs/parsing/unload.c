@@ -167,8 +167,8 @@ void		free_env(t_env *env)
 		en = e->sectors[a].head_enemy;
 		while (en != NULL)
 		{
-			free(e->sectors[a].head_enemy->shoot);
 			e->sectors[a].head_enemy = en->next;
+			free(en->shot);
 			free(en);
 			en = e->sectors[a].head_enemy;
 		}
@@ -176,6 +176,9 @@ void		free_env(t_env *env)
 	}
 	free(e->queue.renderedsectors);
 	free(e->sectors);
+	free(env->player.bullet);
+	if (env->player.shot)
+		free(env->player.shot);
 	e->sectors = NULL;
 	e->nsectors = 0;
 	SDL_DestroyTexture(env->sdl.texture);

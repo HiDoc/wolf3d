@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 15:22:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:48:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,19 @@ void		editor(t_env *env)
 		display_element(env);
 	}
 
-	// display new
-	ui_make_rect(env->data->surface, get_element(E_B_NEW, env)->rect);
-	rect = (t_rect){45, 30, 0, 25, 0xFFFFFFFF};
-	ui_make_string(rect, "New", env->data);	
-	// display upload
-	ui_make_rect(env->data->surface, get_element(E_B_UPLOAD, env)->rect);
-	rect = (t_rect){155, 30, 0, 25, 0xFFFFFFFF};
-	ui_make_string(rect, "Upload", env->data);
+	// display menu
+	ui_make_rect(env->data->surface, get_element(E_B_MENU, env)->rect);
+	ui_make_string(get_element(E_B_MENU, env)->rect, "MENU", env->data);
 	// display save
 	ui_make_rect(env->data->surface, get_element(E_B_SAVE, env)->rect);
-	rect = (t_rect){324, 30, 0, 25, 0xffffffff};
-	ui_make_string(rect, "save", env->data);
+	ui_make_string(get_element(E_B_SAVE, env)->rect, "SAVE", env->data);
 
 	// display map name
-	rect = (t_rect){450, 30, 0, 25, 0xffffffff};
+	rect = (t_rect){20, 65, 0, 25, 0xffffffff};
 	ui_make_string(rect, env->map_name, env->data);
 
 	// display nb frames
-	rect = (t_rect){1100, 20, 0, 20, 0xFFFFFFFF};
+	rect = (t_rect){300, 20, 0, 20, 0xFFFFFFFF};
 	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
 
 	// display nb element
@@ -84,11 +78,11 @@ void		editor(t_env *env)
 
 	// display mouse mode buttons
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_SELECT, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_MODE_MOVE, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_DRAW, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_ELEM, env)->rect);
 
 	// display play
-	rect = (t_rect){850, 20, 0, 40, 0xffffffff};
-	ui_make_string(rect, "PLAY", env->data);
+	ui_make_string(get_element(E_B_PLAY, env)->rect, "PLAY", env->data);
 	ui_make_rect(env->data->surface, get_element(E_B_PLAY, env)->rect);	
 }
