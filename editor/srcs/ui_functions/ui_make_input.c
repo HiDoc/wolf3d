@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 11:02:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 13:13:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:04:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		ui_make_input(SDL_Surface *surface, t_elem *elem, t_data *data)
 		sdl_rect = (SDL_Rect){
 		elem->rect.x, elem->rect.y,
 		elem->rect.w, elem->rect.h};
-		color = ui_hex_to_rgb(elem->rect.color);
+		color = (SDL_Color){255, 255, 255, 255};
 		if (!(srf = TTF_RenderText_Blended(data->font, elem->str, color)))
 			ui_error_exit_sdl("Libui: Error while making surface", data);
 		sdl_rect.w = (sdl_rect.h * srf->w) / srf->h;

@@ -6,56 +6,60 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/30 13:15:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:04:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
+static void		reset_values(t_env *env)
+{
+	// reset menu input new
+	get_element(M_I_NEW, env)->clicked = 0;
+	get_element(M_I_NEW, env)->rect.color = C_WHITE;
+}
+
 int			menu_events(t_env *env)
 {
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
+		reset_values(env);
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_START, env)->rect))
 		{
 			if (get_element(M_I_NEW, env)->str)
 				env->map_name = get_element(M_I_NEW, env)->str;
 			env->menu.state = 0;
-			return (1);
 		}
 		else if (env->menu.state == 1
 		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_EXIT, env)->rect))
 		{
 			ui_exit_sdl(env->data);
-			return (1);
 		}
 		else if (env->menu.state == 2
 		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_CANCEL, env)->rect))
 		{
 			env->menu.state = 0;
-			return (1);
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_UP, env)->rect))
 		{
 			(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
-			return (1);
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_DOWN, env)->rect))
 		{
 			(env->menu.idx_map > -env->menu.nb_maps + 1) ? env->menu.idx_map-- : 0;
-			return (1);
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_I_NEW, env)->rect))
 		{
 			get_element(M_I_NEW, env)->clicked = 1;
-			return (1);
-		} 
+			get_element(M_I_NEW, env)->rect.color = C_GREEN;
+		}
+		return (1);
 	}
 
 	if (get_element(M_I_NEW, env)->clicked == 1
@@ -98,14 +102,16 @@ int			menu_events(t_env *env)
 		}
 		else if (env->data->sdl.event.key.keysym.scancode == 42)
 		{ // backspace
-			/*tmp = get_element(M_I_NEW, env)->str;
-			if (!(get_element(M_I_NEW, env)->str =
-			ft_strrem(get_element(M_I_NEW, env)->str, 1)))
-				ui_error_exit_sdl("Editor: Out of memory", env->data);
-			free(tmp);*/
+			if (get_element(M_I_NEW, env)->str)
+			{
+				int	newsize = ft_strlen(get_element(M_I_NEW, env)->str) - 1;
+				if (newsize > 0)
+					get_element(M_I_NEW, env)->str[newsize] = 0;
+				else
+					ft_strdel(&get_element(M_I_NEW, env)->str);
+			}
 		}
 		return (1);
 	}
-
 	return (0);
 }

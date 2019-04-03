@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:36:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 15:21:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 01:05:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void        display_drawing(t_env *env)
 	i = 0;
 	while (env->editor.wall_txtr[i])
 	{
-		y = origin.y + 80 + 40 * (i + env->editor.idx_wall_txtr);
+		y = origin.y + 80 + 40 * (i /*+ var arrow*/);
 		if (y >= origin.y + 80 && y < origin.y + 130 + 320)
 		{
 			sdlrect = (SDL_Rect){origin.x + 20, y, 200, 30};
