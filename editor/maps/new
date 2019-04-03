@@ -1,16 +1,11 @@
 # map name
-new_map
+new
 # nb vertex:
-4
+0
 # vertex: x y
-vertex 0 1
-vertex 123 0
-vertex 122 120
-vertex 6 121
 # nb sectors:
-1
+0
 # sector: ceil floor n-vertex n-neighbors
-sector /**/ /**//**/
 # nb wall objects:
 0
 # wall_object: x y sector ref
