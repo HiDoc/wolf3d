@@ -1,38 +1,142 @@
 # map name
 this_is_a_test
 # nb vertex:
-9
+91
 # vertex: x y
-vertex 54 0
-vertex 0 161
-vertex 91 193
-vertex 124 132
-vertex 144 207
-vertex 205 190
-vertex 180 113
-vertex 100 62
-vertex 122 22
+vertex 126 28
+vertex 71 62
+vertex 90 105
+vertex 142 100
+vertex 134 80
+vertex 171 66
+vertex 41 51
+vertex 71 62
+vertex 126 28
+vertex 117 7
+vertex 69 36
+vertex 54 22
+vertex 10 23
+vertex 0 40
+vertex 16 53
+vertex 16 67
+vertex 28 69
+vertex 8 107
+vertex 9 77
+vertex 16 67
+vertex 28 69
+vertex 34 90
+vertex 50 94
+vertex 42 109
+vertex 52 113
+vertex 43 125
+vertex 12 120
+vertex 56 139
+vertex 43 125
+vertex 52 113
+vertex 62 122
+vertex 70 143
+vertex 56 139
+vertex 62 122
+vertex 113 126
+vertex 118 121
+vertex 154 121
+vertex 144 148
+vertex 150 153
+vertex 142 161
+vertex 156 178
+vertex 137 192
+vertex 102 197
+vertex 86 180
+vertex 46 194
+vertex 28 173
+vertex 67 166
+vertex 71 153
+vertex 182 66
+vertex 171 66
+vertex 126 28
+vertex 130 23
+vertex 128 9
+vertex 147 0
+vertex 158 6
+vertex 146 23
+vertex 163 29
+vertex 180 22
+vertex 208 29
+vertex 194 46
+vertex 210 76
+vertex 185 94
+vertex 182 66
+vertex 210 76
+vertex 213 88
+vertex 227 90
+vertex 224 106
+vertex 236 115
+vertex 225 129
+vertex 197 124
+vertex 186 130
+vertex 179 126
+vertex 184 114
+vertex 180 102
+vertex 199 143
+vertex 197 124
+vertex 225 129
+vertex 237 132
+vertex 244 127
+vertex 235 90
+vertex 242 38
+vertex 263 11
+vertex 269 14
+vertex 270 38
+vertex 276 50
+vertex 256 69
+vertex 266 103
+vertex 272 139
+vertex 238 154
+vertex 213 158
+vertex 205 141
 # nb sectors:
-1
+8
 # sector: ceil floor n-vertex n-neighbors
+sector /**/ /**//**/
+sector /**/ /**//**/
+sector /**/ /**//**/
+sector /**/ /**//**/
+sector /**/ /**//**/
+sector /**/ /**//**/
+sector /**/ /**//**/
 sector /**/ /**//**/
 # nb wall objects:
 0
 # wall_object: x y sector ref
 # nb consumables:
-2
+15
 # consumable: x y sector ref is_wpn
-consumable 77 21 /**/ /**/ /**/
-consumable 59 16 /**/ /**/ /**/
+consumable 252 116 /**/ /**/ /**/
+consumable 258 144 /**/ /**/ /**/
+consumable 222 143 /**/ /**/ /**/
+consumable 216 136 /**/ /**/ /**/
+consumable 215 100 /**/ /**/ /**/
+consumable 195 105 /**/ /**/ /**/
+consumable 142 48 /**/ /**/ /**/
+consumable 110 23 /**/ /**/ /**/
+consumable 100 33 /**/ /**/ /**/
+consumable 58 39 /**/ /**/ /**/
+consumable 25 47 /**/ /**/ /**/
+consumable 20 84 /**/ /**/ /**/
+consumable 106 83 /**/ /**/ /**/
+consumable 94 68 /**/ /**/ /**/
+consumable 101 61 /**/ /**/ /**/
 # nb entities:
-3
+8
 # entity: x y sector ref
-entity 84 177 /**/ /**/
-entity 184 164 /**/ /**/
-entity 55 43 /**/ /**/
+entity 256 42 /**/ /**/
+entity 248 72 /**/ /**/
+entity 258 92 /**/ /**/
+entity 45 182 /**/ /**/
+entity 66 175 /**/ /**/
+entity 129 64 /**/ /**/
+entity 103 48 /**/ /**/
+entity 122 42 /**/ /**/
 # nb specials:
-3
+0
 # special: x y ref
-special 141 131 /**/
-special 94 106 /**/
-special 34 129 /**/

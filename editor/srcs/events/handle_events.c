@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 21:10:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 00:39:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		handle_events(t_env *env)
 	const SDL_Event	event = env->data->sdl.event;
 
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
-		? ui_exit_sdl(env->data) : 0;
+	? ui_exit_sdl(env->data) : 0;
 
 	if (env->menu.state > 0)
 		return (menu_events(env));
@@ -93,13 +93,9 @@ int		handle_events(t_env *env)
 	else if (event.type == SDL_MOUSEWHEEL)
 	{
 		if (event.wheel.y > 0)
-		{
-			(env->bloc_size > 20) ? env->bloc_size -= 20 : 0;
-		}
+			(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
 		else if (event.wheel.y)
-		{
-			env->bloc_size += 20;
-		}
+			(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
 	}
 
 	if (env->data->mouse.x || env->data->mouse.y)

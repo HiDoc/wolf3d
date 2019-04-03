@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:25:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 00:44:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ static void		init_menu(t_env *env)
 		}
 	}
 	closedir(dr);
+	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image(
 	"ressources/images/doom-background.jpg", env);
@@ -223,7 +224,7 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->obj_type = -1;
-	env->bloc_size = 20;
+	env->bloc_size = 120;
 	env->zoom_coef = 0.4;
 
 	i = 0;
@@ -262,12 +263,8 @@ void		init_env(t_env *env, t_data *data)
 	env->data = data;
 	init_elems(env);
 	init_objs(env);
-	init_editor(env);
 	init_menu(env);
-
-	if (!(env->map_name = ft_strdup("new_map")))
-		ui_error_exit_sdl("Editor: out of memory", data);
-
+	init_editor(env);
 	ui_make_window("EDITOR", data);
 	ui_load_font("ressources/fonts/Arial.ttf", data);
 }

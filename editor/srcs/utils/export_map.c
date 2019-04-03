@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 21:28:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 00:48:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ void        export_map(t_env *env)
 		while (vtx)
 		{
 			dprintf(fd, "vertex %d %d\n",
-			(int)((vtx->pos.x - xmin) * env->zoom_coef),
-			(int)((vtx->pos.y - ymin) * env->zoom_coef));
+			(int)(vtx->pos.x - xmin), (int)(vtx->pos.y - ymin));
 			vtx = vtx->next;
 		}
 		sct = sct->next;	
@@ -106,8 +105,7 @@ void        export_map(t_env *env)
 	{
 		if (obj->category == WALL_OBJ)
 			dprintf(fd, "wall_object %d %d /**/ /**/\n",
-			(int)((obj->pos.x - xmin) * env->zoom_coef),
-			(int)((obj->pos.y - ymin) * env->zoom_coef));
+			(int)(obj->pos.x - xmin),(int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
@@ -120,8 +118,7 @@ void        export_map(t_env *env)
 	{
 		if (obj->category == CONSUMABLE)
 			dprintf(fd, "consumable %d %d /**/ /**/ /**/\n",
-			(int)((obj->pos.x - xmin) * env->zoom_coef),
-			(int)((obj->pos.y - ymin) * env->zoom_coef));
+			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 	
@@ -134,8 +131,7 @@ void        export_map(t_env *env)
 	{
 		if (obj->category == ENTITY)
 			dprintf(fd, "entity %d %d /**/ /**/\n",
-			(int)((obj->pos.x - xmin) * env->zoom_coef),
-			(int)((obj->pos.y - ymin) * env->zoom_coef));
+			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
@@ -148,8 +144,7 @@ void        export_map(t_env *env)
 	{
 		if (obj->category == SPECIAL)
 			dprintf(fd, "special %d %d /**/\n",
-			(int)((obj->pos.x - xmin) * env->zoom_coef),
-			(int)((obj->pos.y - ymin) * env->zoom_coef));
+			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
