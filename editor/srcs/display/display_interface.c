@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 18:13:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:30:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void		display_infos(t_env *env)
 {
+	t_vec		vec;
 	t_rect		rect;
 
 	// display position
@@ -27,33 +28,52 @@ static void		display_infos(t_env *env)
 	ui_make_nbrstring(rect, env->data->mouse_y, env->data);
 
 	// display_size
-	rect = (t_rect){190, 750, 0, 20, 0xFFFFFFFF};
+	rect = (t_rect){190, 750, 0, 20, 0xffffffff};
 	ui_make_string(rect, "size : ", env->data);
-	rect = (t_rect){240, 750, 0, 20, 0xFFFFFFFF};
+	rect = (t_rect){240, 750, 0, 20, 0xffffffff};
 	ui_make_nbrstring(rect, env->vtx_size, env->data);
+
+	// display bloc_size
+	rect = (t_rect){840, 750, 0, 20, 0xffffffff};
+	ui_make_nbrstring(rect, 20, env->data);
+	vec = (t_vec){(t_pos){830 - env->bloc_size, 765}, (t_pos){830, 765}};
+	ui_make_line(env->data->surface, vec, C_WHITE);
+	vec = (t_vec){(t_pos){830, 765}, (t_pos){830, 755}};
+	ui_make_line(env->data->surface, vec, C_WHITE);
+	vec = (t_vec){(t_pos){830 - env->bloc_size, 765},
+	(t_pos){830 - env->bloc_size, 755}};
+	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
 void			display_interface(t_env *env)
 {
+	Uint32		color;
 	t_vec		vec;
 	t_rect		rect;
+	int			nb;
 	int			i;
 
 	// display interface area + grid
 	rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
+	nb = 0;
 	i = 20;
 	while (i < 870)
 	{
+		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
-		ui_make_line(env->data->surface, vec, 0X30FFFFFF);
-		i += 20;
+		ui_make_line(env->data->surface, vec, color);
+		i += env->bloc_size / 4;
+		nb++;
 	}
+	nb = 0;
 	i = 100;
 	while (i < 780)
 	{
+		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
-		ui_make_line(env->data->surface, vec, 0X30FFFFFF);
-		i += 20;
+		ui_make_line(env->data->surface, vec, color);
+		i += env->bloc_size / 4;
+		nb++;
 	}
 	ui_make_rect(env->data->surface, rect);
 
@@ -62,7 +82,6 @@ void			display_interface(t_env *env)
 	// display all edges
 	t_sct	*sct;
 	t_vtx	*vtx;
-	Uint32	color;
 	sct = env->sct_start;
 	while (sct)
 	{

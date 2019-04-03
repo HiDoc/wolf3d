@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 18:10:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:25:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,6 @@ static void		init_elems(t_env *env)
 	150, 25, C_WHITE};
 	create_element(M_B_CANCEL, BUTTON, rect, env);
 
-	rect = (t_rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400,
-	150, 25, C_WHITE};
-	create_element(M_B_EXIT, BUTTON, rect, env);
-
 	rect = (t_rect){20, 20, 125, 40, C_WHITE};
 	create_element(E_B_MENU, BUTTON, rect, env);
 
@@ -115,10 +111,13 @@ static void		init_elems(t_env *env)
 	rect = (t_rect){600, 20, 40, 40, 0xFFFFFFFF};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
 
-	rect = (t_rect){650, 20, 40, 40, 0xffffffff};
-	create_element(E_B_MODE_DRAW, BUTTON, rect, env);
+	rect = (t_rect){650, 20, 40, 40, 0xFFFFFFFF};
+	create_element(E_B_MODE_MOVE, BUTTON, rect, env);
 
 	rect = (t_rect){700, 20, 40, 40, 0xffffffff};
+	create_element(E_B_MODE_DRAW, BUTTON, rect, env);
+
+	rect = (t_rect){750, 20, 40, 40, 0xffffffff};
 	create_element(E_B_MODE_ELEM, BUTTON, rect, env);
 
 	rect = (t_rect){1030, 20, 150, 40, 0xffffffff};
@@ -224,6 +223,8 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->obj_type = -1;
+	env->bloc_size = 20;
+	env->zoom_coef = 0.4;
 
 	i = 0;
 	// compteur nb wall textures

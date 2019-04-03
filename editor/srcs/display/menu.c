@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 19:40:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 20:11:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,12 @@ static void	right_panel(t_pos origin, t_env *env)
 	ui_make_string(rect, "Start", env->data);
 	ui_make_rect(env->data->surface, get_element(M_B_START, env)->rect);
 
-	// Cancel/Exit button
+	// Cancel button
 	rect = (t_rect){origin.x + 610, origin.y + 400, 0, 25, C_WHITE};
-	if (env->menu.state == 1)
-	{
-		ui_make_string(rect, "Exit", env->data); 
-		ui_make_rect(env->data->surface, get_element(M_B_CANCEL, env)->rect);
-	}
-	else if (env->menu.state == 2)
+	if (env->menu.state == 2)
 	{
 		ui_make_string(rect, "Cancel", env->data); 
-		ui_make_rect(env->data->surface, get_element(M_B_EXIT, env)->rect);
+		ui_make_rect(env->data->surface, get_element(M_B_CANCEL, env)->rect);
 	}
 }
 

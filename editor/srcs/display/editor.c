@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/01 17:17:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:26:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		editor(t_env *env)
 
 	// display mouse mode buttons
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_SELECT, env)->rect);
+	ui_make_rect(env->data->surface, get_element(E_B_MODE_MOVE, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_DRAW, env)->rect);
 	ui_make_rect(env->data->surface, get_element(E_B_MODE_ELEM, env)->rect);
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 19:51:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 20:10:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,18 @@ int			menu_events(t_env *env)
 {
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		reset_values(env);
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_START, env)->rect))
 		{
-			if (get_element(M_I_NEW, env)->str)
-				env->map_name = get_element(M_I_NEW, env)->str;
-			else if (env->menu.selected)
+			if (env->menu.selected)
 			{
 				// do parsing
+				printf("do parsing : %s\n", env->menu.selected->str); // temporary
 				exit(0); // temporary
 			}
+			else if (get_element(M_I_NEW, env)->str)
+				env->map_name = get_element(M_I_NEW, env)->str;
 			env->menu.state = 0;
-		}
-		else if (env->menu.state == 1
-		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-		get_element(M_B_EXIT, env)->rect))
-		{
-			ui_exit_sdl(env->data);
 		}
 		else if (env->menu.state == 2
 		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
@@ -51,7 +45,11 @@ int			menu_events(t_env *env)
 		{
 			env->menu.state = 0;
 		}
-		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+
+		// reseting
+		reset_values(env);
+
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(M_B_UP, env)->rect))
 		{
 			(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
