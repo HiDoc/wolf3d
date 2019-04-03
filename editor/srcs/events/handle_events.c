@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 18:17:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:41:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ static void     create_object(int category, t_env *env)
 
 int		handle_events(t_env *env)
 {
-	// data->mouse : mouse position
-	// data->state : keyboard state
-	// data->sdl->event : wait event
+	const Uint8 	*state = env->data->state;
+	const SDL_Event	event = env->data->sdl.event;
 
-	if (env->data->state[SDL_SCANCODE_ESCAPE]
-			|| env->data->sdl.event.type == SDL_QUIT)
-		ui_exit_sdl(env->data);
+	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
+	? ui_exit_sdl(env->data) : 0;
 
 	if (env->menu.state > 0)
 		return (menu_events(env));
@@ -78,7 +76,9 @@ int		handle_events(t_env *env)
 			else if (env->mouse_mode == 2 && env->obj_type > -1)
 			{
 				if (env->sct_hover)
+				{
 					create_object(env->obj_type, env);
+				}
 			}
 		}
 		else if (env->mouse_mode == 2)

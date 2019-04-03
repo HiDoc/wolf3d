@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 21:17:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/02 23:05:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void        export_map(t_env *env)
 {
+
+	int		xmin = WIN_W;	// translation
+	int		ymin = WIN_H;	// translation
+
 	char	*path;
 	int		fd;
 	int		nb_wobj = 0;
@@ -22,6 +26,23 @@ void        export_map(t_env *env)
 	int		nb_spec = 0;
 
 	printf("%s\n", env->map_name);
+
+	t_sct	*sct;
+	t_vtx	*vtx;
+	sct = env->sct_start;
+	while (sct)
+	{
+		vtx = sct->vtx_start;
+		while (vtx)
+		{
+			if (vtx->pos.x < xmin)
+				xmin = vtx->pos.x;
+			if (vtx->pos.y < ymin)
+				ymin = vtx->pos.y;
+			vtx = vtx->next;
+		}
+		sct = sct->next;
+	}
 
 	t_object    *obj = env->objects;
 	while (obj)
@@ -50,15 +71,14 @@ void        export_map(t_env *env)
 
 	dprintf(fd, "# nb vertex:\n%d\n", env->nb_vtx);
 	dprintf(fd, "# vertex: x y\n");
-	t_sct	*sct;
-	t_vtx	*vtx;
 	sct = env->sct_start;
 	while (sct)
 	{
 		vtx = sct->vtx_start;
 		while (vtx)
 		{
-			dprintf(fd, "vertex %d %d\n", (int)vtx->pos.x, (int)vtx->pos.y);
+			dprintf(fd, "vertex %d %d\n",
+			(int)vtx->pos.x - xmin, (int)vtx->pos.y - ymin);
 			vtx = vtx->next;
 		}
 		sct = sct->next;	
@@ -84,7 +104,8 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == WALL_OBJ)
-			dprintf(fd, "wall_object %d %d /**/ /**/\n", (int)obj->pos.x, (int)obj->pos.y);
+			dprintf(fd, "wall_object %d %d /**/ /**/\n",
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin);
 		obj = obj->next;	
 	}
 
@@ -96,7 +117,8 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
-			dprintf(fd, "consumable %d %d /**/ /**/ /**/\n", (int)obj->pos.x, (int)obj->pos.y);
+			dprintf(fd, "consumable %d %d /**/ /**/ /**/\n",
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin);
 		obj = obj->next;	
 	}
 	
@@ -108,7 +130,8 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == ENTITY)
-			dprintf(fd, "entity %d %d /**/ /**/\n", (int)obj->pos.x, (int)obj->pos.y);
+			dprintf(fd, "entity %d %d /**/ /**/\n",
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin);
 		obj = obj->next;	
 	}
 
@@ -120,7 +143,8 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == SPECIAL)
-			dprintf(fd, "special %d %d /**/\n", (int)obj->pos.x, (int)obj->pos.y);
+			dprintf(fd, "special %d %d /**/\n",
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin);
 		obj = obj->next;	
 	}
 
