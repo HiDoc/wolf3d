@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 15:14:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:24:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ enum					e_elements
 	M_I_NEW,
 	M_B_START,
 	M_B_CANCEL,
-	M_B_EXIT,
 	M_B_UP,
 	M_B_DOWN,
 	E_B_MENU,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
+	E_B_MODE_MOVE,
 	E_B_MODE_DRAW,
 	E_B_MODE_ELEM,
 	E_B_PLAY,
@@ -120,7 +120,8 @@ struct					s_menu
 	int				state;
 	int				nb_maps;
 	int				idx_map;
-	char			**maps;
+	t_elem			*btn_maps;		// upload list
+	t_elem			*selected;		// upload selected
 	SDL_Surface		*background;
 };
 
@@ -175,6 +176,10 @@ struct					s_env
 
 	// lst button objects
 	t_elem			*btn_objs;
+
+	// variables
+	int				bloc_size;
+	float			zoom_coef;
 };
 
 #endif

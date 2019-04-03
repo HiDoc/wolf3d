@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 14:41:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 00:39:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		handle_events(t_env *env)
 	if (env->menu.state > 0)
 		return (menu_events(env));
 
-	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
+	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		t_rect		rect;
 
@@ -90,6 +90,13 @@ int		handle_events(t_env *env)
 					get_element(E_B_SAVE, env)->rect))
 			export_map(env);
 	}
+	else if (event.type == SDL_MOUSEWHEEL)
+	{
+		if (event.wheel.y > 0)
+			(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+		else if (event.wheel.y)
+			(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+	}
 
 	if (env->data->mouse.x || env->data->mouse.y)
 	{
@@ -105,8 +112,8 @@ int		handle_events(t_env *env)
 		// calc vrx distance
 		if (env->sct_current)
 			env->vtx_size = sqrt(
-			pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
-			+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
+					pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
+					+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
 		return (1);
 	}
 	return (0);
