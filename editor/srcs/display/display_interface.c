@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:57:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 20:48:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ static void		display_infos(t_env *env)
 	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
+static int		is_vec_in_map(t_vec vec)
+{
+	return (vec.a.x > 0 && vec.a.y > 0 && vec.b.x > 0 && vec.b.y > 0
+	&& vec.a.x < WIN_W && vec.a.y < WIN_H && vec.b.x < WIN_W && vec.b.y < WIN_H);
+}
+
 void			display_interface(t_env *env)
 {
 	Uint32		color;
@@ -80,6 +86,8 @@ void			display_interface(t_env *env)
 	display_infos(env);
 
 	// display all edges
+	t_pos	p1;
+	t_pos	p2;
 	t_sct	*sct;
 	t_vtx	*vtx;
 	sct = env->sct_start;
@@ -91,14 +99,32 @@ void			display_interface(t_env *env)
 			color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
 			while (vtx->next)
 			{
-				vec = (t_vec){vtx->pos, vtx->next->pos};
-				ui_make_line(env->data->surface, vec, color);
+				p1 = (t_pos){
+				vtx->pos.x * env->pixel_value,
+				vtx->pos.y * env->pixel_value};
+
+				p2 = (t_pos){
+				vtx->next->pos.x * env->pixel_value,
+				vtx->next->pos.y * env->pixel_value};
+
+				vec = (t_vec){p1, p2};
+				if (is_vec_in_map(vec))
+					ui_make_line(env->data->surface, vec, color);
 				vtx = vtx->next;
 			}
 			if (sct->close)
 			{
-				vec = (t_vec){sct->vtx_start->pos, sct->vtx_end->pos};
-				ui_make_line(env->data->surface, vec, color);
+				p1 = (t_pos){
+				sct->vtx_start->pos.x * env->pixel_value,
+				sct->vtx_start->pos.y * env->pixel_value};
+
+				p2 = (t_pos){
+				sct->vtx_end->pos.x * env->pixel_value,
+				sct->vtx_end->pos.y * env->pixel_value};
+
+				vec = (t_vec){p1, p2};
+				if (is_vec_in_map(vec))
+					ui_make_line(env->data->surface, vec, color);
 			}
 		}
 		sct = sct->next;
@@ -110,16 +136,27 @@ void			display_interface(t_env *env)
 		vtx = env->sct_hover->vtx_start;
 		while (vtx->next)
 		{
-			vec = (t_vec){vtx->pos, vtx->next->pos};
-			ui_make_line(env->data->surface, vec, color);
+			p1 = (t_pos){
+			vtx->pos.x * env->pixel_value,
+			vtx->pos.y * env->pixel_value};
+
+			p2 = (t_pos){
+			vtx->next->pos.x * env->pixel_value,
+			vtx->next->pos.y * env->pixel_value};
+
+			vec = (t_vec){p1, p2};
+			if (is_vec_in_map(vec))
+				ui_make_line(env->data->surface, vec, color);
 			vtx = vtx->next;
 		}
-		if (env->sct_hover->close)
+		/*if (env->sct_hover->close)
 		{
+			p1 = (t_pos){sct->vtx_start->pos.x * env->pixel_value, sct->vtx_start->pos.y * env->pixel_value};
+			p2 = (t_pos){sct->vtx_end->pos.x * env->pixel_value, sct->vtx_end->pos.y * env->pixel_value};
 			vec = (t_vec){env->sct_hover->vtx_start->pos,
 			env->sct_hover->vtx_end->pos};
 			ui_make_line(env->data->surface, vec, color);
-		}
+		}*/
 	}
 		
 	// display vtx hovering
