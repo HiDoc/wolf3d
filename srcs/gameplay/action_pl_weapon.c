@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 23:17:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 02:04:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 	int	iter;
 
 	iter = 0;
-	if (env->hud.inventory.nb_wpn < WORLD_NB_WEAPONS)
+	if (env->hud.inventory.nb_wpn < 3)
 	{
 		iter = check_weapon_type(env, obj->ref);
 		if (!iter)
@@ -54,6 +54,24 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 	return (17);
 }
 
+int		new_current_wpn(t_env *env, t_inventory *inv)
+{
+	int	i;
+
+	i = 0;
+	while (i < WORLD_NB_WEAPONS)
+	{
+		if (inv->weapons[i].current)
+			break ;
+		i++;
+	}
+	inv->current = &inv->weapons[i];
+	inv->current->ammo_current = env->world.armory[i].ammo_current;
+	inv->current->ammo_magazine = env->world.armory[i].ammo_magazine;
+	inv->current->damage = env->world.armory[i].damage;
+	return (1);
+}
+
 int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 {
 	t_vtx	vertex;
@@ -65,8 +83,9 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 		vertex, wpn->current->ref, wpn->current->is_wpn);
 		*wpn = (t_wrap_wpn) {NULL, 0, 0, 0};
+		new_current_wpn(env, &env->player.inventory);
 		env->hud.inventory.nb_wpn--;
+		env->hud.is_txt = 18;
 	}
-	env->hud.is_txt = 17;
 	return (1);
 }

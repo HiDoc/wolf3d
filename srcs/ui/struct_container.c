@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 17:07:40 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 17:19:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:27:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,33 @@ int		init_hud(t_container *surface)
 
 int		load_enemies(t_world *container)
 {
-	int	i;
+	int		i;
+	int		j;
+	// char	*tmp;
+	// int		ret;
 
 	i = 0;
+	// ret = 0;
 	while (i < WORLD_NB_ENEMIES)
 	{
-		if (!(container->enemies[i].sprite = ui_img("enemies/", i)))
-			return (0);
+		j = 0;
+			// printf("i %i\n", i);
+		while (j < 6)
+		{
+		// tmp = NULL;
+		// if ((tmp = ft_itoa(i) && tmp = (ft_strrjoin("enemies/", tmp))
+			if (!(container->enemies[i].sprites[j] = ui_img("enemies/suitguy/", j)))
+				return (0);
+			// printf("sprite init\n");
+			// printf("j %i\n", j);
+		// 	ret = 1;
+		// else
+		// 	ret = 0;
+		// if (tmp)
+		// 	free(tmp);
+		// if (!ret)
+			j++;
+		}
 		i++;
 	}
 	return (1);

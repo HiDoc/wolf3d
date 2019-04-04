@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:53:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 23:27:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,21 @@ int		put_gun(t_env *env, t_bloc *bloc)
 	const int		ref = env->player.inventory.current->current->ref;
 	const t_actions *a = &env->player.actions;
 
-	if ((!a->is_loading && !a->is_shooting) || (ref == 2 && a->is_shooting))
+	if (((!a->is_loading && !a->is_shooting) && ref != 4)
+	|| (ref == 2 && a->is_shooting))
 		bloc->limit.v1 = (t_vtx){W / 2, H / 2};
 	else if (ref == 0)
 		bloc->limit.v1 = (t_vtx){W / 2, H / 3};
 	else if (ref == 1)
 		bloc->limit.v1 = (t_vtx){W / 3, 0};
 	else if (ref == 2 && a->is_loading)
-		bloc->limit.v1 = (t_vtx){0, H / 3};
+		bloc->limit.v1 = (t_vtx){0, H / 2};
+	if (ref == 3 && !a->is_loading)
+		bloc->limit.v1 = (t_vtx){W / 2, 0};
+	else if (ref == 4)
+		bloc->limit.v1 = (t_vtx){0, H / 4};
+	else
+		bloc->limit.v1 = (t_vtx){0, 0};
 	draw_img(env, bloc->sprite, bloc);
 	return (1);
 }

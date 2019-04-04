@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 20:03:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:42:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,9 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 	where = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 	if (!env->player.actions.is_invisible)
 	{
-		enemy->is_alerted = (dist_vertex(player, where) < 500
+		enemy->is_alerted = (dist_vertex(player, where) < 700
 		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		enemy->has_detected = (dist_vertex(player, where) < 500
+		enemy->has_detected = (dist_vertex(player, where) < 300
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
 		enemy->close_seen = (dist_vertex(player, where) < 100);
 		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
@@ -191,5 +191,8 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
 		}
 	}
+	else
+		enemy->is_shooting = 0;
+
 }
 

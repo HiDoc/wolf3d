@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:55:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 23:46:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,12 @@ int		fill_bloc(t_env *env, int i)
 		rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16, bloc->rect.y + bloc->rect.w / 16,
 			bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
 		draw_img(env, bloc->bg_fill, bloc);
-
 		fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_edge){{0, 0}, {0, 0}}};
 		draw_img(env, bloc->sprite, &fill);
-		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, rect, 0, 0, (t_vtx){0, 0}}));
-
 		fill.rect = bloc->cross.rect;
 		draw_img(env, bloc->cross.sprite, &fill);
-		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, bloc->cross.rect, 0, 0, (t_vtx){0, 0}}));
-
 		fill.rect = bloc->use.rect;
 		draw_img(env, bloc->use.sprite, &fill);
-		//&((t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, bloc->use.rect, 0, 0, (t_vtx){0, 0}}));
-
 		ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 		(t_vtx){bloc->rect.x + W / 80,	bloc->rect.y + 5}, 20, -1,
 		env->player.inventory.objects[i].nb_stack});
@@ -48,15 +41,18 @@ int		fill_bloc(t_env *env, int i)
 
 int		fill_wpn(t_env *env, int iter)
 {
-	SDL_Surface	*mwpn;
 	t_bloc		*bloc;
+	t_bloc		fill;
 
 	bloc = &env->hud.inventory.wpn[iter];
 	if (env->player.inventory.weapons[iter].current)
-		mwpn = bloc->bg_fill;
+	{
+		fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL, bloc->cross.rect, 0, 0, (t_edge){{0, 0}, {0, 0}}};
+		draw_img(env, bloc->bg_fill, bloc);
+		draw_img(env, bloc->cross.sprite, &fill);
+	}
 	else
-		mwpn = bloc->bg_empty;
-	draw_img(env, mwpn, bloc);
+		draw_img(env, bloc->bg_empty, bloc);
 	return (1);
 }
 

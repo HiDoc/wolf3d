@@ -42,7 +42,7 @@ void		free_obj_wpn_img(t_world *world)
 	i = 0;
 	while (i < WORLD_NB_OBJECTS)
 	{
-		if (i < WORLD_NB_WEAPONS)
+		if (i < WORLD_NB_WEAPONS + 1)
 		{
 			j = 0;
 			while (j < world->armory[i].time_reload)
@@ -128,6 +128,21 @@ void		free_walls(t_container *surface)
 	}
 }
 
+void		free_enemies(t_world *world)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WORLD_NB_ENEMIES)
+	{
+		j = -1;
+		while (++j < 6)
+			free_img(world->enemies[i].sprites[j]);
+		i++;
+	}
+}
+
 void		free_world_surfaces(t_container *surface)
 {
 	free_posters(surface);
@@ -141,8 +156,10 @@ void		free_ui(t_env *env)
 	free_surface_string(&env->hud.text);
 	free_world_surfaces(&env->world.surfaces);
 	free_obj_wpn_img(&env->world);
+	free_enemies(&env->world);
 	// free_all_sounds(env);
 }
+
 
 void		free_env(t_env *env)
 {
@@ -176,6 +193,7 @@ void		free_env(t_env *env)
 	}
 	free(e->queue.renderedsectors);
 	free(e->sectors);
+
 	free(env->player.bullet);
 	if (env->player.shot)
 		free(env->player.shot);

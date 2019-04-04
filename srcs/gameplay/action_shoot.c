@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 23:09:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 03:19:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		new_bullet(t_impact *new, t_player *p, int i)
 {
 	new->position.origin = p->where;
 	new->position.where = p->where;
-	new->position.anglecos = p->anglecos * 0.7f;
-	new->position.anglesin = p->anglesin * 0.7f;
+	new->position.anglecos = p->anglecos * 1.9f;
+	new->position.anglesin = p->anglesin * 1.9f;
 	new->position.sprite = p->sprite;
 	new->is_shooting = 1;
 	new->is_alive = 1;
@@ -73,14 +73,16 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 	t_wrap_enmy	*enemy;
 	t_vtx		first;
 	t_vtx		scd;
-	// int			wpn;
+	t_weapon	*rwpn;
+
 
 	enemy = sector->head_enemy;
+	rwpn = &env->world.armory[env->player.inventory.current->current->ref];
 	while (enemy && shot->is_shooting)
 	{
 		first = (t_vtx){shot->position.where.x, shot->position.where.y};
 		scd = (t_vtx){enemy->player.where.x, enemy->player.where.y};
-		if (enemy->is_alive && dist_vertex(first, scd) < 1)
+		if (enemy->is_alive && dist_vertex(first, scd) <= rwpn->ray)
 		{
 			enemy->health -= damage;
 			printf("vie bot : %i\n", enemy->health);
@@ -90,42 +92,53 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 				env->stats.k_enemies++;
 				// env->stats.k_wpn[wpn]++;
 			}
+			enemy->is_shot = 1;
 			shot->is_shooting = 0;
-			shot->is_alive = 0;
+			shot->is_alive = rwpn->ray > 1 ? shot->is_alive + 1 : 0;
 		}
 		enemy = enemy->next;
 	}
+	shot->is_alive = shot->is_alive > 1 ? 0 : 1;
 }
 
-void	player_bullet(t_env *env, t_impact **shot, int damage)
+void	player_bullet(t_env *env, t_character *p, int damage)
 {
 	t_vtx		move;
 	int			i;
 	t_sector	*sector;
+	t_weapon	*rwpn;
 
 	i = 0;
 	sector = &env->engine.sectors[env->engine.player.sector];
 	move = (t_vtx){0.f, 0.f};
-	while (i < env->engine.player.nb_shot)
+	rwpn = &env->world.armory[env->player.inventory.current->current->ref];
+	while (i < PLYR_NB_SHOT)
 	{
-		if (shot[i] && shot[i]->is_shooting)
+		if (p->shot[i].is_shooting)
 		{
-			move = add_vertex(move, (t_vtx){shot[i]->position.anglecos, shot[i]->position.anglesin});
-			shot[i]->position.velocity.x = shot[i]->position.velocity.x * (1 - 1.9f) + move.x * 1.9f;
-			shot[i]->position.velocity.y = shot[i]->position.velocity.y * (1 - 1.9f) + move.y * 1.9f;
-			if (bot_wall_collision(&shot[i]->position, sector))
+			if (dist_vertex((t_vtx){p->shot[i].position.origin.x,
+			p->shot[i].position.origin.y}, (t_vtx){p->shot[i].position.where.x,
+			p->shot[i].position.where.y}) <= rwpn->scop)
 			{
-				shot[i]->is_alive = 0;
-				shot[i]->is_shooting = 0;
-			}
-			impact_bot(env, shot[i], sector, damage);
-			if (shot[i]->is_shooting)
-			{
-				shot[i]->position.where.x += shot[i]->position.velocity.x;
-				shot[i]->position.where.y += shot[i]->position.velocity.y;
+				move = add_vertex(move, (t_vtx){p->shot[i].position.anglecos, p->shot[i].position.anglesin});
+				p->shot[i].position.velocity.x = p->shot[i].position.velocity.x * (1 - 1.9f) + move.x * 1.9f;
+				p->shot[i].position.velocity.y = p->shot[i].position.velocity.y * (1 - 1.9f) + move.y * 1.9f;
+				if (bot_wall_collision(&p->shot[i].position, sector))
+				{
+					p->shot[i].is_alive = 0;
+					p->shot[i].is_shooting = 0;
+				}
+				impact_bot(env, &p->shot[i], sector, damage);
+				if (p->shot[i].is_shooting)
+				{
+					p->shot[i].position.where.x += p->shot[i].position.velocity.x;
+					p->shot[i].position.where.y += p->shot[i].position.velocity.y;
+				}
+				else
+					ft_bzero(&p->shot[i], sizeof(t_impact));
 			}
 			else
-				ft_bzero(shot[i], sizeof(t_impact));
+				ft_bzero(&p->shot[i], sizeof(t_impact));
 		}
 		i++;
 	}

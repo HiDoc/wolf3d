@@ -6,13 +6,13 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/02 15:07:39 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/04 02:51:21 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror  -Ofast #-g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -78,6 +78,7 @@ SRC_NAME 	= main.c \
 			draw_inventory.c \
 			edge.c \
 			function.c \
+			handle_enemy_sprite.c \
 			handle_weapon.c \
 			hud_data.c \
 			hull.c \

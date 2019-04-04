@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:59:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 01:50:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int print_hud(t_env *env)
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;
-	if (player->inventory.current)
+	if (player->inventory.current
+	&& player->inventory.current->current->ref != 4)
 	{
 		if (!print_wpn_hud(env, player->inventory.current))
 			return (0);

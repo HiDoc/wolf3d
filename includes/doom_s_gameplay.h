@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 11:18:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 01:47:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ struct 						s_stats
 
 struct						s_inventory
 {
+	t_wrap_sect	f;
 	t_wrap_wpn	*current;
-	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
+	t_wrap_wpn	weapons[5];
 	t_wrap_inv	objects[6];
 	t_wrap_inv	gems[4];
 	int			nb_current_obj;
@@ -73,6 +74,7 @@ struct						s_weapon
 	t_bloc				sprite_bullet;
 	t_bloc				*sprite_reload;
 	t_bloc				*sprite_shoot;
+	t_bloc				bullet;
 	long				ref;
 	int					type;
 	int					time_reload;
@@ -84,6 +86,9 @@ struct						s_weapon
 	int					ammo_mag_max;
 	int					ammo_max;
 	int					damage;
+	int					scop;
+	int					ray;
+
 	Mix_Chunk			*shot;
 };
 
@@ -127,7 +132,7 @@ struct						s_character
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	SDL_Surface	*sprite;
+	SDL_Surface	*sprites[6];
 	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
@@ -137,7 +142,7 @@ struct						s_character
 
 struct						s_world
 {
-	t_weapon	armory[WORLD_NB_WEAPONS];
+	t_weapon	armory[5];
 	t_object	objects[WORLD_NB_OBJECTS];
 	t_character	enemies[3];
 	t_container	surfaces;

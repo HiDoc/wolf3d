@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/28 22:43:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 01:53:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int		print_description_object(t_env *env)
 
 	i = 0;
 	SDL_GetMouseState(&x, &y);
-	if ((i = select_object(env->player.inventory.objects, x, y,
-	env->hud.inventory.objects)) > -1)
+	if ((i = select_object(env->player.inventory.objects, (t_ixy){x, y},
+	env->hud.inventory.objects, 6)) > -1)
 		env->hud.txt_inv = env->player.inventory.objects[i].current->ref;
-	else if ((i = select_object(env->player.inventory.gems, x, y,
-	env->hud.inventory.gems)) > -1)
+	else if ((i = select_object(env->player.inventory.gems, (t_ixy){x, y},
+	env->hud.inventory.gems, 4)) > -1)
 		env->hud.txt_inv = env->player.inventory.gems[i].current->ref;
 	else
 		env->hud.txt_inv = 11;

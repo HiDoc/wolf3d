@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 13:17:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 15:44:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 # define DOOM_D_HUD_H
 
 /*
-** HUD related constants
+** HUD strings related constants
 */
-# define NB_HUD_OBJ		21
+# define NB_HUD_OBJ		24
 # define UI_NB_STRING	24
 # define UI_NB_STR_INV	5
-# define HUD_PICK_OBJ	14
+# define HUD_PICK_OBJ	15
 # define DSCRIP_STR_INV	12
 
 /*
-** HUD index img
+** HUD index img -- NB_HUD_OBJ
 */
 # define BG				0
 # define BOX_E			1
@@ -40,15 +40,18 @@
 # define W_SLOT_1		12
 # define W_SLOT_2		13
 # define W_SLOT_3		14
-# define INV_PISTOL		15
-# define INV_SHOTGUN	16
-# define INV_RIFLE		17
-# define HUD_PISTOL 	18
-# define HUD_SHOTGUN 	19
-# define HUD_RIFLE	 	20
+# define W_SLOT_LAST	15
+# define INV_PISTOL		16
+# define INV_SHOTGUN	17
+# define INV_RIFLE		18
+# define INV_W_LAST		19
+# define HUD_PISTOL 	20
+# define HUD_SHOTGUN 	21
+# define HUD_RIFLE	 	22
+# define HUD_W_LAST	 	23
 
 /*
-** HUD Strings
+** HUD Strings -- UI_NB_STRING
 */
 # define STRING_0		" "
 # define STRING_1		"Already full shield !"
@@ -76,11 +79,11 @@
 # define STRING_23		"Gems"
 
 /*
-** INV string - Objects description
+** INV string - Objects description -- DSCRIP_STR_INV
 */
 # define I_STRING_0		"Give 50 of health"
 # define I_STRING_1		"Give 50 of shield"
-# define I_STRING_2		"Give ammo for Magnum"
+# define I_STRING_2		"Give ammo for Magnum / RPG"
 # define I_STRING_3		"Give ammo for Shotgun"
 # define I_STRING_4		"Give ammo for Pulsar Rifle"
 # define I_STRING_5		"Turn JetPack ON/OFF"
@@ -92,11 +95,11 @@
 # define I_STRING_11	" "
 
 /*
-** HUD string - Pick up description
+** HUD string - Pick up description -- HUD_PICK_OBJ
 */
 # define P_STRING_0		"E - Pick health"
 # define P_STRING_1		"E - Pick shield"
-# define P_STRING_2		"E - Pick Magnum ammo"
+# define P_STRING_2		"E - Pick Magnum / RPG ammo"
 # define P_STRING_3		"E - Pick Shotgun ammo"
 # define P_STRING_4		"E - Pick Rifle ammo"
 # define P_STRING_5		"E - Pick JetPack"
@@ -107,5 +110,6 @@
 # define P_STRING_10	"E - Pick Magnum"
 # define P_STRING_11	"E - Pick Shotgun"
 # define P_STRING_12	"E - Pick Pulsar Rifle"
-# define P_STRING_13	" "
+# define P_STRING_13	"E - Pick RPG-7"
+# define P_STRING_14	" "
 #endif

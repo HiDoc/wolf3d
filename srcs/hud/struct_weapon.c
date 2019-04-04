@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:54:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 02:59:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	return (ret);
 }
 
-int weapon_set(t_weapon *weapon, char *name, int dam)
+int weapon_set(t_weapon *weapon, char *name, int dam, t_vtx ray_scope, int devset)
 {
 	long	ref;
 
@@ -101,9 +101,14 @@ int weapon_set(t_weapon *weapon, char *name, int dam)
 	weapon->ammo_current = weapon_mask(ref, 7);
 	weapon->ammo_magazine = weapon_mask(ref, 9);
 	weapon->damage = dam;
+	weapon->ray = ray_scope.x;
+	weapon->scop = ray_scope.y;
 	(void)name;
-	// if (weapon_sprites(weapon, name))
-	// 	return (1);
+	if (devset)
+	{
+		if (!weapon_sprites(weapon, name))
+			return (0);
+	}
 	return (1);
 }
 
@@ -112,18 +117,28 @@ int		init_weapon(t_env *env)
 	int	i;
 
 	i = 0;
-	while (i < WORLD_NB_WEAPONS)
+	while (i < WORLD_NB_WEAPONS + 1)
 		env->player.inventory.weapons[i++].current = NULL;
 	env->player.inventory.current = NULL;
-	env->world.armory[0].ref = 0xa2a0601042a2;
-	env->world.armory[1].ref = 0xa2a020105123;
-	env->world.armory[2].ref = 0xa8e2000042a4;
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[0], "weapons/magnum", 56);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[1], "weapons/pompe", 100);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[2], "weapons/rifle", 30);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	return (1);
+	env->world.armory[MAGNUM].ref = 0xa2a0601042a2;
+	env->world.armory[SHOTGUN].ref = 0xa2a020105123;
+	env->world.armory[RIFLE].ref = 0xa8e2000042a4;
+	env->world.armory[RPG].ref = 0xa08010108242;
+	env->world.armory[FIST].ref = 0xa00000103002;
+	// printf("time weapon: %u\n", SDL_GetTicks());
+	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vtx){R_MAGNUM, S_MAGNUM}, 0)
+	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vtx){R_SHOTGUN, S_SHOTGUN}, 0)
+	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vtx){R_RIFLE, S_RIFLE}, 0)
+	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vtx){R_RPG, S_RPG}, 1)
+	&& weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vtx){R_FIST, S_FIST}, 1))
+	{
+		env->player.inventory.f.ref = FIST;
+		env->player.inventory.weapons[FIST].current = &env->player.inventory.f;
+		env->player.inventory.current = &env->player.inventory.weapons[FIST];
+		env->player.inventory.current->ammo_current = env->world.armory[FIST].ammo_current;
+		env->player.inventory.current->ammo_magazine = env->world.armory[FIST].ammo_magazine;
+		env->player.inventory.current->damage = env->world.armory[FIST].damage;
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 16:20:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:44:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,18 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 	new->player.origin = (t_vctr){v.x, v.y, 0};
 	new->player.velocity = (t_vctr){0, 0, 0};
 	new->player.sprite = env->player.bullet;
-	new->ref = ref;
+	new->walk[0] = renemy->sprites[0];
+	new->walk[1] = renemy->sprites[1];
+	new->shootin[0] = renemy->sprites[2];
+	new->shootin[1] = renemy->sprites[3];
+	new->is_hit = renemy->sprites[4];
+	new->dead = renemy->sprites[5];
+	new->sprite = renemy->sprites[0];
+	new->walk_trig = 0;
+	new->is_shot = 0;
 	new->frame = 0;
+	new->shoot_frame = 0;
+	new->ref = ref;
 	new->health = renemy->health;
 	new->shield = renemy->shield;
 	new->damage = renemy->damage;
