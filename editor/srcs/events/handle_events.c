@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 17:03:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:42:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int		handle_events(t_env *env)
 	const Uint8 	*state = env->data->state;
 	const SDL_Event	event = env->data->sdl.event;
 	SDL_Rect		rect = (SDL_Rect){20, 100, 850, 680};
+
+	env->mouse = (t_pos){
+	(env->data->mouse.x - 20) / env->pixel_value,
+	(env->data->mouse.y - 100) / env->pixel_value};
 
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
 	? ui_exit_sdl(env->data) : 0;
@@ -88,12 +92,14 @@ int		handle_events(t_env *env)
 			// in interface & scroll
 			if (event.wheel.y > 0)
 			{
-				(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+				//(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+				(env->pixel_value > 1) ? env->pixel_value -= 1 : 0;
 				return (1);
 			}
 			else if (event.wheel.y)
 			{
-				(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+				//(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+				(env->pixel_value < 50) ? env->pixel_value += 1 : 0;
 				return (1);
 			}
 		}

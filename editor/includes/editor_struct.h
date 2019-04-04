@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 15:54:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:44:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,10 @@ struct					s_env
 	t_elem			*btn_objs;
 
 	// variables
-	int				bloc_size;
-	float			zoom_coef;
+	int				pixel_value; // size correspond a un pixel
+
+	// relative mouse_position
+	t_pos			mouse;
 };
 
 #endif

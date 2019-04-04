@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 12:40:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:57:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void		display_infos(t_env *env)
 	rect = (SDL_Rect){30, 750, 0, 20};
 	ui_make_string(rect, "x : ", env->data);
 	rect = (SDL_Rect){60, 750, 0, 20};
-	ui_make_nbrstring(rect, env->data->mouse_x, env->data);
+	ui_make_nbrstring(rect, env->mouse.x, env->data);
 	rect = (SDL_Rect){110, 750, 0, 20};
 	ui_make_string(rect, "y : ", env->data);
 	rect = (SDL_Rect){140, 750, 0, 20};
-	ui_make_nbrstring(rect, env->data->mouse_y, env->data);
+	ui_make_nbrstring(rect, env->mouse.y, env->data);
 
 	// display_size
 	rect = (SDL_Rect){190, 750, 0, 20};
@@ -36,12 +36,12 @@ static void		display_infos(t_env *env)
 	// display bloc_size
 	rect = (SDL_Rect){840, 750, 0, 20};
 	ui_make_nbrstring(rect, 20, env->data);
-	vec = (t_vec){(t_pos){830 - env->bloc_size, 765}, (t_pos){830, 765}};
+	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765}, (t_pos){830, 765}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
 	vec = (t_vec){(t_pos){830, 765}, (t_pos){830, 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){830 - env->bloc_size, 765},
-	(t_pos){830 - env->bloc_size, 755}};
+	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765},
+	(t_pos){830 - (20 * env->pixel_value), 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
@@ -58,20 +58,20 @@ void			display_interface(t_env *env)
 	i = 20;
 	while (i < 870)
 	{
-		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
 		ui_make_line(env->data->surface, vec, color);
-		i += env->bloc_size / 4;
+		i += 4 * env->pixel_value;
 		nb++;
 	}
 	nb = 0;
 	i = 100;
 	while (i < 780)
 	{
-		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
 		ui_make_line(env->data->surface, vec, color);
-		i += env->bloc_size / 4;
+		i += 4 * env->pixel_value;
 		nb++;
 	}
 	rect = (SDL_Rect){20, 100, 850, 680};

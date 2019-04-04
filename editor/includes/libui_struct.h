@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:26:20 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 12:56:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:22:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ struct					s_data
 	TTF_Font		*font;
 
 	const Uint8 *state;
+	// mouse pos int
 	int			mouse_x;
 	int			mouse_y;
+	// mouse pos float
 	t_pos		mouse;
 
 	int			nb_frames;
