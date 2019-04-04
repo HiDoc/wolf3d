@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/03 23:46:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:24:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		fill_inventory(t_env *env)
 			return (0);
 		if (iter < WORLD_NB_GEMS)
 			fill_gems(env, iter);
-		if (iter < WORLD_NB_WEAPONS)
+		if (iter < GAME_NB_WPN)
 			fill_wpn(env, iter);
 		if (iter < 2)
 		{

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 11:49:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 17:46:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,24 @@ int	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 	int			iter;
 	SDL_Surface	*sprite;
 	t_bloc		*bloc;
+	t_bloc		fill;
 
 	bloc = &env->hud.objects[ref.y];
+	fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
+	bloc->use.rect, 0, 0, {{0, 0}, {0, 0}}};
 	if ((iter = check_object_type(pack, ref.x, limit)) > -1)
 	{
 		sprite = env->world.objects[ref.x].sprite;
 		draw_img(env, bloc->bg_fill, bloc);
 		draw_img(env, sprite, bloc);
+		ui_put_data(env, (t_font){GOLD, "", env->hud.text.text,
+		(t_vtx){fill.rect.x, fill.rect.y}, W / 90, -1,
+		pack[iter].nb_stack});
 	}
 	else
 		draw_img(env, bloc->bg_empty, bloc);
+	fill.rect = bloc->cross.rect;
+	draw_img(env, bloc->cross.sprite, &fill);
 	return (0);
 }
 

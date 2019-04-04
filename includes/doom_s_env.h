@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 11:18:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 23:18:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef struct	s_sdl				t_sdl;
 typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
 typedef struct	s_tiletab			t_tiletab;
+// typedef struct	s_thread			t_thread;
+
+// struct 								s_thread
+// {
+
+// };
 
 struct								s_sdl
 {
@@ -94,6 +100,7 @@ struct								s_env
 	t_hud			hud;
 	t_stats			stats;
 	t_tiletab		tiletab;
+	int				god_mod;
 	// ...
 };
 

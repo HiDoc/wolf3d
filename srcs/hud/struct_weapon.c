@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 13:32:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 23:24:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int     weapon_sprites(t_weapon *weapon, char *name)
 	return (ret);
 }
 
-int weapon_set(t_weapon *weapon, char *name, int dam, t_vtx ray_scope, int devset)
+int weapon_set(t_weapon *weapon, char *name, int dam, t_vctr ray_scope_vel, int devset)
 {
 	long	ref;
 
@@ -101,8 +101,9 @@ int weapon_set(t_weapon *weapon, char *name, int dam, t_vtx ray_scope, int devse
 	weapon->ammo_current = weapon_mask(ref, 7);
 	weapon->ammo_magazine = weapon_mask(ref, 9);
 	weapon->damage = dam;
-	weapon->ray = ray_scope.x;
-	weapon->scop = ray_scope.y;
+	weapon->ray = ray_scope_vel.x;
+	weapon->scop = ray_scope_vel.y;
+	weapon->velocity = ray_scope_vel.z;
 	(void)name;
 	if (devset)
 	{
@@ -117,7 +118,7 @@ int		init_weapon(t_env *env)
 	int	i;
 
 	i = 0;
-	while (i < WORLD_NB_WEAPONS + 1)
+	while (i < WORLD_NB_WEAPONS)
 		env->player.inventory.weapons[i++].current = NULL;
 	env->player.inventory.current = NULL;
 	env->world.armory[MAGNUM].ref = 0xa2a0601042a2;
@@ -126,11 +127,11 @@ int		init_weapon(t_env *env)
 	env->world.armory[RPG].ref = 0xa08010108242;
 	env->world.armory[FIST].ref = 0xa00000103002;
 	// printf("time weapon: %u\n", SDL_GetTicks());
-	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vtx){R_MAGNUM, S_MAGNUM}, 0)
-	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vtx){R_SHOTGUN, S_SHOTGUN}, 1)
-	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vtx){R_RIFLE, S_RIFLE}, 1)
-	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vtx){R_RPG, S_RPG}, 1)
-	&& weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vtx){R_FIST, S_FIST}, 1))
+	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0)
+	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0)
+	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0)
+	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 0)
+	&& weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1))
 	{
 		env->player.inventory.f.ref = FIST;
 		env->player.inventory.weapons[FIST].current = &env->player.inventory.f;

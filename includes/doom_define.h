@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 15:07:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:22:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@
 /*
 ** World related constants
 */
-# define WORLD_NB_WEAPONS	4
+# define WORLD_NB_WEAPONS	5
 # define WORLD_NB_OBJECTS	14
 # define WORLD_NB_GEMS		4
 # define WORLD_NB_CSMBLE	6

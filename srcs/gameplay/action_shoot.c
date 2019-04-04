@@ -6,18 +6,18 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 03:19:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 22:17:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		new_bullet(t_impact *new, t_player *p, int i)
+int		new_bullet(t_impact *new, t_player *p, int i, float velocity)
 {
 	new->position.origin = p->where;
 	new->position.where = p->where;
-	new->position.anglecos = p->anglecos * 1.9f;
-	new->position.anglesin = p->anglesin * 1.9f;
+	new->position.anglecos = p->anglecos * velocity;
+	new->position.anglesin = p->anglesin * velocity;
 	new->position.sprite = p->sprite;
 	new->is_shooting = 1;
 	new->is_alive = 1;
@@ -74,10 +74,12 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 	t_vtx		first;
 	t_vtx		scd;
 	t_weapon	*rwpn;
+	int			wpn;
 
 
 	enemy = sector->head_enemy;
-	rwpn = &env->world.armory[env->player.inventory.current->current->ref];
+	wpn = env->player.inventory.current->current->ref;
+	rwpn = &env->world.armory[wpn];
 	while (enemy && shot->is_shooting)
 	{
 		first = (t_vtx){shot->position.where.x, shot->position.where.y};
@@ -90,7 +92,8 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 			{
 				enemy->is_alive = 0;
 				env->stats.k_enemies++;
-				// env->stats.k_wpn[wpn]++;
+				env->stats.k_wpn[wpn]++;
+				sector->nb_enemies--;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = 0;
@@ -121,8 +124,8 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 			p->shot[i].position.where.y}) <= rwpn->scop)
 			{
 				move = add_vertex(move, (t_vtx){p->shot[i].position.anglecos, p->shot[i].position.anglesin});
-				p->shot[i].position.velocity.x = p->shot[i].position.velocity.x * (1 - 1.9f) + move.x * 1.9f;
-				p->shot[i].position.velocity.y = p->shot[i].position.velocity.y * (1 - 1.9f) + move.y * 1.9f;
+				p->shot[i].position.velocity.x = p->shot[i].position.velocity.x * (1 - rwpn->velocity) + move.x * rwpn->velocity;
+				p->shot[i].position.velocity.y = p->shot[i].position.velocity.y * (1 - rwpn->velocity) + move.y * rwpn->velocity;
 				if (bot_wall_collision(&p->shot[i].position, sector))
 				{
 					p->shot[i].is_alive = 0;
@@ -144,24 +147,26 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 	}
 }
 
-int		pl_new_kill(int shooting, t_player *p, t_character *player)
+int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 {
 	int	i;
+	t_weapon	*rwpn;
 
 	i = 0;
-	if (shooting)
+	rwpn = &env->world.armory[player->inventory.current->current->ref];
+	if (player->actions.is_shooting)
 	{
 		while (i < p->nb_shot)
 		{
 			if (!player->shot[i].is_alive)
 			{
-				new_bullet(&player->shot[i], p, i);
+				new_bullet(&player->shot[i], p, i, rwpn->velocity);
 				return (1);
 			}
 			i++;
 		}
 		ft_bzero(&player->shot[0], sizeof(t_impact));
-		new_bullet(&player->shot[0], p, 0);
+		new_bullet(&player->shot[0], p, 0, rwpn->velocity);
 		ft_bzero(&player->shot[1], sizeof(t_impact));
 	}
 	return (1);

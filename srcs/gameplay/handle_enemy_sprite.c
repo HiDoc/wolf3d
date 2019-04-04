@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/03 20:42:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 15:41:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	bot_is_moving(t_wrap_enmy *enemy)
 {
-	if (enemy->walk_frame < 10)
+	if (enemy->walk_frame < 10 && !enemy->hit_frame)
 	{
 		enemy->sprite = enemy->walk[enemy->walk_trig];
 		enemy->walk_frame++;
@@ -33,6 +33,9 @@ int	bot_is_hit(t_wrap_enmy *enemy)
 	{
 		enemy->sprite = enemy->is_hit;
 		enemy->is_shooting = 0;
+		enemy->is_alerted = 0;
+		enemy->has_detected = 0;
+		enemy->close_seen = 0;
 		enemy->hit_frame++;
 	}
 	else

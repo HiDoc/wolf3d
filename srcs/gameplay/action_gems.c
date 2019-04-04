@@ -6,11 +6,24 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 11:37:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 18:05:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int	gem_is_usable(t_env *env, int i)
+{
+	if (i == 1 && !env->time.t_blue)
+		return (1);
+	if (i == 2 && !env->time.t_green)
+		return (1);
+	if (i == 3 && !env->time.t_red)
+		return (1);
+	if (i == 4 && !env->time.t_purple)
+		return (1);
+	return (0);
+}
 
 int	action_gems(t_env *env, t_wrap_inv *shortcut, int i)
 {
@@ -26,13 +39,16 @@ int	action_gems(t_env *env, t_wrap_inv *shortcut, int i)
 			env->player.actions.is_superstrong = 1;
 		if (i == 4)
 			env->player.actions.is_invulnerable = 1;
-		shortcut->nb_stack--;
-		if (i != 0 && !shortcut->nb_stack)
+		if (gem_is_usable(env, i))
 		{
-			shortcut = NULL;
-			env->player.inventory.gems[i - 1].current = NULL;
+			shortcut->nb_stack--;
+			if (i != 0 && !shortcut->nb_stack)
+			{
+				shortcut = NULL;
+				env->player.inventory.gems[i - 1].current = NULL;
+			}
 		}
-		else if (i == 0)
+		if (i == 0)
 			shortcut->nb_stack = 1;
 	}
 	return (1);

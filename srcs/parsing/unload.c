@@ -42,7 +42,7 @@ void		free_obj_wpn_img(t_world *world)
 	i = 0;
 	while (i < WORLD_NB_OBJECTS)
 	{
-		if (i < WORLD_NB_WEAPONS + 1)
+		if (i < WORLD_NB_WEAPONS)
 		{
 			j = 0;
 			while (j < world->armory[i].time_reload)

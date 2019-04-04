@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   weapons_inventory.c                                :+:      :+:    :+:   */
+/*   weapons_wheel_hud.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:15 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 12:44:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:23:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int     wpn_mouse_wheel(t_env *env, SDL_Event event)
 	{
 		if (inventory->current)
 		{
-			if (event.wheel.y > 0 && *wheel < 5)
+			if (event.wheel.y > 0 && *wheel < WORLD_NB_WEAPONS)
 			{
 				(*wheel)++;
 				if (env->player.inventory.weapons[*wheel].current)

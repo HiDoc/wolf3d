@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 14:17:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:23:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		check_object_type(t_wrap_inv *pack, int ref, int limit)
 	return (-1);
 }
 
-int		pick_gem(t_env *env, t_wrap_sect *obj)
+int		pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 {
 	int	i;
 	int	ref;
@@ -77,15 +77,18 @@ int		pick_gem(t_env *env, t_wrap_sect *obj)
 	i = i == -1 ? ref : i;
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
+	sector->nb_objects--;
 	return (6);
 }
 
 int		pick_object(t_env *env, t_wrap_sect *obj)
 {
-	int	index;
-	int	iter;
+	int			index;
+	int			iter;
+	t_sector	*sector;
 
 	iter = 0;
+	sector = &env->engine.sectors[env->engine.player.sector];
 	if (((iter = check_object_type(env->player.inventory.objects, obj->ref, 6)) > -1)
 	&& !obj->is_wpn)
 	{
@@ -93,6 +96,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			return (5);
 		env->player.inventory.objects[iter].nb_stack++;
 		obj->is_picked = 1;
+		sector->nb_objects--;
 		return (6);
 	}
 	else if (env->player.inventory.nb_current_obj < 6
@@ -107,26 +111,28 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		else
 			env->player.inventory.objects[index].nb_stack++;
 		obj->is_picked = 1;
+		sector->nb_objects--;
 		return (6);
 	}
 	if (obj->ref >= WORLD_NB_CSMBLE && !obj->is_wpn)
-		return (pick_gem(env, obj));
+		return (pick_gem(env, obj, sector));
 	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
 }
 
 int		drop_object(t_env *env, t_wrap_inv *object)
 {
-	t_vtx	vertex;
+	t_vtx		vertex;
+	t_sector	*sector;
 
 	if (object->current != NULL)
 	{
+		sector = &env->engine.sectors[env->engine.player.sector];
 		if (!object->is_used)
 		{
 			vertex.x = env->engine.player.where.x + 1;
 			vertex.y = env->engine.player.where.y;
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 			vertex, object->current->ref, object->current->is_wpn);
-
 		}
 		if (object->nb_stack > 1)
 			object->nb_stack--;
@@ -137,6 +143,7 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			*object = (t_wrap_inv){NULL, 0, 0};
 			env->player.inventory.nb_current_obj--;
 		}
+		sector->nb_objects++;
 	}
 	env->hud.is_txt = 8;
 	return (1);

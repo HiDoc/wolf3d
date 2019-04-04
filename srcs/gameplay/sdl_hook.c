@@ -6,11 +6,27 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 13:29:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 22:31:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int	god_mod(t_env *env)
+{
+	if (env->god_mod)
+	{
+		env->player.actions.is_invisible = 1;
+		env->player.actions.is_invulnerable = 1;
+	}
+	else
+	{
+		env->player.actions.is_invisible = 0;
+		env->player.actions.is_invulnerable = 0;
+	}
+
+	return (1);
+}
 
 int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
@@ -56,6 +72,8 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
 		keyhook_gems(env, keycodes);
+		if (keycodes[SDL_SCANCODE_O])
+			env->god_mod = !env->god_mod;
 		if (keycodes[SDL_SCANCODE_E])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[SDL_SCANCODE_R])

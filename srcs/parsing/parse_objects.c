@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:31 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/21 17:24:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:25:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn)
 			iter = iter->next;
 		iter->next = new_wrap(v, ref, is_wpn);
 	}
+	sector->nb_objects++;
 	return (0);
 }

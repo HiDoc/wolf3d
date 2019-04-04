@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/03 20:44:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:38:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,18 @@ int	fill_enemies_sector(t_env *env, t_sector *sector, t_vtx v, int ref)
 
 	iter = NULL;
 	if (sector->head_enemy == NULL)
-		return ((sector->head_enemy = new_enemy(env, v, ref)) ? 1 : 0);
-	iter = sector->head_enemy;
-	while (iter->next != NULL)
-		iter = iter->next;
-	return ((iter->next = new_enemy(env, v, ref)) ? 1 : 0);
+	{
+		if (!(sector->head_enemy = new_enemy(env, v, ref)))
+			return (0);
+	}
+	else
+	{
+		iter = sector->head_enemy;
+		while (iter->next != NULL)
+			iter = iter->next;
+		if (!(iter->next = new_enemy(env, v, ref)))
+			return (0);
+	}
+	sector->nb_enemies++;
+	return (1);
 }

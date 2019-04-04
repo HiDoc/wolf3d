@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 11:35:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 22:29:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		initialisation_sdl(t_env *env)
 
 int		initialisation(t_env *env)
 {
+	env->god_mod = 0;
 	initialisation_sdl(env);
 	initialisation_sound_text(env);
 	initialisation_cursor(env);

@@ -49,6 +49,8 @@ void			load_map(t_engine *e, t_env *env)
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
 				sect->head_object = NULL;
 				sect->head_enemy = NULL;
+				sect->nb_objects = 0;
+				sect->nb_enemies = 0;
 				for (n=0; n<m; ++n)
 				{
 					sect->neighbors[n] = num[m + n];

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 01:47:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:40:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ struct 						s_stats
 	int				k_wpn[WORLD_NB_WEAPONS];
 	int				headshot;
 	int				time_play;
+	int				kill_togo;
 	int				death;
 	t_bloc			achievments[8];
 };
@@ -50,7 +51,7 @@ struct						s_inventory
 {
 	t_wrap_sect	f;
 	t_wrap_wpn	*current;
-	t_wrap_wpn	weapons[5];
+	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
 	t_wrap_inv	gems[4];
 	int			nb_current_obj;
@@ -88,6 +89,7 @@ struct						s_weapon
 	int					damage;
 	int					scop;
 	int					ray;
+	int					velocity;
 
 	Mix_Chunk			*shot;
 };
@@ -142,7 +144,7 @@ struct						s_character
 
 struct						s_world
 {
-	t_weapon	armory[5];
+	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
 	t_character	enemies[3];
 	t_container	surfaces;

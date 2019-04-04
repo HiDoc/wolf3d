@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/03 15:44:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 20:33:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 ** HUD strings related constants
 */
 # define NB_HUD_OBJ		24
-# define UI_NB_STRING	24
-# define UI_NB_STR_INV	5
+# define UI_NB_STRING	30
+# define HUD_NB_STRING	19
+# define UI_NB_STR_INV	11
 # define HUD_PICK_OBJ	15
 # define DSCRIP_STR_INV	12
 
@@ -51,7 +52,8 @@
 # define HUD_W_LAST	 	23
 
 /*
-** HUD Strings -- UI_NB_STRING
+** HUD Strings -- UI_NB_STRING = HUD_NB_STRING + UI_NB_STR_INV
+** HUD_NB_STRING
 */
 # define STRING_0		" "
 # define STRING_1		"Already full shield !"
@@ -72,11 +74,21 @@
 # define STRING_16		"Already have that weapon"
 # define STRING_17		"Too many weapons, drop one"
 # define STRING_18		"Weapon dropped"
+
+/*
+** UI_NB_STR_INV
+*/
 # define STRING_19		"Inventory"
 # define STRING_20		"Weapons"
 # define STRING_21		"X"
 # define STRING_22		"Use"
 # define STRING_23		"Gems"
+# define STRING_24		"Statistics"
+# define STRING_25		"1"
+# define STRING_26		"2"
+# define STRING_27		"3"
+# define STRING_28		"4"
+# define STRING_29		"5"
 
 /*
 ** INV string - Objects description -- DSCRIP_STR_INV

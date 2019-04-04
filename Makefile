@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/04 13:21:23 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/04 23:04:57 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
-			weapons_inventory.c
+			weapons_wheel_hud.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 
