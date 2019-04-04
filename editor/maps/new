@@ -1,0 +1,20 @@
+# map name
+new
+# nb vertex:
+0
+# vertex: x y
+# nb sectors:
+0
+# sector: ceil floor n-vertex n-neighbors
+# nb wall objects:
+0
+# wall_object: x y sector ref
+# nb consumables:
+0
+# consumable: x y sector ref is_wpn
+# nb entities:
+0
+# entity: x y sector ref
+# nb specials:
+0
+# special: x y ref

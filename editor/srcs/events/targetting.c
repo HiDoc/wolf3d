@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 16:42:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:47:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,22 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 		sector = sector->next;
 	}
 	return (target);
+}
+
+t_object	*target_object(t_pos pos, t_env *env)
+{
+	t_object	*obj;
+
+	env->obj_hover = 0;
+	obj = env->objects;
+	while (obj)
+	{
+		if (ui_close_to(pos, obj->pos, 10))
+		{
+			env->obj_hover = obj;
+			return (obj);
+		}
+		obj = obj->next;
+	}
+	return (0);
 }
