@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 16:31:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 17:03:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,32 @@ int		handle_events(t_env *env)
 		}
 	}
 
-	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect)
-			&& event.type == SDL_MOUSEWHEEL)
-	{ // in interface & scroll
-		if (event.wheel.y > 0)
+	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	{
+		if (event.type == SDL_MOUSEWHEEL)
 		{
-			(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
-			return (1);
+			// in interface & scroll
+			if (event.wheel.y > 0)
+			{
+				(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+				return (1);
+			}
+			else if (event.wheel.y)
+			{
+				(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+				return (1);
+			}
 		}
-		else if (event.wheel.y)
+		if (env->data->mouse.x || env->data->mouse.y)
 		{
-			(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
-			return (1);
+			// targetting vertex
+			target_vertex(env);
+			// targetting sector
+			env->sct_hover = target_sector(env->data->mouse, env);
+			// targetting object
+			env->obj_hover = target_object(env->data->mouse, env);
 		}
 	}
-
-	// targetting vertex
-	target_vertex(env);
-	// targetting sector
-	env->sct_hover = target_sector(env->data->mouse, env);
-	// targetting object
-	env->obj_hover = target_object(env->data->mouse, env);
 
 	if (env->mouse_mode == 0)
 		return (select_mode(env));
