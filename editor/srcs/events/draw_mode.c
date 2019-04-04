@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:47:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 14:41:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,49 +97,66 @@ void		assign_vertex(t_vtx *vtx, t_env *env)
 
 int			draw_mode(t_env *env)
 {
+	const SDL_Event event = env->data->sdl.event;
+	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
 	t_vtx	*current;
 
-	if (!(env->drawing)) // not drawing
+	if (event.type == SDL_MOUSEBUTTONDOWN
+	&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 	{
-		if (!(current = target_vertex(env))) // no dock
+		if (!(env->drawing)) // not drawing
 		{
-			if (!(target_sector(env->data->mouse, env)))
-			{// not in another sector
+			if (!(current = target_vertex(env))) // no dock
+			{
+				if (!(target_sector(env->data->mouse, env)))
+				{// not in another sector
+					env->drawing = 1;
+					create_sector(env);
+					create_vertex(env->data->mouse, env);
+				}
+			}
+			else // dock
+			{
 				env->drawing = 1;
 				create_sector(env);
-				create_vertex(env->data->mouse, env);
+				create_vertex(current->pos, env);
 			}
+			return (1);
 		}
-		else // dock
+		else // drawing
 		{
-			env->drawing = 1;
-			create_sector(env);
-			create_vertex(current->pos, env);
-		}
-		return (1);
-	}
-	else // drawing
-	{
-		if (!(target_sector(env->data->mouse, env)))
-		{
-			if ((current = target_vertex(env))) // dock
+			if (!(target_sector(env->data->mouse, env)))
 			{
-				if (current == env->sct_current->vtx_start) // dock start
+				if ((current = target_vertex(env))) // dock
 				{
-					env->sct_current->close = 1;
-					env->sct_current->vtx_current = 0;
-					env->sct_current = 0;
-					env->drawing = 0;
+					if (current == env->sct_current->vtx_start) // dock start
+					{
+						env->sct_current->close = 1;
+						env->sct_current->vtx_current = 0;
+						env->sct_current = 0;
+						env->drawing = 0;
+					}
+					else if (current->sector != env->sct_current)
+					{// dock (different sector)
+						create_vertex(current->pos, env); // assign
+					}
 				}
-				else if (current->sector != env->sct_current)
-				{// dock (different sector)
-					create_vertex(current->pos, env); // assign
-				}
+				else // no dock
+					create_vertex(env->data->mouse, env);
 			}
-			else // no dock
-				create_vertex(env->data->mouse, env);
+			return (1);
 		}
+	}
+
+	if (env->data->mouse.x || env->data->mouse.y)
+	{
+		// calc vrx distance
+		if (env->sct_current)
+			env->vtx_size = sqrt(
+			pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
+			+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
 		return (1);
 	}
+
 	return (0);
 }
