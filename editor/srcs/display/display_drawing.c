@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:36:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:48:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:43:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,31 @@
 
 void        display_drawing(t_env *env)
 {
-	t_rect		rect;
+	SDL_Rect	rect;
 
 	// display area rect
-	rect = (t_rect){890, 100, 290, 680, 0xFFFFFFFF};
-	ui_make_rect(env->data->surface, rect);
+	rect = (SDL_Rect){890, 100, 290, 680};
+	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	// display title
-	rect = (t_rect){910, 110, 0, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){910, 110, 0, 20};
 	ui_make_string(rect, "Wall texture", env->data);
 
 	// up
-	rect = (t_rect){1130, 350, 20, 20, 0xFFFFFFFF};
-	ui_make_rect(env->data->surface, /*get_element(M_B_UP, env)->rect*/rect);
+	rect = (SDL_Rect){1130, 350, 20, 20};
+	ui_make_rect(env->data->surface, /*get_element(M_B_UP, env)->rect*/rect, C_WHITE);
 
 	// down
-	rect = (t_rect){1130, 380, 20, 20, 0xFFFFFFFF};
-	ui_make_rect(env->data->surface, /*get_element(M_B_DOWN, env)->rect*/rect);
+	rect = (SDL_Rect){1130, 380, 20, 20};
+	ui_make_rect(env->data->surface, /*get_element(M_B_DOWN, env)->rect*/rect, C_WHITE);
 
 	// display preview
-	rect = (t_rect){910, 150, 250, 150, 0xFFFFFFFF};
-	ui_make_rect(env->data->surface, rect);
+	rect = (SDL_Rect){910, 150, 250, 150};
+	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	// display wall_texture file
 	int         y;
 	int         i;
-	SDL_Rect	sdlrect;
 	t_pos       origin;
 
 	origin.x = 890;
@@ -51,9 +50,9 @@ void        display_drawing(t_env *env)
 		y = origin.y + 80 + 40 * (i /*+ var arrow*/);
 		if (y >= origin.y + 80 && y < origin.y + 130 + 320)
 		{
-			sdlrect = (SDL_Rect){origin.x + 20, y, 200, 30};
-			ui_make_full_rect(env->data->surface, sdlrect, C_GREY);
-			rect = (t_rect){origin.x + 20, y, 300, 30, C_WHITE};
+			rect = (SDL_Rect){origin.x + 20, y, 200, 30};
+			ui_make_full_rect(env->data->surface, rect, C_GREY);
+			rect = (SDL_Rect){origin.x + 20, y, 300, 30};
 			ui_make_string(rect, env->editor.wall_txtr[i], env->data);
 		}
 		i++;
