@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:05:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:02:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		editor(t_env *env)
 {
-	SDL_Cursor*		cursor;
 	SDL_Rect		rect;
 
 	if (env->menu.state > 0)
@@ -26,26 +25,11 @@ void		editor(t_env *env)
 	display_interface(env);
 
 	if (env->mouse_mode == 0)
-	{
-		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
-			ui_error_exit_sdl("Libui: error cursor texture", env->data);
-		SDL_SetCursor(cursor);
 		display_selection(env);
-	}
 	else if (env->mouse_mode == 1)
-	{
-		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR)))
-			ui_error_exit_sdl("Libui: error cursor texture", env->data);
-		SDL_SetCursor(cursor);
 		display_drawing(env);
-	}
 	else if (env->mouse_mode == 2)
-	{
-		if (!(cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW)))
-			ui_error_exit_sdl("Libui: error cursor texture", env->data);
-		SDL_SetCursor(cursor);
 		display_element(env);
-	}
 
 	// display menu
 	ui_make_rect(env->data->surface,
@@ -80,22 +64,26 @@ void		editor(t_env *env)
 
 	// display mouse mode buttons
 	ui_make_rect(env->data->surface,
-	get_element(E_B_MODE_SELECT, env)->rect, C_WHITE);
+	get_element(E_B_MODE_SELECT, env)->rect,
+	get_element(E_B_MODE_SELECT, env)->color);
 	SDL_BlitScaled(get_element(E_B_MODE_SELECT, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_SELECT, env)->rect);
 
 	ui_make_rect(env->data->surface,
-	get_element(E_B_MODE_MOVE, env)->rect, C_WHITE);
+	get_element(E_B_MODE_MOVE, env)->rect,
+	get_element(E_B_MODE_MOVE, env)->color);
 	SDL_BlitScaled(get_element(E_B_MODE_MOVE, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_MOVE, env)->rect);
 
 	ui_make_rect(env->data->surface,
-	get_element(E_B_MODE_DRAW, env)->rect, C_WHITE);
+	get_element(E_B_MODE_DRAW, env)->rect,
+	get_element(E_B_MODE_DRAW, env)->color);
 	SDL_BlitScaled(get_element(E_B_MODE_DRAW, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_DRAW, env)->rect);
 
 	ui_make_rect(env->data->surface,
-	get_element(E_B_MODE_ELEM, env)->rect, C_WHITE);
+	get_element(E_B_MODE_ELEM, env)->rect,
+	get_element(E_B_MODE_ELEM, env)->color);
 	SDL_BlitScaled(get_element(E_B_MODE_ELEM, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect);
 

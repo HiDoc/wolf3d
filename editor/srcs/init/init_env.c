@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:07:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 14:58:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
+	get_element(E_B_MODE_SELECT, env)->color = C_GREEN;
 	get_element(E_B_MODE_SELECT, env)->image =
 	ui_load_image("ressources/images/icons/cursor.png", env);
 

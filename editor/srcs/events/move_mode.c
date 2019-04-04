@@ -6,13 +6,14 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:15:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:03:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-int			select_mode(t_env *env)
+int			move_mode(t_env *env)
 {
 	(void)env;
+	return (1);
 }
