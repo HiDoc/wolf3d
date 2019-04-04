@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 00:33:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 12:39:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int			handle_gems(t_env *env);
 int			action_gems(t_env *env, t_wrap_inv *shortcut, int i);
 
 int			pick_weapon(t_env *env, t_wrap_sect *obj);
+int			set_current_wpn(t_inventory *inv, int i);
 int			drop_wpn(t_env *env, t_wrap_wpn *wpn);
 int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 

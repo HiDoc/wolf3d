@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 03:26:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 11:36:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sdl_render_game(t_env *env)
 	handle_gems(env);
 	if (!env->player.actions.is_invisible)
 		bot_action(env, &env->engine.sectors[env->engine.player.sector]);
-	player_bullet(env, &env->player, env->player.inventory.current->damage);
+	player_bullet(env, &env->player, *env->player.inventory.current->damage);
 	enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 	env->hud.is_txt ? ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe) : 0;
 }

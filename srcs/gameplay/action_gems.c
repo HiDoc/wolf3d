@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 01:59:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 11:37:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int	red_gem(t_env *env)
 			{
 				current = env->player.inventory.current->current;
 				ref = &env->world.armory[current->ref];
-				env->player.inventory.current->damage = ref->damage + 50;
+				*env->player.inventory.current->damage = ref->damage + 100;
 				env->time.t_red++;
 				return (1);
 			}
 			else
 			{
 				env->time.t_red = 0;
-				env->player.inventory.current->damage -= 100;
+				*env->player.inventory.current->damage -= 100;
 				env->player.actions.is_superstrong = 0;
 			}
 		}

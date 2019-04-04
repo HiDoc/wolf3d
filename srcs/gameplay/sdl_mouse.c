@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 02:27:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 11:50:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int		mouse_shoot(t_env *env)
 		&& !actions->is_loading && !actions->mouse_state)
 	{
 		rwpn = &env->world.armory[current->current->ref];
-		if (current->ammo_current || current->current->ref == FIST)
+		if (*current->ammo_current || current->current->ref == FIST)
 		{
 			actions->is_shooting = !actions->is_shooting;
 			pl_new_kill(actions->is_shooting, &env->engine.player, &env->player);
 			actions->mouse_state = rwpn->time_shoot_between;
 			// Mix_PlayChannel(0,	rwpn->shot,	0);
-			current->current->ref != FIST ? current->ammo_current-- : 0;
+			current->current->ref != FIST ? *current->ammo_current -= 1 : 0;
 			current->current->ref == RPG ? load_weapon(env) : 0;
 		}
 		else

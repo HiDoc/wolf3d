@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 02:04:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 12:41:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ int		check_weapon_type(t_env *env, int ref)
 	return (0);
 }
 
+int		set_current_wpn(t_inventory *inv, int i)
+{
+	inv->current = &inv->weapons[i];
+	inv->current->ammo_current = &inv->weapons[i].ammo[0];
+	inv->current->ammo_magazine = &inv->weapons[i].ammo[1];
+	inv->current->damage = &inv->weapons[i].ammo[2];
+	return (1);
+}
+
 int		pick_weapon(t_env *env, t_wrap_sect *obj)
 {
 	int	iter;
@@ -39,12 +48,17 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		iter = check_weapon_type(env, obj->ref);
 		if (!iter)
 		{
+			printf("ref: %i\n", obj->ref);
 			env->hud.inventory.nb_wpn++;
 			env->player.inventory.weapons[obj->ref].current = obj;
-			env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
-			env->player.inventory.current->ammo_current = env->world.armory[obj->ref].ammo_curr_max;
-			env->player.inventory.current->ammo_magazine = env->world.armory[obj->ref].ammo_mag_max;
-			env->player.inventory.current->damage = env->world.armory[obj->ref].damage;
+			env->player.inventory.weapons[obj->ref].ammo[0] = env->world.armory[obj->ref].ammo_current;
+			env->player.inventory.weapons[obj->ref].ammo[1] = env->world.armory[obj->ref].ammo_magazine;
+			env->player.inventory.weapons[obj->ref].ammo[2] = env->world.armory[obj->ref].damage;
+			set_current_wpn(&env->player.inventory, obj->ref);
+			// env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
+			// env->player.inventory.current->ammo_current = &env->player.inventory.weapons[obj->ref].ammo[0];
+			// env->player.inventory.current->ammo_magazine = &env->player.inventory.weapons[obj->ref].ammo[1];
+			// env->player.inventory.current->damage = &env->player.inventory.weapons[obj->ref].ammo[2];
 		}
 		else
 			return (16);
@@ -54,7 +68,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 	return (17);
 }
 
-int		new_current_wpn(t_env *env, t_inventory *inv)
+int		new_current_wpn(t_inventory *inv)
 {
 	int	i;
 
@@ -65,10 +79,7 @@ int		new_current_wpn(t_env *env, t_inventory *inv)
 			break ;
 		i++;
 	}
-	inv->current = &inv->weapons[i];
-	inv->current->ammo_current = env->world.armory[i].ammo_current;
-	inv->current->ammo_magazine = env->world.armory[i].ammo_magazine;
-	inv->current->damage = env->world.armory[i].damage;
+	set_current_wpn(inv, i);
 	return (1);
 }
 
@@ -82,8 +93,8 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		vertex.y = env->engine.player.where.y;
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 		vertex, wpn->current->ref, wpn->current->is_wpn);
-		*wpn = (t_wrap_wpn) {NULL, 0, 0, 0};
-		new_current_wpn(env, &env->player.inventory);
+		*wpn = (t_wrap_wpn) {NULL, 0, 0, 0, {0, 0, 0}};
+		new_current_wpn(&env->player.inventory);
 		env->hud.inventory.nb_wpn--;
 		env->hud.is_txt = 18;
 	}
