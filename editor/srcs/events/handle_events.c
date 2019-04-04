@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 15:05:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:31:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,15 @@ int		handle_events(t_env *env)
 			&& event.type == SDL_MOUSEWHEEL)
 	{ // in interface & scroll
 		if (event.wheel.y > 0)
+		{
 			(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+			return (1);
+		}
 		else if (event.wheel.y)
+		{
 			(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+			return (1);
+		}
 	}
 
 	// targetting vertex

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:58:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:11:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,15 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){170, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, rect, env);
 
-	rect = (SDL_Rect){WIN_W / 2 - 50, WIN_H / 2 + 20,20, 20};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);
+	get_element(M_B_UP, env)->image =
+	ui_load_image("ressources/images/icons/arrowup.png", env);
 	
-	rect = (SDL_Rect){WIN_W / 2 - 50, WIN_H / 2 + 60, 20, 20};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 55, 40, 40};
 	create_element(M_B_DOWN, BUTTON, rect, env);
+	get_element(M_B_DOWN, env)->image =
+	ui_load_image("ressources/images/icons/arrowdown.png", env);
 
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
