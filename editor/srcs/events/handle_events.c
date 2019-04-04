@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 15:00:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:05:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,25 +92,17 @@ int		handle_events(t_env *env)
 
 	// targetting vertex
 	target_vertex(env);
-
 	// targetting sector
 	env->sct_hover = target_sector(env->data->mouse, env);
-
 	// targetting object
 	env->obj_hover = target_object(env->data->mouse, env);
 
 	if (env->mouse_mode == 0)
-	{
 		return (select_mode(env));
-	}
 	else if (env->mouse_mode == 1)
-	{
 		return (draw_mode(env));
-	}
 	else if (env->mouse_mode == 2)
-	{
 		return (elem_mode(env));
-	}
 
 	return (0);
 }
