@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 00:39:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:37:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int		handle_events(t_env *env)
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		t_rect		rect;
+		SDL_Rect	rect;
 
-		rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
+		rect = (SDL_Rect){20, 100, 850, 680};
 		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 					get_element(E_B_MODE_SELECT, env)->rect))
 		{ // button select mode

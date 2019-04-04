@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:48:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:41:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void		display_selection(t_env *env)
 {
-	t_rect		rect;
+	SDL_Rect	rect;
 
 	// display selection area
-	rect = (t_rect){890, 100, 290, 250, 0xFFFFFFFF};
-	ui_make_rect(env->data->surface, rect);
+	rect = (SDL_Rect){890, 100, 290, 250};
+	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	//dislay hovered
-	rect = (t_rect){910, 120, 250, 30, 0xFFFFFFFF};
+	rect = (SDL_Rect){910, 120, 250, 30};
 	if (env->obj_hover)
 		ui_make_string(rect, "object", env->data);
 	else if (env->sct_hover)

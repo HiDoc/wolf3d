@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:24:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:56:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ struct					s_elem
 {
 	int				id;
 	int				type;
-	t_rect			rect;
+	SDL_Rect		rect;
+	Uint32			color;
+	SDL_Surface		*image;
 	char			*str;		// if type == input
 	int				str_max;	// if type == input
 	int				clicked;
