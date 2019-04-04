@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 11:36:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 13:28:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int YourEventFilter(void *userdata, SDL_Event *event)
 
 	env = (t_env *)userdata;
 	if (event->type == SDL_MOUSEBUTTONDOWN && !env->player.actions.mouse_state)
-		return (mouse_shoot(env) ? 1 : 0);
+		env->player.inventory.current->current->ref != RIFLE ? mouse_shoot(env) : 0;
 	else if (event->type == SDL_MOUSEBUTTONUP)
 		env->player.actions.mouse_state = 0;
 	return (1);
@@ -87,7 +87,7 @@ int sdl_loop(t_env *env)
 				wpn_mouse_wheel(env, env->sdl.event);
 				sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 				player_move(e, v, env->sdl.keycodes);
-
+				env->player.inventory.current->current->ref == RIFLE ? mouse_shoot(env) : 0;
 			}
 			else
 			{

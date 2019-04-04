@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 12:41:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 12:49:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,24 @@ int		set_current_wpn(t_inventory *inv, int i)
 
 int		pick_weapon(t_env *env, t_wrap_sect *obj)
 {
-	int	iter;
+	int			iter;
+	t_weapon	*rwpn;
+	t_inventory	*inv;
 
 	iter = 0;
+	inv = &env->player.inventory;
 	if (env->hud.inventory.nb_wpn < 3)
 	{
 		iter = check_weapon_type(env, obj->ref);
 		if (!iter)
 		{
-			printf("ref: %i\n", obj->ref);
+			rwpn = &env->world.armory[obj->ref];
 			env->hud.inventory.nb_wpn++;
-			env->player.inventory.weapons[obj->ref].current = obj;
-			env->player.inventory.weapons[obj->ref].ammo[0] = env->world.armory[obj->ref].ammo_current;
-			env->player.inventory.weapons[obj->ref].ammo[1] = env->world.armory[obj->ref].ammo_magazine;
-			env->player.inventory.weapons[obj->ref].ammo[2] = env->world.armory[obj->ref].damage;
-			set_current_wpn(&env->player.inventory, obj->ref);
-			// env->player.inventory.current = &env->player.inventory.weapons[obj->ref];
-			// env->player.inventory.current->ammo_current = &env->player.inventory.weapons[obj->ref].ammo[0];
-			// env->player.inventory.current->ammo_magazine = &env->player.inventory.weapons[obj->ref].ammo[1];
-			// env->player.inventory.current->damage = &env->player.inventory.weapons[obj->ref].ammo[2];
+			inv->weapons[obj->ref].current = obj;
+			inv->weapons[obj->ref].ammo[0] = rwpn->ammo_current;
+			inv->weapons[obj->ref].ammo[1] = rwpn->ammo_magazine;
+			inv->weapons[obj->ref].ammo[2] = rwpn->damage;
+			set_current_wpn(inv, obj->ref);
 		}
 		else
 			return (16);

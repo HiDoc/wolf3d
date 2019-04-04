@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 13:40:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 13:29:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_E])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
+		if (keycodes[SDL_SCANCODE_R])
+			load_weapon(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
 		if (keycodes[SDL_SCANCODE_TAB])
