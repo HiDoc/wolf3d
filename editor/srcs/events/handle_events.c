@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 18:45:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:00:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ int		handle_events(t_env *env)
 	env->mouse = (t_pos){
 	(env->data->mouse.x - 20) / env->pixel_value,
 	(env->data->mouse.y - 100) / env->pixel_value};
-
-	system("clear");
-	printf("screen : [%d][%d]\n",
-		(int)env->data->mouse.x, (int)env->data->mouse.y);
-	printf("world  : [%d][%d]\n",
-		(int)env->mouse.x, (int)env->mouse.y);
 
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
 	? ui_exit_sdl(env->data) : 0;
@@ -112,7 +106,7 @@ int		handle_events(t_env *env)
 			// targetting vertex
 			target_vertex(env);
 			// targetting sector
-			env->sct_hover = target_sector(env->data->mouse, env);
+			env->sct_hover = target_sector(env->mouse, env);
 			// targetting object
 			env->obj_hover = target_object(env->data->mouse, env);
 		}

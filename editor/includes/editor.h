@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 17:58:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:05:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int			elem_mode(t_env *env);
 t_vtx		*target_vertex(t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
-int			vertex_in_sector(t_sct *sector, t_pos pos, t_env *env);
 int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 //float		pointside(t_pos p, t_vrx v0, t_vrx v1);
 
@@ -81,5 +80,6 @@ void		export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
 t_elem		*get_element(int id, t_env *env);
 char		*ft_zstrjoin(char *s1, char *s2);
+int			vertex_in_sector(t_sct *sector, t_pos pos);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 17:14:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:06:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ return (cross_product(diff_vertex(p1, p0), diff_vertex(p, p0)));
   return (v);
   }*/
 
+t_sct       *target_sector(t_pos pos, t_env *env)
+{
+	t_sct   *sector;
+	t_sct   *target;
+
+	target = 0;
+	sector = env->sct_start;
+	while (sector && sector->close == 1) // for each sectors
+	{
+		sector->color = 0xFFFFFFFF;
+		if (!(env->vtx_hover) && vertex_in_sector(sector, pos))
+		{
+			sector->color = (env->mouse_mode == 0) ? 0xFF00FF00 : 0xFF0000FF;
+			target = sector;
+		}
+		sector = sector->next;
+	}
+	return (target);
+}
+
 t_vtx		*target_vertex(t_env *env)
 {
 	t_sct	*sct;
@@ -85,30 +105,6 @@ t_vtx		*target_vertex(t_env *env)
 		sct = sct->next;
 	}
 	return (0);
-}
-
-t_sct       *target_sector(t_pos pos, t_env *env)
-{
-	t_sct   *sector;
-	t_sct   *target;
-
-	target = 0;
-	sector = env->sct_start;
-	while (sector && sector->close == 1) // for each sectors
-	{
-		if (!(env->vtx_hover) && vertex_in_sector(sector, pos, env))
-		{
-			if (env->mouse_mode == 0)
-				sector->color = 0xFF00FF00;
-			else
-				sector->color = 0xFF0000FF;
-			target = sector;
-		}
-		else
-			sector->color = 0xFFFFFFFF;
-		sector = sector->next;
-	}
-	return (target);
 }
 
 t_object	*target_object(t_pos pos, t_env *env)

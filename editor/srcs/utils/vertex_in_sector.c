@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/10 15:02:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:05:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,10 @@ int		intersect_vrx(t_pos p1, t_pos q1, t_pos p2, t_pos q2)
 } 
 //////////////////////////////////////////////////////////////
 
-static int	filter_target(t_sct *sector, t_env *env)
+static int	filter_target(t_pos pos, t_sct *sector)
 {
-	return (env->data->mouse.x >= sector->xmin
-			&& env->data->mouse.x <= sector->xmax
-			&& env->data->mouse.y >= sector->ymin
-			&& env->data->mouse.y <= sector->ymax);
+	return (pos.x >= sector->xmin && pos.x <= sector->xmax
+		&& pos.y >= sector->ymin && pos.y <= sector->ymax);
 }
 
 static int	filter_edges(const t_pos pos, t_vtx *vertex)
@@ -94,14 +92,14 @@ static int	filter_edges(const t_pos pos, t_vtx *vertex)
 	return (1);
 }
 
-int			vertex_in_sector(t_sct *sector, t_pos pos_b, t_env *env)
+int			vertex_in_sector(t_sct *sector, t_pos pos_b)
 {
 	const t_pos	pos_a = (t_pos){sector->xmin, pos_b.y};
 	t_vtx		*vertex;
 	int			intersect;
 
 	intersect = 0;
-	if (!(filter_target(sector, env)))
+	if (!(filter_target(pos_b, sector)))
 		return (0);
 	vertex = sector->vtx_start;
 	while (vertex && vertex->next) // for each edge
