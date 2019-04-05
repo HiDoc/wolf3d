@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:24:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:33:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ struct					s_elem
 {
 	int				id;
 	int				type;
-	t_rect			rect;
+	SDL_Rect		rect;
+	Uint32			color;
+	SDL_Surface		*image;
 	char			*str;		// if type == input
 	int				str_max;	// if type == input
 	int				clicked;
@@ -149,8 +151,11 @@ struct					s_env
 
 	// hover / select
 	t_sct			*sct_hover;
+	t_sct			*sct_select;
 	t_vtx			*vtx_hover;
+	t_vtx			*vtx_select;
 	t_object		*obj_hover;
+	t_object		*obj_select;
 
 	// current obj_button
 	int				obj_type;
@@ -168,8 +173,13 @@ struct					s_env
 	int				drawing;		// am i drawing an edge
 
 	// mouse handling
-	int				mouse_mode; // 0 : selection / 1 : draw
+	int				mouse_mode;
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
+
+	// grid move
+	int				grid_drag;
+	t_pos			grid_init_pos;
+	t_pos			grid_translate;
 
 	// lst elements
 	t_elem			*elements;
@@ -178,8 +188,10 @@ struct					s_env
 	t_elem			*btn_objs;
 
 	// variables
-	int				bloc_size;
-	float			zoom_coef;
+	int				pixel_value; // size correspond a un pixel
+
+	// relative mouse_position
+	t_pos			mouse;
 };
 
 #endif

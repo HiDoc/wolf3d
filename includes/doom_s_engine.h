@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 11:19:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:06:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ typedef struct	s_save		t_save;
 
 struct						s_save
 {
-	t_player				player; //position + angle view
 	int						health;
 	int						shield;
+	t_player				player; //position + angle view
 	t_inventory				inventory; // objects + gems + weapon + current wpn
-	t_sector				*sector; // all sectors (with objects + enemies) to know wich are still visible
+	t_sector				*sector; // all sectors (with objects + enemies)
 	t_stats					stats; // game stats
 };
 
@@ -71,6 +71,7 @@ struct						s_sector
 	signed char	*neighbors;
 	unsigned	npoints;
 	int			nb_objects;
+	int			nb_enemies;
 	t_wrap_sect	*head_object;
 	t_wrap_enmy	*head_enemy;
 };

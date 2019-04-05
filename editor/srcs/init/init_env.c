@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 00:44:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:23:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-static void		create_element(int id, int type, t_rect rect, t_env *env)
+static void		create_element(int id, int type, SDL_Rect rect, t_env *env)
 {
 	t_elem   *new;
 
@@ -21,6 +21,7 @@ static void		create_element(int id, int type, t_rect rect, t_env *env)
 	new->id = id;
 	new->type = type;
 	new->rect = rect;
+	new->color = C_WHITE;
 	if (!(env->elements))
 	{
 		env->elements = new;
@@ -33,7 +34,7 @@ static void		create_element(int id, int type, t_rect rect, t_env *env)
 	}
 }
 
-static void		create_btn_obj(int id, int type, char *str, t_rect rect, t_env *env)
+static void		create_btn_obj(int id, int type, char *str, SDL_Rect rect, t_env *env)
 {
 	t_elem   *new;
 
@@ -56,7 +57,7 @@ static void		create_btn_obj(int id, int type, char *str, t_rect rect, t_env *env
 	}
 }
 
-static void		create_btn_map(char *str, t_rect rect, t_env *env)
+static void		create_btn_map(char *str, SDL_Rect rect, t_env *env)
 {
 	t_elem   *new;
 
@@ -80,74 +81,82 @@ static void		create_btn_map(char *str, t_rect rect, t_env *env)
 
 static void		init_elems(t_env *env)
 {
-	t_rect		rect;
+	SDL_Rect		rect;
 
-	rect = (t_rect){WIN_W / 2 - 390, WIN_H / 2 - 225 + 40,
-	300, 25, C_WHITE};
+	rect = (SDL_Rect){WIN_W / 2 - 390, WIN_H / 2 - 225 + 40, 300, 25};
 	create_element(M_I_NEW, INPUT, rect, env);
 
-	rect = (t_rect){WIN_W / 2 - 400 + 410, WIN_H / 2 - 225 + 400,
-	150, 25, C_WHITE};
+	rect = (SDL_Rect){WIN_W / 2 - 400 + 410, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_START, BUTTON, rect, env);
 
-	rect = (t_rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400,
-	150, 25, C_WHITE};
+	rect = (SDL_Rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_CANCEL, BUTTON, rect, env);
 
-	rect = (t_rect){20, 20, 125, 40, C_WHITE};
+	rect = (SDL_Rect){20, 20, 125, 40};
 	create_element(E_B_MENU, BUTTON, rect, env);
 
-	rect = (t_rect){170, 20, 100, 40, C_WHITE};
+	rect = (SDL_Rect){170, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, rect, env);
 
-	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 + 20,
-	20, 20, C_WHITE};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);
+	get_element(M_B_UP, env)->image =
+	ui_load_image("ressources/images/icons/arrowup.png", env);
 	
-	rect = (t_rect){WIN_W / 2 - 50, WIN_H / 2 +	60,
-	20, 20, C_WHITE};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 55, 40, 40};
 	create_element(M_B_DOWN, BUTTON, rect, env);
+	get_element(M_B_DOWN, env)->image =
+	ui_load_image("ressources/images/icons/arrowdown.png", env);
 
-	rect = (t_rect){600, 20, 40, 40, 0xFFFFFFFF};
+	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
+	get_element(E_B_MODE_SELECT, env)->color = C_GREEN;
+	get_element(E_B_MODE_SELECT, env)->image =
+	ui_load_image("ressources/images/icons/cursor.png", env);
 
-	rect = (t_rect){650, 20, 40, 40, 0xFFFFFFFF};
+	rect = (SDL_Rect){650, 20, 50, 50};
 	create_element(E_B_MODE_MOVE, BUTTON, rect, env);
+	get_element(E_B_MODE_MOVE, env)->image =
+	ui_load_image("ressources/images/icons/move.png", env);
 
-	rect = (t_rect){700, 20, 40, 40, 0xffffffff};
+	rect = (SDL_Rect){700, 20, 50, 50};
 	create_element(E_B_MODE_DRAW, BUTTON, rect, env);
+	get_element(E_B_MODE_DRAW, env)->image =
+	ui_load_image("ressources/images/icons/line.png", env);
 
-	rect = (t_rect){750, 20, 40, 40, 0xffffffff};
+	rect = (SDL_Rect){750, 20, 50, 50};
 	create_element(E_B_MODE_ELEM, BUTTON, rect, env);
+	get_element(E_B_MODE_ELEM, env)->image =
+	ui_load_image("ressources/images/icons/object.png", env);
 
-	rect = (t_rect){1030, 20, 150, 40, 0xffffffff};
+	rect = (SDL_Rect){1030, 20, 150, 40};
 	create_element(E_B_PLAY, BUTTON, rect, env);
 
-	rect = (t_rect){1130, 350, 20, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){1130, 350, 20, 20};
 	create_element(E_B_ELM_UP, BUTTON, rect, env);
 	
-	rect = (t_rect){1130, 380, 20, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_ELM_DOWN, BUTTON, rect, env);
 
-	rect = (t_rect){900, 110, 270, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){900, 110, 270, 20};
 	create_element(E_B_ELM_OBWL, BUTTON, rect, env);
 
-	rect = (t_rect){900, 140, 270, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){900, 140, 270, 20};
 	create_element(E_B_ELM_CONS, BUTTON, rect, env);
 
-	rect = (t_rect){900, 170, 270, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){900, 170, 270, 20};
 	create_element(E_B_ELM_NTTY, BUTTON, rect, env);
 
-	rect = (t_rect){900, 200, 270, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){900, 200, 270, 20};
 	create_element(E_B_ELM_PRFB, BUTTON, rect, env);
 
-	rect = (t_rect){900, 230, 270, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
 }
 
 static void		load_obj(char *path, int type, t_env *env)
 {
-	t_rect		rect;
+	SDL_Rect	rect;
 	char		**stock;
 	char		*line;
 	int			fd;
@@ -163,8 +172,7 @@ static void		load_obj(char *path, int type, t_env *env)
 	i = 0;
 	while (stock[i])
 	{
-		rect = (t_rect){910, 330 + 40 * (i /*+ var arrow */),
-		200, 30, C_WHITE};
+		rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
 		create_btn_obj(i, type, stock[i], rect, env);
 		free(stock[i]);
 		i++;	
@@ -190,7 +198,7 @@ static void		init_objs(t_env *env)
 static void		init_menu(t_env *env)
 {
 	t_data				*data = env->data;
-	t_rect				rect;
+	SDL_Rect			rect;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
@@ -203,7 +211,7 @@ static void		init_menu(t_env *env)
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			rect = (t_rect){220, 310 + (40 * i), 300, 25, C_WHITE};
+			rect = (SDL_Rect){220, 310 + (40 * i), 300, 25};
 			env->menu.nb_maps++;
 			create_btn_map(de->d_name, rect, env);
 			i++;
@@ -224,8 +232,7 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->obj_type = -1;
-	env->bloc_size = 120;
-	env->zoom_coef = 0.4;
+	env->pixel_value = 5;
 
 	i = 0;
 	// compteur nb wall textures

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 11:18:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:02:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,14 @@ struct								s_env
 	t_hud			hud;
 	t_stats			stats;
 	t_tiletab		tiletab;
+	int				god_mod;
 	// ...
 };
 
 void			load_tilesets(t_env *env);
+
+int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
+int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));

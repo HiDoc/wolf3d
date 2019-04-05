@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/01 16:54:54 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/05 19:26:50 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC_NAME 	=	main.c \
 				editor.c \
 				draw_mode.c \
 				select_mode.c \
+				move_mode.c \
 				handle_events.c \
 				utils.c \
 				targetting.c \

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 16:20:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 12:11:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ struct					s_wrap_sect
 struct 					s_wrap_enmy
 {
 	SDL_Surface		*sprite;
+	SDL_Surface		*walk[2];
+	SDL_Surface		*is_hit;
+	SDL_Surface		*dead;
+	SDL_Surface		*shootin[2];
 	int				ref;
 	int				health;
 	int				shield;
@@ -93,7 +97,12 @@ struct 					s_wrap_enmy
 	int				has_detected;
 	int				close_seen;
 	int				is_shooting;
+	int				is_shot;
 	int				frame;
+	int				hit_frame;
+	int				walk_frame;
+	int				shoot_frame;
+	int				walk_trig;
 	t_player		player;
 	t_impact		*shot;
 	t_wrap_enmy		*next;
@@ -109,9 +118,10 @@ struct					s_wrap_inv
 struct					s_wrap_wpn
 {
 	t_wrap_sect		*current;
-	int				ammo_current;
-	int				ammo_magazine;
-	int				damage;
+	int				*ammo_current;
+	int				*ammo_magazine;
+	int				*damage;
+	int				ammo[3];
 };
 
 #endif

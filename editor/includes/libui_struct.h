@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:26:20 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/25 16:15:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:22:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 typedef struct  s_pos   t_pos;
 typedef struct  s_vec   t_vec;
-typedef struct  s_rect  t_rect;
 typedef struct  s_circ  t_circ;
 typedef struct  s_sdl   t_sdl;
 typedef struct  s_square    t_square;
@@ -33,15 +32,6 @@ struct					s_vec
 {
 	t_pos			a;
 	t_pos			b;
-};
-
-struct					s_rect
-{
-	int				x;
-	int				y;
-	int				w;
-	int				h;
-	Uint32			color;
 };
 
 struct					s_circ
@@ -67,8 +57,10 @@ struct					s_data
 	TTF_Font		*font;
 
 	const Uint8 *state;
+	// mouse pos int
 	int			mouse_x;
 	int			mouse_y;
+	// mouse pos float
 	t_pos		mouse;
 
 	int			nb_frames;

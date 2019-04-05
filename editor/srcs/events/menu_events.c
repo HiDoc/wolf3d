@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:47:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:45:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		reset_values(t_env *env)
 {
 	// reset menu input new
 	get_element(M_I_NEW, env)->clicked = 0;
-	get_element(M_I_NEW, env)->rect.color = C_WHITE;
+	get_element(M_I_NEW, env)->color = C_WHITE;
 
 	// reset menu upload
 	env->menu.selected = 0;
@@ -63,20 +63,19 @@ int			menu_events(t_env *env)
 		get_element(M_I_NEW, env)->rect))
 		{
 			get_element(M_I_NEW, env)->clicked = 1;
-			get_element(M_I_NEW, env)->rect.color = C_GREEN;
+			get_element(M_I_NEW, env)->color = C_GREEN;
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-		(t_rect){WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 120, 350, 320, C_WHITE}))
+		(SDL_Rect){WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 120, 350, 320}))
 		{ // mouse in upload
 			t_elem	*obj_map = env->menu.btn_maps;
-			t_rect	rect;
+			SDL_Rect	rect;
 			while (obj_map)
 			{
-				rect = (t_rect){
+				rect = (SDL_Rect){
 				obj_map->rect.x, obj_map->rect.y + env->menu.idx_map * 40,
-				obj_map->rect.w, obj_map->rect.h, obj_map->rect.color};
-				if (ui_mouseenter(
-				env->data->mouse.x, env->data->mouse.y, rect))
+				obj_map->rect.w, obj_map->rect.h};
+				if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 					env->menu.selected = obj_map;
 				obj_map = obj_map->next;
 			}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 11:18:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:00:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,18 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct	s_stats		t_stats;
+typedef struct s_stats		t_stats;
+typedef struct s_thread		t_thread;
+
+struct 								s_thread
+{
+	int				nb;
+	char			*path;
+	t_weapon		*mother;
+	t_bloc			*child;
+	int				size;
+	pthread_t		th;
+};
 
 struct 						s_stats
 {
@@ -42,12 +53,14 @@ struct 						s_stats
 	int				k_wpn[WORLD_NB_WEAPONS];
 	int				headshot;
 	int				time_play;
+	int				kill_togo;
 	int				death;
 	t_bloc			achievments[8];
 };
 
 struct						s_inventory
 {
+	t_wrap_sect	f;
 	t_wrap_wpn	*current;
 	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
@@ -69,10 +82,12 @@ struct						s_inventory
 
 struct						s_weapon
 {
+	t_thread			threads[8];
 	t_bloc				sprite;
 	t_bloc				sprite_bullet;
 	t_bloc				*sprite_reload;
 	t_bloc				*sprite_shoot;
+	t_bloc				bullet;
 	long				ref;
 	int					type;
 	int					time_reload;
@@ -84,6 +99,10 @@ struct						s_weapon
 	int					ammo_mag_max;
 	int					ammo_max;
 	int					damage;
+	int					scop;
+	int					ray;
+	int					velocity;
+
 	Mix_Chunk			*shot;
 };
 
@@ -127,7 +146,7 @@ struct						s_character
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	SDL_Surface	*sprite;
+	SDL_Surface	*sprites[6];
 	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;

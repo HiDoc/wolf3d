@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/02 20:03:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 22:59:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int		bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 		{
 			if (!enemy->shot[i].is_alive)
 			{
-				new_bullet(&enemy->shot[i], p, i);
+				new_bullet(&enemy->shot[i], p, i, BOT_V_SHOT);
 				return (1);
 			}
 			i++;
 		}
 		ft_bzero(&enemy->shot[0], sizeof(t_impact));
-		new_bullet(&enemy->shot[0], p, 0);
+		new_bullet(&enemy->shot[0], p, 0, BOT_V_SHOT);
 		ft_bzero(&enemy->shot[1], sizeof(t_impact));
 	}
 	return (1);
@@ -129,9 +129,9 @@ void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
 	{
 		if (enemy->shot[i].is_shooting)
 		{
-			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, 0.1f);
-			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - 0.1f) + move.x * 0.1f;
-			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - 0.1f) + move.y * 0.1f;
+			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, BOT_V_SHOT);
+			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - BOT_V_SHOT) + move.x * BOT_V_SHOT;
+			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - BOT_V_SHOT) + move.y * BOT_V_SHOT;
 			if (bot_wall_collision(&enemy->shot[i].position, sector))
 			{
 				enemy->shot[i].is_alive = 0;
@@ -178,9 +178,9 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 	where = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 	if (!env->player.actions.is_invisible)
 	{
-		enemy->is_alerted = (dist_vertex(player, where) < 500
+		enemy->is_alerted = (dist_vertex(player, where) < 700
 		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		enemy->has_detected = (dist_vertex(player, where) < 500
+		enemy->has_detected = (dist_vertex(player, where) < 300
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
 		enemy->close_seen = (dist_vertex(player, where) < 100);
 		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
@@ -191,5 +191,8 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
 				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
 		}
 	}
+	else
+		enemy->is_shooting = 0;
+
 }
 

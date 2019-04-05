@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 20:04:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:32:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,40 +118,38 @@ void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 	i = 0;
 	while (i < p.nb_shot)
 	{
-		if (shot[i].is_alive)
-			render_sprites(env, queue, p.sprite, shot[i].position.where);
+		render_sprites(env, queue, p.sprite, shot[i].position.where);
 		i++;
 	}
 }
 
 void		render_enemies(t_env *env, t_queue *queue)
 {
-	const t_character	*ctn = env->world.enemies;
-	t_wrap_enmy			*enemy;
-	t_vtx 				p;
+	t_wrap_enmy	*enemy;
+	t_vtx 		p;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = queue->sect->head_enemy;
 	while (enemy)
 	{
 		if (enemy->is_alive)
-		{
 			bot_status(env, p, enemy, env->sdl.keycodes);
-			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->player.where);
-			render_bullet(env, enemy->player, enemy->shot, queue);
-		}
+		render_sprites(env, queue, enemy->sprite, enemy->player.where);
 		enemy = enemy->next;
 	}
 }
 
 void		render_sector(t_env *env, t_queue *queue)
 {
-	int			s;
+	int	s;
 
 	s = -1;
 	while (++s < (int)queue->sect->npoints)
 		render_sector_edges(env, queue, s);
 	render_object(env, queue);
 	render_enemies(env, queue);
-	render_bullet(env, env->engine.player, env->player.shot, queue);
+	if (env->player.inventory.current)
+		env->player.inventory.current->current->ref == 3
+		? render_bullet(env, env->engine.player, env->player.shot, queue)
+		: 0;
 }

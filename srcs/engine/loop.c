@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 15:03:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:45:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	sdl_render_game(t_env *env)
 {
 	dfs(env);
-	handle_weapon(env, &env->time.frame);
 	ui_put_fps(env, env->time.fps);
 	ui_minimap(env);
+	handle_weapon(env, &env->time.frame);
 	print_hud(env);
 	handle_gems(env);
 	if (!env->player.actions.is_invisible)
 		bot_action(env, &env->engine.sectors[env->engine.player.sector]);
-	player_bullet(env, &env->player.shot, 30);
+	player_bullet(env, &env->player, *env->player.inventory.current->damage);
+	enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 	env->hud.is_txt ? ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe) : 0;
+	god_mod(env);
 }
 
-void	sdl_render_inventory(t_env *env)
+int	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
 	action_inventory(env, 0, 0);
-	// (void)env;
 }
 
 int sdl_render(t_env *env, void (*f)(t_env *env))
 {
-	(void)f;
 	SDL_LockSurface(env->sdl.surface);
 	f(env);
 	SDL_UnlockSurface(env->sdl.surface);
@@ -54,8 +54,8 @@ int YourEventFilter(void *userdata, SDL_Event *event)
 
 	env = (t_env *)userdata;
 	if (event->type == SDL_MOUSEBUTTONDOWN && !env->player.actions.mouse_state)
-		return (mouse_shoot(env) ? 1 : 0);
-	else if (event->type == SDL_MOUSEBUTTONUP && env->player.actions.mouse_state)
+		env->player.inventory.current->current->ref != RIFLE ? mouse_shoot(env) : 0;
+	else if (event->type == SDL_MOUSEBUTTONUP)
 		env->player.actions.mouse_state = 0;
 	return (1);
 }
@@ -73,7 +73,7 @@ int sdl_loop(t_env *env)
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (1)
 	{
-	SDL_SetEventFilter(&YourEventFilter, (void *)env);
+		SDL_SetEventFilter(&YourEventFilter, (void *)env);
 		if (env->sdl.keycodes[SDL_SCANCODE_Q])
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
@@ -85,10 +85,10 @@ int sdl_loop(t_env *env)
 			if (!env->hud.inventory.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
-				// wpn_mouse_wheel(env, env->sdl.event);
+				wpn_mouse_wheel(env, env->sdl.event);
 				sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 				player_move(e, v, env->sdl.keycodes);
-
+				env->player.inventory.current->current->ref == RIFLE ? mouse_shoot(env) : 0;
 			}
 			else
 			{

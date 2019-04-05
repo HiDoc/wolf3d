@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:41:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:22:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ struct					s_bloc
 struct 						s_uinv
 {
 	t_bloc				bg;
-	t_bloc				wpn[3];
+	t_bloc				wpn[GAME_NB_WPN];
 	t_bloc				icons[2];
 	t_bloc				objects[6];
 	t_bloc				gems[4];
@@ -54,7 +54,7 @@ struct						s_hud
 	t_uinv				inventory;
 	t_bloc				bar[2];
 	t_bloc				faces[4];
-	t_bloc				hud_wpn[3];
+	t_bloc				hud_wpn[GAME_NB_WPN];
 	t_bloc				objects[5];
 	t_wrap_inv			*shortcut[5];
 	t_uitxt				text;

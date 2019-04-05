@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:54:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:53:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,80 @@
 
 static void		display_infos(t_env *env)
 {
+	SDL_Rect	rect;
 	t_vec		vec;
-	t_rect		rect;
 
 	// display position
-	rect = (t_rect){30, 750, 0, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){30, 750, 0, 20};
 	ui_make_string(rect, "x : ", env->data);
-	rect = (t_rect){60, 750, 0, 20, 0xFFFFFFFF};
-	ui_make_nbrstring(rect, env->data->mouse_x, env->data);
-	rect = (t_rect){110, 750, 0, 20, 0xFFFFFFFF};
+	rect = (SDL_Rect){60, 750, 0, 20};
+	ui_make_nbrstring(rect, env->mouse.x, env->data);
+	rect = (SDL_Rect){110, 750, 0, 20};
 	ui_make_string(rect, "y : ", env->data);
-	rect = (t_rect){140, 750, 0, 20, 0xFFFFFFFF};
-	ui_make_nbrstring(rect, env->data->mouse_y, env->data);
+	rect = (SDL_Rect){140, 750, 0, 20};
+	ui_make_nbrstring(rect, env->mouse.y, env->data);
 
 	// display_size
-	rect = (t_rect){190, 750, 0, 20, 0xffffffff};
+	rect = (SDL_Rect){190, 750, 0, 20};
 	ui_make_string(rect, "size : ", env->data);
-	rect = (t_rect){240, 750, 0, 20, 0xffffffff};
+	rect = (SDL_Rect){240, 750, 0, 20};
 	ui_make_nbrstring(rect, env->vtx_size, env->data);
 
 	// display bloc_size
-	rect = (t_rect){840, 750, 0, 20, 0xffffffff};
+	rect = (SDL_Rect){840, 750, 0, 20};
 	ui_make_nbrstring(rect, 20, env->data);
-	vec = (t_vec){(t_pos){830 - env->bloc_size, 765}, (t_pos){830, 765}};
+	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765}, (t_pos){830, 765}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
 	vec = (t_vec){(t_pos){830, 765}, (t_pos){830, 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){830 - env->bloc_size, 765},
-	(t_pos){830 - env->bloc_size, 755}};
+	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765},
+	(t_pos){830 - (20 * env->pixel_value), 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
+}
+
+static int		is_vec_in_map(t_vec vec)
+{
+	return (vec.a.x > 0 && vec.a.y > 0 && vec.b.x > 0 && vec.b.y > 0
+	&& vec.a.x < WIN_W && vec.a.y < WIN_H && vec.b.x < WIN_W && vec.b.y < WIN_H);
 }
 
 void			display_interface(t_env *env)
 {
 	Uint32		color;
 	t_vec		vec;
-	t_rect		rect;
+	SDL_Rect	rect;
 	int			nb;
 	int			i;
 
 	// display interface area + grid
-	rect = (t_rect){20, 100, 850, 680, 0xFFFFFFFF};
 	nb = 0;
-	i = 20;
+	i = 20 + env->grid_translate.x;
 	while (i < 870)
 	{
-		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
 		ui_make_line(env->data->surface, vec, color);
-		i += env->bloc_size / 4;
+		i += 4 * env->pixel_value;
 		nb++;
 	}
 	nb = 0;
-	i = 100;
+	i = 100 + env->grid_translate.y;
 	while (i < 780)
 	{
-		color = (nb % 4 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
 		ui_make_line(env->data->surface, vec, color);
-		i += env->bloc_size / 4;
+		i += 4 * env->pixel_value;
 		nb++;
 	}
-	ui_make_rect(env->data->surface, rect);
+	rect = (SDL_Rect){20, 100, 850, 680};
+	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	display_infos(env);
 
 	// display all edges
+	t_pos	p1;
+	t_pos	p2;
 	t_sct	*sct;
 	t_vtx	*vtx;
 	sct = env->sct_start;
@@ -91,14 +99,32 @@ void			display_interface(t_env *env)
 			color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
 			while (vtx->next)
 			{
-				vec = (t_vec){vtx->pos, vtx->next->pos};
-				ui_make_line(env->data->surface, vec, color);
+				p1 = (t_pos){
+				20 + vtx->pos.x * env->pixel_value,
+				100 + vtx->pos.y * env->pixel_value};
+
+				p2 = (t_pos){
+				20 + vtx->next->pos.x * env->pixel_value,
+				100 + vtx->next->pos.y * env->pixel_value};
+
+				vec = (t_vec){p1, p2};
+				if (is_vec_in_map(vec))
+					ui_make_line(env->data->surface, vec, color);
 				vtx = vtx->next;
 			}
 			if (sct->close)
 			{
-				vec = (t_vec){sct->vtx_start->pos, sct->vtx_end->pos};
-				ui_make_line(env->data->surface, vec, color);
+				p1 = (t_pos){
+				20 + sct->vtx_start->pos.x * env->pixel_value,
+				100 + sct->vtx_start->pos.y * env->pixel_value};
+
+				p2 = (t_pos){
+				20 + sct->vtx_end->pos.x * env->pixel_value,
+				100 + sct->vtx_end->pos.y * env->pixel_value};
+
+				vec = (t_vec){p1, p2};
+				if (is_vec_in_map(vec))
+					ui_make_line(env->data->surface, vec, color);
 			}
 		}
 		sct = sct->next;
@@ -110,32 +136,58 @@ void			display_interface(t_env *env)
 		vtx = env->sct_hover->vtx_start;
 		while (vtx->next)
 		{
-			vec = (t_vec){vtx->pos, vtx->next->pos};
-			ui_make_line(env->data->surface, vec, color);
+			p1 = (t_pos){
+			20 + vtx->pos.x * env->pixel_value,
+			100 + vtx->pos.y * env->pixel_value};
+
+			p2 = (t_pos){
+			20 + vtx->next->pos.x * env->pixel_value,
+			100 + vtx->next->pos.y * env->pixel_value};
+
+			vec = (t_vec){p1, p2};
+			if (is_vec_in_map(vec))
+				ui_make_line(env->data->surface, vec, color);
 			vtx = vtx->next;
 		}
 		if (env->sct_hover->close)
 		{
-			vec = (t_vec){env->sct_hover->vtx_start->pos,
-			env->sct_hover->vtx_end->pos};
+			p1 = (t_pos){
+			20 + env->sct_hover->vtx_start->pos.x * env->pixel_value,
+			100 + env->sct_hover->vtx_start->pos.y * env->pixel_value};
+
+			p2 = (t_pos){
+			20 + env->sct_hover->vtx_end->pos.x * env->pixel_value,
+			100 + env->sct_hover->vtx_end->pos.y * env->pixel_value};
+
+			vec = (t_vec){p1, p2};
 			ui_make_line(env->data->surface, vec, color);
 		}
-	}
-		
-	// display vtx hovering
-	t_circ	circ;
-	if (env->vtx_hover)
-	{
-		circ = (t_circ){env->vtx_hover->pos.x,
-		env->vtx_hover->pos.y, 10, 0xFFFFFFFF};
-		ui_make_circle(circ, env->data);
 	}
 
 	// display current edge
 	if (env->sct_current)
 	{
-		vec = (t_vec){env->sct_current->vtx_current->pos, env->data->mouse};
+		p1 = (t_pos){
+		20 + env->sct_current->vtx_current->pos.x * env->pixel_value,
+		100 + env->sct_current->vtx_current->pos.y * env->pixel_value};
+
+		p2 = (t_pos){
+		env->data->mouse.x,
+		env->data->mouse.y};
+
+		vec = (t_vec){p1, p2};
 		ui_make_line(env->data->surface, vec, C_CYAN);
+	}
+
+	// display vtx hovering
+	t_circ	circ;
+	if (env->vtx_hover)
+	{
+		circ = (t_circ){
+		20 + env->vtx_hover->pos.x * env->pixel_value,
+		100 + env->vtx_hover->pos.y * env->pixel_value,
+		10, 0xFFFFFFFF};
+		ui_make_circle(circ, env->data);
 	}
 
 	// display objects
@@ -147,8 +199,13 @@ void			display_interface(t_env *env)
 			color = C_GREEN;
 		else if (obj->category == ENTITY)
 			color = C_RED;
-		rect = (t_rect){obj->pos.x - 5, obj->pos.y - 5, 10, 10, color};
-		ui_make_rect(env->data->surface, rect);
+
+		p1 = (t_pos){
+		20 + obj->pos.x * env->pixel_value,
+		100 + obj->pos.y * env->pixel_value};
+
+		rect = (SDL_Rect){p1.x - 5, p1.y - 5, 10, 10};
+		ui_make_rect(env->data->surface, rect, color);
 		obj = obj->next;
 	}
 }
