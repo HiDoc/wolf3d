@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 23:18:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:02:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ typedef struct	s_sdl				t_sdl;
 typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
 typedef struct	s_tiletab			t_tiletab;
-// typedef struct	s_thread			t_thread;
-
-// struct 								s_thread
-// {
-
-// };
 
 struct								s_sdl
 {
@@ -105,6 +99,9 @@ struct								s_env
 };
 
 void			load_tilesets(t_env *env);
+
+int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
+int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));

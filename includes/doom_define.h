@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 19:22:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:25:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # include "libft.h"
 # define PI             3.141592
+
+# define NB_THREAD_IMG	8
 
 /*
 ** Define window size

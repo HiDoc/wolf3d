@@ -21,6 +21,10 @@ sector 	10 40 		12 13 11 10			-1 -1 -1 -1
 
 
 # object	x	y  sect ref is_wpn
+object  	8 	4	0	0 1
+object  	10 	13	0	1 1
+object  	13 	13	0	2 1
+object  	17 	13	0	3 1
 object  	8 	13	0	6 0
 object  	5 	5	0	7 0
 object  	5 	7	0	8 0

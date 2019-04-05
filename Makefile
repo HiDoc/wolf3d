@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/04 23:04:57 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/05 10:30:25 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,6 +111,7 @@ SRC_NAME 	= main.c \
 			struct_inventory.c \
 			struct_object.c \
 			struct_weapon.c \
+			threads_images.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
