@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 11:18:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:32:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
 void		render_sprites(t_env *env, t_queue *q,
-			SDL_Surface *sprite, t_vtx vertex)
+			SDL_Surface *sprite, t_vctr vertex)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
@@ -103,39 +103,53 @@ void		render_object(t_env *env, t_queue *queue)
 		{
 			object->is_pickable = (dist_vertex(p, object->vertex) < 5);
 			ref = object->ref + ((object->is_wpn) ? gem : 0);
-			render_sprites(env, queue, ctn[ref].sprite, object->vertex);
+			render_sprites(env, queue, ctn[ref].sprite,
+			(t_vctr){object->vertex.x, object->vertex.y, 0});
 			draw_pick_infos(env, object, ref);
 		}
 		object = object->next;
 	}
 }
 
+void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
+{
+	int	i;
+
+	i = 0;
+	while (i < p.nb_shot)
+	{
+		render_sprites(env, queue, p.sprite, shot[i].position.where);
+		i++;
+	}
+}
+
 void		render_enemies(t_env *env, t_queue *queue)
 {
-	const t_character	*ctn = env->world.enemies;
-	t_wrap_enmy			*enemy;
-	t_vtx 			p;
+	t_wrap_enmy	*enemy;
+	t_vtx 		p;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = queue->sect->head_enemy;
 	while (enemy)
 	{
 		if (enemy->is_alive)
-		{
 			bot_status(env, p, enemy, env->sdl.keycodes);
-			render_sprites(env, queue, ctn[enemy->ref].sprite, enemy->where);
-		}
+		render_sprites(env, queue, enemy->sprite, enemy->player.where);
 		enemy = enemy->next;
 	}
 }
 
 void		render_sector(t_env *env, t_queue *queue)
 {
-	int			s;
+	int	s;
 
 	s = -1;
 	while (++s < (int)queue->sect->npoints)
 		render_sector_edges(env, queue, s);
 	render_object(env, queue);
 	render_enemies(env, queue);
+	if (env->player.inventory.current)
+		env->player.inventory.current->current->ref == 3
+		? render_bullet(env, env->engine.player, env->player.shot, queue)
+		: 0;
 }

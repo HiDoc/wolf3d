@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/27 00:31:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 11:48:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,15 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 	{
 		ammo = obj->current->ref * 10;
 		wpn = &env->player.inventory.weapons[obj->current->ref - 2];
-		stack = wpn->ammo_current + wpn->ammo_magazine;
+		stack = *wpn->ammo_current + *wpn->ammo_magazine;
 		wpn_ref = &env->world.armory[obj->current->ref - 2];
 		if (wpn && stack < wpn_ref->ammo_curr_max + wpn_ref->ammo_mag_max)
 		{
-			ammo -= wpn_ref->ammo_curr_max - wpn->ammo_current;
-			wpn->ammo_current = wpn_ref->ammo_curr_max;
-			wpn->ammo_magazine += ammo;
-			if (wpn->ammo_magazine > wpn_ref->ammo_mag_max)
-				wpn->ammo_magazine = wpn_ref->ammo_mag_max;
+			ammo -= wpn_ref->ammo_curr_max - *wpn->ammo_current;
+			*wpn->ammo_current = wpn_ref->ammo_curr_max;
+			*wpn->ammo_magazine += ammo;
+			if (*wpn->ammo_magazine > wpn_ref->ammo_mag_max)
+				*wpn->ammo_magazine = wpn_ref->ammo_mag_max;
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? drop_object(env, obj) : 0;
 			return (0);

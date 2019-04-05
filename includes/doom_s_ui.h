@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 14:34:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 15:32:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ struct						s_uitxt
 	TTF_Font			*doom;
 	TTF_Font			*text;
 	TTF_Font			*number;
-	SDL_Surface			*string[UI_NB_STRING - UI_NB_STR_INV];
+	SDL_Surface			*string[HUD_NB_STRING];
 	SDL_Surface			*t_inv[UI_NB_STR_INV];
 	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
 	SDL_Surface			*pick_objects[HUD_PICK_OBJ];

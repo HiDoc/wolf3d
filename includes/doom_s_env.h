@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/30 14:13:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:02:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,7 @@ typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
-typedef struct	s_stats				t_stats;
 typedef struct	s_tiletab			t_tiletab;
-
-struct 								s_stats
-{
-	int				k_enemies;
-	int				k_boss;
-	int				k_magnum;
-	int				k_shotgun;
-	int				k_rifle;
-	int				headshot;
-	int				time_play;
-	int				death;
-	t_bloc			achievments[8];
-};
 
 struct								s_sdl
 {
@@ -108,10 +94,14 @@ struct								s_env
 	t_hud			hud;
 	t_stats			stats;
 	t_tiletab		tiletab;
+	int				god_mod;
 	// ...
 };
 
 void			load_tilesets(t_env *env);
+
+int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
+int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));

@@ -6,11 +6,27 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 11:21:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 22:31:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int	god_mod(t_env *env)
+{
+	if (env->god_mod)
+	{
+		env->player.actions.is_invisible = 1;
+		env->player.actions.is_invulnerable = 1;
+	}
+	else
+	{
+		env->player.actions.is_invisible = 0;
+		env->player.actions.is_invulnerable = 0;
+	}
+
+	return (1);
+}
 
 int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
@@ -30,6 +46,22 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	return (1);
 }
 
+int	keyhook_gems(t_env *env, const Uint8 *keycodes)
+{
+
+	if (keycodes[SDL_SCANCODE_1])
+		action_gems(env, env->hud.shortcut[0], 0);
+	if (keycodes[SDL_SCANCODE_2])
+		action_gems(env, env->hud.shortcut[1], 1);
+	if (keycodes[SDL_SCANCODE_3])
+		action_gems(env, env->hud.shortcut[2], 2);
+	if (keycodes[SDL_SCANCODE_4])
+		action_gems(env, env->hud.shortcut[3], 3);
+	if (keycodes[SDL_SCANCODE_5])
+		action_gems(env, env->hud.shortcut[4], 4);
+	return (1);
+}
+
 int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
@@ -37,12 +69,15 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 
 	e = &env->engine;
 	v = &e->player.vision;
-	(void)keycodes;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
-
+		keyhook_gems(env, keycodes);
+		if (keycodes[SDL_SCANCODE_O])
+			env->god_mod = !env->god_mod;
 		if (keycodes[SDL_SCANCODE_E])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
+		if (keycodes[SDL_SCANCODE_R])
+			load_weapon(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
 		if (keycodes[SDL_SCANCODE_TAB])

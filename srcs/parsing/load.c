@@ -49,6 +49,8 @@ void			load_map(t_engine *e, t_env *env)
 				sect->vertex    = malloc((m + 1) * sizeof(*sect->vertex));
 				sect->head_object = NULL;
 				sect->head_enemy = NULL;
+				sect->nb_objects = 0;
+				sect->nb_enemies = 0;
 				for (n=0; n<m; ++n)
 				{
 					sect->neighbors[n] = num[m + n];
@@ -75,7 +77,7 @@ void			load_map(t_engine *e, t_env *env)
 			case 'p':; // player
 				float angle;
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-				e->player = (t_player) { {v.x, v.y, 0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0, n }; // TODO: Range checking
+				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet }; // TODO: Range checking
 				e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
 				break;
 		}

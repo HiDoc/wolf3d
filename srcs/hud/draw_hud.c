@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/31 20:59:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 17:46:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	draw_img(env, bloc->sprite, bloc);
 	if (ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
 	(t_vtx){W - W / 7, H / 1.3}, W / 40,
-	env->player.inventory.current->ammo_current, -1})
+	*env->player.inventory.current->ammo_current, -1})
 	&& ui_put_data(env, (t_font){GOLD, "/", env->hud.text.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, W / 40,
-	-1, env->player.inventory.current->ammo_magazine}))
+	-1, *env->player.inventory.current->ammo_magazine}))
 		return (1);
 	return (0);
 }
@@ -33,16 +33,24 @@ int	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 	int			iter;
 	SDL_Surface	*sprite;
 	t_bloc		*bloc;
+	t_bloc		fill;
 
 	bloc = &env->hud.objects[ref.y];
+	fill = (t_bloc){bloc->cross, bloc->use, NULL, NULL, NULL,
+	bloc->use.rect, 0, 0, {{0, 0}, {0, 0}}};
 	if ((iter = check_object_type(pack, ref.x, limit)) > -1)
 	{
 		sprite = env->world.objects[ref.x].sprite;
 		draw_img(env, bloc->bg_fill, bloc);
 		draw_img(env, sprite, bloc);
+		ui_put_data(env, (t_font){GOLD, "", env->hud.text.text,
+		(t_vtx){fill.rect.x, fill.rect.y}, W / 90, -1,
+		pack[iter].nb_stack});
 	}
 	else
 		draw_img(env, bloc->bg_empty, bloc);
+	fill.rect = bloc->cross.rect;
+	draw_img(env, bloc->cross.sprite, &fill);
 	return (0);
 }
 
@@ -108,7 +116,8 @@ int print_hud(t_env *env)
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;
-	if (player->inventory.current)
+	if (player->inventory.current
+	&& player->inventory.current->current->ref != 4)
 	{
 		if (!print_wpn_hud(env, player->inventory.current))
 			return (0);

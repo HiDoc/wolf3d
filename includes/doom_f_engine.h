@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 18:25:45 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:24:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int			is_bumping(const t_sector *sect, t_vision *vision,
 			unsigned s, t_engine *e);
 
 void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
+
+int			sector_collision(t_vtx player, t_vtx *dest, t_edge wall);
 
 int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
@@ -51,7 +53,7 @@ void		render_sector(t_env *env, t_queue *queue);
 void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybot);
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
-int			init_pack_img(t_surface **pack, char *name, int limit);
+//int			init_pack_img(t_surface **pack, char *name, int limit);
 int			init_container(t_env *env);
 int         init_character(t_character *new);
 int		    init_weapon(t_env *env);

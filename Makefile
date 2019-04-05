@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsauron <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/01 16:23:28 by jsauron          ###   ########.fr        #
+#    Updated: 2019/04/05 16:32:22 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -71,12 +71,14 @@ SRC_NAME 	= main.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
+			action_shoot.c \
 			checking.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
 			edge.c \
 			function.c \
+			handle_enemy_sprite.c \
 			handle_weapon.c \
 			hud_data.c \
 			hull.c \
@@ -109,6 +111,7 @@ SRC_NAME 	= main.c \
 			struct_inventory.c \
 			struct_object.c \
 			struct_weapon.c \
+			threads_images.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
@@ -129,7 +132,7 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
-			weapons_inventory.c
+			weapons_wheel_hud.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 
@@ -233,14 +236,18 @@ parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
 	./parser map.txt
 
-run: all
+run: COMPILE
 	clear
 	./doom
+
+god: COMPILE
+	clear
+	./doom "god"
 
 lldb:
 	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
 		-L$(LIBFT) -lft
-	lldb ./doom
+	./doom
 
 .NOTPARALLEL:
 re: fclean all

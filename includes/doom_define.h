@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/01 16:26:14 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/04/05 10:25:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # include "libft.h"
 # define PI             3.141592
+
+# define NB_THREAD_IMG	8
 
 /*
 ** Define window size
@@ -72,8 +74,8 @@
 /*
 ** World related constants
 */
-# define WORLD_NB_WEAPONS	3
-# define WORLD_NB_OBJECTS	13
+# define WORLD_NB_WEAPONS	5
+# define WORLD_NB_OBJECTS	14
 # define WORLD_NB_GEMS		4
 # define WORLD_NB_CSMBLE	6
 # define WORLD_NB_SURFACE	15
@@ -89,6 +91,7 @@
 #define WHITE		(SDL_Color){255, 255, 255, 255}
 #define BLACK		(SDL_Color){0, 0, 0, 255}
 #define BLUE		(SDL_Color){8, 8, 255, 0}
+#define GREEN		(SDL_Color){8, 255, 8, 0}
 #define	GOLD		(SDL_Color){242, 204, 42, 255}
 #define TRANSPARENT	(SDL_Color){0, 0, 0, 0}
 

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/29 17:05:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/04 21:06:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,24 @@
 
 typedef struct	s_scaler	t_scaler;
 typedef struct	s_sector	t_sector;
-typedef struct	s_player	t_player;
 typedef struct	s_item		t_item;
 typedef struct	s_engine	t_engine;
-typedef struct	s_vision	t_vision;
 typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
 typedef struct	s_skybox	t_skybox;
+typedef struct	s_save		t_save;
+
+
+struct						s_save
+{
+	int						health;
+	int						shield;
+	t_player				player; //position + angle view
+	t_inventory				inventory; // objects + gems + weapon + current wpn
+	t_sector				*sector; // all sectors (with objects + enemies)
+	t_stats					stats; // game stats
+};
 
 
 struct						s_scaler
@@ -61,30 +71,9 @@ struct						s_sector
 	signed char	*neighbors;
 	unsigned	npoints;
 	int			nb_objects;
+	int			nb_enemies;
 	t_wrap_sect	*head_object;
 	t_wrap_enmy	*head_enemy;
-};
-
-struct						s_vision
-{
-	int			ground;
-	int			falling;
-	int			moving;
-	int			ducking;
-	float		yaw;
-	float		eyeheight;
-};
-
-struct						s_player
-{
-	t_vctr		where;
-	t_vctr		velocity;
-	t_vision	vision;
-	float		angle;
-	float		anglesin;
-	float		anglecos;
-	float		yaw;
-	unsigned 	sector;
 };
 
 struct						s_queue
