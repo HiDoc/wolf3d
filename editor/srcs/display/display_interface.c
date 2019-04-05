@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 17:08:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:12:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,12 @@ void			display_interface(t_env *env)
 			color = C_GREEN;
 		else if (obj->category == ENTITY)
 			color = C_RED;
-		rect = (SDL_Rect){obj->pos.x - 5, obj->pos.y - 5, 10, 10};
+
+		p1 = (t_pos){
+		20 + obj->pos.x * env->pixel_value,
+		100 + obj->pos.y * env->pixel_value};
+
+		rect = (SDL_Rect){p1.x - 5, p1.y - 5, 10, 10};
 		ui_make_rect(env->data->surface, rect, color);
 		obj = obj->next;
 	}

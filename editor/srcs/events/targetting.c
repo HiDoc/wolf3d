@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:06:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:21:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,16 @@ t_vtx		*target_vertex(t_env *env)
 t_object	*target_object(t_pos pos, t_env *env)
 {
 	t_object	*obj;
+	t_pos		calcpos;
 
 	env->obj_hover = 0;
 	obj = env->objects;
 	while (obj)
 	{
-		if (ui_close_to(pos, obj->pos, 10))
+		calcpos = (t_pos){
+		20 + obj->pos.x * env->pixel_value,
+		100 + obj->pos.y * env->pixel_value};
+		if (ui_close_to(pos, calcpos, 10))
 		{
 			env->obj_hover = obj;
 			return (obj);
