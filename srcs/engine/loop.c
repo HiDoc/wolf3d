@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 22:28:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:45:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sdl_render_game(t_env *env)
 	god_mod(env);
 }
 
-void	sdl_render_inventory(t_env *env)
+int	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
 	action_inventory(env, 0, 0);

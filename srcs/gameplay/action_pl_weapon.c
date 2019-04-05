@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 12:23:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:36:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		sector->nb_objects--;
 		return (15);
 	}
-	;
 	return (drop_wpn(env, env->player.inventory.current)
 	? pick_weapon(env, obj) : 17);
 }
@@ -83,6 +82,7 @@ int		new_current_wpn(t_inventory *inv)
 			break ;
 		i++;
 	}
+	printf("i %i\n", i);
 	set_current_wpn(inv, i);
 	return (1);
 }
@@ -99,7 +99,7 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		ref = wpn->current->ref;
 		cur_ref = env->player.inventory.current->current->ref;
 		sector = &env->engine.sectors[env->engine.player.sector];
-		vertex.x = env->engine.player.where.x;
+		vertex.x = env->engine.player.where.x + 5;
 		vertex.y = env->engine.player.where.y;
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 		vertex, wpn->current->ref, wpn->current->is_wpn);
@@ -107,7 +107,8 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		env->hud.inventory.nb_wpn--;
 		env->hud.is_txt = 18;
 		sector->nb_objects++;
-		return (ref != cur_ref ? new_current_wpn(&env->player.inventory) : 1);
+		printf("ref %i, cur_ref %i\n", ref, cur_ref);
+		return (ref == cur_ref ? new_current_wpn(&env->player.inventory) : 1);
 	}
 	return (0);
 }

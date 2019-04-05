@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 21:24:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:42:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ int     ui_txt_inv(t_env *env)
 	draw_scaled_string((t_font){WHITE, "Stats",
 	env->hud.text.doom, (t_vtx){W / 2.2, H / 1.4}, W / 34, -1, -1},
 	env->hud.text.t_inv[5], env->sdl.surface, (t_vtx){0, 0});
-
-	print_stats(env);
-	print_description_object(env);
-    return (1);
+    return (print_stats(env)
+	&& print_description_object(env));
 }
 
 int		ui_icon_data(t_env *env, t_vtx v, int iter)

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 19:24:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:42:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int		print_inventory(t_env *env)
 
 	bloc = &env->hud.inventory.bg;
 	draw_img(env, bloc->sprite, bloc);
-	fill_inventory(env);
-	ui_txt_inv(env);
-	return (1);
+
+	return (fill_inventory(env);
+	&& ui_txt_inv(env));
 }

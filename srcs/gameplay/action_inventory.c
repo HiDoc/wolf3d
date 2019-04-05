@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 00:33:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:42:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int	action_inventory(t_env *env, int x, int y)
 				drop_wpn(env, weapon);
 		}
 	}
-	return (0);
+	return (1);
 }
