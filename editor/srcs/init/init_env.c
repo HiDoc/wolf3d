@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:07:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:23:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,19 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){170, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, rect, env);
 
-	rect = (SDL_Rect){WIN_W / 2 - 50, WIN_H / 2 + 20,20, 20};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);
+	get_element(M_B_UP, env)->image =
+	ui_load_image("ressources/images/icons/arrowup.png", env);
 	
-	rect = (SDL_Rect){WIN_W / 2 - 50, WIN_H / 2 + 60, 20, 20};
+	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 55, 40, 40};
 	create_element(M_B_DOWN, BUTTON, rect, env);
+	get_element(M_B_DOWN, env)->image =
+	ui_load_image("ressources/images/icons/arrowdown.png", env);
 
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
+	get_element(E_B_MODE_SELECT, env)->color = C_GREEN;
 	get_element(E_B_MODE_SELECT, env)->image =
 	ui_load_image("ressources/images/icons/cursor.png", env);
 
@@ -227,8 +232,7 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->obj_type = -1;
-	env->bloc_size = 120;
-	env->zoom_coef = 0.4;
+	env->pixel_value = 5;
 
 	i = 0;
 	// compteur nb wall textures

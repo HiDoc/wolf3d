@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 12:30:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:18:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	left_panel(t_pos origin, t_env *env)
 
 	// square
 	rect = (SDL_Rect){origin.x, origin.y, 400, 450};
+	ui_make_full_rect(env->data->surface, rect, 0x10000000);
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	// create new
@@ -32,21 +33,21 @@ static void	left_panel(t_pos origin, t_env *env)
 	rect = (SDL_Rect){origin.x + 10, origin.y + 120, 380, 320};
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
-	// up	
-	ui_make_rect(env->data->surface,
-	get_element(M_B_UP, env)->rect, get_element(M_B_UP, env)->color);
+	// up
+	SDL_BlitScaled(get_element(M_B_UP, env)->image,
+	0, env->data->surface, &get_element(M_B_UP, env)->rect);
 
 	// down
-	ui_make_rect(env->data->surface,
-	get_element(M_B_DOWN, env)->rect, get_element(M_B_DOWN, env)->color);
+	SDL_BlitScaled(get_element(M_B_DOWN, env)->image,
+	0, env->data->surface, &get_element(M_B_DOWN, env)->rect);
 
 	// display maps file
 	t_elem		*elem;
 
-	color = C_WHITE;
 	elem = env->menu.btn_maps;
 	while (elem)
 	{
+		color = C_WHITE;
 		rect = (SDL_Rect){elem->rect.x, elem->rect.y + env->menu.idx_map * 40,
 		elem->rect.w, elem->rect.h};
 		if (elem == env->menu.selected)
@@ -66,6 +67,7 @@ static void	right_panel(t_pos origin, t_env *env)
 
 	// square
 	rect = (SDL_Rect){origin.x + 400, origin.y, 400, 450};
+	ui_make_full_rect(env->data->surface, rect, 0x10000000);
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	// preview
