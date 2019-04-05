@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 16:57:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:33:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,13 @@ struct					s_env
 	int				drawing;		// am i drawing an edge
 
 	// mouse handling
-	int				mouse_mode; // 0 : selection / 1 : draw
+	int				mouse_mode;
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
+
+	// grid move
+	int				grid_drag;
+	t_pos			grid_init_pos;
+	t_pos			grid_translate;
 
 	// lst elements
 	t_elem			*elements;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:12:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:53:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			display_interface(t_env *env)
 
 	// display interface area + grid
 	nb = 0;
-	i = 20;
+	i = 20 + env->grid_translate.x;
 	while (i < 870)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
@@ -71,7 +71,7 @@ void			display_interface(t_env *env)
 		nb++;
 	}
 	nb = 0;
-	i = 100;
+	i = 100 + env->grid_translate.y;
 	while (i < 780)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;

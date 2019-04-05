@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:19:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:26:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		handle_events(t_env *env)
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 					get_element(E_B_MODE_MOVE, env)->rect))
-		{ // button select mode
+		{ // button move mode
 			env->mouse_mode = 3;
 			reset_values(env);
 			get_element(E_B_MODE_MOVE, env)->color = C_GREEN;
@@ -77,7 +77,7 @@ int		handle_events(t_env *env)
 		}
 		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 					get_element(E_B_MODE_ELEM, env)->rect))
-		{ // button draw mode
+		{ // button elem mode
 			env->mouse_mode = 2;
 			reset_values(env);
 			get_element(E_B_MODE_ELEM, env)->color = C_GREEN;
@@ -97,7 +97,7 @@ int		handle_events(t_env *env)
 			}
 			else if (event.wheel.y)
 			{
-				(env->pixel_value < 50) ? env->pixel_value += 1 : 0;
+				(env->pixel_value < 20) ? env->pixel_value += 1 : 0;
 				return (1);
 			}
 		}
@@ -118,6 +118,8 @@ int		handle_events(t_env *env)
 		return (draw_mode(env));
 	else if (env->mouse_mode == 2)
 		return (elem_mode(env));
+	else if (env->mouse_mode == 3)
+		return (move_mode(env));
 
 	return (0);
 }

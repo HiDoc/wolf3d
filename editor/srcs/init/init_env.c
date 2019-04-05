@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:47:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:23:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->obj_type = -1;
-	env->pixel_value = 1;
+	env->pixel_value = 5;
 
 	i = 0;
 	// compteur nb wall textures
