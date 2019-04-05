@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:47:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:21:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,31 @@ return (cross_product(diff_vertex(p1, p0), diff_vertex(p, p0)));
   return (v);
   }*/
 
+t_sct       *target_sector(t_pos pos, t_env *env)
+{
+	t_sct   *sector;
+	t_sct   *target;
+
+	target = 0;
+	sector = env->sct_start;
+	while (sector && sector->close == 1) // for each sectors
+	{
+		sector->color = 0xFFFFFFFF;
+		if (!(env->vtx_hover) && vertex_in_sector(sector, pos))
+		{
+			sector->color = (env->mouse_mode == 0) ? 0xFF00FF00 : 0xFF0000FF;
+			target = sector;
+		}
+		sector = sector->next;
+	}
+	return (target);
+}
+
 t_vtx		*target_vertex(t_env *env)
 {
 	t_sct	*sct;
 	t_vtx	*vtx;
+	t_pos	pos;
 
 	env->vtx_hover = 0;
 	sct = env->sct_start;
@@ -71,7 +92,10 @@ t_vtx		*target_vertex(t_env *env)
 		vtx = sct->vtx_start;
 		while (vtx)
 		{
-			if (ui_close_to(env->data->mouse, vtx->pos, 10))
+			pos = (t_pos){
+			20 + vtx->pos.x * env->pixel_value,
+			100 + vtx->pos.y * env->pixel_value};
+			if (ui_close_to(env->data->mouse, pos, 10))
 			{
 				env->vtx_hover = vtx;
 				return (vtx);
@@ -83,39 +107,19 @@ t_vtx		*target_vertex(t_env *env)
 	return (0);
 }
 
-t_sct       *target_sector(t_pos pos, t_env *env)
-{
-	t_sct   *sector;
-	t_sct   *target;
-
-	target = 0;
-	sector = env->sct_start;
-	while (sector && sector->close == 1) // for each sectors
-	{
-		if (!(env->vtx_hover) && vertex_in_sector(sector, pos, env))
-		{
-			if (env->mouse_mode == 0)
-				sector->color = 0xFF00FF00;
-			else
-				sector->color = 0xFF0000FF;
-			target = sector;
-		}
-		else
-			sector->color = 0xFFFFFFFF;
-		sector = sector->next;
-	}
-	return (target);
-}
-
 t_object	*target_object(t_pos pos, t_env *env)
 {
 	t_object	*obj;
+	t_pos		calcpos;
 
 	env->obj_hover = 0;
 	obj = env->objects;
 	while (obj)
 	{
-		if (ui_close_to(pos, obj->pos, 10))
+		calcpos = (t_pos){
+		20 + obj->pos.x * env->pixel_value,
+		100 + obj->pos.y * env->pixel_value};
+		if (ui_close_to(pos, calcpos, 10))
 		{
 			env->obj_hover = obj;
 			return (obj);
