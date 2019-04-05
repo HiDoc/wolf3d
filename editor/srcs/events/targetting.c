@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/03 22:47:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:14:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_vtx		*target_vertex(t_env *env)
 {
 	t_sct	*sct;
 	t_vtx	*vtx;
+	t_pos	pos;
 
 	env->vtx_hover = 0;
 	sct = env->sct_start;
@@ -71,7 +72,10 @@ t_vtx		*target_vertex(t_env *env)
 		vtx = sct->vtx_start;
 		while (vtx)
 		{
-			if (ui_close_to(env->data->mouse, vtx->pos, 10))
+			pos = (t_pos){
+			20 + vtx->pos.x * env->pixel_value,
+			100 + vtx->pos.y * env->pixel_value};
+			if (ui_close_to(env->data->mouse, pos, 10))
 			{
 				env->vtx_hover = vtx;
 				return (vtx);

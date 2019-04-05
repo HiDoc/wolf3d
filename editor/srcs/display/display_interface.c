@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 20:48:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:08:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ void			display_interface(t_env *env)
 			while (vtx->next)
 			{
 				p1 = (t_pos){
-				vtx->pos.x * env->pixel_value,
-				vtx->pos.y * env->pixel_value};
+				20 + vtx->pos.x * env->pixel_value,
+				100 + vtx->pos.y * env->pixel_value};
 
 				p2 = (t_pos){
-				vtx->next->pos.x * env->pixel_value,
-				vtx->next->pos.y * env->pixel_value};
+				20 + vtx->next->pos.x * env->pixel_value,
+				100 + vtx->next->pos.y * env->pixel_value};
 
 				vec = (t_vec){p1, p2};
 				if (is_vec_in_map(vec))
@@ -115,12 +115,12 @@ void			display_interface(t_env *env)
 			if (sct->close)
 			{
 				p1 = (t_pos){
-				sct->vtx_start->pos.x * env->pixel_value,
-				sct->vtx_start->pos.y * env->pixel_value};
+				20 + sct->vtx_start->pos.x * env->pixel_value,
+				100 + sct->vtx_start->pos.y * env->pixel_value};
 
 				p2 = (t_pos){
-				sct->vtx_end->pos.x * env->pixel_value,
-				sct->vtx_end->pos.y * env->pixel_value};
+				20 + sct->vtx_end->pos.x * env->pixel_value,
+				100 + sct->vtx_end->pos.y * env->pixel_value};
 
 				vec = (t_vec){p1, p2};
 				if (is_vec_in_map(vec))
@@ -137,42 +137,57 @@ void			display_interface(t_env *env)
 		while (vtx->next)
 		{
 			p1 = (t_pos){
-			vtx->pos.x * env->pixel_value,
-			vtx->pos.y * env->pixel_value};
+			20 + vtx->pos.x * env->pixel_value,
+			100 + vtx->pos.y * env->pixel_value};
 
 			p2 = (t_pos){
-			vtx->next->pos.x * env->pixel_value,
-			vtx->next->pos.y * env->pixel_value};
+			20 + vtx->next->pos.x * env->pixel_value,
+			100 + vtx->next->pos.y * env->pixel_value};
 
 			vec = (t_vec){p1, p2};
 			if (is_vec_in_map(vec))
 				ui_make_line(env->data->surface, vec, color);
 			vtx = vtx->next;
 		}
-		/*if (env->sct_hover->close)
+		if (env->sct_hover->close)
 		{
-			p1 = (t_pos){sct->vtx_start->pos.x * env->pixel_value, sct->vtx_start->pos.y * env->pixel_value};
-			p2 = (t_pos){sct->vtx_end->pos.x * env->pixel_value, sct->vtx_end->pos.y * env->pixel_value};
-			vec = (t_vec){env->sct_hover->vtx_start->pos,
-			env->sct_hover->vtx_end->pos};
+			p1 = (t_pos){
+			20 + env->sct_hover->vtx_start->pos.x * env->pixel_value,
+			100 + env->sct_hover->vtx_start->pos.y * env->pixel_value};
+
+			p2 = (t_pos){
+			20 + env->sct_hover->vtx_end->pos.x * env->pixel_value,
+			100 + env->sct_hover->vtx_end->pos.y * env->pixel_value};
+
+			vec = (t_vec){p1, p2};
 			ui_make_line(env->data->surface, vec, color);
-		}*/
-	}
-		
-	// display vtx hovering
-	t_circ	circ;
-	if (env->vtx_hover)
-	{
-		circ = (t_circ){env->vtx_hover->pos.x,
-		env->vtx_hover->pos.y, 10, 0xFFFFFFFF};
-		ui_make_circle(circ, env->data);
+		}
 	}
 
 	// display current edge
 	if (env->sct_current)
 	{
-		vec = (t_vec){env->sct_current->vtx_current->pos, env->data->mouse};
+		p1 = (t_pos){
+		20 + env->sct_current->vtx_current->pos.x * env->pixel_value,
+		100 + env->sct_current->vtx_current->pos.y * env->pixel_value};
+
+		p2 = (t_pos){
+		env->data->mouse.x,
+		env->data->mouse.y};
+
+		vec = (t_vec){p1, p2};
 		ui_make_line(env->data->surface, vec, C_CYAN);
+	}
+
+	// display vtx hovering
+	t_circ	circ;
+	if (env->vtx_hover)
+	{
+		circ = (t_circ){
+		20 + env->vtx_hover->pos.x * env->pixel_value,
+		100 + env->vtx_hover->pos.y * env->pixel_value,
+		10, 0xFFFFFFFF};
+		ui_make_circle(circ, env->data);
 	}
 
 	// display objects

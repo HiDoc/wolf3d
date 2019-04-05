@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:57:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 14:28:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int			draw_mode(t_env *env)
 				{// not in another sector
 					env->drawing = 1;
 					create_sector(env);
-					create_vertex(env->data->mouse, env);
+					create_vertex(env->mouse, env);
 				}
 			}
 			else // dock
@@ -142,7 +142,7 @@ int			draw_mode(t_env *env)
 					}
 				}
 				else // no dock
-					create_vertex(env->data->mouse, env);
+					create_vertex(env->mouse, env);
 			}
 			return (1);
 		}
