@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 11:02:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 17:57:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 		else
 			env->player.health -= damage;
 		if (env->player.health <= 10)
+		{
 			env->player.health = 200;
+			env->stats.death++;
+		}
 		shot->is_shooting = 0;
 		shot->is_alive = 0;
 	}

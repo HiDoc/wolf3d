@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:12 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 20:35:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 18:05:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ int	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 	while (i < 6)
 	{
 		inventory->objects[i] = (t_bloc){
-		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){5, 4, rect.y}),
+		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){6, 5, rect.y}),
 		fill_minibloc(rect, hud->text.t_inv[3],
-		(t_vctr){4, 4, rect.y + rect.h - rect.h / 4}),
+		(t_vctr){4, 5, rect.y + rect.h - rect.h / 5}),
 		env->world.surfaces.hud[BOX_E].sprite,
 		env->world.surfaces.hud[BOX_F].sprite,
 		NULL, rect, i, 0, (t_edge){{0, 0}, {0, 0}}};

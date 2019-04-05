@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 21:06:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:05:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
 typedef struct	s_skybox	t_skybox;
 typedef struct	s_save		t_save;
+typedef struct	s_door		t_door;
 
+struct						s_door
+{
+	SDL_Surface				*sprite;
+	int						is_openable;
+	int						is_open;
+};
 
 struct						s_save
 {
@@ -72,6 +79,8 @@ struct						s_sector
 	unsigned	npoints;
 	int			nb_objects;
 	int			nb_enemies;
+	int			is_door;
+	t_door		door;
 	t_wrap_sect	*head_object;
 	t_wrap_enmy	*head_enemy;
 };

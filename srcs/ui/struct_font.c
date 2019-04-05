@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 20:25:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:57:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,22 @@ int	set_pick_strings(t_env *env)
 	return (1);
 }
 
+int			set_door_strings(t_env *env)
+{
+	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (!(env->hud.text.doors[i] = ui_create_simple_string((t_font){WHITE,
+		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int			set_simple_strings(t_env *env, int i, int j)
 {
 	const char		*string[UI_NB_STRING] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
@@ -105,5 +121,5 @@ int			set_simple_strings(t_env *env, int i, int j)
 		}
 		i++;
 	}
-	return (set_inv_strings(env) && set_pick_strings(env));
+	return (set_inv_strings(env) && set_pick_strings(env) && set_door_strings(env));
 }

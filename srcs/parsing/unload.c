@@ -82,26 +82,22 @@ void		free_surface_string(t_uitxt *ui)
 {
 	int i;
 
-	i = 0;
-	while (i < UI_NB_STRING - UI_NB_STR_INV)
+	i = -1;
+	while (++i < UI_NB_STRING - UI_NB_STR_INV)
 	{
 		free_img(ui->string[i]);
 		if (i < UI_NB_STR_INV)
 			free_img(ui->t_inv[i]);
-		i++;
 	}
-	i = 0;
-	while (i < HUD_PICK_OBJ)
-	{
+	i = -1;
+	while (++i < HUD_PICK_OBJ)
 		free_img(ui->pick_objects[i]);
-		i++;
-	}
-	i = 0;
-	while (i < DSCRIP_STR_INV)
-	{
+	i = -1;
+	while (++i < DSCRIP_STR_INV)
 		free_img(ui->i_obj_description[i]);
-		i++;
-	}
+	i = -1;
+	while (++i < 2)
+		free_img(ui->doors[i]);
 }
 
 void		free_posters(t_container *surface)
@@ -133,13 +129,12 @@ void		free_enemies(t_world *world)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < WORLD_NB_ENEMIES)
+	i = -1;
+	while (++i < WORLD_NB_ENEMIES)
 	{
 		j = -1;
 		while (++j < 6)
 			free_img(world->enemies[i].sprites[j]);
-		i++;
 	}
 }
 

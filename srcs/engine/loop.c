@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 16:45:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:48:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	sdl_render_game(t_env *env)
 	enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 	env->hud.is_txt ? ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe) : 0;
 	god_mod(env);
+	front_door(env);
 }
 
-int	sdl_render_inventory(t_env *env)
+void	sdl_render_inventory(t_env *env)
 {
 	print_inventory(env);
 	action_inventory(env, 0, 0);

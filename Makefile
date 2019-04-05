@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/05 16:32:22 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/05 19:55:46 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ HED_NAME	= doom.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
+			action_door.c \
 			action_enemies.c \
 			action_gems.c \
 			action_inventory.c \

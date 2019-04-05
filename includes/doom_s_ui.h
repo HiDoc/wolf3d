@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 15:32:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:31:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct						s_uitxt
 	SDL_Surface			*t_inv[UI_NB_STR_INV];
 	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
 	SDL_Surface			*pick_objects[HUD_PICK_OBJ];
+	SDL_Surface			*doors[2];
 };
 
 struct 						s_font

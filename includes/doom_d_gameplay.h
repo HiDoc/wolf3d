@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 10:54:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 18:01:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@
 # define S_SHOTGUN	100
 # define V_SHOTGUN	1.9f
 # define R_RIFLE	2
-# define S_RIFLE	600
+# define S_RIFLE	1000
 # define V_RIFLE	2.0f
 # define R_RPG		30
-# define S_RPG		1000
+# define S_RPG		2000
 # define V_RPG		1.1f
 # define R_FIST		3
 # define S_FIST		1

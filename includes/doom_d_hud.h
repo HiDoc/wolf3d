@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 20:33:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:46:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,10 @@
 # define P_STRING_12	"E - Pick Pulsar Rifle"
 # define P_STRING_13	"E - Pick RPG-7"
 # define P_STRING_14	" "
+
+/*
+** HUD string - Doors strings
+*/
+# define STR_DOOR_0		"E - Open the door"
+# define STR_DOOR_1		"E - Finish the level to open the door"
 #endif

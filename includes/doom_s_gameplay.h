@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 10:00:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 20:01:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ struct						s_container
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
+	t_surface	button[2];
 };
 
 struct						s_actions

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 16:30:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:09:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,10 @@ int	thread_current_sprite(t_bloc *child, char *path, int line, int size)
 
 t_bloc *weapon_fill(t_weapon *mother, char *path, int size)
 {
-	int	i;
 	t_bloc		*weapons;
 
 	if (!(weapons = malloc(sizeof(t_bloc) * size)))
 		return (NULL);
-
-	i = 0;
-	// (void)mother;
-	// while (i < size)
-	// {
-	// 	if (!current_sprite(&weapons[i], path, i))
-	// 		return (0);
-	// 	i++;
-	// }
 	init_thread(mother, weapons, path, size);
 	return (weapons);
 }
@@ -143,30 +133,30 @@ int		init_weapon(t_env *env)
 	env->world.armory[RIFLE].ref = 0xa8e2000042a4;
 	env->world.armory[RPG].ref = 0xa08010108242;
 	env->world.armory[FIST].ref = 0xa00000103002;
-	weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1);
-	printf("time weapon: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1);
-	printf("time weapon: %u\n", SDL_GetTicks());
+	// weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0);
+	// printf("time weapon: %u\n", SDL_GetTicks());
+	// weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0);
+	// printf("time weapon: %u\n", SDL_GetTicks());
+	// weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1);
+	// printf("time weapon: %u\n", SDL_GetTicks());
+	// weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1);
+	// printf("time weapon: %u\n", SDL_GetTicks());
+	// weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1);
+	// printf("time weapon: %u\n", SDL_GetTicks());
 
-	// if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 1)
-	// && weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1)
-	// && weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1)
-	// && weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1)
-	// && weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1))
-	// {
+	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 1)
+	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1)
+	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1)
+	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1)
+	&& weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1))
+	{
 		env->player.inventory.f.ref = FIST;
 		env->player.inventory.weapons[FIST].current = &env->player.inventory.f;
 		env->player.inventory.weapons[FIST].ammo[0] = env->world.armory[FIST].ammo_current;
 		env->player.inventory.weapons[FIST].ammo[1] = env->world.armory[FIST].ammo_magazine;
 		env->player.inventory.weapons[FIST].ammo[2] = env->world.armory[FIST].damage;
-		set_current_wpn(&env->player.inventory, FIST);
+		set_current_wpn(env, &env->player.inventory, FIST);
 		return (1);
-	// }
+	}
 	return (0);
 }
