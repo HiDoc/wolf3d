@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/05 10:30:25 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/05 12:04:10 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -236,9 +236,13 @@ parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
 	./parser map.txt
 
-run: all
+run: COMPILE
 	clear
 	./doom
+
+god: COMPILE
+	clear
+	./doom "god"
 
 lldb:
 	gcc ./srcs/**/*.c $(CFLAGS) $(LIB) $(LSDL2) $(FRK) $(OPEN) -o $(NAME) \
