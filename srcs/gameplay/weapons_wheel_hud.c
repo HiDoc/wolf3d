@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:15 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 19:23:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:34:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ int     wpn_mouse_wheel(t_env *env, SDL_Event event)
 			if (event.wheel.y > 0 && *wheel < WORLD_NB_WEAPONS)
 			{
 				(*wheel)++;
+				*wheel = *wheel > WORLD_NB_WEAPONS
+				? WORLD_NB_WEAPONS - 1 : *wheel;
 				if (env->player.inventory.weapons[*wheel].current)
 					set_current_wpn(inventory, *wheel);
 			}
 			else if (event.wheel.y < 0 && *wheel > 0)
 			{
 				(*wheel)--;
+				*wheel = *wheel < 0 ? 0 : *wheel;
 				if (env->player.inventory.weapons[*wheel].current)
 					set_current_wpn(inventory, *wheel);
 			}

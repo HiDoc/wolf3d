@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 12:05:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:11:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@ int		main(int ac, char **av)
 	/* Initialisation */
 	ft_bzero(&env, sizeof(t_env));
 	if (ac > 1)
-	{
-		if (ft_strcmp(av[1], "god") == 0)
-			env.god_mod = 1;
-		else
-			env.god_mod = 0;
-	}
+		env.god_mod = ft_strcmp(av[1], "god") == 0 ? 1 : 0;
 	initialisation(&env);
 
 	/* Load data from map */
