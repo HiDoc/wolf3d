@@ -6,11 +6,44 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 16:30:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:39:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+static void		display_grid(t_env *env)
+{
+	SDL_Rect	rect;
+	t_vec		vec;
+	Uint32		color;
+	int			nb;
+	int			i;
+
+	// display interface area + grid
+	nb = 0;
+	i = 20 + env->grid_translate.x + env->grid_mouse_var.x;
+	while (i < 870)
+	{
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
+		ui_make_line(env->data->surface, vec, color);
+		i += 4 * env->pixel_value;
+		nb++;
+	}
+	nb = 0;
+	i = 100 + env->grid_translate.y + env->grid_mouse_var.y;
+	while (i < 780)
+	{
+		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
+		ui_make_line(env->data->surface, vec, color);
+		i += 4 * env->pixel_value;
+		nb++;
+	}
+	rect = (SDL_Rect){20, 100, 850, 680};
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+}
 
 static void		display_infos(t_env *env)
 {
@@ -33,15 +66,15 @@ static void		display_infos(t_env *env)
 	rect = (SDL_Rect){240, 750, 0, 20};
 	ui_make_nbrstring(rect, env->vtx_size, env->data);
 
-	// display bloc_size
-	rect = (SDL_Rect){840, 750, 0, 20};
-	ui_make_nbrstring(rect, 20, env->data);
-	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765}, (t_pos){830, 765}};
+	// display scale
+	rect = (SDL_Rect){830, 750, 0, 20};
+	ui_make_nbrstring(rect, 100, env->data);
+	vec = (t_vec){(t_pos){820 - (20 * env->pixel_value), 765}, (t_pos){820, 765}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){830, 765}, (t_pos){830, 755}};
+	vec = (t_vec){(t_pos){820, 765}, (t_pos){820, 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765},
-	(t_pos){830 - (20 * env->pixel_value), 755}};
+	vec = (t_vec){(t_pos){820 - (20 * env->pixel_value), 765},
+	(t_pos){820 - (20 * env->pixel_value), 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
@@ -101,35 +134,10 @@ void			display_sector(t_sct *sct, t_env *env)
 void			display_interface(t_env *env)
 {
 	Uint32		color;
-	t_vec		vec;
 	SDL_Rect	rect;
-	int			nb;
-	int			i;
+	t_vec		vec;
 
-	// display interface area + grid
-	nb = 0;
-	i = 20 + env->grid_translate.x + env->grid_mouse_var.x;
-	while (i < 870)
-	{
-		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
-		ui_make_line(env->data->surface, vec, color);
-		i += 4 * env->pixel_value;
-		nb++;
-	}
-	nb = 0;
-	i = 100 + env->grid_translate.y + env->grid_mouse_var.y;
-	while (i < 780)
-	{
-		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
-		ui_make_line(env->data->surface, vec, color);
-		i += 4 * env->pixel_value;
-		nb++;
-	}
-	rect = (SDL_Rect){20, 100, 850, 680};
-	ui_make_rect(env->data->surface, rect, C_WHITE);
-
+	display_grid(env);
 	display_infos(env);
 
 	// display all edges
@@ -155,8 +163,8 @@ void			display_interface(t_env *env)
 		100 + env->sct_current->vtx_current->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
 
 		p2 = (t_pos){
-		env->data->mouse.x + env->grid_translate.x + env->grid_mouse_var.x,
-		env->data->mouse.y + env->grid_translate.y + env->grid_mouse_var.y};
+		env->data->mouse.x,
+		env->data->mouse.y};
 
 		vec = (t_vec){p1, p2};
 		ui_make_line(env->data->surface, vec, C_CYAN);

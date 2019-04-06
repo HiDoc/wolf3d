@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 13:03:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:35:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int		handle_events(t_env *env)
 	const SDL_Event	event = env->data->sdl.event;
 	SDL_Rect		rect = (SDL_Rect){20, 100, 850, 680};
 
-	env->mouse = (t_pos){
-	(env->data->mouse.x - 20) / env->pixel_value,
-	(env->data->mouse.y - 100) / env->pixel_value};
+	env->mouse.x = (((env->data->mouse.x - 20)
+		- (env->grid_translate.x + env->grid_mouse_var.x)) / env->pixel_value);
+	env->mouse.y = (((env->data->mouse.y - 100)
+		- (env->grid_translate.y + env->grid_mouse_var.y)) / env->pixel_value);
 
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
 	? ui_exit_sdl(env->data) : 0;
