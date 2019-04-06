@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 17:52:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:59:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ static void		display_infos(t_env *env)
 	ui_make_nbrstring(rect, env->mouse.y, env->data);
 
 	// display_size
-	rect = (SDL_Rect){190, 750, 0, 20};
-	ui_make_string(rect, "size : ", env->data);
-	rect = (SDL_Rect){240, 750, 0, 20};
-	ui_make_nbrstring(rect, env->vtx_size, env->data);
+	if (env->sct_current)
+	{
+		rect = (SDL_Rect){190, 750, 0, 20};
+		ui_make_string(rect, "size : ", env->data);
+		rect = (SDL_Rect){240, 750, 0, 20};
+		ui_make_nbrstring(rect, env->vtx_size, env->data);
+	}
 
 	// display scale
 	rect = (SDL_Rect){830, 750, 0, 20};
