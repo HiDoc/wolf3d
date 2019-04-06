@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 03:48:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 16:33:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			mouse_shoot(t_env *env);
 
 int			bot_wall_collision(t_player *bot, t_sector *sect);
 void		impact_player(t_env *env, t_impact *shot, t_vtx player, int damage);
-int			new_bullet(t_impact *new, t_player *p, int i, float velocity);
+int			new_bullet(t_impact *new, t_player *p, float velocity);
 int			init_enemies(t_env *env);
 void		bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes);
 void		bot_action(t_env *env, t_sector *sector);

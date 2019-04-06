@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 03:55:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 16:32:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		new_bullet(t_impact *new, t_player *p, int i, float velocity)
+int		new_bullet(t_impact *new, t_player *p, float velocity)
 {
 	new->position.origin = p->where;
 	new->position.where = p->where;
@@ -21,7 +21,6 @@ int		new_bullet(t_impact *new, t_player *p, int i, float velocity)
 	new->position.sprite = p->sprite;
 	new->is_shooting = 1;
 	new->is_alive = 1;
-	new->ref = i;
 	return (1);
 }
 
@@ -165,13 +164,13 @@ int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 		{
 			if (!player->shot[i].is_alive)
 			{
-				new_bullet(&player->shot[i], p, i, rwpn->velocity);
+				new_bullet(&player->shot[i], p, rwpn->velocity);
 				return (1);
 			}
 			i++;
 		}
 		ft_bzero(&player->shot[0], sizeof(t_impact));
-		new_bullet(&player->shot[0], p, 0, rwpn->velocity);
+		new_bullet(&player->shot[0], p, rwpn->velocity);
 		ft_bzero(&player->shot[1], sizeof(t_impact));
 	}
 	return (1);

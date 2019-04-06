@@ -41,6 +41,8 @@ enemy		2	8	0	0
 enemy		7	12	0	0
 enemy		7	9	0	0
 enemy		7	3	0	0
+enemy		45	20	3	0
+enemy		50	17	3	0
 
 # player 	x 	y	sectorno	angle
 player  	1 	1	0			0
