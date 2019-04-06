@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:06:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:23:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int			select_mode(t_env *env)
 	//	* sector
 	//	[] delete
 
+	if (env->data->mouse.x || env->data->mouse.y)
+		return (1);
 	return (0);
 }

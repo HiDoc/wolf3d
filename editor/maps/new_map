@@ -1,12 +1,14 @@
 # map name
 new_map
 # nb vertex:
-4
+6
 # vertex: x y
-vertex 20 0
-vertex 40 20
-vertex 20 20
-vertex 0 0
+vertex 12 0
+vertex 0 17
+vertex 14 19
+vertex 6 30
+vertex 28 30
+vertex 27 7
 # nb sectors:
 1
 # sector: ceil floor n-vertex n-neighbors

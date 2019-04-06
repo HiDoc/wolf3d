@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 17:35:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:19:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ int		handle_events(t_env *env)
 			// in interface & scroll
 			if (event.wheel.y > 0)
 			{
-				(env->pixel_value > 1) ? env->pixel_value -= 1 : 0;
+				(env->pixel_value > 1) ? env->pixel_value /= 2 : 0;
 				return (1);
 			}
 			else if (event.wheel.y)
 			{
-				(env->pixel_value < PXL_VAL_MAX) ? env->pixel_value += 1 : 0;
+				(env->pixel_value < PXL_VAL_MAX) ? env->pixel_value *= 2 : 0;
 				return (1);
 			}
 		}
