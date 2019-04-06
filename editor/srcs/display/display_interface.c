@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 17:39:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:52:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,27 @@ static void		display_grid(t_env *env)
 	// display interface area + grid
 	nb = 0;
 	i = 20 + env->grid_translate.x + env->grid_mouse_var.x;
-	while (i < 870)
+	while (i < 870 && nb < 220)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
-		ui_make_line(env->data->surface, vec, color);
+		if (i > 20)
+		{
+			vec = (t_vec){(t_pos){i, 100}, (t_pos){i, 780}};
+			ui_make_line(env->data->surface, vec, color);
+		}
 		i += 4 * env->pixel_value;
 		nb++;
 	}
 	nb = 0;
 	i = 100 + env->grid_translate.y + env->grid_mouse_var.y;
-	while (i < 780)
+	while (i < 780 && nb < 180)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
-		ui_make_line(env->data->surface, vec, color);
+		if (i > 100)
+		{
+			vec = (t_vec){(t_pos){20, i}, (t_pos){870, i}};
+			ui_make_line(env->data->surface, vec, color);
+		}
 		i += 4 * env->pixel_value;
 		nb++;
 	}
