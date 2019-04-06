@@ -6,22 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/28 16:31:56 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/06 16:43:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-int (*get_token[8])(int) = {
-	&is_spc,
-	&is_tab,
-	&ft_isdigit,
-	&is_min,
-	&is_end,
-	&is_sec,
-	&is_vtx,
-	&is_plr
-};
+#include "ast.h"
 
 t_parseline *new_line(unsigned nline)
 {
@@ -43,27 +32,18 @@ t_token	*new_token(char c, unsigned pos)
 
 	iter = 0;
 	new = NULL;
-	while (iter < 8)
+	while (iter < 10)
 	{
-		if (get_token[iter](c))
+		if (op_tab[iter].verify(c))
 			break;
 		iter++;
 	}
 	if ((new = malloc(sizeof(t_token))) == NULL)
 		return (NULL);
-	new->name = TOK_NONE;
-	new->type = (1 << iter);
-	(c == ' ') ? new->name = TOK_NSPC : 0;
-	(c == '\t') ? new->name = TOK_NTAB : 0;
- 	(ft_isdigit(c)) ? new->name = TOK_NINT : 0;
- 	(c == '-') ? new->name = TOK_NMIN : 0;
-	(c == '\n') ? new->name = TOK_NEND : 0;
-	(c == 's') ? new->name = TOK_NSEC : 0;
-	(c == 'v') ? new->name = TOK_NVTX : 0;
-	(c == 'p') ? new->name = TOK_NPLR : 0;
 	new->next = NULL;
+	new->name = op_tab[iter].name;
+	new->type = op_tab[iter].val;
 	new->pos = pos;
 	new->value = c;
 	return (new);
 }
-
