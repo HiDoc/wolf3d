@@ -12,12 +12,9 @@ void		free_wpn_sounds(t_world *world)
 {
 	int	i;
 
-	i = 0;
-	while (i < WORLD_NB_WEAPONS)
-	{
+	i = -1;
+	while (++i < WORLD_NB_WEAPONS)
 		Mix_FreeChunk(world->armory[i].shot);
-		i++;
-	}
 }
 
 void		free_all_sounds(t_env *env)
@@ -39,30 +36,27 @@ void		free_obj_wpn_img(t_world *world)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < WORLD_NB_OBJECTS)
+	i = -1;
+	while (++i < WORLD_NB_OBJECTS)
 	{
 		if (i < WORLD_NB_WEAPONS)
 		{
-			j = 0;
-			while (j < world->armory[i].time_reload)
+			j = -1;
+			while (++j < world->armory[i].time_reload)
 			{
 				if (world->armory[i].sprite_reload)
 					free_img(world->armory[i].sprite_reload[j].sprite);
-				j++;
 			}
-			j = 0;
-			while (j < world->armory[i].time_shoot)
+			j = -1;
+			while (++j < world->armory[i].time_shoot)
 			{
 				if (world->armory[i].sprite_shoot)
 					free_img(world->armory[i].sprite_shoot[j].sprite);
-				j++;
 			}
 			free_img(world->armory[i].sprite.sprite);
 			free_img(world->armory[i].sprite_bullet.sprite);
 		}
 		free_img(world->objects[i].sprite);
-		i++;
 	}
 }
 
@@ -70,12 +64,9 @@ void		free_hud(t_container *surface)
 {
 	int	i;
 
-	i = 0;
-	while (i < NB_HUD_OBJ)
-	{
+	i = -1;
+	while (++i < NB_HUD_OBJ)
 		free_img(surface->hud[i].sprite);
-		i++;
-	}
 }
 
 void		free_surface_string(t_uitxt *ui)
@@ -104,24 +95,18 @@ void		free_posters(t_container *surface)
 {
 	int	i;
 
-	i = 0;
-	while (i < WORLD_NB_POSTERS)
-	{
+	i = -1;
+	while (++i < WORLD_NB_POSTERS)
 		free_img(surface->poster[i].sprite);
-		i++;
-	}
 }
 
 void		free_walls(t_container *surface)
 {
 	int	i;
 
-	i = 0;
-	while (i < WORLD_NB_WALLS)
-	{
+	i = -1;
+	while (++i < WORLD_NB_WALLS)
 		free_img(surface->walls[i].sprite);
-		i++;
-	}
 }
 
 void		free_enemies(t_world *world)
@@ -138,11 +123,21 @@ void		free_enemies(t_world *world)
 	}
 }
 
+void		free_doors(t_container *surface)
+{
+	int	i;
+
+	i = -1;
+	while (++i < NB_DOOR_IMG)
+		free_img(surface->doors[i].sprite);
+}
+
 void		free_world_surfaces(t_container *surface)
 {
 	free_posters(surface);
 	free_walls(surface);
 	free_hud(surface);
+	free_doors(surface);
 }
 
 void		free_ui(t_env *env)

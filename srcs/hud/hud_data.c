@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 16:42:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 03:00:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ int		print_description_object(t_env *env)
 
 int		print_stats(t_env *env)
 {
-	env->stats.kill_togo = env->engine.sectors[env->engine.player.sector].nb_enemies;
 	return (ui_put_data(env, (t_font){WHITE, "Level : ", env->hud.text.doom,
 	(t_vtx){W - (W / 3), H / 50}, W / 23, -1, 1})
 	&& ui_put_data(env, (t_font){GOLD, "Sector : ", env->hud.text.text,
 	(t_vtx){W - W / 3.3, H / 7}, W / 30, -1, env->engine.player.sector})
     && ui_put_data(env, (t_font){RED, "Kills to go : ", env->hud.text.text,
-	(t_vtx){W - W / 3.4, H / 4.9}, W / 40, -1, env->stats.kill_togo})
+	(t_vtx){W - W / 3.4, H / 4.9}, W / 40, -1, env->stats.nb_enemies})
     && ui_put_data(env, (t_font){GOLD, "Enemies killed : ", env->hud.text.text,
 	(t_vtx){W - W / 1.9, H / 1.25}, W / 60, -1, env->stats.k_enemies})
     && ui_put_data(env, (t_font){GOLD, "Death number : ", env->hud.text.text,

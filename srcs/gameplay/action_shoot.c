@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 17:57:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 03:55:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 		{
 			enemy->health -= damage;
 			printf("vie bot : %i\n", enemy->health);
-			printf("wpn ray : %i\n", rwpn->ray);
 			if (enemy->health < 1)
 			{
 				enemy->is_alive = 0;
 				env->stats.k_enemies++;
 				env->stats.k_wpn[wpn]++;
 				sector->nb_enemies--;
+				env->stats.nb_enemies--;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;

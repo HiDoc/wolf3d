@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:05:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 03:20:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ struct						s_door
 	SDL_Surface				*sprite;
 	int						is_openable;
 	int						is_open;
+	int						is_opening;
+	int						frame;
 };
 
 struct						s_save
@@ -99,6 +101,7 @@ struct						s_queue
 
 struct						s_raycast
 {
+	SDL_Surface		*sprite;
 	t_edge			trsl;
 	t_edge			rot;
 	t_edge			scale;

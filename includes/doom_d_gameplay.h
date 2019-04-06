@@ -6,12 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 18:01:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 02:31:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_GAMEPLAY_H
 # define DOOM_D_GAMEPLAY_H
+
+# define NB_DOOR_IMG	2
 
 # define BOT_NB_SHOT	12
 # define BOT_V_SHOT		1.1f

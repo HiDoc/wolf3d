@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 23:32:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 02:58:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	fill_enemies_sector(t_env *env, t_sector *sector, t_vtx v, int ref)
 	t_wrap_enmy	*iter;
 
 	iter = NULL;
+	env->stats.nb_enemies++;
 	if (sector->head_enemy == NULL)
 		return ((sector->head_enemy = new_enemy(env, v, ref)) ? sector->nb_enemies++ : 0);
 	iter = sector->head_enemy;

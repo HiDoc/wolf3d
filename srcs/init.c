@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 12:02:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/05 23:45:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int		init_gameplay_env(t_env *env)
 	&& set_simple_strings(env, 0, 0)
 	&& init_hud_blocs(env)
 	&& init_weapon(env)
-	&& init_enemies(env));
+	&& init_enemies(env)
+	&& init_doors_images(env));
 }
 
 int		initialisation_sdl(t_env *env)
