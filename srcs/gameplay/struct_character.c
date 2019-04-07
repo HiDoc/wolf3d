@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:59 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 02:45:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 23:18:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int     init_character(t_character *new)
     int i;
 
     i = -1;
-    ft_bzero(&new->actions, sizeof(new));
+    ft_bzero(&new->actions, sizeof(t_actions));
     new->health = 200;
     new->shield = 200;
     new->max_health = 200;

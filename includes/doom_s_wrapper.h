@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 19:07:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 23:09:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ struct						s_object
 	int			sectorno;
 	t_vtx		vertex;
 	t_l_float	size;
+	char		*name;
 };
 
 struct						s_vision

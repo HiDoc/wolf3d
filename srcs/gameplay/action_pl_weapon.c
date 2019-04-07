@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 17:39:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 23:28:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 	int			ref;
 	int			cur_ref;
 
-	if (wpn != NULL)
+	if (wpn != NULL && wpn->current->ref != FIST)
 	{
 		ref = wpn->current->ref;
 		cur_ref = env->player.inventory.current->current->ref;
@@ -104,7 +104,7 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		vertex.y = env->engine.player.where.y;
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 		vertex, wpn->current->ref, wpn->current->is_wpn);
-		*wpn = (t_wrap_wpn) {NULL, 0, 0, 0, {0, 0, 0}};
+		ft_bzero(wpn, sizeof(t_wrap_wpn));
 		env->hud.inventory.nb_wpn--;
 		env->hud.is_txt = 18;
 		sector->nb_objects++;
