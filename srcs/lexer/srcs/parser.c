@@ -6,15 +6,24 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 18:48:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/07 19:02:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-int		parser(char *filename)
+int		load(t_env *env, t_parsefile *file, unsigned nvertex, unsigned nsector)
 {
-	int		fd;
+	t_engine *engine;
+
+	engine = &env->engine;
+	engine->nsectors = nsector;
+	engine->sectors = malloc(sizeof(t_sector) * nsector);
+}
+
+int		parser(t_env *env, char *filename)
+{
+	int			fd;
 	t_parsefile	file;
 	unsigned	nvertex;
 	unsigned	nsector;

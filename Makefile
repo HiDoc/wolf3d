@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/06 13:50:02 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/07 17:51:11 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ ID_UN 		= $(shell id -un)
 VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
-			  ./libft/includes/	\
+			  ./libft/includes/
 
 BREW		= ~/.brew
 BREW_SDL	= ~/.brew/Cellar/sdl2
@@ -85,7 +85,6 @@ SRC_NAME 	= main.c \
 			init.c \
 			init_enemies.c \
 			init_minimap.c \
-			init_skybox.c \
 			load.c \
 			loop.c \
 			map.c \
@@ -153,7 +152,7 @@ $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) -L$(LIBFT) $(SDL2LIB) $(SDL_LIB) $(OPEN) -lft
+	@$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) -L$(LIBFT) $(SDL_LIB) $(OPEN) -lft
 
 COMPILE : sdl2lib sdl2cflags $(NAME)
 
@@ -167,16 +166,6 @@ $(BREW) :
 		$(shell /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
 		brew upgrade
 		brew -v install pkg-config
-
-
-cleanbrew:
-	brew uninstall -f sdl2_ttf
-	brew uninstall -f freetype
-	brew uninstall -f pkg-config
-	brew uninstall -f libgpng
-	brew uninstall -f sdl2_image
-	brew uninstall -f sdl2_mixer
-	brew uninstall -f sdl2
 
 $(BREW_SDL) :
 		brew -v install sdl2
@@ -229,8 +218,6 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
-
-fcleansdl: cleanbrew fclean
 
 parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft

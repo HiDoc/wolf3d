@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 12:02:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 17:45:27 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,5 @@ int		initialisation(t_env *env)
 	initialisation_cursor(env);
 	init_container(env);
 	init_gameplay_env(env);
-	init_skybox(env);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:09:19 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 18:45:59 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:57:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@ int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 	return (1);
 }
 
-int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
+int		read_new_line(char *buffer, t_parsefile *file)
 {
+
 	t_parseline	*line;
 	t_token		*iter;
 	unsigned	pos;
 	unsigned	nline;
+}
+
+int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
+{
 	char		buffer[2];
 
 	line = file->first;
