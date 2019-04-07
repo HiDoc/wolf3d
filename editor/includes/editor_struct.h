@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:33:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 15:52:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ struct					s_env
 	// grid move
 	int				grid_drag;
 	t_pos			grid_init_pos;
+	t_pos			grid_mouse_var;
 	t_pos			grid_translate;
 
 	// lst elements

@@ -1,43 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:44:09 by fmadura          ###   ########.fr       */
+/*   Created: 2019/04/06 16:37:37 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/06 16:38:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-int	parser(char *filename)
+int	lexer_vertex(t_token *iter)
 {
-	int		fd;
-	t_parsefile	file;
-	unsigned	nvertex;
-	unsigned	nsector;
+	unsigned	number;
 
-	file.first = new_line(0);
-	nvertex = 0;
-	nsector = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (0);
-	reader(fd, &file, &nvertex, &nsector);
-	printf("\n");
-	printf("vertexes: %u\n", nvertex);
-	printf("sectors: %u\n", nsector);
+	number = 0;
+	(void)iter;
+	(void)number;
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	lexer(t_parseline *line)
 {
-	if (argc > 1)
+	t_token		*iter;
+
+	iter = line->first;
+	if (iter->type == TOK_VTX)
 	{
-		if (argv[1])
-			parser(argv[1]);
+		iter = iter->next;
+		if (!lexer_vertex(iter))
+			return (0);
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:23:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 13:46:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,40 +101,40 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);
 	get_element(M_B_UP, env)->image =
-	ui_load_image("ressources/images/icons/arrowup.png", env);
-	
+		ui_load_image("ressources/images/icons/arrowup.png", env);
+
 	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 55, 40, 40};
 	create_element(M_B_DOWN, BUTTON, rect, env);
 	get_element(M_B_DOWN, env)->image =
-	ui_load_image("ressources/images/icons/arrowdown.png", env);
+		ui_load_image("ressources/images/icons/arrowdown.png", env);
 
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
 	get_element(E_B_MODE_SELECT, env)->color = C_GREEN;
 	get_element(E_B_MODE_SELECT, env)->image =
-	ui_load_image("ressources/images/icons/cursor.png", env);
+		ui_load_image("ressources/images/icons/cursor.png", env);
 
 	rect = (SDL_Rect){650, 20, 50, 50};
 	create_element(E_B_MODE_MOVE, BUTTON, rect, env);
 	get_element(E_B_MODE_MOVE, env)->image =
-	ui_load_image("ressources/images/icons/move.png", env);
+		ui_load_image("ressources/images/icons/move.png", env);
 
 	rect = (SDL_Rect){700, 20, 50, 50};
 	create_element(E_B_MODE_DRAW, BUTTON, rect, env);
 	get_element(E_B_MODE_DRAW, env)->image =
-	ui_load_image("ressources/images/icons/line.png", env);
+		ui_load_image("ressources/images/icons/line.png", env);
 
 	rect = (SDL_Rect){750, 20, 50, 50};
 	create_element(E_B_MODE_ELEM, BUTTON, rect, env);
 	get_element(E_B_MODE_ELEM, env)->image =
-	ui_load_image("ressources/images/icons/object.png", env);
+		ui_load_image("ressources/images/icons/object.png", env);
 
 	rect = (SDL_Rect){1030, 20, 150, 40};
 	create_element(E_B_PLAY, BUTTON, rect, env);
 
 	rect = (SDL_Rect){1130, 350, 20, 20};
 	create_element(E_B_ELM_UP, BUTTON, rect, env);
-	
+
 	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_ELM_DOWN, BUTTON, rect, env);
 
@@ -221,7 +221,7 @@ static void		init_menu(t_env *env)
 	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image(
-	"ressources/images/doom-background.jpg", env);
+			"ressources/images/doom-background.jpg", env);
 }
 
 static void		init_editor(t_env *env)
@@ -247,7 +247,7 @@ static void		init_editor(t_env *env)
 
 	// stockage des wall textures
 	if (!(env->editor.wall_txtr = (char **)ft_memalloc(sizeof(char *)
-	* (env->editor.nb_wall_txtr + 1))))
+					* (env->editor.nb_wall_txtr + 1))))
 		ui_error_exit_sdl("Libui: Out of memory", data);
 
 	if (!(dr = opendir("ressources/images/wall/")))

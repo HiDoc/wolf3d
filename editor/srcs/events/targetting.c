@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:21:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:38:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ t_vtx		*target_vertex(t_env *env)
 		while (vtx)
 		{
 			pos = (t_pos){
-			20 + vtx->pos.x * env->pixel_value,
-			100 + vtx->pos.y * env->pixel_value};
+			20 + vtx->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
+			100 + vtx->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
 			if (ui_close_to(env->data->mouse, pos, 10))
 			{
 				env->vtx_hover = vtx;
@@ -117,8 +117,8 @@ t_object	*target_object(t_pos pos, t_env *env)
 	while (obj)
 	{
 		calcpos = (t_pos){
-		20 + obj->pos.x * env->pixel_value,
-		100 + obj->pos.y * env->pixel_value};
+		20 + obj->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
+		100 + obj->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
 		if (ui_close_to(pos, calcpos, 10))
 		{
 			env->obj_hover = obj;

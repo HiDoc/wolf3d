@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/03 20:32:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 15:38:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		render_sprites(t_env *env, t_queue *q,
 		return ;
 	raycast.neighbor = -1;
 	acquire_limits(&env->engine, &raycast,
-		(t_l_float){q->sect->floor + 5, q->sect->floor});
+		(t_l_float){q->sect->floor + 10, q->sect->floor});
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
 		raycast.x = raycast.x1;
