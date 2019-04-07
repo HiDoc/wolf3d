@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/06 13:50:02 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/07 19:15:22 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,6 @@ SRC_NAME 	= main.c \
 			init.c \
 			init_enemies.c \
 			init_minimap.c \
-			init_skybox.c \
 			load.c \
 			loop.c \
 			map.c \
@@ -132,7 +131,8 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
-			weapons_wheel_hud.c
+			weapons_wheel_hud.c \
+			doom_exit.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 

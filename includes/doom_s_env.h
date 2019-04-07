@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 10:02:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 20:11:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,18 @@ struct								s_env
 	t_tiletab		tiletab;
 	int				god_mod;
 	// ...
+	//
+	// Comment je penses que ce serait mieux :
+	//
+	// t_sdl			sdl; 		(trucs sdl ...)
+	// t_ressources		ressources; (audio / images / fonts ...)
+	// t_player			player; 	(pos / health / stats ...)
+	// t_level			level; 		(map / entitee ...)
+	// t_hud			hud; 		(inventory / minimap / ...)
 };
+
+void			doom_exit(t_env *env);
+void			doom_error_exit(char *str, t_env *env);
 
 void			load_tilesets(t_env *env);
 

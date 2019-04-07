@@ -157,9 +157,8 @@ void		free_ui(t_env *env)
 	free_world_surfaces(&env->world.surfaces);
 	free_obj_wpn_img(&env->world);
 	free_enemies(&env->world);
-	// free_all_sounds(env);
+	free_all_sounds(env);
 }
-
 
 void		free_env(t_env *env)
 {
@@ -168,6 +167,7 @@ void		free_env(t_env *env)
 	t_wrap_sect	*b;
 	t_wrap_enmy	*en;
 
+	// free sectors
 	a = 0;
 	e = &env->engine;
 	while (a < e->nsectors)
@@ -193,20 +193,12 @@ void		free_env(t_env *env)
 	}
 	free(e->queue.renderedsectors);
 	free(e->sectors);
+	//
 
 	free(env->player.bullet);
+	free_ui(env);
 	if (env->player.shot)
 		free(env->player.shot);
-	e->sectors = NULL;
-	e->nsectors = 0;
-	SDL_DestroyTexture(env->sdl.texture);
-	SDL_DestroyRenderer(env->sdl.renderer);
-	SDL_DestroyWindow(env->sdl.window);
-	env->sdl.texture = NULL;
-	env->sdl.window = NULL;
-	env->sdl.renderer = NULL;
-	free_ui(env);
-	Mix_CloseAudio();
-	TTF_Quit();
-	SDL_Quit();
+
+	doom_exit(env);
 }
