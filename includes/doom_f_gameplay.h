@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 00:13:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:37:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int			is_pickable_object(t_env *env, t_sector *sector);
 int		    pick_object(t_env *env, t_wrap_sect *obj);
 int		    drop_object(t_env *env, t_wrap_inv *object);
 int			select_object(t_wrap_inv *object, t_ixy xy, t_bloc *p, int limit);
-int		    give_shield(void *e, t_wrap_inv *object);
-int		    give_health(void *e, t_wrap_inv *object);
+int		    give_life(void *e, t_wrap_inv *object);
 int			give_ammo(void *e, t_wrap_inv *obj);
 int			give_jetpack(void *e, t_wrap_inv *obj);
 int			check_object_type(t_wrap_inv *pack, int ref, int limit);
@@ -56,7 +55,7 @@ void		player_bullet(t_env *env, t_character *p, int damage);
 int			enemies_frames(t_env *env, t_sector *sector);
 
 int			init_doors_images(t_env *env);
-int			door_neighbors(t_engine *e, t_sector *s, int n);
+int			door_neighbors(t_engine *e, t_vtx *vertex, int n);
 int			select_door(t_engine *e);
 int			open_door(t_env *env);
 int			handle_doors(t_env *env);

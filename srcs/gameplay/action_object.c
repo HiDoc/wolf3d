@@ -6,54 +6,34 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 11:48:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 00:30:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		give_shield(void *e, t_wrap_inv *object)
+int		give_life(void *e, t_wrap_inv *object)
 {
-	t_env *env;
+	t_env	*env;
+	int		*data;
+	int		max;
 
 	env = (t_env*)e;
-	if (object)
+	data = object->current->ref == HEALTH
+	? &env->player.health : &env->player.shield;
+	max = object->current->ref == HEALTH
+	? env->player.max_health : env->player.max_shield;
+	if (*data < max)
 	{
-		if (env->player.shield < env->player.max_shield)
-		{
-			env->player.shield += 50;
-			if (env->player.shield > env->player.max_shield)
-				env->player.shield = env->player.max_shield;
-			object->nb_stack > 0 ? object->nb_stack-- : 0;
-			object->is_used = object->nb_stack < 1
-			? drop_object(env, object) : 0;
-			return (0);
-		}
-		return (1);
+		*data += 50;
+		if (*data > max)
+			*data = max;
+		object->nb_stack > 0 ? object->nb_stack-- : 0;
+		object->is_used = object->nb_stack < 1 ? 1 : 0;
+		object->is_used ? drop_object(env, object) : 0;
+		return (0);
 	}
-	return (2);
-}
-
-int		give_health(void *e, t_wrap_inv *object)
-{
-	t_env *env;
-
-	env = (t_env*)e;
-	if (object)
-	{
-		if (env->player.health < env->player.max_health)
-		{
-			env->player.health += 50;
-			if (env->player.health > env->player.max_health)
-				env->player.health = env->player.max_health;
-			object->nb_stack > 0 ? object->nb_stack-- : 0;
-			object->is_used = object->nb_stack < 1
-			? drop_object(env, object) : 0;
-			return (0);
-		}
-		return (3);
-	}
-	return (4);
+	return (1);
 }
 
 int	give_ammo(void *e, t_wrap_inv *obj)
@@ -79,7 +59,8 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			if (*wpn->ammo_magazine > wpn_ref->ammo_mag_max)
 				*wpn->ammo_magazine = wpn_ref->ammo_mag_max;
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
-			obj->is_used = obj->nb_stack < 1 ? drop_object(env, obj) : 0;
+			obj->is_used = obj->nb_stack < 1 ? 1 : 0;
+			obj->is_used ? drop_object(env, obj) : 0;
 			return (0);
 		}
 		return (wpn ? 9 : 10);

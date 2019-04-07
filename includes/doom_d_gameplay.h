@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 19:06:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 00:16:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,21 @@
 # define N_RIFLE		"Rifle"
 # define N_RPG			"RPG-7"
 
+/*
+** WORLD_NB_OBJECTS - OBJECTS INDEX
+*/
+# define HEALTH		0
+# define SHIELD		1
+# define AMMO_MR	2
+# define AMMO_S		3
+# define AMMO_R		4
+# define JETPACK	5
 
+/*
+** WORLD_NB_OBJECTS - GEMS INDEX
+*/
+# define B_GEM		6
+# define G_GEM		7
+# define R_GEM		8
+# define P_GEM		9
 #endif

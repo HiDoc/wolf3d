@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 00:12:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:34:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			render_sector_edges(t_env *env, t_queue *q, int s)
 	/* get the neighbour of the current vertex if there*/
 	ctn.neighbor = q->sect->neighbors[s];
 
-	ctn.sprite = door_neighbors(e, q->sect, s)
+	ctn.sprite = door_neighbors(e, (t_vtx*)vertex, s)
 	? env->world.surfaces.doors[1].sprite
 	: env->world.surfaces.walls[0].sprite;
 

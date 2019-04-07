@@ -6,16 +6,40 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 00:13:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:33:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	door_neighbors(t_engine *e, t_sector *s, int n)
+int	door_neighbors(t_engine *e, t_vtx *vertex, int n)
 {
-	return (s->neighbors[n] >= 0 && e->sectors[s->neighbors[n]].is_door
-	&& s->neighbors[n + 1] >= 0 && e->sectors[s->neighbors[n + 1]].is_door);
+	t_sector	*sect;
+	int			i;
+	int			j;
+
+	i = -1;
+	while (++i < (int)e->nsectors)
+	{
+		sect = &e->sectors[i];
+		j = -1;
+		if (sect->is_door)
+		{
+			while (++j < (int)sect->npoints)
+			{
+				if (equal_vertex(vertex[n], sect->vertex[j]))
+				{
+					j = -1;
+					while (++j < (int)sect->npoints)
+					{
+						if (equal_vertex(vertex[n + 1], sect->vertex[j]))
+							return (1);
+					}
+				}
+			}
+		}
+	}
+	return (0);
 }
 
 int	select_door(t_engine *e)

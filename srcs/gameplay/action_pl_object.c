@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 21:23:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 23:53:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,9 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			object->nb_stack--;
 		else
 		{
-			if (object->current->ref < 6)
+			if (object->current->ref == 5)
 				env->hud.shortcut[object->current->ref] = NULL;
-			*object = (t_wrap_inv){NULL, 0, 0};
+			ft_bzero(object, sizeof(t_wrap_inv));
 			env->player.inventory.nb_current_obj--;
 		}
 		sector->nb_objects++;
