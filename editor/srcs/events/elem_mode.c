@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 14:37:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:11:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void     create_object(int category, t_env *env)
 	//new->ref = /**/;
 	//new->sct = /**/;
 	//...
-	new->pos = env->data->mouse;
+	new->pos = env->mouse;
 	new->category = category;
 	if (!(env->objects))
 	{

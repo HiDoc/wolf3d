@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_close_to.c                                      :+:      :+:    :+:   */
+/*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 20:30:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:19:52 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/07 14:37:18 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/07 18:33:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "editor.h"
+#include "ast.h"
 
-int			ui_close_to(t_pos a, t_pos b, float dist)
+t_parseline	*new_line(unsigned nline)
 {
-	return (fabs(a.x - b.x) < dist && fabs(a.y - b.y) < dist);
+	t_parseline	*new;
+
+	if ((new = (t_parseline *)malloc(sizeof(t_parseline))) == NULL)
+		return (NULL);
+	new->first = NULL;
+	new->next = NULL;
+	new->nline = nline;
+	new->len = 0;
+	return (new);
 }

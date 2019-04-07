@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 20:07:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/06 14:23:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,51 +84,13 @@ int			render_perspective(t_env *env, t_raycast *ctn)
 	t_edge		bot;
 	t_edge		top;
 
-	//bot
 	bot = (t_edge){(t_vtx){ctn->x1, 600}, (t_vtx){ctn->x2, 600}};
-	//top
 	const int max = ctn->p.y2b < ctn->p.y1b ? ctn->p.y2b : ctn->p.y1b;
 	top = (t_edge){(t_vtx){ctn->x1, max}, (t_vtx){ctn->x2, max}};
 	t_vtx horizon = {0, max};
 	t_vtx vanish = {W / 2, H / 2 - max / 2};
 	draw_perspective(env->sdl.surface, (t_square){top, bot}, horizon, vanish);
 	return (1);
-}
-
-void		render_skybox(t_env *env, t_sector *skybox)
-{
-	const t_vtx	*vertex = skybox->vertex;
-	t_drawline	drawline;
-	int			s;
-	int			ytop;
-	int			ybot;
-	t_raycast	ctn;
-
-	s = -1;
-	ybot = H;
-	ytop = 0;
-	ctn.neighbor = -1;
-	ctn.li_sector = (t_l_int){skybox->ceil, skybox->floor};
-	while (++s < (int)skybox->npoints)
-	{
-
-		if (transform_vertex(&ctn, env->engine.player, vertex[s], vertex[s + 1]) == 0
-		|| ctn.x1 >= ctn.x2)
-			continue ;
-		acquire_limits(&env->engine, &ctn, (t_l_float){skybox->ceil, skybox->floor});
-		ctn.x = ctn.x1;
-		drawline.container = (void *)&ctn;
-		drawline.from = 0;
-		drawline.to = 800;
-		drawline.bottom = 0xFFFF;
-		drawline.middle = 0xFF + (0xFF00 * s);
-		drawline.top = 0xFF;
-		while (ctn.x <= ctn.x2)
-		{
-			vline(drawline, env);
-			ctn.x++;
-		}
-	}
 }
 
 void		dfs(t_env *env)
@@ -141,8 +103,6 @@ void		dfs(t_env *env)
 	ini_queue(&queue, engine->nsectors);
 	SDL_memset(env->sdl.surface->pixels, 0,
 		env->sdl.surface->h * env->sdl.surface->pitch);
-	// skybox sector rendering
-	//render_skybox(env, &env->engine.skybox.sector);
 
 	/* Begin whole-screen rendering from where the player is. */
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};

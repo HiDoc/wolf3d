@@ -1,0 +1,372 @@
+srcs/display/display_drawing.c:21:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/display_drawing.c:25:	ui_make_string(rect, "Wall texture", env->data);
+srcs/display/display_drawing.c:29:	ui_make_rect(env->data->surface, /*get_element(M_B_UP, env)->rect*/rect, C_WHITE);
+srcs/display/display_drawing.c:33:	ui_make_rect(env->data->surface, /*get_element(M_B_DOWN, env)->rect*/rect, C_WHITE);
+srcs/display/display_drawing.c:37:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/display_drawing.c:48:	while (env->editor.wall_txtr[i])
+srcs/display/display_drawing.c:54:			ui_make_full_rect(env->data->surface, rect, C_GREY);
+srcs/display/display_drawing.c:56:			ui_make_string(rect, env->editor.wall_txtr[i], env->data);
+srcs/display/display_element.c:21:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/display_element.c:24:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:27:	ui_make_string(rect, "[sprites] wall_objects", env->data); // posters
+srcs/display/display_element.c:29:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:32:	ui_make_string(rect, "[sprites] consumables", env->data); // gun / shield / ...
+srcs/display/display_element.c:34:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:37:	ui_make_string(rect, "[sprites] entities", env->data); // bots
+srcs/display/display_element.c:39:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:42:	ui_make_string(rect, "[sectors] prefabs", env->data); // table / rampe
+srcs/display/display_element.c:44:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:47:	ui_make_string(rect, "[sectors] specials", env->data); // spawn / interest / teleport
+srcs/display/display_element.c:50:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:54:	ui_make_rect(env->data->surface,
+srcs/display/display_element.c:62:	elem = env->btn_objs;
+srcs/display/display_element.c:65:		if (elem->type == env->obj_mode
+srcs/display/display_element.c:68:			ui_make_full_rect(env->data->surface, elem->rect, C_GREY);;
+srcs/display/display_element.c:69:			ui_make_string(elem->rect, elem->str, env->data);
+srcs/display/display_interface.c:22:	ui_make_string(rect, "x : ", env->data);
+srcs/display/display_interface.c:24:	ui_make_nbrstring(rect, env->mouse.x, env->data);
+srcs/display/display_interface.c:26:	ui_make_string(rect, "y : ", env->data);
+srcs/display/display_interface.c:28:	ui_make_nbrstring(rect, env->mouse.y, env->data);
+srcs/display/display_interface.c:32:	ui_make_string(rect, "size : ", env->data);
+srcs/display/display_interface.c:34:	ui_make_nbrstring(rect, env->vtx_size, env->data);
+srcs/display/display_interface.c:38:	ui_make_nbrstring(rect, 20, env->data);
+srcs/display/display_interface.c:39:	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765}, (t_pos){830, 765}};
+srcs/display/display_interface.c:40:	ui_make_line(env->data->surface, vec, C_WHITE);
+srcs/display/display_interface.c:42:	ui_make_line(env->data->surface, vec, C_WHITE);
+srcs/display/display_interface.c:43:	vec = (t_vec){(t_pos){830 - (20 * env->pixel_value), 765},
+srcs/display/display_interface.c:44:	(t_pos){830 - (20 * env->pixel_value), 755}};
+srcs/display/display_interface.c:45:	ui_make_line(env->data->surface, vec, C_WHITE);
+srcs/display/display_interface.c:69:		ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:70:		i += 4 * env->pixel_value;
+srcs/display/display_interface.c:79:		ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:80:		i += 4 * env->pixel_value;
+srcs/display/display_interface.c:84:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/display_interface.c:93:	sct = env->sct_start;
+srcs/display/display_interface.c:96:		if (sct != env->sct_hover)
+srcs/display/display_interface.c:99:			color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
+srcs/display/display_interface.c:112:					ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:122:				sct->vtx_end->pos.x * env->pixel_value,
+srcs/display/display_interface.c:123:				sct->vtx_end->pos.y * env->pixel_value};
+srcs/display/display_interface.c:127:					ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:133:	if (env->sct_hover)
+srcs/display/display_interface.c:135:		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
+srcs/display/display_interface.c:136:		vtx = env->sct_hover->vtx_start;
+srcs/display/display_interface.c:149:				ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:152:		if (env->sct_hover->close)
+srcs/display/display_interface.c:155:			env->sct_hover->vtx_start->pos.x,
+srcs/display/display_interface.c:156:			env->sct_hover->vtx_start->pos.y};
+srcs/display/display_interface.c:159:			env->sct_hover->vtx_end->pos.x,
+srcs/display/display_interface.c:160:			env->sct_hover->vtx_end->pos.y};
+srcs/display/display_interface.c:163:			ui_make_line(env->data->surface, vec, color);
+srcs/display/display_interface.c:169:	if (env->vtx_hover)
+srcs/display/display_interface.c:171:		circ = (t_circ){env->vtx_hover->pos.x,
+srcs/display/display_interface.c:172:		env->vtx_hover->pos.y, 10, 0xFFFFFFFF};
+srcs/display/display_interface.c:173:		ui_make_circle(circ, env->data);
+srcs/display/display_interface.c:177:	if (env->sct_current)
+srcs/display/display_interface.c:180:		env->sct_current->vtx_current->pos.x,
+srcs/display/display_interface.c:181:		env->sct_current->vtx_current->pos.y};
+srcs/display/display_interface.c:184:		env->data->mouse.x,
+srcs/display/display_interface.c:185:		env->data->mouse.y};
+srcs/display/display_interface.c:188:		ui_make_line(env->data->surface, vec, C_CYAN);
+srcs/display/display_interface.c:192:	t_object	*obj = env->objects;
+srcs/display/display_interface.c:201:		ui_make_rect(env->data->surface, rect, color);
+srcs/display/display_selection.c:21:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/display_selection.c:25:	if (env->obj_hover)
+srcs/display/display_selection.c:26:		ui_make_string(rect, "object", env->data);
+srcs/display/display_selection.c:27:	else if (env->sct_hover)
+srcs/display/display_selection.c:28:		ui_make_string(rect, "sector", env->data);
+srcs/display/display_selection.c:29:	else if (env->vtx_hover)
+srcs/display/display_selection.c:30:		ui_make_string(rect, "vertex", env->data);
+srcs/display/display_selection.c:34:	if (env->obj_hover)
+srcs/display/display_selection.c:35:		ui_make_string(rect, "selected : object", env->data);
+srcs/display/display_selection.c:36:	else if (env->sct_hover)
+srcs/display/display_selection.c:37:		ui_make_string(rect, "selected : sector", env->data);
+srcs/display/display_selection.c:38:	else if (env->vtx_hover)
+srcs/display/display_selection.c:39:		ui_make_string(rect, "selected : vertex", env->data);
+srcs/display/editor.c:19:	if (env->menu.state > 0)
+srcs/display/editor.c:27:	if (env->mouse_mode == 0)
+srcs/display/editor.c:29:	else if (env->mouse_mode == 1)
+srcs/display/editor.c:31:	else if (env->mouse_mode == 2)
+srcs/display/editor.c:35:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:37:	ui_make_string(get_element(E_B_MENU, env)->rect, "MENU", env->data);
+srcs/display/editor.c:39:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:41:	ui_make_string(get_element(E_B_SAVE, env)->rect, "SAVE", env->data);
+srcs/display/editor.c:45:	ui_make_string(rect, env->map_name, env->data);
+srcs/display/editor.c:49:	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
+srcs/display/editor.c:53:	ui_make_string(rect, "Nb sectors : ", env->data);
+srcs/display/editor.c:55:	ui_make_nbrstring(rect, env->nb_sct, env->data);
+srcs/display/editor.c:57:	ui_make_string(rect, "Nb edges : ", env->data);
+srcs/display/editor.c:59:	ui_make_nbrstring(rect, env->edg_index + 1, env->data);*/
+srcs/display/editor.c:61:	ui_make_string(rect, "Nb vertex : ", env->data);
+srcs/display/editor.c:63:	ui_make_nbrstring(rect, env->nb_vtx, env->data);
+srcs/display/editor.c:66:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:70:	0, env->data->surface, &get_element(E_B_MODE_SELECT, env)->rect);
+srcs/display/editor.c:72:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:76:	0, env->data->surface, &get_element(E_B_MODE_MOVE, env)->rect);
+srcs/display/editor.c:78:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:82:	0, env->data->surface, &get_element(E_B_MODE_DRAW, env)->rect);
+srcs/display/editor.c:84:	ui_make_rect(env->data->surface,
+srcs/display/editor.c:88:	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect);
+srcs/display/editor.c:91:	ui_make_string(get_element(E_B_PLAY, env)->rect, "PLAY", env->data);
+srcs/display/editor.c:92:	ui_make_rect(env->data->surface, get_element(E_B_PLAY, env)->rect, C_WHITE);	
+srcs/display/menu.c:22:	ui_make_full_rect(env->data->surface, rect, 0x10000000);
+srcs/display/menu.c:23:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/menu.c:27:	ui_make_string(rect, "Create a map", env->data);
+srcs/display/menu.c:28:	ui_make_input(env->data->surface, get_element(M_I_NEW, env), env->data);
+srcs/display/menu.c:32:	ui_make_string(rect, "Upload a map", env->data);
+srcs/display/menu.c:34:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/menu.c:38:	0, env->data->surface, &get_element(M_B_UP, env)->rect);
+srcs/display/menu.c:42:	0, env->data->surface, &get_element(M_B_DOWN, env)->rect);
+srcs/display/menu.c:47:	elem = env->menu.btn_maps;
+srcs/display/menu.c:51:		rect = (SDL_Rect){elem->rect.x, elem->rect.y + env->menu.idx_map * 40,
+srcs/display/menu.c:53:		if (elem == env->menu.selected)
+srcs/display/menu.c:57:			ui_make_rect(env->data->surface, rect, color);
+srcs/display/menu.c:58:			ui_make_string(rect, elem->str, env->data);
+srcs/display/menu.c:70:	ui_make_full_rect(env->data->surface, rect, 0x10000000);
+srcs/display/menu.c:71:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/menu.c:75:	ui_make_rect(env->data->surface, rect, C_WHITE);
+srcs/display/menu.c:79:	if (env->menu.selected)
+srcs/display/menu.c:80:		ui_make_string(rect, env->menu.selected->str, env->data);
+srcs/display/menu.c:82:		ui_make_string(rect, get_element(M_I_NEW, env)->str, env->data);
+srcs/display/menu.c:84:		ui_make_string(rect, env->map_name, env->data);
+srcs/display/menu.c:88:	ui_make_string(rect, "Start", env->data);
+srcs/display/menu.c:89:	ui_make_rect(env->data->surface,
+srcs/display/menu.c:94:	if (env->menu.state == 2)
+srcs/display/menu.c:96:		ui_make_string(rect, "Cancel", env->data); 
+srcs/display/menu.c:97:		ui_make_rect(env->data->surface,
+srcs/display/menu.c:112:	SDL_BlitScaled(env->menu.background, 0, env->data->surface, &rect);
+srcs/display/menu.c:116:	ui_make_string(rect, "DOOM NUKEM EDITOR", env->data);
+srcs/events/draw_mode.c:20:		ui_error_exit_sdl("Editor: Out of memory", env->data);
+srcs/events/draw_mode.c:28:	if (!(env->sct_start))
+srcs/events/draw_mode.c:30:		env->sct_current = new;
+srcs/events/draw_mode.c:31:		env->sct_start = new;
+srcs/events/draw_mode.c:32:		env->sct_end = new;
+srcs/events/draw_mode.c:36:		env->sct_current = new;
+srcs/events/draw_mode.c:37:		env->sct_end->next = new;
+srcs/events/draw_mode.c:38:		env->sct_end = new;
+srcs/events/draw_mode.c:40:	env->nb_sct++;
+srcs/events/draw_mode.c:48:		ui_error_exit_sdl("Editor: Out of memory", env->data);
+srcs/events/draw_mode.c:51:	new->sector = env->sct_current;
+srcs/events/draw_mode.c:54:	if (!(env->sct_current->vtx_start))
+srcs/events/draw_mode.c:56:		env->sct_current->vtx_current = new;
+srcs/events/draw_mode.c:57:		env->sct_current->vtx_start = new;
+srcs/events/draw_mode.c:58:		env->sct_current->vtx_end = new;
+srcs/events/draw_mode.c:62:		env->sct_current->vtx_current = new;
+srcs/events/draw_mode.c:63:		env->sct_current->vtx_end->next = new;
+srcs/events/draw_mode.c:64:		env->sct_current->vtx_end = new;
+srcs/events/draw_mode.c:68:	if (pos.x < env->sct_current->xmin)
+srcs/events/draw_mode.c:69:		env->sct_current->xmin = pos.x;
+srcs/events/draw_mode.c:70:	else if (pos.x > env->sct_current->xmax)
+srcs/events/draw_mode.c:71:		env->sct_current->xmax = pos.x;
+srcs/events/draw_mode.c:73:	if (pos.y < env->sct_current->ymin)
+srcs/events/draw_mode.c:74:		env->sct_current->ymin = pos.y;
+srcs/events/draw_mode.c:75:	else if (pos.y > env->sct_current->ymax)
+srcs/events/draw_mode.c:76:		env->sct_current->ymax = pos.y;
+srcs/events/draw_mode.c:77:	env->nb_vtx++;
+srcs/events/draw_mode.c:82:	env->sct_current->vtx_current = vtx;
+srcs/events/draw_mode.c:83:	env->sct_current->vtx_end->next = vtx;
+srcs/events/draw_mode.c:84:	env->sct_current->vtx_end = vtx;
+srcs/events/draw_mode.c:87:	if (vtx->pos.x < env->sct_current->xmin)
+srcs/events/draw_mode.c:88:		env->sct_current->xmin = vtx->pos.x;
+srcs/events/draw_mode.c:89:	else if (vtx->pos.x > env->sct_current->xmax)
+srcs/events/draw_mode.c:90:		env->sct_current->xmax = vtx->pos.x;
+srcs/events/draw_mode.c:92:	if (vtx->pos.y < env->sct_current->ymin)
+srcs/events/draw_mode.c:93:		env->sct_current->ymin = vtx->pos.y;
+srcs/events/draw_mode.c:94:	else if (vtx->pos.y > env->sct_current->ymax)
+srcs/events/draw_mode.c:95:		env->sct_current->ymax = vtx->pos.y;	
+srcs/events/draw_mode.c:100:	const SDL_Event event = env->data->sdl.event;
+srcs/events/draw_mode.c:105:	&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+srcs/events/draw_mode.c:107:		if (!(env->drawing)) // not drawing
+srcs/events/draw_mode.c:111:				if (!(target_sector(env->data->mouse, env)))
+srcs/events/draw_mode.c:113:					env->drawing = 1;
+srcs/events/draw_mode.c:115:					create_vertex(env->mouse, env);
+srcs/events/draw_mode.c:120:				env->drawing = 1;
+srcs/events/draw_mode.c:128:			if (!(target_sector(env->data->mouse, env)))
+srcs/events/draw_mode.c:132:					if (current == env->sct_current->vtx_start) // dock start
+srcs/events/draw_mode.c:134:						env->sct_current->close = 1;
+srcs/events/draw_mode.c:135:						env->sct_current->vtx_current = 0;
+srcs/events/draw_mode.c:136:						env->sct_current = 0;
+srcs/events/draw_mode.c:137:						env->drawing = 0;
+srcs/events/draw_mode.c:139:					else if (current->sector != env->sct_current)
+srcs/events/draw_mode.c:145:					create_vertex(env->mouse, env);
+srcs/events/draw_mode.c:151:	if (env->data->mouse.x || env->data->mouse.y)
+srcs/events/draw_mode.c:154:		if (env->sct_current)
+srcs/events/draw_mode.c:155:			env->vtx_size = sqrt(
+srcs/events/draw_mode.c:156:			pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
+srcs/events/draw_mode.c:157:			+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
+srcs/events/elem_mode.c:20:		ui_error_exit_sdl("Editor: create object, out of memory", env->data);
+srcs/events/elem_mode.c:24:	new->pos = env->data->mouse;
+srcs/events/elem_mode.c:26:	if (!(env->objects))
+srcs/events/elem_mode.c:28:		env->objects = new;
+srcs/events/elem_mode.c:29:		env->objects->next = 0;
+srcs/events/elem_mode.c:33:		new->next = env->objects;
+srcs/events/elem_mode.c:34:		env->objects = new;
+srcs/events/elem_mode.c:42:	const SDL_Event event = env->data->sdl.event;
+srcs/events/elem_mode.c:49:		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect)
+srcs/events/elem_mode.c:50:				&& env->obj_type > -1)
+srcs/events/elem_mode.c:52:			if (env->sct_hover)
+srcs/events/elem_mode.c:53:				create_object(env->obj_type, env);
+srcs/events/elem_mode.c:60:			if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/elem_mode.c:63:				env->obj_mode = i;
+srcs/events/elem_mode.c:69:		obj_btn = env->btn_objs;
+srcs/events/elem_mode.c:73:						env->data->mouse.x, env->data->mouse.y, obj_btn->rect)
+srcs/events/elem_mode.c:74:					&& obj_btn->type == env->obj_mode)
+srcs/events/elem_mode.c:75:				env->obj_type = obj_btn->type; // replace by ref
+srcs/events/handle_events.c:26:	const Uint8 	*state = env->data->state;
+srcs/events/handle_events.c:27:	const SDL_Event	event = env->data->sdl.event;
+srcs/events/handle_events.c:30:	env->mouse = (t_pos){
+srcs/events/handle_events.c:31:	(env->data->mouse.x) / env->pixel_value,
+srcs/events/handle_events.c:32:	(env->data->mouse.y) / env->pixel_value};
+srcs/events/handle_events.c:35:	? ui_exit_sdl(env->data) : 0;
+srcs/events/handle_events.c:37:	if (env->menu.state > 0)
+srcs/events/handle_events.c:42:		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:45:			env->menu.state = 2;
+srcs/events/handle_events.c:48:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:54:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:57:			env->mouse_mode = 0;
+srcs/events/handle_events.c:62:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:65:			env->mouse_mode = 3;
+srcs/events/handle_events.c:70:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:73:			env->mouse_mode = 1;
+srcs/events/handle_events.c:78:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/handle_events.c:81:			env->mouse_mode = 2;
+srcs/events/handle_events.c:88:	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+srcs/events/handle_events.c:95:				//(env->bloc_size > 60) ? env->bloc_size -= 10 : 0;
+srcs/events/handle_events.c:96:				(env->pixel_value > 1) ? env->pixel_value -= 1 : 0;
+srcs/events/handle_events.c:101:				//(env->bloc_size < 200) ? env->bloc_size += 10 : 0;
+srcs/events/handle_events.c:102:				(env->pixel_value < 50) ? env->pixel_value += 1 : 0;
+srcs/events/handle_events.c:106:		if (env->data->mouse.x || env->data->mouse.y)
+srcs/events/handle_events.c:111:			env->sct_hover = target_sector(env->data->mouse, env);
+srcs/events/handle_events.c:113:			env->obj_hover = target_object(env->data->mouse, env);
+srcs/events/handle_events.c:117:	if (env->mouse_mode == 0)
+srcs/events/handle_events.c:119:	else if (env->mouse_mode == 1)
+srcs/events/handle_events.c:121:	else if (env->mouse_mode == 2)
+srcs/events/menu_events.c:22:	env->menu.selected = 0;
+srcs/events/menu_events.c:27:	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
+srcs/events/menu_events.c:29:		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:32:			if (env->menu.selected)
+srcs/events/menu_events.c:35:				printf("do parsing : %s\n", env->menu.selected->str); // temporary
+srcs/events/menu_events.c:39:				env->map_name = get_element(M_I_NEW, env)->str;
+srcs/events/menu_events.c:40:			env->menu.state = 0;
+srcs/events/menu_events.c:42:		else if (env->menu.state == 2
+srcs/events/menu_events.c:43:		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:46:			env->menu.state = 0;
+srcs/events/menu_events.c:52:		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:55:			(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
+srcs/events/menu_events.c:57:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:60:			(env->menu.idx_map > -env->menu.nb_maps + 1) ? env->menu.idx_map-- : 0;
+srcs/events/menu_events.c:62:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:68:		else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+srcs/events/menu_events.c:71:			t_elem	*obj_map = env->menu.btn_maps;
+srcs/events/menu_events.c:76:				obj_map->rect.x, obj_map->rect.y + env->menu.idx_map * 40,
+srcs/events/menu_events.c:78:				if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+srcs/events/menu_events.c:79:					env->menu.selected = obj_map;
+srcs/events/menu_events.c:87:	&& env->data->sdl.event.type == SDL_KEYDOWN)
+srcs/events/menu_events.c:91:		env->data->sdl.event.key.keysym.scancode));
+srcs/events/menu_events.c:93:		if (env->data->sdl.event.key.keysym.scancode >= 89
+srcs/events/menu_events.c:94:		&& env->data->sdl.event.key.keysym.scancode <= 98)
+srcs/events/menu_events.c:98:		else if (env->data->sdl.event.key.keysym.scancode == 44)
+srcs/events/menu_events.c:102:		else if (env->data->sdl.event.key.keysym.scancode >= 4
+srcs/events/menu_events.c:103:		&& env->data->sdl.event.key.keysym.scancode <= 29)
+srcs/events/menu_events.c:107:		if ((env->data->sdl.event.key.keysym.scancode >= 89
+srcs/events/menu_events.c:108:		&& env->data->sdl.event.key.keysym.scancode <= 98)
+srcs/events/menu_events.c:109:		|| (env->data->sdl.event.key.keysym.scancode >= 4
+srcs/events/menu_events.c:110:		&& env->data->sdl.event.key.keysym.scancode <= 29)
+srcs/events/menu_events.c:111:		|| (env->data->sdl.event.key.keysym.scancode >= 30
+srcs/events/menu_events.c:112:		&& env->data->sdl.event.key.keysym.scancode <= 39)
+srcs/events/menu_events.c:113:		|| env->data->sdl.event.key.keysym.scancode == 44)
+srcs/events/menu_events.c:120:					ui_error_exit_sdl("Editor: Out of memory", env->data);
+srcs/events/menu_events.c:124:		else if (env->data->sdl.event.key.keysym.scancode == 42)
+srcs/events/select_mode.c:22:	const SDL_Event event = env->data->sdl.event;
+srcs/events/select_mode.c:26:		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+srcs/events/select_mode.c:28:		if (env->sct_hover)
+srcs/events/select_mode.c:30:			env->sct_select = env->sct_hover;;
+srcs/events/select_mode.c:32:		else if (env->vtx_hover)
+srcs/events/select_mode.c:34:			env->vtx_select = env->vtx_hover;
+srcs/events/select_mode.c:36:		else if (env->obj_hover)
+srcs/events/select_mode.c:38:			env->obj_select = env->obj_hover;
+srcs/events/targetting.c:67:	env->vtx_hover = 0;
+srcs/events/targetting.c:68:	sct = env->sct_start;
+srcs/events/targetting.c:74:			if (ui_close_to(env->data->mouse, vtx->pos, 10))
+srcs/events/targetting.c:76:				env->vtx_hover = vtx;
+srcs/events/targetting.c:92:	sector = env->sct_start;
+srcs/events/targetting.c:95:		if (!(env->vtx_hover) && vertex_in_sector(sector, pos, env))
+srcs/events/targetting.c:97:			if (env->mouse_mode == 0)
+srcs/events/targetting.c:114:	env->obj_hover = 0;
+srcs/events/targetting.c:115:	obj = env->objects;
+srcs/events/targetting.c:120:			env->obj_hover = obj;
+srcs/init/init_env.c:20:		ui_error_exit_sdl("Editor: Out of memory", env->data);
+srcs/init/init_env.c:25:	if (!(env->elements))
+srcs/init/init_env.c:27:		env->elements = new;
+srcs/init/init_env.c:28:		env->elements->next = 0;
+srcs/init/init_env.c:32:		new->next = env->elements;
+srcs/init/init_env.c:33:		env->elements = new;
+srcs/init/init_env.c:42:		ui_error_exit_sdl("Editor: create_btn_obj, out of memory", env->data);
+srcs/init/init_env.c:46:		ui_error_exit_sdl("Editor: create_btn_obj, out of memory", env->data);
+srcs/init/init_env.c:48:	if (!(env->btn_objs))
+srcs/init/init_env.c:50:		env->btn_objs = new;
+srcs/init/init_env.c:51:		env->btn_objs->next = 0;
+srcs/init/init_env.c:55:		new->next = env->btn_objs;
+srcs/init/init_env.c:56:		env->btn_objs = new;
+srcs/init/init_env.c:65:		ui_error_exit_sdl("Editor: create_btn_map, out of memory", env->data);
+srcs/init/init_env.c:68:		ui_error_exit_sdl("Editor: create_btn_map, out of memory", env->data);
+srcs/init/init_env.c:70:	if (!(env->menu.btn_maps))
+srcs/init/init_env.c:72:		env->menu.btn_maps = new;
+srcs/init/init_env.c:73:		env->menu.btn_maps->next = 0;
+srcs/init/init_env.c:77:		new->next = env->menu.btn_maps;
+srcs/init/init_env.c:78:		env->menu.btn_maps = new;
+srcs/init/init_env.c:166:		ui_error_exit_sdl("Editor: load_obj, bad fd", env->data);
+srcs/init/init_env.c:168:		ui_error_exit_sdl("Editor: load_obj, out of memory", env->data);
+srcs/init/init_env.c:170:		ui_error_exit_sdl("Editor: laod_obj, out of memory", env->data);
+srcs/init/init_env.c:200:	t_data				*data = env->data;
+srcs/init/init_env.c:215:			env->menu.nb_maps++;
+srcs/init/init_env.c:221:	env->map_name = "new_map";
+srcs/init/init_env.c:222:	env->menu.state = 1;
+srcs/init/init_env.c:223:	env->menu.background = ui_load_image(
+srcs/init/init_env.c:229:	t_data				*data = env->data;
+srcs/init/init_env.c:234:	env->obj_type = -1;
+srcs/init/init_env.c:235:	env->pixel_value = 1;
+srcs/init/init_env.c:244:			env->editor.nb_wall_txtr++;
+srcs/init/init_env.c:249:	if (!(env->editor.wall_txtr = (char **)ft_memalloc(sizeof(char *)
+srcs/init/init_env.c:250:	* (env->editor.nb_wall_txtr + 1))))
+srcs/init/init_env.c:259:			if (!(env->editor.wall_txtr[i] = ft_strdup(de->d_name)))
+srcs/init/init_env.c:270:	env->data = data;
+srcs/ui_functions/ui_get_events.c:21:	SDL_WaitEvent(&(env->data->sdl.event));
+srcs/ui_functions/ui_get_events.c:23:	env->data->state = SDL_GetKeyboardState(0);
+srcs/ui_functions/ui_get_events.c:24:	SDL_GetMouseState(&(env->data->mouse_x), &(env->data->mouse_y));
+srcs/ui_functions/ui_get_events.c:26:	env->data->mouse = (t_pos){
+srcs/ui_functions/ui_get_events.c:27:	(float)env->data->mouse_x,
+srcs/ui_functions/ui_get_events.c:28:	(float)env->data->mouse_y};
+srcs/ui_functions/ui_load_image.c:20:		ui_error_exit_sdl("wolf3d: error: bad textures", env->data);
+srcs/ui_functions/ui_make_frame.c:17:	if ((SDL_RenderClear(env->data->sdl.renderer)) != 0)
+srcs/ui_functions/ui_make_frame.c:18:		 ui_error_exit_sdl("Libui: Error while clearing the renderer", env->data);
+srcs/ui_functions/ui_make_frame.c:20:	SDL_FillRect(env->data->surface, 0, 0xFF000000);
+srcs/ui_functions/ui_make_frame.c:23:	if (!(env->data->texture = SDL_CreateTextureFromSurface(
+srcs/ui_functions/ui_make_frame.c:24:	env->data->sdl.renderer, env->data->surface)))
+srcs/ui_functions/ui_make_frame.c:25:		ui_error_exit_sdl("Libui: Error while creating the texture", env->data);
+srcs/ui_functions/ui_make_frame.c:26:	if ((SDL_RenderCopy(env->data->sdl.renderer, env->data->texture, 0, 0)) != 0)
+srcs/ui_functions/ui_make_frame.c:27:		ui_error_exit_sdl("Libui: Error while RenderCopy", env->data);
+srcs/ui_functions/ui_make_frame.c:28:	SDL_DestroyTexture(env->data->texture);
+srcs/ui_functions/ui_make_frame.c:29:	SDL_RenderPresent(env->data->sdl.renderer);
+srcs/ui_functions/ui_make_frame.c:30:	env->data->nb_frames++;
+srcs/utils/export_map.c:28:	printf("%s\n", env->map_name);
+srcs/utils/export_map.c:32:	sct = env->sct_start;
+srcs/utils/export_map.c:47:	t_object    *obj = env->objects;
+srcs/utils/export_map.c:61:	if (!(path = ft_strjoin("maps/", env->map_name)))
+srcs/utils/export_map.c:62:		ui_error_exit_sdl("Editor: Error while opening file", env->data);
+srcs/utils/export_map.c:66:		ui_error_exit_sdl("Editor: Error while opening file", env->data);
+srcs/utils/export_map.c:70:	ft_putendl_fd(env->map_name, fd);
+srcs/utils/export_map.c:72:	dprintf(fd, "# nb vertex:\n%d\n", env->nb_vtx);
+srcs/utils/export_map.c:74:	sct = env->sct_start;
+srcs/utils/export_map.c:88:	ft_putnbr_fd(env->nb_sct, fd);
+srcs/utils/export_map.c:91:	sct = env->sct_start;
+srcs/utils/export_map.c:103:	obj = env->objects;
+srcs/utils/export_map.c:116:	obj = env->objects;
+srcs/utils/export_map.c:129:	obj = env->objects;
+srcs/utils/export_map.c:142:	obj = env->objects;
+srcs/utils/export_map.c:152:		ui_error_exit_sdl("Editor: Error while closing file", env->data);
+srcs/utils/get_element.c:19:	current = env->elements;
+srcs/utils/vertex_in_sector.c:79:	return (env->data->mouse.x >= sector->xmin
+srcs/utils/vertex_in_sector.c:80:			&& env->data->mouse.x <= sector->xmax
+srcs/utils/vertex_in_sector.c:81:			&& env->data->mouse.y >= sector->ymin
+srcs/utils/vertex_in_sector.c:82:			&& env->data->mouse.y <= sector->ymax);

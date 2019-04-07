@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_close_to.c                                      :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 20:30:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:19:52 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/06 16:37:37 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/07 14:57:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "editor.h"
+#include "ast.h"
 
-int			ui_close_to(t_pos a, t_pos b, float dist)
+int	lexer_vertex(t_token *iter)
 {
-	return (fabs(a.x - b.x) < dist && fabs(a.y - b.y) < dist);
+	unsigned	number;
+
+	number = 0;
+	(void)iter;
+	(void)number;
+	return (1);
+}
+
+int	lexer(t_parseline *line)
+{
+	t_token		*iter;
+
+	iter = line->first;
+	return (1);
 }

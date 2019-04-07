@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 03:49:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:54:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	sdl_render_game(t_env *env)
 {
+	t_vision *v;
+
+	v = &env->engine.player.vision;
 	dfs(env);
 	ui_put_fps(env, env->time.fps);
 	ui_minimap(env);
@@ -27,6 +30,9 @@ void	sdl_render_game(t_env *env)
 	env->hud.is_txt ? ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe) : 0;
 	handle_doors(env);
 	god_mod(env);
+	wpn_mouse_wheel(env, env->sdl.event);
+	sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
+	player_move(&env->engine, v, env->sdl.keycodes);
 }
 
 void	sdl_render_inventory(t_env *env)
@@ -86,9 +92,6 @@ int sdl_loop(t_env *env)
 			if (!env->hud.inventory.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
-				wpn_mouse_wheel(env, env->sdl.event);
-				sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
-				player_move(e, v, env->sdl.keycodes);
 				env->player.inventory.current->current->ref == RIFLE ? mouse_shoot(env) : 0;
 			}
 			else
