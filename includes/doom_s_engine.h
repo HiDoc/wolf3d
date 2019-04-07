@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 03:20:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 21:35:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ struct						s_door
 	int						is_openable;
 	int						is_open;
 	int						is_opening;
+	int						ref_img;
 	int						frame;
 };
 

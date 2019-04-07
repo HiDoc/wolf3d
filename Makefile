@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/06 04:03:56 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/06 21:07:19 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ SRC_NAME 	= main.c \
 			move.c \
 			musics.c \
 			no_op.c \
+			parse_door.c \
 			parse_enemies.c \
 			parse_objects.c \
 			perspective.c \

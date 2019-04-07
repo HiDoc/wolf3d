@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 16:33:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 00:13:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		player_bullet(t_env *env, t_character *p, int damage);
 int			enemies_frames(t_env *env, t_sector *sector);
 
 int			init_doors_images(t_env *env);
-int			door_neighbors(t_engine *e, const t_vtx *vertex, int s);
+int			door_neighbors(t_engine *e, t_sector *s, int n);
 int			select_door(t_engine *e);
 int			open_door(t_env *env);
 int			handle_doors(t_env *env);

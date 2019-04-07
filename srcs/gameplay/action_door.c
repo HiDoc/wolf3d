@@ -6,38 +6,16 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 16:24:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 00:13:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	door_neighbors(t_engine *e, const t_vtx *vertex, int s)
+int	door_neighbors(t_engine *e, t_sector *s, int n)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < (int)e->nsectors)
-	{
-		if (e->sectors[i].is_door)
-		{
-			j = -1;
-			while (++j < (int)e->sectors[i].npoints)
-			{
-				if (equal_vertex(vertex[s], e->sectors[i].vertex[j]))
-				{
-					j = -1;
-					while (++j < (int)e->sectors[i].npoints)
-					{
-						if (equal_vertex(vertex[s + 1], e->sectors[i].vertex[j]))
-							return (1);
-					}
-				}
-			}
-		}
-	}
-	return (0);
+	return (s->neighbors[n] >= 0 && e->sectors[s->neighbors[n]].is_door
+	&& s->neighbors[n + 1] >= 0 && e->sectors[s->neighbors[n + 1]].is_door);
 }
 
 int	select_door(t_engine *e)
@@ -69,7 +47,7 @@ int	open_door(t_env *env)
 	if ((index = select_door(&env->engine)) > -1)
 	{
 		sector = &env->engine.sectors[index];
-		if (sector->door.is_openable && (!sector->door.is_open || sector->door.is_open))
+		if (sector->door.is_openable)
 			sector->door.is_opening = 1;
 	}
 	return (1);
@@ -78,16 +56,16 @@ int	open_door(t_env *env)
 int	print_infos_door(t_env *env, t_sector *sector)
 {
 	int			index;
-	t_sector	*front_player;
+	t_door		*front_player;
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
-		front_player = &sector[index];
-		if (!sector->door.is_openable)
+		front_player = &sector[index].door;
+		if (!front_player->is_openable)
 			draw_scaled_string((t_font){WHITE, "Can t open yet",
 			env->hud.text.text, (t_vtx){W / 2, H / 2}, W / 40, -1, -1},
 			env->hud.text.doors[1], env->sdl.surface, (t_vtx){0, 0});
-		else if (!sector->door.is_open && !sector->door.is_opening)
+		else if (!front_player->is_open && !front_player->is_opening)
 		{
 			draw_scaled_string((t_font){WHITE, "Press E",
 			env->hud.text.text, (t_vtx){W / 2, H / 2}, W / 40, -1, -1},
@@ -96,6 +74,7 @@ int	print_infos_door(t_env *env, t_sector *sector)
 	}
 	return (1);
 }
+
 int	handle_doors(t_env *env)
 {
 	t_sector	*sector;
@@ -105,22 +84,21 @@ int	handle_doors(t_env *env)
 	sector = env->engine.sectors;
 	while (++i < (int)env->engine.nsectors)
 	{
-		if (sector[i].is_door)
+		if (sector[i].is_door
+		&& (sector[i].door.is_openable || !env->stats.nb_enemies))
 		{
-			if (sector[i].door.is_openable || !env->stats.nb_enemies)
+			sector[i].door.is_openable = 1;
+			if (sector[i].door.is_opening
+			&& !sector[i].door.is_open && sector[i].ceil < 40)
+				sector[i].ceil = (int)(sector[i].ceil + 1) % 41;
+			else if (sector[i].door.is_open
+			&& sector[i].door.is_opening && sector[i].ceil > 0)
+				sector[i].ceil = (int)(sector[i].ceil - 1) % 41;
+			else if ((sector[i].ceil >= 40 || sector[i].ceil <= 0)
+			&& sector[i].door.is_opening)
 			{
-				sector[i].door.is_openable = 1;
-				if (sector[i].door.is_opening
-				&& !sector[i].door.is_open && sector[i].ceil < 40)
-					sector[i].ceil = (int)(sector[i].ceil + 1) % 41;
-				else if (sector[i].door.is_open && sector[i].door.is_opening
-				&& sector[i].ceil > 0)
-					sector[i].ceil = (int)(sector[i].ceil - 1) % 41;
-				else if (sector[i].ceil >= 40 || sector[i].ceil <= 0)
-				{
-					sector[i].door.is_open = !sector[i].door.is_open;
-					sector[i].door.is_opening = 0;
-				}
+				sector[i].door.is_open = !sector[i].door.is_open;
+				sector[i].door.is_opening = 0;
 			}
 		}
 	}
