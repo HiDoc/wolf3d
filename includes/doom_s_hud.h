@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 19:22:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/07 19:06:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ struct						s_hud
 	t_bloc				hud_wpn[GAME_NB_WPN];
 	t_bloc				objects[5];
 	t_wrap_inv			*shortcut[5];
+	char				**name_objects;
 	t_uitxt				text;
 	int					is_txt;
 	int					txt_inv;
