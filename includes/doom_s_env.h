@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 21:19:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 23:46:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ struct								s_env
 	// t_hud			hud; 		(inventory / minimap / ...)
 };
 
-void			doom_exit(t_env *env);
-void			doom_error_exit(char *str, t_env *env);
+void			doom_exit(void);
+void			doom_error_exit(char *str);
 
 void			load_tilesets(t_env *env);
 
