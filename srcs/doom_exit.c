@@ -6,43 +6,17 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/07 20:00:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 20:14:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		free_env_audio(t_env *env)
-{
-	Mix_FreeMusic(env->sounds.load);
-}
-
-void		free_env_player(t_env *env)
-{
-	// free env->player.inventory
-	// free env->player.actions
-	// free env->player.shot
-}
-
-void		free_env_world(t_env *env)
-{
-	// RENDU ICI
-}
-
-void		free_env_content(t_env *env)
-{
-	free_env_audio(env);
-	free_env_player(env);
-	free_env_world(env);
-	//	free_content(env->sdl) // except texture/renderer/window
-	//	free_content(env->engine)
-	//	free_content(env->hud)
-	//	free_content(env->tiletab)
-}
-
 void		doom_release(t_env *env)
 {
-	free_env_content(env);
+	lt_destroy();
+	if (env->sdl.surface)
+		SDL_FreeSurface(env->sdl.surface);
 	if (env->sdl.texture)
 		SDL_DestroyTexture(env->sdl.texture);
 	if (env->sdl.renderer)

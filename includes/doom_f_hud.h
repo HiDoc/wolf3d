@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 17:31:25 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/08 19:59:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
 int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
-int			init_gameplay_env(t_env *env);
-int			init_hud_blocs(t_env *env);
 int         print_hud(t_env *env);
 int			print_inventory(t_env *env);
 

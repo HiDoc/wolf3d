@@ -6,7 +6,7 @@
 /*   By: abaille <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:11:37 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 18:57:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:30:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_list	t_list;
 struct					s_lt
 {
 	void	*ptr;
-	// fc pointer
+	void	(*f)(void **);
 	t_lt	*next;
 };
 
@@ -109,7 +109,7 @@ void					ft_lstadd(t_list **alst, t_list *new);
 void					ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
 t_lt					*get_lifetime(t_lt *new_ptr);
-void					*lt_push(void *ptr);
+void					*lt_push(void *ptr, void (*f)(void **));
 void					lt_release(void *ptr);
 void					lt_destroy(void);
 

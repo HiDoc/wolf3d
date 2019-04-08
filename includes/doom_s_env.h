@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 20:11:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 20:09:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ struct								s_env
 	t_stats			stats;
 	t_tiletab		tiletab;
 	int				god_mod;
+	//
 	// ...
 	//
 	// Comment je penses que ce serait mieux :
@@ -112,6 +113,7 @@ void			doom_error_exit(char *str, t_env *env);
 void			load_tilesets(t_env *env);
 
 int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
+int				current_sprite(t_bloc *bloc, char *file, int i);
 int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
 
 void			no_op(t_env *env);

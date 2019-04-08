@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 18:16:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/08 18:12:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sdl_render_game(t_env *env)
 	v = &env->engine.player.vision;
 	dfs(env);
 	ui_put_fps(env, env->time.fps);
-	ui_minimap(env);
+	//ui_minimap(env);
 	handle_weapon(env, &env->time.frame);
 	print_hud(env);
 	handle_gems(env);

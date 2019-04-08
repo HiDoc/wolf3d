@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 16:24:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 20:07:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@ void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybot);
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
 //int			init_pack_img(t_surface **pack, char *name, int limit);
-int			init_container(t_env *env);
-int         init_character(t_character *new);
-int		    init_weapon(t_env *env);
-int         init_consumable(t_env *env);
 t_sector	*pick_sector(t_env *env, unsigned sector);
 void		print_sct(t_env *env);
 void		schedule_queue(t_queue *q, t_raycast container, int start, int end);
@@ -68,5 +64,5 @@ t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
 void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
 
-int 		initialisation(t_env *env);
+void 		initialisation(int ac, char **av, t_env *env);
 #endif

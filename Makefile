@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/07 19:15:22 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/08 20:13:29 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -83,7 +83,6 @@ SRC_NAME 	= main.c \
 			hud_data.c \
 			hull.c \
 			init.c \
-			init_enemies.c \
 			init_minimap.c \
 			load.c \
 			loop.c \
@@ -101,11 +100,7 @@ SRC_NAME 	= main.c \
 			render_sect.c \
 			sdl_hook.c \
 			sdl_mouse.c \
-			struct_character.c \
-			struct_container.c \
 			struct_drawline.c \
-			struct_font.c \
-			struct_hud.c \
 			struct_hud_img.c \
 			struct_inventory.c \
 			struct_object.c \
@@ -121,7 +116,6 @@ SRC_NAME 	= main.c \
 			ui_draw_vector.c \
 			ui_make_surface.c \
 			ui_minimap.c \
-			unload.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \
