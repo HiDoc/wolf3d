@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 20:07:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 20:55:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,4 @@ t_vtx		screen_to_map(t_engine *e, float mapY, float screenX, float screenY);
 t_vtx		relative_to_absolute(t_player player, float X, float Z);
 void		acquire_limits(t_engine *e, t_raycast *ctn, t_l_float limit);
 
-void 		initialisation(int ac, char **av, t_env *env);
 #endif

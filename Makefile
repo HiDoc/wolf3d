@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/08 20:13:29 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/08 22:29:40 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ HED_NAME	= doom.h \
 			  doom_s_math.h \
 			  doom_s_gameplay.h \
 			  doom_s_engine.h \
+			  doom_f_init.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
 			  doom_f_ui.h \
@@ -83,7 +84,13 @@ SRC_NAME 	= main.c \
 			hud_data.c \
 			hull.c \
 			init.c \
+			init_hud.c \
+			init_fonts.c \
+			init_images.c \
+			init_enemies.c \
 			init_minimap.c \
+			init_weapons.c \
+			init_strings.c \
 			load.c \
 			loop.c \
 			map.c \
