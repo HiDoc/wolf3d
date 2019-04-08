@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 19:06:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 11:48:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ int	init_consumable(t_env *env)
 	{
 		if (i < WORLD_NB_CSMBLE)
 		{
-			if (!object_new(&env->world.objects[i], i, i == 5 ? 1 : 5, (t_l_float){2, 2}))
+			if (!object_new(&env->world.objects[i], i, i == 5 ? 1 : 5, (t_l_float){4, 3}))
 				return (0);
 		}
 		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
-			if (!object_new(&env->world.objects[i], i, 0, (t_l_float){2, 2}))
+			if (!object_new(&env->world.objects[i], i, 0, (t_l_float){4, 2}))
 				return (0);
 		}
 		else
 		{
-			if (!object_new(&env->world.objects[i], i, -1, (t_l_float){4, 2}))
+			if (!object_new(&env->world.objects[i], i, -1, (t_l_float){4, 1}))
 				return (0);
 		}
 		env->world.objects[i].name = env->hud.name_objects[i];

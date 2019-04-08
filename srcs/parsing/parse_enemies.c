@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/07 23:23:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 11:20:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 	new->health = renemy->health;
 	new->shield = renemy->shield;
 	new->damage = renemy->damage;
+	new->size = renemy->size;
+	new->deathsize = renemy->deathsize;
 	new->is_alive = 1;
 	if (!(new->shot = malloc(sizeof(t_impact) * BOT_NB_SHOT)))
 		return (NULL);

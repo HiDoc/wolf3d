@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 03:00:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 10:52:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ struct						s_character
 	t_actions	actions;
 	t_impact	*shot;
 	int			nb_shot;
+	t_l_float	size;
+	t_l_float	deathsize;
 };
 
 struct						s_world
