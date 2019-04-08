@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 00:26:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 00:31:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ struct								s_env
 	// t_hud			hud; 		(inventory / minimap / ...)
 };
 
+
+// a rander dans un header fonctions
 void			doom_exit(void);
 void			doom_error_exit(char *str);
 void			srf_del(void **ap);	// del surface
@@ -114,6 +116,7 @@ void			wdw_del(void **ap); // del window
 void			rdr_del(void **ap); // del renderer 
 void			txr_del(void **ap); // del texture
 void			crs_del(void **ap); // del cursor
+void			ttf_del(void **ap); // del ttf font
 
 
 void			load_tilesets(t_env *env);

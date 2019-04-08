@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 00:25:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 00:35:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ void		crs_del(void **ap)
 	{
 		SDL_FreeCursor(cursor);
 		cursor = 0;
+	}
+}
+
+void		ttf_del(void **ap)
+{
+	TTF_Font		*font;
+
+	font = (TTF_Font *)(*ap);
+	if (ap && *ap)
+	{
+		TTF_CloseFont(font);
+		font = 0;
 	}
 }
 
