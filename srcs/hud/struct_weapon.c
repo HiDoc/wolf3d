@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:20:50 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 19:09:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 02:04:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,10 @@ int		init_weapon(t_env *env)
 	// weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1);
 	// printf("time weapon: %u\n", SDL_GetTicks());
 
-	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 1)
-	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1)
-	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1)
-	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1)
+	if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0)
+	&& weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0)
+	&& weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0)
+	&& weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 0)
 	&& weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1))
 	{
 		env->player.inventory.f.ref = FIST;
