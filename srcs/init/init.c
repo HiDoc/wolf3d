@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 22:31:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/08 23:13:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void		initialisation_cursor(t_env *env)
 		doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode", env);
 }
 
-void	initialisation(int ac, char **av, t_env *env)
+void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->god_mod = (ac > 1 && ft_strcmp(av[1], "god")) ? 1 : 0;
