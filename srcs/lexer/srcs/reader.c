@@ -6,32 +6,32 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:09:19 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:45:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:57:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-static int	set_new_line(t_parseline *line, unsigned *nline, unsigned *pos)
+int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 {
 	(*pos) = 0;
 	(*nline)++;
-	if (!lexer(line))
-	{
-		print_err(line);
-		return (0);
-	}
-	line->next = new_line(nline);
-	line = line->next;
+	(*line)->next = new_line(*nline);
+	(*line) = (*line)->next;
 	return (1);
 }
 
-int			reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
+int		read_new_line(char *buffer, t_parsefile *file)
 {
+
 	t_parseline	*line;
 	t_token		*iter;
 	unsigned	pos;
 	unsigned	nline;
+}
+
+int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
+{
 	char		buffer[2];
 
 	line = file->first;
@@ -43,6 +43,7 @@ int			reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
 		{
 			line->first = new_token(*buffer, pos);
 			iter = line->first;
+			pos++;
 		}
 		else
 		{
@@ -50,12 +51,12 @@ int			reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
 			iter = iter->next;
 			pos++;
 		}
-		if (iter->type == TOK_END) && !set_new_line(line, &nline, &pos)
-			return (0);
-		if (iter->type == TOK_VTX)
-			(*nvertex)++;
-		if (iter->type == TOK_SEC)
-			(*nsector)++;
+		if (iter->value == '\n')
+			set_new_line(&line, &nline, &pos);
+		if (iter->value == 'v')
+			(*nvtx)++;
+		if (iter->value == 's')
+			(*nsct)++;
 	}
 	return (1);
 }

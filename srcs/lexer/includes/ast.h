@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:47:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:46:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include "doom.h"
+
 typedef struct s_parsefile	t_parsefile;
 typedef struct s_parseline	t_parseline;
 typedef struct s_token		t_token;
 
 struct	s_token
 {
-	int		value;
+	int			value;
 	unsigned	type;
 	unsigned	pos;
-	const char	*name;
 	t_token		*next;
 };
 
@@ -43,8 +44,8 @@ struct	s_parseline
 
 struct	s_parsefile
 {
-	int		nvertex;
-	int		nsector;
+	int			nvertex;
+	int			nsector;
 	t_parseline	*first;
 };
 
@@ -53,9 +54,9 @@ t_parseline	*new_line(unsigned nline);
 
 int			reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct);
 
-
 void		print_line(t_parseline *line);
-void		free_file(t_parsefile *file);
+void		print_file(t_parsefile *file);
+int			free_file(t_parsefile *file);
 
 
 #endif
