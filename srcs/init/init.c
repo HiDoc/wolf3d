@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 00:36:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 12:44:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ void	init_env(int ac, char **av, t_env *env)
 	ft_bzero(env, sizeof(t_env));
 	env->god_mod = (ac > 1 && ft_strcmp(av[1], "god")) ? 1 : 0;
 
-	// init librairies
+	// init libraries
 	initialisation_sdl(env);
 	initialisation_sound_text();
 	initialisation_cursor();
 
 	// init ressources
 	load_fonts(env);
-	load_images(env); // <- lifetime
-	init_strings(env, 0, 0);
+	load_images(env);
+	init_strings(env, 0, 0); // <- lifetime
 
-	// init game datas
+	// init game data
 	init_hud(env);
 	init_weapon(env);
 	init_enemies(env);

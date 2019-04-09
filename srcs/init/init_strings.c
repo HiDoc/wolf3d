@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 23:35:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 12:48:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ SDL_Surface	*ui_create_simple_string(t_font data)
 	ret = 0;
 	tmp = NULL;
 	surface = NULL;
-	if ((tmp = TTF_RenderText_Shaded(data.font, data.str, data.color, TRANSPARENT))
+	if ((tmp = TTF_RenderText_Shaded(
+	data.font, data.str, data.color, TRANSPARENT))
 	&& (surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
 		ret = 1;
 	if (tmp)
@@ -35,16 +36,17 @@ SDL_Surface	*ui_create_simple_string(t_font data)
 
 static int	set_inv_strings(t_env *env)
 {
-	const char	*string[DSCRIP_STR_INV] = {I_STRING_0, I_STRING_1, I_STRING_2,
-	I_STRING_3, I_STRING_4, I_STRING_5, I_STRING_6, I_STRING_7, I_STRING_8,
-	I_STRING_9, I_STRING_10, I_STRING_11};
+	const char	*string[DSCRIP_STR_INV] = {
+	I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4, I_STRING_5,
+	I_STRING_6, I_STRING_7, I_STRING_8, I_STRING_9, I_STRING_10, I_STRING_11};
 	int	i;
 
 	i = 0;
 	while (i < DSCRIP_STR_INV)
 	{
-		if (!(env->hud.text.i_obj_description[i] = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+		if (!(env->hud.text.i_obj_description[i] = ui_create_simple_string(
+		(t_font){WHITE, string[i], env->hud.text.text,
+		(t_vtx){0, 0}, 0, -1, -1})))
 			return (0);
 		i++;
 	}
@@ -62,8 +64,9 @@ static int	set_pick_strings(t_env *env)
 	i = 0;
 	while (i < HUD_PICK_OBJ)
 	{
-		if (!(env->hud.text.pick_objects[i] = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+		if (!(env->hud.text.pick_objects[i] = ui_create_simple_string(
+		(t_font){WHITE, string[i], env->hud.text.text,
+		(t_vtx){0, 0}, 0, -1, -1})))
 			return (0);
 		i++;
 	}
@@ -74,10 +77,10 @@ int		init_strings(t_env *env, int i, int j)
 {
 	const char      *string[UI_NB_STRING] = {
 	STRING_0, STRING_1, STRING_2, STRING_3, STRING_4, STRING_5, STRING_6,
-	STRING_7, STRING_8, STRING_9, STRING_10, STRING_11, STRING_12,
-	STRING_13, STRING_14, STRING_15, STRING_16, STRING_17, STRING_18,
-	STRING_19, STRING_20, STRING_21, STRING_22, STRING_23, STRING_24,
-	STRING_25, STRING_26, STRING_27, STRING_28, STRING_29};
+	STRING_7, STRING_8, STRING_9, STRING_10, STRING_11, STRING_12, STRING_13,
+	STRING_14, STRING_15, STRING_16, STRING_17, STRING_18, STRING_19, STRING_20,
+	STRING_21, STRING_22, STRING_23, STRING_24, STRING_25, STRING_26, STRING_27,
+	STRING_28, STRING_29};
 	TTF_Font        *font;
 
 	while (i < UI_NB_STRING)
