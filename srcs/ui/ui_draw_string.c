@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 15:29:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 16:10:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,32 @@ SDL_Surface *dst, t_vtx pos)
 		x++;
 		pos.x++;
 	}
+	return (1);
+}
+
+int		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
+{
+	int		x;
+	int		y;
+	t_vtx	scale;
+
+	scale = (t_vtx){src->w / dst->w, src->h / dst->h};
+	x = 0;
+	while (x < dst->w)
+	{
+		y = 0;
+		while (y < dst->h)
+		{
+			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
+			& src->format->Amask)
+				setpixel(dst, x, y, getpixel(src, (int)(x * scale.x),
+				(int)(y * scale.y)));
+			y++;
+		}
+		x++;
+	}
+	SDL_FreeSurface(src);
+	src = NULL;
 	return (1);
 }
 

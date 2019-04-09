@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 10:52:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 15:13:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct s_stats		t_stats;
 typedef struct s_thread		t_thread;
 
 struct 								s_thread
@@ -44,18 +43,6 @@ struct 								s_thread
 	t_bloc			*child;
 	int				size;
 	pthread_t		th;
-};
-
-struct 						s_stats
-{
-	int				k_enemies;
-	int				k_boss;
-	int				k_wpn[WORLD_NB_WEAPONS];
-	int				headshot;
-	int				time_play;
-	int				death;
-	int				nb_enemies;
-	t_bloc			achievments[8];
 };
 
 struct						s_inventory

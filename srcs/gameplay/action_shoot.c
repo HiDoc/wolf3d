@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 16:32:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 15:59:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 			if (enemy->health < 1)
 			{
 				enemy->is_alive = 0;
-				env->stats.k_enemies++;
-				env->stats.k_wpn[wpn]++;
+				env->stats.data[D_I_KILLS]++;
+				env->stats.data[D_I_K_MAGNUM + wpn]++;
+				env->stats.data[D_I_KTOGO]--;
 				sector->nb_enemies--;
-				env->stats.nb_enemies--;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;

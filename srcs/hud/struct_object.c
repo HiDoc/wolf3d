@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 11:48:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 11:12:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,34 @@ int	underscore_off_name(char *name, int size)
 	return (1);
 }
 
-char **tab_name_objects(void)
+SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx new_size)
 {
-	char	**new;
-	int		i;
-	int		size;
 	const char	*tab[WORLD_NB_OBJECTS] = {N_HEALTH, N_SHIELD, N_AMMO_M_R,
 	N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
 	N_SHOTGUN, N_RIFLE, N_RPG};
+	SDL_Surface	**new;
+	SDL_Surface	*tmp;
+	char		*name;
 
-	i =-1;
-	if (!(new = malloc(sizeof(char **) * WORLD_NB_OBJECTS)))
+	if (!(new = malloc(sizeof(SDL_Surface**) * WORLD_NB_OBJECTS)))
 		return (NULL);
 	while (++i < WORLD_NB_OBJECTS)
 	{
-		if (!(new[i] = ft_strdup(tab[i])))
+		tmp = NULL;
+		name = NULL;
+		if (!(name = ft_strdup(tab[i])))
 			return (NULL);
-		size = ft_strlen(tab[i]);
-		underscore_off_name(new[i], size);
+		underscore_off_name(name, ft_strlen(name));
+		if (!(tmp = ui_create_simple_string((t_font){WHITE,
+		name, env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+			return(NULL);
+		new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+		if (!(new[i] = SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
+		0xff000000, 0xff0000, 0xff00, 0xff)))
+			return (NULL);
+		ui_scaled_copy(tmp, new[i]);
+		if (name)
+			free(name);
 	}
 	return (new);
 }
@@ -84,7 +94,7 @@ int	init_consumable(t_env *env)
 	int	i;
 
 	i = 0;
-	env->hud.name_objects = tab_name_objects();
+	env->hud.text.obj_names = tab_name_objects(env, -1, (t_vtx){0, 0});
 	while (i < WORLD_NB_OBJECTS)
 	{
 		if (i < WORLD_NB_CSMBLE)
@@ -102,8 +112,6 @@ int	init_consumable(t_env *env)
 			if (!object_new(&env->world.objects[i], i, -1, (t_l_float){4, 1}))
 				return (0);
 		}
-		env->world.objects[i].name = env->hud.name_objects[i];
-		printf("%s\n", env->world.objects[i].name);
 		i++;
 	}
 	env->hud.inventory.is_active = 0;

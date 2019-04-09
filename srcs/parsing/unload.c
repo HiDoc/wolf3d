@@ -47,12 +47,14 @@ void		free_obj_wpn_img(t_world *world)
 				if (world->armory[i].sprite_reload)
 					free_img(world->armory[i].sprite_reload[j].sprite);
 			}
+			free(world->armory[i].sprite_reload);
 			j = -1;
 			while (++j < world->armory[i].time_shoot)
 			{
 				if (world->armory[i].sprite_shoot)
 					free_img(world->armory[i].sprite_shoot[j].sprite);
 			}
+			free(world->armory[i].sprite_shoot);
 			free_img(world->armory[i].sprite.sprite);
 			free_img(world->armory[i].sprite_bullet.sprite);
 		}
@@ -74,15 +76,8 @@ void		free_surface_string(t_uitxt *ui)
 	int i;
 
 	i = -1;
-	while (++i < UI_NB_STRING - UI_NB_STR_INV)
-	{
+	while (++i < UI_NB_STRING)
 		free_img(ui->string[i]);
-		if (i < UI_NB_STR_INV)
-			free_img(ui->t_inv[i]);
-	}
-	i = -1;
-	while (++i < HUD_PICK_OBJ)
-		free_img(ui->pick_objects[i]);
 	i = -1;
 	while (++i < DSCRIP_STR_INV)
 		free_img(ui->i_obj_description[i]);

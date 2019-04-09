@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:37:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 19:57:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:37:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,79 +47,95 @@ int	set_inv_strings(t_env *env)
 {
 	const char	*string[DSCRIP_STR_INV] = {I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4,
 	I_STRING_5, I_STRING_6, I_STRING_7, I_STRING_8, I_STRING_9, I_STRING_10, I_STRING_11};
-	int	i;
+	SDL_Surface	*tmp;
+	t_vtx		new_size;
+	int			i;
 
-	i = 0;
-	while (i < DSCRIP_STR_INV)
+	i = -1;
+	while (++i < DSCRIP_STR_INV)
 	{
-		if (!(env->hud.text.i_obj_description[i] = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+		if (!(tmp = ui_create_simple_string((t_font){WHITE,
+		string[i], env->hud.text.text, {0, 0}, 0, -1, -1})))
 			return (0);
-		i++;
+		new_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
+		if (!(env->hud.text.i_obj_description[i] = SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
+		0xff000000, 0xff0000, 0xff00, 0xff)))
+			return (0);
+		ui_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
 	}
 	return (1);
 }
 
-int	set_pick_strings(t_env *env)
+int	set_pick_string(t_env *env)
 {
-	const char	*string[HUD_PICK_OBJ] = {P_STRING_0, P_STRING_1, P_STRING_2, P_STRING_3, P_STRING_4,
-	P_STRING_5, P_STRING_6, P_STRING_7, P_STRING_8, P_STRING_9, P_STRING_10, P_STRING_11,
-	P_STRING_12, P_STRING_13, P_STRING_14};
-	int	i;
+	SDL_Surface	*tmp;
+	t_vtx		new_size;
 
-	i = 0;
-	while (i < HUD_PICK_OBJ)
-	{
-		if (!(env->hud.text.pick_objects[i] = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
-			return (0);
-		i++;
-	}
+	tmp = NULL;
+	if (!(tmp = ui_create_simple_string((t_font){WHITE,
+	PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1})))
+		return (0);
+	new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+	if (!(env->hud.text.pick = SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
+	0xff000000, 0xff0000, 0xff00, 0xff)))
+		return (0);
+	ui_scaled_copy(tmp, env->hud.text.pick);
 	return (1);
 }
 
 int			set_door_strings(t_env *env)
 {
 	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
-	int	i;
+	int			i;
+	SDL_Surface	*tmp;
+	t_vtx		new_size;
 
-	i = 0;
-	while (i < 2)
+	i = -1;
+	while (++i < 2)
 	{
-		if (!(env->hud.text.doors[i] = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
+		if (!(tmp = ui_create_simple_string((t_font){WHITE,
+		string[i], env->hud.text.text, {0, 0}, 0, -1, -1})))
 			return (0);
-		i++;
+		new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+		if (!(env->hud.text.doors[i] = SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
+		0xff000000, 0xff0000, 0xff00, 0xff)))
+			return (0);
+		ui_scaled_copy(tmp, env->hud.text.doors[i]);
 	}
 	return (1);
 }
 
 int			set_simple_strings(t_env *env, int i, int j)
 {
-	const char		*string[UI_NB_STRING] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
+	const char	*string[UI_NB_STRING] = {STRING_0, STRING_1, STRING_2, STRING_3, STRING_4,
 	STRING_5, STRING_6, STRING_7, STRING_8, STRING_9, STRING_10, STRING_11,
 	STRING_12, STRING_13, STRING_14, STRING_15,	STRING_16, STRING_17, STRING_18,
 	STRING_19, STRING_20, STRING_21, STRING_22, STRING_23, STRING_24, STRING_25,
 	STRING_26, STRING_27, STRING_28, STRING_29};
-	TTF_Font		*font;
+	TTF_Font	*font;
+	SDL_Surface	*tmp;
+	t_vtx		new_size;
+	int	size[UI_NB_STR_INV + 1] = {W / 20, W / 34, W / 34, W / 34, W / 60, W / 44, W / 120,
+	W / 120, W / 120, W / 120, W / 120, W / 40};
 
 	while (i < UI_NB_STRING)
 	{
-		if (i < UI_NB_STRING - UI_NB_STR_INV)
-		{
-			if (!(env->hud.text.string[i] = ui_create_simple_string((t_font){WHITE,
-			string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
-				return (0);
-		}
+		font = i <= T_STATS && i >= T_INVENTORY ? env->hud.text.doom : env->hud.text.text;
+		if (!(tmp = ui_create_simple_string((t_font){WHITE,
+		string[i], font, {0, 0}, 0, -1, -1})))
+			return (0);
+		if (i < HUD_NB_STRING)
+			new_size = (t_vtx){tmp->w / (100 / size[UI_NB_STR_INV]), tmp->h / (100 / size[UI_NB_STR_INV])};
 		else
 		{
-			font = j != 2 && j < 6 ? env->hud.text.doom : env->hud.text.text;
-			if (!(env->hud.text.t_inv[j] = ui_create_simple_string((t_font){WHITE,
-			string[i], font, (t_vtx){0, 0}, 0, -1, -1})))
-				return (0);
+			new_size = (t_vtx){tmp->w / (100 / size[j]), tmp->h / (100 / size[j])};
 			j++;
 		}
+		if (!(env->hud.text.string[i] = SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
+		0xff000000, 0xff0000, 0xff00, 0xff)))
+			return (0);
+		ui_scaled_copy(tmp, env->hud.text.string[i]);
 		i++;
 	}
-	return (set_inv_strings(env) && set_pick_strings(env) && set_door_strings(env));
+	return (set_inv_strings(env) && set_pick_string(env) && set_door_strings(env));
 }
