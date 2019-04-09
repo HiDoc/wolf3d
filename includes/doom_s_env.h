@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 00:31:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:26:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,6 @@ void			ttf_del(void **ap); // del ttf font
 
 
 void			load_tilesets(t_env *env);
-
-int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
-int				current_sprite(t_bloc *bloc, char *file, int i);
-int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));

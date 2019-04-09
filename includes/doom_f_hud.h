@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 10:47:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:43:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 SDL_Surface *ui_img(char *file, int i);
 int			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
-int		    scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
 int         print_hud(t_env *env);

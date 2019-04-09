@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/09 13:49:41 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/09 14:26:11 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,8 +111,6 @@ SRC_NAME 	= main.c \
 			struct_hud_img.c \
 			struct_inventory.c \
 			struct_object.c \
-			struct_weapon.c \
-			threads_images.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \

@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:27:29 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 23:35:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:27:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		init_enemies(t_env *env)
+void	init_enemies(t_env *env)
 {
 	t_character *enemy;
 	long		ref;
@@ -26,5 +26,4 @@ int		init_enemies(t_env *env)
 	enemy->salve_shoot = ((ref >> (5 << 2)) & 0xFF);
 	enemy->health = ((ref >> (7 << 2)) & 0xFF);
 	enemy->shield = ((ref >> (9 << 2)) & 0xFF);
-	return (1);
 }
