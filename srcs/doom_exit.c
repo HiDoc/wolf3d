@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 00:35:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 15:04:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		ttf_del(void **ap)
 
 void		doom_release(void)
 {
-	//lt_destroy();
+	lt_destroy();
 	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();
@@ -102,5 +102,5 @@ void		doom_error_exit(char *str)
 void		doom_exit(void)
 {
 	doom_release();
-	//exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
