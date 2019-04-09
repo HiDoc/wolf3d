@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_hud.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:19:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 13:53:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:25:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void		init_igems_bloc(t_uinv *inventory, t_container *surfaces)
 		inventory->gems[i].bg_empty = surfaces->hud[BOX_E].sprite;
 		inventory->gems[i].bg_fill = surfaces->hud[BOX_F].sprite;
 		inventory->gems[i].rect = rect;
-		inventory->gems[i].type = i;
 		rect.x += inter + size;
 		i++;
 	}
@@ -55,8 +54,6 @@ static void		init_icon_bloc(t_uinv *inventory, t_container *surfaces)
 	{
 		inventory->icons[ref].sprite = surfaces->hud[i].sprite;
 		inventory->icons[ref].rect = rect;
-		inventory->icons[ref].type = ref;
-		inventory->icons[ref].is_visible = 1;
 		rect.x += rect.w + inter;
 		ref++;
 		i++;
@@ -79,29 +76,17 @@ static void	init_iwpn_bloc(t_hud *hud, t_uinv *inventory, t_container *surfaces)
 	while (i < INV_PISTOL && j < HUD_PISTOL)
 	{
 		inventory->wpn[index].cross = (t_minibloc){
-		(SDL_Rect){rect.x, rect.y, rect.w / 6, rect.w / 6}, hud->text.t_inv[2]};
+		(SDL_Rect){rect.x, rect.y, hud->text.string[CROSS]->w,
+		hud->text.string[CROSS]->h}, hud->text.string[CROSS]};
 		inventory->wpn[index].bg_empty = surfaces->hud[i].sprite;
 		inventory->wpn[index].bg_fill = surfaces->hud[j].sprite;
 		inventory->wpn[index].rect = rect;
-		inventory->wpn[index].type = index;
 		rect.x = i == W_SLOT_1 + 2 ? W / 32 : rect.x + rect.w + inter;
 		rect.y = i > W_SLOT_1 + 1 ? inter / 2 + rect.y + rect.h : rect.y;
-		index++;
 		i++;
 		j++;
+		index++;
 	}
-}
-
-static t_minibloc	fill_minibloc(SDL_Rect brect, SDL_Surface *img, t_vctr size)
-{
-	SDL_Rect	rect;
-	t_minibloc	new;
-
-	rect = (SDL_Rect){brect.x + brect.w - brect.w / size.x,
-	size.z, brect.w / size.x, brect.h / size.y};
-
-	new = (t_minibloc) {rect, img};
-	return (new);
 }
 
 static void	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
@@ -110,20 +95,24 @@ static void	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 	SDL_Rect	rect;
 	int			interx;
 	int			intery;
+	SDL_Surface	**img;
 
 	interx = W / 128;
 	intery = H / 6.2;
 	rect = (SDL_Rect){W / 28, intery, W / 11, W / 11};
+	img = hud->text.string;
 	i = 0;
 	while (i < 6)
 	{
-		inventory->objects[i] = (t_bloc){
-		fill_minibloc(rect, hud->text.t_inv[2], (t_vctr){5, 4, rect.y}),
-		fill_minibloc(rect, hud->text.t_inv[3],
-		(t_vctr){4, 4, rect.y + rect.h - rect.h / 4}),
-		env->world.surfaces.hud[BOX_E].sprite,
-		env->world.surfaces.hud[BOX_F].sprite,
-		NULL, rect, i, 0, (t_edge){{0, 0}, {0, 0}}};
+		inventory->objects[i].cross = (t_minibloc){
+		(SDL_Rect){rect.x + rect.w - img[CROSS]->w, rect.y,
+		img[CROSS]->w, img[CROSS]->h}, img[CROSS]};
+		inventory->objects[i].use = (t_minibloc){
+		(SDL_Rect){rect.x + rect.w - img[USE]->w, rect.y + rect.h - img[USE]->h,
+		img[USE]->w, img[USE]->h}, img[USE]};
+		inventory->objects[i].bg_empty = env->world.surfaces.hud[BOX_E].sprite;
+		inventory->objects[i].bg_fill = env->world.surfaces.hud[BOX_F].sprite;
+		inventory->objects[i].rect = rect;
 		rect.x = i == 2 ? W / 28 : rect.x + interx + rect.w;
 		rect.y = i < 2 ? intery : interx + intery + rect.h;
 		i++;
@@ -145,20 +134,14 @@ static void	init_hp_bloc(t_hud *hud, t_container *surfaces)
 	{
 		if (i < HP_BAR_1)
 		{
-			hud->faces[rfaces] = (t_bloc){
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			NULL, NULL, surfaces->hud[i].sprite, rect, rfaces, 0,
-			(t_edge){{0, 0}, {0, 0}}};
+			hud->faces[rfaces].sprite = surfaces->hud[i].sprite;
+			hud->faces[rfaces].rect = rect;
 			rfaces++;
 		}
 		else
 		{
-			hud->bar[rbars] = (t_bloc){
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-			NULL, NULL, surfaces->hud[i].sprite, rect, rbars, 0,
-			(t_edge){{0, 0}, {0, 0}}};
+			hud->bar[rbars].sprite = surfaces->hud[i].sprite;
+			hud->bar[rbars].rect = rect;
 			rbars++;
 		}
 		i++;
@@ -176,11 +159,8 @@ static void	init_hwpn_bloc(t_hud *hud, t_container *surfaces)
 	index = 0;
 	while (i <= HUD_W_LAST)
 	{
-		hud->hud_wpn[index] = (t_bloc){
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		(t_minibloc){(SDL_Rect){0, 0, 0, 0}, NULL},
-		NULL, NULL, surfaces->hud[i].sprite, rect, index, 0,
-		(t_edge){{0, 0}, {0, 0}}};
+		hud->hud_wpn[index].sprite = surfaces->hud[i].sprite;
+		hud->hud_wpn[index].rect = rect;
 		i++;
 		index++;
 	}
@@ -191,19 +171,22 @@ static void	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 	int			i;
 	SDL_Rect	rect;
 	int			interx;
+	SDL_Surface	**str;
 
 	interx = W / 404;
 	rect = (SDL_Rect){W - W / 1.22, H - H  / 8, W / 20, W / 20};
+	str = hud->text.string;
 	i = 0;
 	while (i < 5)
 	{
-		hud->objects[i] = (t_bloc){(t_minibloc)
-		{(SDL_Rect){rect.x + rect.w / 2, rect.y - W / 700,
-		rect.w / 6, rect.w / 6}, hud->text.t_inv[i + 6]},
-		(t_minibloc){(SDL_Rect){rect.x,
-		rect.y + rect.h - rect.w / 6, rect.w / 6, rect.w / 6}, NULL},
-		surfaces->hud[BOX_E].sprite, surfaces->hud[BOX_F].sprite,
-		NULL, rect, i, 0, (t_edge){{0, 0}, {0, 0}}};
+		hud->objects[i].cross = (t_minibloc){
+		(SDL_Rect){rect.x + rect.w / 2, rect.y - W / 700,
+		str[i + PAD_INDEX]->w, str[i + PAD_INDEX]->h}, str[i + PAD_INDEX]};
+		hud->objects[i].use.rect = (SDL_Rect){
+		rect.x, rect.y + rect.h - rect.w / 6, rect.w / 6, rect.w / 6};
+		hud->objects[i].bg_empty = surfaces->hud[BOX_E].sprite;
+		hud->objects[i].bg_fill = surfaces->hud[BOX_F].sprite;
+		hud->objects[i].rect = rect;
 		rect.x += interx + rect.w;
 		i++;
 	}

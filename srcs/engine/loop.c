@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 22:45:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:14:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void		sdl_render_game(t_env *env)
 	player_bullet(env, &env->player, *env->player.inventory.current->damage);
 	enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 	env->hud.is_txt ? ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe) : 0;
+	handle_doors(env);
 	god_mod(env);
 	wpn_mouse_wheel(env, env->sdl.event);
 	sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
@@ -36,6 +37,8 @@ static void		sdl_render_game(t_env *env)
 
 static void		sdl_render_inventory(t_env *env)
 {
+	env->player.actions.is_shooting = 0;
+	env->player.actions.is_loading = 0;
 	print_inventory(env);
 	action_inventory(env, 0, 0);
 }

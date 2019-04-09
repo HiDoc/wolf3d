@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_object.c                                    :+:      :+:    :+:   */
+/*   struct_decor_images.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 22:18:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 19:03:34 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
+/*   Updated: 2019/04/05 23:55:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_inventory(t_env *env)
+int	init_doors_images(t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < NB_DOOR_IMG)
 	{
-		env->player.inventory.objects[i] = (t_wrap_inv) {NULL, 0, 0};
+		if (!(env->world.surfaces.doors[i].sprite = ui_img("decor/door/", i)))
+			return (0);
 		i++;
 	}
-	env->hud.inventory.is_active = 0;
 	return (1);
 }

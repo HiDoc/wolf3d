@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/09 15:21:54 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/09 21:58:14 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -O3 #-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -66,6 +66,7 @@ HED_NAME	= doom.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
+			action_door.c \
 			action_enemies.c \
 			action_gems.c \
 			action_inventory.c \
@@ -97,6 +98,7 @@ SRC_NAME 	= main.c \
 			move.c \
 			musics.c \
 			no_op.c \
+			parse_door.c \
 			parse_enemies.c \
 			parse_objects.c \
 			perspective.c \
@@ -110,7 +112,6 @@ SRC_NAME 	= main.c \
 			struct_drawline.c \
 			struct_hud_img.c \
 			struct_inventory.c \
-			struct_object.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \

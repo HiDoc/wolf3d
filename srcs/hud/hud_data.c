@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 16:42:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 21:32:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,28 @@ int    ui_put_fps(t_env *env, int fps)
 
 int		draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref)
 {
+	t_bloc	fill;
+	SDL_Rect	rect;
+
+	rect = (SDL_Rect){W / 2, H / 2, env->hud.text.pick->w, env->hud.text.pick->h};
+	fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
+	rect, {{0, 0}, {0, 0}}};
 	if (obj->is_pickable)
-		draw_scaled_string((t_font){WHITE, "Pick Object Info",
-		env->hud.text.text, (t_vtx){W / 2, H / 2}, W / 40, -1, -1},
-		env->hud.text.pick_objects[ref], env->sdl.surface, (t_vtx){0, 0});
+	{
+		draw_img(env, env->hud.text.pick, &fill);
+		fill.rect.x += env->hud.text.pick->w;
+		draw_img(env, env->hud.text.obj_names[ref], &fill);
+	}
 	return (1);
 }
 
-int		print_description_object(t_env *env)
+int		print_description_object(t_env *env, int i, int j)
 {
-	int	i;
-	int	x;
-	int	y;
-	int	j;
+	int			x;
+	int			y;
+	t_bloc		fill;
+	SDL_Rect	rect;
 
-	i = -1;
-	j = -1;
 	SDL_GetMouseState(&x, &y);
 	if ((i = select_object(env->player.inventory.objects, (t_ixy){x, y},
 	env->hud.inventory.objects, 6)) > -1)
@@ -45,55 +51,62 @@ int		print_description_object(t_env *env)
 		env->hud.txt_inv = env->player.inventory.gems[j].current->ref;
 	else
 		return (1);
-	draw_scaled_string((t_font){WHITE, "Infos Object inventory",
-	env->hud.text.text, (t_vtx){i > -1 ? W / 40 : W / 10, i > -1 ? H / 7.05 : H / 2.1}, W / 50, -1, -1},
-	env->hud.text.i_obj_description[env->hud.txt_inv], env->sdl.surface, (t_vtx){0, 0});
+	rect = (SDL_Rect){i > -1 ? W / 40 : W / 10, i > -1 ? H / 7.05 : H / 2.1,
+	env->hud.text.i_obj_description[env->hud.txt_inv]->w,
+	env->hud.text.i_obj_description[env->hud.txt_inv]->h};
+	fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL},
+	NULL, NULL, NULL, rect, {{0, 0}, {0, 0}}};
+	draw_img(env, env->hud.text.i_obj_description[env->hud.txt_inv], &fill);
 	return (1);
 }
 
-int		print_stats(t_env *env)
+int		print_stats(t_env *env, int i)
 {
-	env->stats.kill_togo = env->engine.sectors[env->engine.player.sector].nb_enemies;
-	return (ui_put_data(env, (t_font){WHITE, "Level : ", env->hud.text.doom,
-	(t_vtx){W - (W / 3), H / 50}, W / 23, -1, 1})
-	&& ui_put_data(env, (t_font){GOLD, "Sector : ", env->hud.text.text,
-	(t_vtx){W - W / 3.3, H / 7}, W / 30, -1, env->engine.player.sector})
-    && ui_put_data(env, (t_font){RED, "Kills to go : ", env->hud.text.text,
-	(t_vtx){W - W / 3.4, H / 4.9}, W / 40, -1, env->stats.kill_togo})
-    && ui_put_data(env, (t_font){GOLD, "Enemies killed : ", env->hud.text.text,
-	(t_vtx){W - W / 1.9, H / 1.25}, W / 60, -1, env->stats.k_enemies})
-    && ui_put_data(env, (t_font){GOLD, "Death number : ", env->hud.text.text,
-	(t_vtx){W - W / 1.9, H / 1.2}, W / 60, -1, env->stats.death})
-    && ui_put_data(env, (t_font){GOLD, "Playing for : ", env->hud.text.text,
-	(t_vtx){W - W / 1.9, H / 1.15}, W / 60, -1, env->stats.time_play})
-    && ui_put_data(env, (t_font){GOLD, "Fists kills : ", env->hud.text.text,
-	(t_vtx){W - W / 1.9, H / 1.1}, W / 60, -1, env->stats.k_wpn[FIST]})
-    && ui_put_data(env, (t_font){GOLD, "Magnum kills : ", env->hud.text.text,
-	(t_vtx){W - W / 3.0, H / 1.25}, W / 60, -1, env->stats.k_wpn[MAGNUM]})
-    && ui_put_data(env, (t_font){GOLD, "Shotgun kills : ", env->hud.text.text,
-	(t_vtx){W - W / 3.0, H / 1.2}, W / 60, -1, env->stats.k_wpn[SHOTGUN]})
-    && ui_put_data(env, (t_font){GOLD, "Rifle kills : ", env->hud.text.text,
-	(t_vtx){W - W / 3.0, H / 1.15}, W / 60, -1, env->stats.k_wpn[RIFLE]})
-    && ui_put_data(env, (t_font){GOLD, "RPG-7 kills : ", env->hud.text.text,
-	(t_vtx){W - W / 3.0, H / 1.10}, W / 60, -1, env->stats.k_wpn[RPG]}));
+	t_vtx		p;
+	const char *str[NB_STATS] = {D_LEVEL, D_SECTOR, D_KTOGO,
+	D_KILLS, D_DEATHS, D_TIMEPLAY, D_KD_RATIO, D_KD_PERMN,
+	D_K_MAGNUM, D_K_SHOTGUN, D_K_RIFLE, D_K_RPG, D_K_FIST};
+	const t_vtx	pos[3] = {{W - (W / 3), H / 50}, {W - W / 3.3, H / 7},
+	{W - W / 3.4, H / 4.9}};
+	const float	size[4] = {W / 23, W / 30, W / 40, W / 60};
+	float		div_y;
+
+	while (++i < NB_STATS)
+	{
+		i < D_I_KILLS ? p = pos[i] : (t_vtx){0, 0};
+		if (i > D_I_KTOGO)
+		{
+			p.x = i < D_I_K_MAGNUM ? W - W / 1.9 : W - W / 3.0;
+			div_y = (i == D_I_KILLS || i == D_I_K_MAGNUM) ? 1.25 : div_y - .05;
+			p.y = H / div_y;
+		}
+		ui_put_data(env, (t_font){WHITE, str[i], i == 0
+		? env->hud.text.doom : env->hud.text.text, p,
+		i < D_I_KILLS ? size[i] : size[D_I_KILLS], -1, env->stats.data[i]});
+	}
+	return (1);
 }
 
 int     ui_txt_inv(t_env *env)
 {
-	draw_scaled_string((t_font){WHITE, "Inventory",
-	env->hud.text.doom, (t_vtx){W / 40, H / 50}, W / 20, -1, -1},
-	env->hud.text.t_inv[0], env->sdl.surface, (t_vtx){0, 0});
-	draw_scaled_string((t_font){WHITE, "Weapons",
-	env->hud.text.doom, (t_vtx){W / 40, H / 1.6}, W / 34, -1, -1},
-	env->hud.text.t_inv[1], env->sdl.surface, (t_vtx){0, 0});
-	draw_scaled_string((t_font){WHITE, "Gems",
-	env->hud.text.doom, (t_vtx){W / 40, H / 2.15}, W / 34, -1, -1},
-	env->hud.text.t_inv[4], env->sdl.surface, (t_vtx){0, 0});
-	draw_scaled_string((t_font){WHITE, "Stats",
-	env->hud.text.doom, (t_vtx){W / 2.2, H / 1.4}, W / 34, -1, -1},
-	env->hud.text.t_inv[5], env->sdl.surface, (t_vtx){0, 0});
-    return (print_stats(env)
-	&& print_description_object(env));
+	t_bloc		fill;
+	SDL_Rect	rect;
+	const t_vtx	pos[4] = {{W / 40, H / 50}, {W / 40, H / 1.6},
+	{W / 40, H / 2.15}, {W / 2.2, H / 1.4}};
+	int			i;
+	int			r;
+
+	i = -1;
+	r = T_INVENTORY;
+	while (++i < 4)
+	{
+		rect = (SDL_Rect){pos[i].x, pos[i].y, env->hud.text.string[r]->w, env->hud.text.string[r]->h};
+		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
+		rect, {{0, 0}, {0, 0}}};
+		draw_img(env, env->hud.text.string[r++], &fill);
+	}
+    return (print_stats(env, -1)
+	&& print_description_object(env, -1, -1));
 }
 
 int		ui_icon_data(t_env *env, t_vtx v, int iter)
@@ -124,11 +137,15 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 
 int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 {
+	t_bloc	fill;
+	SDL_Rect	rect;
+
 	if (*nb && env->hud.text.string[*nb])
 	{
-		draw_scaled_string((t_font){WHITE, "coucou",
-		env->hud.text.text, (t_vtx){50, H - H / 2.5}, W / 40, -1, -1},
-		env->hud.text.string[*nb], env->sdl.surface, (t_vtx){0, 0});
+		rect = (SDL_Rect){W / 128, H - H / 2.5, env->hud.text.string[*nb]->w, env->hud.text.string[*nb]->h};
+		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
+		rect, {{0, 0}, {0, 0}}};
+		draw_img(env, env->hud.text.string[*nb], &fill);
 		if (*tframe < 60)
 			++(*tframe);
 		else

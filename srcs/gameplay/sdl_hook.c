@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 22:31:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:54:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	return (1);
 }
 
-int	keyhook_gems(t_env *env, const Uint8 *keycodes)
+void	keyhook_gems(t_env *env, const Uint8 *keycodes)
 {
 
 	if (keycodes[SDL_SCANCODE_1])
@@ -59,7 +59,6 @@ int	keyhook_gems(t_env *env, const Uint8 *keycodes)
 		action_gems(env, env->hud.shortcut[3], 3);
 	if (keycodes[SDL_SCANCODE_5])
 		action_gems(env, env->hud.shortcut[4], 4);
-	return (1);
 }
 
 int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
@@ -78,6 +77,8 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);
+		if (keycodes[SDL_SCANCODE_E])
+			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
 		if (keycodes[SDL_SCANCODE_TAB])

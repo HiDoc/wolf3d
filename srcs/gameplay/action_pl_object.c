@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 21:23:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 23:01:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
 	sector->nb_objects--;
-	return (6);
+	return (NEW_ITEM);
 }
 
 int		pick_object(t_env *env, t_wrap_sect *obj)
@@ -93,11 +93,11 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	&& !obj->is_wpn)
 	{
 		if (env->player.inventory.objects[iter].nb_stack >= env->world.objects[obj->ref].max_stack)
-			return (5);
+			return (FULL_STACK);
 		env->player.inventory.objects[iter].nb_stack++;
 		obj->is_picked = 1;
 		sector->nb_objects--;
-		return (6);
+		return (NEW_ITEM);
 	}
 	else if (env->player.inventory.nb_current_obj < 6
 	&& obj->ref < WORLD_NB_CSMBLE && !obj->is_wpn)
@@ -112,14 +112,14 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.objects[index].nb_stack++;
 		obj->is_picked = 1;
 		sector->nb_objects--;
-		return (6);
+		return (NEW_ITEM);
 	}
 	if (obj->ref >= WORLD_NB_CSMBLE && !obj->is_wpn)
 		return (pick_gem(env, obj, sector));
-	return (!obj->is_wpn ? 7 : pick_weapon(env, obj));
+	return (!obj->is_wpn ? FULL_INV : pick_weapon(env, obj));
 }
 
-int		drop_object(t_env *env, t_wrap_inv *object)
+void		drop_object(t_env *env, t_wrap_inv *object)
 {
 	t_vtx		vertex;
 	t_sector	*sector;
@@ -138,13 +138,12 @@ int		drop_object(t_env *env, t_wrap_inv *object)
 			object->nb_stack--;
 		else
 		{
-			if (object->current->ref < 6)
+			if (object->current->ref == 5)
 				env->hud.shortcut[object->current->ref] = NULL;
-			*object = (t_wrap_inv){NULL, 0, 0};
+			ft_bzero(object, sizeof(t_wrap_inv));
 			env->player.inventory.nb_current_obj--;
 		}
 		sector->nb_objects++;
 	}
-	env->hud.is_txt = 8;
-	return (1);
+	env->hud.is_txt = ITEM_SUP;
 }

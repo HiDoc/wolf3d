@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 12:45:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 21:39:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,36 @@ static void		load_enemies(t_world *container)
 
 static void			init_consumable(t_env *env)
 {
-	int i;
+	int 		i;
+	char		*name;
+	const char	*tab[WORLD_NB_OBJECTS] = {N_HEALTH, N_SHIELD, N_AMMO_M_R,
+	N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
+	N_SHOTGUN, N_RIFLE, N_RPG};
 
 	i = 0;
 	while (i < WORLD_NB_OBJECTS)
 	{
+		name = ft_strjoin("consumable/", tab[i]);
+		name = ft_strljoin(name, "_");
 		if (i < WORLD_NB_CSMBLE)
 		{
 			env->world.objects[i].max_stack = (i == 5) ? 1 : 5;
-			env->world.objects[i].sprite = ui_img("consumable/", i);
+			env->world.objects[i].sprite = ui_img(name, i);
+			env->world.objects[i].size = (t_l_float){4, 3};
 		}
 		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
 			env->world.objects[i].max_stack = 0;
-			env->world.objects[i].sprite = ui_img("consumable/", i);
+			env->world.objects[i].sprite = ui_img(name, i);
+			env->world.objects[i].size = (t_l_float){4, 2};
 		}
 		else
 		{
 			env->world.objects[i].max_stack = -1;
-			env->world.objects[i].sprite = ui_img("consumable/", i);
+			env->world.objects[i].sprite = ui_img(name, i);
+			env->world.objects[i].size = (t_l_float){4, 1};
 		}
+		lt_release(name);
 		i++;
 	}
 	env->hud.inventory.is_active = 0;
@@ -81,6 +91,9 @@ static void			init_character(t_character *new)
 	new->max_shield = 200;
 	new->bullet = ui_img("bullet/", 0);
 	new->shot = ft_memalloc(sizeof(t_impact) * PLYR_NB_SHOT);
+	// while (++i < PLYR_NB_SHOT)
+    //     ft_bzero(&new->shot[i], sizeof(t_impact));
+	// ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
 void				load_images(t_env *env)
