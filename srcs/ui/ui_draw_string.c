@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/27 15:29:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:56:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,13 @@ SDL_Surface	*str_join_text(t_font data)
 
 	strjoin = NULL;
 	if (data.l > -1)
-	{
-		if (!(strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str)))
-			return (NULL);
-	}
+		strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str);
 	else if (data.r > -1)
-	{
-		if (!(strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r))))
-			return (NULL);
-	}
+		strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r));
 	if (!(new = TTF_RenderText_Shaded(data.font,
 	strjoin ? strjoin : data.str, data.color, TRANSPARENT)))
 		return (0);
-	if (strjoin)
-		free(strjoin);
+	lt_release(strjoin);
 	return (new);
 }
 

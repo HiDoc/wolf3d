@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 10:02:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:26:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,31 @@ struct								s_env
 	t_stats			stats;
 	t_tiletab		tiletab;
 	int				god_mod;
+	//
 	// ...
+	//
+	// Comment je penses que ce serait mieux :
+	//
+	// t_sdl			sdl; 		(trucs sdl ...)
+	// t_ressources		ressources; (audio / images / fonts ...)
+	// t_player			player; 	(pos / health / stats ...)
+	// t_level			level; 		(map / entitee ...)
+	// t_hud			hud; 		(inventory / minimap / ...)
 };
 
-void			load_tilesets(t_env *env);
 
-int				init_thread(t_weapon *mother, t_bloc *child, char *path, int size);
-int				thread_current_sprite(t_bloc *child, char *path, int line, int size);
+// a rander dans un header fonctions
+void			doom_exit(void);
+void			doom_error_exit(char *str);
+void			srf_del(void **ap);	// del surface
+void			wdw_del(void **ap); // del window
+void			rdr_del(void **ap); // del renderer 
+void			txr_del(void **ap); // del texture
+void			crs_del(void **ap); // del cursor
+void			ttf_del(void **ap); // del ttf font
+
+
+void			load_tilesets(t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_render(t_env *env, void (*f)(t_env *env));
