@@ -6,35 +6,29 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 12:48:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:25:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-SDL_Surface	*ui_create_simple_string(t_font data)
+static SDL_Surface	*ui_create_simple_string(t_font data)
 {
 	SDL_Surface	*tmp;
 	SDL_Surface	*surface;
-	int			ret;
 
-	ret = 0;
-	tmp = NULL;
 	surface = NULL;
-	if ((tmp = TTF_RenderText_Shaded(
-	data.font, data.str, data.color, TRANSPARENT))
-	&& (surface = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0)))
-		ret = 1;
-	if (tmp)
-		SDL_FreeSurface(tmp);
-	if (!ret && surface)
-		SDL_FreeSurface(surface);
-	if (!ret)
-		return (NULL);
+	if (!(tmp = lt_push(TTF_RenderText_Shaded(
+	data.font, data.str, data.color, TRANSPARENT), srf_del)))
+		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
+	if (!(surface = lt_push(
+	SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
+		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
+	lt_release(tmp);
 	return (surface);
 }
 
-static int	set_inv_strings(t_env *env)
+static void	set_inv_strings(t_env *env)
 {
 	const char	*string[DSCRIP_STR_INV] = {
 	I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4, I_STRING_5,
@@ -44,16 +38,13 @@ static int	set_inv_strings(t_env *env)
 	i = 0;
 	while (i < DSCRIP_STR_INV)
 	{
-		if (!(env->hud.text.i_obj_description[i] = ui_create_simple_string(
-		(t_font){WHITE, string[i], env->hud.text.text,
-		(t_vtx){0, 0}, 0, -1, -1})))
-			return (0);
+		env->hud.text.i_obj_description[i] = ui_create_simple_string(
+		(t_font){WHITE, string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
 		i++;
 	}
-	return (1);
 }
 
-static int	set_pick_strings(t_env *env)
+static void	set_pick_strings(t_env *env)
 {
 	const char	*string[HUD_PICK_OBJ] = {
 	P_STRING_0, P_STRING_1, P_STRING_2, P_STRING_3, P_STRING_4, P_STRING_5,
@@ -64,16 +55,13 @@ static int	set_pick_strings(t_env *env)
 	i = 0;
 	while (i < HUD_PICK_OBJ)
 	{
-		if (!(env->hud.text.pick_objects[i] = ui_create_simple_string(
-		(t_font){WHITE, string[i], env->hud.text.text,
-		(t_vtx){0, 0}, 0, -1, -1})))
-			return (0);
+		env->hud.text.pick_objects[i] = ui_create_simple_string(
+		(t_font){WHITE, string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
 		i++;
 	}
-	return (1);
 }
 
-int		init_strings(t_env *env, int i, int j)
+void	init_strings(t_env *env, int i, int j)
 {
 	const char      *string[UI_NB_STRING] = {
 	STRING_0, STRING_1, STRING_2, STRING_3, STRING_4, STRING_5, STRING_6,
@@ -87,19 +75,18 @@ int		init_strings(t_env *env, int i, int j)
 	{
 		if (i < UI_NB_STRING - UI_NB_STR_INV)
 		{
-			if (!(env->hud.text.string[i] = ui_create_simple_string((t_font){
-			WHITE, string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1})))
-				return (0);
+			env->hud.text.string[i] = ui_create_simple_string((t_font){
+			WHITE, string[i], env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
 		}
 		else
 		{
 			font = j != 2 && j < 6 ? env->hud.text.doom : env->hud.text.text;
-			if (!(env->hud.text.t_inv[j] = ui_create_simple_string((t_font){
-			WHITE, string[i], font, (t_vtx){0, 0}, 0, -1, -1})))
-				return (0);
+			env->hud.text.t_inv[j] = ui_create_simple_string((t_font){
+			WHITE, string[i], font, (t_vtx){0, 0}, 0, -1, -1});
 			j++;
 		}
 		i++;
 	}
-	return (set_inv_strings(env) && set_pick_strings(env));
+	set_inv_strings(env);
+	set_pick_strings(env);
 }

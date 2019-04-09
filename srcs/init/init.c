@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 12:44:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:53:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	init_env(int ac, char **av, t_env *env)
 	// init ressources
 	load_fonts(env);
 	load_images(env);
-	init_strings(env, 0, 0); // <- lifetime
+	init_strings(env, 0, 0);
 
 	// init game data
 	init_hud(env);
-	init_weapon(env);
+	init_weapon(env); // <- lifetime
 	init_enemies(env);
 }
