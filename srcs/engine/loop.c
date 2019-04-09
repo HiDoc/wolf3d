@@ -6,20 +6,20 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 01:54:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:14:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	sdl_render_game(t_env *env)
+static void		sdl_render_game(t_env *env)
 {
 	t_vision *v;
 
 	v = &env->engine.player.vision;
 	dfs(env);
 	ui_put_fps(env, env->time.fps);
-	ui_minimap(env);
+	//ui_minimap(env);
 	handle_weapon(env, &env->time.frame);
 	print_hud(env);
 	handle_gems(env);
@@ -35,39 +35,40 @@ void	sdl_render_game(t_env *env)
 	player_move(&env->engine, v, env->sdl.keycodes);
 }
 
-void	sdl_render_inventory(t_env *env)
+static void		sdl_render_inventory(t_env *env)
 {
+	env->player.actions.is_shooting = 0;
+	env->player.actions.is_loading = 0;
 	print_inventory(env);
 	action_inventory(env, 0, 0);
 }
 
-int sdl_render(t_env *env, void (*f)(t_env *env))
+int				sdl_render(t_env *env, void (*f)(t_env *env))
 {
 	SDL_LockSurface(env->sdl.surface);
 	f(env);
 	SDL_UnlockSurface(env->sdl.surface);
-	SDL_UpdateTexture(env->sdl.texture,
-		NULL,
-		env->sdl.surface->pixels,
-		env->sdl.surface->pitch);
+	SDL_UpdateTexture(env->sdl.texture, NULL,
+		env->sdl.surface->pixels, env->sdl.surface->pitch);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(env->sdl.renderer);
 	return (1);
 }
 
-int YourEventFilter(void *userdata, SDL_Event *event)
+static int		YourEventFilter(void *userdata, SDL_Event *event)
 {
 	t_env *env;
 
 	env = (t_env *)userdata;
 	if (event->type == SDL_MOUSEBUTTONDOWN && !env->player.actions.mouse_state)
-		env->player.inventory.current->current->ref != RIFLE ? mouse_shoot(env) : 0;
+		env->player.inventory.current->current->ref != RIFLE
+		? mouse_shoot(env) : 0;
 	else if (event->type == SDL_MOUSEBUTTONUP)
 		env->player.actions.mouse_state = 0;
 	return (1);
 }
 
-int sdl_loop(t_env *env)
+int				sdl_loop(t_env *env)
 {
 	t_vision *v;
 	t_engine *e;
@@ -92,7 +93,8 @@ int sdl_loop(t_env *env)
 			if (!env->hud.inventory.is_active)
 			{
 				sdl_render(env, &sdl_render_game);
-				env->player.inventory.current->current->ref == RIFLE ? mouse_shoot(env) : 0;
+				env->player.inventory.current->current->ref == RIFLE
+				? mouse_shoot(env) : 0;
 			}
 			else
 			{

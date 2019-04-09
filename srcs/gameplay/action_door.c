@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 01:33:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:59:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,19 @@ int	print_infos_door(t_env *env, t_sector *sector)
 {
 	int			index;
 	t_door		*front_player;
+	t_bloc		fill;
+	SDL_Rect	rect;
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
+		rect = (SDL_Rect){W / 2, H / 2, env->hud.text.doors[1]->w, env->hud.text.doors[1]->h};
+		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL},
+		NULL, NULL, NULL, rect, {{0, 0}, {0, 0}}};
 		front_player = &sector[index].door;
 		if (!front_player->is_openable)
-			draw_scaled_string((t_font){WHITE, "Can t open yet",
-			env->hud.text.text, (t_vtx){W / 2, H / 2}, W / 40, -1, -1},
-			env->hud.text.doors[1], env->sdl.surface, (t_vtx){0, 0});
+			draw_img(env, env->hud.text.doors[1], &fill);
 		else if (!front_player->is_open && !front_player->is_opening)
-		{
-			draw_scaled_string((t_font){WHITE, "Press E",
-			env->hud.text.text, (t_vtx){W / 2, H / 2}, W / 40, -1, -1},
-			env->hud.text.doors[0], env->sdl.surface, (t_vtx){0, 0});
-		}
+			draw_img(env, env->hud.text.doors[0], &fill);
 	}
 	return (1);
 }

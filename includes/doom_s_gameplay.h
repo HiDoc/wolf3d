@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 15:13:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:32:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ struct						s_actions
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;
-	int			is_superfast;
+	int			is_ammo_illimited;
 	int			is_invulnerable;
 	int			is_invisible;
 	int			is_superstrong;

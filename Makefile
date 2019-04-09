@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/09 11:04:23 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/09 21:58:14 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
-			  ./libft/includes/
+			  ./libft/includes/	\
 
 BREW		= ~/.brew
 BREW_SDL	= ~/.brew/Cellar/sdl2
@@ -59,6 +59,7 @@ HED_NAME	= doom.h \
 			  doom_s_math.h \
 			  doom_s_gameplay.h \
 			  doom_s_engine.h \
+			  doom_f_init.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
 			  doom_f_ui.h \
@@ -84,8 +85,13 @@ SRC_NAME 	= main.c \
 			hud_data.c \
 			hull.c \
 			init.c \
+			init_hud.c \
+			init_fonts.c \
+			init_images.c \
 			init_enemies.c \
 			init_minimap.c \
+			init_weapons.c \
+			init_strings.c \
 			load.c \
 			loop.c \
 			map.c \
@@ -103,17 +109,9 @@ SRC_NAME 	= main.c \
 			render_sect.c \
 			sdl_hook.c \
 			sdl_mouse.c \
-			struct_character.c \
-			struct_container.c \
 			struct_drawline.c \
-			struct_decor_images.c \
-			struct_font.c \
-			struct_hud.c \
 			struct_hud_img.c \
 			struct_inventory.c \
-			struct_object.c \
-			struct_weapon.c \
-			threads_images.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
@@ -124,7 +122,6 @@ SRC_NAME 	= main.c \
 			ui_draw_vector.c \
 			ui_make_surface.c \
 			ui_minimap.c \
-			unload.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \
@@ -134,7 +131,8 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
-			weapons_wheel_hud.c
+			weapons_wheel_hud.c \
+			doom_exit.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 
@@ -155,7 +153,7 @@ $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
 	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) -L$(LIBFT) $(SDL_LIB) $(OPEN) -lft
+	@$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) -L$(LIBFT) $(SDL2LIB) $(SDL_LIB) $(OPEN) -lft
 
 COMPILE : sdl2lib sdl2cflags $(NAME)
 
@@ -169,6 +167,16 @@ $(BREW) :
 		$(shell /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
 		brew upgrade
 		brew -v install pkg-config
+
+
+cleanbrew:
+	brew uninstall -f sdl2_ttf
+	brew uninstall -f freetype
+	brew uninstall -f pkg-config
+	brew uninstall -f libgpng
+	brew uninstall -f sdl2_image
+	brew uninstall -f sdl2_mixer
+	brew uninstall -f sdl2
 
 $(BREW_SDL) :
 		brew -v install sdl2
@@ -221,6 +229,8 @@ fclean: clean
 		rm -f $(NAME); \
 		printf "\r\033[38;5;196m✗ fclean $(NAME).\033[0m\033[K\n"; \
 	fi;
+
+fcleansdl: cleanbrew fclean
 
 parser:
 	$(CC) parser.c $(CFLAGS) $(LIB) $(INC) -o parser -L$(LIBFT) -lft
