@@ -6,7 +6,7 @@
 #    By: abaille <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/08 16:35:09 by abaille           #+#    #+#              #
-#    Updated: 2018/12/26 11:06:01 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/07 19:05:28 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,8 @@ SRC_NAME =	ft_atoi.c      \
 			ft_modf.c		\
 			ft_abs.c		\
 			ft_pow.c		\
-			ft_clamp.c
+			ft_clamp.c		\
+			lifetime.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))

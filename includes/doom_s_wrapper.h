@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 23:09:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 18:55:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ struct						s_object
 	int			sectorno;
 	t_vtx		vertex;
 	t_l_float	size;
-	char		*name;
 };
 
 struct						s_vision
@@ -105,6 +104,8 @@ struct 					s_wrap_enmy
 	int				walk_frame;
 	int				shoot_frame;
 	int				walk_trig;
+	t_l_float		size;
+	t_l_float		deathsize;
 	t_player		player;
 	t_impact		*shot;
 	t_wrap_enmy		*next;

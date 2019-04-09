@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 00:30:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:49:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int		give_life(void *e, t_wrap_inv *object)
 	t_env	*env;
 	int		*data;
 	int		max;
+	int		ref;
 
 	env = (t_env*)e;
-	data = object->current->ref == HEALTH
-	? &env->player.health : &env->player.shield;
-	max = object->current->ref == HEALTH
-	? env->player.max_health : env->player.max_shield;
+	ref = object->current->ref;
+	data = ref == HEALTH ? &env->player.health : &env->player.shield;
+	max = ref == HEALTH ? env->player.max_health : env->player.max_shield;
 	if (*data < max)
 	{
 		*data += 50;
@@ -31,9 +31,9 @@ int		give_life(void *e, t_wrap_inv *object)
 		object->nb_stack > 0 ? object->nb_stack-- : 0;
 		object->is_used = object->nb_stack < 1 ? 1 : 0;
 		object->is_used ? drop_object(env, object) : 0;
-		return (0);
+		return (BLANK);
 	}
-	return (1);
+	return (ref == HEALTH ? FULL_LIFE : FULL_SHIELD);
 }
 
 int	give_ammo(void *e, t_wrap_inv *obj)
@@ -61,11 +61,11 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? 1 : 0;
 			obj->is_used ? drop_object(env, obj) : 0;
-			return (0);
+			return (BLANK);
 		}
-		return (wpn ? 9 : 10);
+		return (wpn ? WPN_FULL : NO_AMMO);
 	}
-	return (14);
+	return (WPN_LOADED);
 }
 
 int	give_jetpack(void *e, t_wrap_inv *obj)
@@ -76,7 +76,7 @@ int	give_jetpack(void *e, t_wrap_inv *obj)
 	if (obj)
 	{
 		env->player.actions.is_flying = !env->player.actions.is_flying;
-		return (env->player.actions.is_flying ? 11 : 12);
+		return (env->player.actions.is_flying ? JETPACK_ON : JETPACK_OFF);
 	}
-	return (13);
+	return (NO_JTPACK);
 }

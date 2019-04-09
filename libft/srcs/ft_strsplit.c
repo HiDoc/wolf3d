@@ -6,7 +6,7 @@
 /*   By: abaille <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 16:51:06 by abaille           #+#    #+#             */
-/*   Updated: 2017/11/24 16:51:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 00:02:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char		**ft_strsplit(const char *s, char c)
 	char	**ptr;
 
 	ptr = NULL;
-	if (s && (ptr = (char**)malloc(sizeof(*ptr) * ((ft_words(s, c)) + 2))))
+	if (s && (ptr = (char **)ft_memalloc(sizeof(*ptr)
+	* ((ft_words(s, c)) + 2))))
 	{
 		ft_start_end(ptr, s, c);
 		return (ptr);

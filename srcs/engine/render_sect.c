@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 01:55:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 11:36:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
 void		render_sprites(t_env *env, t_queue *q,
-			SDL_Surface *sprite, t_vctr vertex)
+			SDL_Surface *sprite, t_vctr vertex, t_l_float size)
 {
 	const t_engine	*e = &env->engine;
 	const t_player	p = e->player;
@@ -30,7 +30,7 @@ void		render_sprites(t_env *env, t_queue *q,
 		return ;
 	raycast.neighbor = -1;
 	acquire_limits(&env->engine, &raycast,
-		(t_l_float){q->sect->floor + 10, q->sect->floor});
+		(t_l_float){q->sect->floor + size.floor, q->sect->floor - size.ceil});
 	if (raycast.x1 > 0 && raycast.x2 < W)
 	{
 		raycast.x = raycast.x1;
@@ -108,7 +108,7 @@ void		render_object(t_env *env, t_queue *queue)
 			object->is_pickable = (dist_vertex(p, object->vertex) < 5);
 			ref = object->ref + ((object->is_wpn) ? gem : 0);
 			render_sprites(env, queue, ctn[ref].sprite,
-			(t_vctr){object->vertex.x, object->vertex.y, 0});
+			(t_vctr){object->vertex.x, object->vertex.y, 0}, ctn[ref].size);
 			draw_pick_infos(env, object, ref);
 		}
 		object = object->next;
@@ -122,7 +122,7 @@ void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 	i = 0;
 	while (i < p.nb_shot)
 	{
-		render_sprites(env, queue, p.sprite, shot[i].position.where);
+		render_sprites(env, queue, p.sprite, shot[i].position.where, (t_l_float){3, 3});
 		i++;
 	}
 }
@@ -131,14 +131,16 @@ void		render_enemies(t_env *env, t_queue *queue)
 {
 	t_wrap_enmy	*enemy;
 	t_vtx 		p;
+	t_l_float	size;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = queue->sect->head_enemy;
 	while (enemy)
 	{
+		size = enemy->is_alive ? enemy->size : enemy->deathsize;
 		if (enemy->is_alive)
 			bot_status(env, p, enemy, env->sdl.keycodes);
-		render_sprites(env, queue, enemy->sprite, enemy->player.where);
+		render_sprites(env, queue, enemy->sprite, enemy->player.where, size);
 		enemy = enemy->next;
 	}
 }
