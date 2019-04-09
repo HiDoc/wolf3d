@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_load_image.c                                    :+:      :+:    :+:   */
+/*   doom_f_init.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/14 17:46:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 19:02:48 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/08 20:52:50 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/04/09 14:28:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "editor.h"
+#ifndef DOOM_F_INIT_H
+# define DOOM_F_INIT_H
 
-SDL_Surface		*ui_load_image(char *path, t_env *env)
-{
-	SDL_Surface *surface;
+void		init_env(int ac, char **av, t_env *env);
 
-	if (!(surface = IMG_Load(path)))
-		ui_error_exit_sdl("wolf3d: error: bad textures", env->data);
-	return (surface);
-}
+void		load_fonts(t_env *env);
+void		load_images(t_env *env);
+void		init_strings(t_env *env, int i, int j);
+
+void		init_hud(t_env *env);
+void		init_weapon(t_env *env);
+void		init_enemies(t_env *env);
+
+#endif

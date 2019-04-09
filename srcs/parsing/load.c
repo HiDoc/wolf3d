@@ -87,5 +87,4 @@ void			load_map(t_engine *e, t_env *env)
 	fclose(fp);
 	free(vert);
 	verify_map(e);
-	init_minimap(env);
 }
