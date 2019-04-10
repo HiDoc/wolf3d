@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 16:20:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/03 16:21:03 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/10 15:19:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 	Uint8			*p;
 	Uint32			ret;
 
-	SDL_LockSurface(surface);
+	if ((SDL_LockSurface(surface)) < 0)
+		doom_error_exit("Doom_nukem error on SDL_LockSurface");
 	x = ft_abs(--x);
 	y = ft_abs(--y);
 	bpp = surface->format->BytesPerPixel;

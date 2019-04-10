@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 22:04:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 15:26:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ void    		ui_put_data(t_env *env, t_font data)
 	SDL_Surface	*tmp;
 
 	tmp = str_join_text(data);
-	if (!(surface = lt_push(SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
+	if (!(surface = lt_push(SDL_ConvertSurfaceFormat(
+	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
 		doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
 	draw_scaled_string(env, data, surface, (t_vtx){0, 0});
 	lt_release(tmp);
