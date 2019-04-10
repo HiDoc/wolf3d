@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 22:59:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/06 16:31:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int		bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 		{
 			if (!enemy->shot[i].is_alive)
 			{
-				new_bullet(&enemy->shot[i], p, i, BOT_V_SHOT);
+				new_bullet(&enemy->shot[i], p, BOT_V_SHOT);
 				return (1);
 			}
 			i++;
 		}
 		ft_bzero(&enemy->shot[0], sizeof(t_impact));
-		new_bullet(&enemy->shot[0], p, 0, BOT_V_SHOT);
+		new_bullet(&enemy->shot[0], p, BOT_V_SHOT);
 		ft_bzero(&enemy->shot[1], sizeof(t_impact));
 	}
 	return (1);

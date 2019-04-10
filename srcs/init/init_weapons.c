@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_weapons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 14:48:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:37:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,26 +109,16 @@ static void		init_thread(t_weapon *mother, t_bloc *child, char *path, int size)
 	while (i < NB_THREAD_IMG)
 	{
 		if (pthread_join(mother->threads[i].th, NULL))
-			doom_error_exit("Doom_nukem error on pthread_join");	
+			doom_error_exit("Doom_nukem error on pthread_join");
 		i++;
 	}
 }
 
 static t_bloc *weapon_fill(t_weapon *mother, char *path, int size)
 {
-	int	i;
-	t_bloc		*weapons;
+	t_bloc	*weapons;
 
 	weapons = ft_memalloc(sizeof(t_bloc) * size);
-
-	i = 0;
-	// (void)mother;
-	// while (i < size)
-	// {
-	// 	if (!current_sprite(&weapons[i], path, i))
-	// 		return (0);
-	// 	i++;
-	// }
 	init_thread(mother, weapons, path, size);
 	return (weapons);
 }
@@ -189,7 +179,7 @@ void			init_weapon(t_env *env)
 		(t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0);
 	printf("time weapon: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100,
-		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0);
+		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1);
 	printf("time weapon: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30,
 		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0);
@@ -217,6 +207,6 @@ void			init_weapon(t_env *env)
 		env->player.inventory.weapons[FIST].ammo[2] =
 			env->world.armory[FIST].damage;
 
-		set_current_wpn(&env->player.inventory, FIST);
+		set_current_wpn(env, &env->player.inventory, FIST);
 	// }
 }
