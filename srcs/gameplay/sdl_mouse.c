@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 22:19:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 15:01:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int		mouse_shoot(t_env *env)
 	actions = &env->player.actions;
 	current = env->player.inventory.current;
 	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& current && !env->hud.inventory.is_active
-		&& !actions->is_loading && !actions->mouse_state)
+		&& current && !env->hud.inventory.is_active && !actions->is_loading
+		&& !actions->mouse_state)
 	{
 		rwpn = &env->world.armory[current->current->ref];
 		if (*current->ammo_current || current->current->ref == FIST)
