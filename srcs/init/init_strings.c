@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 23:07:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 23:29:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ static SDL_Surface	*ui_create_simple_string(t_font data)
 	return (surface);
 }
 
+SDL_Surface	*create_scaled_surface(SDL_Surface *surface, t_vtx new_size)
+{
+	if (!(surface = lt_push(SDL_CreateRGBSurface(0,
+	new_size.x, new_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
+		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+	return (surface);
+}
+
 static void	set_inv_strings(t_env *env)
 {
 	int			i;
@@ -42,9 +50,10 @@ static void	set_inv_strings(t_env *env)
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
 		new_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
-		if (!(env->hud.text.i_obj_description[i] = lt_push(SDL_CreateRGBSurface(0,
-		new_size.x, new_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-			doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+		env->hud.text.i_obj_description[i] = create_scaled_surface(env->hud.text.i_obj_description[i], new_size);
+		// if (!(env->hud.text.i_obj_description[i] = lt_push(SDL_CreateRGBSurface(0,
+		// new_size.x, new_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
+		// 	doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
 		ui_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
 	}
 }

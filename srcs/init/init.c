@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 14:48:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/10 11:07:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void		initialisation_cursor(void)
 void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
-	env->god_mod = (ac > 1 && ft_strcmp(av[1], "god")) ? 1 : 0;
+	env->god_mod = (ac > 1 && !ft_strcmp(av[1], "god")) ? 1 : 0;
 
 	// init libraries
 	initialisation_sdl(env);
