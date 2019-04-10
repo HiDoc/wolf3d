@@ -6,29 +6,16 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 13:57:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/04 15:32:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 14:21:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_UI
 # define DOOM_S_UI
 
-typedef struct s_uitxt		t_uitxt;
 typedef struct s_font		t_font;
 typedef struct s_circle		t_circle;
 typedef struct s_minimap	t_minimap;
-
-struct						s_uitxt
-{
-	TTF_Font			*arial;
-	TTF_Font			*doom;
-	TTF_Font			*text;
-	TTF_Font			*number;
-	SDL_Surface			*string[HUD_NB_STRING];
-	SDL_Surface			*t_inv[UI_NB_STR_INV];
-	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
-	SDL_Surface			*pick_objects[HUD_PICK_OBJ];
-};
 
 struct 						s_font
 {

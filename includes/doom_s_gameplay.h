@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 10:00:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:32:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct s_stats		t_stats;
 typedef struct s_thread		t_thread;
 
 struct 								s_thread
@@ -44,18 +43,6 @@ struct 								s_thread
 	t_bloc			*child;
 	int				size;
 	pthread_t		th;
-};
-
-struct 						s_stats
-{
-	int				k_enemies;
-	int				k_boss;
-	int				k_wpn[WORLD_NB_WEAPONS];
-	int				headshot;
-	int				time_play;
-	int				kill_togo;
-	int				death;
-	t_bloc			achievments[8];
 };
 
 struct						s_inventory
@@ -113,6 +100,8 @@ struct						s_container
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
+	t_surface	doors[NB_DOOR_IMG];
+	t_surface	button[2];
 };
 
 struct						s_actions
@@ -126,7 +115,7 @@ struct						s_actions
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;
-	int			is_superfast;
+	int			is_ammo_illimited;
 	int			is_invulnerable;
 	int			is_invisible;
 	int			is_superstrong;
@@ -152,6 +141,8 @@ struct						s_character
 	t_actions	actions;
 	t_impact	*shot;
 	int			nb_shot;
+	t_l_float	size;
+	t_l_float	deathsize;
 };
 
 struct						s_world

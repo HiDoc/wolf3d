@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 16:42:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:42:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	select_object(t_wrap_inv *object, t_ixy xy, t_bloc *p, int limit)
 	return (-1);
 }
 
-int	select_wpn(t_wrap_wpn *wpn, t_ixy xy, t_bloc *p, int limit)
+int		select_wpn(t_wrap_wpn *wpn, t_ixy xy, t_bloc *p, int limit)
 {
 	int i;
 
@@ -54,7 +54,7 @@ int	select_wpn(t_wrap_wpn *wpn, t_ixy xy, t_bloc *p, int limit)
 	return (-1);
 }
 
-int	action_inventory(t_env *env, int x, int y)
+void	action_inventory(t_env *env, int x, int y)
 {
 	int			iter;
 	int			index;
@@ -85,5 +85,4 @@ int	action_inventory(t_env *env, int x, int y)
 				drop_wpn(env, weapon);
 		}
 	}
-	return (1);
 }
