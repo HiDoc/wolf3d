@@ -6,23 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 22:57:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 14:57:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-void		new_bullet(t_impact *new, t_player *p, float velocity)
-{
-	ft_bzero(new, sizeof(t_impact));
-	new->position.origin = p->where;
-	new->position.where = p->where;
-	new->position.anglecos = p->anglecos * velocity;
-	new->position.anglesin = p->anglesin * velocity;
-	new->position.sprite = p->sprite;
-	new->is_shooting = 1;
-	new->is_alive = 1;
-}
 
 /*
 ** Collision detection.
@@ -149,6 +137,18 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 		}
 		i++;
 	}
+}
+
+void		new_bullet(t_impact *new, t_player *p, float velocity)
+{
+	ft_bzero(new, sizeof(t_impact));
+	new->position.origin = p->where;
+	new->position.where = p->where;
+	new->position.anglecos = p->anglecos * velocity;
+	new->position.anglesin = p->anglesin * velocity;
+	new->position.sprite = p->sprite;
+	new->is_shooting = 1;
+	new->is_alive = 1;
 }
 
 int		pl_new_kill(t_env *env, t_player *p, t_character *player)

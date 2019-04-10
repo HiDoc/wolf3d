@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 14:59:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:38:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int		main(int ac, char **av)
 	init_env(ac, av, &env);
 
 	/* load level */
-	load_map(&env.engine, &env); // <- lifetime todo
+	load_map(&env.engine, &env); // <- lifetime todo;
 
 	/* load minimap */
 	//init_minimap(&env); // <- lifetime todo
 
 	/* gameloop */
-	sdl_loop(&env); // <- lifetime todo
+	sdl_loop(&env);
 
 	/* free and exit */
 	doom_exit();
