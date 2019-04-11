@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 19:21:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:13:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 180, 250, 30};
+	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
 }
 
 static void		load_obj(char *path, int type, t_env *env)

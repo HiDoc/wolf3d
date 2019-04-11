@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 15:52:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/10 17:04:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ enum					e_elements
 	E_B_ELM_CONS,
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
-	E_B_ELM_SPEC
+	E_B_ELM_SPEC,
+	E_B_SELEC_DEL
 };
 
 enum					e_obj_category
@@ -76,6 +77,8 @@ struct					s_vtx
 
 struct					s_sct
 {
+	int				id;			// identifiant du secteur
+
 	t_vtx			*vtx_current;
 	t_vtx			*vtx_start;
 	t_vtx			*vtx_end;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 17:59:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:25:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void		display_infos(t_env *env)
 
 	// display scale
 	rect = (SDL_Rect){830, 750, 0, 20};
-	ui_make_nbrstring(rect, 100, env->data);
+	ui_make_string(rect, "20", env->data);
 	vec = (t_vec){(t_pos){820 - (20 * env->pixel_value), 765}, (t_pos){820, 765}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
 	vec = (t_vec){(t_pos){820, 765}, (t_pos){820, 755}};
@@ -120,7 +120,7 @@ void			display_sector(t_sct *sct, t_env *env)
 	t_vtx		*vtx;
 
 
-	if (env->sct_hover)
+	if (env->sct_hover == sct)
 		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
 	else
 		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
