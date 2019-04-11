@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 00:16:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 01:04:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,35 @@
 
 # define PLYR_NB_SHOT	35
 # define GAME_NB_WPN	4
+
+# define FRAME_RATIO	6
+
+/*
+** World Enemies index
+*/
+# define MONSTER	0
+# define SOLDIER	1
+# define ROGER		2
+# define LOSTSOUL	3
+# define PAIN_ELEM	4
+# define PINKBOY	5
+# define CYBERDEMON	6
+# define BOSS		7
+# define BOSS_MIDL	8
+
+/*
+** World Enemies long ref
+*/
+# define L_MONSTER		0x01e060b071e0
+# define L_SOLDIER		0x03c1104031e1
+# define L_ROGER		0x03c110407282
+# define L_LOSTSOUL		0x064110206283
+# define L_PAIN_ELEM	0x03c0b0406284
+# define L_PINKBOY		0x028060403285
+# define L_CYBERDEMON	0x1960904063c6
+# define L_BOSS			0x2c8040808467
+# define L_BOSS_MIDL	0x2640308063c8
+
 /*
 ** World WPN index
 */

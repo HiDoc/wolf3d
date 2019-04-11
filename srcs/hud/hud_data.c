@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:36:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 10:14:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ static void		print_stats(t_env *env, int i)
 
 	while (++i < NB_STATS)
 	{
-		i < D_I_KILLS ? p = pos[i] : (t_vtx){0, 0};
-		if (i > D_I_KTOGO)
+		i < I_KILLS ? p = pos[i] : (t_vtx){0, 0};
+		if (i > I_KTOGO)
 		{
-			p.x = i < D_I_K_MAGNUM ? W - W / 1.9 : W - W / 3.0;
-			div_y = (i == D_I_KILLS || i == D_I_K_MAGNUM) ? 1.25 : div_y - .05;
+			p.x = i < I_K_MAGNUM ? W - W / 1.9 : W - W / 3.0;
+			div_y = (i == I_KILLS || i == I_K_MAGNUM) ? 1.25 : div_y - .05;
 			p.y = H / div_y;
 		}
 		ui_put_data(env, (t_font){WHITE, str[i], i == 0
 		? env->hud.text.doom : env->hud.text.text, p,
-		i < D_I_KILLS ? size[i] : size[D_I_KILLS], -1, env->stats.data[i]});
+		i < I_KILLS ? size[i] : size[I_KILLS], -1, env->stats.data[i]});
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 17:40:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/10 17:33:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@
 # define WORLD_NB_POSTERS	10
 # define WORLD_NB_WALLS		5
 # define WORLD_NB_FLOORS	4
-# define WORLD_NB_ENEMIES	1
+# define WORLD_NB_ENEMIES	9
 
 /*
 ** Colors

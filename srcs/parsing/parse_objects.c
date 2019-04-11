@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:31 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/08 11:30:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 10:19:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ t_wrap_sect	*new_wrap(t_vtx curr, int ref, int is_wpn)
 {
 	t_wrap_sect *new;
 
-	if (!(new = malloc(sizeof(t_wrap_sect))))
-		return (NULL);
+	new = ft_memalloc(sizeof(t_wrap_sect));
 	new->ref = ref;
 	new->vertex = curr;
 	new->is_picked = 0;
@@ -40,7 +39,7 @@ t_wrap_sect	*new_wrap(t_vtx curr, int ref, int is_wpn)
 	return (new);
 }
 
-int		fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn)
+void		fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn)
 {
 	t_wrap_sect *iter;
 
@@ -55,5 +54,4 @@ int		fill_objects_sector(t_sector *sector, t_vtx v, int ref, int is_wpn)
 		iter->next = new_wrap(v, ref, is_wpn);
 	}
 	sector->nb_objects++;
-	return (0);
 }

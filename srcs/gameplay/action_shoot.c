@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 14:57:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 10:13:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 	t_vtx	where;
 
 	where = (t_vtx){shot->position.where.x, shot->position.where.y};
-	if (dist_vertex(where, player) < 1)
+	if (dist_vertex(where, player) < 5)
 	{
-		if (env->player.shield)
+		if (env->player.shield > 0)
 			env->player.shield -= damage;
 		else
 			env->player.health -= damage;
 		if (env->player.health <= 10)
 		{
 			env->player.health = 200;
-			env->stats.death++;
+			env->stats.data[I_DEATHS]++;
 		}
 		shot->is_shooting = 0;
 		shot->is_alive = 0;
@@ -76,15 +76,14 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 		scd = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 		if (enemy->is_alive && dist_vertex(first, scd) <= rwpn->ray)
 		{
-			enemy->health -= damage;
-			printf("vie bot : %i\n", enemy->health);
-			if (enemy->health < 1)
+			enemy->brain.health -= damage;
+			printf("vie bot : %i\n", enemy->brain.health);
+			if (enemy->brain.health < 1)
 			{
+				enemy->is_dying = 1;
 				enemy->is_alive = 0;
-				env->stats.data[D_I_KILLS]++;
-				env->stats.data[D_I_K_MAGNUM + wpn]++;
-				env->stats.data[D_I_KTOGO]--;
-				sector->nb_enemies--;
+				env->stats.data[I_KILLS]++;
+				env->stats.data[I_K_MAGNUM + wpn]++;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;

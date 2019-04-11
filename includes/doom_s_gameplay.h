@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/09 22:32:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 18:55:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,13 @@ typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
 typedef struct s_thread		t_thread;
 
+
 struct 								s_thread
 {
 	int				nb;
 	char			*path;
+	t_character		*mom;
+	SDL_Surface		**kid;
 	t_weapon		*mother;
 	t_bloc			*child;
 	int				size;
@@ -69,7 +72,7 @@ struct						s_inventory
 
 struct						s_weapon
 {
-	t_thread			threads[8];
+	t_thread			threads[NB_THREAD_IMG];
 	t_bloc				sprite;
 	t_bloc				sprite_bullet;
 	t_bloc				*sprite_reload;
@@ -124,32 +127,37 @@ struct						s_actions
 
 struct						s_character
 {
-	int			salve_shoot;
 	long		ref;
 	int			type;
-	int			tshoot_between;
+	int			is_boss;
 	int			damage;
+	int			time_walk;
+	int			time_shoot;
+	int			time_death;
+	int			cadence_shoot;
 	int			health;
 	int			shield;
 	int			max_health;
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	SDL_Surface	*sprites[6];
+	SDL_Surface	**walk;
+	SDL_Surface	**shoot;
+	SDL_Surface	**death;
 	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
 	t_impact	*shot;
+	t_brain		brain;
+	t_thread	threads[NB_THREAD_IMG];
 	int			nb_shot;
-	t_l_float	size;
-	t_l_float	deathsize;
 };
 
 struct						s_world
 {
 	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
-	t_character	enemies[3];
+	t_character	enemies[WORLD_NB_ENEMIES];
 	t_container	surfaces;
 };
 

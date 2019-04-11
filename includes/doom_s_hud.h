@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 16:00:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:12:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ struct					s_bloc
 struct 						s_stats
 {
 	int				data[NB_STATS];
-	int				k_enemies;
-	int				k_boss;
-	int				k_wpn[WORLD_NB_WEAPONS];
-	int				headshot;
-	int				time_play;
-	int				death;
-	int				nb_enemies;
 	t_bloc			achievments[8];
 };
 

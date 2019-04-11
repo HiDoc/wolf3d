@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 22:41:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:12:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@
 # define STR_DOOR_1		"E - Finish the level to open the door"
 
 /*
-** HUD DATA STATS - NB_STATS
+** HUD DATA STATS - NB_STATS string
 */
 # define D_LEVEL		"Level : "
 # define D_SECTOR		"Sector : "
@@ -162,17 +162,20 @@
 # define D_K_RIFLE		"Rifle kills : "
 # define D_K_RPG		"RPG-7 kills : "
 
-# define D_I_LEVEL		0
-# define D_I_SECTOR		1
-# define D_I_KTOGO		2
-# define D_I_KILLS		3
-# define D_I_DEATHS		4
-# define D_I_TIMEPLAY	5
-# define D_I_KD_RATIO	6
-# define D_I_KD_PERMN	7
-# define D_I_K_MAGNUM	8
-# define D_I_K_SHOTGUN	9
-# define D_I_K_RIFLE	10
-# define D_I_K_RPG		11
-# define D_I_K_FIST		12
+/*
+** HUD DATA STATS - index data[NB_STATS]
+*/
+# define I_LEVEL		0
+# define I_SECTOR		1
+# define I_KTOGO		2
+# define I_KILLS		3
+# define I_DEATHS		4
+# define I_TIMEPLAY		5
+# define I_KD_RATIO		6
+# define I_KD_PERMN		7
+# define I_K_MAGNUM		8
+# define I_K_SHOTGUN	9
+# define I_K_RIFLE		10
+# define I_K_RPG		11
+# define I_K_FIST		12
 #endif

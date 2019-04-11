@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/08 11:36:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 02:54:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,10 @@ int			render_sector_edges(t_env *env, t_queue *q, int s)
 	/* get the neighbour of the current vertex if there*/
 	ctn.neighbor = q->sect->neighbors[s];
 
-	ctn.sprite = door_neighbors(e, (t_vtx*)vertex, s)
-	? env->world.surfaces.doors[1].sprite
-	: env->world.surfaces.walls[0].sprite;
+	// ctn.sprite = door_neighbors(e, (t_vtx*)vertex, s)
+	// ? env->world.surfaces.doors[1].sprite
+	// : env->world.surfaces.walls[0].sprite;
+	ctn.sprite = env->world.surfaces.walls[0].sprite;
 
 	/* Get limits of ceil and floor of current sector */
 	acquire_limits(e, &ctn, (t_l_float){q->sect->ceil, q->sect->floor});
@@ -129,19 +130,17 @@ void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 
 void		render_enemies(t_env *env, t_queue *queue)
 {
-	t_wrap_enmy	*enemy;
+	t_wrap_enmy	*en;
 	t_vtx 		p;
-	t_l_float	size;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
-	enemy = queue->sect->head_enemy;
-	while (enemy)
+	en = queue->sect->head_enemy;
+	while (en)
 	{
-		size = enemy->is_alive ? enemy->size : enemy->deathsize;
-		if (enemy->is_alive)
-			bot_status(env, p, enemy, env->sdl.keycodes);
-		render_sprites(env, queue, enemy->sprite, enemy->player.where, size);
-		enemy = enemy->next;
+		if (en->is_alive)
+			bot_status(env, p, en, env->sdl.keycodes);
+		render_sprites(env, queue, en->sprite, en->player.where, en->brain.size);
+		en = en->next;
 	}
 }
 

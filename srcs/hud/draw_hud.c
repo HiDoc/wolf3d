@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 21:38:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 02:41:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
+void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
 	t_bloc	*bloc;
 
@@ -24,10 +24,9 @@ int	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	ui_put_data(env, (t_font){GOLD, "/", env->hud.text.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, W / 40,
 	-1, *env->player.inventory.current->ammo_magazine});
-	return (0);
 }
 
-int	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
+void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 {
 	int			iter;
 	SDL_Surface	*sprite;
@@ -50,10 +49,9 @@ int	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 		draw_img(env, bloc->bg_empty, bloc);
 	fill.rect = bloc->cross.rect;
 	draw_img(env, bloc->cross.sprite, &fill);
-	return (0);
 }
 
-int	print_pad(t_env *env)
+void	print_pad(t_env *env)
 {
 	int	i;
 
@@ -64,7 +62,6 @@ int	print_pad(t_env *env)
 		check_object_stack(env, env->player.inventory.gems, (t_ixy){i, i - 5}, 4);
 		i++;
 	}
-	return (1);
 }
 
 float	size_bar(int tmax, int datamax, int data)
@@ -72,16 +69,15 @@ float	size_bar(int tmax, int datamax, int data)
 	return ((tmax - tmax / 2.8) / datamax * data + tmax / 2.8);
 }
 
-int	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
+void	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 {
 	if (data < max)
 		bloc->limit.v2.x = bloc->rect.w - size_bar(bloc->rect.w, max, data);
 	draw_img(env, bloc->sprite, bloc);
 	bloc->limit.v2.x = 0;
-	return (1);
 }
 
-int	print_cross(t_env *env)
+void	print_cross(t_env *env)
 {
 	Uint32		*dst;
 	int			x;
@@ -101,7 +97,6 @@ int	print_cross(t_env *env)
 		}
 		x++;
 	}
-	return (1);
 }
 
 int print_hud(t_env *env)
@@ -117,10 +112,7 @@ int print_hud(t_env *env)
 		h -= 50;
 	if (player->inventory.current
 	&& player->inventory.current->current->ref != 4)
-	{
-		if (!print_wpn_hud(env, player->inventory.current))
-			return (0);
-	}
+		print_wpn_hud(env, player->inventory.current);
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];
 	draw_img(env, bloc->sprite, bloc);

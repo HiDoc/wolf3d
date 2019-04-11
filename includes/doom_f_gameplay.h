@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 23:01:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:20:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void		bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes);
 void		bot_action(t_env *env, t_sector *sector);
 int			pl_new_kill(t_env *env, t_player *p, t_character *player);
 void		player_bullet(t_env *env, t_character *p, int damage);
-int			enemies_frames(t_env *env, t_sector *sector);
+void		enemies_frames(t_env *env, t_sector *sector);
 
 int			init_doors_images(t_env *env);
 int			door_neighbors(t_engine *e, t_vtx *vertex, int n);
 int			select_door(t_engine *e);
 int			open_door(t_env *env);
-int			handle_doors(t_env *env);
+void		handle_doors(t_env *env);
 #endif
