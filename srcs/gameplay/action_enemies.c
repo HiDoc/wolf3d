@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/06 16:31:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 02:24:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,21 +103,21 @@ t_player	bot_angle(t_player src)
 	return (new);
 }
 
-void	bot_shoot_cadence(t_wrap_enmy *enemy, t_player p)
+static void	bot_shoot_cadence(t_env *env, t_wrap_enmy *e, t_player p)
 {
 	t_player	new_look;
 
-	if (enemy->frame > 60)
+	if (e->frame >= env->world.enemies[e->ref].cadence_shoot)
 	{
 		new_look = bot_angle(p);
-		bot_new_kill(enemy->is_shooting, &new_look, enemy);
-		enemy->frame = 0;
+		bot_new_kill(e->is_shooting, &new_look, e);
+		e->frame = 0;
 	}
 	else
-		enemy->frame++;
+		e->frame++;
 }
 
-void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
+static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 {
 	t_vtx		move;
 	int			i;
@@ -127,25 +127,28 @@ void	bot_bullet(t_env *env, t_wrap_enmy *enemy, int damage)
 	sector = &env->engine.sectors[env->engine.player.sector];
 	while (i < BOT_NB_SHOT)
 	{
-		if (enemy->shot[i].is_shooting)
+		if (e->shot[i].is_shooting)
 		{
-			move = bot_orientation(&enemy->shot[i].position, enemy->player.whereto, BOT_V_SHOT);
-			enemy->shot[i].position.velocity.x = enemy->shot[i].position.velocity.x * (1 - BOT_V_SHOT) + move.x * BOT_V_SHOT;
-			enemy->shot[i].position.velocity.y = enemy->shot[i].position.velocity.y * (1 - BOT_V_SHOT) + move.y * BOT_V_SHOT;
-			if (bot_wall_collision(&enemy->shot[i].position, sector))
+			move = bot_orientation(&e->shot[i].position, e->player.whereto, BOT_V_SHOT);
+			e->shot[i].position.velocity.x = e->shot[i].position.velocity.x * (1 - BOT_V_SHOT) + move.x * BOT_V_SHOT;
+			e->shot[i].position.velocity.y = e->shot[i].position.velocity.y * (1 - BOT_V_SHOT) + move.y * BOT_V_SHOT;
+			if (bot_wall_collision(&e->shot[i].position, sector))
 			{
-				enemy->shot[i].is_alive = 0;
-				enemy->shot[i].is_shooting = 0;
+				e->shot[i].is_alive = 0;
+				e->shot[i].is_shooting = 0;
 			}
-			impact_player(env, &enemy->shot[i], (t_vtx){env->engine.player.where.x,
+			impact_player(env, &e->shot[i], (t_vtx){env->engine.player.where.x,
 			env->engine.player.where.y}, damage);
-			if (enemy->shot[i].is_shooting)
+			if (e->shot[i].is_shooting)
 			{
-				enemy->shot[i].position.where.x += enemy->shot[i].position.velocity.x;
-				enemy->shot[i].position.where.y += enemy->shot[i].position.velocity.y;
+				e->shot[i].position.where.x += e->shot[i].position.velocity.x;
+				e->shot[i].position.where.y += e->shot[i].position.velocity.y;
 			}
 			else
-				ft_bzero(&enemy->shot[i], sizeof(t_impact));
+			{
+				e->ref == LOSTSOUL && e->is_alive ? e->is_dying = 1 : 0;
+				ft_bzero(&e->shot[i], sizeof(t_impact));
+			}
 		}
 		i++;
 	}
@@ -159,40 +162,43 @@ void	bot_action(t_env *env, t_sector *sector)
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
-		if (enemy->is_alive)
+		if (enemy->is_alive && !enemy->is_dying)
 		{
 			if (enemy->next && enemy->next->is_alive)
 				bot_check_friend(enemy, enemy->next);
 			if (enemy->is_shooting)
-				bot_shoot_cadence(enemy, env->engine.player);
+				bot_shoot_cadence(env, enemy, env->engine.player);
 			bot_bullet(env, enemy, enemy->damage);
 		}
 		enemy = enemy->next;
 	}
 }
 
-void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *enemy, Uint8 *keycodes)
+static void	bot_dist_detect(t_wrap_enmy *e)
+{
+	e->is_shooting = e->has_detected || e->close_seen;
+}
+
+void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
 {
 	t_vtx	where;
 
-	where = (t_vtx){enemy->player.where.x, enemy->player.where.y};
-	if (!env->player.actions.is_invisible)
+	where = (t_vtx){e->player.where.x, e->player.where.y};
+	if (!env->player.actions.is_invisible && !e->is_dying)
 	{
-		enemy->is_alerted = (dist_vertex(player, where) < 700
+		e->is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
 		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		enemy->has_detected = (dist_vertex(player, where) < 300
+		e->has_detected = (dist_vertex(player, where) < e->brain.dist_detect
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
-		enemy->close_seen = (dist_vertex(player, where) < 100);
-		if (enemy->is_alerted || enemy->has_detected || enemy->close_seen)
+		e->close_seen = (dist_vertex(player, where) < e->brain.dist_close);
+		if (e->is_alerted || e->has_detected || e->close_seen)
 		{
-			if (dist_vertex(player, where) > 100)
-				bot_move(env, player, enemy, 0.2f);
-			if (dist_vertex(player, where) < 400)
-				enemy->is_shooting = enemy->has_detected || enemy->close_seen;
+			if (dist_vertex(player, where) > e->brain.dist_player)
+				bot_move(env, player, e, e->brain.velocity);
+			else
+				bot_dist_detect(e);
 		}
 	}
 	else
-		enemy->is_shooting = 0;
-
+		e->is_shooting = 0;
 }
-

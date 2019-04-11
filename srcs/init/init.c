@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/10 11:07:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 23:49:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	init_env(int ac, char **av, t_env *env)
 	// init game data
 	init_hud(env);
 	init_weapon(env);
-	init_enemies(env);
+	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
 }

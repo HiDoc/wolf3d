@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 22:59:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:21:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	open_door(t_env *env)
 	return (1);
 }
 
-int	print_infos_door(t_env *env, t_sector *sector)
+void	print_infos_door(t_env *env, t_sector *sector)
 {
 	int			index;
 	t_door		*front_player;
@@ -95,10 +95,9 @@ int	print_infos_door(t_env *env, t_sector *sector)
 		else if (!front_player->is_open && !front_player->is_opening)
 			draw_img(env, env->hud.text.doors[0], &fill);
 	}
-	return (1);
 }
 
-int	handle_doors(t_env *env)
+void	handle_doors(t_env *env)
 {
 	t_sector	*sector;
 	int			i;
@@ -108,7 +107,7 @@ int	handle_doors(t_env *env)
 	while (++i < (int)env->engine.nsectors)
 	{
 		if (sector[i].is_door
-		&& (sector[i].door.is_openable || !env->stats.nb_enemies))
+		&& (sector[i].door.is_openable || !env->stats.data[I_KTOGO]))
 		{
 			sector[i].door.is_openable = 1;
 			if (sector[i].door.is_opening
@@ -125,5 +124,5 @@ int	handle_doors(t_env *env)
 			}
 		}
 	}
-	return (print_infos_door(env, sector));
+	print_infos_door(env, sector);
 }

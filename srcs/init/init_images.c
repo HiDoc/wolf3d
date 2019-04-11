@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 21:39:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:23:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,6 @@ static void		init_pack_img(t_surface *pack, char *name, int limit)
 	while (i < limit)
 	{
 		pack[i].sprite = ui_img(name, i);
-		i++;
-	}
-}
-
-static void		load_enemies(t_world *container)
-{
-
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < WORLD_NB_ENEMIES)
-	{
-		j = 0;
-		while (j < 6)
-		{
-			container->enemies[i].sprites[j] = ui_img("enemies/suitguy/", j);
-			j++;
-		}
 		i++;
 	}
 }
@@ -59,21 +40,19 @@ static void			init_consumable(t_env *env)
 		if (i < WORLD_NB_CSMBLE)
 		{
 			env->world.objects[i].max_stack = (i == 5) ? 1 : 5;
-			env->world.objects[i].sprite = ui_img(name, i);
 			env->world.objects[i].size = (t_l_float){4, 3};
 		}
 		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
 			env->world.objects[i].max_stack = 0;
-			env->world.objects[i].sprite = ui_img(name, i);
 			env->world.objects[i].size = (t_l_float){4, 2};
 		}
 		else
 		{
 			env->world.objects[i].max_stack = -1;
-			env->world.objects[i].sprite = ui_img(name, i);
 			env->world.objects[i].size = (t_l_float){4, 1};
 		}
+		env->world.objects[i].sprite = ui_img(name, i);
 		lt_release(name);
 		i++;
 	}
@@ -84,6 +63,9 @@ static void			init_consumable(t_env *env)
 
 static void			init_character(t_character *new)
 {
+	int	i;
+
+	i = -1;
 	ft_bzero(&new->actions, sizeof(new));
 	new->health = 200;
 	new->shield = 200;
@@ -91,8 +73,8 @@ static void			init_character(t_character *new)
 	new->max_shield = 200;
 	new->bullet = ui_img("bullet/", 0);
 	new->shot = ft_memalloc(sizeof(t_impact) * PLYR_NB_SHOT);
-	// while (++i < PLYR_NB_SHOT)
-    //     ft_bzero(&new->shot[i], sizeof(t_impact));
+	while (++i < PLYR_NB_SHOT)
+        ft_bzero(&new->shot[i], sizeof(t_impact));
 	// ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
@@ -102,7 +84,6 @@ void				load_images(t_env *env)
 	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS);
 	init_pack_img(env->world.surfaces.floors, "floors/", WORLD_NB_FLOORS);
 	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ);
-	load_enemies(&env->world);
 	init_consumable(env);
 	init_character(&env->player);
 }
