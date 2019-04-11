@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/10 21:23:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 03:35:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ static void			init_consumable(t_env *env)
 
 static void			init_character(t_character *new)
 {
-	int	i;
-
-	i = -1;
 	ft_bzero(&new->actions, sizeof(new));
 	new->health = 200;
 	new->shield = 200;
@@ -73,9 +70,7 @@ static void			init_character(t_character *new)
 	new->max_shield = 200;
 	new->bullet = ui_img("bullet/", 0);
 	new->shot = ft_memalloc(sizeof(t_impact) * PLYR_NB_SHOT);
-	while (++i < PLYR_NB_SHOT)
-        ft_bzero(&new->shot[i], sizeof(t_impact));
-	// ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
+	ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
 void				load_images(t_env *env)

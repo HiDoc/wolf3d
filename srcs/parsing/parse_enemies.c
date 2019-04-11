@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:25:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 03:36:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 {
 	t_character	*renemy;
 	t_wrap_enmy	*new;
-	int			i;
 
-	i = -1;
 	new = ft_memalloc(sizeof(t_wrap_enmy));
 	ft_bzero(new, sizeof(t_wrap_enmy));
 	renemy = &env->world.enemies[ref];
@@ -31,8 +29,7 @@ t_wrap_enmy	*new_enemy(t_env *env, t_vtx v, int ref)
 	new->damage = renemy->damage;
 	new->frame = renemy->cadence_shoot;
 	new->shot = ft_memalloc(sizeof(t_impact) * BOT_NB_SHOT);
-	while (++i < BOT_NB_SHOT)
-		ft_bzero(&new->shot[i], sizeof(t_impact));
+	ft_bzero(new->shot, sizeof(t_impact) * BOT_NB_SHOT);
 	new->player.nb_shot = BOT_NB_SHOT;
 	new->next = NULL;
 	return (new);
