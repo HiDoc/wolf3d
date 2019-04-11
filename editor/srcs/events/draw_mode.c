@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 14:28:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:52:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@ void		create_sector(t_env *env)
 		ui_error_exit_sdl("Editor: Out of memory", env->data);
 	new->xmin = WIN_W + 1;
 	new->xmax = -1;
-	new->ymin = WIN_W + 1;
+	new->ymin = WIN_H + 1;
 	new->ymax = -1;
 	new->color = C_CYAN;
 	new->next = 0;
 
 	if (!(env->sct_start))
 	{
+		new->id = 0;
 		env->sct_current = new;
 		env->sct_start = new;
 		env->sct_end = new;
 	}
 	else
 	{
+		new->id = env->sct_end->id + 1;
 		env->sct_current = new;
 		env->sct_end->next = new;
 		env->sct_end = new;
@@ -67,12 +69,11 @@ void		create_vertex(t_pos pos, t_env *env)
 	// stock xmin xmax ymin ymax
 	if (pos.x < env->sct_current->xmin)
 		env->sct_current->xmin = pos.x;
-	else if (pos.x > env->sct_current->xmax)
+	if (pos.x > env->sct_current->xmax)
 		env->sct_current->xmax = pos.x;
-
 	if (pos.y < env->sct_current->ymin)
 		env->sct_current->ymin = pos.y;
-	else if (pos.y > env->sct_current->ymax)
+	if (pos.y > env->sct_current->ymax)
 		env->sct_current->ymax = pos.y;
 	env->nb_vtx++;
 }
@@ -86,12 +87,11 @@ void		assign_vertex(t_vtx *vtx, t_env *env)
 	// stock xmin xmax ymin ymax
 	if (vtx->pos.x < env->sct_current->xmin)
 		env->sct_current->xmin = vtx->pos.x;
-	else if (vtx->pos.x > env->sct_current->xmax)
+	if (vtx->pos.x > env->sct_current->xmax)
 		env->sct_current->xmax = vtx->pos.x;
-
 	if (vtx->pos.y < env->sct_current->ymin)
 		env->sct_current->ymin = vtx->pos.y;
-	else if (vtx->pos.y > env->sct_current->ymax)
+	if (vtx->pos.y > env->sct_current->ymax)
 		env->sct_current->ymax = vtx->pos.y;	
 }
 
@@ -150,11 +150,13 @@ int			draw_mode(t_env *env)
 
 	if (env->data->mouse.x || env->data->mouse.y)
 	{
-		// calc vrx distance
+		// calc vtx size
 		if (env->sct_current)
+		{
 			env->vtx_size = sqrt(
-			pow(env->sct_current->vtx_current->pos.x - env->data->mouse.x, 2)
-			+ pow(env->sct_current->vtx_current->pos.y - env->data->mouse.y, 2));
+			pow(env->sct_current->vtx_current->pos.x - env->mouse.x, 2)
+			+ pow(env->sct_current->vtx_current->pos.y - env->mouse.y, 2));
+		}
 		return (1);
 	}
 
