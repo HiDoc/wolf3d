@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/10 16:55:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:52:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		create_sector(t_env *env)
 		ui_error_exit_sdl("Editor: Out of memory", env->data);
 	new->xmin = WIN_W + 1;
 	new->xmax = -1;
-	new->ymin = WIN_W + 1;
+	new->ymin = WIN_H + 1;
 	new->ymax = -1;
 	new->color = C_CYAN;
 	new->next = 0;
@@ -34,7 +34,7 @@ void		create_sector(t_env *env)
 	}
 	else
 	{
-		new->id = env->sct_end->id++;
+		new->id = env->sct_end->id + 1;
 		env->sct_current = new;
 		env->sct_end->next = new;
 		env->sct_end = new;
@@ -69,12 +69,11 @@ void		create_vertex(t_pos pos, t_env *env)
 	// stock xmin xmax ymin ymax
 	if (pos.x < env->sct_current->xmin)
 		env->sct_current->xmin = pos.x;
-	else if (pos.x > env->sct_current->xmax)
+	if (pos.x > env->sct_current->xmax)
 		env->sct_current->xmax = pos.x;
-
 	if (pos.y < env->sct_current->ymin)
 		env->sct_current->ymin = pos.y;
-	else if (pos.y > env->sct_current->ymax)
+	if (pos.y > env->sct_current->ymax)
 		env->sct_current->ymax = pos.y;
 	env->nb_vtx++;
 }
@@ -88,12 +87,11 @@ void		assign_vertex(t_vtx *vtx, t_env *env)
 	// stock xmin xmax ymin ymax
 	if (vtx->pos.x < env->sct_current->xmin)
 		env->sct_current->xmin = vtx->pos.x;
-	else if (vtx->pos.x > env->sct_current->xmax)
+	if (vtx->pos.x > env->sct_current->xmax)
 		env->sct_current->xmax = vtx->pos.x;
-
 	if (vtx->pos.y < env->sct_current->ymin)
 		env->sct_current->ymin = vtx->pos.y;
-	else if (vtx->pos.y > env->sct_current->ymax)
+	if (vtx->pos.y > env->sct_current->ymax)
 		env->sct_current->ymax = vtx->pos.y;	
 }
 

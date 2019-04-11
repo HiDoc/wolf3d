@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/05 19:12:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:41:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r)
 
 static int	orientation(t_pos p, t_pos q, t_pos r) 
 {
-	int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y); 
+	float val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y); 
 
 	if (val == 0)
 		return (0);
@@ -44,31 +44,31 @@ int		intersect_vrx(t_pos p1, t_pos q1, t_pos p2, t_pos q2)
 { 
 	//Find the four orientations needed for general and 
 	// special cases
-	int o1 = orientation(p1, q1, p2); 
-	int o2 = orientation(p1, q1, q2); 
-	int o3 = orientation(p2, q2, p1); 
-	int o4 = orientation(p2, q2, q1); 
+	float o1 = orientation(p1, q1, p2); 
+	float o2 = orientation(p1, q1, q2); 
+	float o3 = orientation(p2, q2, p1); 
+	float o4 = orientation(p2, q2, q1); 
 
 	// General case 
-	if (o1 != o2 && o3 != o4) 
-		return (1); 
+	if (o1 != o2 && o3 != o4)
+		return (1);
 
 	// Special Cases 
 	// p1, q1 and p2 are colinear and p2 lies on segment p1q1 
 	if (o1 == 0 && onSegment(p1, p2, q1))
-		return (1); 
+		return (1);
 
 	// p1, q1 and q2 are colinear and q2 lies on segment p1q1 
 	if (o2 == 0 && onSegment(p1, q2, q1))
-		return (1); 
+		return (1);
 
 	// p2, q2 and p1 are colinear and p1 lies on segment p2q2 
 	if (o3 == 0 && onSegment(p2, p1, q2))
-		return (1); 
+		return (1);
 
 	// p2, q2 and q1 are colinear and q1 lies on segment p2q2 
 	if (o4 == 0 && onSegment(p2, q1, q2))
-		return (1); 
+		return (1);
 
 	return (0); // Doesn't fall in any of the above cases 
 } 
