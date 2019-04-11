@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 21:20:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 15:21:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
 int         print_hud(t_env *env);
-int			print_inventory(t_env *env);
+void		print_inventory(t_env *env);
 
 void    	ui_put_data(t_env *env, t_font data);
 int         ui_txt_inv(t_env *env);

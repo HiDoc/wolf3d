@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:05:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 10:14:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		print_description_object(t_env *env, int i, int j)
 	return (1);
 }
 
-int		print_stats(t_env *env, int i)
+static void		print_stats(t_env *env, int i)
 {
 	t_vtx		p;
 	const char *str[NB_STATS] = {D_LEVEL, D_SECTOR, D_KTOGO,
@@ -84,15 +84,15 @@ int		print_stats(t_env *env, int i)
 		? env->hud.text.doom : env->hud.text.text, p,
 		i < I_KILLS ? size[i] : size[I_KILLS], -1, env->stats.data[i]});
 	}
-	return (1);
 }
 
 int     ui_txt_inv(t_env *env)
 {
+	const t_vtx	pos[4] = {
+		{W / 40, H / 50}, {W / 40, H / 1.6},
+		{W / 40, H / 2.15}, {W / 2.2, H / 1.4}};
 	t_bloc		fill;
 	SDL_Rect	rect;
-	const t_vtx	pos[4] = {{W / 40, H / 50}, {W / 40, H / 1.6},
-	{W / 40, H / 2.15}, {W / 2.2, H / 1.4}};
 	int			i;
 	int			r;
 
@@ -100,13 +100,15 @@ int     ui_txt_inv(t_env *env)
 	r = T_INVENTORY;
 	while (++i < 4)
 	{
-		rect = (SDL_Rect){pos[i].x, pos[i].y, env->hud.text.string[r]->w, env->hud.text.string[r]->h};
-		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
+		rect = (SDL_Rect){pos[i].x, pos[i].y,
+		env->hud.text.string[r]->w, env->hud.text.string[r]->h};
+		fill = (t_bloc){
+		{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
 		rect, {{0, 0}, {0, 0}}};
 		draw_img(env, env->hud.text.string[r++], &fill);
 	}
-    return (print_stats(env, -1)
-	&& print_description_object(env, -1, -1));
+	print_stats(env, -1);
+    return (print_description_object(env, -1, -1));
 }
 
 int		ui_icon_data(t_env *env, t_vtx v, int iter)
@@ -114,10 +116,8 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 	int				data;
 	SDL_Color 		c;
 	const SDL_Color	clrs[4] = {
-		{8, 255, 8, 255},
-		{42, 204, 242, 255},
-		{242, 204, 42, 255},
-		{255, 0, 0, 255}};
+		{8, 255, 8, 255}, {42, 204, 242, 255},
+		{242, 204, 42, 255}, {255, 0, 0, 255}};
 
 	if (iter == 0)
 	{
@@ -131,7 +131,8 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 	}
 	if (data < 100)
 		c = clrs[3];
-	ui_put_data(env, (t_font){c, "%", env->hud.text.text, (t_vtx){v.x, v.y}, W / 45, data, -1});
+	ui_put_data(env, (t_font){c, "%", env->hud.text.text,
+	(t_vtx){v.x, v.y}, W / 45, data, -1});
 	return (1);
 }
 

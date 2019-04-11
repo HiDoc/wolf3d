@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/10 11:01:34 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/11 10:14:57 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ HED_NAME	= doom.h \
 			  doom_s_gameplay.h \
 			  doom_s_engine.h \
 			  doom_f_init.h \
+			  doom_f_exit.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
 			  doom_f_ui.h \
