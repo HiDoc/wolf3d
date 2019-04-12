@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:49:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 16:16:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 
 	v->falling = 1;
 	SDL_GetRelativeMouseState(&x, &y);
-	e->player.angle += x * 0.03f;
-	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
+	e->player.angle += x * 0.002f;
+	v->yaw = clamp(v->yaw + y * 0.004f, -5, 5);
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.8f;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);

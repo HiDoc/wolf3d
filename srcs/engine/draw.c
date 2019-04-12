@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 14:23:53 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/12 14:21:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void		dfs(t_env *env)
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)
 		queue.head = queue.queue;
+
+	display_skybox(env);
 
 	while (queue.head != queue.tail)
 	{
