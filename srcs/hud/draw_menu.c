@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 14:41:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 19:26:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,29 @@ void	draw_page_menu(t_env *env, t_bloc *b, int index, int limit)
 		draw_bloc_isvisible(env, &b[i]);
 }
 
-void	draw_keys_options_menu(t_env *e, t_bloc *b, Uint8 *k)
+
+void	draw_keys_options_menu(t_env *e, t_bloc *b, int *k)
 {
-	int	i;
-	// const char	*s;
+	int			i;
+	char		*s;
+	t_vtx		n_size;
+	SDL_Surface	*tmp;
+	const char	*opt[NB_OPT_KEY] = {S_OUP, S_ODOWN, S_OLEFT, S_ORIGHT,
+	S_OJUMP, S_ODUCK, S_OINVENTR, S_OPICK, S_OOPENDOOR, S_OJETPACKON,
+	S_OBLUEGEM, S_OGREEGEM, S_OREDGEM, S_OPURPGEM};
 
 	i = -1;
-	(void)e;
-	(void)b;
-	(void)k;
 	while (++i < NB_OPT_KEY)
 	{
-		// char	*s;
-
-		// s = SDL_GetKeyName(k[i]);
-		// printf("%s \n", s);
-		// if (ft_isalnum(k[i]))
-		// {
-		// 	printf("is_alnum\n");
-		// 	s = ft_strnew(2);
-		// 	s[0] = (char)k[i];
-		// }
-			// ui_put_data(e, (t_font){WHITE, s, e->hud.text.text,
-			// (t_vtx){b->use.rect.x, b->use.rect.x}, b->use.rect.w,  -1, -1});
-			// lt_release(s);
+		s = ft_strjoin(opt[i], (char*)SDL_GetKeyName(k[i]));
+		tmp = ui_create_simple_string((t_font){WHITE,
+		s, e->hud.text.text, {0, 0}, 0, -1, -1});
+		n_size = (t_vtx){tmp->w / (100 / (W / 45)), tmp->h / (100 / (W / 45))};
+		b[i + 5].rect.w = n_size.x;
+		b[i + 5].rect.h = n_size.y;
+		draw_img(e, tmp, &b[i + 5]);
+		lt_release(tmp);
+		lt_release(s);
 	}
 }
 
@@ -87,19 +86,18 @@ void	menu_status(t_env *env)
 	t_menu	*m;
 
 	m = &env->menu;
-	// if (m->status.on)
-	// {
-		draw_page_menu(env, m->ingame_menu, I_IINGAME, NB_BLOC_IG);
+	if (m->status.on)
+	{
 		draw_page_menu(env, m->load_menu, I_ILOAD_OPT, 2);
 		draw_page_menu(env, &m->mother_menu, I_IHOME, 1);
 		draw_page_menu(env, m->main_menu, I_IMAINMENU, NB_BLOC_NG);
-		draw_page_menu(env, m->options_menu, I_ILOAD_OPT, NB_OPT_MENU);
+		draw_page_menu(env, m->options_menu, I_ILOAD_OPT, NB_OPT_MENU - NB_OPT_KEY);
 		draw_keys_options_menu(env, m->options_menu, m->keys);
-	// 	draw_launch_menu(env);
-	// 	// if (m->status.new_game)
-	// 		draw_main_menu(env);
-	// // }
-	// // if (m->status.pause_game)
-	// 	draw_ingame_menu(env);
+		draw_launch_menu(env);
+		// if (m->status.new_game)
+			draw_main_menu(env);
+	}
+	if (m->status.pause_game)
+		draw_page_menu(env, m->ingame_menu, I_IINGAME, NB_BLOC_IG);
 
 }

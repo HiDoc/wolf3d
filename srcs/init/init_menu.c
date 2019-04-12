@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 13:48:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 19:10:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,14 @@ static void	mainmenu_blocs(t_env *env, t_menu *m, t_bloc *data)
 {
 	SDL_Rect	r;
 
-	r = (SDL_Rect){W / 2, H / 40, W / 17, 0};
+	r = (SDL_Rect){W / 2, H / 2.5, W / 27, 0};
 	r.y += fill_menu(env, &data[0],
-	(t_mbloc){r, m->title[2]}, NULL);
-	r.w = W / 27;
-	r.y += H / 10;
-	r.y += fill_menu(env, &data[1],
 	(t_mbloc){r, m->string[I_NEWGAME]}, m->hover[I_NEWGAME]);
-	r.y += fill_menu(env, &data[2],
+	r.y += fill_menu(env, &data[1],
 	(t_mbloc){r, m->string[I_LOADGAME]}, m->hover[I_LOADGAME]);
-	r.y += fill_menu(env, &data[3],
+	r.y += fill_menu(env, &data[2],
 	(t_mbloc){r, m->string[I_OPTIONS]}, m->hover[I_OPTIONS]);
-	fill_menu(env, &data[4],
+	fill_menu(env, &data[3],
 	(t_mbloc){r, m->string[I_QUIT]}, m->hover[I_QUIT]);
 
 }
@@ -89,20 +85,20 @@ static void	loadgame_blocs(t_env *env, t_menu *m, t_bloc *data)
 
 static void	key_binding(t_menu *m)
 {
-	m->keys[I_OUP] = SDL_SCANCODE_W;
-	m->keys[I_ODOWN] = SDL_SCANCODE_S;
-	m->keys[I_OLEFT] = SDL_SCANCODE_A;
-	m->keys[I_ORIGHT] = SDL_SCANCODE_D;
-	m->keys[I_OJUMP] = SDL_SCANCODE_SPACE;
-	m->keys[I_ODUCK] = SDL_SCANCODE_LCTRL;
-	m->keys[I_OPICK] = SDL_SCANCODE_E;
-	m->keys[I_OOPENDOOR] = SDL_SCANCODE_E;
-	m->keys[I_OINVENTR] = SDL_SCANCODE_TAB;
-	m->keys[I_OJETPACKON] = SDL_SCANCODE_1;
-	m->keys[I_OBLUEGEM] = SDL_SCANCODE_2;
-	m->keys[I_OGREEGEM] = SDL_SCANCODE_3;
-	m->keys[I_OREDGEM] = SDL_SCANCODE_4;
-	m->keys[I_OPURPGEM] = SDL_SCANCODE_5;
+	m->keys[I_OUP] = SDL_GetKeyFromScancode(SDL_SCANCODE_W);
+	m->keys[I_ODOWN] = SDL_GetKeyFromScancode(SDL_SCANCODE_S);
+	m->keys[I_OLEFT] = SDL_GetKeyFromScancode(SDL_SCANCODE_A);
+	m->keys[I_ORIGHT] = SDL_GetKeyFromScancode(SDL_SCANCODE_D);
+	m->keys[I_OJUMP] = SDL_GetKeyFromScancode(SDL_SCANCODE_SPACE);
+	m->keys[I_ODUCK] = SDL_GetKeyFromScancode(SDL_SCANCODE_LCTRL);
+	m->keys[I_OINVENTR] = SDL_GetKeyFromScancode(SDL_SCANCODE_TAB);
+	m->keys[I_OPICK] = SDL_GetKeyFromScancode(SDL_SCANCODE_E);
+	m->keys[I_OOPENDOOR] = SDL_GetKeyFromScancode(SDL_SCANCODE_E);
+	m->keys[I_OJETPACKON] = SDL_GetKeyFromScancode(SDL_SCANCODE_1);
+	m->keys[I_OBLUEGEM] = SDL_GetKeyFromScancode(SDL_SCANCODE_2);
+	m->keys[I_OGREEGEM] = SDL_GetKeyFromScancode(SDL_SCANCODE_3);
+	m->keys[I_OREDGEM] = SDL_GetKeyFromScancode(SDL_SCANCODE_4);
+	m->keys[I_OPURPGEM] = SDL_GetKeyFromScancode(SDL_SCANCODE_5);
 }
 
 static void	options_blocs(t_env *env, t_menu *m, t_bloc *data)
@@ -130,8 +126,6 @@ static void	options_blocs(t_env *env, t_menu *m, t_bloc *data)
 		data[i + 5].rect.x = i < I_OOPENDOOR
 		? data[2].rect.x + data[2].rect.w : W / 1.5;
 		data[i + 5].rect.y -= H / 25;
-		data[i + 5].use = (t_mbloc){{data[i + 5].rect.x + data[i + 5].rect.w,
-		data[i + 5].rect.y, W / 60, 0}, NULL};
 	}
 }
 

@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 12:42:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 19:20:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static SDL_Surface	*ui_create_simple_string(t_font data)
+SDL_Surface	*ui_create_simple_string(t_font data)
 {
 	SDL_Surface	*tmp;
 	SDL_Surface	*surface;

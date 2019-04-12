@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 13:20:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 19:09:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define NB_SCANCODE	283
 # define NB_IMG_MENU	5
-# define NB_BLOC_NG		5
+# define NB_BLOC_NG		4
 # define NB_BLOC_IG		6
 # define NB_OPT_KEY		14
 # define NB_OPT_MENU	19
@@ -98,9 +98,9 @@
 # define I_ORIGHT		3
 # define I_OJUMP		4
 # define I_ODUCK		5
-# define I_OPICK		6
-# define I_OOPENDOOR	7
-# define I_OINVENTR		8
+# define I_OINVENTR		6
+# define I_OPICK		7
+# define I_OOPENDOOR	8
 # define I_OJETPACKON	9
 # define I_OBLUEGEM		10
 # define I_OGREEGEM		11
