@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 03:35:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 15:02:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void				load_images(t_env *env)
 	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS);
 	init_pack_img(env->world.surfaces.floors, "floors/", WORLD_NB_FLOORS);
 	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ);
+	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU);
 	init_consumable(env);
 	init_character(&env->player);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 22:04:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 21:18:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos);
 int			ui_draw_msg(t_env *env, int *nb, int *tframe);
 int			ui_text_msg(t_env *env, char *msg);
 void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst);
+void		create_scaled_surface(SDL_Surface **surface, t_vtx n_size);
 
 int			load_sounds(t_weapon *wpn, char *name, char *action);
 
