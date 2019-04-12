@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/12 12:57:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 19:40:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ struct								s_skybox
 	SDL_Surface		*sb_right;
 	SDL_Surface		*sb_back;
 	SDL_Surface		*sb_left;
+
+	SDL_Surface		*sb;
 };
 
 struct								s_env

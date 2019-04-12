@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 14:17:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 19:52:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,8 @@ static void			init_skybox_img(t_env *env)
 	if (!(env->skybox.sb_top = lt_push(
 			IMG_Load("rsrc/skybox/sb_top.jpg"), srf_del)))
 		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb_front = lt_push(
-			IMG_Load("rsrc/skybox/sb_front.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb_right = lt_push(
-			IMG_Load("rsrc/skybox/sb_right.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb_back = lt_push(
-			IMG_Load("rsrc/skybox/sb_back.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb_left = lt_push(
-			IMG_Load("rsrc/skybox/sb_left.jpg"), srf_del)))
+	if (!(env->skybox.sb = lt_push(
+			IMG_Load("rsrc/skybox/sb.jpg"), srf_del)))
 		doom_error_exit("wolf3d: error while loading skybox");
 }
 

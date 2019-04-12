@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:56:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 16:09:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:06:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,35 @@
 
 void		display_skybox(t_env *env)
 {
-	//const SDL_Surface		*sb_tab[4] = {
-	//	env->skybox.sb_front, env->skybox.sb_right,
-	//	env->skybox.sb_back, env->skybox.sb_left};
 	int				w;
 	int				h;
-	int				wcalc;
-	SDL_Surface		*srf;
-	float			angle_d;
+	float			player_d;
+	float			yaw_d;
+	float			wcalc;
+	float			hcalc;
 
-	angle_d = (int)(env->engine.player.angle * 180 / M_PI) % 360;
-	(angle_d < 0) ? angle_d = 360 - ((int)fabs(angle_d) % 360) : 0;
+	player_d = (int)(env->engine.player.angle * 180 / M_PI) % 360;
+	(player_d < 0) ? player_d = 360 + player_d : 0;
 
-	srf = env->skybox.sb_front;
+	yaw_d = (int)(env->engine.player.yaw * 180 / M_PI);
 
 	w = 0;
 	while (w < W)
 	{
-		wcalc = (w * srf->w) / W;
+		wcalc = (w * (env->skybox.sb->w / 4)) / W;
+		wcalc += (player_d * env->skybox.sb->w) / 360;
+		wcalc = (int)wcalc % env->skybox.sb->w;
 		h = 0;
 		while (h < H)
 		{
+			hcalc = H;
+			hcalc += (int)((h / 4) % env->skybox.sb->h);
+			hcalc += (yaw_d * env->skybox.sb->h / 2) / 360;
+			hcalc = (int)hcalc % env->skybox.sb->h;
 			setpixel(env->sdl.surface, w, h,
-			getpixel(srf, wcalc, h));
+			getpixel(env->skybox.sb, wcalc, hcalc));
 			h++;
 		}
 		w++;
 	}
 }
-
-//
-//	0	  W
-//	[|||||] [|||||] [|||||] [|||||]
-//	0	  90	  180	  270	  360
-//
