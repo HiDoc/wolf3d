@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/11 10:14:57 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/12 12:56:00 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC_NAME 	= main.c \
 			action_pl_weapon.c \
 			action_shoot.c \
 			checking.c \
+			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 03:35:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 12:51:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,25 @@ static void			init_character(t_character *new)
 	ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
+static void			init_skybox_img(t_env *env)
+{
+	if (!(env->skybox.sb_top = lt_push(
+			IMG_Load("rsrc/skybox/sb_top.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+	if (!(env->skybox.sb_front = lt_push(
+			IMG_Load("rsrc/skybox/sb_front.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+	if (!(env->skybox.sb_right = lt_push(
+			IMG_Load("rsrc/skybox/sb_right.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+	if (!(env->skybox.sb_back = lt_push(
+			IMG_Load("rsrc/skybox/sb_back.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+	if (!(env->skybox.sb_left = lt_push(
+			IMG_Load("rsrc/skybox/sb_left.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+}
+
 void				load_images(t_env *env)
 {
 	init_pack_img(env->world.surfaces.poster, "posters/", WORLD_NB_POSTERS);
@@ -81,4 +100,5 @@ void				load_images(t_env *env)
 	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ);
 	init_consumable(env);
 	init_character(&env->player);
+	init_skybox_img(env);
 }

@@ -6,14 +6,12 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 20:55:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 12:46:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_ENGINE_H
 # define DOOM_F_ENGINE_H
-
-void        init_skybox(t_env *env);
 
 void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
