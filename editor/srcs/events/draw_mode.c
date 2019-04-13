@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 18:52:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 13:25:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int			draw_mode(t_env *env)
 		{
 			if (!(current = target_vertex(env))) // no dock
 			{
-				if (!(target_sector(env->data->mouse, env)))
+				if (!env->sct_hover)
 				{// not in another sector
 					env->drawing = 1;
 					create_sector(env);
@@ -125,8 +125,8 @@ int			draw_mode(t_env *env)
 		}
 		else // drawing
 		{
-			if (!(target_sector(env->data->mouse, env)))
-			{
+			if (!env->sct_hover)
+			{// not in another sector
 				if ((current = target_vertex(env))) // dock
 				{
 					if (current == env->sct_current->vtx_start) // dock start

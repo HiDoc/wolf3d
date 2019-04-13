@@ -1,24 +1,14 @@
 # map name
 new_map
 # nb vertex:
-11
-# vertex: x y
-vertex 21 0
-vertex 44 20
-vertex 0 42
-vertex 52 30
-vertex 44 20
-vertex 0 42
-vertex 37 45
-vertex 52 14
-vertex 44 20
-vertex 52 30
-vertex 56 23
-# nb sectors:
 3
+# vertex: x y
+vertex 65 0
+vertex 0 67
+vertex 105 51
+# nb sectors:
+1
 # sector: ceil floor n-vertex n-neighbors
-sector /**/ /**//**/
-sector /**/ /**//**/
 sector /**/ /**//**/
 # nb wall objects:
 0
@@ -27,11 +17,8 @@ sector /**/ /**//**/
 0
 # consumable: x y sector ref is_wpn
 # nb entities:
-3
+0
 # entity: x y sector ref
-entity 17 25 /**/ /**/
-entity 22 10 /**/ /**/
-entity 28 19 /**/ /**/
 # nb specials:
 0
 # special: x y ref
