@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/11 10:13:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:45:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int				sdl_render(t_env *env)
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		//ui_minimap(env);
-		handle_weapon(env, &env->time.frame);
+		handle_weapon(env);
 		print_hud(env);
 		handle_gems(env);
 		if (!env->player.actions.is_invisible)
