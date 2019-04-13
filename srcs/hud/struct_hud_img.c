@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_hud_img.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:19:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 16:21:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,48 +39,18 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 	}
 }
 
-static int			copy_img(Uint32 *pxl, SDL_Surface *img)
-{
-	int	x;
-	int	y;
-	Uint32	*src;
-
-	src = img->pixels;
-	x = 0;
-	while (x < img->w)
-	{
-		y = 0;
-		while (y < img->h)
-		{
-			pxl[img->w * y + x] = src[img->w * y + x];
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
 static SDL_Surface	*surface_fr_png(char *path)
 {
 	SDL_Surface	*new;
 	SDL_Surface	*tmp;
-	Uint32		*pxl;
 
-	if (!(new = lt_push(IMG_Load(path), srf_del)))
+	if (!(tmp = lt_push(IMG_Load(path), srf_del)))
 		 doom_error_exit("Doom_nukem error on IMG_Load");
-	if (!(tmp = lt_push(SDL_ConvertSurfaceFormat(
-	new, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
+	if (!(new = lt_push(SDL_ConvertSurfaceFormat(
+	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
 		 doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	lt_release(new);
-	if (!(new = lt_push(SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
-	if ((SDL_LockSurface(new)) < 0)
-		doom_error_exit("Doom_nukem error on SDL_LockSurface");
-	pxl = new->pixels;
-	copy_img(pxl, tmp);
-	SDL_UnlockSurface(new);
 	lt_release(tmp);
+	SDL_UnlockSurface(new);
 	return (new);
 }
 

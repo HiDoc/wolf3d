@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/11 10:14:57 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/13 15:25:17 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,6 @@ SRC_NAME 	= main.c \
 			utils_edge.c \
 			utils_hud_img.c \
 			utils_pixels.c \
-			utils_surface.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
