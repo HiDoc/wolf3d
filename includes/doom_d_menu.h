@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 19:09:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 22:31:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define I_IHOME		0
 # define I_IMAINMENU	1
 # define I_ILOAD_OPT	2
-# define I_IINGAME		3
+# define I_Iingame_menu		3
 # define I_IBTN			4
 
 /*

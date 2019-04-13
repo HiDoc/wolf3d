@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 22:54:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 01:49:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,118 @@ int	god_mod(t_env *env)
 	return (1);
 }
 
-int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
 {
-	t_uinv		*ui;
+	if (k[SDL_SCANCODE_DOWN] && *cur < limit)
+		(*cur)++;
+	if (k[SDL_SCANCODE_UP] && *cur >= start)
+		(*cur)--;
+	if (*cur < start)
+		*cur = limit - 1;
+	if (*cur == limit)
+		*cur = start;
+}
 
-	ui = &env->hud.inventory;
+void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
+{
+	t_status	*s;
+
+	s = &e->menu.status;
 	SDL_WaitEvent(&ev);
 	if (ev.type == SDL_KEYDOWN)
 	{
-		if (keycodes[SDL_SCANCODE_TAB])
+		if (s->home && k[SDL_SCANCODE_RETURN])
+		{
+			s->main_menu = 1;
+			s->home = 0;
+		}
+		else if (s->main_menu)
+		{
+			scroll_menu(&s->current, k, 0, NB_BLOC_NG);
+			if (k[SDL_SCANCODE_RETURN])
+			{
+				s->current == 0 ? s->on = 0 : 0; //launch cinematik ? s->on = 0; // provisoire
+				s->current == 1 ? s->load_menu = 1 : 0;
+				s->current == 2 ? s->options_menu = 1 : 0;
+				s->current == 3 ? s->quit = 1 : 0;
+				s->main_menu = 0;
+				s->current = 0;
+			}
+
+		}
+		else if (s->ingame_menu)
+		{
+			s->current < 2 ? s->current = 2 : s->current;
+			scroll_menu(&s->current, k, 2, NB_BLOC_IG);
+			if (k[SDL_SCANCODE_LEFT] && s->current == 3)
+				s->current = 2;
+			else if (k[SDL_SCANCODE_RIGHT] && s->current == 2)
+				s->current = 3;
+			else if (k[SDL_SCANCODE_RETURN])
+			{
+				if (s->current == 2)
+				{
+					s->on = !s->on;
+					s->current = 3;
+				}
+				else if (s->current == 3)
+					s->nb_save++; //	save game
+				else if (s->current == 4)
+				s->current == 4 ? s->options_menu = 1 : 0;
+				s->current == 5 ? s->main_menu = 1 : 0;
+				s->ingame_menu = 0;
+				s->current = 0;
+			}
+		}
+		// if (s->load_menu)
+		// {
+		// 	if ()
+		// }
+		else if (s->options_menu)
+		{
+			s->current < 4 ? s->current = 4 : 0;
+			scroll_menu(&s->current, k, 4, NB_OPT_MENU);
+			if (k[SDL_SCANCODE_LEFT] && s->current == 4)
+				s->current = 3;
+			else if (k[SDL_SCANCODE_RIGHT] && s->current == 3)
+				s->current = 4;
+			else if (k[SDL_SCANCODE_RETURN])
+			{
+				if (s->current == 4)
+					s->on = 0;
+				else if (s->current == 1)
+					s->nb_save++; //	save game
+				else if (s->current == 2)
+					s->options_menu = 1;
+				else if (s->current == 3)
+					s->main_menu = 1;
+				s->options_menu = 0;
+				s->current = 0;
+			}
+		}
+		if (k[SDL_SCANCODE_ESCAPE] && !s->home && !s->main_menu)
+		{
+			s->on = !s->on;
+			if (s->load_menu)
+				s->load_menu = 0;
+			SDL_SetRelativeMouseMode(SDL_TRUE);
+			SDL_Delay(300);
+		}
+
+	}
+}
+
+int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+{
+	t_uinv		*ui;
+	int			*k;
+
+	ui = &env->hud.inventory;
+	k = env->menu.keys;
+	SDL_WaitEvent(&ev);
+	if (ev.type == SDL_KEYDOWN)
+	{
+		if (keycodes[SDL_GetScancodeFromKey(k[I_OINVENTR])])
 		{
 			ui->is_active = !ui->is_active;
 			SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -48,16 +151,18 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 
 void	keyhook_gems(t_env *env, const Uint8 *keycodes)
 {
+	int	*k;
 
-	if (keycodes[SDL_SCANCODE_1])
+	k = env->menu.keys;
+	if (keycodes[SDL_GetScancodeFromKey(k[I_OJETPACKON])])
 		action_gems(env, env->hud.shortcut[0], 0);
-	if (keycodes[SDL_SCANCODE_2])
+	if (keycodes[SDL_GetScancodeFromKey(k[I_OBLUEGEM])])
 		action_gems(env, env->hud.shortcut[1], 1);
-	if (keycodes[SDL_SCANCODE_3])
+	if (keycodes[SDL_GetScancodeFromKey(k[I_OGREEGEM])])
 		action_gems(env, env->hud.shortcut[2], 2);
-	if (keycodes[SDL_SCANCODE_4])
+	if (keycodes[SDL_GetScancodeFromKey(k[I_OREDGEM])])
 		action_gems(env, env->hud.shortcut[3], 3);
-	if (keycodes[SDL_SCANCODE_5])
+	if (keycodes[SDL_GetScancodeFromKey(k[I_OPURPGEM])])
 		action_gems(env, env->hud.shortcut[4], 4);
 }
 
@@ -65,7 +170,9 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
 	t_vision	*v;
+	int			*k;
 
+	k = env->menu.keys;
 	e = &env->engine;
 	v = &e->player.vision;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
@@ -73,17 +180,24 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
-		if (keycodes[SDL_SCANCODE_E])
+		if (keycodes[SDL_GetScancodeFromKey(k[I_OPICK])])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);
-		if (keycodes[SDL_SCANCODE_E])
+		if (keycodes[SDL_GetScancodeFromKey(k[I_OOPENDOOR])])
 			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
-		if (keycodes[SDL_SCANCODE_TAB])
+		if (keycodes[SDL_GetScancodeFromKey(k[I_OINVENTR])])
 		{
 			env->hud.inventory.is_active = !env->hud.inventory.is_active;
+			SDL_Delay(300);
+			SDL_SetRelativeMouseMode(SDL_FALSE);
+		}
+		if (keycodes[SDL_SCANCODE_ESCAPE])
+		{
+			env->menu.status.on = !env->menu.status.on;
+			env->menu.status.ingame_menu = 1;
 			SDL_Delay(300);
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}

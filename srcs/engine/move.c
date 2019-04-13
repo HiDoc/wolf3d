@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:49:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:11:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 /*
 ** Set velocity of player in {x, y}
 */
-int		pushing(const Uint8 *keyb)
+int		pushing(const Uint8 *keyb, int *k)
 {
-	return (keyb[SDL_SCANCODE_W] || keyb[SDL_SCANCODE_S]
-		|| keyb[SDL_SCANCODE_A] || keyb[SDL_SCANCODE_D]);
+	return (keyb[SDL_GetScancodeFromKey(k[I_OUP])]
+		|| keyb[SDL_GetScancodeFromKey(k[I_ODOWN])]
+		|| keyb[SDL_GetScancodeFromKey(k[I_OLEFT])]
+		|| keyb[SDL_GetScancodeFromKey(k[I_ORIGHT])]);
 }
 
-int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
+int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb, int *k)
 {
 	t_vtx		move_vec;
 	t_vctr		*velocity;
@@ -34,17 +36,17 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
 	v->ground = !keyb[SDL_SCANCODE_SPACE];
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
-	if (keyb[SDL_SCANCODE_W])
+	if (keyb[SDL_GetScancodeFromKey(k[I_OUP])])
 		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_SCANCODE_S])
+	if (keyb[SDL_GetScancodeFromKey(k[I_ODOWN])])
 		move_vec = diff_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_SCANCODE_A])
+	if (keyb[SDL_GetScancodeFromKey(k[I_OLEFT])])
 		move_vec = add_vertex(move_vec, (t_vtx){sin_move, -cos_move});
-	if (keyb[SDL_SCANCODE_D])
+	if (keyb[SDL_GetScancodeFromKey(k[I_ORIGHT])])
 		move_vec = diff_vertex(move_vec, (t_vtx){sin_move, -cos_move});
 	velocity->x = velocity->x * (1 - speed) + move_vec.x * speed;
 	velocity->y = velocity->y * (1 - speed) + move_vec.y * speed;
-	v->moving = pushing(keyb);
+	v->moving = pushing(keyb, k);
 	return (1);
 }
 
@@ -134,7 +136,7 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 /*
 **Vertical collision detection and horizontal collision detection
 */
-void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
+void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes, int *k)
 {
 	int	x;
 	int y;
@@ -150,5 +152,5 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 	handle_gravity(v, e, 0.05f);
 	if (v->moving)
 		collision(v, e, &e->sectors[e->player.sector]);
-	keyboard_movement(e, v, keycodes);
+	keyboard_movement(e, v, keycodes, k);
 }

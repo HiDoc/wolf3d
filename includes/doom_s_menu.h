@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 18:39:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 23:13:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,18 @@ typedef	struct s_status		t_status;
 struct 			s_status
 {
 	int			on;
-	int			pause_game;
-	int			new_game;
-	int			load_page;
-	int			options;
-	int			ingame;
+	int			home;
+	int			main_menu;
+	int			load_menu;
+	int			ingame_menu;
+	int			options_menu;
+	int			quit;
+	int			nb_save;
+	int			current;
 };
 
 struct 			s_menu
 {
-	int			cur_ng;
-	int			cur_lg;
-	int			cur_ig;
-	int			cur_opt;
 	t_status	status;
 	t_bloc		mother_menu;
 
@@ -40,7 +39,7 @@ struct 			s_menu
 
 	t_bloc		main_menu[NB_BLOC_NG]; // buttns menu
 
-	t_bloc		ingame_menu[NB_BLOC_IG]; // buttns ingame menu
+	t_bloc		ingame_menu[NB_BLOC_IG]; // buttns ingame_menu menu
 
 	t_bloc		options_menu[NB_OPT_MENU]; // buttns options
 	int			keys[NB_OPT_KEY]; // keys options to change keys

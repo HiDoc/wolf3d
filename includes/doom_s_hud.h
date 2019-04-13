@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 18:15:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 22:43:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ struct					s_bloc
 	SDL_Rect			rect;
 	t_edge				limit;
 	int					is_visible;
+	t_bloc				*next;
 };
 
 struct 						s_stats
