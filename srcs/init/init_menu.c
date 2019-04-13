@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/13 01:48:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:43:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,18 @@ static void	ingame_blocs(t_env *env, t_menu *m, t_bloc *data)
 {
 	SDL_Rect	r;
 
-	r = (SDL_Rect){W / 2, H / 50, W / 17, 0};
+	r = (SDL_Rect){W / 27, H / 2.5, W / 17, 0};
 	r.y += fill_menu(env, &data[0],
-	(t_mbloc){r, m->title[3]}, NULL);
-	r.w = W / 27;
-	r.y += H / 10;
-	r.y += fill_menu(env, &data[3],
 	(t_mbloc){r, m->string[I_SAVE]}, m->hover[I_SAVE]);
-	r.y += fill_menu(env, &data[4],
+	r.y += fill_menu(env, &data[1],
 	(t_mbloc){r, m->string[I_OPTIONS]}, m->hover[I_OPTIONS]);
-	r.y += fill_menu(env, &data[5],
+	r.y += fill_menu(env, &data[2],
 	(t_mbloc){r, m->string[I_MAINMENU]}, m->hover[I_MAINMENU]);
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
-	fill_menu(env, &data[2],
+	fill_menu(env, &data[3],
 	(t_mbloc){r, m->string[I_RETURN]}, NULL);
 	r.x = W - W / 10;
-	fill_menu(env, &data[1],
+	fill_menu(env, &data[4],
 	(t_mbloc){r, m->string[I_SAVED]}, NULL);
 }
 
@@ -74,13 +70,8 @@ static void	loadgame_blocs(t_env *env, t_menu *m, t_bloc *data)
 {
 	SDL_Rect	r;
 
-	r = (SDL_Rect){W / 2, H / 50, W / 17, 0};
-	r.y += fill_menu(env, &data[0],
-	(t_mbloc){r, m->title[4]}, NULL);
-	r.w = W / 40;
-	r.y += H / 10;
-	fill_menu(env, &data[1],
-	(t_mbloc){r, m->string[I_NOSAVE]}, NULL);
+	r = (SDL_Rect){W / 40, H / 3, W / 17, 0};
+	fill_menu(env, &data, (t_mbloc){r, m->string[I_NOSAVE]}, NULL);
 }
 
 static void	key_binding(t_menu *m)
@@ -108,25 +99,21 @@ static void	options_blocs(t_env *env, t_menu *m, t_bloc *data)
 
 	key_binding(m);
 	r = (SDL_Rect){W / 2, H / 70, W / 17, 0};
-	r.y += fill_menu(env, &data[0], (t_mbloc){r, m->title[5]}, NULL);
-	r = (SDL_Rect){W / 4, r.y - H / 50, W / 45, 0};
-	r.y += fill_menu(env, &data[1], (t_mbloc){r, m->string[I_OSOUND]}, NULL);
-	r.y += fill_menu(env, &data[4],
-	(t_mbloc){(SDL_Rect){data[1].rect.x + data[1].rect.w, r.y, W / 60, 0},
+	r.y += fill_menu(env, &data[1],
+	(t_mbloc){(SDL_Rect){data[0].rect.x + data[1].rect.w, r.y, W / 60, 0},
 	m->string[I_OON]}, m->string[I_OOFF]);
-	r.y += fill_menu(env, &data[2], (t_mbloc){r, m->string[I_OCOMMANDS]}, NULL);
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
-	r.y += fill_menu(env, &data[3], (t_mbloc){r, m->string[I_RETURN]}, NULL);
+	r.y += fill_menu(env, &data[0], (t_mbloc){r, m->string[I_RETURN]}, NULL);
 	r = (SDL_Rect){data[2].rect.x + data[2].rect.w,
 	data[2].rect.y + data[2].rect.h, W / 45, 0};
 	i = -1;
 	while (++i < NB_OPT_KEY)
 	{
 		i == I_OPICK ? r.y = data[2].rect.y + data[2].rect.h : 0;
-		r.y += fill_menu(env, &data[i + 5], (t_mbloc){r, m->opt_str[i]}, NULL);
-		data[i + 5].rect.x = i < I_OPICK
+		r.y += fill_menu(env, &data[i + 2], (t_mbloc){r, m->opt_str[i]}, NULL);
+		data[i + 2].rect.x = i < I_OPICK
 		? data[2].rect.x + data[2].rect.w : W / 1.5;
-		data[i + 5].rect.y -= H / 20;
+		data[i + 2].rect.y -= H / 20;
 	}
 }
 

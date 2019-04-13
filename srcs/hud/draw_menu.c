@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/13 01:29:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:16:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ void	draw_menu(t_env *env)
 	m = &env->menu;
 	if (m->status.home)
 		draw_page_menu(env, &m->mother_menu, I_IHOME, 1);
-	if (m->status.main_menu)
+	else if (m->status.main_menu)
 		draw_page_menu(env, m->main_menu, I_IMAINMENU, NB_BLOC_NG);
-	if (m->status.load_menu)
+	else if (m->status.load_menu)
 		draw_page_menu(env, m->load_menu, I_ILOAD_OPT, 2);
 		// if (m->status.new_game)
-	if (m->status.options_menu)
+	else if (m->status.options_menu)
 	{
 		draw_page_menu(env, m->options_menu, I_ILOAD_OPT, NB_OPT_MENU - NB_OPT_KEY);
 		draw_keys_options_menu(env, m->options_menu, m->keys);
 	}
-	if (m->status.ingame_menu)
+	else if (m->status.ingame_menu)
 		draw_page_menu(env, m->ingame_menu, I_Iingame_menu, NB_BLOC_IG);
 
 }

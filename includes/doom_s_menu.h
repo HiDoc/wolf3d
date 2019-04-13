@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 23:13:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:41:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ struct 			s_menu
 	t_status	status;
 	t_bloc		mother_menu;
 
-	t_bloc		load_menu[2]; // load game page blocs
+	t_bloc		load_menu; // load game page blocs
 	t_bloc		*games_ldmenu; // 1 bloc = save img + time
 
 	t_bloc		main_menu[NB_BLOC_NG]; // buttns menu
