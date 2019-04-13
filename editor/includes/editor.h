@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 20:32:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 22:37:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 **	utils/
 */
 
+float		pythagore(t_pos p1, t_pos p2);
 void		export_map(t_env *env);
 int			poscmp(t_pos a, t_pos b);
 t_elem		*get_element(int id, t_env *env);

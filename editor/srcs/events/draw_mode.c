@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 21:40:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 22:37:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,10 @@ int			draw_mode(t_env *env)
 	{
 		if (env->sct_current)
 		{
-			env->vtx_size = sqrt(
-			pow(env->sct_current->vtx_current->pos.x - env->mouse.x, 2)
-			+ pow(env->sct_current->vtx_current->pos.y - env->mouse.y, 2));
+			env->vtx_size = pythagore(
+			env->sct_current->vtx_current->pos, env->mouse);
 		}
 		return (1);
 	}
-
 	return (0);
 }
