@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 20:27:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 20:32:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,12 @@ static int	keydown_event(t_env *env)
 			key = "_";
 		}
 		else if (scancode >= 4 && scancode <= 29)
-		{
+		{ // alpha
 			*key += 32;
 		}
 		if ((scancode >= 89 && scancode <= 98)
-		|| (scancode >= 4 && scancode <= 29)
-		|| (scancode >= 30 && scancode <= 39)
-		|| scancode == 44)
-		{ // alpha numeric
+		|| (scancode >= 4 && scancode <= 39) || scancode == 44)
+		{
 			if (get_element(M_I_NEW, env)->str_max == 0)
 			{
 				tmp = get_element(M_I_NEW, env)->str;
@@ -116,7 +114,7 @@ static int	keydown_event(t_env *env)
 			}
 		}
 		else if (scancode == 42)
-		{ // backspace
+		{
 			if (get_element(M_I_NEW, env)->str)
 			{
 				newsize = ft_strlen(get_element(M_I_NEW, env)->str) - 1;

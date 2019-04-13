@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 13:25:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 21:40:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,10 @@ void		create_vertex(t_pos pos, t_env *env)
 	}
 
 	// stock xmin xmax ymin ymax
-	if (pos.x < env->sct_current->xmin)
-		env->sct_current->xmin = pos.x;
-	if (pos.x > env->sct_current->xmax)
-		env->sct_current->xmax = pos.x;
-	if (pos.y < env->sct_current->ymin)
-		env->sct_current->ymin = pos.y;
-	if (pos.y > env->sct_current->ymax)
-		env->sct_current->ymax = pos.y;
+	(pos.x < env->sct_current->xmin) ? env->sct_current->xmin = pos.x : 0;
+	(pos.x > env->sct_current->xmax) ? env->sct_current->xmax = pos.x : 0;
+	(pos.y < env->sct_current->ymin) ? env->sct_current->ymin = pos.y : 0;
+	(pos.y > env->sct_current->ymax) ? env->sct_current->ymax = pos.y : 0;
 	env->nb_vtx++;
 }
 
@@ -85,72 +81,53 @@ void		assign_vertex(t_vtx *vtx, t_env *env)
 	env->sct_current->vtx_end = vtx;
 
 	// stock xmin xmax ymin ymax
-	if (vtx->pos.x < env->sct_current->xmin)
-		env->sct_current->xmin = vtx->pos.x;
-	if (vtx->pos.x > env->sct_current->xmax)
-		env->sct_current->xmax = vtx->pos.x;
-	if (vtx->pos.y < env->sct_current->ymin)
-		env->sct_current->ymin = vtx->pos.y;
-	if (vtx->pos.y > env->sct_current->ymax)
-		env->sct_current->ymax = vtx->pos.y;	
+	(vtx->pos.x < env->sct_current->xmin)
+		? env->sct_current->xmin = vtx->pos.x : 0;
+	(vtx->pos.x > env->sct_current->xmax)
+		? env->sct_current->xmax = vtx->pos.x : 0;
+	(vtx->pos.y < env->sct_current->ymin)
+		? env->sct_current->ymin = vtx->pos.y : 0;
+	(vtx->pos.y > env->sct_current->ymax)
+		? env->sct_current->ymax = vtx->pos.y : 0;
 }
 
 int			draw_mode(t_env *env)
 {
-	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
-	t_vtx	*current;
+	const t_pos			m = env->data->mouse;
+	const SDL_Event 	event = env->data->sdl.event;
+	const SDL_Rect  	rect = (SDL_Rect){20, 100, 850, 680};
 
 	if (event.type == SDL_MOUSEBUTTONDOWN
-	&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	&& ui_mouseenter(m.x, m.y, rect)
+	&& !env->sct_hover)
 	{
-		if (!(env->drawing)) // not drawing
+		if (!env->drawing)
 		{
-			if (!(current = target_vertex(env))) // no dock
-			{
-				if (!env->sct_hover)
-				{// not in another sector
-					env->drawing = 1;
-					create_sector(env);
-					create_vertex(env->mouse, env);
-				}
-			}
-			else // dock
-			{
-				env->drawing = 1;
-				create_sector(env);
-				create_vertex(current->pos, env);
-			}
+			env->drawing = 1;
+			create_sector(env);
+		}
+		if (!env->vtx_hover)
+		{
+			create_vertex(env->mouse, env);
 			return (1);
 		}
-		else // drawing
+		else if (env->vtx_hover == env->sct_current->vtx_start)
 		{
-			if (!env->sct_hover)
-			{// not in another sector
-				if ((current = target_vertex(env))) // dock
-				{
-					if (current == env->sct_current->vtx_start) // dock start
-					{
-						env->sct_current->close = 1;
-						env->sct_current->vtx_current = 0;
-						env->sct_current = 0;
-						env->drawing = 0;
-					}
-					else if (current->sector != env->sct_current)
-					{// dock (different sector)
-						create_vertex(current->pos, env); // assign
-					}
-				}
-				else // no dock
-					create_vertex(env->mouse, env);
-			}
+			env->sct_current->close = 1;
+			env->sct_current->vtx_current = 0;
+			env->sct_current = 0;
+			env->drawing = 0;
+			return (1);
+		}
+		else if (env->vtx_hover->sector != env->sct_current)
+		{
+			create_vertex(env->vtx_hover->pos, env); // assign
 			return (1);
 		}
 	}
 
-	if (env->data->mouse.x || env->data->mouse.y)
+	if (m.x || m.y)
 	{
-		// calc vtx size
 		if (env->sct_current)
 		{
 			env->vtx_size = sqrt(

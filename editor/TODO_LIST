@@ -6,8 +6,7 @@ BUG : sectors : vertex->next sur secteur
 
 TODO : init : refactor elem loading
 TODO : doom launcher godmod
-TODO : menu : refactor		// <-- HERE
-TODO : drawing : refactor
+TODO : drawing : refactor		// <-- HERE
 TODO : walls : texture par walls
 TODO : objects : index par objets
 TODO : grid : centrer la grille
