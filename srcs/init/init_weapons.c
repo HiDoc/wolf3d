@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 22:37:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/13 16:58:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,13 +176,13 @@ void			init_weapon(t_env *env)
 	env->world.armory[RPG].ref = 0xa08010108242;
 	env->world.armory[FIST].ref = 0xa00000103002;
 	weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56,
-		(t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0);
+		(t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 1);
 	printf("time weapon: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100,
 		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1);
 	printf("time weapon: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30,
-		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0);
+		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1);
 	printf("time weapon: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[RPG], "weapons/rpg", 100,
 		(t_vctr){R_RPG, S_RPG, V_RPG}, 1);
