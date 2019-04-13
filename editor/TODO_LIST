@@ -1,0 +1,21 @@
+
+BUG : hovering : curseur sur la ligne des sommets d'un secteur
+BUG : menu : input pas de limite backspace quand on reviens dans le menu
+BUG : grid : pas de limite left / bot
+BUG : sectors : vertex->next sur secteur
+
+TODO : init : refactor elem loading
+TODO : doom launcher godmod
+TODO : menu : refactor		// <-- HERE
+TODO : drawing : refactor
+TODO : walls : texture par walls
+TODO : objects : index par objets
+TODO : grid : centrer la grille
+TODO : grid : zoom centre sur grille
+TODO : parsing : parsing todo
+TODO : objects : prefabs & specials
+TODO : meta : set gravity & music & skybox
+
+TODO : refactor : total cleaning
+TODO : leaks : total check
+TODO : norme : total norme
