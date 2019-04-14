@@ -6,35 +6,33 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 16:07:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/14 17:09:01 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-int	is_spc(int c) { return c == ' '; }
-int	is_tab(int c) { return c == '\t'; }
-int	is_min(int c) { return c == '-'; }
-int	is_end(int c) { return c == '\n'; }
-int	is_sec(int c) { return c == 's'; }
-int	is_vtx(int c) { return c == 'v'; }
-int	is_obj(int c) { return c == 'o'; }
-int	is_txt(int c) { return c == 't'; }
-int	is_ent(int c) { return c == 'e'; }
-int	is_wob(int c) { return c == 'w'; }
-int	is_spe(int c) { return c == 'x'; }
-int	is_plr(int c) { return c == 'p'; }
-int	is_cmt(int c) { return c == '#'; }
-int	is_dgt(int c) { return (c) >= '0' && (c) <= '9'; }
+static int	is_spc(int c) { return c == ' '; }
+static int	is_tab(int c) { return c == '\t'; }
+static int	is_min(int c) { return c == '-'; }
+static int	is_end(int c) { return c == '\n'; }
+static int	is_sec(int c) { return c == 's'; }
+static int	is_vtx(int c) { return c == 'v'; }
+static int	is_obj(int c) { return c == 'o'; }
+static int	is_txt(int c) { return c == 't'; }
+static int	is_ent(int c) { return c == 'e'; }
+static int	is_wob(int c) { return c == 'w'; }
+static int	is_spe(int c) { return c == 'x'; }
+static int	is_plr(int c) { return c == 'p'; }
+static int	is_cmt(int c) { return c == '#'; }
+static int	is_dgt(int c) { return (c) >= '0' && (c) <= '9'; }
 
-typedef struct s_op		t_op;
-
-struct s_op
+typedef struct s_op
 {
 	unsigned	val;
 	const char	*name;
 	int			(*verify)(int);
 	unsigned	max_token;
-};
+}t_op;
 
 enum e_op_first{
 	SECTOR,
@@ -48,7 +46,7 @@ enum e_op_first{
 	TXTURE
 };
 
-const t_op	op_next[6] = {
+static const t_op	op_next[6] = {
 	{(1U << 0), "Space", &is_spc, 1},
 	{(1U << 1), "Tabulation", &is_tab, 1},
 	{(1U << 2), "Integer", &is_dgt, 1},
@@ -58,7 +56,7 @@ const t_op	op_next[6] = {
 };
 
 
-const t_op	op_first[12] = {
+static const t_op	op_first[12] = {
 	{(1U << SECTOR), "Sector", &is_sec, 10},
 	{(1U << VERTEX), "Vertex", &is_vtx, 2},
 	{(1U << PLAYER), "Player", &is_plr, 4},
