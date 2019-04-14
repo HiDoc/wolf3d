@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 01:05:25 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 12:21:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ int	god_mod(t_env *env)
 
 void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
 {
-	*cur += k[SDL_SCANCODE_DOWN] ? 1 : -1;
-	*cur < start ? *cur = limit - 1 : 0;
-	*cur == limit ? *cur = start : 0;
+	if (k[SDL_SCANCODE_DOWN] && *cur < limit)
+		(*cur)++;
+	if (k[SDL_SCANCODE_UP] && *cur >= start)
+		(*cur)--;
+	if (*cur < start)
+		*cur = limit - 1;
+	if (*cur == limit)
+		*cur = start;
 }
 
 void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
@@ -134,7 +139,7 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	SDL_WaitEvent(&ev);
 	if (ev.type == SDL_KEYDOWN)
 	{
-		if (keycodes[SDL_GetScancodeFromKey(k[I_OINVENTR])])
+		if (keycodes[k[I_OINVENTR]])
 		{
 			ui->is_active = !ui->is_active;
 			SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -149,15 +154,15 @@ void	keyhook_gems(t_env *env, const Uint8 *keycodes)
 	int	*k;
 
 	k = env->menu.keys;
-	if (keycodes[SDL_GetScancodeFromKey(k[I_OJETPACKON])])
+	if (keycodes[k[I_OJETPACKON]])
 		action_gems(env, env->hud.shortcut[0], 0);
-	if (keycodes[SDL_GetScancodeFromKey(k[I_OBLUEGEM])])
+	if (keycodes[k[I_OBLUEGEM]])
 		action_gems(env, env->hud.shortcut[1], 1);
-	if (keycodes[SDL_GetScancodeFromKey(k[I_OGREEGEM])])
+	if (keycodes[k[I_OGREEGEM]])
 		action_gems(env, env->hud.shortcut[2], 2);
-	if (keycodes[SDL_GetScancodeFromKey(k[I_OREDGEM])])
+	if (keycodes[k[I_OREDGEM]])
 		action_gems(env, env->hud.shortcut[3], 3);
-	if (keycodes[SDL_GetScancodeFromKey(k[I_OPURPGEM])])
+	if (keycodes[k[I_OPURPGEM]])
 		action_gems(env, env->hud.shortcut[4], 4);
 }
 
@@ -175,15 +180,15 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
-		if (keycodes[SDL_GetScancodeFromKey(k[I_OPICK])])
+		if (keycodes[k[I_OPICK]])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[SDL_SCANCODE_R])
 			load_weapon(env);
-		if (keycodes[SDL_GetScancodeFromKey(k[I_OOPENDOOR])])
+		if (keycodes[k[I_OOPENDOOR]])
 			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
-		if (keycodes[SDL_GetScancodeFromKey(k[I_OINVENTR])])
+		if (keycodes[k[I_OINVENTR]])
 		{
 			env->hud.inventory.is_active = !env->hud.inventory.is_active;
 			SDL_Delay(300);

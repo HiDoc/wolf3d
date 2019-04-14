@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 01:54:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:03:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 # define NB_BLOC_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
-# define NB_OPT_MENU	19
+# define NB_OPT_MENU	16
 # define NB_MENU_BTN	8
-# define NB_HOVER_STR	9
 /*
 ** MENU Index IMG - title
 */

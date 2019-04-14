@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/12 21:11:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 12:21:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 */
 int		pushing(const Uint8 *keyb, int *k)
 {
-	return (keyb[SDL_GetScancodeFromKey(k[I_OUP])]
-		|| keyb[SDL_GetScancodeFromKey(k[I_ODOWN])]
-		|| keyb[SDL_GetScancodeFromKey(k[I_OLEFT])]
-		|| keyb[SDL_GetScancodeFromKey(k[I_ORIGHT])]);
+	return (keyb[k[I_OUP]]
+		|| keyb[k[I_ODOWN]]
+		|| keyb[k[I_OLEFT]]
+		|| keyb[k[I_ORIGHT]]);
 }
 
 int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb, int *k)
@@ -36,13 +36,13 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb, int *k)
 	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
 	v->ground = !keyb[SDL_SCANCODE_SPACE];
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
-	if (keyb[SDL_GetScancodeFromKey(k[I_OUP])])
+	if (keyb[k[I_OUP]])
 		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_GetScancodeFromKey(k[I_ODOWN])])
+	if (keyb[k[I_ODOWN]])
 		move_vec = diff_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_GetScancodeFromKey(k[I_OLEFT])])
+	if (keyb[k[I_OLEFT]])
 		move_vec = add_vertex(move_vec, (t_vtx){sin_move, -cos_move});
-	if (keyb[SDL_GetScancodeFromKey(k[I_ORIGHT])])
+	if (keyb[k[I_ORIGHT]])
 		move_vec = diff_vertex(move_vec, (t_vtx){sin_move, -cos_move});
 	velocity->x = velocity->x * (1 - speed) + move_vec.x * speed;
 	velocity->y = velocity->y * (1 - speed) + move_vec.y * speed;
