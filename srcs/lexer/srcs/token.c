@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 18:47:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:07:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct s_op
 	unsigned	val;
 	const char	*name;
 	int			(*verify)(int);
+	unsigned	max_token;
 };
 
 enum e_op_first{
@@ -48,26 +49,26 @@ enum e_op_first{
 };
 
 const t_op	op_next[6] = {
-	{(1U << 0), "Space", &is_spc},
-	{(1U << 1), "Tabulation", &is_tab},
-	{(1U << 2), "Integer", &is_dgt},
-	{(1U << 3), "Minus", &is_min},
-	{(1U << 4), "End", &is_end},
-	{(1U << 5), "None", NULL}
+	{(1U << 0), "Space", &is_spc, 1},
+	{(1U << 1), "Tabulation", &is_tab, 1},
+	{(1U << 2), "Integer", &is_dgt, 1},
+	{(1U << 3), "Minus", &is_min, 1},
+	{(1U << 4), "End", &is_end, 1},
+	{(1U << 5), "None", NULL, 1}
 };
 
 
 const t_op	op_first[12] = {
-	{(1U << SECTOR), "Sector", &is_sec},
-	{(1U << VERTEX), "Vertex", &is_vtx},
-	{(1U << PLAYER), "Player", &is_plr},
-	{(1U << OBJECT), "Object", &is_obj},
-	{(1U << WOJECT), "Wall object", &is_wob},
-	{(1U << SPECIA), "Special", &is_spe},
-	{(1U << ENTITY), "Entity", &is_ent},
-	{(1U << COMMNT), "Comment", &is_cmt},
-	{(1U << TXTURE), "Texture", &is_txt},
-	{(1U << 9), "End", &is_end},
+	{(1U << SECTOR), "Sector", &is_sec, 10},
+	{(1U << VERTEX), "Vertex", &is_vtx, 2},
+	{(1U << PLAYER), "Player", &is_plr, 4},
+	{(1U << OBJECT), "Object", &is_obj, 5},
+	{(1U << WOJECT), "Wall object", &is_wob, 3},
+	{(1U << SPECIA), "Special", &is_spe, 3},
+	{(1U << ENTITY), "Entity", &is_ent, 4},
+	{(1U << COMMNT), "Comment", &is_cmt, 100},
+	{(1U << TXTURE), "Texture", &is_txt, 3},
+	{(1U << 9), "End", &is_end, 1},
 	{(1U << 10), "None", NULL},
 	{(1U << 11), "Error", NULL}
 };
