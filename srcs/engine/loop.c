@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/12 23:28:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 00:29:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int				sdl_render(t_env *env)
 	if (env->menu.status.on)
 	{
 		draw_menu(env);
-		action_menu(env);
+		// action_menu(env);
 	}
 	else if (env->hud.inventory.is_active)
 	{
@@ -90,8 +90,8 @@ int				sdl_loop(t_env *env)
 			sdl_render(env); // <- lifetime
 			if (env->hud.inventory.is_active)
 				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
-			else if (env->menu.status.on)
-				sdl_keyhook_menu(env, env->sdl.event, env->sdl.keycodes);
+			// else if (env->menu.status.on)
+			// 	sdl_keyhook_menu(env, env->sdl.event, env->sdl.keycodes);
 			else
 				(env->player.inventory.current->current->ref == RIFLE)
 				? mouse_shoot(env) : 0;

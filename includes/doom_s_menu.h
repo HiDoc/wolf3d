@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/13 15:41:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 01:47:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ struct 			s_menu
 	int			keys[NB_OPT_KEY]; // keys options to change keys
 
 	SDL_Surface	*opt_str[NB_OPT_KEY]; // related strings menu
-	SDL_Surface	*title[6]; // title page menu
 	SDL_Surface	*string[NB_MENU_BTN]; // related strings menu
-	SDL_Surface	*hover[NB_HOVER_STR]; // related strings menu
 };
 
 

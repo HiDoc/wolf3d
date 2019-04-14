@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/13 01:49:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 01:05:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,9 @@ int	god_mod(t_env *env)
 
 void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
 {
-	if (k[SDL_SCANCODE_DOWN] && *cur < limit)
-		(*cur)++;
-	if (k[SDL_SCANCODE_UP] && *cur >= start)
-		(*cur)--;
-	if (*cur < start)
-		*cur = limit - 1;
-	if (*cur == limit)
-		*cur = start;
+	*cur += k[SDL_SCANCODE_DOWN] ? 1 : -1;
+	*cur < start ? *cur = limit - 1 : 0;
+	*cur == limit ? *cur = start : 0;
 }
 
 void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
