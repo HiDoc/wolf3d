@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 22:37:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 11:48:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			draw_mode(t_env *env)
 	&& ui_mouseenter(m.x, m.y, rect)
 	&& !env->sct_hover)
 	{
+		env->vtx_size = 0;
 		if (!env->drawing)
 		{
 			env->drawing = 1;

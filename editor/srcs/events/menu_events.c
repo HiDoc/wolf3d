@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 20:32:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 12:20:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,10 @@ static int	keydown_event(t_env *env)
 				if (newsize > 0)
 					get_element(M_I_NEW, env)->str[newsize] = 0;
 				else
+				{
 					ft_strdel(&get_element(M_I_NEW, env)->str);
+					env->map_name = "new_map";
+				}
 			}
 		}
 		return (1);
