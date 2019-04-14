@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/13 16:45:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 16:12:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				sdl_loop(t_env *env)
 
 			SDL_PollEvent(&env->sdl.event);
 
-			sdl_render(env); // <- lifetime
+			sdl_render(env);
 			if (!env->hud.inventory.is_active)
 			{
 				(env->player.inventory.current->current->ref == RIFLE)

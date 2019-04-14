@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/13 15:25:17 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/12 21:39:36 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC_NAME 	= main.c \
 			action_pl_weapon.c \
 			action_shoot.c \
 			checking.c \
+			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
