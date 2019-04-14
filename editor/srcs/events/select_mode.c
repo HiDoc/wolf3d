@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/10 16:39:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:40:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ int			select_mode(t_env *env)
 		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 	{
 		unselect_all(env);
-		if (env->sct_hover)
-		{
-			env->sct_select = env->sct_hover;
-		}
-		else if (env->vtx_hover)
+		if (env->vtx_hover)
 		{
 			env->vtx_select = env->vtx_hover;
 		}
 		else if (env->obj_hover)
 		{
 			env->obj_select = env->obj_hover;
+		}
+		else if (env->sct_hover)
+		{
+			env->sct_select = env->sct_hover;
 		}
 		return (1);
 	}

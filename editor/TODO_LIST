@@ -5,10 +5,10 @@ BUG :	sectors : vertex->next sur secteur
 BUG :	move : lors du deplacement,
 		les secteur vont plus vite (mieux visible si beaucoup dezoome)
 
-TODO :	button synchronise ressources
+TODO :	update export
 TODO :	init : refactor elem loading
 TODO :	walls : texture par walls
-TODO : 	objects : index par objets
+TODO :	objects : delete objects
 TODO :	doom launcher godmod
 TODO :	parsing : parsing todo
 TODO :	objects : prefabs & specials

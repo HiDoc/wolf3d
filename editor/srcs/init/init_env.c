@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 13:29:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:42:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ static void		create_element(int id, int type, SDL_Rect rect, t_env *env)
 	}
 }
 
-static void		create_btn_obj(int id, int type, char *str, SDL_Rect rect, t_env *env)
+static void		create_btn_obj(int id, int ref, int type, char *str, SDL_Rect rect, t_env *env)
 {
 	t_elem   *new;
 
 	if (!(new = (t_elem *)ft_memalloc(sizeof(t_elem))))
 		ui_error_exit_sdl("Editor: create_btn_obj, out of memory", env->data);
 	new->id = id;
+	new->ref = ref;
 	new->type = type;
 	if (!(new->str = ft_strdup(str)))
 		ui_error_exit_sdl("Editor: create_btn_obj, out of memory", env->data);
@@ -153,7 +154,7 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 180, 250, 30};
+	rect = (SDL_Rect){910, 300, 250, 30};
 	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
 
 	rect = (SDL_Rect){910, 250, 250, 30};
@@ -166,7 +167,7 @@ static void		load_obj(char *path, int type, t_env *env)
 	struct dirent       *de;
 	DIR                 *dr;
 	char				*name;
-	int					id;
+	int					ref;
 	int					i;
 
 	i = 0;
@@ -178,8 +179,8 @@ static void		load_obj(char *path, int type, t_env *env)
 		{
 			rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
 			name = ft_strncpy(name, de->d_name, ft_strchri(de->d_name, '+'));
-			id = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_btn_obj(id, type, name, rect, env);
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_btn_obj(i, ref, type, name, rect, env);
 			i++;
 		}
 	}
@@ -232,7 +233,6 @@ static void		init_editor(t_env *env)
 	DIR					*dr;
 	int					i;
 
-	env->obj_type = -1;
 	//env->grid_translate = (t_pos){-(870 * 2), -(780 * 2)};
 	//env->pixel_value = 5;
 
