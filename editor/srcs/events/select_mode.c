@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 13:40:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:22:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,58 @@ void		unselect_all(t_env *env)
 	env->sct_select = 0;
 }
 
+static void     delete_object(t_object *obj, t_env *env)
+{
+	t_object	*ptr;
+
+	ptr = env->objects;
+	if (ptr == obj)
+	{
+		env->objects = ptr->next;
+		free(obj->name);
+		free(obj);
+		return ;
+	}
+	while (ptr && ptr->next)
+	{
+		if (ptr->next == obj)
+		{
+			ptr->next = ptr->next->next;
+			free(obj->name);
+			free(obj);
+		}
+		ptr = ptr->next;
+	}
+}
+
 int			select_mode(t_env *env)
 {
+	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
 	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
 
-	if (event.type == SDL_MOUSEBUTTONDOWN
-		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		unselect_all(env);
-		if (env->vtx_hover)
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 		{
-			env->vtx_select = env->vtx_hover;
+			unselect_all(env);
+			if (env->vtx_hover)
+				env->vtx_select = env->vtx_hover;
+			else if (env->obj_hover)
+				env->obj_select = env->obj_hover;
+			else if (env->sct_hover)
+				env->sct_select = env->sct_hover;
+			return (1);
 		}
-		else if (env->obj_hover)
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
-			env->obj_select = env->obj_hover;
+			//if (env->vtx_select)
+			/*else */if (env->obj_select)
+				delete_object(env->obj_select, env);
+			//else if (env->sct_select)
+			unselect_all(env);
+			return (1);	
 		}
-		else if (env->sct_hover)
-		{
-			env->sct_select = env->sct_hover;
-		}
-		return (1);
 	}
 
 	// sector

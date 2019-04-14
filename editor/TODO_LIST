@@ -8,7 +8,7 @@ BUG :	move : lors du deplacement,
 TODO :	update export
 TODO :	init : refactor elem loading
 TODO :	walls : texture par walls
-TODO :	objects : delete objects
+TODO :	sectors : delete sectors
 TODO :	doom launcher godmod
 TODO :	parsing : parsing todo
 TODO :	objects : prefabs & specials
