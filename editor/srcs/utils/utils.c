@@ -6,11 +6,25 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 22:40:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:23:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+int		ft_strchri(char *str, char c)
+{
+	int count;
+
+	count = 0;
+	while (str[count])
+	{
+		if (str[count] == c)
+			return (count);
+		count++;
+	}
+	return (-1);
+}
 
 float	pythagore(t_pos p1, t_pos p2)
 {

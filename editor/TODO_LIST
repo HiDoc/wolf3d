@@ -1,20 +1,22 @@
 
 BUG :	hovering : curseur sur la ligne des sommets d'un secteur
 		fonction math/intersect_vtx truc
-BUG :	grid : pas de limite left / bot
 BUG :	sectors : vertex->next sur secteur
 BUG :	move : lors du deplacement,
 		les secteur vont plus vite (mieux visible si beaucoup dezoome)
 
+TODO :	button synchronise ressources
 TODO :	init : refactor elem loading
 TODO :	walls : texture par walls
 TODO : 	objects : index par objets
-TODO :	grid : centrer la grille
-TODO :	grid : zoom centre sur grille
 TODO :	doom launcher godmod
 TODO :	parsing : parsing todo
 TODO :	objects : prefabs & specials
 TODO :	meta : set gravity & music & skybox
+TODO :	grid : centrer la grille
+TODO :	grid : zoom centre sur grille
+TODO :	grid : limite left / bot
+
 
 TODO :	refactor : total cleaning
 TODO :	leaks : total check

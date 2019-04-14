@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 18:28:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:29:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,28 +163,27 @@ static void		init_elems(t_env *env)
 static void		load_obj(char *path, int type, t_env *env)
 {
 	SDL_Rect	rect;
-	char		**stock;
-	char		*line;
-	int			fd;
-	int			i;
+	struct dirent       *de;
+	DIR                 *dr;
+	char				*name;
+	int					id;
+	int					i;
 
-	if ((fd = open(path, O_RDONLY)) == -1)
-		ui_error_exit_sdl("Editor: load_obj, bad fd", env->data);
-	if ((get_next_line(fd, &line)) == -1)
-		ui_error_exit_sdl("Editor: load_obj, out of memory", env->data);
-	if (!(stock = ft_strsplit(line, ' ')))
-		ui_error_exit_sdl("Editor: laod_obj, out of memory", env->data);
-	free(line);
 	i = 0;
-	while (stock[i])
+	if (!(dr = opendir(path)))
+		ui_error_exit_sdl("Editor: Unable to open ressources", env->data);
+	while ((de = readdir(dr)))
 	{
-		rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
-		create_btn_obj(i, type, stock[i], rect, env);
-		free(stock[i]);
-		i++;	
+		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
+		{
+			rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
+			name = ft_strncpy(name, de->d_name, ft_strchri(de->d_name, '+'));
+			id = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_btn_obj(id, type, name, rect, env);
+			i++;
+		}
 	}
-	free(stock);
-	close(fd);
+	closedir(dr);
 }
 
 static void		init_objs(t_env *env)
@@ -195,10 +194,6 @@ static void		init_objs(t_env *env)
 	load_obj("ressources/objects/consumables", CONSUMABLE, env);
 	// entities
 	load_obj("ressources/objects/entities", ENTITY, env);
-	// prefabs
-	load_obj("ressources/objects/prefabs", PREFAB, env);
-	// specials
-	load_obj("ressources/objects/specials", SPECIAL, env);
 }
 
 static void		init_menu(t_env *env)

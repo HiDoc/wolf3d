@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 12:18:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 12:25:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,8 @@ void		menu(t_env *env)
 
 	// display right
 	right_panel(origin, env);
+
+	// display nb frames
+	rect = (SDL_Rect){300, 20, 0, 20};
+	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
 }
