@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 16:28:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:23:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int			elem_mode(t_env *env)
 			obj_btn = obj_btn->next;
 		}
 	}
+	if (env->data->mouse.x || env->data->mouse.y)
+		return (1);
 	return (0);
 }

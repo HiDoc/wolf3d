@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 11:48:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:19:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,36 +97,36 @@ int			draw_mode(t_env *env)
 	const SDL_Event 	event = env->data->sdl.event;
 	const SDL_Rect  	rect = (SDL_Rect){20, 100, 850, 680};
 
-	if (event.type == SDL_MOUSEBUTTONDOWN
-	&& ui_mouseenter(m.x, m.y, rect)
-	&& !env->sct_hover)
+	if (ui_mouseenter(m.x, m.y, rect))
 	{
-		env->vtx_size = 0;
-		if (!env->drawing)
+		if (event.type == SDL_MOUSEBUTTONDOWN && !env->sct_hover)
 		{
-			env->drawing = 1;
-			create_sector(env);
-		}
-		if (!env->vtx_hover)
-		{
-			create_vertex(env->mouse, env);
-			return (1);
-		}
-		else if (env->vtx_hover == env->sct_current->vtx_start)
-		{
-			env->sct_current->close = 1;
-			env->sct_current->vtx_current = 0;
-			env->sct_current = 0;
-			env->drawing = 0;
-			return (1);
-		}
-		else if (env->vtx_hover->sector != env->sct_current)
-		{
-			create_vertex(env->vtx_hover->pos, env); // assign
-			return (1);
+			env->vtx_size = 0;
+			if (!env->drawing)
+			{
+				env->drawing = 1;
+				create_sector(env);
+			}
+			if (!env->vtx_hover)
+			{
+				create_vertex(env->mouse, env);
+				return (1);
+			}
+			else if (env->vtx_hover == env->sct_current->vtx_start)
+			{
+				env->sct_current->close = 1;
+				env->sct_current->vtx_current = 0;
+				env->sct_current = 0;
+				env->drawing = 0;
+				return (1);
+			}
+			else if (env->vtx_hover->sector != env->sct_current)
+			{
+				create_vertex(env->vtx_hover->pos, env); // assign
+				return (1);
+			}
 		}
 	}
-
 	if (m.x || m.y)
 	{
 		if (env->sct_current)

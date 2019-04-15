@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 23:45:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:21:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,17 @@ int				handle_events(t_env *env)
 	const SDL_Event		event = env->data->sdl.event;
 	SDL_Rect			rect = (SDL_Rect){20, 100, 850, 680};
 
-	env->mouse.x = (((m.x - 20)
-	- (env->grid_translate.x + env->grid_mouse_var.x)) / env->pixel_value);
-	env->mouse.y = (((m.y - 100)
-	- (env->grid_translate.y + env->grid_mouse_var.y)) / env->pixel_value);
+	if (ui_mouseenter(m.x, m.y, rect))
+	{
+		env->mouse.x = (((m.x - 20)
+		- (env->grid_translate.x + env->grid_mouse_var.x)) / env->pixel_value);
+		env->mouse.y = (((m.y - 100)
+		- (env->grid_translate.y + env->grid_mouse_var.y)) / env->pixel_value);
+	}
+	else
+	{
+		env->mouse = (t_pos){0, 0};
+	}
 
 	/* quit doom_nukem */
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
