@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 01:04:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:17:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,25 +122,6 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx n_size)
 	return (new);
 }
 
-static void	set_menu_strings(t_env *env)
-{
-	int			i;
-	const char	*s[NB_MENU_BTN] = {S_MAINMENU, S_NEWGAME, S_LOADGAME,
-	S_OPTIONS, S_SAVE, S_QUIT, S_RETURN, S_OOFF};
-	const char	*opt[NB_OPT_KEY] = {S_OON, S_OUP, S_ODOWN, S_OLEFT, S_ORIGHT, S_OJUMP, S_ODUCK,
-	S_OINVENTR, S_OPICK, S_OOPENDOOR, S_OJETPACKON, S_OBLUEGEM, S_OGREEGEM, S_OREDGEM,
-	S_OPURPGEM};
-
-	i = -1;
-	while (++i < NB_MENU_BTN)
-		env->menu.string[i] = ui_create_simple_string((t_font){WHITE,
-		s[i], env->hud.text.deadfont, {0, 0}, 0, -1, -1});
-	i = -1;
-	while (++i < NB_OPT_KEY)
-		env->menu.opt_str[i] = ui_create_simple_string((t_font){WHITE,
-		opt[i], env->hud.text.deadfont, {0, 0}, 0, -1, -1});
-}
-
 void		init_strings(t_env *env, int i, int j)
 {
 	t_vtx		n_size;
@@ -177,5 +158,4 @@ void		init_strings(t_env *env, int i, int j)
 	set_inv_strings(env);
 	set_pick_strings(env);
 	set_door_strings(env);
-	set_menu_strings(env);
 }

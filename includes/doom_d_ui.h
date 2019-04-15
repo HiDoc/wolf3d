@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:41:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 00:16:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:45:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define F_TEXT "rsrc/font/interbureau.ttf"
 # define F_NUMB "rsrc/font/5E.ttf"
 # define F_ARIAL "rsrc/font/Arial.ttf"
-# define F_DEAD "rsrc/font/AmongDeadPriest.ttf"
+# define F_QTFY "rsrc/font/Quantify.ttf"
 
 
 #endif

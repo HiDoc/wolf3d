@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 13:11:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 23:49:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@
 #define GREEN		(SDL_Color){8, 255, 8, 0}
 #define	GOLD		(SDL_Color){242, 204, 42, 255}
 #define	M_GOLD		(SDL_Color){238, 174, 60, 0}
+#define	M_WHITE		(SDL_Color){231, 209, 190, 0}
 #define TRANSPARENT	(SDL_Color){0, 0, 0, 0}
 
 /*

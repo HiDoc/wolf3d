@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 21:12:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:07:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
 int			is_bumping(const t_sector *sect, t_vision *vision,
 			unsigned s, t_engine *e);
 
-void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes, int *k);
+void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
 
 int			sector_collision(t_vtx player, t_vtx *dest, t_edge wall);
 
-int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes, int *k);
+int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
 int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 

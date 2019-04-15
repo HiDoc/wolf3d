@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/12 19:50:56 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/16 00:17:10 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRC_NAME 	= main.c \
 			action_gems.c \
 			action_inventory.c \
 			action_menu.c \
+			action_menu_utils.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \

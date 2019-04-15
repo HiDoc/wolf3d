@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 13:03:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/15 23:30:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define S_MAINMENU		"MAIN MENU"
 # define S_NEWGAME		"NEW GAME"
 # define S_LOADGAME		"LOAD GAME"
-# define S_OPTIONS		"OPTIONS"
+# define S_OPTIONS		"SETTINGS"
 # define S_SAVE			"SAVE"
 # define S_QUIT			"QUIT"
 # define S_RETURN		"Return"
@@ -47,20 +47,20 @@
 ** OPTIONS string
 */
 # define S_OON			"ON"
-# define S_OUP			"Up               : "
-# define S_ODOWN		"Down          : "
-# define S_OLEFT		"Rift left     : "
-# define S_ORIGHT		"Rift right    : "
-# define S_OJUMP		"Jump           : "
-# define S_ODUCK		"Duck            : "
-# define S_OINVENTR		"Inventory   : "
-# define S_OPICK		"Pick up : "
-# define S_OOPENDOOR	"Open doors      : "
-# define S_OJETPACKON	"Jetpack ON/OFF  : "
-# define S_OBLUEGEM		"Blue Gem        : "
-# define S_OGREEGEM		"Green Gem       : "
-# define S_OREDGEM		"Red Gem         : "
-# define S_OPURPGEM		"Purple Gem      : "
+# define S_OUP			"UP     		  	    	 : "
+# define S_ODOWN		"DOWN       	    : "
+# define S_OLEFT		"RIFT LEFT       : "
+# define S_ORIGHT		"RIFT RIGHT   : "
+# define S_OJUMP		"JUMP       	       : "
+# define S_ODUCK		"DUCK       	      : "
+# define S_OINVENTR		"INVENTORY  : "
+# define S_OPICK		"PICK/OPEN	 	     		: "
+# define S_ORELOAD		"LOAD WPN   	 	   		: "
+# define S_OJETPACKON	"JETPACK ON/OFF  : "
+# define S_OBLUEGEM		"BLUE GEM       		 	    : "
+# define S_OGREEGEM		"GREEN GEM     		  	 : "
+# define S_OREDGEM		"RED GEM       	    		   : "
+# define S_OPURPGEM		"PURPLE GEM          	 : "
 
 /*
 ** MENU Index String -- NB_STR_MENU --
@@ -86,7 +86,7 @@
 # define I_ODUCK		6
 # define I_OINVENTR		7
 # define I_OPICK		8
-# define I_OOPENDOOR	9
+# define I_ORELOAD		9
 # define I_OJETPACKON	10
 # define I_OBLUEGEM		11
 # define I_OGREEGEM		12

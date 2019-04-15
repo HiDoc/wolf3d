@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 12:21:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 00:45:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,114 +16,52 @@ int	god_mod(t_env *env)
 {
 	if (env->god_mod)
 	{
+		env->menu.status.on = 0;
+		env->menu.status.home = 0;
+		env->menu.status.sound = 0;
 		env->player.actions.is_invisible = 1;
-		env->player.actions.is_invulnerable = 1;
 	}
-	else
-	{
-		env->player.actions.is_invisible = 0;
-		env->player.actions.is_invulnerable = 0;
-	}
-
 	return (1);
 }
 
-void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
-{
-	if (k[SDL_SCANCODE_DOWN] && *cur < limit)
-		(*cur)++;
-	if (k[SDL_SCANCODE_UP] && *cur >= start)
-		(*cur)--;
-	if (*cur < start)
-		*cur = limit - 1;
-	if (*cur == limit)
-		*cur = start;
-}
-
-void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
+void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 {
 	t_status	*s;
 
 	s = &e->menu.status;
 	SDL_WaitEvent(&ev);
-	if (ev.type == SDL_KEYDOWN)
+	if (ev.type == SDL_KEYDOWN || ev.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (s->home && k[SDL_SCANCODE_RETURN])
+		if (s->home)
 		{
+			SDL_SetRelativeMouseMode(SDL_FALSE);
 			s->main_menu = 1;
 			s->home = 0;
 		}
-		else if (s->main_menu)
-		{
-			scroll_menu(&s->current, k, 0, NB_BLOC_NG);
-			if (k[SDL_SCANCODE_RETURN])
-			{
-				s->current == 0 ? s->on = 0 : 0; //launch cinematik ? s->on = 0; // provisoire
-				s->current == 1 ? s->load_menu = 1 : 0;
-				s->current == 2 ? s->options_menu = 1 : 0;
-				s->current == 3 ? s->quit = 1 : 0;
-				s->main_menu = 0;
-				s->current = 0;
-			}
-
-		}
-		else if (s->ingame_menu)
-		{
-			s->current < 2 ? s->current = 2 : s->current;
-			scroll_menu(&s->current, k, 2, NB_BLOC_IG);
-			if (k[SDL_SCANCODE_LEFT] && s->current == 3)
-				s->current = 2;
-			else if (k[SDL_SCANCODE_RIGHT] && s->current == 2)
-				s->current = 3;
-			else if (k[SDL_SCANCODE_RETURN])
-			{
-				if (s->current == 2)
-				{
-					s->on = !s->on;
-					s->current = 3;
-				}
-				else if (s->current == 3)
-					s->nb_save++; //	save game
-				else if (s->current == 4)
-				s->current == 4 ? s->options_menu = 1 : 0;
-				s->current == 5 ? s->main_menu = 1 : 0;
-				s->ingame_menu = 0;
-				s->current = 0;
-			}
-		}
-		// if (s->load_menu)
-		// {
-		// 	if ()
-		// }
+		else if (s->main_menu && !s->options_menu && !s->ingame_menu && !s->load_menu)
+			action_mainmenu(s, k);
+		else if (s->ingame_menu && !s->options_menu)
+			action_ingame_menu(s, k);
+		else if (s->load_menu)
+			action_loadmenu(e, s, k);
 		else if (s->options_menu)
+			action_optionmenu(e, s, k);
+		if (k[SDL_SCANCODE_ESCAPE])
 		{
-			s->current < 4 ? s->current = 4 : 0;
-			scroll_menu(&s->current, k, 4, NB_OPT_MENU);
-			if (k[SDL_SCANCODE_LEFT] && s->current == 4)
-				s->current = 3;
-			else if (k[SDL_SCANCODE_RIGHT] && s->current == 3)
-				s->current = 4;
-			else if (k[SDL_SCANCODE_RETURN])
+			if (s->options_menu || s->load_menu)
 			{
-				if (s->current == 4)
-					s->on = 0;
-				else if (s->current == 1)
-					s->nb_save++; //	save game
-				else if (s->current == 2)
-					s->options_menu = 1;
-				else if (s->current == 3)
-					s->main_menu = 1;
+				s->key_change = 0;
 				s->options_menu = 0;
-				s->current = 0;
-			}
-		}
-		if (k[SDL_SCANCODE_ESCAPE] && !s->home && !s->main_menu)
-		{
-			s->on = !s->on;
-			if (s->load_menu)
 				s->load_menu = 0;
-			SDL_SetRelativeMouseMode(SDL_TRUE);
-			SDL_Delay(300);
+			}
+			else if (!s->main_menu)
+			{
+				s->on = !s->on;
+				s->ingame_menu = !s->ingame_menu;
+				SDL_SetRelativeMouseMode(SDL_TRUE);
+				SDL_Delay(300);
+			}
+			s->current = 0;
 		}
 
 	}
@@ -135,7 +73,7 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	int			*k;
 
 	ui = &env->hud.inventory;
-	k = env->menu.keys;
+	k = env->engine.keys;
 	SDL_WaitEvent(&ev);
 	if (ev.type == SDL_KEYDOWN)
 	{
@@ -153,7 +91,7 @@ void	keyhook_gems(t_env *env, const Uint8 *keycodes)
 {
 	int	*k;
 
-	k = env->menu.keys;
+	k = env->engine.keys;
 	if (keycodes[k[I_OJETPACKON]])
 		action_gems(env, env->hud.shortcut[0], 0);
 	if (keycodes[k[I_OBLUEGEM]])
@@ -172,7 +110,7 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	t_vision	*v;
 	int			*k;
 
-	k = env->menu.keys;
+	k = env->engine.keys;
 	e = &env->engine;
 	v = &e->player.vision;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
@@ -182,9 +120,9 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			env->god_mod = !env->god_mod;
 		if (keycodes[k[I_OPICK]])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
-		if (keycodes[SDL_SCANCODE_R])
+		if (k[I_ORELOAD])
 			load_weapon(env);
-		if (keycodes[k[I_OOPENDOOR]])
+		if (keycodes[k[I_ORELOAD]])
 			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
@@ -197,7 +135,7 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
 			env->menu.status.on = !env->menu.status.on;
-			env->menu.status.ingame_menu = 1;
+			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
 			SDL_Delay(300);
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}

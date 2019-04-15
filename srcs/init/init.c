@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/11 20:51:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/15 23:13:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->god_mod = (ac > 1 && !ft_strcmp(av[1], "god")) ? 1 : 0;
-
 	// init libraries
 	initialisation_sdl(env);
 	initialisation_sound_text();

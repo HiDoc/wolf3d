@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 00:17:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:46:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ struct						s_uitxt
 	TTF_Font			*arial;
 	TTF_Font			*doom;
 	TTF_Font			*text;
-	TTF_Font			*doom200;
-	TTF_Font			*text200;
 	TTF_Font			*number;
-	TTF_Font			*deadfont;
+	TTF_Font			*quantify;
 	SDL_Surface			*string[UI_NB_STRING];
 	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
 	SDL_Surface			*doors[2];
