@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/16 00:17:10 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/16 01:14:49 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,7 +132,6 @@ SRC_NAME 	= main.c \
 			utils_edge.c \
 			utils_hud_img.c \
 			utils_pixels.c \
-			utils_surface.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \

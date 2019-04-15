@@ -6,13 +6,13 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/05 19:26:50 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/10 17:10:04 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	editor
 CC			=	gcc
-CFLAGS 		=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 		=	-Wall -Wextra -Werror -O3 #-g -fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 15:52:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/11 20:10:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ enum					e_elements
 	E_B_ELM_CONS,
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
-	E_B_ELM_SPEC
+	E_B_ELM_SPEC,
+	E_B_SELEC_DEL,
+	E_I_SELEC_HEIGHT
 };
 
 enum					e_obj_category
@@ -76,6 +78,8 @@ struct					s_vtx
 
 struct					s_sct
 {
+	int				id;			// identifiant du secteur
+
 	t_vtx			*vtx_current;
 	t_vtx			*vtx_start;
 	t_vtx			*vtx_end;
@@ -189,7 +193,7 @@ struct					s_env
 	t_elem			*btn_objs;
 
 	// variables
-	int				pixel_value; // size correspond a un pixel
+	float			pixel_value; // size correspond a un pixel
 
 	// relative mouse_position
 	t_pos			mouse;

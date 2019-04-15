@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/11 15:19:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 01:13:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,11 @@ void			txr_del(void **ap); // del texture
 void			crs_del(void **ap); // del cursor
 void			ttf_del(void **ap); // del ttf font
 
-
 void			load_tilesets(t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_loop(t_env *env);
 
-SDL_Surface		*new_surface(char *filename);
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32			getpixel(SDL_Surface *surface, int x, int y);
 void			projection_print(t_raycast container);

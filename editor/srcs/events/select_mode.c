@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:06:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/10 16:39:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void		unselect_all(t_env *env)
 {
-	(void)env;
+	env->obj_select = 0;
+	env->vtx_select = 0;
+	env->sct_select = 0;
 }
 
 int			select_mode(t_env *env)
@@ -25,9 +27,10 @@ int			select_mode(t_env *env)
 	if (event.type == SDL_MOUSEBUTTONDOWN
 		&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
 	{
+		unselect_all(env);
 		if (env->sct_hover)
 		{
-			env->sct_select = env->sct_hover;;
+			env->sct_select = env->sct_hover;
 		}
 		else if (env->vtx_hover)
 		{
@@ -76,5 +79,7 @@ int			select_mode(t_env *env)
 	//	* sector
 	//	[] delete
 
+	if (env->data->mouse.x || env->data->mouse.y)
+		return (1);
 	return (0);
 }
