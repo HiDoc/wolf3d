@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/05 10:00:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 13:37:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,19 @@ typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
 typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
-typedef struct s_stats		t_stats;
 typedef struct s_thread		t_thread;
+
 
 struct 								s_thread
 {
 	int				nb;
 	char			*path;
+	t_character		*mom;
+	SDL_Surface		**kid;
 	t_weapon		*mother;
 	t_bloc			*child;
 	int				size;
 	pthread_t		th;
-};
-
-struct 						s_stats
-{
-	int				k_enemies;
-	int				k_boss;
-	int				k_wpn[WORLD_NB_WEAPONS];
-	int				headshot;
-	int				time_play;
-	int				kill_togo;
-	int				death;
-	t_bloc			achievments[8];
 };
 
 struct						s_inventory
@@ -82,7 +72,7 @@ struct						s_inventory
 
 struct						s_weapon
 {
-	t_thread			threads[8];
+	t_thread			threads[NB_THREAD_IMG];
 	t_bloc				sprite;
 	t_bloc				sprite_bullet;
 	t_bloc				*sprite_reload;
@@ -113,6 +103,8 @@ struct						s_container
 	t_surface	ceils[30];
 	t_surface	hud[NB_HUD_OBJ];
 	t_surface	poster[WORLD_NB_POSTERS];
+	t_surface	doors[NB_DOOR_IMG];
+	t_surface	button[2];
 };
 
 struct						s_actions
@@ -126,7 +118,7 @@ struct						s_actions
 	int			is_shooting;
 	int			is_loading;
 	int			is_flying;
-	int			is_superfast;
+	int			is_ammo_illimited;
 	int			is_invulnerable;
 	int			is_invisible;
 	int			is_superstrong;
@@ -135,22 +127,29 @@ struct						s_actions
 
 struct						s_character
 {
-	int			salve_shoot;
 	long		ref;
 	int			type;
-	int			tshoot_between;
+	int			is_boss;
 	int			damage;
+	int			time_walk;
+	int			time_shoot;
+	int			time_death;
+	int			cadence_shoot;
 	int			health;
 	int			shield;
 	int			max_health;
 	int			max_shield;
 	int			max_weapons;
 	int			max_objects;
-	SDL_Surface	*sprites[6];
+	SDL_Surface	**walk;
+	SDL_Surface	**shoot;
+	SDL_Surface	**death;
 	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
 	t_impact	*shot;
+	t_brain		brain;
+	t_thread	threads[NB_THREAD_IMG];
 	int			nb_shot;
 };
 
@@ -158,7 +157,7 @@ struct						s_world
 {
 	t_weapon	armory[WORLD_NB_WEAPONS];
 	t_object	objects[WORLD_NB_OBJECTS];
-	t_character	enemies[3];
+	t_character	enemies[WORLD_NB_ENEMIES];
 	t_container	surfaces;
 };
 

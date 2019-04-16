@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 20:33:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:12:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@
 # define UI_NB_STRING	30
 # define HUD_NB_STRING	19
 # define UI_NB_STR_INV	11
-# define HUD_PICK_OBJ	15
 # define DSCRIP_STR_INV	12
-
+# define NB_STATS		13
 /*
 ** HUD index img -- NB_HUD_OBJ
 */
@@ -80,16 +79,45 @@
 */
 # define STRING_19		"Inventory"
 # define STRING_20		"Weapons"
-# define STRING_21		"X"
-# define STRING_22		"Use"
-# define STRING_23		"Gems"
-# define STRING_24		"Statistics"
+# define STRING_21		"Gems"
+# define STRING_22		"Statistics"
+# define STRING_23		"X"
+# define STRING_24		"Use"
 # define STRING_25		"1"
 # define STRING_26		"2"
 # define STRING_27		"3"
 # define STRING_28		"4"
 # define STRING_29		"5"
 
+# define BLANK			0
+# define FULL_SHIELD	1
+# define NO_SHIELD		2
+# define FULL_LIFE		3
+# define NO_HEALTH		4
+# define FULL_STACK		5
+# define NEW_ITEM		6
+# define FULL_INV		7
+# define ITEM_SUP		8
+# define WPN_FULL		9
+# define NO_AMMO		10
+# define JETPACK_ON		11
+# define JETPACK_OFF	12
+# define NO_JTPACK		13
+# define WPN_LOADED		14
+# define NEW_WPN		15
+# define HAVE_WPN		16
+# define TOO_MANY_WPN	17
+# define WPN_DROPPED	18
+
+# define T_INVENTORY	19
+# define T_WEAPONS		20
+# define T_GEMS			21
+# define T_STATS		22
+
+# define CROSS			23
+# define USE			24
+
+# define PAD_INDEX		25
 /*
 ** INV string - Objects description -- DSCRIP_STR_INV
 */
@@ -99,29 +127,55 @@
 # define I_STRING_3		"Give ammo for Shotgun"
 # define I_STRING_4		"Give ammo for Pulsar Rifle"
 # define I_STRING_5		"Turn JetPack ON/OFF"
-# define I_STRING_6		"Give Super Speed - for 2 minutes"
-# define I_STRING_7		"Give Invisibility - for 2 minutes"
-# define I_STRING_8		"Give Super Strength - for 2 minutes"
-# define I_STRING_9		"Give Invulnerability - for 2 minutes"
+# define I_STRING_6		"Give Illimited ammo - for 30 sec"
+# define I_STRING_7		"Give Invisibility - for 30 sec"
+# define I_STRING_8		"Give Super Strength - for 30 sec"
+# define I_STRING_9		"Give Invulnerability - for 30 sec"
 # define I_STRING_10	"Drop object"
 # define I_STRING_11	" "
 
 /*
-** HUD string - Pick up description -- HUD_PICK_OBJ
+** HUD string - Pick up description
 */
-# define P_STRING_0		"E - Pick health"
-# define P_STRING_1		"E - Pick shield"
-# define P_STRING_2		"E - Pick Magnum / RPG ammo"
-# define P_STRING_3		"E - Pick Shotgun ammo"
-# define P_STRING_4		"E - Pick Rifle ammo"
-# define P_STRING_5		"E - Pick JetPack"
-# define P_STRING_6		"E - Pick Blue Gem"
-# define P_STRING_7		"E - Pick Green Gem"
-# define P_STRING_8		"E - Pick Red Gem"
-# define P_STRING_9		"E - Pick Purple Gem"
-# define P_STRING_10	"E - Pick Magnum"
-# define P_STRING_11	"E - Pick Shotgun"
-# define P_STRING_12	"E - Pick Pulsar Rifle"
-# define P_STRING_13	"E - Pick RPG-7"
-# define P_STRING_14	" "
+# define PICK_STRING	"E - Pick "
+
+/*
+** HUD string - Doors strings
+*/
+# define STR_DOOR_0		"E - Open the door"
+# define STR_DOOR_1		"E - Finish the level to open the door"
+
+/*
+** HUD DATA STATS - NB_STATS string
+*/
+# define D_LEVEL		"Level : "
+# define D_SECTOR		"Sector : "
+# define D_KTOGO		"Kills to go : "
+# define D_KD_RATIO		"Ratio kill/death : "
+# define D_KD_PERMN		"Ratio kill/minute : "
+# define D_KILLS		"Enemies killed : "
+# define D_DEATHS		"Death number : "
+# define D_TIMEPLAY		"Playing for : "
+# define D_K_FIST		"Fists kills : "
+# define D_K_MAGNUM		"Magnum kills : "
+# define D_K_SHOTGUN	"Shotgun kills : "
+# define D_K_RIFLE		"Rifle kills : "
+# define D_K_RPG		"RPG-7 kills : "
+
+/*
+** HUD DATA STATS - index data[NB_STATS]
+*/
+# define I_LEVEL		0
+# define I_SECTOR		1
+# define I_KTOGO		2
+# define I_KILLS		3
+# define I_DEATHS		4
+# define I_TIMEPLAY		5
+# define I_KD_RATIO		6
+# define I_KD_PERMN		7
+# define I_K_MAGNUM		8
+# define I_K_SHOTGUN	9
+# define I_K_RIFLE		10
+# define I_K_RPG		11
+# define I_K_FIST		12
 #endif

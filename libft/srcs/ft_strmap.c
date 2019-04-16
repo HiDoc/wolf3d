@@ -6,7 +6,7 @@
 /*   By: abaille <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 16:30:35 by abaille           #+#    #+#             */
-/*   Updated: 2017/11/24 16:30:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/08 23:59:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ char	*ft_strmap(const char *s, char (*f)(char))
 	if (s)
 	{
 		i = 0;
-		ptr = (char*)malloc(sizeof(*ptr) * (ft_strlen(s) + 1));
-		if (!ptr)
-			return (NULL);
+		ptr = (char*)ft_memalloc(sizeof(*ptr) * (ft_strlen(s) + 1));
 		while (s[i])
 		{
 			ptr[i] = f(s[i]);

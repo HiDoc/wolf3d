@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 18:05:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 11:07:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	action_gems(t_env *env, t_wrap_inv *shortcut, int i)
 		if (i == 0)
 			shortcut->current->action(env, shortcut);
 		if (i == 1)
-			env->player.actions.is_superfast = 1;
+			env->player.actions.is_ammo_illimited = 1;
 		if (i == 2)
 			env->player.actions.is_invisible = 1;
 		if (i == 3)
@@ -56,17 +56,23 @@ int	action_gems(t_env *env, t_wrap_inv *shortcut, int i)
 
 int	blue_gem(t_env *env)
 {
-	if (env->player.actions.is_superfast)
+	int	ref;
+	t_wrap_wpn	*cur;
+
+	if (env->player.actions.is_ammo_illimited)
 	{
+		cur = env->player.inventory.current;
+		ref = cur->current->ref;
 		if (env->time.t_blue < 600)
 		{
-			// raise velocity
+			*cur->ammo_current = env->world.armory[ref].ammo_current;
+			*cur->ammo_magazine = env->world.armory[ref].ammo_current;
 			env->time.t_blue++;
 			return (1);
 		}
 		else
 		{
-			env->player.actions.is_superfast = 0;
+			env->player.actions.is_ammo_illimited = 0;
 			env->time.t_blue = 0;
 		}
 	}

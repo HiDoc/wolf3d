@@ -6,32 +6,28 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 15:41:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 02:57:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	bot_is_moving(t_wrap_enmy *enemy)
+static void	bot_is_moving(t_character *e, t_wrap_enmy *enemy)
 {
-	if (enemy->walk_frame < 10 && !enemy->hit_frame)
+	if (enemy->walk_frame / FRAME_RATIO < e->time_walk && !enemy->hit_frame)
 	{
-		enemy->sprite = enemy->walk[enemy->walk_trig];
+		enemy->sprite = e->walk[enemy->walk_frame / FRAME_RATIO];
 		enemy->walk_frame++;
 	}
 	else
-	{
-		enemy->walk_trig = !enemy->walk_trig ? 1 : 0;
 		enemy->walk_frame = 0;
-	}
-	return (1);
 }
 
-int	bot_is_hit(t_wrap_enmy *enemy)
+static void	bot_is_hit(t_character *e, t_wrap_enmy *enemy)
 {
-	if (enemy->hit_frame < 30)
+	if (enemy->hit_frame / FRAME_RATIO < 10)
 	{
-		enemy->sprite = enemy->is_hit;
+		enemy->sprite = e->ref == LOSTSOUL ? e->shoot[0] : e->death[0];
 		enemy->is_shooting = 0;
 		enemy->is_alerted = 0;
 		enemy->has_detected = 0;
@@ -43,42 +39,61 @@ int	bot_is_hit(t_wrap_enmy *enemy)
 		enemy->hit_frame = 0;
 		enemy->is_shot = 0;
 	}
-	return (1);
 }
 
-int	bot_is_shootin(t_wrap_enmy *enemy)
+static void	bot_is_shootin(t_character *e, t_wrap_enmy *enemy)
 {
-	if (enemy->shoot_frame < 10)
+	if (enemy->shoot_frame / FRAME_RATIO < e->time_shoot)
 	{
-		enemy->sprite = enemy->shootin[enemy->walk_trig];
+		enemy->sprite = e->shoot[enemy->shoot_frame / FRAME_RATIO];
 		enemy->shoot_frame++;
 	}
 	else
-	{
 		enemy->shoot_frame = 0;
-		enemy->walk_trig = !enemy->walk_trig ? 1 : 0;
-	}
-
-	return (1);
 }
 
-int	enemies_frames(t_env *env, t_sector *sector)
+static void	bot_is_dying(t_env *env, t_character *e, t_wrap_enmy *enemy, t_sector *s)
+{
+	if (enemy->die_frame / FRAME_RATIO < e->time_death)
+	{
+		enemy->is_shooting = 0;
+		enemy->is_shot = 0;
+		enemy->walk_frame = 0;
+		enemy->sprite = e->death[enemy->die_frame / FRAME_RATIO];
+		enemy->die_frame++;
+	}
+	else
+	{
+		enemy->is_alive = 0;
+		enemy->is_dying = 0;
+		env->stats.data[I_KTOGO]--;
+		s->nb_enemies--;
+	}
+}
+
+void	enemies_frames(t_env *env, t_sector *sector)
 {
 	t_wrap_enmy	*enemy;
-
+	t_character	*e;
 	(void)env;
+
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
-		if (enemy->is_shooting)
-			bot_is_shootin(enemy);
+		e = &env->world.enemies[enemy->ref];
+		if (enemy->is_dying)
+			bot_is_dying(env, e, enemy, sector);
 		else
-			bot_is_moving(enemy);
-		if (enemy->is_shot)
-			bot_is_hit(enemy);
-		if (!enemy->is_alive)
-			enemy->sprite = enemy->dead;
+		{
+			if (enemy->is_shooting)
+				bot_is_shootin(e, enemy);
+			else
+				bot_is_moving(e, enemy);
+			if (enemy->is_shot)
+				bot_is_hit(e, enemy);
+		}
+		if (!enemy->is_alive && !enemy->is_dying)
+			enemy->sprite = e->death[e->time_death - 1];
 		enemy = enemy->next;
 	}
-	return (1);
 }

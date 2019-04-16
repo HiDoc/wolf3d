@@ -16,5 +16,4 @@ Run `./doom_nukem`
 ## Authors
 Fmadura</br>
 Abaille</br>
-Sgalasso</br>
-Jsauron
+Sgalasso

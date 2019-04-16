@@ -6,37 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:21:37 by abaille           #+#    #+#             */
-/*   Updated: 2019/03/29 19:36:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:43:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img)
-{
-	t_vtx	scale;
-    Uint32  *src;
-	Uint32	p;
-	int		x;
-	int		y;
-
-    src = img->pixels;
-	scale.x = fabs((float)img->w / (float)(rect.w));
-	scale.y = fabs((float)img->h / (float)(rect.h));
-	x = 0;
-	while (x < rect.w && x < img->w)
-	{
-		y = 0;
-		while (y < rect.h && y < img->h)
-		{
-			p = src[img->w * (int)(y * scale.y) + (int)(x * scale.x)];
-			dest[rect.w * y + x] = p;
-			y++;
-		}
-		x++;
-	}
-	return (0);
-}
 
 int	 set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 {

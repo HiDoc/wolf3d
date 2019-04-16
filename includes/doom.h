@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/02 10:55:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/10 12:20:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 /*
 ** Then include all functions
 */
+# include "doom_f_init.h"
+# include "doom_f_exit.h"
 # include "doom_f_math.h"
 # include "doom_f_parser.h"
 # include "doom_f_gameplay.h"

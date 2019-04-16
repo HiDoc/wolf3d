@@ -6,24 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 11:02:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 10:13:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int		new_bullet(t_impact *new, t_player *p, int i, float velocity)
-{
-	new->position.origin = p->where;
-	new->position.where = p->where;
-	new->position.anglecos = p->anglecos * velocity;
-	new->position.anglesin = p->anglesin * velocity;
-	new->position.sprite = p->sprite;
-	new->is_shooting = 1;
-	new->is_alive = 1;
-	new->ref = i;
-	return (1);
-}
 
 /*
 ** Collision detection.
@@ -55,14 +42,17 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 	t_vtx	where;
 
 	where = (t_vtx){shot->position.where.x, shot->position.where.y};
-	if (dist_vertex(where, player) < 1)
+	if (dist_vertex(where, player) < 5)
 	{
-		if (env->player.shield)
+		if (env->player.shield > 0)
 			env->player.shield -= damage;
 		else
 			env->player.health -= damage;
 		if (env->player.health <= 10)
+		{
 			env->player.health = 200;
+			env->stats.data[I_DEATHS]++;
+		}
 		shot->is_shooting = 0;
 		shot->is_alive = 0;
 	}
@@ -86,15 +76,14 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 		scd = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 		if (enemy->is_alive && dist_vertex(first, scd) <= rwpn->ray)
 		{
-			enemy->health -= damage;
-			printf("vie bot : %i\n", enemy->health);
-			printf("wpn ray : %i\n", rwpn->ray);
-			if (enemy->health < 1)
+			enemy->brain.health -= damage;
+			printf("vie bot : %i\n", enemy->brain.health);
+			if (enemy->brain.health < 1)
 			{
+				enemy->is_dying = 1;
 				enemy->is_alive = 0;
-				env->stats.k_enemies++;
-				env->stats.k_wpn[wpn]++;
-				sector->nb_enemies--;
+				env->stats.data[I_KILLS]++;
+				env->stats.data[I_K_MAGNUM + wpn]++;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;
@@ -149,6 +138,18 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 	}
 }
 
+void		new_bullet(t_impact *new, t_player *p, float velocity)
+{
+	ft_bzero(new, sizeof(t_impact));
+	new->position.origin = p->where;
+	new->position.where = p->where;
+	new->position.anglecos = p->anglecos * velocity;
+	new->position.anglesin = p->anglesin * velocity;
+	new->position.sprite = p->sprite;
+	new->is_shooting = 1;
+	new->is_alive = 1;
+}
+
 int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 {
 	int	i;
@@ -162,14 +163,11 @@ int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 		{
 			if (!player->shot[i].is_alive)
 			{
-				new_bullet(&player->shot[i], p, i, rwpn->velocity);
+				new_bullet(&player->shot[i], p, rwpn->velocity);
 				return (1);
 			}
 			i++;
 		}
-		ft_bzero(&player->shot[0], sizeof(t_impact));
-		new_bullet(&player->shot[0], p, 0, rwpn->velocity);
-		ft_bzero(&player->shot[1], sizeof(t_impact));
 	}
 	return (1);
 }

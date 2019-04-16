@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/29 18:52:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/13 15:00:11 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void				render_cwall(t_drawline l, t_env *env)
 	ctn = ((t_raycast *)l.container);
 
 	pixels	= (int *)env->sdl.surface->pixels;
-	sprite = env->world.surfaces.walls[0].sprite;
+	// sprite = env->world.surfaces.walls[0].sprite;
+	sprite = ctn->sprite;
 
 	float height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
@@ -93,7 +94,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
 				y++;
 				iter++;
 			}
@@ -105,7 +106,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
 				y++;
 				iter++;
 			}
@@ -115,7 +116,7 @@ void				render_cwall(t_drawline l, t_env *env)
 			while (iter < l.to)
 			{
 				pos = (y / height * scaley) * sprite->h;
-				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h) | 0xFF;
+				pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
 				y++;
 				iter++;
 			}

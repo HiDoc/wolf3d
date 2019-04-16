@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/04 19:22:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/11 00:12:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ typedef struct s_minibloc	t_minibloc;
 typedef struct s_bloc		t_bloc;
 typedef struct s_uinv		t_uinv;
 typedef struct s_hud		t_hud;
+typedef struct s_uitxt		t_uitxt;
+typedef struct s_stats		t_stats;
 
 struct					s_minibloc
 {
@@ -32,9 +34,26 @@ struct					s_bloc
 	SDL_Surface			*bg_fill;
 	SDL_Surface			*sprite;
 	SDL_Rect			rect;
-	int					type;
-	int					is_visible;
 	t_edge				limit;
+};
+
+struct 						s_stats
+{
+	int				data[NB_STATS];
+	t_bloc			achievments[8];
+};
+
+struct						s_uitxt
+{
+	TTF_Font			*arial;
+	TTF_Font			*doom;
+	TTF_Font			*text;
+	TTF_Font			*number;
+	SDL_Surface			*string[UI_NB_STRING];
+	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
+	SDL_Surface			*doors[2];
+	SDL_Surface			**obj_names;
+	SDL_Surface			*pick;
 };
 
 struct 						s_uinv

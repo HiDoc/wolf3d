@@ -6,13 +6,13 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/06 13:50:02 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/12 21:39:36 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g -O3#-fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -31,7 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -59,12 +59,15 @@ HED_NAME	= doom.h \
 			  doom_s_math.h \
 			  doom_s_gameplay.h \
 			  doom_s_engine.h \
+			  doom_f_init.h \
+			  doom_f_exit.h \
 			  doom_f_engine.h \
 			  doom_f_math.h \
 			  doom_f_ui.h \
 			  doom_define.h
 
 SRC_NAME 	= main.c \
+			action_door.c \
 			action_enemies.c \
 			action_gems.c \
 			action_inventory.c \
@@ -73,6 +76,7 @@ SRC_NAME 	= main.c \
 			action_pl_weapon.c \
 			action_shoot.c \
 			checking.c \
+			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
@@ -83,15 +87,20 @@ SRC_NAME 	= main.c \
 			hud_data.c \
 			hull.c \
 			init.c \
+			init_hud.c \
+			init_fonts.c \
+			init_images.c \
 			init_enemies.c \
 			init_minimap.c \
-			init_skybox.c \
+			init_weapons.c \
+			init_strings.c \
 			load.c \
 			loop.c \
 			map.c \
 			move.c \
 			musics.c \
 			no_op.c \
+			parse_door.c \
 			parse_enemies.c \
 			parse_objects.c \
 			perspective.c \
@@ -102,16 +111,9 @@ SRC_NAME 	= main.c \
 			render_sect.c \
 			sdl_hook.c \
 			sdl_mouse.c \
-			struct_character.c \
-			struct_container.c \
 			struct_drawline.c \
-			struct_font.c \
-			struct_hud.c \
 			struct_hud_img.c \
 			struct_inventory.c \
-			struct_object.c \
-			struct_weapon.c \
-			threads_images.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
@@ -122,17 +124,16 @@ SRC_NAME 	= main.c \
 			ui_draw_vector.c \
 			ui_make_surface.c \
 			ui_minimap.c \
-			unload.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \
 			utils_hud_img.c \
 			utils_pixels.c \
-			utils_surface.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
-			weapons_wheel_hud.c
+			weapons_wheel_hud.c \
+			doom_exit.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 
