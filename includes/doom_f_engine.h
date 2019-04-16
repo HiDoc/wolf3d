@@ -13,8 +13,6 @@
 #ifndef DOOM_F_ENGINE_H
 # define DOOM_F_ENGINE_H
 
-void        init_skybox(t_env *env);
-
 void		dfs(t_env *env);
 int			is_crossing(const t_vtx p, t_vtx d, const t_vtx *vert, unsigned s);
 int			is_bumping(const t_sector *sect, t_vision *vision,

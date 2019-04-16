@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 00:48:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:44:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void        export_map(t_env *env)
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);
 
-	dprintf(fd, "# nb vertex:\n%d\n", env->nb_vtx);
 	dprintf(fd, "# vertex: x y\n");
 	sct = env->sct_start;
 	while (sct)
@@ -84,9 +83,6 @@ void        export_map(t_env *env)
 		sct = sct->next;	
 	}
 
-	ft_putendl_fd("# nb sectors:", fd);
-	ft_putnbr_fd(env->nb_sct, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# sector: ceil floor n-vertex n-neighbors", fd);
 	sct = env->sct_start;
 	while (sct)
@@ -96,9 +92,6 @@ void        export_map(t_env *env)
 		sct = sct->next;	
 	}
 
-	ft_putendl_fd("# nb wall objects:", fd);
-	ft_putnbr_fd(nb_wobj, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# wall_object: x y sector ref", fd);
 	obj = env->objects;
 	while (obj)
@@ -109,9 +102,6 @@ void        export_map(t_env *env)
 		obj = obj->next;	
 	}
 
-	ft_putendl_fd("# nb consumables:", fd);
-	ft_putnbr_fd(nb_cons, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# consumable: x y sector ref is_wpn", fd);
 	obj = env->objects;
 	while (obj)
@@ -122,9 +112,6 @@ void        export_map(t_env *env)
 		obj = obj->next;	
 	}
 	
-	ft_putendl_fd("# nb entities:", fd);
-	ft_putnbr_fd(nb_ntty, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# entity: x y sector ref", fd);	
 	obj = env->objects;
 	while (obj)
@@ -135,9 +122,6 @@ void        export_map(t_env *env)
 		obj = obj->next;	
 	}
 
-	ft_putendl_fd("# nb specials:", fd);
-	ft_putnbr_fd(nb_spec, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# special: x y ref", fd);
 	obj = env->objects;
 	while (obj)

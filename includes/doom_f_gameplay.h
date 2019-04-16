@@ -36,7 +36,7 @@ int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 int		    put_gun(t_env *env, t_bloc *bloc);
 int			put_gun_load(t_env *env, int frame);
 int			put_gun_shoot(t_env *env, int frame);
-int			handle_weapon(t_env *env, int *frame);
+int			handle_weapon(t_env *env);
 int			load_weapon(t_env *env);
 int			reload_ammo(t_env *env);
 

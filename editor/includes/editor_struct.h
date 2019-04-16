@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 20:10:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 03:03:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
+	int				height;
+
 	float			xmin;
 	float			xmax;
 	float			ymin;
@@ -98,6 +100,7 @@ struct					s_sct
 
 struct					s_elem
 {
+	int				ref;		// if btn object
 	int				id;
 	int				type;
 	SDL_Rect		rect;
@@ -114,9 +117,12 @@ struct					s_object
 {
 	t_pos			pos;
 	float			dir;	// if entity
+
 	int				sct;
 	int				ref;
 	int				category;
+	char			*name;
+
 	Uint32			icon_color; // replace by image
 	t_object		*next;
 };
@@ -161,8 +167,11 @@ struct					s_env
 	t_object		*obj_hover;
 	t_object		*obj_select;
 
-	// current obj_button
-	int				obj_type;
+	// current elem / objects flags
+	t_elem			*obj_elem;	// obj selectionne
+	int				spawn_set;	// spawn pose, en attente de direction
+	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
+
 	// lst objects
 	t_object		*objects;
 
@@ -178,7 +187,6 @@ struct					s_env
 
 	// mouse handling
 	int				mouse_mode;
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// grid move
 	int				grid_drag;

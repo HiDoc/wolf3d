@@ -78,6 +78,7 @@ SRC_NAME 	= main.c \
 			action_pl_weapon.c \
 			action_shoot.c \
 			checking.c \
+			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \

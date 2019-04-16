@@ -73,6 +73,16 @@ static void			init_character(t_character *new)
 	ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
+static void			init_skybox_img(t_env *env)
+{
+	if (!(env->skybox.sb_top = lt_push(
+			IMG_Load("rsrc/skybox/sb_top.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+	if (!(env->skybox.sb = lt_push(
+			IMG_Load("rsrc/skybox/sb.jpg"), srf_del)))
+		doom_error_exit("wolf3d: error while loading skybox");
+}
+
 void				load_images(t_env *env)
 {
 	init_pack_img(env->world.surfaces.poster, "posters/", WORLD_NB_POSTERS);
@@ -82,4 +92,5 @@ void				load_images(t_env *env)
 	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU);
 	init_consumable(env);
 	init_character(&env->player);
+	init_skybox_img(env);
 }
