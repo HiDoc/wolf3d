@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_hud_img.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/13 16:21:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/16 01:14:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 		while (j < bloc->rect.h - bloc->limit.v2.y
 		&& (ratioy > 1 ? (j * ratioy) : j) < img->h)
 		{
-			Uint32 color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
-			(ratioy > 1 ? (j * ratioy) : j));
-			if (color & 0xff)
+			// Uint32 color = ;
+			if (getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
+			(ratioy > 1 ? (j * ratioy) : j)) & img->format->Amask)
 				setpixel(env->sdl.surface, i + bloc->rect.x,
-				j + bloc->rect.y, color);
+				j + bloc->rect.y, getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
+			(ratioy > 1 ? (j * ratioy) : j)));
 			j++;
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_env.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/12 19:40:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:13:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ struct								s_env
 	t_engine		engine;
 	t_hud			hud;
 	t_stats			stats;
+	t_menu			menu;
 	int				god_mod;
-
-	/* tilesets */
 	t_tiletab		tiletab;
 
 	/* skybox */

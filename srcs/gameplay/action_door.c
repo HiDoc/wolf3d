@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:21:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 02:41:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,11 @@ void	print_infos_door(t_env *env, t_sector *sector)
 	int			index;
 	t_door		*front_player;
 	t_bloc		fill;
-	SDL_Rect	rect;
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
-		rect = (SDL_Rect){W / 2, H / 2, env->hud.text.doors[1]->w, env->hud.text.doors[1]->h};
-		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL},
-		NULL, NULL, NULL, rect, {{0, 0}, {0, 0}}};
+		ft_bzero(&fill, sizeof(t_bloc));
+		fill.rect = (SDL_Rect){W / 2, H / 2, env->hud.text.doors[1]->w, env->hud.text.doors[1]->h};
 		front_player = &sector[index].door;
 		if (!front_player->is_openable)
 			draw_img(env, env->hud.text.doors[1], &fill);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 12:45:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:43:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ struct						s_engine
 	t_player		player;
 	t_queue			queue;
 	t_minimap		minimap;
+	t_skybox		skybox;
+	int				keys[NB_OPT_KEY];
 };
 #endif
