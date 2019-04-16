@@ -2,4 +2,7 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "editor.insertSpaces": false,
     "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "doom.h": "c"
+    },
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:20:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 00:12:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ int         wpn_mouse_wheel(t_env *env, SDL_Event event);
 int		    put_gun(t_env *env, t_bloc *bloc);
 int			put_gun_load(t_env *env, int frame);
 int			put_gun_shoot(t_env *env, int frame);
-int			handle_weapon(t_env *env, int *frame);
+int			handle_weapon(t_env *env);
 int			load_weapon(t_env *env);
 int			reload_ammo(t_env *env);
 
+void		sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k);
 int			sdl_keyhook_game(t_env *env, SDL_Event event, const Uint8 *keycodes);
 int			sdl_keyhook_inventory(t_env *env, SDL_Event event, const Uint8 *keycodes);
 int			mouse_shoot(t_env *env);
@@ -58,4 +59,5 @@ int			door_neighbors(t_engine *e, t_vtx *vertex, int n);
 int			select_door(t_engine *e);
 int			open_door(t_env *env);
 void		handle_doors(t_env *env);
+
 #endif

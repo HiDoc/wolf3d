@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/10 23:49:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 01:14:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		initialisation_sdl(t_env *env)
 
 	// init renderer
 	if (!(env->sdl.renderer = lt_push(
-	SDL_CreateRenderer(env->sdl.window, -1, 0), rdr_del)))
+	SDL_CreateRenderer(env->sdl.window, -1, SDL_RENDERER_SOFTWARE), rdr_del)))
 		doom_error_exit("Doom_nukem error, can't create renderer");
 
 	// init main surface
@@ -39,7 +39,7 @@ static void		initialisation_sdl(t_env *env)
 
 	// init main texture
 	if (!(env->sdl.texture = lt_push(
-	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_RGBA8888,
+	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_RGBA32,
 	SDL_TEXTUREACCESS_STREAMING, W, H), txr_del)))
 		doom_error_exit("Doom_nukem error, can't create texture");
 }
@@ -68,7 +68,6 @@ void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->god_mod = (ac > 1 && !ft_strcmp(av[1], "god")) ? 1 : 0;
-
 	// init libraries
 	initialisation_sdl(env);
 	initialisation_sound_text();
@@ -80,6 +79,7 @@ void	init_env(int ac, char **av, t_env *env)
 	init_strings(env, 0, 0);
 
 	// init game data
+	init_blocs_menu(env);
 	init_hud(env);
 	init_weapon(env);
 	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/10 12:36:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:13:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_sdl				t_sdl;
 typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
 typedef struct	s_tiletab			t_tiletab;
+typedef struct	s_skybox			t_skybox;
 
 struct								s_sdl
 {
@@ -81,6 +82,17 @@ struct								s_tiletab
 	SDL_Surface		**surface;
 };
 
+struct								s_skybox
+{
+	SDL_Surface		*sb_top;
+	SDL_Surface		*sb_front;
+	SDL_Surface		*sb_right;
+	SDL_Surface		*sb_back;
+	SDL_Surface		*sb_left;
+
+	SDL_Surface		*sb;
+};
+
 struct								s_env
 {
 	int				map_w;
@@ -93,11 +105,13 @@ struct								s_env
 	t_engine		engine;
 	t_hud			hud;
 	t_stats			stats;
-	t_tiletab		tiletab;
+	t_menu			menu;
 	int				god_mod;
-	//
-	// ...
-	//
+	t_tiletab		tiletab;
+
+	/* skybox */
+	t_skybox		skybox;
+
 	// Comment je penses que ce serait mieux :
 	//
 	// t_sdl			sdl; 		(trucs sdl ...)
@@ -113,18 +127,18 @@ void			doom_exit(void);
 void			doom_error_exit(char *str);
 void			srf_del(void **ap);	// del surface
 void			wdw_del(void **ap); // del window
-void			rdr_del(void **ap); // del renderer 
+void			rdr_del(void **ap); // del renderer
 void			txr_del(void **ap); // del texture
 void			crs_del(void **ap); // del cursor
 void			ttf_del(void **ap); // del ttf font
 
+void			display_skybox(t_env *env);
 
 void			load_tilesets(t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_loop(t_env *env);
 
-SDL_Surface		*new_surface(char *filename);
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32			getpixel(SDL_Surface *surface, int x, int y);
 void			projection_print(t_raycast container);

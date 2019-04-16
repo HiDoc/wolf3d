@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 15:52:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 20:25:26 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/13 14:54:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,13 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 		ret = *(Uint16 *)p;
 	else if (bpp == 3)
 	{
-		ret = (SDL_BYTEORDER == SDL_BIG_ENDIAN) ?
+		ret = (SDL_BYTEORDER != SDL_BIG_ENDIAN) ?
 		(p[0] << 16 | p[1] << 8 | p[2]) : (p[0] | p[1] << 8 | p[2] << 16);
 	}
 	else if (bpp == 4)
 		ret = *(Uint32 *)p;
 	else
 		ret = 0;
-	ret = ((ret & 0xFF) << 24)
-	+ (((ret & 0xFF00) >> 8) << 16)
-	+ (((ret & 0xFF0000) >> 16) << 8)
-	+ (((ret & 0xFF000000) >> 24));
 	SDL_UnlockSurface(surface);
 	return (ret);
 }
