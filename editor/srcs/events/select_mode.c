@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 04:22:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 19:54:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,19 @@ int			select_mode(t_env *env)
 			else if (env->sct_hover)
 			{
 				env->sct_select = env->sct_hover;
+				// height input
 				if (get_element(E_I_SELEC_HEIGHT, env)->str)
 					ft_strdel(&get_element(E_I_SELEC_HEIGHT, env)->str);
 				if (env->sct_select->height > 0
 				&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
 				ft_itoa(env->sct_select->height)))
+					ui_error_exit_sdl("Editor: Out of memory", env->data);
+				// gravity input
+				if (get_element(E_I_SELEC_GRAVITY, env)->str)
+					ft_strdel(&get_element(E_I_SELEC_GRAVITY, env)->str);
+				if (env->sct_select->gravity > 0
+				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
+				ft_itoa(env->sct_select->gravity)))
 					ui_error_exit_sdl("Editor: Out of memory", env->data);
 			}
 			return (1);
@@ -119,6 +127,12 @@ int			select_mode(t_env *env)
 		{
 			get_element(E_I_SELEC_HEIGHT, env)->clicked = 1;
 			get_element(E_I_SELEC_HEIGHT, env)->color = C_GREEN;
+		}
+		else if (env->sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_GRAVITY, env)->rect))
+		{
+			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
+			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
@@ -165,13 +179,43 @@ int			select_mode(t_env *env)
 					newsize = ft_strlen(
 					get_element(E_I_SELEC_HEIGHT, env)->str) - 1;
 					if (newsize > 0)
-					{
 						get_element(E_I_SELEC_HEIGHT, env)->str[newsize] = 0;
-					}
 					else
-					{
 						ft_strdel(&get_element(E_I_SELEC_HEIGHT, env)->str);
-					}
+				}
+			}
+			return (1);
+		}
+		else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
+		{
+			if (scancode >= 89 && scancode <= 98)
+			{ // numeric keypad
+				key += 7;
+			}
+			if ((scancode >= 89 && scancode <= 98)
+			|| (scancode >= 30 && scancode <= 39))
+			{
+				if (get_element(E_I_SELEC_GRAVITY, env)->str_max == 0)
+				{
+					tmp = get_element(E_I_SELEC_GRAVITY, env)->str;
+					if (!(get_element(E_I_SELEC_GRAVITY, env)->str =
+					ft_zstrjoin(get_element(E_I_SELEC_GRAVITY, env)->str, key)))
+						ui_error_exit_sdl("Editor: Out of memory", env->data);
+					env->sct_select->gravity = ft_atoi(
+					get_element(E_I_SELEC_GRAVITY, env)->str);
+					free(tmp);
+				}
+			}
+			else if (scancode == 42)
+			{
+				if (get_element(E_I_SELEC_GRAVITY, env)->str)
+				{
+					newsize = ft_strlen(
+					get_element(E_I_SELEC_GRAVITY, env)->str) - 1;
+					if (newsize > 0)
+						get_element(E_I_SELEC_GRAVITY, env)->str[newsize] = 0;
+					else
+						ft_strdel(&get_element(E_I_SELEC_GRAVITY, env)->str);
 				}
 			}
 			return (1);
