@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 17:04:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:45:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ struct					s_sct
 	t_vtx			*vtx_end;
 
 	int				close;		// is sector close;
+
+	int				height;
 
 	float			xmin;
 	float			xmax;
