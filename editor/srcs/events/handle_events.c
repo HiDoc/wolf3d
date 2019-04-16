@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 01:21:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:13:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int				handle_events(t_env *env)
 
 	/* quit doom_nukem */
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
-		? ui_exit_sdl(env->data) : 0;
+		? ui_exit_sdl() : 0;
 
 	if (env->menu.state > 0 && menu_events(env))
 		return (1);

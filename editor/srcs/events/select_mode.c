@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 19:54:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:12:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ int			select_mode(t_env *env)
 				if (env->sct_select->height > 0
 				&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
 				ft_itoa(env->sct_select->height)))
-					ui_error_exit_sdl("Editor: Out of memory", env->data);
+					ui_error_exit_sdl("Editor: Out of memory");
 				// gravity input
 				if (get_element(E_I_SELEC_GRAVITY, env)->str)
 					ft_strdel(&get_element(E_I_SELEC_GRAVITY, env)->str);
 				if (env->sct_select->gravity > 0
 				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
 				ft_itoa(env->sct_select->gravity)))
-					ui_error_exit_sdl("Editor: Out of memory", env->data);
+					ui_error_exit_sdl("Editor: Out of memory");
 			}
 			return (1);
 		}
@@ -166,7 +166,7 @@ int			select_mode(t_env *env)
 					tmp = get_element(E_I_SELEC_HEIGHT, env)->str;
 					if (!(get_element(E_I_SELEC_HEIGHT, env)->str =
 					ft_zstrjoin(get_element(E_I_SELEC_HEIGHT, env)->str, key)))
-						ui_error_exit_sdl("Editor: Out of memory", env->data);
+						ui_error_exit_sdl("Editor: Out of memory");
 					env->sct_select->height = ft_atoi(
 					get_element(E_I_SELEC_HEIGHT, env)->str);
 					free(tmp);
@@ -200,7 +200,7 @@ int			select_mode(t_env *env)
 					tmp = get_element(E_I_SELEC_GRAVITY, env)->str;
 					if (!(get_element(E_I_SELEC_GRAVITY, env)->str =
 					ft_zstrjoin(get_element(E_I_SELEC_GRAVITY, env)->str, key)))
-						ui_error_exit_sdl("Editor: Out of memory", env->data);
+						ui_error_exit_sdl("Editor: Out of memory");
 					env->sct_select->gravity = ft_atoi(
 					get_element(E_I_SELEC_GRAVITY, env)->str);
 					free(tmp);

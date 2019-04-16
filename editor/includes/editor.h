@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 13:23:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:28:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@
 */
 
 void		init_env(t_env *env, t_data *data);
+
+/*
+** release ////////////////// a ranger
+*/
+
+void        dir_del(void **ap);		// close directory
+void        wdw_del(void **ap);		// destroy window
+void        rdr_del(void **ap);		// destroy renderer
+void        srf_del(void **ap);		// free surface
+void        txr_del(void **ap);		// destroy texture
+void        crs_del(void **ap);		// destroy cursor
+void        ttf_del(void **ap);		// free font
+
 
 /*
 **	display/

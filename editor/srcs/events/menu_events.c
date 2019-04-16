@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 12:22:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:13:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static int	keydown_event(t_env *env)
 				tmp = get_element(M_I_NEW, env)->str;
 				if (!(get_element(M_I_NEW, env)->str =
 						ft_zstrjoin(get_element(M_I_NEW, env)->str, key)))
-					ui_error_exit_sdl("Editor: Out of memory", env->data);
+					ui_error_exit_sdl("Editor: Out of memory");
 				free(tmp);
 			}
 		}

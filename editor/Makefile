@@ -6,13 +6,13 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/16 01:24:56 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/16 22:45:09 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	editor
 CC			=	gcc
-CFLAGS 		=	-Wall -Wextra -Werror -O3 #-g -fsanitize=address
+CFLAGS 		=	-Wall -Wextra -Werror -g -fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \
@@ -76,6 +76,7 @@ SRC_NAME 	=	main.c \
 				display_element.c \
 				export_map.c \
 				init_env.c \
+				release_functions.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image

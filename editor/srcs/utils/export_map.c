@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 15:44:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:14:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void        export_map(t_env *env)
 	}
 
 	if (!(path = ft_strjoin("maps/", env->map_name)))
-		ui_error_exit_sdl("Editor: Error while opening file", env->data);
+		ui_error_exit_sdl("Editor: Error while opening file");
 
 	if ((fd = open(path, O_CREAT | O_TRUNC | O_WRONLY,
 	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
-		ui_error_exit_sdl("Editor: Error while opening file", env->data);
+		ui_error_exit_sdl("Editor: Error while opening file");
 	free(path);	
 
 	ft_putendl_fd("# map name", fd);
@@ -133,5 +133,5 @@ void        export_map(t_env *env)
 	}
 
 	if (close(fd) == -1)
-		ui_error_exit_sdl("Editor: Error while closing file", env->data);
+		ui_error_exit_sdl("Editor: Error while closing file");
 }
