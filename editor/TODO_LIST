@@ -8,14 +8,14 @@ BUG :	trop de reframes inutiles
 BUG :	angle du spawn
 
 TOCHECK : reference 0 de l'angle du joueur sur le spawm
+TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 
 TODO :	elements : refactor elements
 TODO :	update export
 TODO :	init : refactor elem loading
 TODO :	edge selection
-TODO :	walls : handle size max walls
+* TODO : walls : handle size max walls
 * TODO : walls : texture par walls
-* TODO : sectors : delete sectors
 TODO :	doom launcher godmod
 TODO :	parsing : parsing todo
 TODO :	objects : prefabs
@@ -24,6 +24,6 @@ TODO :	grid : centrer la grille
 TODO :	grid : zoom centre sur grille
 TODO :	grid : limite left / bot
 
-* TODO :	leaks : lifetime
+* TODO : leaks : lifetime
 TODO :	refactor : total cleaning
 TODO :	norme : total norme

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 02:04:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 04:22:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,42 @@ static void     delete_object(t_object *obj, t_env *env)
 	}
 }
 
+static void		delete_sct_content(t_sct *sector)
+{
+	t_vtx	*tmp;
+
+	while (sector->vtx_start)
+	{
+		tmp = sector->vtx_start->next;
+		free(sector->vtx_start);
+		sector->vtx_start = tmp;
+	}
+}
+
+static void     delete_sector(t_sct *sector, t_env *env)
+{
+	t_sct		*ptr;
+
+	ptr = env->sct_start;
+	if (ptr == sector)
+	{
+		env->sct_start = ptr->next;
+		delete_sct_content(sector);
+		free(sector);
+		return ;
+	}
+	while (ptr && ptr->next)
+	{
+		if (ptr->next == sector)
+		{
+			ptr->next = ptr->next->next;
+			delete_sct_content(sector);
+			free(sector);
+		}
+		ptr = ptr->next;
+	}
+}
+
 int			select_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
@@ -86,10 +122,10 @@ int			select_mode(t_env *env)
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
-			//if (env->vtx_select)
-			/*else */if (env->obj_select)
+			if (env->obj_select)
 				delete_object(env->obj_select, env);
-			//else if (env->sct_select)
+			else if (env->sct_select)
+				delete_sector(env->sct_select, env);
 			unselect_all(env);
 			return (1);	
 		}
@@ -129,7 +165,9 @@ int			select_mode(t_env *env)
 					newsize = ft_strlen(
 					get_element(E_I_SELEC_HEIGHT, env)->str) - 1;
 					if (newsize > 0)
+					{
 						get_element(E_I_SELEC_HEIGHT, env)->str[newsize] = 0;
+					}
 					else
 					{
 						ft_strdel(&get_element(E_I_SELEC_HEIGHT, env)->str);
