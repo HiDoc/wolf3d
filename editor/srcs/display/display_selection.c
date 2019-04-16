@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 01:43:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 03:29:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		display_selection(t_env *env)
 {
-	char		*obj_tab[3] = {"Wall_object", "Consumable", "Entity"};
+	char		*obj_tab[5] = {
+	"Wall_object", "Consumable", "Entity", "Prefab", "Special"};
 	SDL_Rect	rect;
 
 	// display selection area
@@ -35,9 +36,10 @@ void		display_selection(t_env *env)
 	if (env->obj_select)
 	{
 		ui_make_string(rect, obj_tab[env->obj_select->category], env->data);
-
 		rect = (SDL_Rect){910, 140, 250, 30};
 		ui_make_string(rect, env->obj_select->name, env->data);
+		rect = (SDL_Rect){910, 180, 250, 30};
+		ui_make_nbrstring(rect, env->obj_select->dir, env->data);
 
 		ui_make_rect(env->data->surface,
 		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);

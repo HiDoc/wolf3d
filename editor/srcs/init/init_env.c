@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 16:42:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 02:20:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,16 @@ static void		load_obj(char *path, int type, t_env *env)
 	closedir(dr);
 }
 
+static void		load_specials(int type, t_env *env)
+{
+	SDL_Rect	rect;
+
+	rect = (SDL_Rect){910, 330, 200, 30};
+	create_btn_obj(0, 0, type, "Spawn", rect, env);
+	rect = (SDL_Rect){910, 330 + 40, 200, 30};
+	create_btn_obj(1, 0, type, "Interest", rect, env);
+}
+
 static void		init_objs(t_env *env)
 {
 	// wall_objects
@@ -195,6 +205,8 @@ static void		init_objs(t_env *env)
 	load_obj("ressources/objects/consumables", CONSUMABLE, env);
 	// entities
 	load_obj("ressources/objects/entities", ENTITY, env);
+	// specials
+	load_specials(SPECIAL, env);
 }
 
 static void		init_menu(t_env *env)

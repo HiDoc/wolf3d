@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 01:23:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 03:22:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,21 @@ int			elem_mode(t_env *env)
 		if (ui_mouseenter(m.x, m.y, rect) && env->obj_elem)
 		{ // si click sur interface et object selectionne
 			if (env->sct_hover)
+			{
+				if (env->spawn_set == 1)
+				{
+					env->objects->dir = atan(
+					(env->data->mouse.y - env->objects->pos.y) /
+					(env->data->mouse.x - env->objects->pos.x));
+					env->spawn_set = 0;
+					return (1);
+				}
+				else if (env->obj_elem->type == SPECIAL && env->obj_elem->id == 0)
+				{ // if spawn
+					env->spawn_set = 1;
+				}
 				create_object(env->obj_elem, env);
+			}
 			return (1);
 		}
 

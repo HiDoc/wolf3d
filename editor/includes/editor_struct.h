@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 01:45:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 03:03:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ struct					s_env
 
 	// current elem / objects flags
 	t_elem			*obj_elem;	// obj selectionne
+	int				spawn_set;	// spawn pose, en attente de direction
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// lst objects
