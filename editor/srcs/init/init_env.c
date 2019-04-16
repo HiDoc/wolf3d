@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 22:45:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:50:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,32 +253,33 @@ static void		init_editor(t_env *env)
 
 	i = 0;
 	// compteur nb wall textures
-	if (!(dr = opendir("ressources/images/wall/")))
+	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
 		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 			env->editor.nb_wall_txtr++;
 	}
-	closedir(dr);
+	lt_release(dr);
 
 	// stockage des wall textures
-	if (!(env->editor.wall_txtr = (char **)ft_memalloc(sizeof(char *)
-					* (env->editor.nb_wall_txtr + 1))))
+	if (!(env->editor.wall_txtr = lt_push(
+	ft_memalloc(sizeof(char *) * (env->editor.nb_wall_txtr + 1)), ft_memdel)))
 		ui_error_exit_sdl("Libui: Out of memory");
 
-	if (!(dr = opendir("ressources/images/wall/")))
+	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
 		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			if (!(env->editor.wall_txtr[i] = ft_strdup(de->d_name)))
+			if (!(env->editor.wall_txtr[i] =
+			lt_push(ft_strdup(de->d_name), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory");
 			i++;
 		}
 	}
-	closedir(dr);
+	lt_release(dr);
 }
 
 void		init_env(t_env *env, t_data *data)
@@ -288,7 +289,7 @@ void		init_env(t_env *env, t_data *data)
 	init_elems(env);
 	init_objs(env);
 	init_menu(env);
-	init_editor(env); // <- lifetime
+	init_editor(env);
 	ui_make_window("EDITOR", data);
 	ui_load_font("ressources/fonts/Arial.ttf", data);
 }
