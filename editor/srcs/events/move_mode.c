@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/06 15:53:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 01:23:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ int			move_mode(t_env *env)
 		env->grid_drag = 0;
 	}
 
+	if (env->data->mouse.x || env->data->mouse.y)
+		return (1);
 	return (0);
 }
