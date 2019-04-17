@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:23:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:21:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,26 +115,27 @@ static t_vec	grid_transform(t_pos p1, t_pos p2, t_env *env)
 
 void			display_sector(t_sct *sct, t_env *env)
 {
+	t_w_vtx		*w_vtx;
 	Uint32		color;
 	t_vec		vec;
-	t_vtx		*vtx;
 
 
 	if (env->sct_hover == sct)
 		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
 	else
 		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
-	vtx = sct->vtx_start;
-	while (vtx->next)
+	w_vtx = sct->w_vtx_start;
+	while (w_vtx->next)
 	{
-		vec = grid_transform(vtx->pos, vtx->next->pos, env);
+		vec = grid_transform(w_vtx->vtx->pos, w_vtx->next->vtx->pos, env);
 		if (is_vec_in_map(vec))
 			ui_make_line(env->data->surface, vec, color);
-		vtx = vtx->next;
+		w_vtx = w_vtx->next;
 	}
 	if (sct->close)
 	{
-		vec = grid_transform(sct->vtx_start->pos, sct->vtx_end->pos, env);
+		vec = grid_transform(
+		sct->w_vtx_start->vtx->pos, sct->w_vtx_end->vtx->pos, env);
 		if (is_vec_in_map(vec))
 			ui_make_line(env->data->surface, vec, color);
 	}
@@ -168,8 +169,10 @@ void			display_interface(t_env *env)
 	if (env->sct_current)
 	{
 		p1 = (t_pos){
-		20 + env->sct_current->vtx_current->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
-		100 + env->sct_current->vtx_current->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
+		20 + env->sct_current->w_vtx_current->vtx->pos.x
+		* env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
+		100 + env->sct_current->w_vtx_current->vtx->pos.y
+		* env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
 
 		p2 = (t_pos){env->data->mouse.x,env->data->mouse.y};
 

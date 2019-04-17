@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:51:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:24:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void        export_map(t_env *env)
 {
-
-	int		xmin = WIN_W;	// translation
+	(void)env;
+	/*int		xmin = WIN_W;	// translation
 	int		ymin = WIN_H;	// translation
 
 	char	*path;
@@ -87,8 +87,8 @@ void        export_map(t_env *env)
 	sct = env->sct_start;
 	while (sct)
 	{
-		dprintf(fd, "sector /**/ /**/");
-		dprintf(fd, "/**/\n");
+		//dprintf(fd, "sector // //");
+		//dprintf(fd, "//\n");
 		sct = sct->next;	
 	}
 
@@ -97,7 +97,7 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == WALL_OBJ)
-			dprintf(fd, "wall_object %d %d /**/ /**/\n",
+			//dprintf(fd, "wall_object %d %d // //\n",
 			(int)(obj->pos.x - xmin),(int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
@@ -107,7 +107,7 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
-			dprintf(fd, "consumable %d %d /**/ /**/ /**/\n",
+			//dprintf(fd, "consumable %d %d // // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
@@ -117,7 +117,7 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == ENTITY)
-			dprintf(fd, "entity %d %d /**/ /**/\n",
+			//dprintf(fd, "entity %d %d // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
@@ -127,10 +127,10 @@ void        export_map(t_env *env)
 	while (obj)
 	{
 		if (obj->category == SPECIAL)
-			dprintf(fd, "special %d %d /**/\n",
+			//dprintf(fd, "special %d %d //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
-	close(fd);
+	close(fd);*/
 }

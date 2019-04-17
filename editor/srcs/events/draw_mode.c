@@ -6,28 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:15:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:40:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-void		assign_vertex(t_vtx *vtx, t_env *env)
-{
-	env->sct_current->vtx_current = vtx;
-	env->sct_current->vtx_end->next = vtx;
-	env->sct_current->vtx_end = vtx;
-
-	// stock xmin xmax ymin ymax
-	(vtx->pos.x < env->sct_current->xmin)
-		? env->sct_current->xmin = vtx->pos.x : 0;
-	(vtx->pos.x > env->sct_current->xmax)
-		? env->sct_current->xmax = vtx->pos.x : 0;
-	(vtx->pos.y < env->sct_current->ymin)
-		? env->sct_current->ymin = vtx->pos.y : 0;
-	(vtx->pos.y > env->sct_current->ymax)
-		? env->sct_current->ymax = vtx->pos.y : 0;
-}
 
 int			draw_mode(t_env *env)
 {
@@ -48,21 +31,22 @@ int			draw_mode(t_env *env)
 			if (!env->vtx_hover)
 			{
 				create_vertex(env->mouse, env);
+				create_w_vertex(env->vertex, env);
 				return (1);
 			}
-			else if (env->vtx_hover == env->sct_current->vtx_start)
+			/*else if (env->vtx_hover == env->sct_current->w_vtx_start)
 			{
 				env->sct_current->close = 1;
-				env->sct_current->vtx_current = 0;
+				env->sct_current->w_vtx_current = 0;
 				env->sct_current = 0;
 				env->drawing = 0;
 				return (1);
-			}
-			else if (env->vtx_hover->sector != env->sct_current)
+			}*/
+			/*else if (env->vtx_hover->sector != env->sct_current)
 			{
-				create_vertex(env->vtx_hover->pos, env); // assign
+				//create_vertex(env->vtx_hover->vtx->pos, env); // assign
 				return (1);
-			}
+			}*/
 		}
 	}
 	if (m.x || m.y)
@@ -70,7 +54,7 @@ int			draw_mode(t_env *env)
 		if (env->sct_current)
 		{
 			env->vtx_size = pythagore(
-			env->sct_current->vtx_current->pos, env->mouse);
+			env->sct_current->w_vtx_current->vtx->pos, env->mouse);
 		}
 		return (1);
 	}

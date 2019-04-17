@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/17 04:22:22 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/18 01:37:52 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRC_NAME 	=	main.c \
 				release_functions.c \
 				create_object.c \
 				create_vertex.c \
+				create_w_vertex.c \
 				create_sector.c \
 				delete_object.c \
 				delete_sector.c \

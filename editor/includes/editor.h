@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:19:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:44:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void        ttf_del(void **ap);		// free font
 
 void		create_object(t_elem *element, t_env *env);
 void		create_vertex(t_pos pos, t_env *env);
+void		create_w_vertex(t_vtx *vtx, t_env *env);
 void		create_sector(t_env *env);
 void        delete_object(t_object *obj, t_env *env);
 void		delete_sector(t_sct *sector, t_env *env);

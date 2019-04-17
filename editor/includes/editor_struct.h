@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 19:51:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 00:22:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ enum					e_obj_category
 	SPECIAL
 };
 
+typedef struct	s_w_vtx		t_w_vtx;
 typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
@@ -70,10 +71,16 @@ typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
 
+struct					s_w_vtx
+{
+	t_vtx		*vtx;
+	t_sct		*sector;
+	t_w_vtx		*next;
+};
+
 struct					s_vtx
 {
 	t_pos			pos;
-	t_sct			*sector;
 	t_vtx			*next;
 };
 
@@ -81,9 +88,9 @@ struct					s_sct
 {
 	int				id;			// identifiant du secteur
 
-	t_vtx			*vtx_current;
-	t_vtx			*vtx_start;
-	t_vtx			*vtx_end;
+	t_w_vtx		*w_vtx_current;	// vertex wrapper
+	t_w_vtx		*w_vtx_start;	// vertex wrapper
+	t_w_vtx		*w_vtx_end;	// vertex wrapper
 
 	int				close;		// is sector close;
 
@@ -160,6 +167,9 @@ struct					s_env
 	t_sct			*sct_current;
 	t_sct			*sct_start;
 	t_sct			*sct_end;
+
+	// lst vertex
+	t_vtx			*vertex;
 
 	// hover / select
 	t_sct			*sct_hover;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:52:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:00:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 t_vtx		*target_vertex(t_env *env)
 {
 	t_pos	translate;
+	t_w_vtx	*w_vtx;
 	t_sct	*sct;
-	t_vtx	*vtx;
 	t_pos	pos;
 
 	env->vtx_hover = 0;
@@ -42,17 +42,17 @@ t_vtx		*target_vertex(t_env *env)
 	translate.y = 100 + env->grid_translate.y + env->grid_mouse_var.y;
 	while (sct)
 	{
-		vtx = sct->vtx_start;
-		while (vtx)
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx)
 		{
-			pos.x = (vtx->pos.x * env->pixel_value) + translate.x;
-			pos.y = (vtx->pos.y * env->pixel_value) + translate.y;
+			pos.x = (w_vtx->vtx->pos.x * env->pixel_value) + translate.x;
+			pos.y = (w_vtx->vtx->pos.y * env->pixel_value) + translate.y;
 			if (ui_close_to(env->data->mouse, pos, 10))
 			{
-				env->vtx_hover = vtx;
-				return (vtx);
+				env->vtx_hover = w_vtx->vtx;
+				return (w_vtx->vtx);
 			}
-			vtx = vtx->next;
+			w_vtx = w_vtx->next;
 		}
 		sct = sct->next;
 	}
