@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 12:36:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:10:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 void			ui_init_sdl(t_data *data);
 void			ui_make_window(char *name, t_data *data);
 void			ui_load_font(char *path, t_data *data);
-SDL_Surface		*ui_load_image(char *path, t_env *env);
+SDL_Surface		*ui_load_image(char *path);
 
 // Other
 
@@ -61,7 +61,7 @@ int				ui_close_to(t_pos a, t_pos b, float dist);
 
 // Exit
 
-void			ui_exit_sdl(t_data *data);
-void			ui_error_exit_sdl(char *msg, t_data *data);
+void			ui_exit_sdl(void);
+void			ui_error_exit_sdl(char *msg);
 
 #endif

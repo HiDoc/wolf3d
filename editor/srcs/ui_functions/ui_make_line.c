@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 21:07:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 16:16:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 01:20:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		bresenham_tab(int *tab, t_pos p1, t_pos p2)
 {
-	tab[0]	 = abs((int)p2.x - (int)p1.x);
+	tab[0] = abs((int)p2.x - (int)p1.x);
 	tab[1] = (int)p1.x < (int)p2.x ? 1 : -1;
 	tab[2] = abs((int)p2.y - (int)p1.y);
 	tab[3] = (int)p1.y < (int)p2.y ? 1 : -1;

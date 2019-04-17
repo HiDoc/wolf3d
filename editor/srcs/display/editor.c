@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 23:30:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 01:37:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,30 @@ void		editor(t_env *env)
 	ui_make_rect(env->data->surface,
 	get_element(E_B_MODE_SELECT, env)->rect,
 	get_element(E_B_MODE_SELECT, env)->color);
-	SDL_BlitScaled(get_element(E_B_MODE_SELECT, env)->image,
-	0, env->data->surface, &get_element(E_B_MODE_SELECT, env)->rect);
+	if ((SDL_BlitScaled(get_element(E_B_MODE_SELECT, env)->image,
+	0, env->data->surface, &get_element(E_B_MODE_SELECT, env)->rect)) < 0)
+		 ui_error_exit_sdl("Libui: Blit error on editor display");
 
 	ui_make_rect(env->data->surface,
 	get_element(E_B_MODE_MOVE, env)->rect,
 	get_element(E_B_MODE_MOVE, env)->color);
-	SDL_BlitScaled(get_element(E_B_MODE_MOVE, env)->image,
-	0, env->data->surface, &get_element(E_B_MODE_MOVE, env)->rect);
+	if ((SDL_BlitScaled(get_element(E_B_MODE_MOVE, env)->image,
+	0, env->data->surface, &get_element(E_B_MODE_MOVE, env)->rect)) < 0)
+		 ui_error_exit_sdl("Libui: Blit error on editor display");
 
 	ui_make_rect(env->data->surface,
 	get_element(E_B_MODE_DRAW, env)->rect,
 	get_element(E_B_MODE_DRAW, env)->color);
-	SDL_BlitScaled(get_element(E_B_MODE_DRAW, env)->image,
-	0, env->data->surface, &get_element(E_B_MODE_DRAW, env)->rect);
+	if ((SDL_BlitScaled(get_element(E_B_MODE_DRAW, env)->image,
+	0, env->data->surface, &get_element(E_B_MODE_DRAW, env)->rect)) < 0)
+		ui_error_exit_sdl("Libui: Blit error on editor display");
 
 	ui_make_rect(env->data->surface,
 	get_element(E_B_MODE_ELEM, env)->rect,
 	get_element(E_B_MODE_ELEM, env)->color);
-	SDL_BlitScaled(get_element(E_B_MODE_ELEM, env)->image,
-	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect);
+	if ((SDL_BlitScaled(get_element(E_B_MODE_ELEM, env)->image,
+	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect)) < 0)
+		ui_error_exit_sdl("Libui: Blit error on editor display");
 
 	// display play
 	ui_make_string(get_element(E_B_PLAY, env)->rect, "PLAY", env->data);

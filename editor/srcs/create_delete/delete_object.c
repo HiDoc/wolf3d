@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   delete_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/03 22:32:00 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 02:08:00 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/04/17 04:16:26 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/04/17 04:17:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "editor.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void		delete_object(t_object *obj, t_env *env)
 {
-	char	*str;
+	t_object	*ptr;
 
-	if (!s1 || !s2)
-		return (0);
-	if (!(str = (char *)(ft_memalloc(sizeof(char)
-	* (ft_strlen(s1) + ft_strlen(s2) + 1)))))
-		return (0);
-	str = ft_strcat(str, (char *)s1);
-	str = ft_strcat(str, s2);
-	return (str);
+	ptr = env->objects;
+	if (ptr == obj)
+	{
+		env->objects = ptr->next;
+		lt_release(obj->name);
+		lt_release(obj);
+		return ;
+	}
+	while (ptr && ptr->next)
+	{
+		if (ptr->next == obj)
+		{
+			ptr->next = ptr->next->next;
+			lt_release(obj->name);
+			lt_release(obj);
+		}
+		ptr = ptr->next;
+	}
 }
