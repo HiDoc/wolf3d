@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 01:21:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:07:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ static int		click_event(t_env *env)
 		get_element(E_B_MODE_ELEM, env)->color = C_GREEN;
 		return (1);
 	}
+	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+				get_element(E_B_PLAY, env)->rect))
+	{
+		pid_t			parent;
+		char * const	argv[1] = {0};
+		char * const	envp[1] = {0};
+
+		// le binaire a besoin des ressources + execve KC
+		if ((parent = fork()) != -1 && !parent)
+		{
+			if ((execve("ressources/doom", argv, envp)) == -1)
+				ui_error_exit_sdl("Editor: unable to launch the game");
+			lt_destroy();
+			exit(EXIT_SUCCESS);
+		}
+		wait(0);
+	}
 	return (0);
 }
 
@@ -99,6 +116,8 @@ int				handle_events(t_env *env)
 	const SDL_Event		event = env->data->sdl.event;
 	SDL_Rect			rect = (SDL_Rect){20, 100, 850, 680};
 
+	/* calcul relative mouse position */
+	env->mouse = (t_pos){0, 0};
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
 		env->mouse.x = (((m.x - 20)
@@ -106,21 +125,6 @@ int				handle_events(t_env *env)
 		env->mouse.y = (((m.y - 100)
 		- (env->grid_translate.y + env->grid_mouse_var.y)) / env->pixel_value);
 	}
-	else
-	{
-		env->mouse = (t_pos){0, 0};
-	}
-
-	/* quit doom_nukem */
-	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT)
-		? ui_exit_sdl(env->data) : 0;
-
-	if (env->menu.state > 0 && menu_events(env))
-		return (1);
-	if (event.type == SDL_MOUSEBUTTONDOWN && click_event(env))
-		return (1);
-	if (event.type == SDL_MOUSEWHEEL && mousewheel_event(env))
-		return (1);
 
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
 	{
@@ -132,7 +136,16 @@ int				handle_events(t_env *env)
 		env->obj_hover = target_object(env->data->mouse, env);
 	}
 
-	if (env->mouse_mode == 0)
+	/* quit doom_nukem */
+	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT) ? ui_exit_sdl() : 0;
+
+	if (env->menu.state > 0)
+		return (menu_events(env));
+	else if (event.type == SDL_MOUSEBUTTONDOWN && click_event(env))
+		return (1);
+	else if (event.type == SDL_MOUSEWHEEL)
+		return (mousewheel_event(env));
+	else if (env->mouse_mode == 0)
 		return (select_mode(env));
 	else if (env->mouse_mode == 1)
 		return (draw_mode(env));
@@ -140,6 +153,5 @@ int				handle_events(t_env *env)
 		return (elem_mode(env));
 	else if (env->mouse_mode == 3)
 		return (move_mode(env));
-
 	return (0);
 }

@@ -4,26 +4,29 @@ BUG :	hovering : curseur sur la ligne des sommets d'un secteur
 BUG :	sectors : vertex->next sur secteur
 BUG :	move : lors du deplacement,
 		les secteur vont plus vite (mieux visible si beaucoup dezoome)
-BUG :	trop de reframes inutiles
 BUG :	angle du spawn
+BUG :	execve ./doom completement KC
+BUG :	si suppression sector les objects restent sur l'interface
+* BUG :	colors sur les rect d'objects sur interface
 
 TOCHECK : reference 0 de l'angle du joueur sur le spawm
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
+TOCHECK : si memory push et release est bien dynamique partout
 
-TODO :	elements : refactor elements
-TODO :	update export
+* TODO :	refactor : display / event functions
+* TODO :	walls : handle size max walls
+* TODO :	corriger le reframes inutiles
+TODO :	spawn : display line on spawn direction
 TODO :	init : refactor elem loading
+TODO :	update export
 TODO :	edge selection
-* TODO : walls : handle size max walls
-* TODO : walls : texture par walls
-TODO :	doom launcher godmod
+TODO :	walls : texture par walls
 TODO :	parsing : parsing todo
 TODO :	objects : prefabs
-* TODO : meta : set gravity & music & skybox
+TODO :	meta : set music & skybox
 TODO :	grid : centrer la grille
 TODO :	grid : zoom centre sur grille
 TODO :	grid : limite left / bot
 
-* TODO : leaks : lifetime
 TODO :	refactor : total cleaning
 TODO :	norme : total norme

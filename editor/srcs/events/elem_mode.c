@@ -6,41 +6,17 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 03:22:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:13:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-static void     create_object(t_elem *element, t_env *env)
-{
-	t_object   *new;
-
-	if (!(new = (t_object *)ft_memalloc(sizeof(t_object))))
-		ui_error_exit_sdl("Editor: create object, out of memory", env->data);
-	new->ref = element->ref;
-	new->category = element->type;
-	if (!(new->name = ft_strdup(element->str)))
-		ui_error_exit_sdl("Editor: create object, out of memory", env->data);
-	//new->sct = /**/;
-	new->pos = env->mouse;
-	if (!(env->objects))
-	{
-		env->objects = new;
-		env->objects->next = 0;
-	}
-	else
-	{
-		new->next = env->objects;
-		env->objects = new;
-	}
-}
-
 int			elem_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	const int		tab[5] = {
-		E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
+	E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
 	const SDL_Event event = env->data->sdl.event;
 	const SDL_Rect	rect = (SDL_Rect){20, 100, 850, 680};
 	t_elem			*obj_btn;

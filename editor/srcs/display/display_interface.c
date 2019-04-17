@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 14:40:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 01:23:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,7 @@ void			display_interface(t_env *env)
 		20 + env->sct_current->vtx_current->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
 		100 + env->sct_current->vtx_current->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
 
-		p2 = (t_pos){
-		env->data->mouse.x,
-		env->data->mouse.y};
+		p2 = (t_pos){env->data->mouse.x,env->data->mouse.y};
 
 		vec = (t_vec){p1, p2};
 		ui_make_line(env->data->surface, vec, C_CYAN);

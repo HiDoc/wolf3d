@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 04:22:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:19:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,66 +24,6 @@ static void     reset_values(t_env *env)
 	// reset menu input new
 	get_element(E_I_SELEC_HEIGHT, env)->clicked = 0;
 	get_element(E_I_SELEC_HEIGHT, env)->color = C_WHITE;
-}
-
-static void     delete_object(t_object *obj, t_env *env)
-{
-	t_object	*ptr;
-
-	ptr = env->objects;
-	if (ptr == obj)
-	{
-		env->objects = ptr->next;
-		free(obj->name);
-		free(obj);
-		return ;
-	}
-	while (ptr && ptr->next)
-	{
-		if (ptr->next == obj)
-		{
-			ptr->next = ptr->next->next;
-			free(obj->name);
-			free(obj);
-		}
-		ptr = ptr->next;
-	}
-}
-
-static void		delete_sct_content(t_sct *sector)
-{
-	t_vtx	*tmp;
-
-	while (sector->vtx_start)
-	{
-		tmp = sector->vtx_start->next;
-		free(sector->vtx_start);
-		sector->vtx_start = tmp;
-	}
-}
-
-static void     delete_sector(t_sct *sector, t_env *env)
-{
-	t_sct		*ptr;
-
-	ptr = env->sct_start;
-	if (ptr == sector)
-	{
-		env->sct_start = ptr->next;
-		delete_sct_content(sector);
-		free(sector);
-		return ;
-	}
-	while (ptr && ptr->next)
-	{
-		if (ptr->next == sector)
-		{
-			ptr->next = ptr->next->next;
-			delete_sct_content(sector);
-			free(sector);
-		}
-		ptr = ptr->next;
-	}
 }
 
 int			select_mode(t_env *env)
@@ -105,12 +45,20 @@ int			select_mode(t_env *env)
 			else if (env->sct_hover)
 			{
 				env->sct_select = env->sct_hover;
+				// height input
 				if (get_element(E_I_SELEC_HEIGHT, env)->str)
-					ft_strdel(&get_element(E_I_SELEC_HEIGHT, env)->str);
+					lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
 				if (env->sct_select->height > 0
 				&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
-				ft_itoa(env->sct_select->height)))
-					ui_error_exit_sdl("Editor: Out of memory", env->data);
+				lt_push(ft_itoa(env->sct_select->height), ft_memdel)))
+					ui_error_exit_sdl("Editor: Out of memory");
+				// gravity input
+				if (get_element(E_I_SELEC_GRAVITY, env)->str)
+					lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
+				if (env->sct_select->gravity > 0
+				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
+				lt_push(ft_itoa(env->sct_select->gravity), ft_memdel)))
+					ui_error_exit_sdl("Editor: Out of memory");
 			}
 			return (1);
 		}
@@ -119,6 +67,12 @@ int			select_mode(t_env *env)
 		{
 			get_element(E_I_SELEC_HEIGHT, env)->clicked = 1;
 			get_element(E_I_SELEC_HEIGHT, env)->color = C_GREEN;
+		}
+		else if (env->sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_GRAVITY, env)->rect))
+		{
+			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
+			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
@@ -151,11 +105,11 @@ int			select_mode(t_env *env)
 				{
 					tmp = get_element(E_I_SELEC_HEIGHT, env)->str;
 					if (!(get_element(E_I_SELEC_HEIGHT, env)->str =
-					ft_zstrjoin(get_element(E_I_SELEC_HEIGHT, env)->str, key)))
-						ui_error_exit_sdl("Editor: Out of memory", env->data);
+					lt_push(ft_zstrjoin(get_element(E_I_SELEC_HEIGHT, env)->str, key), ft_memdel)))
+						ui_error_exit_sdl("Editor: Out of memory");
 					env->sct_select->height = ft_atoi(
 					get_element(E_I_SELEC_HEIGHT, env)->str);
-					free(tmp);
+					lt_release(tmp);
 				}
 			}
 			else if (scancode == 42)
@@ -165,13 +119,43 @@ int			select_mode(t_env *env)
 					newsize = ft_strlen(
 					get_element(E_I_SELEC_HEIGHT, env)->str) - 1;
 					if (newsize > 0)
-					{
 						get_element(E_I_SELEC_HEIGHT, env)->str[newsize] = 0;
-					}
 					else
-					{
-						ft_strdel(&get_element(E_I_SELEC_HEIGHT, env)->str);
-					}
+						lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
+				}
+			}
+			return (1);
+		}
+		else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
+		{
+			if (scancode >= 89 && scancode <= 98)
+			{ // numeric keypad
+				key += 7;
+			}
+			if ((scancode >= 89 && scancode <= 98)
+			|| (scancode >= 30 && scancode <= 39))
+			{
+				if (get_element(E_I_SELEC_GRAVITY, env)->str_max == 0)
+				{
+					tmp = get_element(E_I_SELEC_GRAVITY, env)->str;
+					if (!(get_element(E_I_SELEC_GRAVITY, env)->str =
+					lt_push(ft_zstrjoin(get_element(E_I_SELEC_GRAVITY, env)->str, key), ft_memdel)))
+						ui_error_exit_sdl("Editor: Out of memory");
+					env->sct_select->gravity = ft_atoi(
+					get_element(E_I_SELEC_GRAVITY, env)->str);
+					lt_release(tmp);
+				}
+			}
+			else if (scancode == 42)
+			{
+				if (get_element(E_I_SELEC_GRAVITY, env)->str)
+				{
+					newsize = ft_strlen(
+					get_element(E_I_SELEC_GRAVITY, env)->str) - 1;
+					if (newsize > 0)
+						get_element(E_I_SELEC_GRAVITY, env)->str[newsize] = 0;
+					else
+						lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
 				}
 			}
 			return (1);
