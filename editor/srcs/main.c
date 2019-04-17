@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:13:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 22:50:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 02:05:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				main(void)
 
 	ui_init_sdl(&data);
 	init_env(&env, &data);
-	ui_gameloop(&handle_events, &editor, &env); // <- lifetime
+	ui_gameloop(&handle_events, &editor, &env);
 	ui_exit_sdl();
 	return (0);
 }

@@ -1,26 +1,8 @@
 # map name
 new_map
 # vertex: x y
-vertex 22 0
-vertex 0 26
-vertex 30 32
-vertex 50 13
-vertex 42 55
-vertex 30 32
-vertex 50 13
-vertex 69 22
-vertex 46 49
-vertex 51 55
 # sector: ceil floor n-vertex n-neighbors
-sector /**/ /**//**/
-sector /**/ /**//**/
 # wall_object: x y sector ref
-wall_object 45 39 /**/ /**/
-wall_object 43 36 /**/ /**/
-wall_object 49 28 /**/ /**/
-wall_object 22 22 /**/ /**/
-wall_object 25 15 /**/ /**/
-wall_object 37 17 /**/ /**/
 # consumable: x y sector ref is_wpn
 # entity: x y sector ref
 # special: x y ref

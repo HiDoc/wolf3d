@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 22:13:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 01:44:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ static int	keydown_event(t_env *env)
 			{
 				tmp = get_element(M_I_NEW, env)->str;
 				if (!(get_element(M_I_NEW, env)->str =
-						ft_zstrjoin(get_element(M_I_NEW, env)->str, key)))
+				lt_push(ft_zstrjoin(get_element(M_I_NEW, env)->str, key), ft_memdel)))
 					ui_error_exit_sdl("Editor: Out of memory");
-				free(tmp);
+				lt_release(tmp);
 			}
 		}
 		else if (scancode == 42)
@@ -122,7 +122,7 @@ static int	keydown_event(t_env *env)
 					get_element(M_I_NEW, env)->str[newsize] = 0;
 				else
 				{
-					ft_strdel(&get_element(M_I_NEW, env)->str);
+					lt_release(get_element(M_I_NEW, env)->str);
 					env->map_name = "new_map";
 				}
 			}
