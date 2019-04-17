@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/10 14:38:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 19:26:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int ac, char **av)
 
 	/* load minimap */
 	//init_minimap(&env); // <- lifetime todo
-
+	launch_msc_menu(&env, &env.menu.status);
 	/* gameloop */
 	sdl_loop(&env);
 

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 01:08:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 11:29:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	new_btn_current(t_bloc *b, int x, int y, int limit)
 	while (++i < limit)
 	{
 		r = b[i].rect;
-		limit == NB_OPT_MENU ? r.x = b[i].rect.x - b[i].rect.w / 2 : 0;
+		limit != NB_OPT_MENU ? r.x = b[i].rect.x - b[i].rect.w / 2 : 0;
 		if (ispoint_inrect(x, y, r))
 			return (i);
 	}

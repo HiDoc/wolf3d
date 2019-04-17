@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 00:45:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 21:31:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 	{
 		if (s->home)
 		{
-			SDL_SetRelativeMouseMode(SDL_FALSE);
+			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 			s->main_menu = 1;
 			s->home = 0;
 		}
@@ -58,7 +59,9 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			{
 				s->on = !s->on;
 				s->ingame_menu = !s->ingame_menu;
-				SDL_SetRelativeMouseMode(SDL_TRUE);
+				if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
+					doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
+				launch_msc_menu(e, s);
 				SDL_Delay(300);
 			}
 			s->current = 0;
@@ -80,7 +83,8 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[k[I_OINVENTR]])
 		{
 			ui->is_active = !ui->is_active;
-			SDL_SetRelativeMouseMode(SDL_TRUE);
+			if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 			SDL_Delay(300);
 		}
 	}
@@ -130,14 +134,17 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		{
 			env->hud.inventory.is_active = !env->hud.inventory.is_active;
 			SDL_Delay(300);
-			SDL_SetRelativeMouseMode(SDL_FALSE);
+			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 		}
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
 			env->menu.status.on = !env->menu.status.on;
 			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
+			launch_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
-			SDL_SetRelativeMouseMode(SDL_FALSE);
+			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 		}
 	}
 	return (1);

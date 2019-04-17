@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 00:33:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/16 23:07:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	action_optionmenu(t_env *e, t_status *s, const Uint8 *k)
 		s->current = 0;
 		s->click = 0;
 	}
-	change_option(e, s, k, &e->engine.keys[s->current]);
+	else
+		change_option(e, s, k, &e->engine.keys[s->current]);
 }
 
 

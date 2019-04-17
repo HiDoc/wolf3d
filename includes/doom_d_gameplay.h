@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 01:04:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 00:29:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define FRAME_RATIO	6
 
 /*
-** World Enemies index
+** World Enemies index - Works for sounds index
 */
 # define MONSTER	0
 # define SOLDIER	1
