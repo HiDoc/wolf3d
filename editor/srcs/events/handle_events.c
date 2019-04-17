@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:54:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 03:51:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ static int		click_event(t_env *env)
 		reset_values(env);
 		get_element(E_B_MODE_ELEM, env)->color = C_GREEN;
 		return (1);
+	}
+	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+				get_element(E_B_PLAY, env)->rect))
+	{
+		pid_t			parent;
+		char * const	argv[1] = {0};
+		char * const	envp[1] = {0};
+
+		// le binaire a besoin des ressources + execve KC
+		if ((parent = fork()) != -1 && !parent)
+		{
+			if ((execve("ressources/doom", argv, envp)) == -1)
+				ui_error_exit_sdl("Editor: unable to launch the game");
+			lt_destroy();
+			exit(EXIT_SUCCESS);
+		}
+		wait(0);
 	}
 	return (0);
 }
