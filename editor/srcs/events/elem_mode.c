@@ -6,35 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:57:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:13:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-static void     create_object(t_elem *element, t_env *env)
-{
-	t_object   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_object)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create object, out of memory");
-	new->ref = element->ref;
-	new->category = element->type;
-	if (!(new->name = lt_push(ft_strdup(element->str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create object, out of memory");
-	//new->sct = /**/;
-	new->pos = env->mouse;
-	if (!(env->objects))
-	{
-		env->objects = new;
-		env->objects->next = 0;
-	}
-	else
-	{
-		new->next = env->objects;
-		env->objects = new;
-	}
-}
 
 int			elem_mode(t_env *env)
 {

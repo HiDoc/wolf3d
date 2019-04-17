@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:49:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:19:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ void        txr_del(void **ap);		// destroy texture
 void        crs_del(void **ap);		// destroy cursor
 void        ttf_del(void **ap);		// free font
 
+
+/*
+**	create_delete/
+*/
+
+void		create_object(t_elem *element, t_env *env);
+void		create_vertex(t_pos pos, t_env *env);
+void		create_sector(t_env *env);
+void        delete_object(t_object *obj, t_env *env);
+void		delete_sector(t_sct *sector, t_env *env);
 
 /*
 **	display/

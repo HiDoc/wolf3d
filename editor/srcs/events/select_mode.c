@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 02:05:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 04:19:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,66 +24,6 @@ static void     reset_values(t_env *env)
 	// reset menu input new
 	get_element(E_I_SELEC_HEIGHT, env)->clicked = 0;
 	get_element(E_I_SELEC_HEIGHT, env)->color = C_WHITE;
-}
-
-static void     delete_object(t_object *obj, t_env *env)
-{
-	t_object	*ptr;
-
-	ptr = env->objects;
-	if (ptr == obj)
-	{
-		env->objects = ptr->next;
-		lt_release(obj->name);
-		lt_release(obj);
-		return ;
-	}
-	while (ptr && ptr->next)
-	{
-		if (ptr->next == obj)
-		{
-			ptr->next = ptr->next->next;
-			lt_release(obj->name);
-			lt_release(obj);
-		}
-		ptr = ptr->next;
-	}
-}
-
-static void		delete_sct_content(t_sct *sector)
-{
-	t_vtx	*tmp;
-
-	while (sector->vtx_start)
-	{
-		tmp = sector->vtx_start->next;
-		lt_release(sector->vtx_start);
-		sector->vtx_start = tmp;
-	}
-}
-
-static void     delete_sector(t_sct *sector, t_env *env)
-{
-	t_sct		*ptr;
-
-	ptr = env->sct_start;
-	if (ptr == sector)
-	{
-		env->sct_start = ptr->next;
-		delete_sct_content(sector);
-		lt_release(sector);
-		return ;
-	}
-	while (ptr && ptr->next)
-	{
-		if (ptr->next == sector)
-		{
-			ptr->next = ptr->next->next;
-			delete_sct_content(sector);
-			lt_release(sector);
-		}
-		ptr = ptr->next;
-	}
 }
 
 int			select_mode(t_env *env)
