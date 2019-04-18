@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 01:21:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 06:37:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ static t_vec	grid_transform(t_pos p1, t_pos p2, t_env *env)
 
 void			display_sector(t_sct *sct, t_env *env)
 {
+	SDL_Rect	rect;
 	t_w_vtx		*w_vtx;
 	Uint32		color;
 	t_vec		vec;
@@ -129,7 +130,11 @@ void			display_sector(t_sct *sct, t_env *env)
 	{
 		vec = grid_transform(w_vtx->vtx->pos, w_vtx->next->vtx->pos, env);
 		if (is_vec_in_map(vec))
+		{
 			ui_make_line(env->data->surface, vec, color);
+			rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
+			ui_make_full_rect(env->data->surface, rect, C_CYAN);
+		}
 		w_vtx = w_vtx->next;
 	}
 	if (sct->close)
@@ -178,6 +183,8 @@ void			display_interface(t_env *env)
 
 		vec = (t_vec){p1, p2};
 		ui_make_line(env->data->surface, vec, C_CYAN);
+		rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
+		ui_make_full_rect(env->data->surface, rect, C_CYAN);
 	}
 
 	// display vtx hovering
@@ -185,8 +192,10 @@ void			display_interface(t_env *env)
 	if (env->vtx_hover)
 	{
 		circ = (t_circ){
-		20 + env->vtx_hover->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
-		100 + env->vtx_hover->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y,
+		20 + env->vtx_hover->pos.x * env->pixel_value
+		+ env->grid_translate.x + env->grid_mouse_var.x,
+		100 + env->vtx_hover->pos.y * env->pixel_value
+		+ env->grid_translate.y + env->grid_mouse_var.y,
 		10, 0xFFFFFFFF};
 		ui_make_circle(circ, env->data);
 	}
@@ -202,8 +211,10 @@ void			display_interface(t_env *env)
 			color = C_RED;
 
 		p1 = (t_pos){
-		20 + obj->pos.x * env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
-		100 + obj->pos.y * env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
+		20 + obj->pos.x * env->pixel_value + env->grid_translate.x
+		+ env->grid_mouse_var.x,
+		100 + obj->pos.y * env->pixel_value + env->grid_translate.y
+		+ env->grid_mouse_var.y};
 
 		rect = (SDL_Rect){p1.x - 5, p1.y - 5, 10, 10};
 		ui_make_rect(env->data->surface, rect, color);

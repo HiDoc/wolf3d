@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:07:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 06:39:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static int		mousewheel_event(t_env *env)
 			(env->pixel_value < PXL_VAL_MAX) ? env->pixel_value *= 1.2 : 0;
 			return (1);
 		}
+		return (1);
 	}
 	return (0);
 }
