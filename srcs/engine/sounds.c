@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:47:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 03:39:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,22 @@ void	menu_btn_sound(t_env *e, const Uint8 *k)
 {
 	if (k[SDL_SCANCODE_UP] || k[SDL_SCANCODE_DOWN]
 		|| k[SDL_SCANCODE_LEFT] || k[SDL_SCANCODE_RIGHT])
-		Mix_PlayChannel(-1,	e->sound.hud[HUD_MENU], 0);
+		Mix_PlayChannel(-1, e->sound.hud[HUD_MENU], 0);
 }
 
-// void	hud_sound(t_env *e)
-// {
+unsigned int	sound_rand(int max)
+{
+	time_t	tmp;
+	int		multi;
+	int		addi;
+	int		seed;
 
-// }
-// void	sound_ingame(t_env *e, t_sound *s, t_status *s)
-// {
-
-// }
+	tmp = time(NULL);
+	multi = 12087;
+	addi = 3876;
+	seed = (multi * tmp + addi) % max;
+	return ((unsigned int)seed);
+}
 
 // void	sound_enemies()
 // {

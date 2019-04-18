@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 10:13:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 03:46:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 				enemy->is_alive = 0;
 				env->stats.data[I_KILLS]++;
 				env->stats.data[I_K_MAGNUM + wpn]++;
+				enemy->player.sound.dead = 1;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;
