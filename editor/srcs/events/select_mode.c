@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:33:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:50:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		unselect_all(t_env *env)
 {
 	env->editor.obj_select = 0;
 	env->editor.vtx_select = 0;
+	env->editor.edg_select = 0;
 	env->editor.sct_select = 0;
 }
 

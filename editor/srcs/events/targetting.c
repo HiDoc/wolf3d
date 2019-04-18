@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:16:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:45:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 	sector = env->sct_start;
 	while (sector && sector->close == 1)
 	{
-		sector->color = C_WHITE;
 		if (!(env->editor.vtx_hover) && vertex_in_sector(sector, pos))
 			target = sector;
 		sector = sector->next;
@@ -44,7 +43,6 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 			if (fabs(pointside(
 			pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 10)
 			{
-				printf("oooooooooooooooook\n");
 				env->editor.edg_hover = w_vtx;
 				return (w_vtx);
 			}

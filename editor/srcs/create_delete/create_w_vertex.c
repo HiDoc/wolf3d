@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 01:05:43 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 04:38:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 23:29:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@ void		create_w_vertex(t_vtx *vtx, t_env *env)
 	}
 
 	// stock xmin xmax ymin ymax
-	(new->vtx->pos.x < env->sct_current->xmin) ? env->sct_current->xmin = new->vtx->pos.x : 0;
-	(new->vtx->pos.x > env->sct_current->xmax) ? env->sct_current->xmax = new->vtx->pos.x : 0;
-	(new->vtx->pos.y < env->sct_current->ymin) ? env->sct_current->ymin = new->vtx->pos.y : 0;
-	(new->vtx->pos.y > env->sct_current->ymax) ? env->sct_current->ymax = new->vtx->pos.y : 0;
+	(new->vtx->pos.x < env->sct_current->xmin)
+		? env->sct_current->xmin = new->vtx->pos.x : 0;
+	(new->vtx->pos.x > env->sct_current->xmax)
+		? env->sct_current->xmax = new->vtx->pos.x : 0;
+	(new->vtx->pos.y < env->sct_current->ymin)
+		? env->sct_current->ymin = new->vtx->pos.y : 0;
+	(new->vtx->pos.y > env->sct_current->ymax)
+		? env->sct_current->ymax = new->vtx->pos.y : 0;
 }
