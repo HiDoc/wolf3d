@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:19:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:22:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,66 +26,39 @@ static void     reset_values(t_env *env)
 	get_element(E_I_SELEC_HEIGHT, env)->color = C_WHITE;
 }
 
-int			select_mode(t_env *env)
+static int		select_interface_events(t_env *env)
 {
-	const t_pos		m = env->data->mouse;
-	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
-
-	if (event.type == SDL_MOUSEBUTTONDOWN)
+	unselect_all(env);
+	if (env->vtx_hover)
 	{
-		reset_values(env);
-		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
-		{
-			unselect_all(env);
-			if (env->vtx_hover)
-				env->vtx_select = env->vtx_hover;
-			else if (env->obj_hover)
-				env->obj_select = env->obj_hover;
-			else if (env->sct_hover)
-			{
-				env->sct_select = env->sct_hover;
-				// height input
-				if (get_element(E_I_SELEC_HEIGHT, env)->str)
-					lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
-				if (env->sct_select->height > 0
-				&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
-				lt_push(ft_itoa(env->sct_select->height), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-				// gravity input
-				if (get_element(E_I_SELEC_GRAVITY, env)->str)
-					lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
-				if (env->sct_select->gravity > 0
-				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
-				lt_push(ft_itoa(env->sct_select->gravity), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-			}
-			return (1);
-		}
-		else if (env->sct_select
-		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))
-		{
-			get_element(E_I_SELEC_HEIGHT, env)->clicked = 1;
-			get_element(E_I_SELEC_HEIGHT, env)->color = C_GREEN;
-		}
-		else if (env->sct_select
-		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_GRAVITY, env)->rect))
-		{
-			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
-			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
-		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
-		{
-			if (env->obj_select)
-				delete_object(env->obj_select, env);
-			else if (env->sct_select)
-				delete_sector(env->sct_select, env);
-			unselect_all(env);
-			return (1);	
-		}
+		env->mouse_drag = 1;
+		env->vtx_select = env->vtx_hover;
 	}
-	else if (event.type == SDL_KEYDOWN)
+	else if (env->obj_hover)
+		env->obj_select = env->obj_hover;
+	else if (env->sct_hover)
 	{
+		env->sct_select = env->sct_hover;
+		// height input
+		if (get_element(E_I_SELEC_HEIGHT, env)->str)
+			lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
+		if (env->sct_select->height > 0
+		&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
+		lt_push(ft_itoa(env->sct_select->height), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+		// gravity input
+		if (get_element(E_I_SELEC_GRAVITY, env)->str)
+			lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
+		if (env->sct_select->gravity > 0
+		&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
+		lt_push(ft_itoa(env->sct_select->gravity), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+	}
+	return (1);
+}
+
+static int		select_input_events(t_env *env)
+{
 		char				*tmp;
 		char 				*key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
 		env->data->sdl.event.key.keysym.scancode));
@@ -161,9 +134,57 @@ int			select_mode(t_env *env)
 			return (1);
 		}
 		return (0);
-	}
+}
 
-	if (env->data->mouse.x || env->data->mouse.y)
+int				select_mode(t_env *env)
+{
+	const t_pos		m = env->data->mouse;
+	const SDL_Event event = env->data->sdl.event;
+	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
+
+	if (env->mouse_drag)
+	{
+		if (event.type == SDL_MOUSEBUTTONUP)
+		{
+			env->mouse_drag = 0;
+		}
+		else
+		{
+			env->vtx_select->pos = env->mouse;
+		}
+		return (1);
+	}
+	else if (event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		reset_values(env);
+		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+			return (select_interface_events(env));
+		else if (env->sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))
+		{
+			get_element(E_I_SELEC_HEIGHT, env)->clicked = 1;
+			get_element(E_I_SELEC_HEIGHT, env)->color = C_GREEN;
+		}
+		else if (env->sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_GRAVITY, env)->rect))
+		{
+			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
+			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
+		}
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
+		{
+			if (env->obj_select)
+				delete_object(env->obj_select, env);
+			else if (env->sct_select)
+				delete_sector(env->sct_select, env);
+			unselect_all(env);
+			return (1);	
+		}
+		return (0);
+	}
+	else if (event.type == SDL_KEYDOWN)
+		return (select_input_events(env));
+	else if (env->data->mouse.x || env->data->mouse.y)
 		return (1);
 	return (0);
 }

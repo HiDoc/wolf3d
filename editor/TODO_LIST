@@ -8,6 +8,7 @@ BUG : colors sur les rect d'objects sur interface
 BUG : affichage point des vertex bug
 BUG : wheel scroll pas precis sur la souris
 BUG : bloquer value max des input
+BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
 
 TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
 TOCHECK : reference 0 de l'angle du joueur sur le spawm
@@ -19,7 +20,7 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	split edge
 * TODO :	modifs texture edge en selection
 
-* TODO :	move vertex
+** TODO :	move vertex
 * TODO :	objects : prefabs
 * TODO :	meta : set music & skybox
 * TODO :	spawn : display line on spawn direction
@@ -28,6 +29,7 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	grid : zoom centre sur grille
 * TODO :	grid : limite left / bot
 
+TODO :	refactor .h
 TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading

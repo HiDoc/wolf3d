@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 00:22:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:19:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,9 @@ struct					s_env
 
 	// mouse handling
 	int				mouse_mode;
+
+	// drag vertex;
+	int				mouse_drag;
 
 	// grid move
 	int				grid_drag;
