@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:30:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:09:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int			select_mode(t_env *env);
 int			elem_mode(t_env *env);
 int			move_mode(t_env *env);
 t_vtx		*target_vertex(t_env *env);
+t_w_vtx		*target_edge(t_pos pos, t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
 int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
@@ -101,6 +102,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 **	utils/
 */
 
+float       pointside(t_pos p, t_pos p0, t_pos p1);
 int			input_add(int elem, char *key, t_env *env);
 int			input_del(int elem, t_env *env);
 int			ft_strchri(char *str, char c);

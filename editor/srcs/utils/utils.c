@@ -6,11 +6,31 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:30:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:13:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+static t_pos   diff_vertex(t_pos p1, t_pos p2)
+{
+	return ((t_pos){p1.x - p2.x, p1.y - p2.y});
+}
+
+static float   cross_product(t_pos p1, t_pos p2)
+{
+	return (p1.x * p2.y - p2.x * p1.y);
+}
+
+/*
+** Determine which side of a line the point is on.
+** Return value: left < 0, on line 0, right > 0.
+*/
+
+float		pointside(t_pos p, t_pos p0, t_pos p1)
+{
+	return (cross_product(diff_vertex(p1, p0), diff_vertex(p, p0)));
+}
 
 /*
 ** return : 1 if string not empty, 0 if str is empty

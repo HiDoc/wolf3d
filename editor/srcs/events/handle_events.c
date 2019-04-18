@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:07:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:05:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int				handle_events(t_env *env)
 	{
 		// targetting vertex
 		target_vertex(env); // to change to same format as bellow
+		// targetting edge
+		env->editor.edg_hover = target_edge(env->mouse, env);
 		// targetting sector
 		env->editor.sct_hover = target_sector(env->mouse, env);
 		// targetting object

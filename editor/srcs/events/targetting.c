@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:52:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:16:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 		sector = sector->next;
 	}
 	return (target);
+}
+
+t_w_vtx		*target_edge(t_pos pos, t_env *env)
+{
+	t_w_vtx	*w_vtx;
+	t_sct	*sct;
+
+	env->editor.edg_hover = 0;
+	sct = env->sct_start;
+	while (sct)
+	{
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx && w_vtx->next) // peut faire bugger le code
+		{
+			if (fabs(pointside(
+			pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 10)
+			{
+				printf("oooooooooooooooook\n");
+				env->editor.edg_hover = w_vtx;
+				return (w_vtx);
+			}
+			w_vtx = w_vtx->next;
+		}
+		sct = sct->next;
+	}
+	return (0);
 }
 
 t_vtx		*target_vertex(t_env *env)

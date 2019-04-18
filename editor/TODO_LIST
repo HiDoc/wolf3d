@@ -11,8 +11,8 @@ BUG : bloquer value max des input
 BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
 BUG : input del bugge avec le refactor dans utils.c
 
+TOCHECK : target_edge() : boucle (w_vtx && w_vtx->next)
 TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
-TOCHECK : reference 0 de l'angle du joueur sur le spawm
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 
@@ -21,7 +21,8 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	split edge
 * TODO :	modifs texture edge en selection
 
-* TODO :	objects : prefabs
+TODO :	objects : prefabs
+* TODO :	update export
 * TODO :	meta : set music & skybox
 * TODO :	spawn : display line on spawn direction
 
@@ -34,7 +35,6 @@ TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading
 TODO :	parsing : parsing todo
-TODO :	update export
 
 TODO :	refactor : total cleaning
 TODO :	norme : total norme

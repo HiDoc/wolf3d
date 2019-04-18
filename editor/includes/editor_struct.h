@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:01:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:58:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,14 @@ struct					s_editor
 	t_pos			grid_translate;
 
 	// hover / select
-	t_sct			*sct_hover;
-	t_sct			*sct_select;
 	t_vtx			*vtx_hover;
-	t_vtx			*vtx_select;
+	t_w_vtx			*edg_hover;
+	t_sct			*sct_hover;
 	t_object		*obj_hover;
+
+	t_vtx			*vtx_select;
+	t_w_vtx			*edg_select;
+	t_sct			*sct_select;
 	t_object		*obj_select;
 
 	// size current edge draw
