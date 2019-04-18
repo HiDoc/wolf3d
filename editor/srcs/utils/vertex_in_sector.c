@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 01:07:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 04:37:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	filter_target(t_pos pos, t_sct *sector)
 static int	filter_edges(const t_pos pos, t_w_vtx *w_vtx)
 {
 	const float		a_y = w_vtx->vtx->pos.y;
-	const float		b_y = w_vtx->vtx->next->pos.y;
+	const float		b_y = w_vtx->next->vtx->pos.y;
 
 	if (a_y < b_y && (pos.y < a_y || pos.y > b_y))
 		return (0);
