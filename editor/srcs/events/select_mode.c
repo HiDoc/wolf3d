@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:22:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:33:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int		select_interface_events(t_env *env)
 
 static int		select_input_events(t_env *env)
 {
-		char				*tmp;
 		char 				*key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
 		env->data->sdl.event.key.keysym.scancode));
 		const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
@@ -73,15 +72,10 @@ static int		select_input_events(t_env *env)
 			if ((scancode >= 89 && scancode <= 98)
 			|| (scancode >= 30 && scancode <= 39))
 			{
-				if (get_element(E_I_SELEC_HEIGHT, env)->str_max == 0)
+				if ((input_add(E_I_SELEC_HEIGHT, key, env)))
 				{
-					tmp = get_element(E_I_SELEC_HEIGHT, env)->str;
-					if (!(get_element(E_I_SELEC_HEIGHT, env)->str =
-					lt_push(ft_zstrjoin(get_element(E_I_SELEC_HEIGHT, env)->str, key), ft_memdel)))
-						ui_error_exit_sdl("Editor: Out of memory");
 					env->editor.sct_select->height = ft_atoi(
 					get_element(E_I_SELEC_HEIGHT, env)->str);
-					lt_release(tmp);
 				}
 			}
 			else if (scancode == 42)
@@ -99,15 +93,10 @@ static int		select_input_events(t_env *env)
 			if ((scancode >= 89 && scancode <= 98)
 			|| (scancode >= 30 && scancode <= 39))
 			{
-				if (get_element(E_I_SELEC_GRAVITY, env)->str_max == 0)
+				if ((input_add(E_I_SELEC_GRAVITY, key, env)))
 				{
-					tmp = get_element(E_I_SELEC_GRAVITY, env)->str;
-					if (!(get_element(E_I_SELEC_GRAVITY, env)->str =
-					lt_push(ft_zstrjoin(get_element(E_I_SELEC_GRAVITY, env)->str, key), ft_memdel)))
-						ui_error_exit_sdl("Editor: Out of memory");
 					env->editor.sct_select->gravity = ft_atoi(
 					get_element(E_I_SELEC_GRAVITY, env)->str);
-					lt_release(tmp);
 				}
 			}
 			else if (scancode == 42)

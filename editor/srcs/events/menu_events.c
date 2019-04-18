@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:19:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:27:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static int	click_event(t_env *env)
 
 static int	keydown_event(t_env *env)
 {
-	char				*tmp;
 	char 				*key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
 	env->data->sdl.event.key.keysym.scancode));
 	const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
@@ -103,14 +102,7 @@ static int	keydown_event(t_env *env)
 		if ((scancode >= 89 && scancode <= 98)
 		|| (scancode >= 4 && scancode <= 39) || scancode == 44)
 		{
-			if (get_element(M_I_NEW, env)->str_max == 0)
-			{
-				tmp = get_element(M_I_NEW, env)->str;
-				if (!(get_element(M_I_NEW, env)->str =
-				lt_push(ft_zstrjoin(get_element(M_I_NEW, env)->str, key), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-				lt_release(tmp);
-			}
+			input_add(M_I_NEW, key, env);
 		}
 		else if (scancode == 42)
 		{

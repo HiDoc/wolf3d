@@ -29,7 +29,6 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	grid : zoom centre sur grille
 * TODO :	grid : limite left / bot
 
-* TODO :	generiser input events
 TODO :	refactor .h
 TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions

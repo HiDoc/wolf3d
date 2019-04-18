@@ -6,15 +6,30 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:19:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:30:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void	input_add()
-{
+/*
+** return : 1 if string not empty, 0 if str is empty
+*/
 
+int		input_add(int elem, char *key, t_env *env)
+{
+	char *tmp;
+
+	if (get_element(elem, env)->str_max == 0)
+	{
+		tmp = get_element(elem, env)->str;
+		if (!(get_element(elem, env)->str =
+		lt_push(ft_zstrjoin(get_element(elem, env)->str, key), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+		lt_release(tmp);
+		return (1);
+	}
+	return (0);
 }
 
 /*
