@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:06:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:50:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ int				handle_events(t_env *env)
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
 		env->mouse.x = (((m.x - 20)
-		- (env->grid_translate.x + env->grid_mouse_var.x)) / env->pixel_value);
+		- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x)) / env->pixel_value);
 		env->mouse.y = (((m.y - 100)
-		- (env->grid_translate.y + env->grid_mouse_var.y)) / env->pixel_value);
+		- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y)) / env->pixel_value);
 	}
 
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
@@ -132,9 +132,9 @@ int				handle_events(t_env *env)
 		// targetting vertex
 		target_vertex(env); // to change to same format as bellow
 		// targetting sector
-		env->sct_hover = target_sector(env->mouse, env);
+		env->editor.sct_hover = target_sector(env->mouse, env);
 		// targetting object
-		env->obj_hover = target_object(env->data->mouse, env);
+		env->editor.obj_hover = target_object(env->data->mouse, env);
 	}
 
 	/* quit doom_nukem */

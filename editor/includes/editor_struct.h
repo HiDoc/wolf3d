@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:19:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:39:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,39 @@ struct					s_editor
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
 	char            **wall_txtr;
+
+	// drag vertex;
+	int				mouse_drag;
+	t_pos			new_pos;
+
+	// grid move
+	int				grid_drag;
+	t_pos			grid_init_pos;
+	t_pos			grid_mouse_var;
+	t_pos			grid_translate;
+
+	// hover / select
+	t_sct			*sct_hover;
+	t_sct			*sct_select;
+	t_vtx			*vtx_hover;
+	t_vtx			*vtx_select;
+	t_object		*obj_hover;
+	t_object		*obj_select;
+
+	// size current edge draw
+	int				vtx_size;
+
+	// state
+	int				drawing;		// am i drawing an edge
 };
 
 struct					s_env
 {
 	t_data          *data;
 
-	t_editor		editor;
 	t_menu			menu;
+	t_editor		editor;
+
 
 	char			*map_name;
 
@@ -170,14 +195,6 @@ struct					s_env
 
 	// lst vertex
 	t_vtx			*vertex;
-
-	// hover / select
-	t_sct			*sct_hover;
-	t_sct			*sct_select;
-	t_vtx			*vtx_hover;
-	t_vtx			*vtx_select;
-	t_object		*obj_hover;
-	t_object		*obj_select;
 
 	// current elem / objects flags
 	t_elem			*obj_elem;	// obj selectionne
@@ -191,23 +208,8 @@ struct					s_env
 	int				nb_vtx;
 	int				nb_sct;
 
-	// size current edge draw
-	int				vtx_size;
-
-	// state
-	int				drawing;		// am i drawing an edge
-
 	// mouse handling
 	int				mouse_mode;
-
-	// drag vertex;
-	int				mouse_drag;
-
-	// grid move
-	int				grid_drag;
-	t_pos			grid_init_pos;
-	t_pos			grid_mouse_var;
-	t_pos			grid_translate;
 
 	// lst elements
 	t_elem			*elements;

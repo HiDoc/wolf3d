@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:13:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:58:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			elem_mode(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, rect) && env->obj_elem)
 		{ // si click sur interface et object selectionne
-			if (env->sct_hover)
+			if (env->editor.sct_hover)
 			{
 				if (env->spawn_set == 1)
 				{

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 06:37:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:57:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		display_grid(t_env *env)
 
 	// display interface area + grid
 	nb = 0;
-	i = 20 + env->grid_translate.x + env->grid_mouse_var.x;
+	i = 20 + env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
 	while (i < 870 && nb < 220)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
@@ -35,7 +35,7 @@ static void		display_grid(t_env *env)
 		nb++;
 	}
 	nb = 0;
-	i = 100 + env->grid_translate.y + env->grid_mouse_var.y;
+	i = 100 + env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 	while (i < 780 && nb < 180)
 	{
 		color = (nb % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
@@ -72,7 +72,7 @@ static void		display_infos(t_env *env)
 		rect = (SDL_Rect){190, 750, 0, 20};
 		ui_make_string(rect, "size : ", env->data);
 		rect = (SDL_Rect){240, 750, 0, 20};
-		ui_make_nbrstring(rect, env->vtx_size, env->data);
+		ui_make_nbrstring(rect, env->editor.vtx_size, env->data);
 	}
 
 	// display scale
@@ -99,15 +99,15 @@ static t_vec	grid_transform(t_pos p1, t_pos p2, t_env *env)
 
 	p1 = (t_pos){
 	20 + (p1.x * env->pixel_value)
-		+ env->grid_translate.x + env->grid_mouse_var.x,
+		+ env->editor.grid_translate.x + env->editor.grid_mouse_var.x,
 	100 + (p1.y * env->pixel_value)
-		+ env->grid_translate.y + env->grid_mouse_var.y};
+		+ env->editor.grid_translate.y + env->editor.grid_mouse_var.y};
 
 	p2 = (t_pos){
 	20 + (p2.x * env->pixel_value)
-		+ env->grid_translate.x + env->grid_mouse_var.x,
+		+ env->editor.grid_translate.x + env->editor.grid_mouse_var.x,
 	100 + (p2.y * env->pixel_value)
-		+ env->grid_translate.y + env->grid_mouse_var.y};
+		+ env->editor.grid_translate.y + env->editor.grid_mouse_var.y};
 
 	vec = (t_vec){p1, p2};
 	return (vec);
@@ -121,7 +121,7 @@ void			display_sector(t_sct *sct, t_env *env)
 	t_vec		vec;
 
 
-	if (env->sct_hover == sct)
+	if (env->editor.sct_hover == sct)
 		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
 	else
 		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
@@ -162,22 +162,22 @@ void			display_interface(t_env *env)
 	sct = env->sct_start;
 	while (sct)
 	{
-		if (sct != env->sct_hover)
+		if (sct != env->editor.sct_hover)
 			display_sector(sct, env);
 		sct = sct->next;
 	}
 	// display hovered one overflowing the others
-	if (env->sct_hover)
-		display_sector(env->sct_hover, env);
+	if (env->editor.sct_hover)
+		display_sector(env->editor.sct_hover, env);
 
 	// display current edge
 	if (env->sct_current)
 	{
 		p1 = (t_pos){
 		20 + env->sct_current->w_vtx_current->vtx->pos.x
-		* env->pixel_value + env->grid_translate.x + env->grid_mouse_var.x,
+		* env->pixel_value + env->editor.grid_translate.x + env->editor.grid_mouse_var.x,
 		100 + env->sct_current->w_vtx_current->vtx->pos.y
-		* env->pixel_value + env->grid_translate.y + env->grid_mouse_var.y};
+		* env->pixel_value + env->editor.grid_translate.y + env->editor.grid_mouse_var.y};
 
 		p2 = (t_pos){env->data->mouse.x,env->data->mouse.y};
 
@@ -189,13 +189,13 @@ void			display_interface(t_env *env)
 
 	// display vtx hovering
 	t_circ	circ;
-	if (env->vtx_hover)
+	if (env->editor.vtx_hover)
 	{
 		circ = (t_circ){
-		20 + env->vtx_hover->pos.x * env->pixel_value
-		+ env->grid_translate.x + env->grid_mouse_var.x,
-		100 + env->vtx_hover->pos.y * env->pixel_value
-		+ env->grid_translate.y + env->grid_mouse_var.y,
+		20 + env->editor.vtx_hover->pos.x * env->pixel_value
+		+ env->editor.grid_translate.x + env->editor.grid_mouse_var.x,
+		100 + env->editor.vtx_hover->pos.y * env->pixel_value
+		+ env->editor.grid_translate.y + env->editor.grid_mouse_var.y,
 		10, 0xFFFFFFFF};
 		ui_make_circle(circ, env->data);
 	}
@@ -211,10 +211,10 @@ void			display_interface(t_env *env)
 			color = C_RED;
 
 		p1 = (t_pos){
-		20 + obj->pos.x * env->pixel_value + env->grid_translate.x
-		+ env->grid_mouse_var.x,
-		100 + obj->pos.y * env->pixel_value + env->grid_translate.y
-		+ env->grid_mouse_var.y};
+		20 + obj->pos.x * env->pixel_value + env->editor.grid_translate.x
+		+ env->editor.grid_mouse_var.x,
+		100 + obj->pos.y * env->pixel_value + env->editor.grid_translate.y
+		+ env->editor.grid_mouse_var.y};
 
 		rect = (SDL_Rect){p1.x - 5, p1.y - 5, 10, 10};
 		ui_make_rect(env->data->surface, rect, color);

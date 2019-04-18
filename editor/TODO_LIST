@@ -20,7 +20,6 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	split edge
 * TODO :	modifs texture edge en selection
 
-** TODO :	move vertex
 * TODO :	objects : prefabs
 * TODO :	meta : set music & skybox
 * TODO :	spawn : display line on spawn direction
@@ -29,7 +28,7 @@ TOCHECK : si memory push et release est bien dynamique partout
 * TODO :	grid : zoom centre sur grille
 * TODO :	grid : limite left / bot
 
-TODO :	refactor .h
+* TODO :	refactor .h
 TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading

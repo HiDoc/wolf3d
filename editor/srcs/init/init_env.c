@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:05:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:59:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ static void		init_editor(t_env *env)
 	//env->grid_translate = (t_pos){-(870 * 2), -(780 * 2)};
 	//env->pixel_value = 5;
 
-	env->grid_translate = (t_pos){0, 0};
+	env->editor.grid_translate = (t_pos){0, 0};
 	env->pixel_value = 5;
 
 	i = 0;
