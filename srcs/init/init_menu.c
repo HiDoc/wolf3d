@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/15 23:29:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 23:26:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	key_binding(t_engine *e)
 	e->keys[I_OJUMP] = SDL_SCANCODE_SPACE;
 	e->keys[I_ODUCK] = SDL_SCANCODE_LCTRL;
 	e->keys[I_OINVENTR] = SDL_SCANCODE_TAB;
-	e->keys[I_OPICK] = SDL_SCANCODE_E;
+	e->keys[I_OPICKOPN] = SDL_SCANCODE_E;
 	e->keys[I_ORELOAD] = SDL_SCANCODE_R;
 	e->keys[I_OJETPACKON] = SDL_SCANCODE_1;
 	e->keys[I_OBLUEGEM] = SDL_SCANCODE_2;
@@ -105,9 +105,9 @@ static void	options_blocs(t_env *e, t_bloc *data)
 	i = 0;
 	while (++i < NB_OPT_KEY)
 	{
-		i == I_OPICK ? r.y = H / 2 : 0;
+		i == I_OPICKOPN ? r.y = H / 2 : 0;
 		fill_menu(e, &data[i], &r, H / 15);
-		data[i].rect.x = i < I_OPICK ? W / 6.5 : W / 1.9;
+		data[i].rect.x = i < I_OPICKOPN ? W / 6.5 : W / 1.9;
 	}
 }
 

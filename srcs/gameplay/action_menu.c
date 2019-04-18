@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 23:07:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 23:57:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	action_mainmenu(t_status *s, const Uint8 *k)
+void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 {
 	scroll_menu(&s->current, k, 0, NB_BLOC_NG);
 	if (k[SDL_SCANCODE_RETURN] || s->click)
@@ -24,10 +24,12 @@ void	action_mainmenu(t_status *s, const Uint8 *k)
 		s->current == 0 ? s->main_menu = 0 : 0;
 		s->load_menu || s->options_menu ? s->current = 0 : 0;
 		s->click = 0;
+		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
+	menu_btn_sound(e, k);
 }
 
-void	action_ingame_menu(t_status *s, const Uint8 *k)
+void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
 	scroll_menu(&s->current, k, 0, NB_BLOC_IG - 1);
 	if (k[SDL_SCANCODE_LEFT] && s->current == 0)
@@ -43,7 +45,9 @@ void	action_ingame_menu(t_status *s, const Uint8 *k)
 		!s->options_menu ? s->ingame_menu = 0 : 0;
 		s->current = 0;
 		s->click = 0;
+		!s->ingame_menu ? set_msc_menu(e, s) : 0;
 	}
+	menu_btn_sound(e, k);
 }
 
 void	action_loadmenu(t_env *e, t_status *s, const Uint8 *k)
@@ -79,7 +83,7 @@ void	action_optionmenu(t_env *e, t_status *s, const Uint8 *k)
 	else if (k[SDL_SCANCODE_RIGHT] && !s->key_change)
 	{
 		s->current == NB_OPT_KEY ? s->current = 0 : 0;
-		s->current < I_OPICK && s->current
+		s->current < I_OPICKOPN && s->current
 		? s->current += I_OINVENTR : 0;
 	}
 	else if ((k[SDL_SCANCODE_RETURN] || s->click)
@@ -91,6 +95,7 @@ void	action_optionmenu(t_env *e, t_status *s, const Uint8 *k)
 	}
 	else
 		change_option(e, s, k, &e->engine.keys[s->current]);
+	menu_btn_sound(e, k);
 }
 
 

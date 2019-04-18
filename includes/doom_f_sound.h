@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom_f_sound.c                                     :+:      :+:    :+:   */
+/*   doom_f_sound.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:30:51 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 19:21:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 00:35:25 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define DOOM_F_SOUND_H
 
 void	init_sounds(t_env *e);
-void	launch_msc_menu(t_env *e, t_status *s);
+void	set_msc_menu(t_env *e, t_status *s);
+void	menu_btn_sound(t_env *e, const Uint8 *k);
+void	sound_player(t_env *e, t_player *p);
 
 #endif

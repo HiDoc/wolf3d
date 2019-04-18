@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/16 00:12:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 01:51:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int				sdl_render(t_env *env)
 	}
 	else
 	{
+		sound_player(env, &env->engine.player);
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		//ui_minimap(env);
@@ -78,7 +79,7 @@ int				sdl_loop(t_env *env)
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (1)
 	{
-		SDL_SetEventFilter(&YourEventFilter, (void *)env);
+		!env->menu.status.on ? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
 		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)

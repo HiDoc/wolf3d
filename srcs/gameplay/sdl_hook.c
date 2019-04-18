@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 21:31:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 23:33:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu && !s->ingame_menu && !s->load_menu)
-			action_mainmenu(s, k);
+			action_mainmenu(e, s, k);
 		else if (s->ingame_menu && !s->options_menu)
-			action_ingame_menu(s, k);
+			action_ingame_menu(e, s, k);
 		else if (s->load_menu)
 			action_loadmenu(e, s, k);
 		else if (s->options_menu)
@@ -61,7 +61,7 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 				s->ingame_menu = !s->ingame_menu;
 				if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
 					doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
-				launch_msc_menu(e, s);
+				set_msc_menu(e, s);
 				SDL_Delay(300);
 			}
 			s->current = 0;
@@ -122,11 +122,11 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
-		if (keycodes[k[I_OPICK]])
+		if (keycodes[k[I_OPICKOPN]])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
-		if (k[I_ORELOAD])
-			load_weapon(env);
 		if (keycodes[k[I_ORELOAD]])
+			load_weapon(env);
+		if (keycodes[k[I_OPICKOPN]])
 			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
@@ -141,7 +141,7 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		{
 			env->menu.status.on = !env->menu.status.on;
 			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
-			launch_msc_menu(env, &env->menu.status);
+			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
 			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
 				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");

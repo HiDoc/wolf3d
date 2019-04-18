@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:01:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:31:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int		load_weapon(t_env *env)
 	int				curr_max;
 
 	wpn = env->player.inventory.current;
-	if (wpn)
+	if (wpn && wpn->current->ref != FIST)
 	{
+
+		Mix_PlayChannel(-1,	env->sound.reload[wpn->current->ref], 0);
 		curr_max = env->world.armory[wpn->current->ref].ammo_curr_max;
 		if (*wpn->ammo_magazine && *wpn->ammo_current < curr_max)
 			env->player.actions.is_loading = 1;

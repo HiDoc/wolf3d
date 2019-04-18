@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:56:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 19:44:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 01:35:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define DOOM_S_SOUND_H
 
 typedef struct	s_sound		t_sound;
-typedef struct	s_sd_state	t_sd_state;
+typedef struct	s_sd_stat	t_sd_stat;
 
-struct 						t_sd_state
+struct 						s_sd_stat
 {
 	int			hit;
 	int			dead;
@@ -47,8 +47,6 @@ struct						s_sound
 	Mix_Chunk	*hud[SD_HUD];
 	Mix_Chunk	*s_effect[SD_EFFECT];
 	Mix_Music	*ambiance[SD_AMBIANCE];
-	// Mix_Chunk	*explode[SD_EXPLODE];
-	// Mix_Chunk	*door[SD_DOOR];
 };
 
 #endif

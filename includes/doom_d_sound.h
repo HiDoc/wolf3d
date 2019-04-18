@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 21:16:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 01:44:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Sounds constants
 */
 # define SD_PLAYER		13
-# define SD_HUD			5
+# define SD_HUD			7
 # define SD_EFFECT		13
 # define SD_AMBIANCE	20
 # define SD_RAND_GEM	3
@@ -62,8 +62,9 @@
 # define AB_TENSION			14
 # define AB_EPICLOOP		15
 # define AB_CAVEWATER		16
-# define AB_CINEM			17
-# define AB_FACTORY			18
+# define AB_CINEMTIK		17
+# define AB_ACTIONLOOP		18
+# define AB_FACTORY			19
 
 /*
 ** HUD sounds index
@@ -73,6 +74,8 @@
 # define HUD_DROP	2
 # define HUD_PCKGEM	3
 # define HUD_PCKWPN	4
+# define HUD_NOPE	5
+# define HUD_AMMO	6
 
 /*
 ** EFFECTS sounds index

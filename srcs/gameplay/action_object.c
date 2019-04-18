@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 23:40:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 01:43:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		give_life(void *e, t_wrap_inv *object)
 		object->nb_stack > 0 ? object->nb_stack-- : 0;
 		object->is_used = object->nb_stack < 1 ? 1 : 0;
 		object->is_used ? drop_object(env, object) : 0;
+		env->engine.player.sound.medkit = 1;
 		return (BLANK);
 	}
 	return (ref == HEALTH ? FULL_LIFE : FULL_SHIELD);
@@ -61,6 +62,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? 1 : 0;
 			obj->is_used ? drop_object(env, obj) : 0;
+			Mix_PlayChannel(-1,	env->sound.hud[HUD_AMMO], 0);
 			return (BLANK);
 		}
 		return (wpn->current ? WPN_FULL : NO_AMMO);
