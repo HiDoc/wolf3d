@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:18:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:20:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:32:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void		delete_sct_content(t_sct *sector)
 {
-	t_vtx	*tmp;
+	t_w_vtx		*tmp;
 
-	while (sector->vtx_start)
+	while (sector->w_vtx_start)
 	{
-		tmp = sector->vtx_start->next;
-		lt_release(sector->vtx_start);
-		sector->vtx_start = tmp;
+		tmp = sector->w_vtx_start->next;
+		lt_release(sector->w_vtx_start);
+		sector->w_vtx_start = tmp;
 	}
 }
 
