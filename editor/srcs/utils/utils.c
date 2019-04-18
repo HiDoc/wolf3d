@@ -6,11 +6,39 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:43:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:19:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void	input_add()
+{
+
+}
+
+/*
+** return : 1 if last char has been deleted, 0 if str is now empty
+*/
+
+int		input_del(int elem, t_env *env)
+{
+	int		newsize;
+
+	newsize = 0;
+	if (get_element(elem, env)->str)
+	{
+		newsize = ft_strlen(get_element(elem, env)->str) - 1;
+		if (newsize > 0)
+			get_element(elem, env)->str[newsize] = 0;
+		else
+		{
+			lt_release(get_element(elem, env)->str);
+			return (0);
+		}
+	}
+	return (1);
+}
 
 int		ft_strchri(char *str, char c)
 {

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:57:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:02:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void			display_sector(t_sct *sct, t_env *env)
 
 
 	if (env->editor.sct_hover == sct)
-		color = (env->mouse_mode == 1) ? C_RED : C_GREEN;
+		color = (env->editor.mouse_mode == 1) ? C_RED : C_GREEN;
 	else
 		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
 	w_vtx = sct->w_vtx_start;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:47:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:22:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static int		select_input_events(t_env *env)
 		char 				*key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
 		env->data->sdl.event.key.keysym.scancode));
 		const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
-		int					newsize;
 
 		if (get_element(E_I_SELEC_HEIGHT, env)->clicked == 1)
 		{
@@ -87,15 +86,7 @@ static int		select_input_events(t_env *env)
 			}
 			else if (scancode == 42)
 			{
-				if (get_element(E_I_SELEC_HEIGHT, env)->str)
-				{
-					newsize = ft_strlen(
-					get_element(E_I_SELEC_HEIGHT, env)->str) - 1;
-					if (newsize > 0)
-						get_element(E_I_SELEC_HEIGHT, env)->str[newsize] = 0;
-					else
-						lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
-				}
+				input_del(E_I_SELEC_HEIGHT, env);
 			}
 			return (1);
 		}
@@ -121,15 +112,7 @@ static int		select_input_events(t_env *env)
 			}
 			else if (scancode == 42)
 			{
-				if (get_element(E_I_SELEC_GRAVITY, env)->str)
-				{
-					newsize = ft_strlen(
-					get_element(E_I_SELEC_GRAVITY, env)->str) - 1;
-					if (newsize > 0)
-						get_element(E_I_SELEC_GRAVITY, env)->str[newsize] = 0;
-					else
-						lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
-				}
+				input_del(E_I_SELEC_GRAVITY, env);
 			}
 			return (1);
 		}

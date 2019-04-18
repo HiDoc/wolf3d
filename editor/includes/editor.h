@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:06:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:17:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
 **	utils/
 */
 
+int			input_del(int elem, t_env *env);
 int			ft_strchri(char *str, char c);
 float		pythagore(t_pos p1, t_pos p2);
 void		export_map(t_env *env);

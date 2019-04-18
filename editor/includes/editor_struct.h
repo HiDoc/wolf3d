@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:39:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:01:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,9 @@ struct					s_menu
 
 struct					s_editor
 {
+	// mouse handling
+	int				mouse_mode;
+
 	// wall textures
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
@@ -188,40 +191,34 @@ struct					s_env
 
 	char			*map_name;
 
+	// lst vertex
+	t_vtx			*vertex;
 	// lst sectors
 	t_sct			*sct_current;
 	t_sct			*sct_start;
 	t_sct			*sct_end;
+	// lst objects
+	t_object		*objects;
 
-	// lst vertex
-	t_vtx			*vertex;
 
+	// lst elements
+	t_elem			*elements;
+	// lst button objects
+	t_elem			*btn_objs;
 	// current elem / objects flags
 	t_elem			*obj_elem;	// obj selectionne
 	int				spawn_set;	// spawn pose, en attente de direction
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
-
-	// lst objects
-	t_object		*objects;
-
-	// data infos
-	int				nb_vtx;
-	int				nb_sct;
-
-	// mouse handling
-	int				mouse_mode;
-
-	// lst elements
-	t_elem			*elements;
-
-	// lst button objects
-	t_elem			*btn_objs;
 
 	// variables
 	float			pixel_value; // size correspond a un pixel
 
 	// relative mouse_position
 	t_pos			mouse;
+
+	// data infos
+	int				nb_vtx;
+	int				nb_sct;
 };
 
 #endif
