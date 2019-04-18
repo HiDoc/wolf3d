@@ -6,11 +6,20 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:13:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 00:59:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+t_pos			get_edge_center(t_pos a, t_pos b)
+{
+	t_pos	center;
+
+	center.x = (a.x + b.x) / 2;
+	center.y = (a.y + b.y) / 2;
+	return (center);
+}
 
 static t_pos   diff_vertex(t_pos p1, t_pos p2)
 {

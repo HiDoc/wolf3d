@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:49:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 23:38:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,13 @@ void			display_sector(t_sct *sct, t_env *env)
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
-		(w_vtx == env->editor.edg_hover) ? color = C_RED : 0;
 		vec = grid_transform(w_vtx->vtx->pos, w_vtx->next->vtx->pos, env);
 		if (is_vec_in_map(vec))
 		{
-			ui_make_line(env->data->surface, vec, color);
+			if (w_vtx == env->editor.edg_hover)
+				ui_make_line(env->data->surface, vec, C_BLUE);
+			else
+				ui_make_line(env->data->surface, vec, color);
 			rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
 			ui_make_full_rect(env->data->surface, rect, C_CYAN);
 		}

@@ -10,15 +10,17 @@ BUG : wheel scroll pas precis sur la souris
 BUG : bloquer value max des input
 BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
 BUG : input del bugge avec le refactor dans utils.c
+BUG : hover edges
 
+TOCHECK : coherence du sct_current dans le programme
 TOCHECK : target_edge() : boucle (w_vtx && w_vtx->next)
 TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 
-** TODO :	edge selection
+* TODO :	delete vertex
+* TODO :	delete edge
 * TODO :	walls : texture par walls
-* TODO :	split edge
 * TODO :	modifs texture edge en selection
 
 TODO :	objects : prefabs

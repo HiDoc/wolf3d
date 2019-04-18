@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:45:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 23:38:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 		while (w_vtx && w_vtx->next) // peut faire bugger le code
 		{
 			if (fabs(pointside(
-			pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 10)
+			pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 50)
 			{
 				env->editor.edg_hover = w_vtx;
 				return (w_vtx);

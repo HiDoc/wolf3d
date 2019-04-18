@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:58:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 00:23:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ enum					e_elements
 	E_B_ELM_SPEC,
 	E_B_SELEC_DEL,
 	E_I_SELEC_HEIGHT,
-	E_I_SELEC_GRAVITY
+	E_I_SELEC_GRAVITY,
+	E_B_SELEC_SPLIT
 };
 
 enum					e_obj_category

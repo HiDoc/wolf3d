@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:50:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 01:02:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int		select_interface_events(t_env *env)
 		env->editor.mouse_drag = 1;
 		env->editor.vtx_select = env->editor.vtx_hover;
 	}
+	else if (env->editor.edg_hover)
+		env->editor.edg_select = env->editor.edg_hover;
 	else if (env->editor.obj_hover)
 		env->editor.obj_select = env->editor.obj_hover;
 	else if (env->editor.sct_hover)
@@ -118,13 +120,9 @@ int				select_mode(t_env *env)
 	if (env->editor.mouse_drag)
 	{
 		if (event.type == SDL_MOUSEBUTTONUP)
-		{
 			env->editor.mouse_drag = 0;
-		}
 		else
-		{
 			env->editor.vtx_select->pos = env->mouse;
-		}
 		return (1);
 	}
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
@@ -143,6 +141,14 @@ int				select_mode(t_env *env)
 		{
 			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
 			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
+		{
+			create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
+				env->editor.edg_select->next->vtx->pos), env);
+			insert_w_vertex(env->editor.edg_select, env->vertex, env);
+			env->nb_vtx++;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
