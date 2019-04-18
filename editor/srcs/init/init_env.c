@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:05:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 00:25:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){910, 180, 250, 30};
 	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
+
+	rect = (SDL_Rect){910, 250, 250, 30};
+	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
 }
 
 static void		load_obj(char *path, int type, t_env *env)
@@ -248,7 +251,7 @@ static void		init_editor(t_env *env)
 	//env->grid_translate = (t_pos){-(870 * 2), -(780 * 2)};
 	//env->pixel_value = 5;
 
-	env->grid_translate = (t_pos){0, 0};
+	env->editor.grid_translate = (t_pos){0, 0};
 	env->pixel_value = 5;
 
 	i = 0;
