@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:56:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:35:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:57:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,21 @@ struct 						s_sd_stat
 	int			lowlife;
 	int			impass;
 	int			shootin;
+	int			loadin;
 	int			kill;
 	int			gem;
 	int			explode;
+	int			pick;
+	int			drop;
+	int			ammo;
+	int			nope;
+	int			open;
 };
 
 
 struct						s_sound
 {
+	t_sd_stat	state;
 	Mix_Chunk	*shot[WORLD_NB_WEAPONS];
 	Mix_Chunk	*reload[GAME_NB_WPN];
 	Mix_Chunk	*e_voice[WORLD_NB_ENEMIES];

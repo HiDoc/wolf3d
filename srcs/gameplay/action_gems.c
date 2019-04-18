@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 03:40:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:29:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	gem_is_usable(t_env *env, int i)
 
 int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 {
-	int	r;
+	// int	r;
 
 	if (shortcut)
 	{
@@ -49,9 +49,7 @@ int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 				shortcut = NULL;
 				e->player.inventory.gems[i - 1].current = NULL;
 			}
-			r = sound_rand(SD_RAND_GEM + 1);
-			r > SD_RAND_GEM - 1 ? r = SD_RAND_GEM - 1 : 0;
-			Mix_PlayChannel(1, e->sound.rp_gem[r], 0);
+			e->engine.player.sound.gem = 1;
 		}
 		if (i == 0)
 			shortcut->nb_stack = 1;
@@ -71,7 +69,7 @@ int	blue_gem(t_env *env)
 		if (env->time.t_blue < 600)
 		{
 			*cur->ammo_current = env->world.armory[ref].ammo_current;
-			*cur->ammo_magazine = env->world.armory[ref].ammo_current;
+			*cur->ammo_magazine = env->world.armory[ref].ammo_magazine;
 			env->time.t_blue++;
 			return (1);
 		}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 23:33:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:07:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			{
 				s->on = !s->on;
 				s->ingame_menu = !s->ingame_menu;
-				if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
+				if ((SDL_SetRelativeMouseMode(s->on ? 1 : 0)) < 0)
 					doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 				set_msc_menu(e, s);
 				SDL_Delay(300);

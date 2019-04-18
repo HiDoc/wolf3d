@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:43:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 16:05:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
 	sector->nb_objects--;
-	Mix_PlayChannel(-1,	env->sound.hud[HUD_PCKGEM], 0);
+	env->engine.player.sound.pick = 2;
 	return (NEW_ITEM);
 }
 
@@ -98,6 +98,7 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 		env->player.inventory.objects[iter].nb_stack++;
 		obj->is_picked = 1;
 		sector->nb_objects--;
+		env->engine.player.sound.pick = 1;
 		return (NEW_ITEM);
 	}
 	else if (env->player.inventory.nb_current_obj < 6
@@ -113,12 +114,12 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 			env->player.inventory.objects[index].nb_stack++;
 		obj->is_picked = 1;
 		sector->nb_objects--;
-		Mix_PlayChannel(-1,	env->sound.hud[HUD_PICK], 0);
+		env->engine.player.sound.pick = 1;
 		return (NEW_ITEM);
 	}
 	if (obj->ref >= WORLD_NB_CSMBLE && !obj->is_wpn)
 		return (pick_gem(env, obj, sector));
-	!obj->is_wpn ? Mix_PlayChannel(-1,	env->sound.hud[HUD_NOPE], 0) : 0;
+	!obj->is_wpn ? env->engine.player.sound.nope = 1 : 0;
 	return (!obj->is_wpn ? FULL_INV : pick_weapon(env, obj));
 }
 
@@ -137,7 +138,7 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 			vertex, object->current->ref, object->current->is_wpn);
 			sector->nb_objects++;
-			Mix_PlayChannel(-1,	env->sound.hud[HUD_DROP], 0);
+			env->engine.player.sound.drop = 1;
 		}
 		if (object->nb_stack > 1)
 			object->nb_stack--;

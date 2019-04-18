@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:44:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 14:15:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,10 @@
 # define EFCT_CYDMN_FARSTEP	10
 # define EFCT_INTRO_BOSS	11
 # define EFCT_CREEPSCREAM	12
+
+/*
+** CHANELS sounds index
+*/
+
 
 #endif

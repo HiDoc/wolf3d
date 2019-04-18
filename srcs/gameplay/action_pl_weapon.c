@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:32:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:56:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		set_current_wpn(t_env *env, t_inventory *inv, int i)
 	inv->current->ammo_current = &inv->weapons[i].ammo[0];
 	inv->current->ammo_magazine = &inv->weapons[i].ammo[1];
 	inv->current->damage = &inv->weapons[i].ammo[2];
-	Mix_PlayChannel(-1,	env->sound.hud[HUD_PCKWPN], 0);
+	env->engine.player.sound.pick = 3;
 	return (1);
 }
 
@@ -66,7 +66,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		}
 		else
 		{
-			Mix_PlayChannel(-1,	env->sound.hud[HUD_NOPE], 0);
+			env->engine.player.sound.nope = 1;
 			return (HAVE_WPN);
 		}
 		obj->is_picked = 1;
@@ -88,7 +88,6 @@ int		new_current_wpn(t_env *env, t_inventory *inv)
 			break ;
 		i++;
 	}
-	Mix_PlayChannel(-1,	env->sound.hud[HUD_DROP], 0);
 	set_current_wpn(env, inv, i);
 	return (1);
 }
@@ -113,6 +112,7 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		env->hud.inventory.nb_wpn--;
 		env->hud.is_txt = WPN_DROPPED;
 		sector->nb_objects++;
+		env->engine.player.sound.drop = 1;
 		return (ref == cur_ref ? new_current_wpn(env, &env->player.inventory) : 1);
 	}
 	return (0);

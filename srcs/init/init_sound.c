@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:54:47 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 21:14:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 16:43:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	init_sounds(t_env *e)
 	t_sound	*s;
 
 	s = &e->sound;
+	ft_bzero(s, sizeof(t_sound));
+	Mix_AllocateChannels(32);
 	musics_pack("ambiance/", s->ambiance, SD_AMBIANCE);
 	chunks_pack("hud/", s->hud, SD_HUD);
 	chunks_pack("effect/", s->s_effect, SD_EFFECT);

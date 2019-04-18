@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 01:43:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:47:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			obj->nb_stack > 0 ? obj->nb_stack-- : 0;
 			obj->is_used = obj->nb_stack < 1 ? 1 : 0;
 			obj->is_used ? drop_object(env, obj) : 0;
-			Mix_PlayChannel(-1,	env->sound.hud[HUD_AMMO], 0);
+			env->engine.player.sound.ammo = 1;
 			return (BLANK);
 		}
 		return (wpn->current ? WPN_FULL : NO_AMMO);

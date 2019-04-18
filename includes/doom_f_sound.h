@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:30:51 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 02:58:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 14:17:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ void			set_msc_menu(t_env *e, t_status *s);
 void			menu_btn_sound(t_env *e, const Uint8 *k);
 void			sound_player(t_env *e, t_player *p);
 unsigned int	sound_rand(int max);
+void			sound_enemies(t_env *e, t_wrap_enmy *en, t_vtx p);
 #endif
