@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 12:54:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:10:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	set_msc_menu(t_env *e, t_status *s)
 {
-	if (s->on && (s->home || s->main_menu))
-		Mix_FadeInMusic(e->sound.ambiance[AB_MENU], 0, 3000) < 0
-		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
-		: 0;
-	else if (s->on && s->ingame_menu)
+	if (s->on && (s->home || s->main_menu || s->ingame_menu))
+	{
+		if (Mix_Playing(-1))
+			Mix_HaltChannel(-1);
 		Mix_FadeInMusic(e->sound.ambiance[AB_IGMENU], 0, 3000) < 0
 		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
 		: 0;
+	}
 	else
 		!Mix_FadeOutMusic(100)
 		? doom_error_exit("Doom_nukem error on Mix_FadeOutMusic")

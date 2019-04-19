@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 17:43:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 13:55:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ struct						s_sector
 	int			nb_enemies;
 	int			is_door;
 	t_door		door;
+	int			type;
 	t_wrap_sect	*head_object;
 	t_wrap_enmy	*head_enemy;
 };

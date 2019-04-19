@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/19 11:34:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:39:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ static int				sdl_render(t_env *env)
 	SDL_LockSurface(env->sdl.surface);
 	god_mod(env);
 	if (env->menu.status.on)
-	{
 		draw_menu(env);
-		action_menu(env);
-	}
 	else if (env->hud.inventory.is_active)
 	{
 		env->player.actions.is_shooting = 0;
@@ -68,8 +65,6 @@ static int		YourEventFilter(void *userdata, SDL_Event *event)
 		mouse_shoot(env);
 	else if (event->type == SDL_MOUSEBUTTONUP)
 		env->player.actions.mouse_state = 0;
-	else if (event->type == SDL_MOUSEBUTTONDOWN && env->menu.status.click)
-		sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 	return (1);
 }
 
@@ -93,7 +88,7 @@ int				sdl_loop(t_env *env)
 			if (env->hud.inventory.is_active)
 				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 			else if (env->menu.status.on)
-				sdl_keymouse_menu(env, env->sdl.event, env->sdl.keycodes);
+				sdl_key_menu(env, env->sdl.event, env->sdl.keycodes);
 			else
 				(env->player.inventory.current->current->ref == RIFLE)
 				? mouse_shoot(env) : 0;

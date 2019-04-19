@@ -39,7 +39,7 @@ void			load_map(t_engine *e, t_env *env)
 				t_sector *sect = &e->sectors[e->nsectors-1];
 				t_door	*d = &sect->door;
 				int* num = NULL;
-				sscanf(ptr += n, "%f%f%d%d%d%n", &sect->floor,&sect->ceil, &sect->is_door, &d->is_openable, &d->ref_img, &n);
+				sscanf(ptr += n, "%f%f%d%d%d%d%n", &sect->floor,&sect->ceil, &sect->type, &sect->is_door, &d->is_openable, &d->ref_img, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
 				{
 					num = realloc(num, ++m * sizeof(*num));

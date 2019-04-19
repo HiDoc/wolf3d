@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:30:51 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 12:39:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:16:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void			sound_hud(t_env *e, t_sd_stat *s);
 void			sound_effect(t_env *e, t_sd_stat *s);
 void			handle_sound(t_env *e, t_sd_stat *s);
 void			play_chunk(int chan, Mix_Chunk *c, int loop);
+
 #endif

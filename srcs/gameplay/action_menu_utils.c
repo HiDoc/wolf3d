@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 11:29:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:37:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 		check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys)
 		? *key = e->sdl.event.key.keysym.scancode : 0;
 		s->key_change = 0;
-		s->click = 0;
 		printf("key pressed : %i\n", *key);
 	}
-	if ((k[SDL_SCANCODE_RETURN] || s->click) && !s->key_change && s->options_menu)
+	if ((k[SDL_SCANCODE_RETURN]) && !s->key_change && s->options_menu)
 	{
 		printf("key CHANGE %i\n", s->key_change);
 		s->key_change = 1;
@@ -62,7 +61,6 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 		{
 			s->sound = !s->sound;
 			s->key_change = 0;
-			s->click = 0;
 		}
 	}
 }
@@ -72,18 +70,3 @@ int	ispoint_inrect(int x, int y, SDL_Rect r)
 	return (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h);
 }
 
-int	new_btn_current(t_bloc *b, int x, int y, int limit)
-{
-	int	i;
-	SDL_Rect	r;
-
-	i = -1;
-	while (++i < limit)
-	{
-		r = b[i].rect;
-		limit != NB_OPT_MENU ? r.x = b[i].rect.x - b[i].rect.w / 2 : 0;
-		if (ispoint_inrect(x, y, r))
-			return (i);
-	}
-	return (-1);
-}

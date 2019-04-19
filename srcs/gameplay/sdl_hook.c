@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 21:09:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:51:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	god_mod(t_env *env)
 	return (1);
 }
 
-void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
+void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 {
 	t_status	*s;
 
@@ -34,8 +34,6 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 	{
 		if (s->home)
 		{
-			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
-				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 			s->main_menu = 1;
 			s->home = 0;
 		}
@@ -59,14 +57,11 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			{
 				s->on = 0;
 				s->ingame_menu = 0;
-				if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
-					doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 				set_msc_menu(e, s);
 				SDL_Delay(300);
 			}
 			s->current = 0;
 		}
-
 	}
 }
 
@@ -139,12 +134,10 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		}
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
-			env->menu.status.on = 1;
-			env->menu.status.ingame_menu = 1;
-			// set_msc_menu(env, &env->menu.status);
+			env->menu.status.on = !env->menu.status.on;
+			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
+			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
-			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
-				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 		}
 	}
 	return (1);
