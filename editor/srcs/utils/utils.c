@@ -6,11 +6,32 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 03:05:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 04:23:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void			sync_sct_minmax(t_env *env)
+{
+	t_sct		*sct;
+	t_w_vtx		*w_vtx;
+
+	sct = env->sct_start;
+	while (sct)
+	{
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx)
+		{
+			(w_vtx->vtx->pos.x < sct->xmin) ? sct->xmin = w_vtx->vtx->pos.x : 0;
+			(w_vtx->vtx->pos.x > sct->xmax) ? sct->xmax = w_vtx->vtx->pos.x : 0;
+			(w_vtx->vtx->pos.y < sct->ymin) ? sct->ymin = w_vtx->vtx->pos.y : 0;
+			(w_vtx->vtx->pos.y > sct->ymax) ? sct->ymax = w_vtx->vtx->pos.y : 0;
+			w_vtx = w_vtx->next;
+		}
+		sct = sct->next;
+	}
+}
 
 t_pos			get_edge_center(t_pos a, t_pos b)
 {

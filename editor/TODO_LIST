@@ -5,7 +5,6 @@ BUG : angle du spawn
 BUG : execve ./doom completement KC
 BUG : wheel scroll pas precis sur la souris
 * BUG : bloquer value max des input
-* BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
 BUG : input del bugge avec le refactor dans utils.c
 BUG : segv sur les split des fois
 BUF : corriger sens de priorite des hover/selections
@@ -16,12 +15,18 @@ TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 
+OPTI : minmax sync
+OPTI : multithreading
+OPTI : corriger le reframes inutiles
+OPTI : getpixel
+
 * TODO :	delete vertex
 * TODO :	delete edge
 * TODO :	walls : texture par walls
 * TODO :	modifs texture edge en selection
 
 TODO :	objects : prefabs
+TODO :	floodfill on sectors
 * TODO :	update export
 * TODO :	meta : set music & skybox
 * TODO :	spawn : display line on spawn direction
@@ -32,7 +37,6 @@ TODO :	objects : prefabs
 * TODO :	grid : limite left / bot
 
 TODO :	refactor .h
-TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading
 TODO :	parsing : parsing todo

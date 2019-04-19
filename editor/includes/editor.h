@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 03:05:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 04:22:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ t_vtx		*target_vertex(t_env *env);
 t_w_vtx		*target_edge(t_pos pos, t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
-int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire
-//float		pointside(t_pos p, t_vrx v0, t_vrx v1);
+int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointside
 
 /*
 **	utils/
 */
 
+void		sync_sct_minmax(t_env *env);
 t_pos		get_edge_center(t_pos a, t_pos b);
 float       pointside(t_pos p, t_pos p0, t_pos p1);
 int			input_add(int elem, char *key, t_env *env);

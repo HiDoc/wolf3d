@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 02:53:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 04:21:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,10 @@ int				select_mode(t_env *env)
 		if (event.type == SDL_MOUSEBUTTONUP)
 			env->editor.mouse_drag = 0;
 		else
+		{
 			env->editor.vtx_select->pos = env->mouse;
+			sync_sct_minmax(env);
+		}
 		return (1);
 	}
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
