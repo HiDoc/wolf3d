@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:18:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:58:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 21:38:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		delete_sct_content(t_sct *sector, t_env *env)
 	while (sector->w_vtx_start)
 	{
 		tmp = sector->w_vtx_start->next;
-		lt_release(sector->w_vtx_start);
+		delete_vertex(sector->w_vtx_start->vtx, env);
 		sector->w_vtx_start = tmp;
 	}
 
@@ -45,6 +45,7 @@ void			delete_sector(t_sct *sector, t_env *env)
 		env->sct_start = ptr->next;
 		delete_sct_content(sector, env);
 		lt_release(sector);
+		env->nb_sct--;
 		return ;
 	}
 	while (ptr && ptr->next)
@@ -57,4 +58,5 @@ void			delete_sector(t_sct *sector, t_env *env)
 		}
 		ptr = ptr->next;
 	}
+	env->nb_sct--;
 }

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:41:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:39:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 21:30:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void			delete_vertex(t_vtx *vtx, t_env *env)
 	{
 		env->vertex = ptr->next;
 		lt_release(ptr);
+		env->nb_vtx--;
 		return ;
 	}
 	while (ptr && ptr->next)
