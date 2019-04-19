@@ -12,16 +12,13 @@ BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si b
 BUG : angle du spawn
 BUG : execve ./doom completement KC
 BUG : wheel scroll pas precis sur la souris
-* BUG : bloquer value max des input
+BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
-BUG : corriger sens de priorite des hover/selections
-BUG : edge hover sometimes doesn't work
-BUG : nb vertex apres sct_del
-BUG : nb obj apres obj_del et sct_del
+* BUG : nb vertex apres sct_del
+* BUG : corriger sens de priorite des hover/selections
+* BUG : edge hover sometimes doesn't work
 
 TOCHECK : coherence du sct_current dans le programme
-TOCHECK : function target_edge() : boucle (w_vtx && w_vtx->next)
-TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 
@@ -51,6 +48,7 @@ TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading
 TODO :	parsing : parsing todo
 TODO :	multithreading
+TODO :	design
 
 TODO :	refactor : total cleaning
 TODO :	norme : total norme

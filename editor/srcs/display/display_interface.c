@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 18:58:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:04:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,10 @@ void			display_sector(t_sct *sct, t_env *env)
 		w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
 		if (is_vec_in_map(vec))
 		{
-			ui_make_line(env->data->surface, vec, color);
+			if (w_vtx == env->editor.edg_hover)
+				ui_make_line(env->data->surface, vec, C_BLUE);
+			else
+				ui_make_line(env->data->surface, vec, color);
 			rect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
 			ui_make_full_rect(env->data->surface, rect, C_CYAN);
 		}

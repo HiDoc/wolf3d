@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:29:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:07:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,16 @@ int				select_mode(t_env *env)
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
-			create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
-				env->editor.edg_select->next->vtx->pos), env);
+			if (env->editor.edg_select->next)
+			{ // normal eddge
+				create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos), env);
+			}
+			else
+			{ // last edge
+				create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos), env);
+			}
 			insert_w_vertex(env->editor.edg_select, env->vertex, env);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))

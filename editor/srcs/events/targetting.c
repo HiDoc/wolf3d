@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 03:07:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:03:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 	return (target);
 }
 
-static int  filter_edge(const t_pos pos, t_w_vtx *w_vtx)
+static int  filter_edge(const t_pos pos, t_w_vtx *v0, t_w_vtx *v1)
 {
-	const float     a_y = w_vtx->vtx->pos.y;
-	const float     b_y = w_vtx->next->vtx->pos.y;
+	const float     a_y = v0->vtx->pos.y;
+	const float     b_y = v1->vtx->pos.y;
 
 	if (a_y < b_y && (pos.y < a_y || pos.y > b_y))
 		return (0);
@@ -50,9 +50,9 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 	while (sct)
 	{
 		w_vtx = sct->w_vtx_start;
-		while (w_vtx && w_vtx->next) // peut faire bugger le code
+		while (w_vtx && w_vtx->next)
 		{
-			if (filter_edge(pos, w_vtx))
+			if (filter_edge(pos, w_vtx, w_vtx->next))
 			{
 				if (fabs(pointside(
 				pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 20)
@@ -62,6 +62,15 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 				}
 			}
 			w_vtx = w_vtx->next;
+		}
+		if (filter_edge(pos, w_vtx, sct->w_vtx_start))
+		{
+			if (fabs(pointside(
+			pos, w_vtx->vtx->pos, sct->w_vtx_start->vtx->pos)) < 20)
+			{
+				env->editor.edg_hover = w_vtx;
+				return (w_vtx);
+			}
 		}
 		sct = sct->next;
 	}
