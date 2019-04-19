@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 11:07:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 20:26:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,29 @@ int	gem_is_usable(t_env *env, int i)
 	return (0);
 }
 
-int	action_gems(t_env *env, t_wrap_inv *shortcut, int i)
+int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 {
 	if (shortcut)
 	{
 		if (i == 0)
-			shortcut->current->action(env, shortcut);
+			shortcut->current->action(e, shortcut);
 		if (i == 1)
-			env->player.actions.is_ammo_illimited = 1;
+			e->player.actions.is_ammo_illimited = 1;
 		if (i == 2)
-			env->player.actions.is_invisible = 1;
+			e->player.actions.is_invisible = 1;
 		if (i == 3)
-			env->player.actions.is_superstrong = 1;
+			e->player.actions.is_superstrong = 1;
 		if (i == 4)
-			env->player.actions.is_invulnerable = 1;
-		if (gem_is_usable(env, i))
+			e->player.actions.is_invulnerable = 1;
+		if (gem_is_usable(e, i))
 		{
 			shortcut->nb_stack--;
 			if (i != 0 && !shortcut->nb_stack)
 			{
 				shortcut = NULL;
-				env->player.inventory.gems[i - 1].current = NULL;
+				e->player.inventory.gems[i - 1].current = NULL;
 			}
+			e->engine.player.sound.gem = 1;
 		}
 		if (i == 0)
 			shortcut->nb_stack = 1;
@@ -66,7 +67,7 @@ int	blue_gem(t_env *env)
 		if (env->time.t_blue < 600)
 		{
 			*cur->ammo_current = env->world.armory[ref].ammo_current;
-			*cur->ammo_magazine = env->world.armory[ref].ammo_current;
+			*cur->ammo_magazine = env->world.armory[ref].ammo_magazine;
 			env->time.t_blue++;
 			return (1);
 		}
@@ -148,7 +149,7 @@ int	purple_gem(t_env *env)
 int	handle_gems(t_env *env)
 {
 	if (blue_gem(env))
-		ui_put_data(env, (t_font){BLUE, "Super Speed ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
 	if (green_gem(env))
 		ui_put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !", env->hud.text.text, (t_vtx){W / 1.3, H / 1.7}, W / 60, -1, -1});
 	if (red_gem(env))

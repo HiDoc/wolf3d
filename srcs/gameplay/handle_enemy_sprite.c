@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 02:57:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 19:56:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,22 @@ static void	bot_is_shootin(t_character *e, t_wrap_enmy *enemy)
 
 static void	bot_is_dying(t_env *env, t_character *e, t_wrap_enmy *enemy, t_sector *s)
 {
+	int	temp;
+
 	if (enemy->die_frame / FRAME_RATIO < e->time_death)
 	{
 		enemy->is_shooting = 0;
 		enemy->is_shot = 0;
 		enemy->walk_frame = 0;
-		enemy->sprite = e->death[enemy->die_frame / FRAME_RATIO];
 		enemy->die_frame++;
 	}
 	else
 	{
+		temp = env->stats.data[I_KTOGO];
 		enemy->is_alive = 0;
 		enemy->is_dying = 0;
 		env->stats.data[I_KTOGO]--;
+		temp && !env->stats.data[I_KTOGO] ? env->engine.player.sound.open = 1 : 0;
 		s->nb_enemies--;
 	}
 }
@@ -75,8 +78,9 @@ void	enemies_frames(t_env *env, t_sector *sector)
 {
 	t_wrap_enmy	*enemy;
 	t_character	*e;
-	(void)env;
+	t_vtx		p;
 
+	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
@@ -92,6 +96,7 @@ void	enemies_frames(t_env *env, t_sector *sector)
 			if (enemy->is_shot)
 				bot_is_hit(e, enemy);
 		}
+		sound_enemies(env, enemy, p);
 		if (!enemy->is_alive && !enemy->is_dying)
 			enemy->sprite = e->death[e->time_death - 1];
 		enemy = enemy->next;
