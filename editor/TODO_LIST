@@ -7,8 +7,8 @@ BUG : wheel scroll pas precis sur la souris
 * BUG : bloquer value max des input
 * BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
 BUG : input del bugge avec le refactor dans utils.c
-BUG : hover edges
-* BUG : nombre de vertex apres split
+BUG : segv sur les split des fois
+BUF : corriger sens de priorite des hover/selections
 
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : target_edge() : boucle (w_vtx && w_vtx->next)
@@ -36,6 +36,7 @@ TODO :	corriger le reframes inutiles
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading
 TODO :	parsing : parsing todo
+TODO :	multithreading
 
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
