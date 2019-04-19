@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:10:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:58:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	set_msc_menu(t_env *e, t_status *s)
 	{
 		if (Mix_Playing(-1))
 			Mix_HaltChannel(-1);
-		Mix_FadeInMusic(e->sound.ambiance[AB_IGMENU], 0, 3000) < 0
+		Mix_FadeInMusic(e->sound.ambiance[AB_IGMENU], -1, 3000) < 0
 		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
 		: 0;
 	}
 	else
-		!Mix_FadeOutMusic(100)
+		!Mix_FadeOutMusic(1000)
 		? doom_error_exit("Doom_nukem error on Mix_FadeOutMusic")
 		: 0;
 }

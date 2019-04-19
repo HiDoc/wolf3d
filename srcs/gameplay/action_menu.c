@@ -6,21 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:53:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:55:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-void	exit_menu(t_env *e, t_status *s, int p)
-{
-	if (!p)
-	{
-		set_msc_menu(e, s);
-		if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
-			doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
-	}
-}
 
 void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 {
@@ -33,7 +23,7 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 		s->current == 3 ? s->quit = 1 : 0;
 		s->current == 0 ? s->main_menu = 0 : 0;
 		s->load_menu || s->options_menu ? s->current = 0 : 0;
-		exit_menu(e, s, s->main_menu);
+		s->main_menu ? set_msc_menu(e, s) : 0;
 	}
 	menu_btn_sound(e, k);
 }
@@ -52,7 +42,7 @@ void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 		s->current == 2 ? s->main_menu = 1 : 0; // save en mm tps
 		s->current == 3 ? s->on = !s->on : 0;
 		!s->options_menu && s->current ? s->ingame_menu = 0 : 0;
-		if (!s->options_menu && !s->ingame_menu && !s->main_menu)
+		if (!s->ingame_menu && !s->main_menu)
 			set_msc_menu(e, s);
 		s->current = 0;
 	}
