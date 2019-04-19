@@ -26,7 +26,6 @@ OPTI : multithreading
 OPTI : corriger le reframes inutiles
 OPTI : getpixel
 
-* TODO :	move object
 * TODO :	delete edge
 * TODO :	walls : texture par walls
 * TODO :	modifs texture edge en selection
@@ -54,6 +53,7 @@ TODO :	parsing : parsing todo
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
 
+OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
 OPTIONAL :	floodfill on sectors

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:12:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:24:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static int		select_interface_events(t_env *env)
 	else if (env->editor.edg_hover)
 		env->editor.edg_select = env->editor.edg_hover;
 	else if (env->editor.obj_hover)
+	{
+		env->editor.mouse_drag = 1;
 		env->editor.obj_select = env->editor.obj_hover;
+	}
 	else if (env->editor.sct_hover)
 	{
 		env->editor.sct_select = env->editor.sct_hover;
@@ -122,8 +125,15 @@ int				select_mode(t_env *env)
 			env->editor.mouse_drag = 0;
 		else
 		{
-			env->editor.vtx_select->pos = env->mouse;
-			sync_sct_minmax(env);
+			if (env->editor.vtx_select)
+			{
+				env->editor.vtx_select->pos = env->mouse;
+				sync_sct_minmax(env);
+			}
+			else if (env->editor.obj_select)
+			{
+				env->editor.obj_select->pos = env->mouse;
+			}
 		}
 		return (1);
 	}
