@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:58:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 16:59:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	set_msc_menu(t_env *e, t_status *s)
 		: 0;
 	}
 	else
-		!Mix_FadeOutMusic(1000)
+		!Mix_FadeOutMusic(500)
 		? doom_error_exit("Doom_nukem error on Mix_FadeOutMusic")
 		: 0;
 }

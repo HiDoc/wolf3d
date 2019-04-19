@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 20:10:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 00:23:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ enum					e_elements
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
 	E_B_SELEC_DEL,
-	E_I_SELEC_HEIGHT
+	E_I_SELEC_HEIGHT,
+	E_I_SELEC_GRAVITY,
+	E_B_SELEC_SPLIT
 };
 
 enum					e_obj_category
@@ -61,6 +63,7 @@ enum					e_obj_category
 	SPECIAL
 };
 
+typedef struct	s_w_vtx		t_w_vtx;
 typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
@@ -69,10 +72,16 @@ typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
 
+struct					s_w_vtx
+{
+	t_vtx		*vtx;
+	t_sct		*sector;
+	t_w_vtx		*next;
+};
+
 struct					s_vtx
 {
 	t_pos			pos;
-	t_sct			*sector;
 	t_vtx			*next;
 };
 
@@ -80,11 +89,14 @@ struct					s_sct
 {
 	int				id;			// identifiant du secteur
 
-	t_vtx			*vtx_current;
-	t_vtx			*vtx_start;
-	t_vtx			*vtx_end;
+	t_w_vtx		*w_vtx_current;	// vertex wrapper
+	t_w_vtx		*w_vtx_start;	// vertex wrapper
+	t_w_vtx		*w_vtx_end;	// vertex wrapper
 
 	int				close;		// is sector close;
+
+	int				height;
+	int				gravity;
 
 	float			xmin;
 	float			xmax;
@@ -98,6 +110,7 @@ struct					s_sct
 
 struct					s_elem
 {
+	int				ref;		// if btn object
 	int				id;
 	int				type;
 	SDL_Rect		rect;
@@ -114,9 +127,12 @@ struct					s_object
 {
 	t_pos			pos;
 	float			dir;	// if entity
+
 	int				sct;
 	int				ref;
 	int				category;
+	char			*name;
+
 	Uint32			icon_color; // replace by image
 	t_object		*next;
 };
@@ -133,52 +149,17 @@ struct					s_menu
 
 struct					s_editor
 {
+	// mouse handling
+	int				mouse_mode;
+
 	// wall textures
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
 	char            **wall_txtr;
-};
 
-struct					s_env
-{
-	t_data          *data;
-
-	t_editor		editor;
-	t_menu			menu;
-
-	char			*map_name;
-
-	// lst sectors
-	t_sct			*sct_current;
-	t_sct			*sct_start;
-	t_sct			*sct_end;
-
-	// hover / select
-	t_sct			*sct_hover;
-	t_sct			*sct_select;
-	t_vtx			*vtx_hover;
-	t_vtx			*vtx_select;
-	t_object		*obj_hover;
-	t_object		*obj_select;
-
-	// current obj_button
-	int				obj_type;
-	// lst objects
-	t_object		*objects;
-
-	// data infos
-	int				nb_vtx;
-	int				nb_sct;
-
-	// size current edge draw
-	int				vtx_size;
-
-	// state
-	int				drawing;		// am i drawing an edge
-
-	// mouse handling
-	int				mouse_mode;
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
+	// drag vertex;
+	int				mouse_drag;
+	t_pos			new_pos;
 
 	// grid move
 	int				grid_drag;
@@ -186,17 +167,62 @@ struct					s_env
 	t_pos			grid_mouse_var;
 	t_pos			grid_translate;
 
+	// hover / select
+	t_vtx			*vtx_hover;
+	t_w_vtx			*edg_hover;
+	t_sct			*sct_hover;
+	t_object		*obj_hover;
+
+	t_vtx			*vtx_select;
+	t_w_vtx			*edg_select;
+	t_sct			*sct_select;
+	t_object		*obj_select;
+
+	// size current edge draw
+	int				vtx_size;
+
+	// state
+	int				drawing;		// am i drawing an edge
+};
+
+struct					s_env
+{
+	t_data          *data;
+
+	t_menu			menu;
+	t_editor		editor;
+
+
+	char			*map_name;
+
+	// lst vertex
+	t_vtx			*vertex;
+	// lst sectors
+	t_sct			*sct_current;
+	t_sct			*sct_start;
+	t_sct			*sct_end;
+	// lst objects
+	t_object		*objects;
+
+
 	// lst elements
 	t_elem			*elements;
-
 	// lst button objects
 	t_elem			*btn_objs;
+	// current elem / objects flags
+	t_elem			*obj_elem;	// obj selectionne
+	int				spawn_set;	// spawn pose, en attente de direction
+	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// variables
 	float			pixel_value; // size correspond a un pixel
 
 	// relative mouse_position
 	t_pos			mouse;
+
+	// data infos
+	int				nb_vtx;
+	int				nb_sct;
 };
 
 #endif

@@ -30,7 +30,7 @@ static int				sdl_render(t_env *env)
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		//ui_minimap(env);
-		handle_weapon(env, &env->time.frame);
+		handle_weapon(env);
 		print_hud(env);
 		handle_gems(env);
 		if (!env->god_mod)

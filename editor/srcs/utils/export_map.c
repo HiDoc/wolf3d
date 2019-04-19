@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 00:48:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 01:24:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void        export_map(t_env *env)
 {
-
-	int		xmin = WIN_W;	// translation
+	(void)env;
+	/*int		xmin = WIN_W;	// translation
 	int		ymin = WIN_H;	// translation
 
 	char	*path;
@@ -58,18 +58,17 @@ void        export_map(t_env *env)
 		obj = obj->next;
 	}
 
-	if (!(path = ft_strjoin("maps/", env->map_name)))
-		ui_error_exit_sdl("Editor: Error while opening file", env->data);
+	if (!(path = lt_push(ft_strjoin("maps/", env->map_name), ft_memdel)))
+		ui_error_exit_sdl("Editor: Error while opening file");
 
 	if ((fd = open(path, O_CREAT | O_TRUNC | O_WRONLY,
 	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
-		ui_error_exit_sdl("Editor: Error while opening file", env->data);
-	free(path);	
+		ui_error_exit_sdl("Editor: Error while opening file");
+	lt_release(path);
 
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);
 
-	dprintf(fd, "# nb vertex:\n%d\n", env->nb_vtx);
 	dprintf(fd, "# vertex: x y\n");
 	sct = env->sct_start;
 	while (sct)
@@ -84,70 +83,54 @@ void        export_map(t_env *env)
 		sct = sct->next;	
 	}
 
-	ft_putendl_fd("# nb sectors:", fd);
-	ft_putnbr_fd(env->nb_sct, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# sector: ceil floor n-vertex n-neighbors", fd);
 	sct = env->sct_start;
 	while (sct)
 	{
-		dprintf(fd, "sector /**/ /**/");
-		dprintf(fd, "/**/\n");
+		//dprintf(fd, "sector // //");
+		//dprintf(fd, "//\n");
 		sct = sct->next;	
 	}
 
-	ft_putendl_fd("# nb wall objects:", fd);
-	ft_putnbr_fd(nb_wobj, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# wall_object: x y sector ref", fd);
 	obj = env->objects;
 	while (obj)
 	{
 		if (obj->category == WALL_OBJ)
-			dprintf(fd, "wall_object %d %d /**/ /**/\n",
+			//dprintf(fd, "wall_object %d %d // //\n",
 			(int)(obj->pos.x - xmin),(int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
-	ft_putendl_fd("# nb consumables:", fd);
-	ft_putnbr_fd(nb_cons, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# consumable: x y sector ref is_wpn", fd);
 	obj = env->objects;
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
-			dprintf(fd, "consumable %d %d /**/ /**/ /**/\n",
+			//dprintf(fd, "consumable %d %d // // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 	
-	ft_putendl_fd("# nb entities:", fd);
-	ft_putnbr_fd(nb_ntty, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# entity: x y sector ref", fd);	
 	obj = env->objects;
 	while (obj)
 	{
 		if (obj->category == ENTITY)
-			dprintf(fd, "entity %d %d /**/ /**/\n",
+			//dprintf(fd, "entity %d %d // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
-	ft_putendl_fd("# nb specials:", fd);
-	ft_putnbr_fd(nb_spec, fd);
-	ft_putchar_fd('\n', fd);
 	ft_putendl_fd("# special: x y ref", fd);
 	obj = env->objects;
 	while (obj)
 	{
 		if (obj->category == SPECIAL)
-			dprintf(fd, "special %d %d /**/\n",
+			//dprintf(fd, "special %d %d //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
 		obj = obj->next;	
 	}
 
-	if (close(fd) == -1)
-		ui_error_exit_sdl("Editor: Error while closing file", env->data);
+	close(fd);*/
 }

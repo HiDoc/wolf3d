@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:40:39 by sgalasso          #+#    #+#             */
-/*   Updated: 2018/10/22 15:22:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:02:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,13 @@ typedef struct s_lt	t_lt;
 
 struct				s_lt
 {
+	void	(*f)(void **);
 	void	*ptr;
 	t_lt	*next;
 };
 
 t_lt				*get_lifetime(t_lt	*new_ptr);
-void				*lt_push(void *ptr);
+void				*lt_push(void *ptr, void (*f)(void **));
 void				lt_release(void *ptr);
 void				lt_destroy(void);
 

@@ -1,0 +1,42 @@
+
+BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si beaucoup dezoome)
+BUG : angle du spawn
+BUG : execve ./doom completement KC
+BUG : si suppression sector les objects restent sur l'interface
+BUG : colors sur les rect d'objects sur interface
+BUG : affichage point des vertex bug
+BUG : wheel scroll pas precis sur la souris
+BUG : bloquer value max des input
+BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges
+BUG : input del bugge avec le refactor dans utils.c
+BUG : hover edges
+
+TOCHECK : coherence du sct_current dans le programme
+TOCHECK : target_edge() : boucle (w_vtx && w_vtx->next)
+TOCHECK : sector delete : choisir si detruire vertex (pointe par wrapper) ou pas
+TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
+TOCHECK : si memory push et release est bien dynamique partout
+
+* TODO :	delete vertex
+* TODO :	delete edge
+* TODO :	walls : texture par walls
+* TODO :	modifs texture edge en selection
+
+TODO :	objects : prefabs
+* TODO :	update export
+* TODO :	meta : set music & skybox
+* TODO :	spawn : display line on spawn direction
+
+* TODO :	grid : centrer la grille
+* TODO :	grid : zoom centre sur grille
+* TODO :	grid : limite left / bot
+
+TODO :	refactor .h
+TODO :	corriger le reframes inutiles
+TODO :	refactor : display / event functions
+TODO :	init : refactor elem loading
+TODO :	parsing : parsing todo
+
+TODO :	refactor : total cleaning
+TODO :	norme : total norme

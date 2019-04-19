@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:55:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 16:58:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 		s->current == 3 ? s->quit = 1 : 0;
 		s->current == 0 ? s->main_menu = 0 : 0;
 		s->load_menu || s->options_menu ? s->current = 0 : 0;
-		s->main_menu ? set_msc_menu(e, s) : 0;
+		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
 	menu_btn_sound(e, k);
 }

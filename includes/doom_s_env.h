@@ -41,6 +41,7 @@ typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_time				t_time;
 typedef struct	s_tiletab			t_tiletab;
+typedef struct	s_skybox			t_skybox;
 
 struct								s_sdl
 {
@@ -75,6 +76,17 @@ struct								s_tiletab
 	SDL_Surface		**surface;
 };
 
+struct								s_skybox
+{
+	SDL_Surface		*sb_top;
+	SDL_Surface		*sb_front;
+	SDL_Surface		*sb_right;
+	SDL_Surface		*sb_back;
+	SDL_Surface		*sb_left;
+
+	SDL_Surface		*sb;
+};
+
 struct								s_env
 {
 	int				map_w;
@@ -88,11 +100,12 @@ struct								s_env
 	t_hud			hud;
 	t_stats			stats;
 	t_menu			menu;
-	t_tiletab		tiletab;
 	int				god_mod;
-	//
-	// ...
-	//
+	t_tiletab		tiletab;
+
+	/* skybox */
+	t_skybox		skybox;
+
 	// Comment je penses que ce serait mieux :
 	//
 	// t_sdl			sdl; 		(trucs sdl ...)
@@ -112,6 +125,8 @@ void			rdr_del(void **ap); // del renderer
 void			txr_del(void **ap); // del texture
 void			crs_del(void **ap); // del cursor
 void			ttf_del(void **ap); // del ttf font
+
+void			display_skybox(t_env *env);
 
 void			load_tilesets(t_env *env);
 
