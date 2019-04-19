@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 02:26:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 02:31:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,13 +211,14 @@ void			display_interface(t_env *env)
 
 	// display objects
 	t_object	*obj = env->objects;
-	color = C_WHITE;
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
 			color = C_GREEN;
 		else if (obj->category == ENTITY)
 			color = C_RED;
+		else
+			color = C_WHITE;
 
 		p1 = (t_pos){
 		20 + obj->pos.x * env->pixel_value + env->editor.grid_translate.x

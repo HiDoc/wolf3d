@@ -3,8 +3,6 @@ BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/in
 BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si beaucoup dezoome)
 BUG : angle du spawn
 BUG : execve ./doom completement KC
-* BUG : si suppression sector les objects restent sur l'interface
-* BUG : colors sur les rect d'objects sur interface
 BUG : wheel scroll pas precis sur la souris
 * BUG : bloquer value max des input
 * BUG : recalculer les maxmin pos of sector quand les vertexs sont bouges

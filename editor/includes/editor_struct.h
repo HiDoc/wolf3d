@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 00:23:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 02:36:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ struct					s_object
 	t_pos			pos;
 	float			dir;	// if entity
 
-	int				sct;
+	t_sct			*sct;
 	int				ref;
 	int				category;
 	char			*name;

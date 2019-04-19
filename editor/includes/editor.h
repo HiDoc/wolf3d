@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 00:58:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 02:43:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void        srf_del(void **ap);		// free surface
 void        txr_del(void **ap);		// destroy texture
 void        crs_del(void **ap);		// destroy cursor
 void        ttf_del(void **ap);		// free font
-
 
 /*
 **	create_delete/
