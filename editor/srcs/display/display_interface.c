@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 20:13:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:05:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,7 @@ void			display_sector(t_sct *sct, t_env *env)
 	}
 	else
 	{
-		color = (sct == sct_lst_end(env->sct_start)
-		&& !sct->close) ? C_CYAN : C_WHITE;
+		color = (sct == env->sct_start && !sct->close) ? C_CYAN : C_WHITE;
 	}
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:37:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:07:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 enum					e_type
 {
 	INPUT,
-	BUTTON
+	BUTTON,
+	RECT
 };
 
 /*
@@ -34,6 +35,7 @@ enum					e_elements
 	M_B_CANCEL,
 	M_B_UP,
 	M_B_DOWN,
+	E_R_RECT,
 	E_B_MENU,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
@@ -89,9 +91,9 @@ struct					s_sct
 {
 	int				id;			// identifiant du secteur
 
-	int			nb_w_vtx;
-	t_w_vtx		*w_vtx_current;	// vertex wrapper
-	t_w_vtx		*w_vtx_start;	// vertex wrapper
+	int				nb_w_vtx;
+	t_w_vtx			*w_vtx_current;	// vertex wrapper
+	t_w_vtx			*w_vtx_start;	// vertex wrapper
 
 	int				close;		// is sector close;
 

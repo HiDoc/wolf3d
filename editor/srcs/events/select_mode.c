@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 20:07:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:12:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int				select_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
 
 	if (env->editor.mouse_drag)
 	{
@@ -131,7 +130,7 @@ int				select_mode(t_env *env)
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		reset_values(env);
-		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+		if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
 			return (select_interface_events(env));
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))

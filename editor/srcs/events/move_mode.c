@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:50:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:12:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 int			move_mode(t_env *env)
 {
 	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
 
-	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, get_element(E_R_RECT, env)->rect))
 	{
 		if (event.type == SDL_MOUSEBUTTONDOWN && env->editor.grid_drag == 0)
 		{

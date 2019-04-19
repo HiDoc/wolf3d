@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 20:42:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 21:58:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 	t_sct   *sector;
 
 	sector = env->sct_start;
-	while (sector && sector->close == 1)
+	while (sector)
 	{
-		if (vertex_in_sector(sector, pos))
-			return (sector);
+		if (sector->close == 1)
+		{
+			if (vertex_in_sector(sector, pos))
+				return (sector);
+		}
 		sector = sector->next;
 	}
 	return (0);

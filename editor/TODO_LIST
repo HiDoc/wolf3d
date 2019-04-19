@@ -15,19 +15,18 @@ BUG : execve ./doom completement KC
 BUG : wheel scroll pas precis sur la souris
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
-* BUG : create vertex in sector
-* BUG : create sector with at least 3 vertex
-* BUG : color of drawing sector
 
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
+TOCHECK : si le get elem du rect interface a bien ete remplace partout
 
 OPTI : minmax sync
 OPTI : multithreading
 OPTI : corriger le reframes inutiles
 OPTI : getpixel
 
+* TODO :	move object
 * TODO :	delete edge
 * TODO :	walls : texture par walls
 * TODO :	modifs texture edge en selection
@@ -40,6 +39,9 @@ OPTI : getpixel
 * TODO :	grid : centrer la grille
 * TODO :	grid : zoom centre sur grille
 * TODO :	grid : limite left / bot
+
+TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
+TODO :	bloquer les sorties d'object lors d'un edit de sector
 
 TODO :	front design interface / buttons
 TODO :	front design selected / hovered color and stuff
