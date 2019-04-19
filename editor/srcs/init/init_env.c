@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 00:25:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:08:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){170, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, rect, env);
+
+	rect = (SDL_Rect){20, 100, 850, 680};
+	create_element(E_R_RECT, RECT, rect, env);
 
 	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);

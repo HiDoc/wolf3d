@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 01:02:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:24:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static int		select_interface_events(t_env *env)
 	else if (env->editor.edg_hover)
 		env->editor.edg_select = env->editor.edg_hover;
 	else if (env->editor.obj_hover)
+	{
+		env->editor.mouse_drag = 1;
 		env->editor.obj_select = env->editor.obj_hover;
+	}
 	else if (env->editor.sct_hover)
 	{
 		env->editor.sct_select = env->editor.sct_hover;
@@ -115,20 +118,29 @@ int				select_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
 
 	if (env->editor.mouse_drag)
 	{
 		if (event.type == SDL_MOUSEBUTTONUP)
 			env->editor.mouse_drag = 0;
 		else
-			env->editor.vtx_select->pos = env->mouse;
+		{
+			if (env->editor.vtx_select)
+			{
+				env->editor.vtx_select->pos = env->mouse;
+				sync_sct_minmax(env);
+			}
+			else if (env->editor.obj_select)
+			{
+				env->editor.obj_select->pos = env->mouse;
+			}
+		}
 		return (1);
 	}
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		reset_values(env);
-		if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+		if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
 			return (select_interface_events(env));
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))
@@ -145,10 +157,17 @@ int				select_mode(t_env *env)
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
-			create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
-				env->editor.edg_select->next->vtx->pos), env);
+			if (env->editor.edg_select->next)
+			{ // normal eddge
+				create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos), env);
+			}
+			else
+			{ // last edge
+				create_vertex(get_edge_center(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos), env);
+			}
 			insert_w_vertex(env->editor.edg_select, env->vertex, env);
-			env->nb_vtx++;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
@@ -156,6 +175,8 @@ int				select_mode(t_env *env)
 				delete_object(env->editor.obj_select, env);
 			else if (env->editor.sct_select)
 				delete_sector(env->editor.sct_select, env);
+			else if (env->editor.vtx_select)
+				delete_vertex(env->editor.vtx_select, env);
 			unselect_all(env);
 			return (1);	
 		}

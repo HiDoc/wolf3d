@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 20:58:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:13:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ int			elem_mode(t_env *env)
 	const int		tab[5] = {
 	E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
 	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect	rect = (SDL_Rect){20, 100, 850, 680};
 	t_elem			*obj_btn;
 	int				i;
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (ui_mouseenter(m.x, m.y, rect) && env->obj_elem)
+		if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect) && env->obj_elem)
 		{ // si click sur interface et object selectionne
 			if (env->editor.sct_hover)
 			{
