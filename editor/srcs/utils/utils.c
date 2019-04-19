@@ -6,11 +6,25 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 04:23:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 18:48:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst)
+{
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+t_sct		*sct_lst_end(t_sct *lst)
+{
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
 void			sync_sct_minmax(t_env *env)
 {

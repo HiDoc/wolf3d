@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 16:23:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 18:58:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,14 @@ void			display_sector(t_sct *sct, t_env *env)
 
 
 	if (env->editor.sct_hover == sct)
+	{
 		color = (env->editor.mouse_mode == 1) ? C_RED : C_GREEN;
+	}
 	else
-		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
+	{
+		color = (sct == sct_lst_end(env->sct_start)
+		&& !sct->close) ? C_CYAN : C_WHITE;
+	}
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
@@ -142,8 +147,8 @@ void			display_sector(t_sct *sct, t_env *env)
 	}
 	if (sct->close)
 	{
-		vec = grid_transform(
-		sct->w_vtx_start->vtx->pos, sct->w_vtx_end->vtx->pos, env);
+		vec = grid_transform(sct->w_vtx_start->vtx->pos,
+		w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
 		if (is_vec_in_map(vec))
 		{
 			ui_make_line(env->data->surface, vec, color);

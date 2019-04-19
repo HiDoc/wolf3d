@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 23:30:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:12:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			draw_mode(t_env *env)
 				return (1);
 			}
 			else if (env->sct_current->w_vtx_start
-			&& env->editor.vtx_hover == env->sct_current->w_vtx_start->vtx)
+			&& env->editor.vtx_hover == w_vtx_lst_end(env->sct_current->w_vtx_start)->vtx)
 			{
 				env->sct_current->close = 1;
 				env->sct_current->w_vtx_current = 0;

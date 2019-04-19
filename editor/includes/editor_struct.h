@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 16:10:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:37:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ struct					s_sct
 	int			nb_w_vtx;
 	t_w_vtx		*w_vtx_current;	// vertex wrapper
 	t_w_vtx		*w_vtx_start;	// vertex wrapper
-	t_w_vtx		*w_vtx_end;	// vertex wrapper
 
 	int				close;		// is sector close;
 
@@ -193,7 +192,6 @@ struct					s_env
 	t_menu			menu;
 	t_editor		editor;
 
-
 	char			*map_name;
 
 	// lst vertex
@@ -201,7 +199,6 @@ struct					s_env
 	// lst sectors
 	t_sct			*sct_current;
 	t_sct			*sct_start;
-	t_sct			*sct_end;
 	// lst objects
 	t_object		*objects;
 

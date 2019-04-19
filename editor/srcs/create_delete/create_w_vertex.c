@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 01:05:43 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 16:11:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:30:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		insert_w_vertex(t_w_vtx *prev, t_vtx *vtx, t_env *env)
 	if (!(new = lt_push(ft_memalloc(sizeof(t_w_vtx)), ft_memdel)))
 		ui_error_exit_sdl("Editor: Out of memory");
 	new->vtx = vtx;
-	new->sector = env->sct_current;
+	new->sector = env->editor.edg_select->sector;
 
 	ptr = prev->sector->w_vtx_start;
 	while (ptr)
@@ -32,7 +32,7 @@ void		insert_w_vertex(t_w_vtx *prev, t_vtx *vtx, t_env *env)
 		}
 		ptr = ptr->next;
 	}
-	env->sct_current->nb_w_vtx++;
+	env->editor.edg_select->sector->nb_w_vtx++;
 }
 
 void		create_w_vertex(t_vtx *vtx, t_env *env)
@@ -49,13 +49,12 @@ void		create_w_vertex(t_vtx *vtx, t_env *env)
 	{
 		env->sct_current->w_vtx_current = new;
 		env->sct_current->w_vtx_start = new;
-		env->sct_current->w_vtx_end = new;
 	}
 	else
 	{
+		new->next = env->sct_current->w_vtx_start;
 		env->sct_current->w_vtx_current = new;
-		env->sct_current->w_vtx_end->next = new;
-		env->sct_current->w_vtx_end = new;
+		env->sct_current->w_vtx_start = new;
 	}
 	env->sct_current->nb_w_vtx++;
 	sync_sct_minmax(env);
