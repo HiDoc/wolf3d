@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 18:47:39 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:42:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			draw_mode(t_env *env);
 int			select_mode(t_env *env);
 int			elem_mode(t_env *env);
 int			move_mode(t_env *env);
-t_vtx		*target_vertex(t_env *env);
+t_vtx		*target_vertex(t_pos pos, t_env *env);
 t_w_vtx		*target_edge(t_pos pos, t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
