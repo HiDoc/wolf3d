@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 10:14:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 00:59:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref)
 	t_bloc	fill;
 	SDL_Rect	rect;
 
+	ft_bzero(&fill, sizeof(t_bloc));
 	rect = (SDL_Rect){W / 2, H / 2, env->hud.text.pick->w, env->hud.text.pick->h};
-	fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
-	rect, {{0, 0}, {0, 0}}};
+	fill.rect = rect;
 	if (obj->is_pickable)
 	{
 		draw_img(env, env->hud.text.pick, &fill);
@@ -54,8 +54,8 @@ int		print_description_object(t_env *env, int i, int j)
 	rect = (SDL_Rect){i > -1 ? W / 40 : W / 10, i > -1 ? H / 7.05 : H / 2.1,
 	env->hud.text.i_obj_description[env->hud.txt_inv]->w,
 	env->hud.text.i_obj_description[env->hud.txt_inv]->h};
-	fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL},
-	NULL, NULL, NULL, rect, {{0, 0}, {0, 0}}};
+	ft_bzero(&fill, sizeof(t_bloc));
+	fill.rect = rect;
 	draw_img(env, env->hud.text.i_obj_description[env->hud.txt_inv], &fill);
 	return (1);
 }
@@ -100,11 +100,10 @@ int     ui_txt_inv(t_env *env)
 	r = T_INVENTORY;
 	while (++i < 4)
 	{
+		ft_bzero(&fill, sizeof(t_bloc));
 		rect = (SDL_Rect){pos[i].x, pos[i].y,
 		env->hud.text.string[r]->w, env->hud.text.string[r]->h};
-		fill = (t_bloc){
-		{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
-		rect, {{0, 0}, {0, 0}}};
+		fill.rect = rect;
 		draw_img(env, env->hud.text.string[r++], &fill);
 	}
 	print_stats(env, -1);
@@ -143,9 +142,9 @@ int	ui_draw_msg(t_env *env, int *nb, int *tframe)
 
 	if (*nb && env->hud.text.string[*nb])
 	{
+		ft_bzero(&fill, sizeof(t_bloc));
 		rect = (SDL_Rect){W / 128, H - H / 2.5, env->hud.text.string[*nb]->w, env->hud.text.string[*nb]->h};
-		fill = (t_bloc){{{0, 0, 0, 0}, NULL}, {{0, 0, 0, 0}, NULL}, NULL, NULL, NULL,
-		rect, {{0, 0}, {0, 0}}};
+		fill.rect = rect;
 		draw_img(env, env->hud.text.string[*nb], &fill);
 		if (*tframe < 60)
 			++(*tframe);

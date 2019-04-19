@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/13 16:58:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 00:02:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,22 +191,14 @@ void			init_weapon(t_env *env)
 		(t_vctr){R_FIST, S_FIST, V_FIST}, 1);
 	printf("time weapon: %u\n", SDL_GetTicks());
 
-	// if (weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56, (t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 1)
-	// && weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100, (t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1)
-	// && weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30, (t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 1)
-	// && weapon_set(&env->world.armory[RPG], "weapons/rpg", 100, (t_vctr){R_RPG, S_RPG, V_RPG}, 1)
-	// && weapon_set(&env->world.armory[FIST], "weapons/fist", 45, (t_vctr){R_FIST, S_FIST, V_FIST}, 1))
-	// {
-		env->player.inventory.f.ref = FIST;
-		env->player.inventory.weapons[FIST].current =
-			&env->player.inventory.f;
-		env->player.inventory.weapons[FIST].ammo[0] =
-			env->world.armory[FIST].ammo_current;
-		env->player.inventory.weapons[FIST].ammo[1] =
-			env->world.armory[FIST].ammo_magazine;
-		env->player.inventory.weapons[FIST].ammo[2] =
-			env->world.armory[FIST].damage;
-
-		set_current_wpn(env, &env->player.inventory, FIST);
-	// }
+	env->player.inventory.f.ref = FIST;
+	env->player.inventory.weapons[FIST].current =
+		&env->player.inventory.f;
+	env->player.inventory.weapons[FIST].ammo[0] =
+		env->world.armory[FIST].ammo_current;
+	env->player.inventory.weapons[FIST].ammo[1] =
+		env->world.armory[FIST].ammo_magazine;
+	env->player.inventory.weapons[FIST].ammo[2] =
+		env->world.armory[FIST].damage;
+	set_current_wpn(env, &env->player.inventory, FIST);
 }

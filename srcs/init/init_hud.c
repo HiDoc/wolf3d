@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:19:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 22:25:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/12 12:43:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	init_iwpn_bloc(t_hud *hud, t_uinv *inventory, t_container *surfaces)
 	index = 0;
 	while (i < INV_PISTOL && j < HUD_PISTOL)
 	{
-		inventory->wpn[index].cross = (t_minibloc){
+		inventory->wpn[index].cross = (t_mbloc){
 		(SDL_Rect){rect.x, rect.y, hud->text.string[CROSS]->w,
 		hud->text.string[CROSS]->h}, hud->text.string[CROSS]};
 		inventory->wpn[index].bg_empty = surfaces->hud[i].sprite;
@@ -104,10 +104,10 @@ static void	init_iobjects_bloc(t_env *env, t_hud *hud, t_uinv *inventory)
 	i = 0;
 	while (i < 6)
 	{
-		inventory->objects[i].cross = (t_minibloc){
+		inventory->objects[i].cross = (t_mbloc){
 		(SDL_Rect){rect.x + rect.w - img[CROSS]->w, rect.y,
 		img[CROSS]->w, img[CROSS]->h}, img[CROSS]};
-		inventory->objects[i].use = (t_minibloc){
+		inventory->objects[i].use = (t_mbloc){
 		(SDL_Rect){rect.x + rect.w - img[USE]->w, rect.y + rect.h - img[USE]->h,
 		img[USE]->w, img[USE]->h}, img[USE]};
 		inventory->objects[i].bg_empty = env->world.surfaces.hud[BOX_E].sprite;
@@ -179,7 +179,7 @@ static void	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 	i = 0;
 	while (i < 5)
 	{
-		hud->objects[i].cross = (t_minibloc){
+		hud->objects[i].cross = (t_mbloc){
 		(SDL_Rect){rect.x + rect.w / 2, rect.y - W / 700,
 		str[i + PAD_INDEX]->w, str[i + PAD_INDEX]->h}, str[i + PAD_INDEX]};
 		hud->objects[i].use.rect = (SDL_Rect){

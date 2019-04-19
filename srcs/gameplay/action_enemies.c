@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 02:24:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 14:33:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ static void	bot_shoot_cadence(t_env *env, t_wrap_enmy *e, t_player p)
 	{
 		new_look = bot_angle(p);
 		bot_new_kill(e->is_shooting, &new_look, e);
+		e->player.sound.shootin = 1;
 		e->frame = 0;
 	}
 	else
@@ -162,7 +163,7 @@ void	bot_action(t_env *env, t_sector *sector)
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
-		if (enemy->is_alive && !enemy->is_dying)
+		if (enemy->is_alive && !enemy->is_dying && !enemy->is_shot)
 		{
 			if (enemy->next && enemy->next->is_alive)
 				bot_check_friend(enemy, enemy->next);
@@ -176,7 +177,7 @@ void	bot_action(t_env *env, t_sector *sector)
 
 static void	bot_dist_detect(t_wrap_enmy *e)
 {
-	e->is_shooting = e->has_detected || e->close_seen;
+	e->is_shooting = (e->has_detected || e->close_seen);
 }
 
 void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
@@ -184,7 +185,7 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
 	t_vtx	where;
 
 	where = (t_vtx){e->player.where.x, e->player.where.y};
-	if (!env->player.actions.is_invisible && !e->is_dying)
+	if (!env->player.actions.is_invisible && !e->is_dying && !e->is_shot)
 	{
 		e->is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
 		&& keycodes[SDL_SCANCODE_LSHIFT]);

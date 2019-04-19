@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/12 21:39:36 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/19 17:13:50 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,8 @@ SRC_NAME 	= main.c \
 			action_enemies.c \
 			action_gems.c \
 			action_inventory.c \
+			action_menu.c \
+			action_menu_utils.c \
 			action_object.c \
 			action_pl_object.c \
 			action_pl_weapon.c \
@@ -80,6 +82,7 @@ SRC_NAME 	= main.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
+			draw_menu.c \
 			edge.c \
 			function.c \
 			handle_enemy_sprite.c \
@@ -91,8 +94,10 @@ SRC_NAME 	= main.c \
 			init_fonts.c \
 			init_images.c \
 			init_enemies.c \
+			init_menu.c \
 			init_minimap.c \
 			init_weapons.c \
+			init_sound.c \
 			init_strings.c \
 			load.c \
 			loop.c \
@@ -111,6 +116,7 @@ SRC_NAME 	= main.c \
 			render_sect.c \
 			sdl_hook.c \
 			sdl_mouse.c \
+			sounds.c \
 			struct_drawline.c \
 			struct_hud_img.c \
 			struct_inventory.c \

@@ -6,7 +6,7 @@
 /*   By: tblaudez <tblaudez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 18:01:58 by tblaudez          #+#    #+#             */
-/*   Updated: 2019/02/27 15:55:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:02:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 t_lt	*get_lifetime(t_lt *new_ptr)
 {
-	static t_lt	*lifetime = NULL;
+	static t_lt	*lifetime = 0;
 
-	if (new_ptr != NULL)
+	if (new_ptr)
 		lifetime = new_ptr;
 	return (lifetime);
 }
 
-void	*lt_push(void *ptr)
+void	*lt_push(void *ptr, void (*f)(void **))
 {
 	t_lt	*lifetime;
 
-	if (!(lifetime = (t_lt*)malloc(sizeof(t_lt))))
-	{
-		lt_destroy();
-		exit(EXIT_FAILURE);
-	}
+	if (!(lifetime = (t_lt *)(malloc(sizeof(t_lt)))))
+		return (0);
 	lifetime->ptr = ptr;
-	lifetime->next = get_lifetime(NULL);
+	lifetime->f = f;
+	lifetime->next = get_lifetime(0);
 	get_lifetime(lifetime);
 	return (ptr);
 }
@@ -41,12 +39,12 @@ void	lt_release(void *ptr)
 	t_lt	*lifetime;
 	t_lt	*tmp;
 
-	lifetime = get_lifetime(NULL);
+	lifetime = get_lifetime(0);
 	if (lifetime->ptr == ptr)
 	{
 		get_lifetime(lifetime->next);
 		if (lifetime->ptr)
-			ft_memdel((void**)&lifetime->ptr);
+			(*(lifetime->f))(&ptr);
 		ft_memdel((void**)&lifetime);
 		return ;
 	}
@@ -54,12 +52,12 @@ void	lt_release(void *ptr)
 		lifetime = lifetime->next;
 	if (!lifetime)
 		return ;
-	tmp = get_lifetime(NULL);
+	tmp = get_lifetime(0);
 	while (tmp->next != lifetime)
 		tmp = tmp->next;
 	tmp->next = lifetime->next;
 	if (lifetime->ptr)
-		ft_memdel((void**)&lifetime->ptr);
+		(*(lifetime->f))(&ptr);
 	ft_memdel((void**)&lifetime);
 }
 
@@ -68,12 +66,12 @@ void	lt_destroy(void)
 	t_lt	*lifetime;
 	t_lt	*tmp;
 
-	lifetime = get_lifetime(NULL);
+	lifetime = get_lifetime(0);
 	while (lifetime)
 	{
 		tmp = lifetime;
 		lifetime = lifetime->next;
-		ft_memdel((void**)&tmp->ptr);
-		ft_memdel((void**)&tmp);
+		(*(tmp->f))((void **)&(tmp->ptr));
+		ft_memdel((void **)&tmp);
 	}
 }

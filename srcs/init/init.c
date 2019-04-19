@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/12 14:48:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:06:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->god_mod = (ac > 1 && !ft_strcmp(av[1], "god")) ? 1 : 0;
-
 	// init libraries
 	initialisation_sdl(env);
 	initialisation_sound_text();
@@ -77,10 +76,19 @@ void	init_env(int ac, char **av, t_env *env)
 	// init ressources
 	load_fonts(env);
 	load_images(env);
+	printf("time image: %u\n", SDL_GetTicks());
 	init_strings(env, 0, 0);
+	printf("time string: %u\n", SDL_GetTicks());
+	init_sounds(env);
+	printf("time sound: %u\n", SDL_GetTicks());
 
 	// init game data
+	init_blocs_menu(env);
+	printf("time menu: %u\n", SDL_GetTicks());
 	init_hud(env);
+	printf("time hud: %u\n", SDL_GetTicks());
 	init_weapon(env);
+	printf("time wpn: %u\n", SDL_GetTicks());
 	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
+	printf("time enemies: %u\n", SDL_GetTicks());
 }

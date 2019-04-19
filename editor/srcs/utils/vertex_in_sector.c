@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 18:41:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:38:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ static int	filter_target(t_pos pos, t_sct *sector)
 		&& pos.y >= sector->ymin && pos.y <= sector->ymax);
 }
 
-static int	filter_edges(const t_pos pos, t_vtx *vertex)
+static int	filter_edges(const t_pos pos, t_w_vtx *w_vtx)
 {
-	const float		a_y = vertex->pos.y;
-	const float		b_y = vertex->next->pos.y;
+	const float		a_y = w_vtx->vtx->pos.y;
+	const float		b_y = w_vtx->next->vtx->pos.y;
 
 	if (a_y < b_y && (pos.y < a_y || pos.y > b_y))
 		return (0);
@@ -95,24 +95,26 @@ static int	filter_edges(const t_pos pos, t_vtx *vertex)
 int			vertex_in_sector(t_sct *sector, t_pos pos_b)
 {
 	const t_pos	pos_a = (t_pos){sector->xmin, pos_b.y};
-	t_vtx		*vertex;
+	t_w_vtx		*w_vtx;
 	int			intersect;
 
 	intersect = 0;
 	if (!(filter_target(pos_b, sector)))
 		return (0);
-	vertex = sector->vtx_start;
-	while (vertex && vertex->next) // for each edge
-	{
-		if (filter_edges((const t_pos)pos_b, vertex))
+	w_vtx = sector->w_vtx_start;
+	while (w_vtx && w_vtx->next)
+	{ // for each edge
+		if (filter_edges((const t_pos)pos_b, w_vtx))
 		{
-			if ((intersect_vrx(vertex->pos, vertex->next->pos, pos_a, pos_b)))
+			if ((intersect_vrx(
+			w_vtx->vtx->pos, w_vtx->next->vtx->pos, pos_a, pos_b)))
 				intersect++;
 		}
-		vertex = vertex->next;
+		w_vtx = w_vtx->next;
 	}
 	// for last edge
-	if ((intersect_vrx(vertex->pos, sector->vtx_start->pos, pos_a, pos_b)))
+	if ((intersect_vrx(
+	w_vtx->vtx->pos, sector->w_vtx_start->vtx->pos, pos_a, pos_b)))
 		intersect++;
 	return (intersect % 2);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 19:52:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/18 16:52:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void			init_consumable(t_env *env)
 	while (i < WORLD_NB_OBJECTS)
 	{
 		name = ft_strjoin("consumable/", tab[i]);
-		name = ft_strljoin(name, "_");
+		name = ft_strljoin(name, "+");
 		if (i < WORLD_NB_CSMBLE)
 		{
 			env->world.objects[i].max_stack = (i == 5) ? 1 : 5;
@@ -89,6 +89,7 @@ void				load_images(t_env *env)
 	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS);
 	init_pack_img(env->world.surfaces.floors, "floors/", WORLD_NB_FLOORS);
 	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ);
+	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU);
 	init_consumable(env);
 	init_character(&env->player);
 	init_skybox_img(env);
