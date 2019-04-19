@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 03:46:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 01:12:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,27 @@ int		bot_wall_collision(t_player *bot, t_sector *sect)
 void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 {
 	t_vtx	where;
+	int		health;
 
 	where = (t_vtx){shot->position.where.x, shot->position.where.y};
 	if (dist_vertex(where, player) < 5)
 	{
+		health = env->player.health;
 		if (env->player.shield > 0)
 			env->player.shield -= damage;
 		else
 			env->player.health -= damage;
-		if (env->player.health <= 10)
+		if (env->player.health <= 0)
 		{
-			env->player.health = 200;
+			env->player.health = 0;
 			env->stats.data[I_DEATHS]++;
+			env->engine.player.sound.dead = 1;
 		}
+		else if (env->player.health <= 50 && health > env->player.health
+		&& !env->engine.player.sound.lowlife)
+			env->engine.player.sound.lowlife = 1;
+		else
+			env->engine.player.sound.hit++;
 		shot->is_shooting = 0;
 		shot->is_alive = 0;
 	}

@@ -78,9 +78,10 @@ void			load_map(t_engine *e, t_env *env)
 				break;
 			case 'p':; // player
 				float angle;
+				t_sd_stat sd;
+				ft_bzero(&sd, sizeof(t_sd_stat));
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet,
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}; // TODO: Range checking
+				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet, sd}; // TODO: Range checking
 				e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
 				break;
 		}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 16:31:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 19:56:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,7 @@ void	enemies_frames(t_env *env, t_sector *sector)
 			if (enemy->is_shot)
 				bot_is_hit(e, enemy);
 		}
-		printf("sound_enemi\n");
 		sound_enemies(env, enemy, p);
-		printf("sound_enemi apres\n");
 		if (!enemy->is_alive && !enemy->is_dying)
 			enemy->sprite = e->death[e->time_death - 1];
 		enemy = enemy->next;

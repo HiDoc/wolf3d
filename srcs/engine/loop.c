@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/18 16:30:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 11:34:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static int				sdl_render(t_env *env)
 		wpn_mouse_wheel(env, env->sdl.event);
 		sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 		player_move(&env->engine, &env->engine.player.vision, env->sdl.keycodes);
-		printf("sound_player avant\n");
-		sound_player(env, &env->engine.player);
-		printf("sound_player apres\n");
+		handle_sound(env, &env->engine.player.sound);
 	}
 
 	SDL_UnlockSurface(env->sdl.surface);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:56:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 15:57:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 11:51:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ struct 						s_sd_stat
 	int			hit;
 	int			dead;
 	int			medkit;
+	int			move;
+	int			o_duck;
+	float		o_veloc;
 	int			jump;
 	int			duck;
 	int			lowlife;
@@ -29,12 +32,12 @@ struct 						s_sd_stat
 	int			loadin;
 	int			kill;
 	int			gem;
-	int			explode;
 	int			pick;
 	int			drop;
 	int			ammo;
 	int			nope;
 	int			open;
+	int			chan;
 };
 
 

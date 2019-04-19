@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:54:47 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 16:43:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 01:38:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	musics_pack(char *name, Mix_Music **pack, int limit)
 		file = ft_itoa(i + 1);
 		file = ft_strrjoin(prefix, file);
 		file = ft_strljoin(file, (char*)wav);
-		if (!(pack[i] = Mix_LoadMUS(file)))
+		if (!(pack[i] = lt_push(Mix_LoadMUS(file), &msc_del)))
 			doom_error_exit("Doom_nukem error on Mix_LoadMUS");
 		lt_release(prefix);
 		lt_release(file);
@@ -62,7 +62,6 @@ void	init_sounds(t_env *e)
 
 	s = &e->sound;
 	ft_bzero(s, sizeof(t_sound));
-	Mix_AllocateChannels(32);
 	musics_pack("ambiance/", s->ambiance, SD_AMBIANCE);
 	chunks_pack("hud/", s->hud, SD_HUD);
 	chunks_pack("effect/", s->s_effect, SD_EFFECT);
@@ -76,6 +75,7 @@ void	init_sounds(t_env *e)
 	chunks_pack("enemies/voice/", s->e_voice, WORLD_NB_ENEMIES);
 	chunks_pack("enemies/shot/", s->e_shot, WORLD_NB_ENEMIES);
 	chunks_pack("enemies/death/", s->e_death, WORLD_NB_ENEMIES);
+	Mix_AllocateChannels(32);
 }
 
 // // Mix_Music *Mix_LoadMUS(const char *file)
@@ -88,7 +88,7 @@ void	init_sounds(t_env *e)
 
 // int Mix_FadeInChannel(int channel, Mix_Chunk *chunk, int loops, int ms) // -1 to infinite
 
-// int Mix_PlayChannel(int channel, Mix_Chunk *chunk, int loops)
+// int play_chunk(int channel, Mix_Chunk *chunk, int loops)
 
 // // void Mix_Pause(int channel) // -1 pour all chanels
 

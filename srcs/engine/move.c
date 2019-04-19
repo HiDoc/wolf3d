@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/16 11:40:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 12:39:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,13 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.8f;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);
+	e->player.sound.o_veloc = e->player.velocity.z;
+	e->player.sound.o_duck = v->ducking;
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
+	e->player.origin = e->player.where;
 	handle_gravity(v, e, 0.05f);
 	if (v->moving)
 		collision(v, e, &e->sectors[e->player.sector]);
 	keyboard_movement(e, v, keycodes);
+	sd_stat_player(e, v, &e->player.sound);
 }

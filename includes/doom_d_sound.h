@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 14:15:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 12:47:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 ** Sounds constants
 */
-# define SD_PLAYER		13
+# define SD_PLAYER		14
 # define SD_HUD			7
 # define SD_EFFECT		13
 # define SD_AMBIANCE	20
@@ -41,6 +41,7 @@
 # define P_JTPACKON	10
 # define P_JTPACK	11
 # define P_JTPACKOF	12
+# define P_HIT		13
 
 /*
 ** AMBIANCE sounds index
@@ -95,8 +96,14 @@
 # define EFCT_CREEPSCREAM	12
 
 /*
-** CHANELS sounds index
+** RESERVED CHANELS sounds index
 */
-
+# define CHAN_LOWLIFE	31
+# define CHAN_JETPACK	30
+# define CHAN_GEM		29
+# define CHAN_KILL		28
+# define CHAN_IMPASS	27
+# define CHAN_DUCK		26
+# define CHAN_MOVE		25
 
 #endif

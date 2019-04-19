@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 15:56:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 00:14:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		}
 		obj->is_picked = 1;
 		sector->nb_objects--;
+		env->engine.player.sound.pick = 3;
 		return (NEW_WPN);
 	}
 	return (drop_wpn(env, env->player.inventory.current)

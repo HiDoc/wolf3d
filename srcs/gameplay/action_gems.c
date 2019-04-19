@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 15:29:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 20:26:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	gem_is_usable(t_env *env, int i)
 
 int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 {
-	// int	r;
-
 	if (shortcut)
 	{
 		if (i == 0)
@@ -151,7 +149,7 @@ int	purple_gem(t_env *env)
 int	handle_gems(t_env *env)
 {
 	if (blue_gem(env))
-		ui_put_data(env, (t_font){BLUE, "Super Speed ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
 	if (green_gem(env))
 		ui_put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !", env->hud.text.text, (t_vtx){W / 1.3, H / 1.7}, W / 60, -1, -1});
 	if (red_gem(env))
