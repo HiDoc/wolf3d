@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 04:22:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:06:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void		create_w_vertex(t_vtx *vtx, t_env *env);
 void        insert_w_vertex(t_w_vtx *prev, t_vtx *vtx, t_env *env);
 void		create_sector(t_env *env);
 void        delete_object(t_object *obj, t_env *env);
+void		delete_vertex(t_vtx *vtx, t_env *env);
 void		delete_sector(t_sct *sector, t_env *env);
 
 /*

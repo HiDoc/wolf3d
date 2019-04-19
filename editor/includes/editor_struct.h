@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 03:24:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:10:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ struct					s_sct
 {
 	int				id;			// identifiant du secteur
 
+	int			nb_w_vtx;
 	t_w_vtx		*w_vtx_current;	// vertex wrapper
 	t_w_vtx		*w_vtx_start;	// vertex wrapper
 	t_w_vtx		*w_vtx_end;	// vertex wrapper

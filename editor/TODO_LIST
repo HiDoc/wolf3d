@@ -1,4 +1,12 @@
 
+SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
+		#1 0x102ba2641 in draw_mode draw_mode.c:43
+	    #2 0x102ba8905 in handle_events handle_events.c:154
+		#3 0x102b8d298 in ui_get_events ui_get_events.c:30
+		#4 0x102b950ad in ui_gameloop ui_gameloop.c:21
+		#5 0x102b8cc52 in main main.c:22
+		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
+
 BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si beaucoup dezoome)
 BUG : angle du spawn
@@ -7,7 +15,11 @@ BUG : wheel scroll pas precis sur la souris
 * BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
 BUG : segv sur les split des fois
-BUF : corriger sens de priorite des hover/selections
+BUG : corriger sens de priorite des hover/selections
+BUG : edge hover sometimes doesn't work
+BUG : nb vertex apres sct_del
+BUG : nb obj apres obj_del et sct_del
+BUG : handle end des listes chainees apres des delete ou split
 
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : target_edge() : boucle (w_vtx && w_vtx->next)
@@ -20,7 +32,6 @@ OPTI : multithreading
 OPTI : corriger le reframes inutiles
 OPTI : getpixel
 
-* TODO :	delete vertex
 * TODO :	delete edge
 * TODO :	walls : texture par walls
 * TODO :	modifs texture edge en selection
@@ -36,6 +47,7 @@ TODO :	floodfill on sectors
 * TODO :	grid : zoom centre sur grille
 * TODO :	grid : limite left / bot
 
+TODO :	messages d'erreur display
 TODO :	refactor .h
 TODO :	refactor : display / event functions
 TODO :	init : refactor elem loading

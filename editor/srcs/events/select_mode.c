@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 04:21:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:07:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ int				select_mode(t_env *env)
 				delete_object(env->editor.obj_select, env);
 			else if (env->editor.sct_select)
 				delete_sector(env->editor.sct_select, env);
+			else if (env->editor.vtx_select)
+				delete_vertex(env->editor.vtx_select, env);
 			unselect_all(env);
 			return (1);	
 		}

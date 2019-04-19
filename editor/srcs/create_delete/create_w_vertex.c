@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 01:05:43 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 04:22:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:11:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		insert_w_vertex(t_w_vtx *prev, t_vtx *vtx, t_env *env)
 		}
 		ptr = ptr->next;
 	}
+	env->sct_current->nb_w_vtx++;
 }
 
 void		create_w_vertex(t_vtx *vtx, t_env *env)
@@ -56,6 +57,6 @@ void		create_w_vertex(t_vtx *vtx, t_env *env)
 		env->sct_current->w_vtx_end->next = new;
 		env->sct_current->w_vtx_end = new;
 	}
-
+	env->sct_current->nb_w_vtx++;
 	sync_sct_minmax(env);
 }

@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/18 01:37:52 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/19 16:06:56 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRC_NAME 	=	main.c \
 				create_sector.c \
 				delete_object.c \
 				delete_sector.c \
+				delete_vertex.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image
