@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:14:48 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 04:15:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:11:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,15 @@ void		create_sector(t_env *env)
 	if (!(env->sct_start))
 	{
 		new->id = 0;
-		env->sct_current = new;
 		env->sct_start = new;
-		env->sct_end = new;
+		env->sct_current = new;
 	}
 	else
 	{
-		new->id = env->sct_end->id + 1;
+		new->id = sct_lst_end(env->sct_start)->id + 1;
+		new->next = env->sct_start;
 		env->sct_current = new;
-		env->sct_end->next = new;
-		env->sct_end = new;
+		env->sct_start = new;
 	}
 	env->nb_sct++;
 }

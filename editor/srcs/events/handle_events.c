@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 22:05:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:12:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ static int		click_event(t_env *env)
 static int		mousewheel_event(t_env *env)
 {
 	const SDL_Event	event = env->data->sdl.event;
-	SDL_Rect		rect = (SDL_Rect){20, 100, 850, 680};
 
-	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, get_element(E_R_RECT, env)->rect))
 	{
 		// in interface & scroll
 		if (event.wheel.y > 0)
@@ -112,6 +111,7 @@ static int		mousewheel_event(t_env *env)
 
 int				handle_events(t_env *env)
 {
+	t_editor			*edt = &env->editor;
 	const t_pos			m = env->data->mouse;
 	const Uint8 		*state = env->data->state;
 	const SDL_Event		event = env->data->sdl.event;
@@ -121,22 +121,21 @@ int				handle_events(t_env *env)
 	env->mouse = (t_pos){0, 0};
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
-		env->mouse.x = (((m.x - 20) - (env->editor.grid_translate.x
-		+ env->editor.grid_mouse_var.x)) / env->pixel_value);
-		env->mouse.y = (((m.y - 100) - (env->editor.grid_translate.y
-		+ env->editor.grid_mouse_var.y)) / env->pixel_value);
+		env->mouse.x = (((m.x - 20) - (edt->grid_translate.x
+		+ edt->grid_mouse_var.x)) / env->pixel_value);
+		env->mouse.y = (((m.y - 100) - (edt->grid_translate.y
+		+ edt->grid_mouse_var.y)) / env->pixel_value);
 	}
 
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
-	{
-		// targetting vertex
-		target_vertex(env); // to change to same format as bellow
-		// targetting edge
-		env->editor.edg_hover = target_edge(env->mouse, env);
-		// targetting sector
-		env->editor.sct_hover = target_sector(env->mouse, env);
-		// targetting object
-		env->editor.obj_hover = target_object(env->data->mouse, env);
+	{	
+		edt->vtx_hover = target_vertex(env->data->mouse, env);
+		edt->edg_hover = (!edt->vtx_hover)
+			? target_edge(env->mouse, env) : 0;
+		edt->obj_hover = (!edt->vtx_hover && !edt->edg_hover)
+			? target_object(env->data->mouse, env) : 0;
+		edt->sct_hover = (!edt->vtx_hover && !edt->edg_hover && !edt->obj_hover)
+			? target_sector(env->mouse, env) : 0;
 	}
 
 	/* quit doom_nukem */
