@@ -39,7 +39,7 @@ void			load_map(t_engine *e, t_env *env)
 				t_sector *sect = &e->sectors[e->nsectors-1];
 				t_door	*d = &sect->door;
 				int* num = NULL;
-				sscanf(ptr += n, "%f%f%d%d%d%n", &sect->floor,&sect->ceil, &sect->is_door, &d->is_openable, &d->ref_img, &n);
+				sscanf(ptr += n, "%f%f%d%d%d%d%n", &sect->floor,&sect->ceil, &sect->type, &sect->is_door, &d->is_openable, &d->ref_img, &n);
 				for(m=0; sscanf(ptr += n, "%32s%n", word, &n) == 1 && word[0] != '#'; )
 				{
 					num = realloc(num, ++m * sizeof(*num));
@@ -78,8 +78,10 @@ void			load_map(t_engine *e, t_env *env)
 				break;
 			case 'p':; // player
 				float angle;
+				t_sd_stat sd;
+				ft_bzero(&sd, sizeof(t_sd_stat));
 				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet }; // TODO: Range checking
+				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet, sd}; // TODO: Range checking
 				e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
 				break;
 		}

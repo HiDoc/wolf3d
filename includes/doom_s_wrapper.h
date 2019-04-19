@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/13 16:35:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:49:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ struct						s_player
 	int		 	nb_shot;
 	unsigned 	sector;
 	SDL_Surface	*sprite;
+	t_sd_stat	sound;
 };
 
 struct 						s_impact

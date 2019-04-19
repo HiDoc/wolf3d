@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/15 23:30:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/18 13:52:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define I_RETURN		6
 
 # define I_OOFF			7
+
 /*
 ** OPTIONS Index options
 */
@@ -85,11 +86,12 @@
 # define I_OJUMP		5
 # define I_ODUCK		6
 # define I_OINVENTR		7
-# define I_OPICK		8
+# define I_OPICKOPN		8
 # define I_ORELOAD		9
 # define I_OJETPACKON	10
 # define I_OBLUEGEM		11
 # define I_OGREEGEM		12
 # define I_OREDGEM		13
 # define I_OPURPGEM		14
+
 #endif

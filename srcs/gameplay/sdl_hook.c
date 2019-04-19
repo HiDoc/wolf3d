@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 00:45:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:51:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	god_mod(t_env *env)
 	return (1);
 }
 
-void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
+void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 {
 	t_status	*s;
 
@@ -34,14 +34,13 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 	{
 		if (s->home)
 		{
-			SDL_SetRelativeMouseMode(SDL_FALSE);
 			s->main_menu = 1;
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu && !s->ingame_menu && !s->load_menu)
-			action_mainmenu(s, k);
+			action_mainmenu(e, s, k);
 		else if (s->ingame_menu && !s->options_menu)
-			action_ingame_menu(s, k);
+			action_ingame_menu(e, s, k);
 		else if (s->load_menu)
 			action_loadmenu(e, s, k);
 		else if (s->options_menu)
@@ -56,14 +55,13 @@ void	sdl_keymouse_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			}
 			else if (!s->main_menu)
 			{
-				s->on = !s->on;
-				s->ingame_menu = !s->ingame_menu;
-				SDL_SetRelativeMouseMode(SDL_TRUE);
+				s->on = 0;
+				s->ingame_menu = 0;
+				set_msc_menu(e, s);
 				SDL_Delay(300);
 			}
 			s->current = 0;
 		}
-
 	}
 }
 
@@ -80,7 +78,8 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[k[I_OINVENTR]])
 		{
 			ui->is_active = !ui->is_active;
-			SDL_SetRelativeMouseMode(SDL_TRUE);
+			if ((SDL_SetRelativeMouseMode(SDL_TRUE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 			SDL_Delay(300);
 		}
 	}
@@ -118,11 +117,11 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		keyhook_gems(env, keycodes);
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
-		if (keycodes[k[I_OPICK]])
+		if (keycodes[k[I_OPICKOPN]])
 			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
-		if (k[I_ORELOAD])
-			load_weapon(env);
 		if (keycodes[k[I_ORELOAD]])
+			load_weapon(env);
+		if (keycodes[k[I_OPICKOPN]])
 			open_door(env);
 		if (keycodes[SDL_SCANCODE_G])
 			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
@@ -130,14 +129,15 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		{
 			env->hud.inventory.is_active = !env->hud.inventory.is_active;
 			SDL_Delay(300);
-			SDL_SetRelativeMouseMode(SDL_FALSE);
+			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
+				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 		}
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
 			env->menu.status.on = !env->menu.status.on;
 			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
+			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
-			SDL_SetRelativeMouseMode(SDL_FALSE);
 		}
 	}
 	return (1);

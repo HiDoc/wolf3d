@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   doom_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 15:04:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/16 23:48:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void		chk_del(void **ap)
+{
+	Mix_Chunk		*chunk;
+
+	chunk = (Mix_Chunk *)(*ap);
+	if (ap && *ap)
+	{
+		Mix_FreeChunk(chunk);
+		chunk = 0;
+	}
+}
+
+void		msc_del(void **ap)
+{
+	Mix_Music		*music;
+
+	music = (Mix_Music *)(*ap);
+	if (ap && *ap)
+	{
+		Mix_FreeMusic(music);
+		music = 0;
+	}
+}
 
 void		wdw_del(void **ap)
 {

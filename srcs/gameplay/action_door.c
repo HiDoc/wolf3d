@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 02:41:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 01:38:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,24 @@ int	select_door(t_engine *e)
 	return (-1);
 }
 
-int	open_door(t_env *env)
+int		open_door(t_env *e)
 {
-	int	index;
+	int			index;
 	t_sector	*sector;
+	int			sound;
 
-	if ((index = select_door(&env->engine)) > -1)
+	if ((index = select_door(&e->engine)) > -1)
 	{
-		sector = &env->engine.sectors[index];
+		sector = &e->engine.sectors[index];
+		play_chunk(-1,	e->sound.s_effect[EFCT_BTNDOOR], 0);
 		if (sector->door.is_openable)
+		{
+			sound = !sector->door.is_open ? EFCT_OP_LILDOOR : EFCT_CL_LILDOOR;
+			play_chunk(-1,	e->sound.s_effect[sound], 0);
 			sector->door.is_opening = 1;
+		}
+		else
+			play_chunk(-1,	e->sound.s_effect[EFCT_DOORLOCK], 0);
 	}
 	return (1);
 }

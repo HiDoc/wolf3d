@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/16 01:13:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/17 19:28:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ enum								e_tileset
 
 typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
-typedef struct	s_msc				t_msc;
 typedef struct	s_time				t_time;
 typedef struct	s_tiletab			t_tiletab;
 typedef struct	s_skybox			t_skybox;
@@ -52,11 +51,6 @@ struct								s_sdl
 	SDL_Surface		*surface;
 	SDL_Event		event;
 	Uint8			*keycodes;
-};
-
-struct								s_msc
-{
-	Mix_Music		*load;
 };
 
 struct 								s_time
@@ -98,7 +92,7 @@ struct								s_env
 	int				map_w;
 	int				map_h;
 	t_time			time;
-	t_msc			sounds;
+	t_sound			sound;
 	t_character		player;
 	t_world			world;
 	t_sdl			sdl;
