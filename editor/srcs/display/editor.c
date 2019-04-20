@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:01:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 23:10:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,13 @@ void		editor(t_env *env)
 	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
 
 	// display nb element
-	rect = (SDL_Rect){900, 720, 0, 20};
+	rect = (SDL_Rect){30, 150, 0, 20};
 	ui_make_string(rect, "Nb sectors : ", env->data);
-	rect = (SDL_Rect){1040, 720, 0, 20};
+	rect = (SDL_Rect){170, 150, 0, 20};
 	ui_make_nbrstring(rect, env->nb_sct, env->data);
-	/*rect = (t_rect){900, 630, 0, 20, 0xFFFFFFFF};
-	ui_make_string(rect, "Nb edges : ", env->data);
-	rect = (t_rect){1040, 630, 0, 20, 0xFFFFFFFF};
-	ui_make_nbrstring(rect, env->edg_index + 1, env->data);*/
-	rect = (SDL_Rect){900, 750, 0, 20};
+	rect = (SDL_Rect){30, 180, 0, 20};
 	ui_make_string(rect, "Nb vertex : ", env->data);
-	rect = (SDL_Rect){1040, 750, 0, 20};
+	rect = (SDL_Rect){170, 180, 0, 20};
 	ui_make_nbrstring(rect, env->nb_vtx, env->data);
 
 	// display mouse mode buttons

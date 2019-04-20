@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:40:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:40:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 12:31:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int			ui_get_events(int (*event)(t_env *env), t_env *env)
 	change = 0;
 
 	SDL_WaitEvent(&(env->data->sdl.event));
-
 	env->data->state = SDL_GetKeyboardState(0);
 	SDL_GetMouseState(&(env->data->mouse_x), &(env->data->mouse_y));
 
