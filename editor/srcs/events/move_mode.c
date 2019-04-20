@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:12:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 22:21:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int			move_mode(t_env *env)
 {
+	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
 
-	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, get_element(E_R_RECT, env)->rect))
+	if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
 	{
 		if (event.type == SDL_MOUSEBUTTONDOWN && env->editor.grid_drag == 0)
 		{
-			env->editor.grid_init_pos = env->data->mouse;
+			env->editor.grid_init_pos = m;
 			env->editor.grid_drag = 1;
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP)
@@ -34,13 +35,9 @@ int			move_mode(t_env *env)
 		if (env->editor.grid_drag == 1)
 		{
 			env->editor.grid_mouse_var.x =
-			(env->data->mouse.x - env->editor.grid_init_pos.x);
-			if (env->editor.grid_translate.x + env->editor.grid_mouse_var.x > 0)
-				env->editor.grid_mouse_var.x = -env->editor.grid_translate.x;
+				(m.x - env->editor.grid_init_pos.x) / env->grid_scale;
 			env->editor.grid_mouse_var.y =
-			(env->data->mouse.y - env->editor.grid_init_pos.y);
-			if (env->editor.grid_translate.y + env->editor.grid_mouse_var.y > 0)
-				env->editor.grid_mouse_var.y = -env->editor.grid_translate.y;
+				(m.y - env->editor.grid_init_pos.y) / env->grid_scale;
 			return (1);
 		}
 	}
