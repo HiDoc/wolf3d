@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/14 20:46:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 23:09:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct 						s_stats
 {
 	int				data[NB_STATS];
 	t_bloc			achievments[8];
+	int				save;
 	SDL_Surface		*save_img;
 };
 

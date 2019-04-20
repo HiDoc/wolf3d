@@ -6,51 +6,22 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 00:02:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:18:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		scale_img(Uint32 *dest, SDL_Rect rect, SDL_Surface *img)
-{
-	t_vtx	scale;
-    Uint32  *src;
-	Uint32	p;
-	int		x;
-	int		y;
-
-    src = img->pixels;
-	scale.x = fabs((float)img->w / (float)(rect.w));
-	scale.y = fabs((float)img->h / (float)(rect.h));
-	x = 0;
-	while (x < rect.w && x < img->w)
-	{
-		y = 0;
-		while (y < rect.h && y < img->h)
-		{
-			p = src[img->w * (int)(y * scale.y) + (int)(x * scale.x)];
-			dest[rect.w * y + x] = p;
-			y++;
-		}
-		x++;
-	}
-}
-
 static void		current_sprite(t_bloc *bloc, char *file, int i)
 {
 	SDL_Surface	*sprite;
-	Uint32		*p;
 
 	sprite = ui_img(file, i);
-	if (!(bloc->sprite = lt_push(SDL_CreateRGBSurface(0, W, H, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+	create_surface(&bloc->sprite, (t_vtx){W, H});
 	bloc->rect = (SDL_Rect){0, 0, W, H};
 	bloc->limit.v1 = (t_vtx){0, 0};
 	SDL_LockSurface(bloc->sprite);
-	p = (Uint32*)bloc->sprite->pixels;
-	scale_img(p, bloc->rect, sprite);
+	img_scaled_copy(sprite, bloc->sprite);
 	SDL_UnlockSurface(bloc->sprite);
 	lt_release(sprite);
 }

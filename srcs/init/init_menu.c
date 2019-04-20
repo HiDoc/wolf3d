@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 23:26:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 21:53:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,11 @@ void		init_blocs_menu(t_env *env)
 	menu->status.on = 1;
 	menu->status.home = 1;
 	menu->status.sound = 1;
+	create_surface(&env->stats.save_img, (t_vtx){W / 10, H / 10});
 	r = (SDL_Rect){W / 2, H / 1.17, W / 50, 0};
 	mainmenu_blocs(env, menu->main_menu);
 	ingame_blocs(env, menu->ingame_menu);
-	loadgame_blocs(env, &menu->games_ldmenu);
+	loadgame_blocs(env, &menu->save_game);
 	options_blocs(env, menu->options_menu);
 }
 

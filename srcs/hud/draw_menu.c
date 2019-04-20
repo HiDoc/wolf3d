@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 23:55:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:55:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,28 @@ void		draw_page_menu(t_env *e, t_bloc *b, const char **s, int limit)
 	}
 }
 
+void	draw_saves(t_env *e, t_bloc *b)
+{
+	t_bloc 		*cur;
+	SDL_Rect	r;
+	t_bloc		f;
+
+
+	cur = b->next;
+	r = (SDL_Rect){W / 4, H / 5, 0, 0};
+	ft_bzero(&f, sizeof(t_bloc));
+	while (cur)
+	{
+		printf("size cur sprite %i\n", cur->sprite->w);
+		draw_scaled_string(e->sdl.surface, (t_font){GOLD, "", e->hud.text.quantify,
+		(t_vtx){r.x, r.y}, W / 60, -1, -1}, cur->sprite, (t_vtx){0, 0});
+		f.rect = cur->use.rect;
+		draw_img(e, cur->use.sprite, &f);
+		r.y += H / 10;
+		cur = cur->next;
+	}
+}
+
 void	draw_menu(t_env *e)
 {
 	t_bloc		f;
@@ -80,8 +102,10 @@ void	draw_menu(t_env *e)
 	m->status.main_menu ? draw_page_menu(e, m->main_menu, mainmenu, NB_BLOC_NG) : 0;
 	if (m->status.load_menu)
 	{
-		draw_page_menu(e, m->games_ldmenu, ingame, m->status.nb_save + 1);
-		if (!m->status.nb_save)
+		draw_page_menu(e, m->save_game, ingame, 1);
+		if (m->status.nb_save)
+			draw_saves(e, m->save_game);
+		else
 			ui_put_data(e, (t_font){M_WHITE, "No save yet", e->hud.text.quantify,
 			(t_vtx){W / 2.5, H / 2.5}, W / 40, -1, -1});
 	}

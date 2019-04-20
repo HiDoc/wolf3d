@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:37:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:12:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
 	*cur += k[SDL_SCANCODE_DOWN] ? 1 : 0;
 	*cur -= k[SDL_SCANCODE_UP] ? 1 : 0;
 	*cur < start ? *cur = limit - 1 : 0;
-	*cur == limit && (k[SDL_SCANCODE_DOWN] || k[SDL_SCANCODE_UP])
+	*cur >= limit && (k[SDL_SCANCODE_DOWN] || k[SDL_SCANCODE_UP])
 		? *cur = start : 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/14 20:17:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:18:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ SDL_Surface	*ui_create_simple_string(t_font data)
 	return (surface);
 }
 
-void	create_scaled_surface(SDL_Surface **surface, t_vtx n_size)
+void	create_surface(SDL_Surface **surface, t_vtx n_size)
 {
 	if (!(*surface = lt_push(SDL_CreateRGBSurface(0,
 	n_size.x, n_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
@@ -49,8 +49,8 @@ static void	set_inv_strings(t_env *env)
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
 		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
-		create_scaled_surface(&env->hud.text.i_obj_description[i], n_size);
-		ui_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
+		create_surface(&env->hud.text.i_obj_description[i], n_size);
+		img_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
 		lt_release(tmp);
 	}
 }
@@ -68,8 +68,8 @@ static void	set_door_strings(t_env *env)
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		create_scaled_surface(&env->hud.text.doors[i], n_size);
-		ui_scaled_copy(tmp, env->hud.text.doors[i]);
+		create_surface(&env->hud.text.doors[i], n_size);
+		img_scaled_copy(tmp, env->hud.text.doors[i]);
 		lt_release(tmp);
 	}
 }
@@ -83,8 +83,8 @@ static void	set_pick_strings(t_env *env)
 	tmp = ui_create_simple_string((t_font){WHITE,
 	PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1});
 	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-	create_scaled_surface(&env->hud.text.pick, n_size);
-	ui_scaled_copy(tmp, env->hud.text.pick);
+	create_surface(&env->hud.text.pick, n_size);
+	img_scaled_copy(tmp, env->hud.text.pick);
 	lt_release(tmp);
 }
 
@@ -114,8 +114,8 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx n_size)
 		tmp = ui_create_simple_string((t_font){WHITE,
 		name, env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		create_scaled_surface(&new[i], n_size);
-		ui_scaled_copy(tmp, new[i]);
+		create_surface(&new[i], n_size);
+		img_scaled_copy(tmp, new[i]);
 		lt_release(tmp);
 		lt_release(name);
 	}
@@ -149,8 +149,8 @@ void		init_strings(t_env *env, int i, int j)
 			n_size = (t_vtx){tmp->w / (100 / size[j]), tmp->h / (100 / size[j])};
 			j++;
 		}
-		create_scaled_surface(&env->hud.text.string[i], n_size);
-		ui_scaled_copy(tmp, env->hud.text.string[i]);
+		create_surface(&env->hud.text.string[i], n_size);
+		img_scaled_copy(tmp, env->hud.text.string[i]);
 		lt_release(tmp);
 		i++;
 	}

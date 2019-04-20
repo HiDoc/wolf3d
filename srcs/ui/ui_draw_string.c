@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 18:53:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:18:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ SDL_Surface	*str_join_text(t_font data)
 	return (new);
 }
 
-void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
+void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
 {
 	int		x;
 	int		y;
@@ -82,36 +82,13 @@ void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
 		{
 			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
 			& src->format->Amask)
-				setpixel(env->sdl.surface, pos.x, pos.y, getpixel(src, (int)(x * scale.x),
+				setpixel(dst, pos.x, pos.y, getpixel(src, (int)(x * scale.x),
 				(int)(y * scale.y)));
 			y++;
 			pos.y++;
 		}
 		x++;
 		pos.x++;
-	}
-}
-
-void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
-{
-	int		x;
-	int		y;
-	t_vtx	scale;
-
-	scale = (t_vtx){src->w / dst->w, src->h / dst->h};
-	x = 0;
-	while (x < dst->w)
-	{
-		y = 0;
-		while (y < dst->h)
-		{
-			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
-			& src->format->Amask)
-				setpixel(dst, x, y, getpixel(src, (int)(x * scale.x),
-				(int)(y * scale.y)));
-			y++;
-		}
-		x++;
 	}
 }
 
@@ -124,7 +101,7 @@ void    		ui_put_data(t_env *env, t_font data)
 	if (!(surface = lt_push(SDL_ConvertSurfaceFormat(
 	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
 		doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	draw_scaled_string(env, data, surface, (t_vtx){0, 0});
+	draw_scaled_string(env->sdl.surface, data, surface, (t_vtx){0, 0});
 	lt_release(tmp);
 	lt_release(surface);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:51:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/20 09:47:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		}
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
-			env->menu.status.on = !env->menu.status.on;
-			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
+			create_save_image(env);
+			env->menu.status.on = 1;
+			env->menu.status.ingame_menu = 1;
 			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
 		}

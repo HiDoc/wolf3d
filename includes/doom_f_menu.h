@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:36:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:56:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 22:01:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,8 @@ void		action_optionmenu(t_env *e, t_status *s, const Uint8 *k);
 void		change_option(t_env *e, t_status *s, const Uint8 *k, int *key);
 int			check_doublon(t_status *s, int scan, int *ktab);
 void		scroll_menu(int *cur, const Uint8 *k, int start, int limit);
+
+void		create_save_image(t_env *e);
+void		create_save(t_env *e, t_status *s);
 
 #endif

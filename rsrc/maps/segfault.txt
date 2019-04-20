@@ -26,9 +26,5 @@ object  	10 	13	0	1 1
 object  	13 	13	0	2 1
 object  	17 	13	0	3 1
 
-# enemies	x	y	sect ref
-enemy		18	15	0	0
-enemy		7	8	0	0
-
 # player 	x 	y	sectorno	angle
 player  	1 	1	0			0
