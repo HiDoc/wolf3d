@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/19 16:49:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:31:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ struct						s_player
 	float		anglesin;
 	float		anglecos;
 	float		yaw;
+	float		yaw_d;
+	float		roll_d;
 	int		 	nb_shot;
 	unsigned 	sector;
 	SDL_Surface	*sprite;
