@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 20:03:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 00:42:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 	//	0x111111 , 0x222222, 0x111111}, env);
 
 	display_skybox((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
-	0x111111 , 0x222222, 0x111111}, env, y_coord_curr.floor);
+	0x111111 , 0x222222, 0x111111}, env);
 
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&ctn, y_coord_curr.floor + 1, *ybottom,
