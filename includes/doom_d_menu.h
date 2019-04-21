@@ -6,20 +6,18 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 13:52:43 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 23:17:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_MENU_H
 # define DOOM_D_MENU_H
 
-# define NB_SCANCODE	283
 # define NB_IMG_MENU	6
 # define NB_BLOC_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
-# define NB_OPT_MENU	16
-# define NB_MENU_BTN	8
+# define NB_OPT_MENU	17
 /*
 ** MENU Index IMG - title
 */
@@ -31,7 +29,7 @@
 # define I_IBTN			5
 
 /*
-** MENU String -- NB_MENU_BTN --
+** MENU String
 */
 # define S_MAINMENU		"MAIN MENU"
 # define S_NEWGAME		"NEW GAME"
@@ -40,6 +38,7 @@
 # define S_SAVE			"SAVE"
 # define S_QUIT			"QUIT"
 # define S_RETURN		"Return"
+# define S_RESET		"Reset keys"
 
 # define S_OOFF			"OFF"
 
@@ -61,19 +60,6 @@
 # define S_OGREEGEM		"GREEN GEM     		  	 : "
 # define S_OREDGEM		"RED GEM       	    		   : "
 # define S_OPURPGEM		"PURPLE GEM          	 : "
-
-/*
-** MENU Index String -- NB_STR_MENU --
-*/
-# define I_MAINMENU		0
-# define I_NEWGAME		1
-# define I_LOADGAME		2
-# define I_OPTIONS		3
-# define I_SAVE			4
-# define I_QUIT			5
-# define I_RETURN		6
-
-# define I_OOFF			7
 
 /*
 ** OPTIONS Index options

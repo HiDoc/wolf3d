@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/20 10:25:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:41:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 	if (k[SDL_SCANCODE_RETURN])
 	{
 		s->current == 0 ? s->on = 0 : 0; //launch cinematik ? s->on = 0; // provisoire
+		s->current == 0 ? s->main_menu = 0 : 0;
 		s->current == 1 ? s->load_menu = 1 : 0;
 		s->current == 2 ? s->options_menu = 1 : 0;
 		s->current == 3 ? s->quit = 1 : 0;
-		s->current == 0 ? s->main_menu = 0 : 0;
 		s->load_menu || s->options_menu ? s->current = 0 : 0;
 		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
@@ -56,8 +56,21 @@ void	action_loadmenu(t_env *e, t_status *s, const Uint8 *k)
 
 	i = 0;
 	b = e->menu.save_game;
-	if (s->nb_save)
+	if (s->nb_save && s->nb_save < 6)
 		scroll_menu(&s->current, k, 0, s->nb_save);
+	else
+	{
+		if (k[SDL_SCANCODE_DOWN] && s->current >= s->end && s->end < s->nb_save)
+		{
+			s->start++;
+			s->end++;
+		}
+		if (k[SDL_SCANCODE_UP] && s->current <= s->start && s->start > 1)
+		{
+			s->start--;
+			s->end--;
+		}
+	}
 	if (k[SDL_SCANCODE_RETURN])
 	{
 		s->current == 0 ? s->load_menu = 0 : 0;
@@ -85,9 +98,10 @@ void	action_optionmenu(t_env *e, t_status *s, const Uint8 *k)
 		? s->current += I_OINVENTR : 0;
 	}
 	else if ((k[SDL_SCANCODE_RETURN])
-		&& !s->key_change && s->current == NB_OPT_KEY)
+		&& !s->key_change && (s->current == NB_OPT_KEY
+		|| s->current == NB_OPT_KEY + 1))
 	{
-		s->options_menu = 0;
+		s->current == NB_OPT_KEY ? s->options_menu = 0 : key_binding(&e->engine);
 		s->current = 0;
 	}
 	else

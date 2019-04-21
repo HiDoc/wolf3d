@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 00:59:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:51:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void		print_stats(t_env *env, int i)
 			div_y = (i == I_KILLS || i == I_K_MAGNUM) ? 1.25 : div_y - .05;
 			p.y = H / div_y;
 		}
-		ui_put_data(env, (t_font){WHITE, str[i], i == 0
+		ui_put_data(env, (t_font){i > 2 ? GOLD : WHITE, str[i], i == 0
 		? env->hud.text.doom : env->hud.text.text, p,
 		i < I_KILLS ? size[i] : size[I_KILLS], -1, env->stats.data[i]});
 	}

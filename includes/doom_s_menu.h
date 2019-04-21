@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 18:37:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:19:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ struct 			s_status
 	int			current;
 	int			key_change;
 	int			sound;
-	int			click;
+	int			msc_vol;
+	int			start;
+	int			end;
+
 };
 
 struct 			s_menu

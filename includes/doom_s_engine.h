@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 16:49:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 23:50:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ struct						s_save
 	t_inventory				inventory; // objects + gems + weapon + current wpn
 	t_sector				*sector; // all sectors (with objects + enemies)
 	t_stats					stats; // game stats
+	int						*keys[NB_OPT_KEY];
+	int						msc_vol;
 };
 
 

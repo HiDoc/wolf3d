@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/20 11:07:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:42:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,14 @@ void	create_save_name(char **name)
 t_bloc	*new_save(t_env *e)
 {
 	t_bloc		*new;
-	char		*name;
 
 	new = ft_memalloc(sizeof(t_bloc));
 	create_surface(&new->use.sprite, (t_vtx){W / 10, H / 10});
 	img_scaled_copy(e->stats.save_img, new->use.sprite);
-	new->use.rect = (SDL_Rect){W / 2.5 - W / 10,
-		H / (2.5 * e->menu.status.nb_save), W / 10, H / 10};
-	create_save_name(&name);
-	printf("name %s \n", name);
+	new->use.rect = (SDL_Rect){W / 2.5, H / 3, W / 10, H / 10};
+	create_save_name(&new->name);
 	new->rect = (SDL_Rect){W / 2.5, H / 2.5, W / 40, 0};
-	new->sprite = ui_create_simple_string(
-		(t_font){M_WHITE, name, e->hud.text.quantify,
-		(t_vtx){0, 0}, W / 40, -1, -1});
 	new->next = NULL;
-	printf("size n %i \n", new->sprite->w);
-
 	return (new);
 }
 
@@ -80,14 +72,11 @@ void	create_save(t_env *e, t_status *s)
 	if (e->stats.save)
 	{
 		s->nb_save++;
-		printf("crea de save %i\n", s->nb_save);
+		s->nb_save < 6 ? e->menu.status.end++ : 0;
 		cur_save = e->menu.save_game;
 		while (cur_save->next != NULL)
-		{
 			cur_save = cur_save->next;
-			printf("next\n");
-		}
-		cur_save = new_save(e);
+		cur_save->next = new_save(e);
 		ui_put_data(e, (t_font){M_WHITE, "Game saved", e->hud.text.quantify,
 			(t_vtx){W / 2, H / 20}, W / 60, -1, -1});
 		e->stats.save = 0;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/20 10:12:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 00:40:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,29 @@ int		check_doublon(t_status *s, int scan, int *ktab)
 
 void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 {
-	if (!k[SDL_SCANCODE_RETURN] && !k[SDL_SCANCODE_ESCAPE]
-		&& s->current != 0 && s->key_change)
+	if (!k[SDL_SCANCODE_RETURN] && !k[SDL_SCANCODE_ESCAPE] && s->key_change)
 	{
-		SDL_WaitEvent(&e->sdl.event);
-		check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys)
-		? *key = e->sdl.event.key.keysym.scancode : 0;
-		s->key_change = 0;
-		printf("key pressed : %i\n", *key);
-	}
-	if ((k[SDL_SCANCODE_RETURN]) && !s->key_change && s->options_menu)
-	{
-		printf("key CHANGE %i\n", s->key_change);
-		s->key_change = 1;
 		if (s->current == 0)
 		{
-			s->sound = !s->sound;
+			k[SDL_SCANCODE_LEFT] ? s->msc_vol-- : 0;
+			k[SDL_SCANCODE_RIGHT] ? s->msc_vol++ : 0;
+			s->msc_vol > MIX_MAX_VOLUME ? s->msc_vol = MIX_MAX_VOLUME : 0;
+			s->msc_vol < 0 ? s->msc_vol = 0 : 0;
+			Mix_VolumeMusic(e->menu.status.msc_vol);
+		}
+		else
+		{
+			SDL_WaitEvent(&e->sdl.event);
+			check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys)
+			? *key = e->sdl.event.key.keysym.scancode : 0;
+			printf("key pressed : %i\n", *key);
 			s->key_change = 0;
 		}
 	}
+	if (k[SDL_SCANCODE_RETURN] && !s->key_change && s->options_menu)
+		s->key_change = 1;
+	else if (k[SDL_SCANCODE_RETURN] && s->key_change && s->current == 0)
+		s->key_change = 0;
 }
 
 int	ispoint_inrect(int x, int y, SDL_Rect r)
