@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 23:06:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 01:53:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ int				handle_events(t_env *env)
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
 		env->mouse.x = (m.x - rect.x - 425) / env->grid_scale
-			/*- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x)*/;
+			- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x) + 280;
 		env->mouse.y = (m.y - rect.y - 340) / env->grid_scale
-			/*- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x)*/;
+			- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y) + 115;
 	}
 
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))

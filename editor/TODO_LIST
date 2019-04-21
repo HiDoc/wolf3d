@@ -28,11 +28,9 @@ OPTI : multithreading
 OPTI : corriger le reframes inutiles
 OPTI : getpixel
 
-* TODO :	grid : centrer la grille
-* TODO :	grid : zoom centre sur grille
+* TODO :	reparer post grid refactor
 * TODO :	grid : limite left / bot
 * BUG : wheel scroll pas precis sur la souris
-* BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si beaucoup dezoome)
 
 TODO :	choose ceil / sky
 TODO :	floor / ceil casting texture
