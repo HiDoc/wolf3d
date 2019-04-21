@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:01:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/13 16:58:00 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int		put_gun_load(t_env *env, int frame)
 
 	weapon = env->player.inventory.current;
 	wpn_ref = &env->world.armory[weapon->current->ref];
-	frame /= 2.5;
 	if (frame < wpn_ref->time_reload - 1)
 		put_gun(env, &wpn_ref->sprite_reload[frame]);
 	else
