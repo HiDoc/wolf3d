@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 16:20:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 20:03:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 	y_coord_curr = wonder_wall(ctn, ctn.p, ytop, ybottom);
 
 	/* Render ceiling: everything above this sector's ceiling height. */
-	render_ceil((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
-		0x111111 , 0x222222, 0x111111}, env);
+	//render_ceil((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
+	//	0x111111 , 0x222222, 0x111111}, env);
+
+	display_skybox((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
+	0x111111 , 0x222222, 0x111111}, env, y_coord_curr.floor);
 
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&ctn, y_coord_curr.floor + 1, *ybottom,
@@ -108,8 +111,6 @@ void		dfs(t_env *env)
 	*queue.head = (t_item) {engine->player.sector, 0, W - 1};
 	if (++queue.head == queue.queue + MAXQUEUE)
 		queue.head = queue.queue;
-
-	//display_skybox(env);
 
 	while (queue.head != queue.tail)
 	{
