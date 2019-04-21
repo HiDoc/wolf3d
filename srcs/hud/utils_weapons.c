@@ -6,11 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/13 16:58:00 by fmadura          ###   ########.fr       */
-=======
-/*   Updated: 2019/04/19 16:50:47 by abaille          ###   ########.fr       */
->>>>>>> d1a6321fbd2e25ab7a6c2acaf292726a07fdf815
+/*   Updated: 2019/04/21 13:30:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +76,7 @@ int		put_gun_load(t_env *env, int frame)
 	const t_wrap_wpn	*weapon = env->player.inventory.current;
 	const t_weapon		*wpn_ref = &env->world.armory[weapon->current->ref];
 
-<<<<<<< HEAD
-	weapon = env->player.inventory.current;
-	wpn_ref = &env->world.armory[weapon->current->ref];
-=======
 	frame /= 1.2;
->>>>>>> d1a6321fbd2e25ab7a6c2acaf292726a07fdf815
 	if (frame < wpn_ref->time_reload - 1)
 		put_gun(env, &wpn_ref->sprite_reload[frame]);
 	else

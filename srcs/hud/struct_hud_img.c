@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 01:14:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 13:46:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,7 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 	}
 }
 
-static SDL_Surface	*surface_fr_png(char *path)
-{
-	SDL_Surface	*new;
-	SDL_Surface	*tmp;
-
-	if (!(tmp = lt_push(IMG_Load(path), srf_del)))
-		 doom_error_exit("Doom_nukem error on IMG_Load");
-	if (!(new = lt_push(SDL_ConvertSurfaceFormat(
-	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
-		 doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	lt_release(tmp);
-	SDL_UnlockSurface(new);
-	return (new);
-}
-
-SDL_Surface *ui_img(char *file, int i)
+SDL_Surface		*ui_img(char *file, int i)
 {
 	SDL_Surface	*new;
 	char		*nb;
@@ -69,7 +54,7 @@ SDL_Surface *ui_img(char *file, int i)
 	path = ft_strjoin("./rsrc/img/", file);
 	final_path = ft_strrjoin(path, nb);
 	final_path = ft_strljoin(final_path, (char *)png);
-	new = surface_fr_png(final_path);
+	new = load_image(final_path);
 	lt_release(path);
 	lt_release(final_path);
 	return (new);

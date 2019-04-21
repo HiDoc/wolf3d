@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:21:37 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/09 14:43:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 15:03:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	 set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 
 	fmt = surface->format;
 	bpp = fmt->BytesPerPixel;
-	SDL_LockSurface(surface);
 	y = 0;
 	while (y < surface->h)
 	{
@@ -38,6 +37,5 @@ int	 set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c)
 		}
 		y++;
 	}
-	SDL_UnlockSurface(surface);
 	return (1);
 }

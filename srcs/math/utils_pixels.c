@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 15:52:46 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/13 14:54:59 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/21 15:04:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 	Uint8			*p;
 	Uint32			ret;
 
-	SDL_LockSurface(surface);
 	x = ft_abs(--x);
 	y = ft_abs(--y);
 	bpp = surface->format->BytesPerPixel;
@@ -63,6 +62,5 @@ Uint32		getpixel(SDL_Surface *surface, int x, int y)
 		ret = *(Uint32 *)p;
 	else
 		ret = 0;
-	SDL_UnlockSurface(surface);
 	return (ret);
 }

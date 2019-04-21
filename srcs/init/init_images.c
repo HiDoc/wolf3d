@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 16:52:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 13:49:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,8 @@ static void			init_character(t_character *new)
 
 static void			init_skybox_img(t_env *env)
 {
-	if (!(env->skybox.sb_top = lt_push(
-			IMG_Load("rsrc/skybox/sb_top.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb = lt_push(
-			IMG_Load("rsrc/skybox/sb.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
+	env->skybox.sb_top = load_image("rsrc/skybox/sb_top.jpg");
+	env->skybox.sb = load_image("rsrc/skybox/sb.jpg");
 }
 
 void				load_images(t_env *env)
