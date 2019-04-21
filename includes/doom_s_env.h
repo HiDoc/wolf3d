@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 13:54:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 19:16:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void			txr_del(void **ap); // del texture
 void			crs_del(void **ap); // del cursor
 void			ttf_del(void **ap); // del ttf font
 
-void			display_skybox(t_env *env);
+void			display_skybox(t_drawline l, t_env *env, int floor_pos);
 
 void			load_tilesets(t_env *env);
 
