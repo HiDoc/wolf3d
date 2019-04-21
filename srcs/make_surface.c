@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 13:36:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 13:56:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 16:23:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-SDL_Surface      *make_surface(int height, int width)
+SDL_Surface      *make_surface(int width, int height)
 {
 	SDL_Surface     *surface;
 
