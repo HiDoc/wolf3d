@@ -8,12 +8,15 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
 
 BUG : segv on setpixel quand zoom
-BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-BUG : angle du spawn
+
+*FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+*FLO* BUG : angle du spawn
+
 BUG : execve ./doom completement KC
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
 BUG : draw mode : create vertex in sector close to edge
+BUG : wheel scroll pas precis sur la souris
 
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
@@ -30,23 +33,24 @@ OPTI : getpixel
 
 * TODO :	reparer post grid refactor
 * TODO :	grid : limite left / bot
-* BUG : wheel scroll pas precis sur la souris
 
-TODO :	choose ceil / sky
-TODO :	floor / ceil casting texture
-TODO :	refactor liste deroulantes sur interface modes
 TODO :	delete edge
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection
+TODO :	parsing : parsing todo
+
+TODO :	choose ceil / sky
+TODO :	floor / ceil casting texture
+TODO :	music & skybox
+TODO :	messages d'erreur display
+
 TODO :	update export
-TODO :	meta : set music & skybox
+TODO :	refactor liste deroulantes sur interface modes
 TODO :	spawn : display line on spawn direction
 TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
 TODO :	interface element clipping
 TODO :	front design selected / hovered color and stuff
-TODO :	messages d'erreur display
-TODO :	parsing : parsing todo
 
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
