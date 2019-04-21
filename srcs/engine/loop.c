@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/11 10:13:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:39:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static int				sdl_render(t_env *env)
 {
 	SDL_LockSurface(env->sdl.surface);
-
-	if (env->hud.inventory.is_active)
+	god_mod(env);
+	if (env->menu.status.on)
+		draw_menu(env);
+	else if (env->hud.inventory.is_active)
 	{
 		env->player.actions.is_shooting = 0;
 		env->player.actions.is_loading = 0;
@@ -28,20 +30,20 @@ static int				sdl_render(t_env *env)
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		//ui_minimap(env);
-		handle_weapon(env, &env->time.frame);
+		handle_weapon(env);
 		print_hud(env);
 		handle_gems(env);
-		if (!env->player.actions.is_invisible)
+		if (!env->god_mod)
 			bot_action(env, &env->engine.sectors[env->engine.player.sector]);
 		player_bullet(env, &env->player, *env->player.inventory.current->damage);
 		enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 		if (env->hud.is_txt)
 			ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
 		handle_doors(env);
-		god_mod(env);
 		wpn_mouse_wheel(env, env->sdl.event);
 		sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 		player_move(&env->engine, &env->engine.player.vision, env->sdl.keycodes);
+		handle_sound(env, &env->engine.player.sound);
 	}
 
 	SDL_UnlockSurface(env->sdl.surface);
@@ -72,8 +74,8 @@ int				sdl_loop(t_env *env)
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (1)
 	{
-		SDL_SetEventFilter(&YourEventFilter, (void *)env);
-		if (env->sdl.keycodes[SDL_SCANCODE_Q])
+		!env->menu.status.on ? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
+		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
@@ -83,15 +85,13 @@ int				sdl_loop(t_env *env)
 			SDL_PollEvent(&env->sdl.event);
 
 			sdl_render(env); // <- lifetime
-			if (!env->hud.inventory.is_active)
-			{
+			if (env->hud.inventory.is_active)
+				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
+			else if (env->menu.status.on)
+				sdl_key_menu(env, env->sdl.event, env->sdl.keycodes);
+			else
 				(env->player.inventory.current->current->ref == RIFLE)
 				? mouse_shoot(env) : 0;
-			}
-			else
-			{
-				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
-			}
 		}
 	}
 	return (0);

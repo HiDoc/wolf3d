@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/09 23:29:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:17:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static SDL_Surface	*ui_create_simple_string(t_font data)
+SDL_Surface	*ui_create_simple_string(t_font data)
 {
 	SDL_Surface	*tmp;
 	SDL_Surface	*surface;
@@ -27,18 +27,17 @@ static SDL_Surface	*ui_create_simple_string(t_font data)
 	return (surface);
 }
 
-SDL_Surface	*create_scaled_surface(SDL_Surface *surface, t_vtx new_size)
+void	create_scaled_surface(SDL_Surface **surface, t_vtx n_size)
 {
-	if (!(surface = lt_push(SDL_CreateRGBSurface(0,
-	new_size.x, new_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
+	if (!(*surface = lt_push(SDL_CreateRGBSurface(0,
+	n_size.x, n_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
 		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
-	return (surface);
 }
 
 static void	set_inv_strings(t_env *env)
 {
 	int			i;
-	t_vtx		new_size;
+	t_vtx		n_size;
 	SDL_Surface	*tmp;
 	const char	*string[DSCRIP_STR_INV] = {
 	I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4, I_STRING_5,
@@ -49,12 +48,10 @@ static void	set_inv_strings(t_env *env)
 	{
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
-		new_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
-		env->hud.text.i_obj_description[i] = create_scaled_surface(env->hud.text.i_obj_description[i], new_size);
-		// if (!(env->hud.text.i_obj_description[i] = lt_push(SDL_CreateRGBSurface(0,
-		// new_size.x, new_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		// 	doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
+		create_scaled_surface(&env->hud.text.i_obj_description[i], n_size);
 		ui_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
+		lt_release(tmp);
 	}
 }
 
@@ -63,34 +60,32 @@ static void	set_door_strings(t_env *env)
 	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
 	int			i;
 	SDL_Surface	*tmp;
-	t_vtx		new_size;
+	t_vtx		n_size;
 
 	i = -1;
 	while (++i < 2)
 	{
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
-		new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		if (!(env->hud.text.doors[i] = lt_push(SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
-		0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-			doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+		create_scaled_surface(&env->hud.text.doors[i], n_size);
 		ui_scaled_copy(tmp, env->hud.text.doors[i]);
+		lt_release(tmp);
 	}
 }
 
 static void	set_pick_strings(t_env *env)
 {
 	SDL_Surface	*tmp;
-	t_vtx		new_size;
+	t_vtx		n_size;
 
 	tmp = NULL;
 	tmp = ui_create_simple_string((t_font){WHITE,
 	PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1});
-	new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-	if (!(env->hud.text.pick = lt_push(SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+	create_scaled_surface(&env->hud.text.pick, n_size);
 	ui_scaled_copy(tmp, env->hud.text.pick);
+	lt_release(tmp);
 }
 
 static void	underscore_off_name(char *name, int size)
@@ -102,7 +97,7 @@ static void	underscore_off_name(char *name, int size)
 		name[i] == '_' ? name[i] = ' ' : 0;
 }
 
-SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx new_size)
+SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx n_size)
 {
 	const char	*tab[WORLD_NB_OBJECTS] = {N_HEALTH, N_SHIELD, N_AMMO_M_R,
 	N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
@@ -118,11 +113,10 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx new_size)
 		underscore_off_name(name, ft_strlen(name));
 		tmp = ui_create_simple_string((t_font){WHITE,
 		name, env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
-		new_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		if (!(new[i] = lt_push(SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
-		0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-			doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+		create_scaled_surface(&new[i], n_size);
 		ui_scaled_copy(tmp, new[i]);
+		lt_release(tmp);
 		lt_release(name);
 	}
 	return (new);
@@ -130,7 +124,7 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx new_size)
 
 void		init_strings(t_env *env, int i, int j)
 {
-	t_vtx		new_size;
+	t_vtx		n_size;
 	TTF_Font	*font;
 	SDL_Surface	*tmp;
 	const char      *string[UI_NB_STRING] = {
@@ -148,17 +142,16 @@ void		init_strings(t_env *env, int i, int j)
 		tmp = ui_create_simple_string((t_font){WHITE,
 		string[i], font, {0, 0}, 0, -1, -1});
 		if (i < HUD_NB_STRING)
-			new_size = (t_vtx){tmp->w / (100 / size[UI_NB_STR_INV]),
+			n_size = (t_vtx){tmp->w / (100 / size[UI_NB_STR_INV]),
 			tmp->h / (100 / size[UI_NB_STR_INV])};
 		else
 		{
-			new_size = (t_vtx){tmp->w / (100 / size[j]), tmp->h / (100 / size[j])};
+			n_size = (t_vtx){tmp->w / (100 / size[j]), tmp->h / (100 / size[j])};
 			j++;
 		}
-		if (!(env->hud.text.string[i] = lt_push(SDL_CreateRGBSurface(0, new_size.x, new_size.y, 32,
-		0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-			doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+		create_scaled_surface(&env->hud.text.string[i], n_size);
 		ui_scaled_copy(tmp, env->hud.text.string[i]);
+		lt_release(tmp);
 		i++;
 	}
 	env->hud.text.obj_names = tab_name_objects(env, -1, (t_vtx){0, 0});

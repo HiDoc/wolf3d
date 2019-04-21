@@ -6,21 +6,21 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:50:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:12:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:46:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_S_HUD_H
 # define DOOM_S_HUD_H
 
-typedef struct s_minibloc	t_minibloc;
+typedef struct s_mbloc		t_mbloc;
 typedef struct s_bloc		t_bloc;
 typedef struct s_uinv		t_uinv;
 typedef struct s_hud		t_hud;
 typedef struct s_uitxt		t_uitxt;
 typedef struct s_stats		t_stats;
 
-struct					s_minibloc
+struct					s_mbloc
 {
 	SDL_Rect			rect;
 	SDL_Surface			*sprite;
@@ -28,19 +28,22 @@ struct					s_minibloc
 
 struct					s_bloc
 {
-	t_minibloc			cross;
-	t_minibloc			use;
+	t_mbloc				cross;
+	t_mbloc				use;
 	SDL_Surface			*bg_empty;
 	SDL_Surface			*bg_fill;
 	SDL_Surface			*sprite;
 	SDL_Rect			rect;
 	t_edge				limit;
+	int					is_visible;
+	t_bloc				*next;
 };
 
 struct 						s_stats
 {
 	int				data[NB_STATS];
 	t_bloc			achievments[8];
+	SDL_Surface		*save_img;
 };
 
 struct						s_uitxt
@@ -49,6 +52,7 @@ struct						s_uitxt
 	TTF_Font			*doom;
 	TTF_Font			*text;
 	TTF_Font			*number;
+	TTF_Font			*quantify;
 	SDL_Surface			*string[UI_NB_STRING];
 	SDL_Surface			*i_obj_description[DSCRIP_STR_INV];
 	SDL_Surface			*doors[2];

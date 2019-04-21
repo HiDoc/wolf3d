@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/06 16:49:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/19 12:39:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*
 ** Set velocity of player in {x, y}
 */
-int		pushing(const Uint8 *keyb)
+int		pushing(const Uint8 *keyb, int *k)
 {
-	return (keyb[SDL_SCANCODE_W] || keyb[SDL_SCANCODE_S]
-		|| keyb[SDL_SCANCODE_A] || keyb[SDL_SCANCODE_D]);
+	return (keyb[k[I_OUP]] || keyb[k[I_ODOWN]]
+		|| keyb[k[I_OLEFT]] || keyb[k[I_ORIGHT]]);
 }
 
 int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
@@ -34,17 +34,17 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
 	v->ground = !keyb[SDL_SCANCODE_SPACE];
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
-	if (keyb[SDL_SCANCODE_W])
+	if (keyb[e->keys[I_OUP]])
 		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_SCANCODE_S])
+	if (keyb[e->keys[I_ODOWN]])
 		move_vec = diff_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[SDL_SCANCODE_A])
+	if (keyb[e->keys[I_OLEFT]])
 		move_vec = add_vertex(move_vec, (t_vtx){sin_move, -cos_move});
-	if (keyb[SDL_SCANCODE_D])
+	if (keyb[e->keys[I_ORIGHT]])
 		move_vec = diff_vertex(move_vec, (t_vtx){sin_move, -cos_move});
 	velocity->x = velocity->x * (1 - speed) + move_vec.x * speed;
 	velocity->y = velocity->y * (1 - speed) + move_vec.y * speed;
-	v->moving = pushing(keyb);
+	v->moving = pushing(keyb, e->keys);
 	return (1);
 }
 
@@ -141,14 +141,18 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 
 	v->falling = 1;
 	SDL_GetRelativeMouseState(&x, &y);
-	e->player.angle += x * 0.03f;
-	v->yaw = clamp(v->yaw + y * 0.05f, -5, 5);
+	e->player.angle += x * 0.002f;
+	v->yaw = clamp(v->yaw + y * 0.005f, -5, 5);
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.8f;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);
+	e->player.sound.o_veloc = e->player.velocity.z;
+	e->player.sound.o_duck = v->ducking;
 	v->eyeheight = v->ducking ? DUCKHEIGHT : EYEHEIGHT;
+	e->player.origin = e->player.where;
 	handle_gravity(v, e, 0.05f);
 	if (v->moving)
 		collision(v, e, &e->sectors[e->player.sector]);
 	keyboard_movement(e, v, keycodes);
+	sd_stat_player(e, v, &e->player.sound);
 }

@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:33:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 12:43:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	select_action(t_minibloc p, int x, int y)
+int	select_action(t_mbloc p, int x, int y)
 {
 	return ((x >= p.rect.x && x <= p.rect.x + p.rect.w)
 	&& (y >= p.rect.y && y <= p.rect.y + p.rect.h));

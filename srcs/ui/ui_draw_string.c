@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/10 15:26:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/12 18:53:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 		}
 		x++;
 	}
-	lt_release(src);
 }
 
 void    		ui_put_data(t_env *env, t_font data)

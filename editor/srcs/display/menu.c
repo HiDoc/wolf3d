@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/04 18:18:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/17 01:21:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ static void	left_panel(t_pos origin, t_env *env)
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
 	// up
-	SDL_BlitScaled(get_element(M_B_UP, env)->image,
-	0, env->data->surface, &get_element(M_B_UP, env)->rect);
+	if ((SDL_BlitScaled(get_element(M_B_UP, env)->image,
+	0, env->data->surface, &get_element(M_B_UP, env)->rect)))
+		ui_error_exit_sdl("Libui: Blit error in menu left panel");
 
 	// down
-	SDL_BlitScaled(get_element(M_B_DOWN, env)->image,
-	0, env->data->surface, &get_element(M_B_DOWN, env)->rect);
+	if ((SDL_BlitScaled(get_element(M_B_DOWN, env)->image,
+	0, env->data->surface, &get_element(M_B_DOWN, env)->rect)) < 0)
+		ui_error_exit_sdl("Libui: Blit error in menu left panel");
 
 	// display maps file
 	t_elem		*elem;
@@ -109,7 +111,8 @@ void		menu(t_env *env)
 
 	// display background
 	rect = (SDL_Rect){0, 0, WIN_W, WIN_H};
-	SDL_BlitScaled(env->menu.background, 0, env->data->surface, &rect);
+	if ((SDL_BlitScaled(env->menu.background, 0, env->data->surface, &rect)) < 0)
+		ui_error_exit_sdl("Libui: Blit error in menu");
 
 	// display popup
 	rect = (SDL_Rect){origin.x + 230, origin.y - 50, 0, 35};
@@ -120,4 +123,8 @@ void		menu(t_env *env)
 
 	// display right
 	right_panel(origin, env);
+
+	// display nb frames
+	rect = (SDL_Rect){300, 20, 0, 20};
+	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
 }

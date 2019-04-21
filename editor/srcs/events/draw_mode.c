@@ -6,159 +6,74 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/11 18:52:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:11:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		create_sector(t_env *env)
+static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 {
-	t_sct	*new;
+	t_w_vtx		*ptr;
 
-	if (!(new = (t_sct *)ft_memalloc(sizeof(t_sct))))
-		ui_error_exit_sdl("Editor: Out of memory", env->data);
-	new->xmin = WIN_W + 1;
-	new->xmax = -1;
-	new->ymin = WIN_H + 1;
-	new->ymax = -1;
-	new->color = C_CYAN;
-	new->next = 0;
-
-	if (!(env->sct_start))
+	ptr = sct->w_vtx_start;
+	while (ptr)
 	{
-		new->id = 0;
-		env->sct_current = new;
-		env->sct_start = new;
-		env->sct_end = new;
+		if (ptr->vtx == vtx)
+			return (1);
+		ptr = ptr->next;
 	}
-	else
-	{
-		new->id = env->sct_end->id + 1;
-		env->sct_current = new;
-		env->sct_end->next = new;
-		env->sct_end = new;
-	}
-	env->nb_sct++;
-}
-
-void		create_vertex(t_pos pos, t_env *env)
-{
-	t_vtx	*new;
-
-	if (!(new = (t_vtx *)ft_memalloc(sizeof(t_vtx))))
-		ui_error_exit_sdl("Editor: Out of memory", env->data);
-	new->pos.x = pos.x;
-	new->pos.y = pos.y;
-	new->sector = env->sct_current;
-	new->next = 0;
-
-	if (!(env->sct_current->vtx_start))
-	{
-		env->sct_current->vtx_current = new;
-		env->sct_current->vtx_start = new;
-		env->sct_current->vtx_end = new;
-	}
-	else
-	{
-		env->sct_current->vtx_current = new;
-		env->sct_current->vtx_end->next = new;
-		env->sct_current->vtx_end = new;
-	}
-
-	// stock xmin xmax ymin ymax
-	if (pos.x < env->sct_current->xmin)
-		env->sct_current->xmin = pos.x;
-	if (pos.x > env->sct_current->xmax)
-		env->sct_current->xmax = pos.x;
-	if (pos.y < env->sct_current->ymin)
-		env->sct_current->ymin = pos.y;
-	if (pos.y > env->sct_current->ymax)
-		env->sct_current->ymax = pos.y;
-	env->nb_vtx++;
-}
-
-void		assign_vertex(t_vtx *vtx, t_env *env)
-{
-	env->sct_current->vtx_current = vtx;
-	env->sct_current->vtx_end->next = vtx;
-	env->sct_current->vtx_end = vtx;
-
-	// stock xmin xmax ymin ymax
-	if (vtx->pos.x < env->sct_current->xmin)
-		env->sct_current->xmin = vtx->pos.x;
-	if (vtx->pos.x > env->sct_current->xmax)
-		env->sct_current->xmax = vtx->pos.x;
-	if (vtx->pos.y < env->sct_current->ymin)
-		env->sct_current->ymin = vtx->pos.y;
-	if (vtx->pos.y > env->sct_current->ymax)
-		env->sct_current->ymax = vtx->pos.y;	
+	return (0);
 }
 
 int			draw_mode(t_env *env)
 {
-	const SDL_Event event = env->data->sdl.event;
-	const SDL_Rect  rect = (SDL_Rect){20, 100, 850, 680};
-	t_vtx	*current;
+	const t_pos			m = env->data->mouse;
+	const SDL_Event 	event = env->data->sdl.event;
 
-	if (event.type == SDL_MOUSEBUTTONDOWN
-	&& ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
+	if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
 	{
-		if (!(env->drawing)) // not drawing
+		if (event.type == SDL_MOUSEBUTTONDOWN && !env->editor.sct_hover)
 		{
-			if (!(current = target_vertex(env))) // no dock
+			env->editor.vtx_size = 0;
+			if (!env->editor.drawing)
 			{
-				if (!(target_sector(env->data->mouse, env)))
-				{// not in another sector
-					env->drawing = 1;
-					create_sector(env);
-					create_vertex(env->mouse, env);
-				}
-			}
-			else // dock
-			{
-				env->drawing = 1;
+				env->editor.drawing = 1;
 				create_sector(env);
-				create_vertex(current->pos, env);
 			}
-			return (1);
-		}
-		else // drawing
-		{
-			if (!(target_sector(env->data->mouse, env)))
+			if (!env->editor.vtx_hover)
 			{
-				if ((current = target_vertex(env))) // dock
-				{
-					if (current == env->sct_current->vtx_start) // dock start
-					{
-						env->sct_current->close = 1;
-						env->sct_current->vtx_current = 0;
-						env->sct_current = 0;
-						env->drawing = 0;
-					}
-					else if (current->sector != env->sct_current)
-					{// dock (different sector)
-						create_vertex(current->pos, env); // assign
-					}
-				}
-				else // no dock
-					create_vertex(env->mouse, env);
+				create_vertex(env->mouse, env);
+				create_w_vertex(env->vertex, env);
+				return (1);
 			}
-			return (1);
+			else if (env->sct_current->w_vtx_start
+			&& env->editor.vtx_hover == w_vtx_lst_end(
+			env->sct_current->w_vtx_start)->vtx
+			&& env->sct_current->nb_w_vtx > 2)
+			{
+				env->sct_current->close = 1;
+				env->sct_current->w_vtx_current = 0;
+				env->sct_current = 0;
+				env->editor.drawing = 0;
+				return (1);
+			}
+			else if (!vertex_of_sector(
+			env->editor.vtx_hover, env->sct_current))
+			{
+				create_w_vertex(env->editor.vtx_hover, env);
+				return (1);
+			}
 		}
 	}
-
-	if (env->data->mouse.x || env->data->mouse.y)
+	if (m.x || m.y)
 	{
-		// calc vtx size
 		if (env->sct_current)
 		{
-			env->vtx_size = sqrt(
-			pow(env->sct_current->vtx_current->pos.x - env->mouse.x, 2)
-			+ pow(env->sct_current->vtx_current->pos.y - env->mouse.y, 2));
+			env->editor.vtx_size = pythagore(
+			env->sct_current->w_vtx_current->vtx->pos, env->mouse);
 		}
 		return (1);
 	}
-
 	return (0);
 }
