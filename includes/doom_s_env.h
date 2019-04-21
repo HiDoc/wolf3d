@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/17 19:28:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 13:54:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ struct								s_env
 
 
 // a rander dans un header fonctions
+
+SDL_Surface		*make_surface(int height, int width);
+SDL_Surface		*make_string(t_font str_data);
+SDL_Surface		*load_image(char *path);
+
 void			doom_exit(void);
 void			doom_error_exit(char *str);
 void			srf_del(void **ap);	// del surface

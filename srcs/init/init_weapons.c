@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 00:02:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:27:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 	Uint32		*p;
 
 	sprite = ui_img(file, i);
-	if (!(bloc->sprite = lt_push(SDL_CreateRGBSurface(0, W, H, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
+	bloc->sprite = make_surface(W, H);
 	bloc->rect = (SDL_Rect){0, 0, W, H};
 	bloc->limit.v1 = (t_vtx){0, 0};
 	SDL_LockSurface(bloc->sprite);
