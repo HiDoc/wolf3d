@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_hud_img.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/21 13:46:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:08:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 {
 	int		i;
 	int		j;
-
+	Uint32	color;
 	const float ratiox = img->w / (float)bloc->rect.w;
 	const float ratioy = img->h / (float)bloc->rect.h;
 
@@ -28,12 +28,11 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 		while (j < bloc->rect.h - bloc->limit.v2.y
 		&& (ratioy > 1 ? (j * ratioy) : j) < img->h)
 		{
-			// Uint32 color = ;
-			if (getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
-			(ratioy > 1 ? (j * ratioy) : j)) & img->format->Amask)
+			color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
+			(ratioy > 1 ? (j * ratioy) : j));
+			if (color & 0xFF)
 				setpixel(env->sdl.surface, i + bloc->rect.x,
-				j + bloc->rect.y, getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
-			(ratioy > 1 ? (j * ratioy) : j)));
+				j + bloc->rect.y, color);
 			j++;
 		}
 		i++;

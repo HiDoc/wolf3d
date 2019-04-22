@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui_draw_string.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 14:58:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:04:51 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
 	int		y;
 	t_vtx	new_size;
 	t_vtx	scale;
+	Uint32	color;
 
 	new_size = (t_vtx){src->w / (100 / data.size), src->h / (100 / data.size)};
 	scale = (t_vtx){src->w / new_size.x, src->h / new_size.y};
@@ -101,10 +102,9 @@ void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
 		pos.y = data.pos.y;
 		while (pos.y < data.pos.y + new_size.y && pos.y < H)
 		{
-			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
-			& src->format->Amask)
-				setpixel(env->sdl.surface, pos.x, pos.y, getpixel(src, (int)(x * scale.x),
-				(int)(y * scale.y)));
+			color = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
+			if (((color & 0xFF00) >> 8) != 42)
+				setpixel(env->sdl.surface, pos.x, pos.y, color);
 			y++;
 			pos.y++;
 		}

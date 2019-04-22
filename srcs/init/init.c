@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 16:23:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:00:50 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	init_env(int ac, char **av, t_env *env)
 	init_blocs_menu(env);
 	printf("time menu: %u\n", SDL_GetTicks());
 	init_hud(env);
-	printf("time hud: %u\n", SDL_GetTicks());
+	printf("time hud hud: %u\n", SDL_GetTicks());
 	init_weapon(env);
-	printf("time wpn: %u\n", SDL_GetTicks());
+	printf("time wpn init: %u\n", SDL_GetTicks());
 	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
 	printf("time enemies: %u\n", SDL_GetTicks());
 }
