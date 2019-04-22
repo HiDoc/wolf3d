@@ -6,44 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 20:29:45 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/24 19:56:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 11:40:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-/*
-** Rotation surface, relatif a env->engine.player.angle
-*/
-// fonction a proteger
-SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-				SDL_Surface *dst, t_vtx origin, t_env *env)
-{
-	const t_player	plr = env->engine.player;
-	const t_vtx		c = {src_rect.w / 2, src_rect.h / 2};
-	t_vtx			dest;
-	float			y;
-	float			x;
-	Uint32			color;
-	const float		angle = -plr.angle;
-
-	y = 0;
-	while (y < src_rect.h)
-	{
-		x = 0;
-		while (x < src_rect.w)
-		{
-			dest = (t_vtx){
-			c.x + (x - c.x) * sin(angle) - (y - c.y) * cos(angle),
-			c.y + (x - c.x) * cos(angle) + (y - c.y) * sin(angle)};
-			if ((color = getpixel(src, src_rect.x + dest.x, src_rect.y + dest.y)))
-				setpixel(dst, origin.x + x, origin.y + y, color);
-			x++;
-		}
-		y++;
-	}
-	return (dst);
-}
 
 /*
 ** e.v1 is the start point
