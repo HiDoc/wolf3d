@@ -3,20 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   struct_hud_img.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 16:06:43 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/22 19:05:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
+void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 {
-	int		i;
-	int		j;
-	Uint32	color;
+	int		x;
+	int		y;
+	t_vtx	scale;
+	Uint32	c;
+
+	scale = (t_vtx){fabs((float)src->w / (float)dst->w),
+		fabs((float)src->h / (float)dst->h)};
+	x = 0;
+	while (x < dst->w)
+	{
+		y = 0;
+		while (y < dst->h)
+		{
+			c = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
+			if (c & src->format->Amask)
+				setpixel(dst, x, y, c);
+			y++;
+		}
+		x++;
+	}
+}
+
+void				draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
+{
+	int			i;
+	int			j;
+	Uint32 		color;
 	const float ratiox = img->w / (float)bloc->rect.w;
 	const float ratioy = img->h / (float)bloc->rect.h;
 

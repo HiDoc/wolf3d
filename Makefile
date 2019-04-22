@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/22 17:49:28 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/22 19:06:02 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,7 @@ SRC_NAME 	= main.c \
 			projection.c \
 			queue.c \
 			render_sect.c \
+			save_menu.c \
 			sdl_hook.c \
 			sdl_mouse.c \
 			sounds.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui_draw_string.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 11:29:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 15:50:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ SDL_Surface	*str_join_text(t_font data)
 	return (new);
 }
 
-void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
+void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
 {
 	int		x;
 	int		y;
@@ -99,7 +99,7 @@ void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
 		{
 			color = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
 			if (((color & 0xFF00) >> 8) != 42)
-				setpixel(env->sdl.surface, pos.x, pos.y, color);
+				setpixel(dst, pos.x, pos.y, color);
 			y++;
 			pos.y++;
 		}
@@ -113,6 +113,6 @@ void    		ui_put_data(t_env *env, t_font data)
 	SDL_Surface	*surface;
 
 	surface = str_join_text(data);
-	draw_scaled_string(env, data, surface, (t_vtx){0, 0});
+	draw_scaled_string(env->sdl.surface, data, surface, (t_vtx){0, 0});
 	lt_release(surface);
 }

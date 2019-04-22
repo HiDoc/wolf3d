@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 17:02:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:05:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu
-				&& !s->ingame_menu && !s->load_menu)
+				&& !s->ingame_menu && !s->load_menu && !s->new_game)
 			action_mainmenu(e, s, k);
 		else if (s->ingame_menu && !s->options_menu)
 			action_ingame_menu(e, s, k);
@@ -46,13 +46,16 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			action_loadmenu(e, s, k);
 		else if (s->options_menu)
 			action_optionmenu(e, s, k);
+		else if (s->new_game)
+			action_newgame_menu(e, s, k);
 		if (k[SDL_SCANCODE_ESCAPE])
 		{
-			if (s->options_menu || s->load_menu)
+			if (s->options_menu || s->load_menu || s->new_game)
 			{
 				s->key_change = 0;
 				s->options_menu = 0;
 				s->load_menu = 0;
+				s->new_game = 0;
 			}
 			else if (!s->main_menu)
 			{
@@ -137,8 +140,9 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		}
 		if (keycodes[SDL_SCANCODE_ESCAPE])
 		{
-			env->menu.status.on = !env->menu.status.on;
-			env->menu.status.ingame_menu = !env->menu.status.ingame_menu;
+			create_save_image(env);
+			env->menu.status.on = 1;
+			env->menu.status.ingame_menu = 1;
 			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
 		}
