@@ -6,11 +6,27 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:58:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 11:52:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+t_pos		vtx_transform(t_pos pos, t_env *env)
+{
+	const SDL_Rect  rect = get_element(E_R_RECT, env)->rect;
+	t_pos           newpos;
+	t_pos			origin;
+
+	origin.x = rect.x
+		+ (env->editor.grid_translate.x + env->editor.grid_mouse_var.x);
+	origin.y = rect.y
+		+ (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
+
+	newpos.x = env->grid_scale * (pos.x) + 425 + rect.x;
+	newpos.y = env->grid_scale * (pos.y) + 340 + rect.y;
+	return (newpos);
+}
 
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst)
 {

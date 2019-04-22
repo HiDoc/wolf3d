@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 20:42:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 22:01:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+t_pos		vtx_transform(t_pos pos, t_env *env);
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst);
 t_sct		*sct_lst_end(t_sct *lst);
 void		sync_sct_minmax(t_env *env);

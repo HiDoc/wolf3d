@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 14:06:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/16 14:45:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 17:00:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	ui_make_circle(t_circ circ, t_data *data)
 
 	while (x >= y)
 	{
-		ui_set_pixel(data->surface, circ.x + x, circ.y + y, circ.color);
-		ui_set_pixel(data->surface, circ.x + y, circ.y + x, circ.color);
-		ui_set_pixel(data->surface, circ.x - y, circ.y + x, circ.color);
-		ui_set_pixel(data->surface, circ.x - x, circ.y + y, circ.color);
-		ui_set_pixel(data->surface, circ.x - x, circ.y - y, circ.color);
-		ui_set_pixel(data->surface, circ.x - y, circ.y - x, circ.color);
-		ui_set_pixel(data->surface, circ.x + y, circ.y - x, circ.color);
-		ui_set_pixel(data->surface, circ.x + x, circ.y - y, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x + x, circ.pos.y + y, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x + y, circ.pos.y + x, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x - y, circ.pos.y + x, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x - x, circ.pos.y + y, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x - x, circ.pos.y - y, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x - y, circ.pos.y - x, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x + y, circ.pos.y - x, circ.color);
+		ui_set_pixel(data->surface, circ.pos.x + x, circ.pos.y - y, circ.color);
 
 		if (err <= 0)
 		{
