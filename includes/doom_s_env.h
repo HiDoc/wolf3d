@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 17:46:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 19:05:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ enum								e_tileset
 typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_time				t_time;
-typedef struct	s_tiletab			t_tiletab;
 typedef struct	s_skybox			t_skybox;
 
 struct								s_sdl
@@ -64,16 +63,6 @@ struct 								s_time
 	int				t_green;
 	int				t_red;
 	int				t_purple;
-};
-
-struct								s_tiletab
-{
-	char			*path;
-	SDL_Surface		*tileset;
-	int				nb_column;
-	int				nb_tiles;
-	int				tile_size;
-	SDL_Surface		**surface;
 };
 
 struct								s_skybox
@@ -101,14 +90,14 @@ struct								s_env
 	t_stats			stats;
 	t_menu			menu;
 	int				god_mod;
-	t_tiletab		tiletab;
 
 	/* skybox */
 	t_skybox		skybox;
 
-	/* world names */
-	int				nb_games;
-	char			**games;
+	int				nb_games;	// nb worlds
+	char			**games;	// all worlds
+	//t_level			*levels;	// world levels
+	int				finish;		// flag fin de level
 
 	// Comment je penses que ce serait mieux :
 	//
@@ -126,24 +115,15 @@ SDL_Surface		*make_surface(int height, int width);
 SDL_Surface		*make_string(t_font str_data);
 SDL_Surface		*load_image(char *path);
 
-void			doom_exit(void);
-void			doom_error_exit(char *str);
-void			srf_del(void **ap);	// del surface
-void			wdw_del(void **ap); // del window
-void			rdr_del(void **ap); // del renderer
-void			txr_del(void **ap); // del texture
-void			crs_del(void **ap); // del cursor
-void			ttf_del(void **ap); // del ttf font
-
 void			display_skybox(t_drawline l, t_env *env);
-
-void			load_tilesets(t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_loop(t_env *env);
+void			mainmenu_loop(t_env *env);
 
 void			setpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 Uint32			getpixel(SDL_Surface *surface, int x, int y);
 void			projection_print(t_raycast container);
 void			print_edg(t_edge edge);
+
 #endif
