@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 16:58:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:19:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 	scroll_menu(&s->current, k, 0, NB_BLOC_NG);
 	if (k[SDL_SCANCODE_RETURN])
 	{
-		s->current == 0 ? s->on = 0 : 0; //launch cinematik ? s->on = 0; // provisoire
+		s->current == 0 ? s->on = 0 : 0;//launch cinematik ? s->on=0;// provisoire
 		s->current == 1 ? s->load_menu = 1 : 0;
 		s->current == 2 ? s->options_menu = 1 : 0;
 		s->current == 3 ? s->quit = 1 : 0;
