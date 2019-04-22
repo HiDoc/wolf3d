@@ -6,11 +6,38 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 18:04:51 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:29:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+static SDL_Color	ui_hex_to_rgb(int hexa)
+{
+	SDL_Color color;
+
+	color = (SDL_Color){hexa >> 24, hexa >> 16, hexa >> 8, hexa};
+	return (color);
+}
+
+void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
+			char *text, Uint32 color, t_env *env)
+{
+	SDL_Surface			*surface;
+	t_font				str_data;
+
+	ft_bzero(&str_data, sizeof(t_font));
+	str_data.color = ui_hex_to_rgb(color);
+	str_data.str = text;
+	str_data.font = env->hud.text.arial;
+
+	surface = make_string(str_data);
+	rect.w = (rect.h * surface->w) / surface->h;
+
+	if ((SDL_BlitScaled(surface, 0, dst_surface, &rect)) < 0)
+		doom_error_exit("Doom_nukem: Blit error on ui_draw_string");
+	lt_release(surface);
+}
 
 void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 {
@@ -33,38 +60,6 @@ void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 		}
 		x++;
 	}
-}
-
-static SDL_Color	ui_hex_to_rgb(int hexa)
-{
-	SDL_Color color;
-
-	color.r = hexa >> 24;
-	color.g = hexa >> 16;
-	color.b = hexa >> 8;
-	color.a = hexa;
-	return (color);
-}
-
-void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
-			char *text, Uint32 color, t_env *env)
-{
-	SDL_Rect			sdl_rect;
-	SDL_Surface			*surface;
-	SDL_Color			sdlcolor;
-	t_font				str_data;
-
-	sdl_rect = (SDL_Rect){rect.x, rect.y, rect.w, rect.h};
-	sdlcolor = ui_hex_to_rgb(color);
-	str_data = (t_font){sdlcolor, text, env->hud.text.arial, {0, 0}, 0, 0, 0};
-	surface = make_string(str_data);
-	sdl_rect.w = (sdl_rect.h * surface->w) / surface->h;
-	if ((SDL_BlitScaled(surface, 0, dst_surface, &sdl_rect)) < 0)
-	{
-		ft_putendl(SDL_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
-	lt_release(surface);
 }
 
 SDL_Surface	*str_join_text(t_font data)

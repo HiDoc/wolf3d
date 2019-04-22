@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 00:37:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 01:00:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 	e->player.yaw = v->yaw - e->player.velocity.z * 0.8f;
 	e->player.yaw_d = (e->player.yaw * 180 / M_PI);
 	e->player.roll_d = e->player.angle * 180 / M_PI;
-	(e->player.roll_d > 360) ? e->player.roll_d = 0 : 0;
 	(e->player.roll_d < 0) ? e->player.roll_d = 360 + e->player.roll_d : 0;
 	e->player.anglesin = sinf(e->player.angle);
 	e->player.anglecos = cosf(e->player.angle);
