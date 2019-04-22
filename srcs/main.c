@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 16:21:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 10:41:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ int		main(int ac, char **av)
 	init_env(ac, av, &env);
 
 	/* load level */
-	load_map(&env.engine, &env); // <- lifetime todo;
+	load_map(&env.engine, &env);
+	init_minimap(&env);
 
-	/* load minimap */
-	//init_minimap(&env); // <- lifetime todo
+	/* gamemode */
 	!env.god_mod ? set_msc_menu(&env, &env.menu.status) : 0;
+
 	/* gameloop */
 	sdl_loop(&env);
 

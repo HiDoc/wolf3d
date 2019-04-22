@@ -1,0 +1,7 @@
+
+skybox: handle memory access
+skybox: set relative to floor and not yaw_d
+
+minimap: replace N by arrow
+
+entities: monstres pas au bon endroit par rapport a minimap pos

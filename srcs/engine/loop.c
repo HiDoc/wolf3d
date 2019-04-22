@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 00:50:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 10:42:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int				sdl_render(t_env *env)
 	{
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
-		//ui_minimap(env);
+		ui_minimap(env);
 		//handle_weapon(env);
 
 		// si retire alors segv :
