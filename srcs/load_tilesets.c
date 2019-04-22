@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 17:23:20 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 16:44:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:36:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,9 @@ SDL_Surface		*tile_blit(t_tiletab *tiletab, int index)
 	srcrect = (SDL_Rect){
 	index % tiletab->tile_size, index % tiletab->nb_column,
 	tiletab->tile_size, tiletab->tile_size};
-	if (!(surface = ui_make_surface(tiletab->tile_size, tiletab->tile_size)))
-	{
-		printf("Doom_nukem: tile_blit error\n");
-		exit(EXIT_FAILURE); // recup error
-	}
+	surface = make_surface(tiletab->tile_size, tiletab->tile_size);
 	if ((SDL_BlitScaled(surface, &srcrect, tiletab->tileset, 0)) < 0)
-	{
-		printf("Doom_nukem: tile_blit error\n");
-		exit(EXIT_FAILURE); // recup error
-	}
+		doom_error_exit("Doom_nukem error on tile_blit");
 	SDL_FreeSurface(surface);
 	return (surface);
 }
@@ -44,17 +37,9 @@ void			parse_tileset(t_tiletab *tiletab)
 	int				i;
 
 	i = 0;
-	if (!(tiletab->tileset = IMG_Load(tiletab->path)))
-	{
-		printf("Doom_nukem: %s\n", IMG_GetError());
-		exit(EXIT_FAILURE); // recup error
-	}
-	if (!(tiletab->surface = (SDL_Surface **)
-	ft_memalloc(sizeof(SDL_Surface *) * (tiletab->nb_tiles + 1))))
-	{
-		printf("Doom_nukem: Out of memory parse_tileset\n");
-		exit(EXIT_FAILURE); // recup error
-	}
+	tiletab->tileset = load_image(tiletab->path);
+	tiletab->surface =
+	(SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *) * (tiletab->nb_tiles + 1));
 	while (i < tiletab->nb_tiles)
 	{
 		tiletab->surface[i] = tile_blit(tiletab, i);

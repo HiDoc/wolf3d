@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/02 10:23:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 15:05:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,6 @@ void		ui_minimap(t_env *env)
 	(env->engine.player.where.y * COEF_MINIMAP),
 	MINIMAP_SIZE, MINIMAP_SIZE};
 
-	SDL_UnlockSurface(env->sdl.surface);
-
 	SDL_BlitScaled(minimap->background, 0, env->sdl.surface,
 	&((SDL_Rect){minimap->origin.x, minimap->origin.y,
 	MINIMAP_SIZE, MINIMAP_SIZE}));
@@ -178,6 +176,4 @@ void		ui_minimap(t_env *env)
 	draw_objects(env->sdl.surface, &(env->engine));
 	draw_entities(env->sdl.surface, &(env->engine));
 	draw_compass(env->sdl.surface, env);
-
-	SDL_LockSurface(env->sdl.surface);
 }
