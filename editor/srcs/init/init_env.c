@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:08:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 11:07:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,11 +251,8 @@ static void		init_editor(t_env *env)
 	DIR					*dr;
 	int					i;
 
-	//env->grid_translate = (t_pos){-(870 * 2), -(780 * 2)};
-	//env->pixel_value = 5;
-
-	env->editor.grid_translate = (t_pos){0, 0};
-	env->pixel_value = 5;
+	env->grid_scale = 2;
+	env->editor.grid_translate = (t_pos){280, 115};
 
 	i = 0;
 	// compteur nb wall textures

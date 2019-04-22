@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:07:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 16:30:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,19 +203,18 @@ struct					s_env
 	t_sct			*sct_start;
 	// lst objects
 	t_object		*objects;
-
-
 	// lst elements
 	t_elem			*elements;
 	// lst button objects
 	t_elem			*btn_objs;
+
 	// current elem / objects flags
 	t_elem			*obj_elem;	// obj selectionne
 	int				spawn_set;	// spawn pose, en attente de direction
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// variables
-	float			pixel_value; // size correspond a un pixel
+	float			grid_scale;
 
 	// relative mouse_position
 	t_pos			mouse;

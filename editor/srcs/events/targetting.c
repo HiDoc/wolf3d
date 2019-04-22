@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 21:58:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/20 22:59:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 			if (filter_edge(pos, w_vtx, w_vtx->next))
 			{
 				if (fabs(pointside(
-				pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 20)
+				pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos)) < 30)	
 				{
 					env->editor.edg_hover = w_vtx;
 					return (w_vtx);
@@ -79,22 +79,16 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 
 t_vtx		*target_vertex(t_pos pos, t_env *env)
 {
-	t_pos	translate;
-	t_w_vtx	*w_vtx;
-	t_sct	*sct;
-	t_pos	calcpos;
+	t_w_vtx			*w_vtx;
+	t_sct			*sct;
 
 	sct = env->sct_start;
-	translate.x = 20 + env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
-	translate.y = 100 + env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 	while (sct)
 	{
 		w_vtx = sct->w_vtx_start;
 		while (w_vtx)
 		{
-			calcpos.x = (w_vtx->vtx->pos.x * env->pixel_value) + translate.x;
-			calcpos.y = (w_vtx->vtx->pos.y * env->pixel_value) + translate.y;
-			if (ui_close_to(pos, calcpos, 10))
+			if (ui_close_to(pos, vtx_transform(w_vtx->vtx->pos, env), 10))
 				return (w_vtx->vtx);
 			w_vtx = w_vtx->next;
 		}
@@ -105,18 +99,12 @@ t_vtx		*target_vertex(t_pos pos, t_env *env)
 
 t_object	*target_object(t_pos pos, t_env *env)
 {
-	t_pos		translate;
-	t_object	*obj;
-	t_pos		calcpos;
+	t_object		*obj;
 
 	obj = env->objects;
-	translate.x = 20 + env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
-	translate.y = 100 + env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 	while (obj)
 	{
-		calcpos.x = (obj->pos.x * env->pixel_value) + translate.x;
-		calcpos.y = (obj->pos.y * env->pixel_value) + translate.y;
-		if (ui_close_to(pos, calcpos, 10))
+		if (ui_close_to(pos, vtx_transform(obj->pos, env), 10))
 			return (obj);
 		obj = obj->next;
 	}
