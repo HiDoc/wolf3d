@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/22 16:08:46 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/22 17:49:28 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,9 +99,11 @@ SRC_NAME 	= main.c \
 			init_weapons.c \
 			init_sound.c \
 			init_strings.c \
+			load_worlds.c \
 			load.c \
 			load_image.c \
 			loop.c \
+			mainmenu_loop.c \
 			make_string.c \
 			make_surface.c \
 			map.c \

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 14:20:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:02:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
 		keyhook_gems(env, keycodes);
+		if (keycodes[SDL_SCANCODE_N]) // provisoire (sgalasso)
+			env->finish = 1;
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
 		if (keycodes[k[I_OPICKOPN]])
