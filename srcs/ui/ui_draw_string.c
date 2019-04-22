@@ -6,90 +6,37 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 18:53:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:50:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-SDL_Color	ui_hex_to_rgb(int hexa)
+static SDL_Color	ui_hex_to_rgb(int hexa)
 {
 	SDL_Color color;
 
-	color.r = hexa >> 24;
-	color.g = hexa >> 16;
-	color.b = hexa >> 8;
-	color.a = hexa;
+	color = (SDL_Color){hexa >> 24, hexa >> 16, hexa >> 8, hexa};
 	return (color);
 }
 
 void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 			char *text, Uint32 color, t_env *env)
 {
-	SDL_Rect			sdl_rect;
 	SDL_Surface			*surface;
-	SDL_Color			sdlcolor;
+	t_font				str_data;
 
-	sdl_rect = (SDL_Rect){rect.x, rect.y, rect.w, rect.h};
-	sdlcolor = ui_hex_to_rgb(color);
-	if (!(surface = TTF_RenderText_Blended(env->hud.text.arial, text, sdlcolor)))
-	{
-		ft_putendl(TTF_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
-	sdl_rect.w = (sdl_rect.h * surface->w) / surface->h;
-	if ((SDL_BlitScaled(surface, 0, dst_surface, &sdl_rect)) < 0)
-	{
-		ft_putendl(SDL_GetError()); // provisoire
-		exit(EXIT_FAILURE); // provisoire : rediriger erreur
-	}
-	SDL_FreeSurface(surface);
-}
+	ft_bzero(&str_data, sizeof(t_font));
+	str_data.color = ui_hex_to_rgb(color);
+	str_data.str = text;
+	str_data.font = env->hud.text.arial;
 
-SDL_Surface	*str_join_text(t_font data)
-{
-	char				*strjoin;
-	SDL_Surface	*new;
+	surface = make_string(str_data);
+	rect.w = (rect.h * surface->w) / surface->h;
 
-	strjoin = NULL;
-	if (data.l > -1)
-		strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str);
-	else if (data.r > -1)
-		strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r));
-	if (!(new = lt_push(TTF_RenderText_Shaded(data.font,
-	strjoin ? strjoin : data.str, data.color, TRANSPARENT), srf_del)))
-		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
-	lt_release(strjoin);
-	return (new);
-}
-
-void		draw_scaled_string(t_env *env, t_font data, SDL_Surface *src, t_vtx pos)
-{
-	int		x;
-	int		y;
-	t_vtx	new_size;
-	t_vtx	scale;
-
-	new_size = (t_vtx){src->w / (100 / data.size), src->h / (100 / data.size)};
-	scale = (t_vtx){src->w / new_size.x, src->h / new_size.y};
-	x = 0;
-	pos.x = data.pos.x;
-	while (pos.x < data.pos.x + new_size.x && pos.x < W)
-	{
-		y = 0;
-		pos.y = data.pos.y;
-		while (pos.y < data.pos.y + new_size.y && pos.y < H)
-		{
-			if (getpixel(src, (int)(x * scale.x), (int)(y * scale.y))
-			& src->format->Amask)
-				setpixel(env->sdl.surface, pos.x, pos.y, getpixel(src, (int)(x * scale.x),
-				(int)(y * scale.y)));
-			y++;
-			pos.y++;
-		}
-		x++;
-		pos.x++;
-	}
+	if ((SDL_BlitScaled(surface, 0, dst_surface, &rect)) < 0)
+		doom_error_exit("Doom_nukem: Blit error on ui_draw_string");
+	lt_release(surface);
 }
 
 void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
@@ -115,16 +62,57 @@ void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 	}
 }
 
+SDL_Surface	*str_join_text(t_font data)
+{
+	char				*strjoin;
+	SDL_Surface			*new;
+	t_font				str_data;
+
+	strjoin = NULL;
+	if (data.l > -1)
+		strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str);
+	else if (data.r > -1)
+		strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r));
+	str_data = (t_font){data.color, (strjoin) ? strjoin : data.str, data.font, {0, 0}, 0, 0, 0};
+	new = make_string(str_data);
+	lt_release(strjoin);
+	return (new);
+}
+
+void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
+{
+	int		x;
+	int		y;
+	t_vtx	new_size;
+	t_vtx	scale;
+	Uint32	color;
+
+	new_size = (t_vtx){src->w / (100 / data.size), src->h / (100 / data.size)};
+	scale = (t_vtx){src->w / new_size.x, src->h / new_size.y};
+	x = 0;
+	pos.x = data.pos.x;
+	while (pos.x < data.pos.x + new_size.x && pos.x < W)
+	{
+		y = 0;
+		pos.y = data.pos.y;
+		while (pos.y < data.pos.y + new_size.y && pos.y < H)
+		{
+			color = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
+			if (((color & 0xFF00) >> 8) != 42)
+				setpixel(dst, pos.x, pos.y, color);
+			y++;
+			pos.y++;
+		}
+		x++;
+		pos.x++;
+	}
+}
+
 void    		ui_put_data(t_env *env, t_font data)
 {
 	SDL_Surface	*surface;
-	SDL_Surface	*tmp;
 
-	tmp = str_join_text(data);
-	if (!(surface = lt_push(SDL_ConvertSurfaceFormat(
-	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	draw_scaled_string(env, data, surface, (t_vtx){0, 0});
-	lt_release(tmp);
+	surface = str_join_text(data);
+	draw_scaled_string(env->sdl.surface, data, surface, (t_vtx){0, 0});
 	lt_release(surface);
 }

@@ -6,17 +6,41 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/16 01:14:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 19:05:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
+void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 {
-	int		i;
-	int		j;
+	int		x;
+	int		y;
+	t_vtx	scale;
+	Uint32	c;
 
+	scale = (t_vtx){fabs((float)src->w / (float)dst->w),
+		fabs((float)src->h / (float)dst->h)};
+	x = 0;
+	while (x < dst->w)
+	{
+		y = 0;
+		while (y < dst->h)
+		{
+			c = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
+			if (c & src->format->Amask)
+				setpixel(dst, x, y, c);
+			y++;
+		}
+		x++;
+	}
+}
+
+void				draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
+{
+	int			i;
+	int			j;
+	Uint32 		color;
 	const float ratiox = img->w / (float)bloc->rect.w;
 	const float ratioy = img->h / (float)bloc->rect.h;
 
@@ -28,34 +52,18 @@ void			draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 		while (j < bloc->rect.h - bloc->limit.v2.y
 		&& (ratioy > 1 ? (j * ratioy) : j) < img->h)
 		{
-			// Uint32 color = ;
-			if (getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
-			(ratioy > 1 ? (j * ratioy) : j)) & img->format->Amask)
+			color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
+			(ratioy > 1 ? (j * ratioy) : j));
+			if (color & 0xFF)
 				setpixel(env->sdl.surface, i + bloc->rect.x,
-				j + bloc->rect.y, getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
-			(ratioy > 1 ? (j * ratioy) : j)));
+				j + bloc->rect.y, color);
 			j++;
 		}
 		i++;
 	}
 }
 
-static SDL_Surface	*surface_fr_png(char *path)
-{
-	SDL_Surface	*new;
-	SDL_Surface	*tmp;
-
-	if (!(tmp = lt_push(IMG_Load(path), srf_del)))
-		 doom_error_exit("Doom_nukem error on IMG_Load");
-	if (!(new = lt_push(SDL_ConvertSurfaceFormat(
-	tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
-		 doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	lt_release(tmp);
-	SDL_UnlockSurface(new);
-	return (new);
-}
-
-SDL_Surface *ui_img(char *file, int i)
+SDL_Surface		*ui_img(char *file, int i)
 {
 	SDL_Surface	*new;
 	char		*nb;
@@ -67,11 +75,13 @@ SDL_Surface *ui_img(char *file, int i)
 	final_path = NULL;
 	nb = ft_itoa(i + 1);
 	path = ft_strjoin("./rsrc/img/", file);
-	final_path = ft_strrjoin(path, nb);
-	final_path = ft_strljoin(final_path, (char *)png);
-	new = surface_fr_png(final_path);
+	final_path = ft_strjoin(path, nb);
 	lt_release(path);
+	lt_release(nb);
+	path = ft_strjoin(final_path, (char *)png);
+	new = load_image(path);
 	lt_release(final_path);
+	lt_release(path);
 	return (new);
 }
 

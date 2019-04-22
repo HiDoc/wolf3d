@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/18 21:06:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:42:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,11 @@ static void		initialisation_sdl(t_env *env)
 		doom_error_exit("Doom_nukem error, can't create renderer");
 
 	// init main surface
-	if (!(env->sdl.surface = lt_push(
-	SDL_CreateRGBSurface(0, W, H, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error, can't create surface");
+	env->sdl.surface = make_surface(W, H);
 
 	// init main texture
 	if (!(env->sdl.texture = lt_push(
-	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_RGBA32,
+	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_ARGB32,
 	SDL_TEXTUREACCESS_STREAMING, W, H), txr_del)))
 		doom_error_exit("Doom_nukem error, can't create texture");
 }
@@ -86,9 +83,9 @@ void	init_env(int ac, char **av, t_env *env)
 	init_blocs_menu(env);
 	printf("time menu: %u\n", SDL_GetTicks());
 	init_hud(env);
-	printf("time hud: %u\n", SDL_GetTicks());
+	printf("time hud hud: %u\n", SDL_GetTicks());
 	init_weapon(env);
-	printf("time wpn: %u\n", SDL_GetTicks());
+	printf("time wpn init: %u\n", SDL_GetTicks());
 	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
 	printf("time enemies: %u\n", SDL_GetTicks());
 }

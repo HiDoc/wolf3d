@@ -1,0 +1,20 @@
+
+- ALL --------------------------------------------------------------------
+
+Entree variables to check:
+	* parsing world_names
+	* parsing world_data
+	* parsing map
+	* ...
+
+
+- SGALASSO ---------------------------------------------------------------
+
+skybox: handle memory access
+skybox: set relative to floor and not yaw_d
+
+minimap: replace N by arrow
+minimap: redesign player representation
+
+world_loop: proteger parsing world_names
+world_loop: proteger parsing world_data

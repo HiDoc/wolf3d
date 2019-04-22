@@ -6,43 +6,40 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:56:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/12 22:06:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 13:21:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		display_skybox(t_env *env)
+static Uint32	get_sb_color(int x, int y, float roll_d, t_env *env)
 {
-	int				w;
-	int				h;
-	float			player_d;
-	float			yaw_d;
-	float			wcalc;
-	float			hcalc;
+	float		wcalc;
+	float		hcalc;
 
-	player_d = (int)(env->engine.player.angle * 180 / M_PI) % 360;
-	(player_d < 0) ? player_d = 360 + player_d : 0;
+	wcalc = (x * (env->skybox.sb->w / 4)) / W;
+	wcalc += (roll_d * env->skybox.sb->w) / 360;
+	hcalc = ((y * env->skybox.sb->h) / H);
+	return (getpixel(env->skybox.sb, wcalc, hcalc));
+}
 
-	yaw_d = (int)(env->engine.player.yaw * 180 / M_PI);
+void			display_skybox(t_drawline l, t_env *env)
+{
+	int     x;
+	int     y;
 
-	w = 0;
-	while (w < W)
+	x = ((t_raycast *)l.container)->x;
+	l.from = clamp(l.from, 0, H - 1);
+	l.to = clamp(l.to, 0, H - 1);
+	if (l.from < l.to)
 	{
-		wcalc = (w * (env->skybox.sb->w / 4)) / W;
-		wcalc += (player_d * env->skybox.sb->w) / 360;
-		wcalc = (int)wcalc % env->skybox.sb->w;
-		h = 0;
-		while (h < H)
+		y = 0;
+		while (y < l.to)
 		{
-			hcalc = H;
-			hcalc += (int)((h / 4) % env->skybox.sb->h);
-			hcalc += (yaw_d * env->skybox.sb->h / 2) / 360;
-			hcalc = (int)hcalc % env->skybox.sb->h;
-			setpixel(env->sdl.surface, w, h,
-			getpixel(env->skybox.sb, wcalc, hcalc));
-			h++;
+			setpixel(env->sdl.surface, x, y,
+			get_sb_color(x, y + env->engine.player.yaw_d,
+			env->engine.player.roll_d, env));
+			y++;
 		}
-		w++;
 	}
 }

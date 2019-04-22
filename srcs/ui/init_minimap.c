@@ -6,26 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:03:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 16:18:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 13:10:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-static void		draw_player(SDL_Surface *surface)
-{
-	t_circle	circle;
-
-	// player position
-	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 5, C_CYAN};
-	ui_draw_full_circle(surface, circle);
-
-	// player fov
-	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
-	240 * M_PI / 180, 0, 30, 0xFBFCAEFF);
-	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
-	300 * M_PI / 180, 0, 30, 0xFBFCAEFF);
-}
 
 static void		get_map_minmax(t_env *env)
 {
@@ -37,7 +22,7 @@ static void		get_map_minmax(t_env *env)
 	env->engine.minimap.xmin = W;
 	env->engine.minimap.xmax = -1;
 	env->engine.minimap.ymin = H;
-	env->engine.minimap. ymax = -1;
+	env->engine.minimap.ymax = -1;
 
 	i = 0;
 	while (i < engine->nsectors)
@@ -59,6 +44,42 @@ static void		get_map_minmax(t_env *env)
 	}
 }
 
+/*static int		point_on_circle(t_vtx vtx, t_circle circle, float delta)
+{
+	float	res;
+
+	res = sqrt(pow(vtx.x - circle.x, 2) + pow(vtx.y - circle.y, 2));
+	return (res >= circle.radius - delta && res <= circle.radius + delta);
+}
+
+static int		point_in_circle(t_vtx vtx, t_circle circle)
+{
+	return (sqrt(pow(vtx.x - circle.x, 2) + pow(vtx.y - circle.y, 2))
+		< circle.radius);
+}
+
+t_vtx			get_edge_center(t_vtx a, t_vtx b)
+{
+	t_vtx	center;
+
+	center.x = (a.x + b.x) / 2;
+	center.y = (a.y + b.y) / 2;
+	return (center);
+}
+
+static t_edge	clip_minimap_edge(t_edge edge, t_circle circle)
+{
+	t_edge	new;
+
+	if (point_in_circle(edge.v1, circle) && point_in_circle(edge.v2, circle))
+		return (edge);
+	new.v1 = (point_in_circle(edge.v1, circle)) ? edge.v1 : edge.v2;
+	new.v2 = (point_in_circle(edge.v1, circle)) ? edge.v2 : edge.v1;
+	while (!point_on_circle(new.v2, circle, 2))
+		new.v2 = get_edge_center(new.v2, new.v1);
+	return (new);
+}*/
+
 static void     draw_sectors(SDL_Surface *surface, t_engine *engine)
 {
 	t_edge          edge;
@@ -71,14 +92,14 @@ static void     draw_sectors(SDL_Surface *surface, t_engine *engine)
 		j = 0;
 		while (j < engine->sectors[i].npoints)
 		{
-			edge = (t_edge){
-				engine->sectors[i].vertex[j],
-				engine->sectors[i].vertex[j + 1]};
+			edge = (t_edge){engine->sectors[i].vertex[j],
+			engine->sectors[i].vertex[j + 1]};
 
 			edge.v1.x = edge.v1.x * COEF_MINIMAP + MINIMAP_SIZE / 2;
 			edge.v1.y = edge.v1.y * COEF_MINIMAP + MINIMAP_SIZE / 2;
 			edge.v2.x = edge.v2.x * COEF_MINIMAP + MINIMAP_SIZE / 2;
 			edge.v2.y = edge.v2.y * COEF_MINIMAP + MINIMAP_SIZE / 2;
+
 			ui_draw_line(surface, edge, C_CYAN);
 
 			j++;
@@ -90,20 +111,29 @@ static void     draw_sectors(SDL_Surface *surface, t_engine *engine)
 void	draw_background(SDL_Surface *surface)
 {
 	t_circle            circle;
-	SDL_Rect            rect;
 
-	rect = (SDL_Rect){0, 0, MINIMAP_SIZE, MINIMAP_SIZE}; // to remove
-	ui_draw_rect(surface, rect, C_RED); // to remove
-
-	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2,
-	MINIMAP_SIZE / 2, 0x0C0A15FF};
-
+	circle = (t_circle){(MINIMAP_SIZE) / 2, (MINIMAP_SIZE) / 2,
+	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 	ui_draw_full_circle(surface, circle);
 
 	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2,
 	MINIMAP_SIZE / 2, C_WHITE};
-
 	ui_draw_circle(surface, circle);
+}
+
+static void		draw_player(SDL_Surface *surface)
+{
+	t_circle	circle;
+
+	// player position
+	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 5, C_CYAN};
+	ui_draw_full_circle(surface, circle);
+
+	// player fov
+	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
+	240 * M_PI / 180, 0, 30, 0xFBFCAEFF);
+	ui_draw_vector(surface, (t_vtx){circle.x, circle.y},
+	300 * M_PI / 180, 0, 30, 0xFBFCAEFF);
 }
 
 int			init_minimap(t_env *env)
@@ -115,15 +145,12 @@ int			init_minimap(t_env *env)
 	minimap->origin.x = W - MINIMAP_SIZE - 10;
 	minimap->origin.y = 10;
 
-	if (!(minimap->surface = ui_make_surface(
+	minimap->surface = make_surface(
 	(minimap->xmax - minimap->xmin) * COEF_MINIMAP + MINIMAP_SIZE,
-	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE)))
-		return (0);
-	draw_sectors(minimap->surface, &(env->engine)); // a proteger ?
+	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE);
+	minimap->background = make_surface(MINIMAP_SIZE, MINIMAP_SIZE);
 
-	if (!(minimap->background = ui_make_surface(
-	MINIMAP_SIZE, MINIMAP_SIZE)))
-		return (0);
+	draw_sectors(minimap->surface, &(env->engine));
 	draw_background(minimap->background);
 	draw_player(minimap->background);
 

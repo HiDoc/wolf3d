@@ -65,25 +65,40 @@ void			load_map(t_engine *e, t_env *env)
 				free(num);
 				break;
 			case 'o':; //object
-				t_vtx	vertex = (t_vtx){0, 0};
-				int		s = 0;
-				int		ref = 0;
-				int		is_wpn = 0;
-				sscanf(ptr += n, "%f %f %d %d %d%n", &vertex.x, &vertex.y, &s, &ref, &is_wpn, &n);
-				fill_objects_sector(&e->sectors[s], vertex, ref, is_wpn);
-				break;
+					 t_vtx	vertex = (t_vtx){0, 0};
+					 int		s = 0;
+					 int		ref = 0;
+					 int		is_wpn = 0;
+					 sscanf(ptr += n, "%f %f %d %d %d%n", &vertex.x, &vertex.y, &s, &ref, &is_wpn, &n);
+					 fill_objects_sector(&e->sectors[s], vertex, ref, is_wpn);
+					 break;
 			case 'e':; // enemy
-				sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);
-				fill_enemies_sector(env, &e->sectors[s], vertex, ref);
-				break;
+					 sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);
+					 fill_enemies_sector(env, &e->sectors[s], vertex, ref);
+					 break;
 			case 'p':; // player
-				float angle;
-				t_sd_stat sd;
-				ft_bzero(&sd, sizeof(t_sd_stat));
-				sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
-				e->player = (t_player) { {0,0,0}, {v.x, v.y, 0}, {0,0,0}, {0,0,0},{0,1,0,0,0,0}, angle,0,0,0,12, n, env->player.bullet, sd}; // TODO: Range checking
-				e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
-				break;
+					 float angle;
+					 t_sd_stat sd;
+					 ft_bzero(&sd, sizeof(t_sd_stat));
+					 sscanf(ptr += n, "%f %f %f %d", &v.x, &v.y, &angle,&n);
+					 e->player = (t_player){
+						 {0,0,0},
+							 {v.x, v.y, 0},
+							 {0,0,0},
+							 {0,0,0},
+							 {0,1,0,0,0,0},
+							 angle,
+							 0,
+							 0,
+							 0,
+							 0,
+							 0,
+							 12,
+							 n,
+							 env->player.bullet,
+							 sd}; // TODO: Range checking
+					 e->player.where.z = e->sectors[e->player.sector].floor + EYEHEIGHT;
+					 break;
 		}
 	}
 	if ((e->queue.renderedsectors = (int *)malloc(e->nsectors * sizeof(int))) == NULL)

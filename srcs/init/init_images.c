@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 16:52:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:36:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ static void			init_consumable(t_env *env)
 		if (i < WORLD_NB_CSMBLE)
 		{
 			env->world.objects[i].max_stack = (i == 5) ? 1 : 5;
-			env->world.objects[i].size = (t_l_float){4, 3};
+			env->world.objects[i].size = (t_l_float){8, 3};
 		}
 		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
 			env->world.objects[i].max_stack = 0;
-			env->world.objects[i].size = (t_l_float){4, 2};
+			env->world.objects[i].size = (t_l_float){7, 2};
 		}
 		else
 		{
 			env->world.objects[i].max_stack = -1;
-			env->world.objects[i].size = (t_l_float){4, 1};
+			env->world.objects[i].size = (t_l_float){6, 1};
 		}
 		env->world.objects[i].sprite = ui_img(name, i);
 		lt_release(name);
@@ -75,12 +75,8 @@ static void			init_character(t_character *new)
 
 static void			init_skybox_img(t_env *env)
 {
-	if (!(env->skybox.sb_top = lt_push(
-			IMG_Load("rsrc/skybox/sb_top.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
-	if (!(env->skybox.sb = lt_push(
-			IMG_Load("rsrc/skybox/sb.jpg"), srf_del)))
-		doom_error_exit("wolf3d: error while loading skybox");
+	env->skybox.sb_top = load_image("rsrc/skybox/sb_top.jpg");
+	env->skybox.sb = load_image("rsrc/skybox/sb.jpg");
 }
 
 void				load_images(t_env *env)

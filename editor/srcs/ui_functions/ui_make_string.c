@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ui_make_string.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 14:19:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:15:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/21 17:46:51 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void	ui_make_string(SDL_Rect  rect, char *text, t_data *data)
+void	ui_make_string(SDL_Rect rect, char *text, t_data *data)
 {
 	SDL_Rect			newrect;
 	SDL_Surface			*srf;

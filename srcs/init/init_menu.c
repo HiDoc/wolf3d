@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 23:26:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:35:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	ingame_blocs(t_env *e, t_bloc *data)
 	fill_menu(e, &data[0], &r, H / 10);
 	fill_menu(e, &data[1], &r, H / 10);
 	fill_menu(e, &data[2], &r, H / 10);
-	// r.x = W - W / 10;
-	// fill_menu(env, &data[1], &r, H / 10);
 }
 
 static void	loadgame_blocs(t_env *e, t_bloc **b)
@@ -64,14 +62,25 @@ static void	loadgame_blocs(t_env *e, t_bloc **b)
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
 	*b = ft_memalloc(sizeof(t_bloc));
 	fill_menu(e, *b, &r, H / 10);
-	// r = (SDL_Rect){W / 2, H / 2.5, W / 40, 0};
-	// fill_menu(e, *b, &r, H / 10);
+	(*b)->name = ft_strdup("Return");
 	(*b)->limit.v1.x = I_LOADMENU;
 	(*b)->limit.v2.x = e->menu.status.nb_save + 1;
 	(*b)->next = NULL;
 }
 
-static void	key_binding(t_engine *e)
+static void	newgame_blocs(t_env *e, t_bloc *b)
+{
+	SDL_Rect	r;
+
+	(void)e;
+	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
+	fill_menu(e, b, &r, H / 10);
+	b->name = ft_strdup("Return");
+	b->limit.v1.x = I_IMAINMENU;
+	b->limit.v2.x = e->nb_games + 1;
+}
+
+void		key_binding(t_engine *e)
 {
 	e->keys[I_OUP] = SDL_SCANCODE_W;
 	e->keys[I_ODOWN] = SDL_SCANCODE_S;
@@ -97,6 +106,8 @@ static void	options_blocs(t_env *e, t_bloc *data)
 	key_binding(&e->engine);
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
 	fill_menu(e, &data[NB_OPT_KEY], &r, H / 10);
+	r = (SDL_Rect){W / 1.2, H / 4, W / 45, 0};
+	fill_menu(e, &data[NB_OPT_KEY + 1], &r, H / 10);
 	r = (SDL_Rect){W / 2.6, H / 3.1, W / 45, 0};
 	fill_menu(e, &data[0], &r, H / 10);
 	data[0].limit.v1.x = I_IOPT;
@@ -121,10 +132,14 @@ void		init_blocs_menu(t_env *env)
 	menu->status.on = 1;
 	menu->status.home = 1;
 	menu->status.sound = 1;
+	menu->status.msc_vol = MIX_MAX_VOLUME;
+	env->stats.save_img = make_surface(W / 10, H / 10);
 	r = (SDL_Rect){W / 2, H / 1.17, W / 50, 0};
 	mainmenu_blocs(env, menu->main_menu);
 	ingame_blocs(env, menu->ingame_menu);
-	loadgame_blocs(env, &menu->games_ldmenu);
+	loadgame_blocs(env, &menu->save_game);
 	options_blocs(env, menu->options_menu);
+	newgame_blocs(env, &menu->new_game);
+	printf("name %s\n", menu->new_game.name);
 }
 

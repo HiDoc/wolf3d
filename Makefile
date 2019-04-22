@@ -6,13 +6,13 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/19 17:13:50 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/22 19:06:02 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -g
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -99,8 +99,13 @@ SRC_NAME 	= main.c \
 			init_weapons.c \
 			init_sound.c \
 			init_strings.c \
+			load_worlds.c \
 			load.c \
+			load_image.c \
 			loop.c \
+			mainmenu_loop.c \
+			make_string.c \
+			make_surface.c \
 			map.c \
 			move.c \
 			musics.c \
@@ -114,12 +119,12 @@ SRC_NAME 	= main.c \
 			projection.c \
 			queue.c \
 			render_sect.c \
+			save_menu.c \
 			sdl_hook.c \
 			sdl_mouse.c \
 			sounds.c \
 			struct_drawline.c \
 			struct_hud_img.c \
-			struct_inventory.c \
 			transformation.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
@@ -128,7 +133,6 @@ SRC_NAME 	= main.c \
 			ui_draw_rect.c \
 			ui_draw_string.c \
 			ui_draw_vector.c \
-			ui_make_surface.c \
 			ui_minimap.c \
 			utils.c \
 			utils_color.c \

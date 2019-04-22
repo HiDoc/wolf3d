@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/19 16:57:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:54:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,37 @@ int		main(int ac, char **av)
 
 	/* init env */
 	init_env(ac, av, &env);
+	set_msc_menu(&env, &env.menu.status);
+	load_worlds(&env);
+	
+	/* mainmenu loop */
+	mainmenu_loop(&env);
 
-	/* load level */
-	load_map(&env.engine, &env); // <- lifetime todo;
+	/* world loop */
+	int iprovisoire = 0;
+	while (/**env.level*/iprovisoire < 5)
+	{
+		env.finish = 0;	
 
-	/* load minimap */
-	//init_minimap(&env); // <- lifetime todo
-	!env.god_mod ? set_msc_menu(&env, &env.menu.status) : 0;
-	/* gameloop */
-	sdl_loop(&env);
+		// display text start
+
+		/* load level */
+		load_map(&env.engine, &env);
+		init_minimap(&env);
+
+		/* gameloop */
+		sdl_loop(&env);
+
+		// display text end
+
+		/* free level */
+		//free_map();
+		lt_release(env.engine.minimap.surface);
+		lt_release(env.engine.minimap.background);
+
+		/*(env.level)++;*/
+		iprovisoire++;
+	}
 
 	/* free and exit */
 	doom_exit();
