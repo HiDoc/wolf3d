@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 00:19:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 17:40:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct 			s_status
 	int			load_menu;
 	int			ingame_menu;
 	int			options_menu;
+	int			new_game;
 	int			quit;
 	int			nb_save;
 	int			current;
@@ -43,6 +44,7 @@ struct 			s_menu
 	t_bloc		options_menu[NB_OPT_MENU]; // buttns options // keys options to change keys
 	t_bloc		load_menu;
 	t_bloc		*save_game; // list chain 1 bloc = save img + time
+	t_bloc		new_game;
 };
 
 

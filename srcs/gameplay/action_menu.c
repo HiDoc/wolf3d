@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 15:48:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:59:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,32 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 	scroll_menu(&s->current, k, 0, NB_BLOC_NG);
 	if (k[SDL_SCANCODE_RETURN])
 	{
-		s->current == 0 ? s->on = 0 : 0; //launch cinematik ? s->on = 0; // provisoire
-		s->current == 0 ? s->main_menu = 0 : 0;
+		s->current == 0 ? s->new_game = 1 : 0; //launch cinematik ? s->on = 0; // provisoire
 		s->current == 1 ? s->load_menu = 1 : 0;
 		s->current == 2 ? s->options_menu = 1 : 0;
 		s->current == 3 ? s->quit = 1 : 0;
-		s->load_menu || s->options_menu ? s->current = 0 : 0;
+		s->new_game || s->load_menu || s->options_menu ? s->current = 0 : 0;
 		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
 	menu_btn_sound(e, k);
+}
+
+void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
+{
+		printf("current %i \n",  s->current);
+
+	if (e->nb_games)
+		scroll_menu(&s->current, k, 0, e->nb_games);
+	else if (k[SDL_SCANCODE_LEFT] && s->current == 0)
+		s->current = e->nb_games;
+	else if (k[SDL_SCANCODE_RIGHT] && s->current == e->nb_games)
+		s->current = 0;
+	if ((k[SDL_SCANCODE_RETURN]))
+	{
+		(s->current == e->nb_games) ? s->new_game = 0 : 0;
+		// fonction load WORLD
+		s->current = 0;
+	}
 }
 
 void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
@@ -58,7 +75,7 @@ void	action_loadmenu(t_env *e, t_status *s, const Uint8 *k)
 	b = e->menu.save_game;
 	if (s->nb_save && s->nb_save < 6)
 		scroll_menu(&s->current, k, 0, s->nb_save);
-	else
+	else if (s->nb_save)
 	{
 		if (k[SDL_SCANCODE_DOWN] && s->current >= s->end && s->end < s->nb_save)
 		{

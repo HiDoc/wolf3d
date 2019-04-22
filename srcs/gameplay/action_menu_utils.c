@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 16:19:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:26:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ int		check_doublon(t_status *s, int scan, int *ktab)
 	int	i;
 
 	i = 0;
-	// if (scan < 0)
-	// {
-	// 	s->key_change = 0;
-	// 	return (0);
-	// }
 	while (++i < NB_OPT_KEY)
 	{
 		if (ktab[i] == scan && i != s->current)

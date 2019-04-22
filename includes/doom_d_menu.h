@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/21 23:17:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:29:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_MENU_H
 # define DOOM_D_MENU_H
 
-# define NB_IMG_MENU	6
+# define NB_IMG_MENU	7
 # define NB_BLOC_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
@@ -27,6 +27,7 @@
 # define I_INGAME		3
 # define I_LOADMENU		4
 # define I_IBTN			5
+# define I_INEWGAME		6
 
 /*
 ** MENU String
@@ -40,12 +41,9 @@
 # define S_RETURN		"Return"
 # define S_RESET		"Reset keys"
 
-# define S_OOFF			"OFF"
-
 /*
 ** OPTIONS string
 */
-# define S_OON			"ON"
 # define S_OUP			"UP     		  	    	 : "
 # define S_ODOWN		"DOWN       	    : "
 # define S_OLEFT		"RIFT LEFT       : "

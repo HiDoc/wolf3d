@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 11:32:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 19:04:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,32 @@ void	draw_saves(t_env *e, t_bloc *b)
 	}
 }
 
+
+void	draw_games(t_env *e)
+{
+	SDL_Rect	r;
+	int			i;
+
+	i = -1;
+	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
+	ui_put_data(e, (t_font){
+		(e->menu.status.current == e->nb_games)
+		? GOLD : M_WHITE, e->menu.new_game.name, e->hud.text.quantify,
+		(t_vtx){r.x, r.y}, r.w, -1, -1});
+	r = (SDL_Rect){W / 4, H / 3, W / 60, 0};
+	if (e->games)
+	{
+		while (e->games[++i] && i < e->nb_games)
+		{
+			ui_put_data(e, (t_font){
+				i == (e->menu.status.current)
+				? GOLD : M_WHITE, e->games[i], e->hud.text.quantify,
+				(t_vtx){r.x, r.y}, r.w, -1, -1});
+			r.y += H / 10;
+		}
+	}
+}
+
 void	draw_menu(t_env *e)
 {
 	t_bloc		f;
@@ -117,8 +143,14 @@ void	draw_menu(t_env *e)
 			ui_put_data(e, (t_font){M_WHITE, "No save yet", e->hud.text.quantify,
 			(t_vtx){W / 2.5, H / 2.5}, W / 40, -1, -1});
 	}
-	m->status.ingame_menu
+	(m->status.ingame_menu)
 		? draw_page_menu(e, m->ingame_menu, ingame, NB_BLOC_IG) : 0;
-	m->status.options_menu
+	(m->status.options_menu)
 		? draw_page_menu(e, m->options_menu, options, NB_OPT_MENU) : 0;
+	if (m->status.new_game)
+	{
+		draw_img(e, e->world.surfaces.img_menu[I_INEWGAME].sprite, &f);
+		draw_games(e);
+	}
+
 }

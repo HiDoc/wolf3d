@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 13:54:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:46:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ struct								s_env
 	t_skybox		skybox;
 
 	/* world names */
+	int				nb_games;
 	char			**games;
 
 	// Comment je penses que ce serait mieux :

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 11:42:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:35:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,18 @@ static void	loadgame_blocs(t_env *e, t_bloc **b)
 	(*b)->next = NULL;
 }
 
+static void	newgame_blocs(t_env *e, t_bloc *b)
+{
+	SDL_Rect	r;
+
+	(void)e;
+	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
+	fill_menu(e, b, &r, H / 10);
+	b->name = ft_strdup("Return");
+	b->limit.v1.x = I_IMAINMENU;
+	b->limit.v2.x = e->nb_games + 1;
+}
+
 void		key_binding(t_engine *e)
 {
 	e->keys[I_OUP] = SDL_SCANCODE_W;
@@ -127,5 +139,7 @@ void		init_blocs_menu(t_env *env)
 	ingame_blocs(env, menu->ingame_menu);
 	loadgame_blocs(env, &menu->save_game);
 	options_blocs(env, menu->options_menu);
+	newgame_blocs(env, &menu->new_game);
+	printf("name %s\n", menu->new_game.name);
 }
 
