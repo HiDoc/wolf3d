@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 13:30:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:55:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,14 +146,9 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	if (l.to < 0)
 		y = abs(l.to);
 	else if (l.from < 0)
-	{
 		y = abs(l.from);
-	}
 	else
-	{
 		y = 0;
-	}
-
 	const float height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
@@ -182,7 +177,6 @@ void				render_floor(t_drawline l, t_env *env)
 {
 	t_raycast	*ctn;
 	int			*pixels;
-	SDL_Surface	*sprite;
 	int			iter;
 	int			x;
 
@@ -190,29 +184,20 @@ void				render_floor(t_drawline l, t_env *env)
 	ctn = ((t_raycast *)l.container);
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;
-	sprite = env->world.surfaces.floors[0].sprite;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
 
+	printf("%d, %d\n", l.to, l.from);
 	if (l.from == l.to)
 		pixels[l.from * W + ctn->x] = l.middle;
 	else if (l.to > l.from)
 	{
 		pixels[l.from * W + x] = 0xff00ffff;
 		iter = l.from + 1;
-		float y = 0;
-		float height = l.to - l.from;
-		float scaley = (ctn->li_sector.ceil - ctn->li_sector.floor) / 20;
-		x = (ctn->li_texture.floor * ((ctn->x2 - ctn->x) * ctn->rot.v2.y)
-		+ ctn->li_texture.ceil * ((ctn->x - ctn->x1) * ctn->rot.v1.y))
-		/ ((ctn->x2 - ctn->x) * ctn->rot.v2.y + (ctn->x - ctn->x1) * ctn->rot.v1.y);
-		int pos;
 		while (iter < l.to)
 		{
-			pos = (y / height * scaley) * sprite->h;
-			pixels[iter * W + ctn->x] = getpixel(sprite, x % sprite->w, pos % sprite->h);
+			pixels[iter * W + ctn->x] = 0xAAAAAAFF;
 			iter++;
-			y++;
 		}
 		pixels[l.to * W + ctn->x] = 0xff00ffff;
 	}
