@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 18:23:06 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/22 12:18:06 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 	y_coord_curr = wonder_wall(ctn, ctn.p, ytop, ybottom);
 
 	/* Render ceiling: everything above this sector's ceiling height. */
-	render_ceil((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
-		0x111111 , 0x222222, 0x111111}, env);
+	//render_ceil((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
+	//	0x111111 , 0x222222, 0x111111}, env);
+
+	display_skybox((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
+	0x111111 , 0x222222, 0x111111}, env);
 
 	/* Render floor: everything below this sector's floor height. */
 	render_floor((t_drawline){(void *)&ctn, y_coord_curr.floor + 1, *ybottom,
