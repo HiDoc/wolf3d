@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 13:49:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 14:36:59 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ static void			init_consumable(t_env *env)
 		if (i < WORLD_NB_CSMBLE)
 		{
 			env->world.objects[i].max_stack = (i == 5) ? 1 : 5;
-			env->world.objects[i].size = (t_l_float){4, 3};
+			env->world.objects[i].size = (t_l_float){8, 3};
 		}
 		else if (i > WORLD_NB_CSMBLE + WORLD_NB_GEMS)
 		{
 			env->world.objects[i].max_stack = 0;
-			env->world.objects[i].size = (t_l_float){4, 2};
+			env->world.objects[i].size = (t_l_float){7, 2};
 		}
 		else
 		{
 			env->world.objects[i].max_stack = -1;
-			env->world.objects[i].size = (t_l_float){4, 1};
+			env->world.objects[i].size = (t_l_float){6, 1};
 		}
 		env->world.objects[i].sprite = ui_img(name, i);
 		lt_release(name);

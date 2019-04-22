@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui_minimap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 13:10:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 14:26:41 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine)
 		enemy = engine->sectors[i].head_enemy;
 		while (enemy)
 		{
-			enmy_where = (t_vtx){enemy->player.where.x, enemy->player.where.x};
+			enmy_where = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 			// translation
 			edge = translate_edge(engine->player.where,
 					enmy_where, enmy_where);
