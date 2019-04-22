@@ -6,11 +6,51 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 17:04:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:53:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+static void		load_world_data(int index, t_env *env)
+{
+	int     fd;
+	char    *line;
+	int     i;
+
+	line = 0;
+	if ((fd = open("worlds", O_RDONLY)) == -1)
+		doom_error_exit("Doom_nukem: fd error in load_world_data");
+	i = -1;
+	while ((get_next_line(fd, &line)) > 0 && i < index)
+	{
+		(line[0] == '#') ? i++ : 0;
+		lt_release(line);
+	}
+	env->nb_levels = ft_atoi(line);
+	env->levels = ft_memalloc(sizeof(t_level *) * (env->nb_levels + 1));
+	i = 0;
+	while (i < env->nb_levels)
+	{
+		env->levels[i] = ft_memalloc(sizeof(t_level));
+		if ((get_next_line(fd, &line)) < 0)
+			doom_error_exit("Doom_nukem: out of memory in load_world_data");
+		env->levels[i]->index = ft_atoi(line);
+		lt_release(line);
+
+		if ((get_next_line(fd, &line)) < 0)
+			doom_error_exit("Doom_nukem: out of memory in load_world_data");
+		env->levels[i]->text_start = ft_strdup(line);
+		lt_release(line);
+
+		if ((get_next_line(fd, &line)) < 0)
+			doom_error_exit("Doom_nukem: out of memory in load_world_data");
+		env->levels[i]->text_end = ft_strdup(line);
+		lt_release(line);
+		i++;
+	}
+	close(fd);
+}
 
 void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 {
@@ -24,6 +64,7 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 		s->current == 0 ? s->main_menu = 0 : 0;
 		s->load_menu || s->options_menu ? s->current = 0 : 0;
 		!s->main_menu ? set_msc_menu(e, s) : 0;
+		load_world_data(0, e);
 	}
 	menu_btn_sound(e, k);
 }

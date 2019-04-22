@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 17:49:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:42:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_time				t_time;
 typedef struct	s_skybox			t_skybox;
+typedef struct	s_level				t_level;
 
 struct								s_sdl
 {
@@ -76,6 +77,13 @@ struct								s_skybox
 	SDL_Surface		*sb;
 };
 
+struct								s_level
+{
+	int				index;
+	char			*text_start;
+	char			*text_end;
+};
+
 struct								s_env
 {
 	int				map_w;
@@ -96,7 +104,8 @@ struct								s_env
 
 	int				nb_games;	// nb worlds
 	char			**games;	// all worlds
-	//t_level			*levels;	// world levels
+	int				nb_levels;	//nb world levels
+	t_level			**levels;	// world levels
 	int				finish;		// flag fin de level
 
 	// Comment je penses que ce serait mieux :

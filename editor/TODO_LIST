@@ -16,6 +16,8 @@ BUG : wheel scroll pas precis sur la souris
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
 
+LEAK: protect gnl
+
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
