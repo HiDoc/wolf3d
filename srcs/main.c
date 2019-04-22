@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 14:35:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:06:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,36 @@ int		main(int ac, char **av)
 	set_msc_menu(&env, &env.menu.status);
 
 	/* parse world names */
-	//load_worlds(&env);
+	load_worlds(&env);
 	
 	/* mainmenu loop */
 	mainmenu_loop(&env);
 
 	/* world loop */
-	//while (/**/)
-	//{
+	int iprovisoire = 0;
+	while (/**env.level*/iprovisoire < 5)
+	{
+		env.finish = 0;	
+
+		// display text start
+
 		/* load level */
 		load_map(&env.engine, &env);
 		init_minimap(&env);
 
 		/* gameloop */
 		sdl_loop(&env);
-	//}
+
+		// display text end
+
+		/* free level */
+		//free_map();
+		lt_release(env.engine.minimap.surface);
+		lt_release(env.engine.minimap.background);
+
+		/*(env.level)++;*/
+		iprovisoire++;
+	}
 
 	/* free and exit */
 	doom_exit();

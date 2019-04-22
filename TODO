@@ -1,7 +1,16 @@
 
+Entree variables to check:
+	* parsing world_names
+	* parsing level data
+	* parsing map
+	* ...
+
 skybox: handle memory access
 skybox: set relative to floor and not yaw_d
 
 minimap: replace N by arrow
+minimap: redesign player representation
 
 entities: monstres pas au bon endroit par rapport a minimap pos
+
+world_loop: proteger parsing world_names

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 13:54:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:07:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,14 @@ struct								s_env
 	t_stats			stats;
 	t_menu			menu;
 	int				god_mod;
-	t_tiletab		tiletab;
+	t_tiletab		tiletab; // a gerer (sgalasso)
 
 	/* skybox */
 	t_skybox		skybox;
 
-	/* world names */
-	char			**games;
+	char			**games;	// all worlds
+	//t_level			*levels;	// world levels
+	int				finish;		// flag fin de level
 
 	// Comment je penses que ce serait mieux :
 	//

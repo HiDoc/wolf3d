@@ -3,85 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/18 05:10:16 by abaille           #+#    #+#             */
-/*   Updated: 2018/05/18 05:10:25 by abaille          ###   ########.fr       */
+/*   Created: 2018/04/23 14:10:24 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/04/22 16:35:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*read_buf_to_str(char *str, int *ret, int fd)
+int		ft_subjoinfree(char **line, char *buf, int i)
 {
-	char			*tmp;
-	char			buf[BUFF_SIZE + 1];
-	unsigned int	i;
+	char		*temp;
+	char		*temp2;
 
-	while ((*ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
-		i = 0;
-		if (buf[i])
-		{
-			buf[*ret] = '\0';
-			if (str != NULL)
-			{
-				tmp = ft_strdup(str);
-				free(str);
-				str = ft_strjoin(tmp, buf);
-				free(tmp);
-			}
-			else
-				str = ft_strdup(buf);
-		}
-	}
-	return (str);
+	i = 0;
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	temp = *line;
+	temp2 = ft_strsub(buf, 0, i);
+	*line = ft_strjoin(*line, temp2);
+	lt_release(temp);
+	lt_release(temp2);
+	return (i);
 }
 
-char	*ft_cutndup(char *str, int i)
+int		get_next_line(const int fd, char **line)
 {
-	char *tmp;
+	static char	buf[BUFF_SIZE + 1] = {'\0'};
+	int			ret[2];
 
-	tmp = ft_strsub(str, i + 1, ft_strlen(str) - i);
-	free(str);
-	str = ft_strdup(tmp);
-	free(tmp);
-	return (str);
-}
-
-char	*ft_strfdup(char *line, char **str)
-{
-	line = ft_strdup(*str);
-	free(*str);
-	*str = NULL;
-	return (line);
-}
-
-int		get_next_line(int const fd, char **line)
-{
-	unsigned int	i;
-	static char		*str[FOPEN_MAX];
-	int				ret;
-
-	if (!(line) || fd < 0 || fd > FOPEN_MAX)
+	if ((fd < 0 || !line) || !(*line = ft_strdup("")))
 		return (-1);
-	str[fd] = read_buf_to_str(str[fd], &ret, fd);
-	if (str[fd] != NULL && ret == 0)
+	ret[0] = 1;
+	while (ret[0])
 	{
-		i = 0;
-		while (str[fd][i] != '\0')
+		if (!(*buf))
 		{
-			if (str[fd][i] == '\n')
-			{
-				*line = ft_strsub(str[fd], 0, i);
-				if (ft_strlen(str[fd]) > i)
-					str[fd] = ft_cutndup(str[fd], i);
+			if ((ret[0] = read(fd, buf, BUFF_SIZE)) == 0 && **line)
 				return (1);
-			}
-			i++;
+			else if (ret[0] < 0)
+				return (-1);
 		}
-		*line = ft_strfdup(*line, &str[fd]);
-		return (i == 0 ? 0 : 1);
+		ret[1] = ft_subjoinfree(line, buf, ret[1]);
+		if (buf[ret[1]] == '\n')
+		{
+			ft_strncpy(buf, buf + ret[1] + 1, BUFF_SIZE);
+			return (1);
+		}
+		ft_strncpy(buf, buf + ret[1], BUFF_SIZE);
 	}
-	return (ret);
+	return (0);
 }
