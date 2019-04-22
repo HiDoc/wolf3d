@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 00:42:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:43:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_bloc	*new_save(t_env *e)
 	t_bloc		*new;
 
 	new = ft_memalloc(sizeof(t_bloc));
-	create_surface(&new->use.sprite, (t_vtx){W / 10, H / 10});
+	make_surface(W / 10, H / 10);
 	img_scaled_copy(e->stats.save_img, new->use.sprite);
 	new->use.rect = (SDL_Rect){W / 2.5, H / 3, W / 10, H / 10};
 	create_save_name(&new->name);

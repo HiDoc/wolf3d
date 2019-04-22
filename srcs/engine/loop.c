@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/19 14:39:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 16:19:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int				sdl_render(t_env *env)
 {
-	SDL_LockSurface(env->sdl.surface);
 	god_mod(env);
 	if (env->menu.status.on)
 		draw_menu(env);
@@ -30,23 +29,28 @@ static int				sdl_render(t_env *env)
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		//ui_minimap(env);
-		handle_weapon(env);
+		//handle_weapon(env);
+
+		// si retire alors segv :
 		print_hud(env);
-		handle_gems(env);
-		if (!env->god_mod)
-			bot_action(env, &env->engine.sectors[env->engine.player.sector]);
-		player_bullet(env, &env->player, *env->player.inventory.current->damage);
+
+		//handle_gems(env);
+		//if (!env->god_mod)
+		//	bot_action(env, &env->engine.sectors[env->engine.player.sector]);
+		//player_bullet(env, &env->player, *env->player.inventory.current->damage);
+
+		// si retire alors segv :
 		enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
-		if (env->hud.is_txt)
-			ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
-		handle_doors(env);
-		wpn_mouse_wheel(env, env->sdl.event);
+
+		//if (env->hud.is_txt)
+		//	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
+		//handle_doors(env);
+		//wpn_mouse_wheel(env, env->sdl.event);
 		sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 		player_move(&env->engine, &env->engine.player.vision, env->sdl.keycodes);
-		handle_sound(env, &env->engine.player.sound);
+		//handle_sound(env, &env->engine.player.sound);
 	}
 
-	SDL_UnlockSurface(env->sdl.surface);
 	SDL_UpdateTexture(env->sdl.texture, NULL,
 		env->sdl.surface->pixels, env->sdl.surface->pitch);
 	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
@@ -74,7 +78,8 @@ int				sdl_loop(t_env *env)
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (1)
 	{
-		!env->menu.status.on ? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
+		(!env->menu.status.on)
+		? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
 		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
 			return (0);
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)

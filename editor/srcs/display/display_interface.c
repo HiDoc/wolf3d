@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 23:38:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 22:05:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,13 @@ void			display_sector(t_sct *sct, t_env *env)
 
 
 	if (env->editor.sct_hover == sct)
+	{
 		color = (env->editor.mouse_mode == 1) ? C_RED : C_GREEN;
+	}
 	else
-		color = (sct == env->sct_end && !sct->close) ? C_CYAN : C_WHITE;
+	{
+		color = (sct == env->sct_start && !sct->close) ? C_CYAN : C_WHITE;
+	}
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
@@ -142,10 +146,17 @@ void			display_sector(t_sct *sct, t_env *env)
 	}
 	if (sct->close)
 	{
-		vec = grid_transform(
-		sct->w_vtx_start->vtx->pos, sct->w_vtx_end->vtx->pos, env);
+		vec = grid_transform(sct->w_vtx_start->vtx->pos,
+		w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
 		if (is_vec_in_map(vec))
-			ui_make_line(env->data->surface, vec, color);
+		{
+			if (w_vtx == env->editor.edg_hover)
+				ui_make_line(env->data->surface, vec, C_BLUE);
+			else
+				ui_make_line(env->data->surface, vec, color);
+			rect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
+			ui_make_full_rect(env->data->surface, rect, C_CYAN);
+		}
 	}
 }
 
@@ -178,9 +189,11 @@ void			display_interface(t_env *env)
 	{
 		p1 = (t_pos){
 		20 + env->sct_current->w_vtx_current->vtx->pos.x
-		* env->pixel_value + env->editor.grid_translate.x + env->editor.grid_mouse_var.x,
+		* env->pixel_value + env->editor.grid_translate.x
+		+ env->editor.grid_mouse_var.x,
 		100 + env->sct_current->w_vtx_current->vtx->pos.y
-		* env->pixel_value + env->editor.grid_translate.y + env->editor.grid_mouse_var.y};
+		* env->pixel_value + env->editor.grid_translate.y
+		+ env->editor.grid_mouse_var.y};
 
 		p2 = (t_pos){env->data->mouse.x,env->data->mouse.y};
 
@@ -205,13 +218,14 @@ void			display_interface(t_env *env)
 
 	// display objects
 	t_object	*obj = env->objects;
-	color = C_WHITE;
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
 			color = C_GREEN;
 		else if (obj->category == ENTITY)
 			color = C_RED;
+		else
+			color = C_WHITE;
 
 		p1 = (t_pos){
 		20 + obj->pos.x * env->pixel_value + env->editor.grid_translate.x

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 04:37:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:38:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int			vertex_in_sector(t_sct *sector, t_pos pos_b)
 	if (!(filter_target(pos_b, sector)))
 		return (0);
 	w_vtx = sector->w_vtx_start;
-	while (w_vtx && w_vtx->next) // for each edge
-	{
+	while (w_vtx && w_vtx->next)
+	{ // for each edge
 		if (filter_edges((const t_pos)pos_b, w_vtx))
 		{
 			if ((intersect_vrx(

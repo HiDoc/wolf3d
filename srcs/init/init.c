@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/18 21:06:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 16:23:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,11 @@ static void		initialisation_sdl(t_env *env)
 		doom_error_exit("Doom_nukem error, can't create renderer");
 
 	// init main surface
-	if (!(env->sdl.surface = lt_push(
-	SDL_CreateRGBSurface(0, W, H, 32,
-	0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error, can't create surface");
+	env->sdl.surface = make_surface(W, H);
 
 	// init main texture
 	if (!(env->sdl.texture = lt_push(
-	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_RGBA32,
+	SDL_CreateTexture(env->sdl.renderer, SDL_PIXELFORMAT_ARGB32,
 	SDL_TEXTUREACCESS_STREAMING, W, H), txr_del)))
 		doom_error_exit("Doom_nukem error, can't create texture");
 }

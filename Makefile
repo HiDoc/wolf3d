@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/21 23:13:48 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/22 11:39:28 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,10 @@ SRC_NAME 	= main.c \
 			init_sound.c \
 			init_strings.c \
 			load.c \
+			load_image.c \
 			loop.c \
+			make_string.c \
+			make_surface.c \
 			map.c \
 			move.c \
 			musics.c \
@@ -129,7 +132,6 @@ SRC_NAME 	= main.c \
 			ui_draw_rect.c \
 			ui_draw_string.c \
 			ui_draw_vector.c \
-			ui_make_surface.c \
 			ui_minimap.c \
 			utils.c \
 			utils_color.c \

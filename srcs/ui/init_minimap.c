@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:03:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/08 16:18:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:00:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,12 @@ int			init_minimap(t_env *env)
 	minimap->origin.x = W - MINIMAP_SIZE - 10;
 	minimap->origin.y = 10;
 
-	if (!(minimap->surface = ui_make_surface(
+	minimap->surface = make_surface(
 	(minimap->xmax - minimap->xmin) * COEF_MINIMAP + MINIMAP_SIZE,
-	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE)))
-		return (0);
+	(minimap->ymax - minimap->ymin) * COEF_MINIMAP + MINIMAP_SIZE);
 	draw_sectors(minimap->surface, &(env->engine)); // a proteger ?
 
-	if (!(minimap->background = ui_make_surface(
-	MINIMAP_SIZE, MINIMAP_SIZE)))
-		return (0);
+	minimap->background = make_surface(MINIMAP_SIZE, MINIMAP_SIZE);
 	draw_background(minimap->background);
 	draw_player(minimap->background);
 

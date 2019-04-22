@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 10:18:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:37:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 	SDL_Surface	*sprite;
 
 	sprite = ui_img(file, i);
-	create_surface(&bloc->sprite, (t_vtx){W, H});
+	bloc->sprite = make_surface(W, H);
+	img_scaled_copy(sprite, bloc->sprite);
 	bloc->rect = (SDL_Rect){0, 0, W, H};
 	bloc->limit.v1 = (t_vtx){0, 0};
-	SDL_LockSurface(bloc->sprite);
-	img_scaled_copy(sprite, bloc->sprite);
-	SDL_UnlockSurface(bloc->sprite);
 	lt_release(sprite);
 }
 

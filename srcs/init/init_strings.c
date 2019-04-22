@@ -6,87 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 10:18:34 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:46:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-SDL_Surface	*ui_create_simple_string(t_font data)
-{
-	SDL_Surface	*tmp;
-	SDL_Surface	*surface;
-
-	if (!(tmp = lt_push(TTF_RenderText_Shaded(
-	data.font, data.str, data.color, TRANSPARENT), srf_del)))
-		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
-	if (!(surface = lt_push(
-	SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA32, 0), srf_del)))
-		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
-	lt_release(tmp);
-	return (surface);
-}
-
-void	create_surface(SDL_Surface **surface, t_vtx n_size)
-{
-	if (!(*surface = lt_push(SDL_CreateRGBSurface(0,
-	n_size.x, n_size.y, 32, 0xff000000, 0xff0000, 0xff00, 0xff), srf_del)))
-		doom_error_exit("Doom_nukem error on SDL_CreateRGBSurface");
-}
-
-static void	set_inv_strings(t_env *env)
-{
-	int			i;
-	t_vtx		n_size;
-	SDL_Surface	*tmp;
-	const char	*string[DSCRIP_STR_INV] = {
-	I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4, I_STRING_5,
-	I_STRING_6, I_STRING_7, I_STRING_8, I_STRING_9, I_STRING_10, I_STRING_11};
-
-	i = -1;
-	while (++i < DSCRIP_STR_INV)
-	{
-		tmp = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
-		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
-		create_surface(&env->hud.text.i_obj_description[i], n_size);
-		img_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
-		lt_release(tmp);
-	}
-}
-
-static void	set_door_strings(t_env *env)
-{
-	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
-	int			i;
-	SDL_Surface	*tmp;
-	t_vtx		n_size;
-
-	i = -1;
-	while (++i < 2)
-	{
-		tmp = ui_create_simple_string((t_font){WHITE,
-		string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
-		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		create_surface(&env->hud.text.doors[i], n_size);
-		img_scaled_copy(tmp, env->hud.text.doors[i]);
-		lt_release(tmp);
-	}
-}
-
-static void	set_pick_strings(t_env *env)
-{
-	SDL_Surface	*tmp;
-	t_vtx		n_size;
-
-	tmp = NULL;
-	tmp = ui_create_simple_string((t_font){WHITE,
-	PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1});
-	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-	create_surface(&env->hud.text.pick, n_size);
-	img_scaled_copy(tmp, env->hud.text.pick);
-	lt_release(tmp);
-}
 
 static void	underscore_off_name(char *name, int size)
 {
@@ -111,15 +35,69 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx n_size)
 	{
 		name = ft_strdup(tab[i]);
 		underscore_off_name(name, ft_strlen(name));
-		tmp = ui_create_simple_string((t_font){WHITE,
-		name, env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
+		tmp = make_string((t_font){
+		WHITE, name, env->hud.text.text, (t_vtx){0, 0}, 0, -1, -1});
 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-		create_surface(&new[i], n_size);
+		new[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, new[i]);
 		lt_release(tmp);
 		lt_release(name);
 	}
 	return (new);
+}
+
+static void	set_inv_strings(t_env *env)
+{
+	int			i;
+	t_vtx		n_size;
+	SDL_Surface	*tmp;
+	const char	*string[DSCRIP_STR_INV] = {
+	I_STRING_0, I_STRING_1, I_STRING_2, I_STRING_3, I_STRING_4, I_STRING_5,
+	I_STRING_6, I_STRING_7, I_STRING_8, I_STRING_9, I_STRING_10, I_STRING_11};
+
+	i = -1;
+	while (++i < DSCRIP_STR_INV)
+	{
+		tmp = make_string((t_font){
+			WHITE, string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
+		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
+		env->hud.text.i_obj_description[i] = make_surface(n_size.x, n_size.y);
+		img_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
+		lt_release(tmp);
+	}
+}
+
+static void	set_pick_strings(t_env *env)
+{
+	SDL_Surface	*tmp;
+	t_vtx		n_size;
+
+	tmp = NULL;
+	tmp = make_string((t_font){
+		WHITE, PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1});
+	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+	env->hud.text.pick = make_surface(n_size.x, n_size.y);
+	img_scaled_copy(tmp, env->hud.text.pick);
+	lt_release(tmp);
+}
+
+static void	set_door_strings(t_env *env)
+{
+	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
+	int			i;
+	SDL_Surface	*tmp;
+	t_vtx		n_size;
+
+	i = -1;
+	while (++i < 2)
+	{
+		tmp = make_string((t_font){
+			WHITE, string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
+		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
+		env->hud.text.doors[i] = make_surface(n_size.x, n_size.y);
+		img_scaled_copy(tmp, env->hud.text.doors[i]);
+		lt_release(tmp);
+	}
 }
 
 void		init_strings(t_env *env, int i, int j)
@@ -133,14 +111,15 @@ void		init_strings(t_env *env, int i, int j)
 	STRING_14, STRING_15, STRING_16, STRING_17, STRING_18, STRING_19, STRING_20,
 	STRING_21, STRING_22, STRING_23, STRING_24, STRING_25, STRING_26, STRING_27,
 	STRING_28, STRING_29};
-	int	size[UI_NB_STR_INV + 1] = {W / 20, W / 34, W / 34, W / 34, W / 60, W / 44, W / 120,
+	int	size[UI_NB_STR_INV + 1] = {
+	W / 20, W / 34, W / 34, W / 34, W / 60, W / 44, W / 120,
 	W / 120, W / 120, W / 120, W / 120, W / 40};
 
 	while (i < UI_NB_STRING)
 	{
-		font = i <= T_STATS && i >= T_INVENTORY ? env->hud.text.doom : env->hud.text.text;
-		tmp = ui_create_simple_string((t_font){WHITE,
-		string[i], font, {0, 0}, 0, -1, -1});
+		font = (i <= T_STATS && i >= T_INVENTORY)
+			? env->hud.text.doom : env->hud.text.text;
+		tmp = make_string((t_font){WHITE, string[i], font, {0, 0}, 0, -1, -1});
 		if (i < HUD_NB_STRING)
 			n_size = (t_vtx){tmp->w / (100 / size[UI_NB_STR_INV]),
 			tmp->h / (100 / size[UI_NB_STR_INV])};
@@ -149,7 +128,7 @@ void		init_strings(t_env *env, int i, int j)
 			n_size = (t_vtx){tmp->w / (100 / size[j]), tmp->h / (100 / size[j])};
 			j++;
 		}
-		create_surface(&env->hud.text.string[i], n_size);
+		env->hud.text.string[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, env->hud.text.string[i]);
 		lt_release(tmp);
 		i++;

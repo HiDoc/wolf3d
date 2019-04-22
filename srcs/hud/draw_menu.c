@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 00:46:25 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:32:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void		getsizebloc_n_draw(t_env *e, t_font d, t_bloc *b, int l)
 	SDL_Surface	*tmp;
 
 	ft_bzero(&f, sizeof(t_bloc));
-	tmp = ui_create_simple_string((t_font){d.color,
-	d.str, d.font, {0, 0}, 0, -1, -1});
+	tmp = make_string((t_font){d.color, d.str, d.font, {0, 0}, 0, -1, -1});
 	n_size = (t_vtx){tmp->w / (100 / b->use.rect.w),
 		tmp->h / (100 / b->use.rect.w)};
 	b->rect.w = n_size.x;
