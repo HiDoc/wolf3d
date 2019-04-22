@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 00:40:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:19:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		check_doublon(t_status *s, int scan, int *ktab)
 	int	i;
 
 	i = 0;
-	if (scan < 0)
-	{
-		s->key_change = 0;
-		return (0);
-	}
+	// if (scan < 0)
+	// {
+	// 	s->key_change = 0;
+	// 	return (0);
+	// }
 	while (++i < NB_OPT_KEY)
 	{
 		if (ktab[i] == scan && i != s->current)
@@ -44,8 +44,10 @@ int		check_doublon(t_status *s, int scan, int *ktab)
 
 void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 {
+	SDL_FlushEvents(SDL_QUIT, SDL_LASTEVENT);
 	if (!k[SDL_SCANCODE_RETURN] && !k[SDL_SCANCODE_ESCAPE] && s->key_change)
 	{
+		SDL_WaitEvent(&e->sdl.event);
 		if (s->current == 0)
 		{
 			k[SDL_SCANCODE_LEFT] ? s->msc_vol-- : 0;
@@ -56,10 +58,10 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 		}
 		else
 		{
-			SDL_WaitEvent(&e->sdl.event);
-			check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys)
+			printf("1 : %d\n", e->sdl.event.key.keysym.scancode);
+			(check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys))
 			? *key = e->sdl.event.key.keysym.scancode : 0;
-			printf("key pressed : %i\n", *key);
+			printf("2 : %d\n", e->sdl.event.key.keysym.scancode);
 			s->key_change = 0;
 		}
 	}

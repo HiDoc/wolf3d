@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/20 09:47:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:48:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->main_menu = 1;
 			s->home = 0;
 		}
-		else if (s->main_menu && !s->options_menu && !s->ingame_menu && !s->load_menu)
+		else if (s->main_menu && !s->options_menu
+				&& !s->ingame_menu && !s->load_menu)
 			action_mainmenu(e, s, k);
 		else if (s->ingame_menu && !s->options_menu)
 			action_ingame_menu(e, s, k);

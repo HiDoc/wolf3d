@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 11:44:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:48:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void				draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 		{
 			color = getpixel(img, (ratiox > 1 ? (i * ratiox) : i),
 			(ratioy > 1 ? (j * ratioy) : j));
-			if (color & img->format->Amask)
+			if (color & 0xFF)
 				setpixel(env->sdl.surface, i + bloc->rect.x,
 				j + bloc->rect.y, color);
 			j++;

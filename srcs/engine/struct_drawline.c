@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/21 23:24:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 13:30:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,27 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 {
 	const t_raycast	*ctn = (t_raycast *)l.container;
 	int				*pixels;
+	Uint32			color;
 	int				iter;
 	int				x;
+	float			y;
 
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;
+	if (l.to < 0)
+		y = abs(l.to);
+	else if (l.from < 0)
+	{
+		y = abs(l.from);
+	}
+	else
+	{
+		y = 0;
+	}
+
+	const float height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
-	const float height = l.to - l.from;
 	const float width = ctn->x2 - ctn->x1;
 	if (l.from == l.to)
 		pixels[l.from * W + x] = 0x00;
@@ -151,18 +164,17 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	{
 		pixels[l.from * W + x] = 0x00;
 		iter = l.from + 1;
-		float y = 0;
-		while (iter < l.to && y < sprite->h)
+		while (iter < l.to)
 		{
-			const int pix = getpixel(sprite,
-			(int)((ctn->x - ctn->x1)/ width * sprite->w) % sprite->w,
+			color = getpixel(sprite, (int)((ctn->x - ctn->x1)
+				/ width * sprite->w) % sprite->w,
 				(int)(y / height * sprite->h) % sprite->h);
-			if (pix & 0xff)
-				pixels[iter * W + x] = pix;
+			if (color & 0xff)
+				pixels[iter * W + x] = color;
 			y++;
 			iter++;
 		}
-		pixels[l.to * W + x] = 0x00;
+		pixels[l.to * W + x] = 0xFF00FFFF;
 	}
 }
 

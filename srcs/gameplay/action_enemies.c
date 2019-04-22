@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_enemies.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 14:33:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:20:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	bot_move(t_env *env, t_vtx p, t_wrap_enmy *enemy, float speed)
 {
 	t_vtx		move;
 
-	enemy->player.whereto = (t_vctr){p.x, p.y, 0};
+	enemy->player.whereto = (t_vctr){p.x, p.y, EYEHEIGHT};
 	enemy->player.angle = -p.x * 0.03f;
 	enemy->player.anglesin = -sinf(enemy->player.angle);
 	enemy->player.anglecos = -cosf(enemy->player.angle);
