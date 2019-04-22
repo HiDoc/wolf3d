@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_shoot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 01:12:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:21:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Collision detection.
-** Check if the player is crossing an edge and if this edge has a neighbour
+** Check if the bot is crossing an edge and if this edge has a neighbour
 */
 int		bot_wall_collision(t_player *bot, t_sector *sect)
 {
