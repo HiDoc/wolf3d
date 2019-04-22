@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 11:52:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:55:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ t_pos		vtx_transform(t_pos pos, t_env *env)
 	origin.y = rect.y
 		+ (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
 
-	newpos.x = env->grid_scale * (pos.x) + 425 + rect.x;
-	newpos.y = env->grid_scale * (pos.y) + 340 + rect.y;
+	newpos.x = env->grid_scale * (pos.x + origin.x - 425) + 425 + rect.x
+		+ 125 * env->grid_scale ;
+	newpos.y = env->grid_scale * (pos.y + origin.y - 340) + 340 + rect.y
+		+ 125 * env->grid_scale;
 	return (newpos);
 }
 

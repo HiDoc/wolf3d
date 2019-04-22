@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 11:07:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:58:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ static void		init_editor(t_env *env)
 	DIR					*dr;
 	int					i;
 
-	env->grid_scale = 2;
+	env->grid_scale = 45;
 	env->editor.grid_translate = (t_pos){280, 115};
 
 	i = 0;

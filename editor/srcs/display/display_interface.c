@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 11:41:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 22:12:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static void		display_grid(t_env *env)
 	while (i < 250)
 	{
 		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		color = (i == 125) ? 0xFFFFFFFF: color;
-
 		vec.a = (t_pos){
 			env->grid_scale * (i + origin.x - 425) + 425 + rect.x, rect.y};
 		vec.b = (t_pos){
@@ -50,8 +48,6 @@ static void		display_grid(t_env *env)
 	while (i < 250)
 	{
 		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-		color = (i == 125) ? 0xFFFFFFFF: color;
-
 		vec.a = (t_pos){
 			rect.x, env->grid_scale * (i + origin.y - 340) + 340 + rect.y};
 		vec.b = (t_pos){
@@ -62,6 +58,7 @@ static void		display_grid(t_env *env)
 		i++;
 	}
 	ui_make_rect(env->data->surface, get_element(E_R_RECT, env)->rect, C_WHITE);
+
 }
 
 static void		display_infos(t_env *env)
@@ -100,18 +97,13 @@ static void		display_infos(t_env *env)
 	ui_make_line(env->data->surface, vec, C_WHITE);*/
 }
 
-static int		is_vec_in_map(t_vec vec)
-{
-	return (vec.a.x > 0 && vec.a.y > 0 && vec.b.x > 0 && vec.b.y > 0
-	&& vec.a.x < WIN_W && vec.a.y < WIN_H && vec.b.x < WIN_W && vec.b.y < WIN_H);
-}
-
 void			display_sector(t_sct *sct, t_env *env)
 {
-	SDL_Rect	rect;
-	t_w_vtx		*w_vtx;
-	Uint32		color;
-	t_vec		vec;
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
+	SDL_Rect		vtxrect;
+	t_w_vtx			*w_vtx;
+	Uint32			color;
+	t_vec			vec;
 
 
 	if (env->editor.sct_hover == sct)
@@ -127,14 +119,17 @@ void			display_sector(t_sct *sct, t_env *env)
 	{
 		vec.a = vtx_transform(w_vtx->vtx->pos, env);
 		vec.b = vtx_transform(w_vtx->next->vtx->pos, env);
-		if (is_vec_in_map(vec))
+		if ((point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect)))
 		{
 			if (w_vtx == env->editor.edg_hover)
 				ui_make_line(env->data->surface, vec, C_BLUE);
 			else
 				ui_make_line(env->data->surface, vec, color);
-			rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
-			ui_make_full_rect(env->data->surface, rect, C_CYAN);
+			if (point_in_rect(vec.a, rect))
+			{
+				vtxrect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
+				ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
+			}
 		}
 		w_vtx = w_vtx->next;
 	}
@@ -142,14 +137,17 @@ void			display_sector(t_sct *sct, t_env *env)
 	{
 		vec.a = vtx_transform(sct->w_vtx_start->vtx->pos, env);
 		vec.b = vtx_transform(w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
-		if (is_vec_in_map(vec))
+		if ((point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect)))
 		{
 			if (w_vtx == env->editor.edg_hover)
 				ui_make_line(env->data->surface, vec, C_BLUE);
 			else
 				ui_make_line(env->data->surface, vec, color);
-			rect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
-			ui_make_full_rect(env->data->surface, rect, C_CYAN);
+			if (point_in_rect(vec.b, rect))
+			{
+				vtxrect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
+				ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
+			}
 		}
 	}
 }
@@ -209,8 +207,11 @@ void			display_interface(t_env *env)
 			color = C_WHITE;
 
 		pos = vtx_transform(obj->pos, env);
-		rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
-		ui_make_rect(env->data->surface, rect, color);
+		if (point_in_rect(pos, get_element(E_R_RECT, env)->rect))
+		{
+			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
+			ui_make_rect(env->data->surface, rect, color);
+		}
 		obj = obj->next;
 	}
 }

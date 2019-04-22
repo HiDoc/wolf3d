@@ -7,8 +7,6 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 		#5 0x102b8cc52 in main main.c:22
 		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
 
-BUG : segv on setpixel quand zoom
-
 *FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 *FLO* BUG : angle du spawn
 
@@ -17,6 +15,7 @@ BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
 BUG : draw mode : create vertex in sector close to edge
 BUG : wheel scroll pas precis sur la souris
+BUG : coherence mouse mode (ex: change mouse mode while drawing)
 
 LEAK: protect gnl
 
@@ -33,10 +32,11 @@ OPTI : multithreading
 OPTI : corriger le reframes inutiles
 OPTI : getpixel
 
-* TODO :	reparer post grid refactor
+* TODO :	reparer grid hover
 * TODO :	grid : limite left / bot
 
 TODO :	delete edge
+TODO :	interface element clipping
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection
 TODO :	parsing : parsing todo
@@ -51,12 +51,13 @@ TODO :	refactor liste deroulantes sur interface modes
 TODO :	spawn : display line on spawn direction
 TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
-TODO :	interface element clipping
 TODO :	front design selected / hovered color and stuff
 
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
 
+
+OPTIONAL :	set cursor middle of grid
 OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one

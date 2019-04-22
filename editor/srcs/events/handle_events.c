@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 11:42:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:18:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ static int		click_event(t_env *env)
 static int		mousewheel_event(t_env *env)
 {
 	const SDL_Event	event = env->data->sdl.event;
+	float			newscale;
 
 	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(E_R_RECT, env)->rect))
 	{
-		//printf("%d\n", event.wheel.y);
-		//if (env->grid_scale > 0 && env->pixel_value < PXL_VAL_MAX)
-		//{
-			env->grid_scale -= (event.wheel.y * (env->grid_scale * 0.02));
-		//}
+		newscale = env->grid_scale - (event.wheel.y * (env->grid_scale * 0.02));
+		(newscale < 6) ? newscale = 6 : 0;
+		(newscale > 150) ? newscale = 150 : 0;
+		env->grid_scale = newscale;
 		return (1);
 	}
 	return (0);

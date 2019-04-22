@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 22:01:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:16:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define VRX_MAX 500
 # define EDG_MAX 250
 # define SCT_MAX 50
-
-# define PXL_VAL_MAX 20
 
 # include <stdio.h>
 
