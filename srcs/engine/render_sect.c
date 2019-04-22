@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/11 02:54:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/22 12:47:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,24 @@ void		render_sprites(t_env *env, t_queue *q,
 		(t_vtx){vertex.x - p.anglesin, vertex.y + p.anglecos},
 		(t_vtx){vertex.x + p.anglesin, vertex.y - p.anglecos}
 	};
+	(void)q;
 	if (!transform_vertex(&raycast, e->player, edge.v2, edge.v1))
 		return ;
 	raycast.neighbor = -1;
 	acquire_limits(&env->engine, &raycast,
-		(t_l_float){q->sect->floor + size.floor, q->sect->floor - size.ceil});
-	if (raycast.x1 > 0 && raycast.x2 < W)
+		(t_l_float){size.floor, size.ceil});
+	const int start = fmax(raycast.x1, 0);
+	const int end = fmin(raycast.x2, W);
+	if (fmax(raycast.x1, raycast.x2) > 0 || fmin(raycast.x1, raycast.x2) < W)
 	{
-		raycast.x = raycast.x1;
+		raycast.x = start;
 		drawline.container = (void *)&raycast;
 		drawline.from = raycast.p.y1a;
 		drawline.to = raycast.p.y1b;
 		drawline.bottom = 0xFF;
 		drawline.middle = 0xFF;
 		drawline.top = 0xFF;
-		while (raycast.x < raycast.x2)
+		while (raycast.x < end)
 		{
 			oline(drawline, env, sprite);
 			raycast.x++;
