@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/21 18:08:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:06:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ SDL_Surface		*ui_img(char *file, int i)
 	final_path = NULL;
 	nb = ft_itoa(i + 1);
 	path = ft_strjoin("./rsrc/img/", file);
-	final_path = ft_strrjoin(path, nb);
-	final_path = ft_strljoin(final_path, (char *)png);
-	new = load_image(final_path);
+	final_path = ft_strjoin(path, nb);
 	lt_release(path);
+	lt_release(nb);
+	path = ft_strjoin(final_path, (char *)png);
+	new = load_image(path);
 	lt_release(final_path);
+	lt_release(path);
 	return (new);
 }
 
