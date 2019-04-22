@@ -6,11 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:51:15 by fmadura           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/21 18:30:05 by fmadura          ###   ########.fr       */
-=======
-/*   Updated: 2019/04/21 23:24:16 by sgalasso         ###   ########.fr       */
->>>>>>> 44dc1247ca738446b107ffa9a286c63f4067981a
+/*   Updated: 2019/04/22 13:23:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +139,21 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	Uint32			color;
 	int				iter;
 	int				x;
+	float			y;
 
 	x = ctn->x;
 	pixels	= (int *)env->sdl.surface->pixels;
+	if (l.to < 0)
+		y = abs(l.to);
+	else if (l.from < 0)
+	{
+		y = abs(l.from);
+	}
+	else
+	{
+		y = 0;
+	}
+
 	const float height = l.to - l.from;
 	l.from = clamp(l.from, 0, H - 1);
 	l.to = clamp(l.to, 0, H - 1);
@@ -156,8 +164,7 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 	{
 		pixels[l.from * W + x] = 0x00;
 		iter = l.from + 1;
-		float y = 0;
-		while (iter < l.to && y < sprite->h)
+		while (iter < l.to)
 		{
 			color = getpixel(sprite, (int)((ctn->x - ctn->x1)
 				/ width * sprite->w) % sprite->w,
@@ -167,7 +174,7 @@ void		oline(t_drawline l, t_env *env, SDL_Surface *sprite)
 			y++;
 			iter++;
 		}
-		pixels[l.to * W + x] = 0x00;
+		pixels[l.to * W + x] = 0xFF00FFFF;
 	}
 }
 
