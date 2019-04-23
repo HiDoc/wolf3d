@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 21:18:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/23 13:48:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int				handle_events(t_env *env)
 	{	
 		edt->vtx_hover = target_vertex(env->data->mouse, env);
 		edt->edg_hover = (!edt->vtx_hover)
-			? target_edge(env->mouse, env) : 0;
+			? target_edge(env->data->mouse, env) : 0;
 		edt->obj_hover = (!edt->vtx_hover && !edt->edg_hover)
 			? target_object(env->data->mouse, env) : 0;
 		edt->sct_hover = (!edt->vtx_hover && !edt->edg_hover && !edt->obj_hover)

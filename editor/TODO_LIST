@@ -56,7 +56,7 @@ TODO :	front design selected / hovered color and stuff
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
 
-
+OPTIONAL :	shift pour tracer ligne horizontale ou verticale
 OPTIONAL :	set cursor middle of grid
 OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct

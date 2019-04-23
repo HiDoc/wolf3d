@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 20:55:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/23 13:40:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,6 @@ t_pos			get_edge_center(t_pos a, t_pos b)
 	return (center);
 }
 
-static t_pos   diff_vertex(t_pos p1, t_pos p2)
-{
-	return ((t_pos){p1.x - p2.x, p1.y - p2.y});
-}
-
-static float   cross_product(t_pos p1, t_pos p2)
-{
-	return (p1.x * p2.y - p2.x * p1.y);
-}
-
 /*
 ** Determine which side of a line the point is on.
 ** Return value: left < 0, on line 0, right > 0.
@@ -91,7 +81,14 @@ static float   cross_product(t_pos p1, t_pos p2)
 
 float		pointside(t_pos p, t_pos p0, t_pos p1)
 {
-	return (cross_product(diff_vertex(p1, p0), diff_vertex(p, p0)));
+	t_pos	res1;
+	t_pos	res2;
+	float	res;
+
+	res1 = (t_pos){p1.x - p0.x, p1.y - p0.y};
+	res2 = (t_pos){p.x - p0.x, p.y - p0.y};
+	res = res1.x * res2.y - res2.x * res1.y;
+	return (res);
 }
 
 /*
