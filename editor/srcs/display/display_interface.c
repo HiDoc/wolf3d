@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 22:12:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:59:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,29 @@ int				point_in_rect(t_pos pos, SDL_Rect rect) // set in utils
 static void		display_grid(t_env *env)
 {
 	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_pos			origin;
+	t_pos			translate;
+	t_pos			origin;;
 	t_vec			vec;
 	Uint32			color;
 	int				i;
 
-	origin.x = rect.x
-		+ (env->editor.grid_translate.x + env->editor.grid_mouse_var.x);
-	origin.y = rect.y
-		+ (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
+	origin.x = rect.x + 425;
+	origin.y = rect.y + 340;
+
+	translate.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
+	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 
 	i = 0;
 	while (i < 250)
 	{
 		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+
 		vec.a = (t_pos){
-			env->grid_scale * (i + origin.x - 425) + 425 + rect.x, rect.y};
+			origin.x + (i + translate.x - (250 / 2)) * env->grid_scale,
+			rect.y};
 		vec.b = (t_pos){
-			env->grid_scale * (i + origin.x - 425) + 425 + rect.x, rect.y + rect.h};
+			origin.x + (i + translate.x - (250 / 2)) * env->grid_scale,
+			rect.y + rect.h};
 
 		if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
 			ui_make_line(env->data->surface, vec, color);
@@ -48,10 +53,13 @@ static void		display_grid(t_env *env)
 	while (i < 250)
 	{
 		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+
 		vec.a = (t_pos){
-			rect.x, env->grid_scale * (i + origin.y - 340) + 340 + rect.y};
+			rect.x,
+			origin.y + (i + translate.y - (250 / 2)) * env->grid_scale};
 		vec.b = (t_pos){
-			rect.x + rect.w, env->grid_scale * (i + origin.y - 340) + 340 + rect.y};
+			rect.x + rect.w,
+			origin.y + (i + translate.y - (250 / 2)) * env->grid_scale};
 
 		if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
 			ui_make_line(env->data->surface, vec, color);

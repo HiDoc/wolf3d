@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/23 13:40:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:23:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ t_pos		vtx_transform(t_pos pos, t_env *env)
 {
 	const SDL_Rect  rect = get_element(E_R_RECT, env)->rect;
 	t_pos           newpos;
+	t_pos			translate;
 	t_pos			origin;
 
-	origin.x = rect.x
-		+ (env->editor.grid_translate.x + env->editor.grid_mouse_var.x);
-	origin.y = rect.y
-		+ (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
+	origin.x = rect.x + 425;
+	origin.y = rect.y + 340;
 
-	newpos.x = env->grid_scale * (pos.x + origin.x - 425) + 425 + rect.x
-		+ 125 * env->grid_scale ;
-	newpos.y = env->grid_scale * (pos.y + origin.y - 340) + 340 + rect.y
-		+ 125 * env->grid_scale;
+	translate.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
+	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
+
+	newpos.x = origin.x + (pos.x + translate.x) * env->grid_scale;
+	newpos.y = origin.y + (pos.y + translate.y) * env->grid_scale;
 	return (newpos);
 }
 
@@ -63,6 +63,11 @@ void			sync_sct_minmax(t_env *env)
 		}
 		sct = sct->next;
 	}
+}
+
+float	pythagore(t_pos p1, t_pos p2)
+{
+	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
 }
 
 t_pos			get_edge_center(t_pos a, t_pos b)
@@ -146,11 +151,6 @@ int		ft_strchri(char *str, char c)
 		count++;
 	}
 	return (-1);
-}
-
-float	pythagore(t_pos p1, t_pos p2)
-{
-	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
 }
 
 int		poscmp(t_pos a, t_pos b)

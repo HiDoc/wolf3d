@@ -14,8 +14,8 @@ BUG : execve ./doom completement KC
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
 BUG : draw mode : create vertex in sector close to edge
-BUG : wheel scroll pas precis sur la souris
 BUG : coherence mouse mode (ex: change mouse mode while drawing)
+BUG : fix edge hover
 
 LEAK: protect gnl
 
@@ -23,24 +23,24 @@ TOCHECK : coherence du sct_current dans le programme
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si le get elem du rect interface a bien ete remplace partout
+TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 
 PROTEC : set min edge size for split edge
 
-OPTI : retirer lock/unlock surface
-OPTI : minmax sync
-OPTI : multithreading
-OPTI : corriger le reframes inutiles
-OPTI : getpixel
-
-* TODO :	reparer grid hover
-* TODO :	grid : limite left / bot
+OPTI :	minmax sync
+OPTI :	multithreading
+OPTI :	corriger le reframes inutiles
 
 TODO :	delete edge
+TODO :	delete door
+
+TODO :	display size selected edge
 TODO :	interface element clipping
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection
 TODO :	parsing : parsing todo
 
+TODO :	grid : limite left / bot
 TODO :	choose ceil / sky
 TODO :	floor / ceil casting texture
 TODO :	music & skybox
@@ -49,6 +49,8 @@ TODO :	messages d'erreur display
 TODO :	update export
 TODO :	refactor liste deroulantes sur interface modes
 TODO :	spawn : display line on spawn direction
+TODO :	bloquer split / door / fdor si c'est une door
+TODO :	bloquer modif size de vertex door
 TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
 TODO :	front design selected / hovered color and stuff
@@ -56,6 +58,8 @@ TODO :	front design selected / hovered color and stuff
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
 
+
+OPTIONAL : wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
 OPTIONAL :	set cursor middle of grid
 OPTIONAL :	sector move

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:24:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:37:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,30 @@ static int		select_input_events(t_env *env)
 		return (0);
 }
 
+void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
+{
+	float		size;
+	float		scale;
+	t_vec		door;
+	t_pos		center;
+
+	center = get_edge_center(a, b);
+
+	size = env->editor.vtx_size = pythagore(a, b);
+	scale = doorsize / size;
+
+	door.a.x = -scale * (a.x - center.x) + center.x;
+	door.a.y = -scale * (a.y - center.y) + center.y;
+
+	door.b.x = -scale * (b.x - center.x) + center.x;
+	door.b.y = -scale * (b.y - center.y) + center.y;
+
+	create_vertex(door.a, env);
+	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+	create_vertex(door.b, env);
+	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+}
+
 int				select_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
@@ -168,6 +192,62 @@ int				select_mode(t_env *env)
 					env->editor.edg_select->sector->w_vtx_start->vtx->pos), env);
 			}
 			insert_w_vertex(env->editor.edg_select, env->vertex, env);
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DOOR, env)->rect))
+		{
+			if (env->editor.edg_select->next)
+			{
+				if (pythagore(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos) > 3)
+				{
+					make_door(3, env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos, env);
+					// w_vtx.door = 1;
+				}
+				else
+					dprintf(2, "wall too small to make a door\n");
+			}
+			else
+			{
+				if (pythagore(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos) > 3)
+				{
+					make_door(3, env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos, env);
+					// w_vtx.door = 1;
+				}
+				else
+					dprintf(2, "wall too small to make a door\n");
+			}
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_FDOOR, env)->rect))
+		{
+			if (env->editor.edg_select->next)
+			{
+				if (pythagore(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos) > 4)
+				{
+					make_door(4, env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->next->vtx->pos, env);
+					// w_vtx.fdoor = 1;
+				}
+				else
+					dprintf(2, "wall too small to make a final door\n");
+			}
+			else
+			{
+				if (pythagore(env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos) > 4)
+				{
+					make_door(4, env->editor.edg_select->vtx->pos,
+					env->editor.edg_select->sector->w_vtx_start->vtx->pos, env);
+					// w_vtx.fdoor = 1;
+				}
+				else
+					dprintf(2, "wall too small to make a final door\n");
+			}
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{

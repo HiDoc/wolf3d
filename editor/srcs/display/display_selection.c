@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 00:26:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:35:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,16 @@ void		display_selection(t_env *env)
 	else if (env->editor.edg_select)
 	{
 		ui_make_string(rect, "edge [id vertex]", env->data);
+
+		ui_make_rect(env->data->surface,
+		get_element(E_B_SELEC_FDOOR, env)->rect, C_WHITE);
+		ui_make_string(
+		get_element(E_B_SELEC_FDOOR, env)->rect, "FINAL DOOR", env->data);
+
+		ui_make_rect(env->data->surface,
+		get_element(E_B_SELEC_DOOR, env)->rect, C_WHITE);
+		ui_make_string(
+		get_element(E_B_SELEC_DOOR, env)->rect, "DOOR", env->data);
 
 		ui_make_rect(env->data->surface,
 		get_element(E_B_SELEC_SPLIT, env)->rect, C_WHITE);

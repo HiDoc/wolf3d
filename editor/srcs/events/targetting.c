@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/23 16:20:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 12:13:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,28 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 		w_vtx = sct->w_vtx_start;
 		while (w_vtx && w_vtx->next)
 		{
-			//if (filter_edge(pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos, env))
-			//{
+			if (filter_edge(pos, w_vtx->vtx->pos, w_vtx->next->vtx->pos, env))
+			{
 				i = fabs(pointside(pos, vtx_transform(w_vtx->vtx->pos, env),
 				vtx_transform(w_vtx->next->vtx->pos, env)));
-				printf("%d\n", i);
-				if (i < (50 * env->grid_scale))
+				if (i < (40 * env->grid_scale))
 				{
 					env->editor.edg_hover = w_vtx;
 					return (w_vtx);
 				}
-			//}
+			}
 			w_vtx = w_vtx->next;
 		}
-		//if (filter_edge(pos, w_vtx->vtx->pos, sct->w_vtx_start->vtx->pos, env))
-		//{
+		if (filter_edge(pos, w_vtx->vtx->pos, sct->w_vtx_start->vtx->pos, env))
+		{
 			i = fabs(pointside(pos, vtx_transform(w_vtx->vtx->pos, env),
 			vtx_transform(sct->w_vtx_start->vtx->pos, env)));
-			printf("%d\n", i);
 			if (i < (50 * env->grid_scale))
 			{
 				env->editor.edg_hover = w_vtx;
 				return (w_vtx);
 			}
-		//}
+		}
 		sct = sct->next;
 	}
 	return (0);

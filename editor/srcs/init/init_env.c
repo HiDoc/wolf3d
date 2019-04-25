@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 20:58:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:32:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,12 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){910, 250, 250, 30};
 	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 200, 250, 30};
+	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 150, 250, 30};
+	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 }
 
 static void		load_obj(char *path, int type, t_env *env)
@@ -252,7 +258,7 @@ static void		init_editor(t_env *env)
 	int					i;
 
 	env->grid_scale = 45;
-	env->editor.grid_translate = (t_pos){280, 115};
+	env->editor.grid_translate = (t_pos){0, 0};
 
 	i = 0;
 	// compteur nb wall textures

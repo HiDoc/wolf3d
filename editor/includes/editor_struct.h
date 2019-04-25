@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 16:30:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:32:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ enum					e_elements
 	E_B_SELEC_DEL,
 	E_I_SELEC_HEIGHT,
 	E_I_SELEC_GRAVITY,
-	E_B_SELEC_SPLIT
+	E_B_SELEC_SPLIT,
+	E_B_SELEC_DOOR,
+	E_B_SELEC_FDOOR
 };
 
 enum					e_obj_category
@@ -76,6 +78,8 @@ typedef struct  s_env   	t_env;
 
 struct					s_w_vtx
 {
+	int			fdoor;	// is final door
+	int			door;	// is door
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
