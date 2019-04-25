@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 20:37:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:57:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,58 +196,38 @@ int				select_mode(t_env *env)
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DOOR, env)->rect))
 		{
-			if (env->editor.edg_select->next)
+			t_vec	vec;
+
+			vec.a = env->editor.edg_select->vtx->pos;
+			vec.b = (env->editor.edg_select->next)
+				? env->editor.edg_select->next->vtx->pos
+				: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
+
+			if (pythagore(vec.a, vec.b) > 3)
 			{
-				if (pythagore(env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->next->vtx->pos) > 3)
-				{
-					make_door(3, env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->next->vtx->pos, env);
-					// w_vtx.door = 1;
-				}
-				else
-					dprintf(2, "wall too small to make a door\n");
+				make_door(3, vec.a, vec.b, env);
+				// w_vtx.door = 1;
 			}
 			else
-			{
-				if (pythagore(env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->sector->w_vtx_start->vtx->pos) > 3)
-				{
-					make_door(3, env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->sector->w_vtx_start->vtx->pos, env);
-					// w_vtx.door = 1;
-				}
-				else
-					dprintf(2, "wall too small to make a door\n");
-			}
+				dprintf(2, "wall too small to make a door\n");
 		}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_FDOOR, env)->rect))
 		{
-			if (env->editor.edg_select->next)
+			t_vec	vec;
+
+			vec.a = env->editor.edg_select->vtx->pos;
+			vec.b = (env->editor.edg_select->next)
+				? env->editor.edg_select->next->vtx->pos
+				: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
+
+			if (pythagore(vec.a, vec.b) > 4)
 			{
-				if (pythagore(env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->next->vtx->pos) > 4)
-				{
-					make_door(4, env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->next->vtx->pos, env);
-					// w_vtx.fdoor = 1;
-				}
-				else
-					dprintf(2, "wall too small to make a final door\n");
+				make_door(4, vec.a, vec.b, env);
+				// w_vtx.door = 1;
 			}
 			else
-			{
-				if (pythagore(env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->sector->w_vtx_start->vtx->pos) > 4)
-				{
-					make_door(4, env->editor.edg_select->vtx->pos,
-					env->editor.edg_select->sector->w_vtx_start->vtx->pos, env);
-					// w_vtx.fdoor = 1;
-				}
-				else
-					dprintf(2, "wall too small to make a final door\n");
-			}
+				dprintf(2, "wall too small to make a final door\n");
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
