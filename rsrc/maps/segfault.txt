@@ -19,12 +19,14 @@ sector 	0 20 		1		0	0	0		7 6 9 8				-1 -1 -1 -1
 sector 	0 0 		-1		1	0	1		10 11 4 3			-1 -1 -1 -1
 sector 	10 40 		2		0	0	0		12 13 11 10			-1 -1 -1 -1
 
-
 # object	x	y  sect ref is_wpn
 object  	8 	4	0	0 1
 object  	10 	13	0	1 1
 object  	13 	13	0	2 1
 object  	17 	13	0	3 1
+
+# enemies	x	y	sect ref
+enemy		18	15	0	0
 
 # player 	x 	y	sectorno	angle
 player  	1 	1	0			0

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:24:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:40:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,30 @@ static int		select_input_events(t_env *env)
 		return (0);
 }
 
+void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
+{
+	float		size;
+	float		scale;
+	t_vec		door;
+	t_pos		center;
+
+	center = get_edge_center(a, b);
+
+	size = env->editor.vtx_size = pythagore(a, b);
+	scale = doorsize / size;
+
+	door.a.x = -scale * (a.x - center.x) + center.x;
+	door.a.y = -scale * (a.y - center.y) + center.y;
+
+	door.b.x = -scale * (b.x - center.x) + center.x;
+	door.b.y = -scale * (b.y - center.y) + center.y;
+
+	create_vertex(door.a, env);
+	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+	create_vertex(door.b, env);
+	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+}
+
 int				select_mode(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
@@ -154,6 +178,12 @@ int				select_mode(t_env *env)
 			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
 			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
 		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_CEIL, env)->rect))
+			env->editor.sct_select->roof = 0;
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SKY, env)->rect))
+			env->editor.sct_select->roof = 1;
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
@@ -169,6 +199,42 @@ int				select_mode(t_env *env)
 			}
 			insert_w_vertex(env->editor.edg_select, env->vertex, env);
 		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DOOR, env)->rect))
+		{
+			t_vec	vec;
+
+			vec.a = env->editor.edg_select->vtx->pos;
+			vec.b = (env->editor.edg_select->next)
+				? env->editor.edg_select->next->vtx->pos
+				: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
+
+			if (pythagore(vec.a, vec.b) > 3)
+			{
+				make_door(3, vec.a, vec.b, env);
+				// w_vtx.door = 1;
+			}
+			else
+				display_error_msg("Wall too small to make a door", env);
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_FDOOR, env)->rect))
+		{
+			t_vec	vec;
+
+			vec.a = env->editor.edg_select->vtx->pos;
+			vec.b = (env->editor.edg_select->next)
+				? env->editor.edg_select->next->vtx->pos
+				: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
+
+			if (pythagore(vec.a, vec.b) > 4)
+			{
+				make_door(4, vec.a, vec.b, env);
+				// w_vtx.door = 1;
+			}
+			else
+				display_error_msg("Wall too small to make a final door", env);
+		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
 			if (env->editor.obj_select)
@@ -177,6 +243,8 @@ int				select_mode(t_env *env)
 				delete_sector(env->editor.sct_select, env);
 			else if (env->editor.vtx_select)
 				delete_vertex(env->editor.vtx_select, env);
+			else if (env->editor.edg_select)
+				delete_edge(env->editor.edg_select, env);
 			unselect_all(env);
 			return (1);	
 		}
