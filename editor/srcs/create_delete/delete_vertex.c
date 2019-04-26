@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:41:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 11:08:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:40:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			delete_vertex(t_vtx *vtx, t_env *env)
 
 	if (!handle_w_vertex(vtx, env))
 	{
-		ft_putendl_fd("Editor: some w_vtx have not been deleted", 2);
+		display_error_msg("Some w_vtx have not been deleted", env);
 		return ;
 	}
 	ptr = env->vertex;

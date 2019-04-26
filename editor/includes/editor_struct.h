@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 11:37:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:41:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,9 @@ struct					s_menu
 
 struct					s_editor
 {
+	time_t			timestamp;	// error_msg timestamp
+	char			*error_msg;
+
 	// mouse handling
 	int				mouse_mode;
 

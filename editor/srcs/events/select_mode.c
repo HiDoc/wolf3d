@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 11:51:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:40:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int				select_mode(t_env *env)
 				// w_vtx.door = 1;
 			}
 			else
-				dprintf(2, "wall too small to make a door\n");
+				display_error_msg("Wall too small to make a door", env);
 		}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_FDOOR, env)->rect))
@@ -233,7 +233,7 @@ int				select_mode(t_env *env)
 				// w_vtx.door = 1;
 			}
 			else
-				dprintf(2, "wall too small to make a final door\n");
+				display_error_msg("Wall too small to make a final door", env);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{

@@ -15,6 +15,7 @@ BUG : input del bugge avec le refactor dans utils.c
 BUG : draw mode : create vertex in sector close to edge
 BUG : coherence mouse mode (ex: change mouse mode while drawing)
 BUG : fix edge hover
+BUG : color of error_msg
 
 LEAK: protect gnl
 
@@ -29,8 +30,6 @@ PROTEC : set min edge size for split edge
 OPTI :	minmax sync
 OPTI :	multithreading
 OPTI :	corriger le reframes inutiles
-
-* TODO :	messages d'erreur display
 
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection

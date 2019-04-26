@@ -6,11 +6,20 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 19:23:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:39:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void		display_error_msg(char *msg, t_env *env)
+{
+	if (env->editor.error_msg)
+		lt_release(env->editor.error_msg);
+	env->editor.timestamp = time(0);
+	if (!(env->editor.error_msg = lt_push(ft_strdup(msg), ft_memdel)))
+		ui_error_exit_sdl("Editor: out of memory on delete_vertex");
+}
 
 t_pos		vtx_transform(t_pos pos, t_env *env)
 {
