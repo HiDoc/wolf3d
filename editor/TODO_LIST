@@ -30,15 +30,14 @@ OPTI :	minmax sync
 OPTI :	multithreading
 OPTI :	corriger le reframes inutiles
 
-TODO :	delete edge
-TODO :	delete door
-TODO :	choose ceil / sky
-TODO :	floor / ceil casting texture
+* TODO :	choose ceil / sky
+* TODO :	messages d'erreur display
+
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection
 
 TODO :	music & skybox
-TODO :	messages d'erreur display
+TODO :	floor / ceil casting texture
 
 TODO :	display size selected edge
 TODO :	interface element clipping
@@ -57,6 +56,7 @@ TODO :	front design selected / hovered color and stuff
 TODO :	refactor : total cleaning
 TODO :	norme : total norme
 
+OPTIONAL :	floor / ceil casting texture per sector
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
 OPTIONAL :	set cursor middle of grid
