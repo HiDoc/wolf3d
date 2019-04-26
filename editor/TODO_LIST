@@ -7,14 +7,15 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 		#5 0x102b8cc52 in main main.c:22
 		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
 
-BUG : segv on setpixel quand zoom
-BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-BUG :	move : lors du deplacement, les secteur vont plus vite (mieux visible si beaucoup dezoome)
-BUG : angle du spawn
+*FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+*FLO* BUG : angle du spawn
 BUG : execve ./doom completement KC
-BUG : wheel scroll pas precis sur la souris
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
+BUG : draw mode : create vertex in sector close to edge
+BUG : coherence mouse mode (ex: change mouse mode while drawing)
+BUG : fix edge hover
+BUG : color of error_msg
 
 LEAK: protect gnl
 
@@ -22,40 +23,46 @@ TOCHECK : coherence du sct_current dans le programme
 TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si le get elem du rect interface a bien ete remplace partout
+TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 
-OPTI : minmax sync
-OPTI : multithreading
-OPTI : corriger le reframes inutiles
-OPTI : getpixel
+PROTEC : set min edge size for split edge
 
-* TODO :	delete edge
-* TODO :	walls : texture par walls
-* TODO :	modifs texture edge en selection
+OPTI :	minmax sync
+OPTI :	multithreading
+OPTI :	corriger le reframes inutiles
 
-* TODO :	update export
-* TODO :	meta : set music & skybox
-* TODO :	spawn : display line on spawn direction
+TODO :	walls : texture par walls
+TODO :	modifs texture edge en selection
 
-* TODO : refactor et simplification du scaling grid et sectors
-* TODO :	grid : centrer la grille
-* TODO :	grid : zoom centre sur grille
-* TODO :	grid : limite left / bot
+TODO :	music & skybox
+TODO :	floor / ceil casting texture
 
+TODO :	display size selected edge
+TODO :	interface element clipping
+TODO :	spawn : display line on spawn direction
+TODO :	grid : limite left / bot
+
+TODO :	refactor liste deroulantes sur interface modes
+TODO :	bloquer split / door / fdor si c'est une door
+TODO :	bloquer modif size de vertex door
 TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
-
-TODO :	front design interface / buttons
 TODO :	front design selected / hovered color and stuff
-TODO :	messages d'erreur display
-TODO :	refactor .h
-TODO :	refactor : display / event functions
-TODO :	init : refactor elem loading
+
 TODO :	parsing : parsing todo
+TODO :	update export
 
 TODO :	refactor : total cleaning
+TODO :	beta testing
 TODO :	norme : total norme
 
+OPTIONAL :	floor / ceil casting texture per sector
+OPTIONAL :	wheel scroll pas precis sur la souris
+OPTIONAL :	shift pour tracer ligne horizontale ou verticale
+OPTIONAL :	set cursor middle of grid
+OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
-OPTIONAL :	floodfill on sectors
+OPTIONAL :	floodfill on sectors with ceil casting
+OPTIONAL :	front design

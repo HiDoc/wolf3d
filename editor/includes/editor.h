@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 20:42:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:39:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define VRX_MAX 500
 # define EDG_MAX 250
 # define SCT_MAX 50
-
-# define PXL_VAL_MAX 20
 
 # include <stdio.h>
 
@@ -69,7 +67,9 @@ void        insert_w_vertex(t_w_vtx *prev, t_vtx *vtx, t_env *env);
 void		create_sector(t_env *env);
 void        delete_object(t_object *obj, t_env *env);
 void		delete_vertex(t_vtx *vtx, t_env *env);
+int         delete_w_vertex(t_sct *sct, t_vtx *vtx);
 void		delete_sector(t_sct *sector, t_env *env);
+void		delete_edge(t_w_vtx *w_vtx, t_env *env);
 
 /*
 **	display/
@@ -102,6 +102,8 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+void		display_error_msg(char *msg, t_env *env);
+t_pos		vtx_transform(t_pos pos, t_env *env);
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst);
 t_sct		*sct_lst_end(t_sct *lst);
 void		sync_sct_minmax(t_env *env);
