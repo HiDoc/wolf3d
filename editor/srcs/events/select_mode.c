@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 10:47:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:51:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,12 @@ int				select_mode(t_env *env)
 			get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
 			get_element(E_I_SELEC_GRAVITY, env)->color = C_GREEN;
 		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_CEIL, env)->rect))
+			env->editor.sct_select->roof = 0;
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SKY, env)->rect))
+			env->editor.sct_select->roof = 1;
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{

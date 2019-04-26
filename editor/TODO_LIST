@@ -30,7 +30,6 @@ OPTI :	minmax sync
 OPTI :	multithreading
 OPTI :	corriger le reframes inutiles
 
-* TODO :	choose ceil / sky
 * TODO :	messages d'erreur display
 
 TODO :	walls : texture par walls
@@ -41,11 +40,9 @@ TODO :	floor / ceil casting texture
 
 TODO :	display size selected edge
 TODO :	interface element clipping
-TODO :	grid : limite left / bot
 TODO :	spawn : display line on spawn direction
+TODO :	grid : limite left / bot
 
-TODO :	update export
-TODO :	parsing : parsing todo
 TODO :	refactor liste deroulantes sur interface modes
 TODO :	bloquer split / door / fdor si c'est une door
 TODO :	bloquer modif size de vertex door
@@ -53,7 +50,11 @@ TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
 TODO :	front design selected / hovered color and stuff
 
+TODO :	parsing : parsing todo
+TODO :	update export
+
 TODO :	refactor : total cleaning
+TODO :	beta testing
 TODO :	norme : total norme
 
 OPTIONAL :	floor / ceil casting texture per sector

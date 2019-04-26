@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 20:32:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:45:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,13 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 350, 110, 30};
+	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
+	get_element(E_B_SELEC_CEIL, env)->color = C_GREEN;
+
+	rect = (SDL_Rect){1040, 350, 120, 30};
+	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
 }
 
 static void		load_obj(char *path, int type, t_env *env)

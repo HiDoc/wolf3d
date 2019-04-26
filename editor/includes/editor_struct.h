@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 20:32:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:37:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ enum					e_elements
 	E_I_SELEC_GRAVITY,
 	E_B_SELEC_SPLIT,
 	E_B_SELEC_DOOR,
-	E_B_SELEC_FDOOR
+	E_B_SELEC_FDOOR,
+	E_B_SELEC_CEIL,
+	E_B_SELEC_SKY
 };
 
 enum					e_obj_category
@@ -103,6 +105,8 @@ struct					s_sct
 
 	int				height;
 	int				gravity;
+
+	int				roof;		// ceil or sky : 0 / 1
 
 	float			xmin;
 	float			xmax;
