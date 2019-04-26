@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/26 10:57:22 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/04/26 14:02:38 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ SRC_NAME 	=	main.c \
 				draw_mode.c \
 				select_mode.c \
 				move_mode.c \
+				elem_mode.c \
+				misc_mode.c \
 				handle_events.c \
 				utils.c \
 				targetting.c \
@@ -70,10 +72,10 @@ SRC_NAME 	=	main.c \
 				display_interface.c \
 				display_selection.c \
 				display_drawing.c \
+				display_element.c \
+				display_misc.c \
 				menu_events.c \
 				get_element.c \
-				elem_mode.c \
-				display_element.c \
 				export_map.c \
 				init_env.c \
 				release_functions.c \

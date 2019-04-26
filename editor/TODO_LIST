@@ -1,11 +1,54 @@
 
+SEGV :
+==84925==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000035c30 at pc 0x0001016ccd46 bp 0x7fff5e6e4450 sp 0x7fff5e6e3bf8
+READ of size 2 at 0x602000035c30 thread T0
+#0 0x1016ccd45 in wrap_strlen (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x12d45)
+#1 0x101685b72 in TTF_RenderText_Blended (libSDL2_ttf-2.0.0.dylib:x86_64+0x3b72)
+#2 0x101521e39 in ui_make_input ui_make_input.c:27
+#3 0x101558491 in display_selection display_selection.c:68
+#4 0x10152c23c in editor editor.c:28
+#5 0x10152261b in ui_make_frame ui_make_frame.c:22
+#6 0x101522ae3 in ui_gameloop ui_gameloop.c:22
+#7 0x10151a970 in main main.c:22
+#8 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
+
+0x602000035c30 is located 0 bytes inside of 6-byte region [0x602000035c30,0x602000035c36)
+freed by thread T0 here:
+#0 0x101710126 in wrap_free (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x56126)
+#1 0x101571cd0 in ft_memdel (editor:x86_64+0x100058cd0)
+#2 0x10157202b in lt_release (editor:x86_64+0x10005902b)
+#3 0x101537660 in select_interface_events select_mode.c:57
+#4 0x10153357e in select_mode select_mode.c:168
+#5 0x10153c0b1 in handle_events handle_events.c:155
+#6 0x10151afb8 in ui_get_events ui_get_events.c:29
+#7 0x101522acd in ui_gameloop ui_gameloop.c:21
+#8 0x10151a970 in main main.c:22
+#9 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
+
+previously allocated by thread T0 here:
+#0 0x10170ff5c in wrap_malloc (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x55f5c)
+#1 0x101571d04 in ft_memalloc (editor:x86_64+0x100058d04)
+#2 0x101542202 in ft_zstrjoin utils.c:180
+#3 0x1015420b6 in input_add utils.c:120
+#4 0x101537c69 in select_input_events select_mode.c:102
+#5 0x101536ba4 in select_mode select_mode.c:254
+#6 0x10153c0b1 in handle_events handle_events.c:155
+#7 0x10151afb8 in ui_get_events ui_get_events.c:29
+#8 0x101522acd in ui_gameloop ui_gameloop.c:21
+#9 0x10151a970 in main main.c:22
+#10 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
+
+---------------------------------------------------------------
+
 SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
-		#1 0x102ba2641 in draw_mode draw_mode.c:43
-	    #2 0x102ba8905 in handle_events handle_events.c:154
-		#3 0x102b8d298 in ui_get_events ui_get_events.c:30
-		#4 0x102b950ad in ui_gameloop ui_gameloop.c:21
-		#5 0x102b8cc52 in main main.c:22
-		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
+#1 0x102ba2641 in draw_mode draw_mode.c:43
+#2 0x102ba8905 in handle_events handle_events.c:154
+#3 0x102b8d298 in ui_get_events ui_get_events.c:30
+#4 0x102b950ad in ui_gameloop ui_gameloop.c:21
+#5 0x102b8cc52 in main main.c:22
+#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
+
+---------------------------------------------------------------
 
 *FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 *FLO* BUG : angle du spawn
@@ -31,22 +74,23 @@ OPTI :	minmax sync
 OPTI :	multithreading
 OPTI :	corriger le reframes inutiles
 
+TODO :	misc lists
+TODO :	floor / ceil casting texture on sectors
 TODO :	walls : texture par walls
 TODO :	modifs texture edge en selection
-
-TODO :	music & skybox
-TODO :	floor / ceil casting texture
+TODO :	refactor liste deroulantes sur interface modes
 
 TODO :	display size selected edge
 TODO :	interface element clipping
 TODO :	spawn : display line on spawn direction
 TODO :	grid : limite left / bot
 
-TODO :	refactor liste deroulantes sur interface modes
 TODO :	bloquer split / door / fdor si c'est une door
 TODO :	bloquer modif size de vertex door
-TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
+TODO :	bloquer les croisement de sectors // soluce : bloquer a la sauvegarde
 TODO :	bloquer les sorties d'object lors d'un edit de sector
+
+TODO :	find image for misc_mode
 TODO :	front design selected / hovered color and stuff
 
 TODO :	parsing : parsing todo
@@ -56,7 +100,7 @@ TODO :	refactor : total cleaning
 TODO :	beta testing
 TODO :	norme : total norme
 
-OPTIONAL :	floor / ceil casting texture per sector
+OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
 OPTIONAL :	set cursor middle of grid
@@ -66,3 +110,4 @@ OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
 OPTIONAL :	floodfill on sectors with ceil casting
 OPTIONAL :	front design
+

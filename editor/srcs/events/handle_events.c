@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 17:51:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 13:36:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void     reset_values(t_env *env)
 	get_element(E_B_MODE_MOVE, env)->color = C_WHITE;
 	get_element(E_B_MODE_DRAW, env)->color = C_WHITE;
 	get_element(E_B_MODE_ELEM, env)->color = C_WHITE;
+	get_element(E_B_MODE_MISC, env)->color = C_WHITE;
 }
 
 static int		click_event(t_env *env)
@@ -65,6 +66,14 @@ static int		click_event(t_env *env)
 		env->editor.mouse_mode = 2;
 		reset_values(env);
 		get_element(E_B_MODE_ELEM, env)->color = C_GREEN;
+		return (1);
+	}
+	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
+				get_element(E_B_MODE_MISC, env)->rect))
+	{ // button misc mode
+		env->editor.mouse_mode = 4;
+		reset_values(env);
+		get_element(E_B_MODE_MISC, env)->color = C_GREEN;
 		return (1);
 	}
 	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
@@ -150,5 +159,7 @@ int				handle_events(t_env *env)
 		return (elem_mode(env));
 	else if (env->editor.mouse_mode == 3)
 		return (move_mode(env));
+	else if (env->editor.mouse_mode == 4)
+		return (misc_mode(env));
 	return (0);
 }
