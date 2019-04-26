@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 19:05:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 14:22:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 			load_weapon(env);
 		if (keycodes[k[I_OPICKOPN]])
 			open_door(env);
-		if (keycodes[SDL_SCANCODE_G])
-			e->sectors[2].floor = (int)(e->sectors[2].floor + 1) % 41;
 		if (keycodes[k[I_OINVENTR]])
 		{
 			env->hud.inventory.is_active = !env->hud.inventory.is_active;

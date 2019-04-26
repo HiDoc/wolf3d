@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 13:48:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:07:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct 								s_thread
 
 struct						s_inventory
 {
-	t_wrap_sect	f;
+	t_wrap_sect	f; // to begin game with fist
 	t_wrap_wpn	*current;
 	t_wrap_wpn	weapons[WORLD_NB_WEAPONS];
 	t_wrap_inv	objects[6];
@@ -140,8 +140,6 @@ struct						s_character
 	int			shield;
 	int			max_health;
 	int			max_shield;
-	int			max_weapons;
-	int			max_objects;
 	SDL_Surface	**walk;
 	SDL_Surface	**shoot;
 	SDL_Surface	**death;
@@ -151,7 +149,6 @@ struct						s_character
 	t_impact	*shot;
 	t_brain		brain;
 	t_thread	threads[NB_THREAD_IMG];
-	int			nb_shot;
 };
 
 struct						s_world

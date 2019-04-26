@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:36:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 18:47:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 12:08:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ void		scroll_menu(int *cur, const Uint8 *k, int start, int limit);
 
 void		create_save_image(t_env *e);
 void		create_save(t_env *e, t_status *s);
+void		save_data_file(t_env *e, char *name);
+
+void		loop_intro(t_env *e, int level);
 
 #endif

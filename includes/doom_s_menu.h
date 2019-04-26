@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:47:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 17:40:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 12:11:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct 			s_status
 	int			msc_vol;
 	int			start;
 	int			end;
+	int			inter;
 
 };
 
@@ -45,6 +46,7 @@ struct 			s_menu
 	t_bloc		load_menu;
 	t_bloc		*save_game; // list chain 1 bloc = save img + time
 	t_bloc		new_game;
+	t_bloc		inter;
 };
 
 

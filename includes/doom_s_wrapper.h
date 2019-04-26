@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 00:31:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/24 14:53:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ struct					s_wrap_sect
 struct 					s_wrap_enmy
 {
 	int				ref;
+	int				sectorno;
 	int				health;
 	int				shield;
 	int				damage;

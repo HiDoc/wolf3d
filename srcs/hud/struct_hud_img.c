@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 19:05:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/23 12:12:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 		while (y < dst->h)
 		{
 			c = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
-			if (c & src->format->Amask)
+			if (c & 0xFF)
 				setpixel(dst, x, y, c);
 			y++;
 		}

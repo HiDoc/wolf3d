@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 19:20:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/24 15:30:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 		(s->current == e->nb_games) ? s->new_game = 0 : 0;
 		load_world_data(s->current, e);
 		s->current = 0;
+		s->new_game = 0;
 		s->on = 0;
 	}
 }

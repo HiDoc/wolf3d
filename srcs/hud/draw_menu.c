@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 19:22:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 14:33:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,4 @@ void	draw_menu(t_env *e)
 		draw_img(e, e->world.surfaces.img_menu[I_INEWGAME].sprite, &f);
 		draw_games(e);
 	}
-
 }
