@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 23:10:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:34:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ void		editor(t_env *env)
 	// display nb frames
 	rect = (SDL_Rect){300, 20, 0, 20};
 	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
+
+	// display error_msg
+	rect = (SDL_Rect){30, 120, 0, 20};
+	if (env->editor.error_msg)
+	{
+		if (time(0) - env->editor.timestamp < 4)
+			ui_make_string(rect, env->editor.error_msg, env->data);
+		else
+			lt_release(env->editor.error_msg);
+	}
 
 	// display nb element
 	rect = (SDL_Rect){30, 150, 0, 20};

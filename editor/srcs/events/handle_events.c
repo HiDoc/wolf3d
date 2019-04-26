@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 11:42:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:51:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ static int		click_event(t_env *env)
 static int		mousewheel_event(t_env *env)
 {
 	const SDL_Event	event = env->data->sdl.event;
+	float			newscale;
 
 	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 		get_element(E_R_RECT, env)->rect))
 	{
-		//printf("%d\n", event.wheel.y);
-		//if (env->grid_scale > 0 && env->pixel_value < PXL_VAL_MAX)
-		//{
-			env->grid_scale -= (event.wheel.y * (env->grid_scale * 0.02));
-		//}
+		newscale = env->grid_scale - (event.wheel.y * (env->grid_scale * 0.02));
+		//(newscale < 6) ? newscale = 6 : 0;
+		//(newscale > 150) ? newscale = 150 : 0;
+		env->grid_scale = newscale;
 		return (1);
 	}
 	return (0);
@@ -117,16 +117,16 @@ int				handle_events(t_env *env)
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
 		env->mouse.x = (m.x - rect.x - 425) / env->grid_scale
-			- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x) + 280;
+			- (env->editor.grid_translate.x + env->editor.grid_mouse_var.x);
 		env->mouse.y = (m.y - rect.y - 340) / env->grid_scale
-			- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y) + 115;
+			- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
 	}
 
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
 	{	
 		edt->vtx_hover = target_vertex(env->data->mouse, env);
 		edt->edg_hover = (!edt->vtx_hover)
-			? target_edge(env->mouse, env) : 0;
+			? target_edge(env->data->mouse, env) : 0;
 		edt->obj_hover = (!edt->vtx_hover && !edt->edg_hover)
 			? target_object(env->data->mouse, env) : 0;
 		edt->sct_hover = (!edt->vtx_hover && !edt->edg_hover && !edt->obj_hover)
