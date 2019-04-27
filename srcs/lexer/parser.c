@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 16:23:00 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:42:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ unsigned	token_calc(t_parseline *line)
 	return (count);
 }
 
+void	select_type_sector(t_sector *sect)
+{
+	if (sect->type == 0x00)
+		sect->is_door = 0x00;
+}
+
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 {
 	t_token		*iter;
@@ -82,26 +88,22 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 				sect->ceil = sect->ceil * 10 + (iter->value - '0');
 			else if (count > 1)
 				pos = pos * 10 + (iter->value - '0');
-		}
-		if (iter->type == (1U << 2) && (iter->next
-			&& iter->next->type != (1U << 2)))
-		{
-			if (count == 2)
+			if (iter->next && iter->next->type != (1U << 2))
 			{
-				sect->is_door = (pos & 100);
-				sect->door.is_openable = (pos & 10);
-				sect->door.ref_img = (pos & 1);
+				if (count == 2)
+					sect->type = pos;
+				if (count > 2)
+				{
+					sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
+					printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
+				}
+				count++;
+				pos = 0;
 			}
-			if (count > 2)
-			{
-				sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
-				printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
-			}
-			count++;
-			pos = 0;
 		}
 		iter = iter->next;
 	}
+	select_type_sector(sect);
 	if (count > 2)
 		sect->vertex[0] = (t_vtx){sect->vertex[sect->npoints].x,
 		sect->vertex[sect->npoints].y};

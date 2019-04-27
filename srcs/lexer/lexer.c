@@ -6,42 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:37:37 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 14:58:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:57:10 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-static int	is_end(int c) { return c == '\n'; }
-static int	is_sec(int c) { return c == 's'; }
-static int	is_vtx(int c) { return c == 'v'; }
-static int	is_obj(int c) { return c == 'o'; }
-static int	is_txt(int c) { return c == 't'; }
-static int	is_ent(int c) { return c == 'e'; }
-static int	is_wob(int c) { return c == 'w'; }
-static int	is_spe(int c) { return c == 'x'; }
-static int	is_plr(int c) { return c == 'p'; }
-static int	is_cmt(int c) { return c == '#'; }
-
-typedef struct s_op
-{
-	unsigned	val;
-	const char	*name;
-	int			(*verify)(int);
-	unsigned	max_token;
-}t_op;
-
-enum e_op_first{
-	SECTOR,
-	VERTEX,
-	PLAYER,
-	OBJECT,
-	WOJECT,
-	SPECIA,
-	ENTITY,
-	COMMNT,
-	TXTURE
-};
 
 const t_op	op_first[12] = {
 	{(1U << SECTOR), "Sector", &is_sec, 10},

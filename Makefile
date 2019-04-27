@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/27 15:09:37 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/27 16:58:24 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,6 +150,9 @@ SRC_NAME 	= main.c \
 			op.c \
 			printer.c \
 			reader.c \
+			parser_utils1.c \
+			parser_utils2.c \
+			parser_utils3.c \
 			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
