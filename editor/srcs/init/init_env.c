@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 13:58:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:50:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,9 +211,15 @@ static void		load_obj(char *path, int type, t_env *env)
 		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
 		{
 			rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
+			printf("chri : %d\n", ft_strchri(de->d_name, '+'));
+
+			// probleme ici name non alloue // checker si meme problem ailleurs
 			name = ft_strncpy(name, de->d_name, ft_strchri(de->d_name, '+'));
+			//
+
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_btn_obj(i, ref, type, name, rect, env);
+			printf("[ref : %d] [name : %s]\n", ref, name);
 			i++;
 		}
 	}

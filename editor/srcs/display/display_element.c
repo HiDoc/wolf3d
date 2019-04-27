@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:34:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 15:45:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,25 @@ void		display_element(t_env *env)
 	rect = (SDL_Rect){890, 100, 290, 680};
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
-	// display categories
-	ui_make_rect(env->data->surface,
-	get_element(E_B_ELM_OBWL, env)->rect, C_WHITE);
-	rect = (SDL_Rect){910, 110, 0, 20};
-	ui_make_string(rect, "[sprites] wall_objects", env->data);
+	rect = get_element(E_B_ELM_OBWL, env)->rect;
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+	ui_make_string(rect, "Wall objects", env->data);
 
-	ui_make_rect(env->data->surface,
-	get_element(E_B_ELM_CONS, env)->rect, C_WHITE);
-	rect = (SDL_Rect){910, 140, 0, 20};
-	ui_make_string(rect, "[sprites] consumables", env->data);
+	rect = get_element(E_B_ELM_CONS, env)->rect;
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+	ui_make_string(rect, "Consumables", env->data);
 
-	ui_make_rect(env->data->surface,
-	get_element(E_B_ELM_NTTY, env)->rect, C_WHITE);
-	rect = (SDL_Rect){910, 170, 0, 20};
-	ui_make_string(rect, "[sprites] entities", env->data);
+	rect = get_element(E_B_ELM_NTTY, env)->rect;
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+	ui_make_string(rect, "Entities", env->data);
 
-	ui_make_rect(env->data->surface,
-	get_element(E_B_ELM_PRFB, env)->rect, C_WHITE);
-	rect = (SDL_Rect){910, 200, 0, 20};
-	ui_make_string(rect, "[sectors] prefabs", env->data);
+	rect = get_element(E_B_ELM_PRFB, env)->rect;
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+	ui_make_string(rect, "Prefabs", env->data);
 
-	ui_make_rect(env->data->surface,
-	get_element(E_B_ELM_SPEC, env)->rect, C_WHITE);
-	rect = (SDL_Rect){910, 230, 0, 20};
-	ui_make_string(rect, "[sectors] specials", env->data);
+	rect = get_element(E_B_ELM_SPEC, env)->rect;
+	ui_make_rect(env->data->surface, rect, C_WHITE);
+	ui_make_string(rect, "Specials", env->data);
 
 	// up
 	ui_make_rect(env->data->surface,

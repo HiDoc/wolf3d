@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:11:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:12:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 
 int			draw_mode(t_env *env)
 {
+	SDL_Rect			rect = get_element(E_R_RECT, env)->rect;
 	const t_pos			m = env->data->mouse;
 	const SDL_Event 	event = env->data->sdl.event;
 
-	if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
+	if (ui_mouseenter(m.x, m.y, rect))
 	{
 		if (event.type == SDL_MOUSEBUTTONDOWN && !env->editor.sct_hover)
 		{
@@ -66,14 +67,10 @@ int			draw_mode(t_env *env)
 			}
 		}
 	}
-	if (m.x || m.y)
+	if (env->sct_current)
 	{
-		if (env->sct_current)
-		{
-			env->editor.vtx_size = pythagore(
-			env->sct_current->w_vtx_current->vtx->pos, env->mouse);
-		}
-		return (1);
+		env->editor.vtx_size = pythagore(
+		env->sct_current->w_vtx_current->vtx->pos, env->mouse);
 	}
-	return (0);
+	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }
