@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/24 15:30:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 19:33:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,17 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 	scroll_menu(&s->current, k, 0, NB_BLOC_NG);
 	if (k[SDL_SCANCODE_RETURN])
 	{
-		s->current == 0 ? s->new_game = 1 : 0; //launch cinematik ? s->on = 0; // provisoire
+		s->current == 0 ? s->new_game = 1 : 0;
 		s->current == 1 ? s->load_menu = 1 : 0;
 		s->current == 2 ? s->options_menu = 1 : 0;
 		s->current == 3 ? s->quit = 1 : 0;
 		s->new_game || s->load_menu || s->options_menu ? s->current = 0 : 0;
-		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
 	menu_btn_sound(e, k);
 }
 
 void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
-		printf("current %i \n",  s->current);
-
 	if (e->nb_games)
 		scroll_menu(&s->current, k, 0, e->nb_games);
 	else if (k[SDL_SCANCODE_LEFT] && s->current == 0)
@@ -79,12 +76,18 @@ void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 		s->current = 0;
 	if ((k[SDL_SCANCODE_RETURN]))
 	{
-		(s->current == e->nb_games) ? s->new_game = 0 : 0;
-		load_world_data(s->current, e);
-		s->current = 0;
+		if (s->current == 0 || s->current < e->nb_games)
+		{
+			load_world_data(s->current, e);
+			s->inter = 1;
+			s->on = 0;
+			s->main_menu = 0;
+		}
 		s->new_game = 0;
-		s->on = 0;
+		s->current = 0;
+		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
+	menu_btn_sound(e, k);
 }
 
 void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
@@ -96,9 +99,9 @@ void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 		s->current = 0;
 	else if ((k[SDL_SCANCODE_RETURN]))
 	{
-		s->current == 0 ? create_save(e, s) : 0; //	save game
+		s->current == 0 ? create_save(e, s) : 0;
 		s->current == 1 ? s->options_menu = 1 : 0;
-		s->current == 2 ? s->main_menu = 1 : 0; // save en mm tps
+		s->current == 2 ? s->main_menu = 1 : 0;
 		s->current == 3 ? s->on = !s->on : 0;
 		!s->options_menu && s->current ? s->ingame_menu = 0 : 0;
 		if (!s->ingame_menu && !s->main_menu)

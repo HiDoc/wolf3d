@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 20:24:40 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 09:44:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 21:54:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,23 +102,24 @@ void	save_data_file(t_env *e, char *name)
 	while (++i < (int)e->engine.nsectors)
 	{
 		t_wrap_sect	*obj = e->engine.sectors[i].head_object;
-		j = -1;
 		while (obj)
 		{
+			j = -1;
 			if (!obj->is_picked && ++j < e->engine.sectors[i].nb_objects)
 			{
 				j == 0 ? concat_data(&data, i, 0, "#sector") : 0;
 				concat_data(&data, obj->ref, 0, "/obj::");
+				concat_data(&data, obj->is_wpn, 0, NULL);
 				concat_data(&data, obj->vertex.x, 0, NULL);
 				concat_data(&data, obj->vertex.y, 1, NULL);
 			}
 			obj = obj->next;
 		}
 		print_data(fd, &data);
-		j = -1;
 		t_wrap_enmy	*en = e->engine.sectors[i].head_enemy;
 		while (en)
 		{
+			j = -1;
 			if (en->is_alive && ++j < e->engine.sectors[i].nb_enemies)
 			{
 				j == 0 ? concat_data(&data, i, 0, "#sector") : 0;

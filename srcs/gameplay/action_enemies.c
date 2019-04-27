@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_enemies.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 14:20:53 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/26 23:50:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,10 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
 		if (e->is_alerted || e->has_detected || e->close_seen)
 		{
 			if (dist_vertex(player, where) > e->brain.dist_player)
+			{
+				e->is_shooting = 0;
 				bot_move(env, player, e, e->brain.velocity);
+			}
 			else
 				bot_dist_detect(e);
 		}

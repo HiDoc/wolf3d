@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/26 14:25:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 20:56:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		main(int ac, char **av)
 		env.finish = 0;
 
 		// display text start
-		// loop_intro(&env, iprovisoire);
-		printf("iprov %i \n", iprovisoire);
+		loop_intro(&env, iprovisoire, 1);
+
 		/* load level */
 		load_map(&env.engine, &env);
 		init_minimap(&env);
@@ -41,6 +41,7 @@ int		main(int ac, char **av)
 		sdl_loop(&env);
 
 		// display text end
+		loop_intro(&env, iprovisoire, 0);
 
 		/* free level */
 		//free_map();
