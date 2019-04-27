@@ -6,11 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:39:10 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 16:08:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 15:15:07 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "doom.h"
 
 void	print_line(t_parseline *line)
 {
@@ -20,7 +20,7 @@ void	print_line(t_parseline *line)
 	iter = line->first;
 	while (iter)
 	{
-		printf("[%u: %d]", iter->pos, iter->value);
+		printf("[%u: %c]", iter->pos, iter->value);
 		iter = iter->next;
 	}
 	printf("\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/18 00:28:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:55:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DOOM_H
 
 /*
-**include all define
+** Include all define
 */
 # include "doom_define.h"
 # include "doom_d_ui.h"
@@ -50,5 +50,10 @@
 # include "doom_f_hud.h"
 # include "doom_f_menu.h"
 # include "doom_f_sound.h"
+
+/*
+** Include Parsing
+*/
+#include "ast.h"
 
 #endif

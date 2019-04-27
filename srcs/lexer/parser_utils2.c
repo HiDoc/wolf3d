@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line.c                                             :+:      :+:    :+:   */
+/*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 14:37:18 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 18:33:56 by fmadura          ###   ########.fr       */
+/*   Created: 2019/04/27 16:32:58 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/27 16:35:13 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "doom.h"
 
-t_parseline	*new_line(unsigned nline)
+int	is_vtx(int c)
 {
-	t_parseline	*new;
+	return c == 'v';
+}
 
-	if ((new = (t_parseline *)malloc(sizeof(t_parseline))) == NULL)
-		return (NULL);
-	new->first = NULL;
-	new->next = NULL;
-	new->nline = nline;
-	new->len = 0;
-	return (new);
+int	is_obj(int c)
+{
+	return c == 'o';
+}
+
+int	is_txt(int c)
+{
+	return c == 't';
+}
+
+int	is_ent(int c)
+{
+	return c == 'e';
+}
+
+int	is_wob(int c)
+{
+	return c == 'w';
 }

@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load.c                                             :+:      :+:    :+:   */
+/*   parser_utils1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 14:59:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 15:31:45 by fmadura          ###   ########.fr       */
+/*   Created: 2019/04/27 16:32:17 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/27 16:35:38 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void			load_map(t_engine *e, t_env *env)
+int	is_spc(int c)
 {
-	parser(env, "rsrc/maps/segfault.txt");
-	verify_map(e);
-	if ((e->queue.renderedsectors = (int *)malloc(e->nsectors * sizeof(int))) == NULL)
-		return;
-	return ;
+	return c == ' ';
+}
+
+int	is_tab(int c)
+{
+	return c == '\t';
+}
+
+int	is_min(int c)
+{
+	return c == '-';
+}
+
+int	is_end(int c)
+{
+	return c == '\n';
+}
+
+int	is_sec(int c)
+{
+	return c == 's';
 }
