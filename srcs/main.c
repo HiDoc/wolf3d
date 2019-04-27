@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 18:54:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:07:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(int ac, char **av)
 	init_env(ac, av, &env);
 	set_msc_menu(&env, &env.menu.status);
 	load_worlds(&env);
-	
+
 	/* mainmenu loop */
 	mainmenu_loop(&env);
 
@@ -28,7 +28,7 @@ int		main(int ac, char **av)
 	int iprovisoire = 0;
 	while (/**env.level*/iprovisoire < 5)
 	{
-		env.finish = 0;	
+		env.finish = 0;
 
 		// display text start
 
@@ -37,7 +37,8 @@ int		main(int ac, char **av)
 		init_minimap(&env);
 
 		/* gameloop */
-		sdl_loop(&env);
+		if (sdl_loop(&env))
+			return (0);
 
 		// display text end
 

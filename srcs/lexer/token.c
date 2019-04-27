@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/06 16:37:37 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 17:09:14 by fmadura          ###   ########.fr       */
+/*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/27 14:59:15 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
-
+#include "doom.h"
 static int	is_spc(int c) { return c == ' '; }
 static int	is_tab(int c) { return c == '\t'; }
 static int	is_min(int c) { return c == '-'; }
@@ -47,7 +46,17 @@ enum e_op_first{
 	TXTURE
 };
 
-const t_op	op_first[12] = {
+static const t_op	op_next[6] = {
+	{(1U << 0), "Space", &is_spc, 1},
+	{(1U << 1), "Tabulation", &is_tab, 1},
+	{(1U << 2), "Integer", &is_dgt, 1},
+	{(1U << 3), "Minus", &is_min, 1},
+	{(1U << 4), "End", &is_end, 1},
+	{(1U << 5), "None", NULL, 1}
+};
+
+
+static const t_op	op_first[12] = {
 	{(1U << SECTOR), "Sector", &is_sec, 10},
 	{(1U << VERTEX), "Vertex", &is_vtx, 2},
 	{(1U << PLAYER), "Player", &is_plr, 4},
@@ -62,66 +71,28 @@ const t_op	op_first[12] = {
 	{(1U << 11), "Error", NULL, 0}
 };
 
-static unsigned	token_calc(t_parseline *line)
+t_token	*new_token(char c, unsigned pos)
 {
-	t_token		*iter;
-	unsigned	count;
-
-	iter = line->first;
-	count = 0;
-	while (iter)
-	{
-		if (iter->type == (1U << 2) &&
-			(iter->next && iter->next->type != (1U << 2)))
-			count++;
-		iter = iter->next;
-	}
-	return (count);
-}
-
-int		lexer_vertex(t_parseline *line)
-{
-	t_token		*iter;
-	unsigned	number;
-
-	number = 0;
-	iter = line->first;
-	if (!iter || !iter->next)
-		return (0);
-	while (iter)
-	{
-		if (iter->type == (1U << 2))
-			number = number * 10 + (iter->value - '0');
-		if (iter->type == (1U << 2) && (iter->next && iter->next->type != (1U << 2)))
-		{
-			if (number > 100)
-				return (0);
-			number = 0;
-		}
-		iter = iter->next;
-	}
-	return (1);
-}
-
-int	lexer(t_parsefile *file)
-{
-	t_parseline	*line;
 	unsigned	iter;
+	unsigned	maxiter;
+	t_token		*new;
+	t_op		*op;
 
-	line = file->first;
 	iter = 0;
-	while (line)
+	maxiter = pos ? 5 : 9;
+	op = pos ? (t_op *)op_next : (t_op *)op_first;
+	new = NULL;
+	while (iter < maxiter)
 	{
-		while (iter < 10)
-		{
-			if (op_first[iter].val == line->first->type
-				&& token_calc(line) > op_first[iter].max_token)
-				{
-					line->first->type = (1U << 11);
-					return (0);
-				}
-			iter++;
-		}
+		if (op[iter].verify(c))
+			break;
+		iter++;
 	}
-	return (1);
+	if ((new = malloc(sizeof(t_token))) == NULL)
+		return (NULL);
+	new->next = NULL;
+	new->type = op[iter].val;
+	new->pos = pos;
+	new->value = c;
+	return (new);
 }

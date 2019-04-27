@@ -204,12 +204,12 @@ int     verify_map(t_engine *e)
 		 	printf("vertex does not form a loop\n");
 		if (verify_neighbor(e, NULL, NULL))
 		{
-			// printf("neighbors not linked\n");
+			printf("neighbors not linked\n");
 			continue ;
 		}
 		if (verify_hull(e))
 		{
-			// printf("hull redispatch\n");
+			printf("hull redispatch\n");
 			continue ;
 		}
 		else break;
