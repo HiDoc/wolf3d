@@ -60,6 +60,7 @@ BUG : coherence mouse mode (ex: change mouse mode while drawing)
 BUG : fix edge hover
 BUG : color of error_msg
 BUG : reframe click boutons sur right pannel
+BUG : taille du nom des object depasse du carre
 
 LEAK: protect gnl
 
@@ -78,7 +79,6 @@ OPTI :	corriger le reframes inutiles
 TODO :	door is a sector
 TODO :	height ceil / height floor sector
 
-* BUG :	sortie de memoire loading obejcts
 * TODO :	refactor liste deroulantes sur interface modes
 * TODO :	floor / ceil casting texture on sectors
 * TODO :	misc lists
