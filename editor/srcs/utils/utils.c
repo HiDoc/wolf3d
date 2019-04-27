@@ -6,11 +6,31 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 15:43:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:35:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void		display_dropdown_list(SDL_Rect rect, t_elem *elem,
+			int index, t_env *env)
+{
+	Uint32		color;
+	SDL_Rect	box;
+
+	while (elem)
+	{
+		color = (elem->clicked == 1) ? C_GREEN : C_WHITE;
+		box = (SDL_Rect){elem->rect.x, elem->rect.y + index * 40,
+		elem->rect.w, elem->rect.h};
+		if (box.y >= rect.y && box.y <= rect.y + rect.h)
+		{
+			ui_make_rect(env->data->surface, box, color);
+			ui_make_string(box, elem->str, env->data);
+		}
+		elem = elem->next;
+	}
+}
 
 void		display_error_msg(char *msg, t_env *env)
 {

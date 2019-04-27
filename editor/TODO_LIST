@@ -90,6 +90,7 @@ TODO :	interface element clipping
 TODO :	spawn : display line on spawn direction
 TODO :	grid : limite left / bot
 
+TODO :	wall object dock
 TODO :	bloquer split / door / fdor si c'est une door
 TODO :	bloquer modif size de vertex door
 TODO :	bloquer les croisement de sectors // soluce : bloquer a la sauvegarde
@@ -100,6 +101,7 @@ TODO :	front design selected / hovered color and stuff
 
 * TODO :	parsing : parsing todo
 * TODO :	update export
+TODO :	menu preview
 
 TODO :	refactor : total cleaning
 TODO :	beta testing

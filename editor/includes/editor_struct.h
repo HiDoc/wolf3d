@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 13:56:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:28:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,10 @@ struct					s_elem
 	SDL_Surface		*image;
 	char			*str;		// if type == input
 	int				str_max;	// if type == input
+
 	int				clicked;
-	int				hovered;
+	int				hovered; // delete if not used ?
+
 	t_elem			*next;
 };
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 15:30:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:17:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void        export_map(t_env *env)
 		vtx = vtx->next;
 	}
 
-	ft_putstr_fd("# sector: ceil_h ceil_tx floor_h floor_tx", fd);
-	ft_putendl_fd("gravity door n-vertex n-neighbors", fd);
+	ft_putstr_fd("# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx", fd);
 	sct = env->sct_start;
 	while (sct)
 	{
