@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 14:35:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:57:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,10 @@ void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 void		render_enemies(t_env *env, t_queue *queue)
 {
 	t_wrap_enmy	*en;
-	t_vtx 		p;
 
-	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	en = queue->sect->head_enemy;
 	while (en)
 	{
-		if (en->is_alive)
-			bot_status(env, p, en, env->sdl.keycodes);
 		render_sprites(env, queue, en->sprite, en->player.where, en->brain.size);
 		en = en->next;
 	}

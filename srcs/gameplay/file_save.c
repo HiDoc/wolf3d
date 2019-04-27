@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 20:24:40 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 21:54:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 19:42:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,28 @@ void	save_data_file(t_env *e, char *name)
 
 	tmp = ft_itoa(e->menu.status.nb_save);
 	data = ft_strjoin("./rsrc/save/", tmp);
-	if ((fd = open(data, O_RDWR | O_CREAT)) == -1)
+	if ((fd = open(data, O_CREAT | O_TRUNC | O_WRONLY,
+    	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 		doom_error_exit("Doom_nukem error on create file save");
 	lt_release(data);
 	data = NULL;
 	ft_putendl_fd(tmp, fd);
 	lt_release(tmp);
 	ft_putendl_fd(name, fd);
-	concat_data(&data, e->player.health, 0, "#player::");
+	concat_data(&data, e->engine.player.sector, 0, "#p:");
+	concat_data(&data, e->player.health, 0, NULL);
 	concat_data(&data, e->player.shield, 0, NULL);
 	concat_data(&data, e->engine.player.where.x, 0, NULL);
 	concat_data(&data, e->engine.player.where.y, 1, NULL);
 	print_data(fd, &data);
-	concat_data(&data, e->player.inventory.current->current->ref, 1, "#current::");
+	concat_data(&data, e->player.inventory.current->current->ref, 1, "#c:");
 	print_data(fd, &data);
 	i = -1;
 	while (++i < GAME_NB_WPN)
 	{
 		if (e->player.inventory.weapons[i].current)
 		{
-			concat_data(&data, e->player.inventory.weapons[i].current->ref, 0, "#weapon::");
+			concat_data(&data, e->player.inventory.weapons[i].current->ref, 0, "#w:");
 			concat_data(&data, e->player.inventory.weapons[i].ammo[0], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[1], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[2], 1, NULL);
@@ -74,7 +76,7 @@ void	save_data_file(t_env *e, char *name)
 	{
 		if (e->player.inventory.objects[i].current)
 		{
-			concat_data(&data, e->player.inventory.objects[i].current->ref, 0, "#object::");
+			concat_data(&data, e->player.inventory.objects[i].current->ref, 0, "#o:");
 			concat_data(&data, e->player.inventory.objects[i].nb_stack, 1, NULL);
 		}
 	}
@@ -84,18 +86,18 @@ void	save_data_file(t_env *e, char *name)
 	{
 		if (e->player.inventory.gems[i].current)
 		{
-			concat_data(&data, e->player.inventory.gems[i].current->ref, 0, "#gem::");
+			concat_data(&data, e->player.inventory.gems[i].current->ref, 0, "#g:");
 			concat_data(&data, e->player.inventory.gems[i].nb_stack, 1, NULL);
 		}
 	}
 	print_data(fd, &data);
 	i = -1;
 	while (++i < NB_STATS)
-		concat_data(&data, e->stats.data[i], i == NB_STATS - 1 ? 1 : 0, i == 0 ? "#stats::" : NULL);
+		concat_data(&data, e->stats.data[i], i == NB_STATS - 1 ? 1 : 0, i == 0 ? "#s:" : NULL);
 	print_data(fd, &data);
 	i = 0;
 	while (++i < NB_OPT_KEY)
-		concat_data(&data, e->engine.keys[i], i == NB_OPT_KEY - 1 ? 1 : 0, i == 1 ? "#settings::" : NULL);
+		concat_data(&data, e->engine.keys[i], i == NB_OPT_KEY - 1 ? 1 : 0, i == 1 ? "#k:" : NULL);
 	print_data(fd, &data);
 	i = -1;
 	int j = -1;
@@ -105,11 +107,12 @@ void	save_data_file(t_env *e, char *name)
 		while (obj)
 		{
 			j = -1;
-			if (!obj->is_picked && ++j < e->engine.sectors[i].nb_objects)
+			if (++j < e->engine.sectors[i].nb_objects)
 			{
-				j == 0 ? concat_data(&data, i, 0, "#sector") : 0;
-				concat_data(&data, obj->ref, 0, "/obj::");
+				j == 0 ? concat_data(&data, i, 0, "#s") : 0;
+				concat_data(&data, obj->ref, 0, "o:");
 				concat_data(&data, obj->is_wpn, 0, NULL);
+				concat_data(&data, obj->is_picked, 0, NULL);
 				concat_data(&data, obj->vertex.x, 0, NULL);
 				concat_data(&data, obj->vertex.y, 1, NULL);
 			}
@@ -122,10 +125,9 @@ void	save_data_file(t_env *e, char *name)
 			j = -1;
 			if (en->is_alive && ++j < e->engine.sectors[i].nb_enemies)
 			{
-				j == 0 ? concat_data(&data, i, 0, "#sector") : 0;
-				concat_data(&data, en->ref, 0, "/en::");
+				j == 0 ? concat_data(&data, i, 0, "#s") : 0;
+				concat_data(&data, en->ref, 0, "e:");
 				concat_data(&data, en->brain.health, 0, NULL);
-				concat_data(&data, en->brain.shield, 0, NULL);
 				concat_data(&data, en->player.where.x, 0, NULL);
 				concat_data(&data, en->player.where.y, 1, NULL);
 			}

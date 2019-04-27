@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/24 14:53:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 20:27:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ struct					s_wrap_sect
     int         (*action)(void *, t_wrap_inv *);
 	int			is_pickable;
 	t_wrap_sect	*next;
+	t_wrap_sect	*prev;
 };
 
 struct 					s_wrap_enmy

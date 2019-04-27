@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/17 00:29:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:35:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,15 @@
 # define G_GEM		7
 # define R_GEM		8
 # define P_GEM		9
+
+/*
+** SECTOR - TYPES
+*/
+# define SECT_BASE		0
+# define SECT_BEGIN		1
+# define SECT_MECHA		2
+# define SECT_DEAD		3
+# define SECT_ENDGAME	4
+# define SECT_DOOR		5
+# define SECT_CYBER		7
 #endif

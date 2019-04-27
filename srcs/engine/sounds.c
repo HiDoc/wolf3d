@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 23:41:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 19:52:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,14 @@ void	sound_hud(t_env *e, t_sd_stat *s)
 
 void	sound_effect(t_env *e, t_sd_stat *s)
 {
-	(s->open) ? play_chunk(-1, e->sound.s_effect[EFCT_OP_BIGDOOR], 0) : 0;
+	(s->end_level) ? play_chunk(-1, e->sound.s_effect[EFCT_OP_BIGDOOR], 0) : 0;
+	s->end_level = 0;
+	(s->open == 1) ? play_chunk(-1, e->sound.s_effect[EFCT_BTNDOOR], 0) : 0;
+	(s->open == 2) ? play_chunk(-1,	e->sound.s_effect[EFCT_DOORLOCK], 0) : 0;
 	s->open = 0;
+	(s->is_open == 1) ? play_chunk(CHAN_DOOR,	e->sound.s_effect[EFCT_OP_LILDOOR], 0) : 0;
+	(s->is_open == 2) ? play_chunk(CHAN_DOOR,	e->sound.s_effect[EFCT_CL_LILDOOR], 0) : 0;
+	s->is_open = 0;
 }
 
 void	handle_sound(t_env *e, t_sd_stat *s)

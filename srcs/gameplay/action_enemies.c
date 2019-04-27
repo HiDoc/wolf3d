@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 23:50:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:58:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,13 +158,16 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 void	bot_action(t_env *env, t_sector *sector)
 {
 	t_wrap_enmy	*enemy;
+	t_vtx 		p;
 
+	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	(void)env;
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
 		if (enemy->is_alive && !enemy->is_dying && !enemy->is_shot)
 		{
+			bot_status(env, p, enemy, env->sdl.keycodes);
 			if (enemy->next && enemy->next->is_alive)
 				bot_check_friend(enemy, enemy->next);
 			if (enemy->is_shooting)
