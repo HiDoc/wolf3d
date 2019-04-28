@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 16:07:19 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 19:01:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int		main(int ac, char **av)
 	{
 		env.finish = 0;
 
-		// display text start
-
 		/* load level */
 		load_map(&env.engine, &env);
 		init_minimap(&env);
@@ -40,10 +38,8 @@ int		main(int ac, char **av)
 		if (sdl_loop(&env))
 			return (0);
 
-		// display text end
-
 		/* free level */
-		//free_map();
+		free_map(&env);
 		lt_release(env.engine.minimap.surface);
 		lt_release(env.engine.minimap.background);
 
