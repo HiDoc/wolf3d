@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:29:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:14:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ enum					e_elements
 	E_B_MODE_MOVE,
 	E_B_MODE_DRAW,
 	E_B_MODE_ELEM,
-	E_B_MODE_MISC,
 	E_B_PLAY,
 	E_B_ELM_UP,
 	E_B_ELM_DOWN,
@@ -63,8 +62,8 @@ enum					e_elements
 	E_B_SELEC_FDOOR,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
-	E_B_MISC_MUSIC,
-	E_B_MISC_SKY
+	E_B_SELEC_MUSIC,
+	E_B_SELEC_SBTX
 };
 
 enum					e_obj_category

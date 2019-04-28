@@ -79,8 +79,9 @@ OPTI :	corriger le reframes inutiles
 TODO :	door is a sector
 TODO :	height ceil / height floor sector
 
+* TODO :	fix click on buttons in dropdown lists
 * TODO :	floor / ceil casting texture on sectors
-* TODO :	misc lists
+* TODO :	misc lists on select mode
 * TODO :	walls : texture par walls
 * TODO :	modifs texture edge en selection
 

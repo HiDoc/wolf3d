@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 17:58:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:02:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void		editor(t_env *env)
 		display_drawing(env);
 	else if (env->editor.mouse_mode == 2)
 		display_element(env);
-	else if (env->editor.mouse_mode == 4)
-		display_misc(env);
 
 	// display menu
 	ui_make_rect(env->data->surface,
@@ -98,13 +96,6 @@ void		editor(t_env *env)
 	if ((SDL_BlitScaled(get_element(E_B_MODE_ELEM, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect)) < 0)
 		ui_error_exit_sdl("Libui: Blit error on editor display");
-
-	ui_make_rect(env->data->surface,
-	get_element(E_B_MODE_MISC, env)->rect,
-	get_element(E_B_MODE_MISC, env)->color);
-	//if ((SDL_BlitScaled(get_element(E_B_MODE_MISC, env)->image,
-	//0, env->data->surface, &get_element(E_B_MODE_MISC, env)->rect)) < 0)
-	//	ui_error_exit_sdl("Libui: Blit error on editor display");
 
 	// display play
 	ui_make_string(get_element(E_B_PLAY, env)->rect, "PLAY", env->data);

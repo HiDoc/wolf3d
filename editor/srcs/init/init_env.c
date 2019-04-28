@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:49:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:19:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,6 @@ static void		init_elems(t_env *env)
 	get_element(E_B_MODE_ELEM, env)->image =
 		ui_load_image("ressources/images/icons/object.png");
 
-	rect = (SDL_Rect){800, 20, 50, 50};
-	create_element(E_B_MODE_MISC, BUTTON, rect, env);
-	//get_element(E_B_MODE_MISC, env)->image =
-	//	ui_load_image("ressources/images/icons/object.png");
-
 	rect = (SDL_Rect){1030, 20, 150, 40};
 	create_element(E_B_PLAY, BUTTON, rect, env);
 
@@ -198,11 +193,11 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){1040, 350, 120, 30};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
 
-	rect = (SDL_Rect){900, 110, 270, 20};
-	create_element(E_B_MISC_MUSIC, BUTTON, rect, env);
+	rect = (SDL_Rect){910, 150, 250, 25};
+	create_element(E_B_SELEC_MUSIC, BUTTON, rect, env);
 
-	rect = (SDL_Rect){900, 140, 270, 20};
-	create_element(E_B_MISC_SKY, BUTTON, rect, env);
+	rect = (SDL_Rect){910, 190, 250, 25};
+	create_element(E_B_SELEC_SBTX, BUTTON, rect, env);
 }
 
 /*

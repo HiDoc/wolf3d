@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 18:30:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:01:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void		display_interface(t_env *env);
 void		display_selection(t_env *env);
 void		display_drawing(t_env *env);
 void		display_element(t_env *env);
-void		display_misc(t_env *env);
 
 /*
 **	events/
@@ -92,7 +91,6 @@ int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
 int			select_mode(t_env *env);
 int			elem_mode(t_env *env);
-int			misc_mode(t_env *env);
 int			move_mode(t_env *env);
 t_vtx		*target_vertex(t_pos pos, t_env *env);
 t_w_vtx		*target_edge(t_pos pos, t_env *env);
