@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 19:15:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 11:41:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:23:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 ** 5 : Limit of floor and ceil in float
 ** 6 : Perspective projection of an edge
 */
+
 typedef struct s_vtx			t_vtx;
 typedef struct s_vctr			t_vctr;
 typedef struct s_edge			t_edge;

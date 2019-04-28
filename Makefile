@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/27 16:58:24 by fmadura          ###   ########.fr        #
+#    Updated: 2019/04/27 18:56:59 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRC_NAME 	= main.c \
 			draw_menu.c \
 			edge.c \
 			function.c \
+			free_map.c \
 			handle_enemy_sprite.c \
 			handle_weapon.c \
 			hud_data.c \
