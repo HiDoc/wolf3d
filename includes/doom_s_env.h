@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 19:21:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:14:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ struct								s_env
 
 	t_skybox		skybox;
 
+	int				curr_lvl;	// level courant
 	int				nb_games;	// nb worlds
 	char			**games;	// all worlds
 	int				nb_levels;	//nb world levels

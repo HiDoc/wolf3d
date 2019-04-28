@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 19:01:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:29:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int		main(int ac, char **av)
 	mainmenu_loop(&env);
 
 	/* world loop */
-	int iprovisoire = 0;
-	while (/**env.level*/iprovisoire < 5)
+	while (env.curr_lvl < 5)
 	{
 		env.finish = 0;
 
@@ -43,8 +42,7 @@ int		main(int ac, char **av)
 		lt_release(env.engine.minimap.surface);
 		lt_release(env.engine.minimap.background);
 
-		/*(env.level)++;*/
-		iprovisoire++;
+		env.curr_lvl++;
 	}
 
 	/* free and exit */
