@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 16:07:44 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:44:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "doom.h"
 
 void 	retrieve_vertex(t_parseline *line, t_vtx *vtx)
 {
@@ -54,16 +54,25 @@ unsigned	token_calc(t_parseline *line)
 	return (count);
 }
 
+void	select_type_sector(t_sector *sect)
+{
+	if (sect->type == 0x00)
+		sect->is_door = 0x00;
+}
+
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 {
 	t_token		*iter;
+	unsigned	number;
 	unsigned	count;
 	unsigned	pos;
 
-	sect->npoints = token_calc(line) - 3;
-	sect->neighbors = malloc(sizeof(signed) * token_calc(line) - 3);
-	sect->vertex = malloc(sizeof(t_vtx) * (sect->npoints + 1));
-
+	number = token_calc(line) - 3;
+	//printf("number of vertexes: %u\n", number);
+	sect->npoints = number;
+	sect->neighbors = ft_memalloc(sizeof(signed) * number);
+	sect->vertex = ft_memalloc(sizeof(t_vtx) * (sect->npoints + 1));
+	ft_memset(sect->neighbors, -1, number);
 	iter = line->first;
 	if (iter)
 		iter = iter->next;
@@ -79,28 +88,26 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 				sect->ceil = sect->ceil * 10 + (iter->value - '0');
 			else if (count > 1)
 				pos = pos * 10 + (iter->value - '0');
-		}
-		if (iter->type == (1U << 2) && (iter->next
-			&& iter->next->type != (1U << 2)))
-		{
-			if (count == 2)
+			if (iter->next && iter->next->type != (1U << 2))
 			{
-				sect->is_door = (pos & 100);
-				sect->door.is_openable = (pos & 10);
-				sect->door.ref_img = (pos & 1);
+				if (count == 2)
+					sect->type = pos;
+				if (count > 2)
+				{
+					sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
+					//printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
+				}
+				count++;
+				pos = 0;
 			}
-			if (count > 2)
-			{
-				sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
-				// printf("%.0f %.0f\n", sect->vertex[count - 2].x, sect->vertex[count - 2].y);
-			}
-			count++;
-			pos = 0;
 		}
 		iter = iter->next;
 	}
-	if (count > 1)
-		sect->vertex[count - 2] = (t_vtx){sect->vertex[0].x, sect->vertex[0].y};
+	select_type_sector(sect);
+	if (count > 2)
+		sect->vertex[0] = (t_vtx){sect->vertex[sect->npoints].x,
+		sect->vertex[sect->npoints].y};
+	//printf("Vertex: [%.0f, %.0f]\n", vtx[0].x, vtx[0].y);
 }
 
 void 	retrieve_player(t_engine *engine, t_parseline *line)
@@ -135,13 +142,12 @@ void 	retrieve_player(t_engine *engine, t_parseline *line)
 	}
 	engine->player.where = (t_vctr) {x, y, EYEHEIGHT};
 	engine->player.sector = n;
-	printf("%f, %f, %f, %f\n", x, y, engine->player.angle, n);
+	//printf("player :%.0f, %.0f, %.0f, %.0f\n", x, y, engine->player.angle, n);
 }
 
 void	load_vertex(t_parsefile *file, t_vtx *vert)
 {
 	t_parseline	*line;
-	t_token		*iter;
 	unsigned	pos;
 
 	line = file->first;
@@ -153,7 +159,7 @@ void	load_vertex(t_parsefile *file, t_vtx *vert)
 			if (line->first->type == (1U << 1))
 			{
 				retrieve_vertex(line, &vert[pos]);
-				// printf("v %.0f %.0f \n", vert[pos].x, vert[pos].y);
+				//printf("v %.0f %.0f \n", vert[pos].x, vert[pos].y);
 				pos++;
 			}
 		}
@@ -164,18 +170,18 @@ void	load_vertex(t_parsefile *file, t_vtx *vert)
 void	load_sector(t_engine *engine, t_parsefile *file, t_vtx *vert)
 {
 	t_parseline	*line;
-	t_token		*iter;
 	unsigned	pos;
 
 	line = file->first;
+	pos = 0;
 	while (line)
 	{
 		if (line->first)
 		{
 			if (line->first->type == (1U))
 			{
+				//printf("Currently on sector : %u\n", pos);
 				retrieve_sector(&engine->sectors[pos], line, vert);
-				// printf("v %.0f %.0f \n", vert[pos].x, vert[pos].y);
 				pos++;
 			}
 			if (line->first->type == (1U << 2))
@@ -219,11 +225,11 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 		}
 		iter = iter->next;
 	}
-	printf("o %f %f %f %f %f\n", pos.x, pos.y, s, ref.x, ref.y);
-	// fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
+	//printf("object %.0f %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x, ref.y);
+	fill_objects_sector(&engine->sectors[(unsigned)s], pos, (t_ixy){ref.x, s}, ref.y);
 }
 
-void	retrieve_enemy(t_engine *engine, t_parseline *line)
+/*void	retrieve_enemy(t_engine *engine, t_parseline *line)
 {
 	t_token		*iter;
 	t_vtx		pos;
@@ -256,15 +262,13 @@ void	retrieve_enemy(t_engine *engine, t_parseline *line)
 		}
 		iter = iter->next;
 	}
-	printf("e %f %f %f %f\n", pos.x, pos.y, s, ref.x);
-	// fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
-}
+	//printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x);
+	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
+}*/
 
 void	load_object(t_engine *engine, t_parsefile *file)
 {
 	t_parseline	*line;
-	t_token		*iter;
-	unsigned	pos;
 
 	line = file->first;
 	while (line)
@@ -273,8 +277,8 @@ void	load_object(t_engine *engine, t_parsefile *file)
 		{
 			if (line->first->type == (1U << 3))
 				retrieve_object(engine, line);
-			if (line->first->type == (1U << 6))
-				retrieve_enemy(engine, line);
+			//if (line->first->type == (1U << 6))
+			//	retrieve_enemy(engine, line);
 		}
 		line = line->next;
 	}
@@ -287,8 +291,8 @@ int		load(t_env *env, t_parsefile *file, unsigned nvertex, unsigned nsector)
 
 	engine = &env->engine;
 	engine->nsectors = nsector;
-	engine->sectors = malloc(sizeof(t_sector) * nsector);
-	vert = (t_vtx *)malloc(sizeof(t_vtx) * nvertex);
+	engine->sectors = ft_memalloc(sizeof(t_sector) * nsector);
+	vert = (t_vtx *)ft_memalloc(sizeof(t_vtx) * nvertex);
 	load_vertex(file, vert);
 	load_sector(engine, file, vert);
 	load_object(engine, file);
@@ -312,20 +316,8 @@ int		parser(t_env *env, char *filename)
 	print_file(&file);
 	load(env, &file, nvertex, nsector);
 	free_file(&file);
-	printf("vertexes: %u\n", nvertex);
-	printf("sectors: %u\n", nsector);
+	env->engine.nsectors = nsector;
+	//printf("vertexes: %u\n", nvertex);
+	//printf("sectors: %u\n", nsector);
 	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-	t_env 	env;
-
-	ft_bzero(&env, sizeof(t_env));
-	if (argc > 1)
-	{
-		if (argv[1])
-			parser(&env, argv[1]);
-	}
-	return (0);
 }

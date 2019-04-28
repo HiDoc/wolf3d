@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/28 16:18:29 by abaille          ###   ########.fr        #
+#    Updated: 2019/04/27 18:56:59 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -86,6 +86,7 @@ SRC_NAME 	= main.c \
 			edge.c \
 			file_save.c \
 			function.c \
+			free_map.c \
 			handle_enemy_sprite.c \
 			handle_weapon.c \
 			hud_data.c \
@@ -145,7 +146,17 @@ SRC_NAME 	= main.c \
 			utils_weapons.c \
 			vertex.c \
 			weapons_wheel_hud.c \
-			doom_exit.c
+			doom_exit.c \
+			lexer.c \
+			parser.c \
+			line.c \
+			op.c \
+			printer.c \
+			reader.c \
+			parser_utils1.c \
+			parser_utils2.c \
+			parser_utils3.c \
+			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 

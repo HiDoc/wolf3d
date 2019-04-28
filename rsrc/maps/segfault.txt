@@ -1,37 +1,28 @@
-vertex	1	1
-vertex	40	1
-vertex	40	8
-vertex	40	16
-vertex	40	24
-vertex	1	24
-vertex	1	16
-vertex	1	8
-vertex	0	8
-vertex	0	16
-vertex	41	16
-vertex	41	24
-vertex	60	0
-vertex	60	40
+v	1	1
+v	40	1
+v	40	8
+v	40	16
+v	40	24
+v	1	24
+v	1	16
+v	1	8
+v	0	8
+v	0	16
+v	41	16
+v	41	24
+v	60	0
+v	60	40
 
-#sector floor/ceil	type door/op/img 	n-vertex			n-neighbours
-sector 	0 40 		0		0	0	0		0 1 2 3 4 5 6 7		-1 -1 -1 -1 -1 -1 -1 -1
-sector 	0 20 		1		0	0	0		7 6 9 8				-1 -1 -1 -1
-sector 	0 0 		-1		2	0	1		10 11 4 3			-1 -1 -1 -1
-sector 	10 40 		2		0	0	0		12 13 11 10			-1 -1 -1 -1
+s 	0 40 		0		0 1 2 3 4 5 6 7
+s 	0 20 		1		7 6 9 8
+s 	0 0 		0		10 11 4 3
+s 	10 40 		2		12 13 11 10
 
+o  	8 	4	0	0 1
+o  	10 	13	0	1 1
+o  	13 	13	0	2 1
+o  	17 	13	0	3 1
 
-# object	x	y  sect ref is_wpn
-object  	8 	4	0	0 1
-object  	10 	13	0	1 1
-object  	13 	13	0	2 1
-object  	17 	13	0	3 1
-object  	32 	20	0	0 0
-object  	4 	7	0	1 0
+e		18	15	0	0
 
-# enemies 	x	y	sect ref
-enemy		20	13	0	 2
-enemy		6	19	0	 1
-enemy		20	4	0	 0
-
-# player 	x 	y	sectorno	angle
-player  	1 	1	0			0
+p  	1 	1	0			0

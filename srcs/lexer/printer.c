@@ -6,11 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:39:10 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 16:08:10 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:26:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "doom.h"
 
 void	print_line(t_parseline *line)
 {
@@ -20,10 +20,10 @@ void	print_line(t_parseline *line)
 	iter = line->first;
 	while (iter)
 	{
-		printf("[%u: %d]", iter->pos, iter->value);
+		//printf("[%u: %c]", iter->pos, iter->value);
 		iter = iter->next;
 	}
-	printf("\n");
+	//printf("\n");
 }
 
 void	print_file(t_parsefile *file)
@@ -51,11 +51,11 @@ int		free_file(t_parsefile *file)
 		{
 			iter = line->first;
 			line->first = iter->next;
-			free(iter);
+			lt_release(iter);
 			iter = NULL;
 		}
 		file->first = line->next;
-		free(line);
+		lt_release(line);
 		line = NULL;
 	}
 	return (1);

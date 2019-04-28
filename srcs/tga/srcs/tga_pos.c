@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line.c                                             :+:      :+:    :+:   */
+/*   tga_pos.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 14:37:18 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/07 18:33:56 by fmadura          ###   ########.fr       */
+/*   Created: 2019/04/27 20:10:18 by fmadura           #+#    #+#             */
+/*   Updated: 2019/04/28 16:08:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "tga.h"
 
-t_parseline	*new_line(unsigned nline)
+int		pos_depth(t_tga *d)
 {
-	t_parseline	*new;
+	int	mult;
 
-	if ((new = (t_parseline *)malloc(sizeof(t_parseline))) == NULL)
-		return (NULL);
-	new->first = NULL;
-	new->next = NULL;
-	new->nline = nline;
-	new->len = 0;
-	return (new);
+	mult = (d->depth / 8);
+	return (d->offset + mult * d->width * d->i + mult * d->j);
 }

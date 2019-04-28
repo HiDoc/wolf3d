@@ -6,11 +6,38 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 19:58:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:39:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void		display_error_msg(char *msg, t_env *env)
+{
+	if (env->editor.error_msg)
+		lt_release(env->editor.error_msg);
+	env->editor.timestamp = time(0);
+	if (!(env->editor.error_msg = lt_push(ft_strdup(msg), ft_memdel)))
+		ui_error_exit_sdl("Editor: out of memory on delete_vertex");
+}
+
+t_pos		vtx_transform(t_pos pos, t_env *env)
+{
+	const SDL_Rect  rect = get_element(E_R_RECT, env)->rect;
+	t_pos           newpos;
+	t_pos			translate;
+	t_pos			origin;
+
+	origin.x = rect.x + 425;
+	origin.y = rect.y + 340;
+
+	translate.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
+	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
+
+	newpos.x = origin.x + (pos.x + translate.x) * env->grid_scale;
+	newpos.y = origin.y + (pos.y + translate.y) * env->grid_scale;
+	return (newpos);
+}
 
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst)
 {
@@ -47,6 +74,11 @@ void			sync_sct_minmax(t_env *env)
 	}
 }
 
+float	pythagore(t_pos p1, t_pos p2)
+{
+	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
+}
+
 t_pos			get_edge_center(t_pos a, t_pos b)
 {
 	t_pos	center;
@@ -56,16 +88,6 @@ t_pos			get_edge_center(t_pos a, t_pos b)
 	return (center);
 }
 
-static t_pos   diff_vertex(t_pos p1, t_pos p2)
-{
-	return ((t_pos){p1.x - p2.x, p1.y - p2.y});
-}
-
-static float   cross_product(t_pos p1, t_pos p2)
-{
-	return (p1.x * p2.y - p2.x * p1.y);
-}
-
 /*
 ** Determine which side of a line the point is on.
 ** Return value: left < 0, on line 0, right > 0.
@@ -73,7 +95,14 @@ static float   cross_product(t_pos p1, t_pos p2)
 
 float		pointside(t_pos p, t_pos p0, t_pos p1)
 {
-	return (cross_product(diff_vertex(p1, p0), diff_vertex(p, p0)));
+	t_pos	res1;
+	t_pos	res2;
+	float	res;
+
+	res1 = (t_pos){p1.x - p0.x, p1.y - p0.y};
+	res2 = (t_pos){p.x - p0.x, p.y - p0.y};
+	res = res1.x * res2.y - res2.x * res1.y;
+	return (res);
 }
 
 /*
@@ -131,11 +160,6 @@ int		ft_strchri(char *str, char c)
 		count++;
 	}
 	return (-1);
-}
-
-float	pythagore(t_pos p1, t_pos p2)
-{
-	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
 }
 
 int		poscmp(t_pos a, t_pos b)

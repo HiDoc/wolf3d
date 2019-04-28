@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 22:07:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:41:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ enum					e_elements
 	E_B_SELEC_DEL,
 	E_I_SELEC_HEIGHT,
 	E_I_SELEC_GRAVITY,
-	E_B_SELEC_SPLIT
+	E_B_SELEC_SPLIT,
+	E_B_SELEC_DOOR,
+	E_B_SELEC_FDOOR,
+	E_B_SELEC_CEIL,
+	E_B_SELEC_SKY
 };
 
 enum					e_obj_category
@@ -76,6 +80,8 @@ typedef struct  s_env   	t_env;
 
 struct					s_w_vtx
 {
+	int			fdoor;	// is final door
+	int			door;	// is door
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
@@ -99,6 +105,8 @@ struct					s_sct
 
 	int				height;
 	int				gravity;
+
+	int				roof;		// ceil or sky : 0 / 1
 
 	float			xmin;
 	float			xmax;
@@ -151,6 +159,9 @@ struct					s_menu
 
 struct					s_editor
 {
+	time_t			timestamp;	// error_msg timestamp
+	char			*error_msg;
+
 	// mouse handling
 	int				mouse_mode;
 
@@ -203,19 +214,18 @@ struct					s_env
 	t_sct			*sct_start;
 	// lst objects
 	t_object		*objects;
-
-
 	// lst elements
 	t_elem			*elements;
 	// lst button objects
 	t_elem			*btn_objs;
+
 	// current elem / objects flags
 	t_elem			*obj_elem;	// obj selectionne
 	int				spawn_set;	// spawn pose, en attente de direction
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// variables
-	float			pixel_value; // size correspond a un pixel
+	float			grid_scale;
 
 	// relative mouse_position
 	t_pos			mouse;

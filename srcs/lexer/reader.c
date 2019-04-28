@@ -6,11 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:09:19 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/14 17:02:38 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:58:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "doom.h"
 
 int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 {
@@ -18,11 +18,6 @@ int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 	(*nline)++;
 	(*line)->next = new_line(*nline);
 	(*line) = (*line)->next;
-	return (1);
-}
-
-int		read_new_line(char *buffer, t_parsefile *file)
-{
 	return (1);
 }
 
