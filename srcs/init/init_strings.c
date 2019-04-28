@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 11:46:15 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/23 16:20:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	set_pick_strings(t_env *env)
 	SDL_Surface	*tmp;
 	t_vtx		n_size;
 
-	tmp = NULL;
 	tmp = make_string((t_font){
 		WHITE, PICK_STRING, env->hud.text.text, {0, 0}, 0, -1, -1});
 	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};

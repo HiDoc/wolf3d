@@ -6,18 +6,20 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 18:29:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:20:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_MENU_H
 # define DOOM_D_MENU_H
 
-# define NB_IMG_MENU	7
+# define NB_IMG_MENU	13
+# define NB_INTER_IMG	6
 # define NB_BLOC_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
 # define NB_OPT_MENU	17
+# define NB_INTER_STR	18
 /*
 ** MENU Index IMG - title
 */
@@ -28,6 +30,13 @@
 # define I_LOADMENU		4
 # define I_IBTN			5
 # define I_INEWGAME		6
+
+# define I_INTER1		7
+# define I_INTER2		8
+# define I_INTER3		9
+# define I_INTER4		10
+# define I_INTER5		11
+# define I_INTER6		12
 
 /*
 ** MENU String

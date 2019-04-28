@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 00:51:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/23 16:19:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref)
 	if (obj->is_pickable)
 	{
 		draw_img(env, env->hud.text.pick, &fill);
+		fill.rect.w = env->hud.text.obj_names[ref]->w;
+		fill.rect.h = env->hud.text.obj_names[ref]->h;
 		fill.rect.x += env->hud.text.pick->w;
 		draw_img(env, env->hud.text.obj_names[ref], &fill);
 	}

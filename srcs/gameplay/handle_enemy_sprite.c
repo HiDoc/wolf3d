@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 19:56:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:58:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	bot_is_hit(t_character *e, t_wrap_enmy *enemy)
 {
 	if (enemy->hit_frame / FRAME_RATIO < 10)
 	{
-		enemy->sprite = e->ref == LOSTSOUL ? e->shoot[0] : e->death[0];
+		enemy->sprite = (e->ref == LOSTSOUL) ? e->shoot[0] : e->death[0];
 		enemy->is_shooting = 0;
 		enemy->is_alerted = 0;
 		enemy->has_detected = 0;
@@ -68,11 +68,26 @@ static void	bot_is_dying(t_env *env, t_character *e, t_wrap_enmy *enemy, t_secto
 		temp = env->stats.data[I_KTOGO];
 		enemy->is_alive = 0;
 		enemy->is_dying = 0;
-		env->stats.data[I_KTOGO]--;
-		temp && !env->stats.data[I_KTOGO] ? env->engine.player.sound.open = 1 : 0;
+		enemy->ref != BOSS ? env->stats.data[I_KTOGO]-- : 0;
+		(temp && !env->stats.data[I_KTOGO]) ? env->engine.player.sound.end_level = 1 : 0;
 		s->nb_enemies--;
 	}
 }
+
+
+void	set_bossmidlife(t_env *e, t_wrap_enmy *en)
+{
+	t_character	*renemy;
+
+
+	renemy = &e->world.enemies[BOSS_MIDL];
+	en->ref = renemy->type;
+	en->brain = renemy->brain;
+	en->is_alive = 1;
+	en->damage = renemy->damage;
+	en->frame = renemy->cadence_shoot;
+}
+
 
 void	enemies_frames(t_env *env, t_sector *sector)
 {
@@ -85,20 +100,21 @@ void	enemies_frames(t_env *env, t_sector *sector)
 	while (enemy)
 	{
 		e = &env->world.enemies[enemy->ref];
-		if (enemy->is_dying)
-			bot_is_dying(env, e, enemy, sector);
-		else
-		{
-			if (enemy->is_shooting)
-				bot_is_shootin(e, enemy);
-			else
-				bot_is_moving(e, enemy);
-			if (enemy->is_shot)
-				bot_is_hit(e, enemy);
-		}
-		sound_enemies(env, enemy, p);
 		if (!enemy->is_alive && !enemy->is_dying)
+		{
 			enemy->sprite = e->death[e->time_death - 1];
+		}
+		else if (enemy->is_dying)
+			bot_is_dying(env, e, enemy, sector);
+		else if (enemy->is_shooting)
+			bot_is_shootin(e, enemy);
+		else
+			bot_is_moving(e, enemy);
+		if (enemy->is_shot)
+			bot_is_hit(e, enemy);
+		if (enemy->ref == BOSS && !enemy->is_alive && !enemy->is_dying)
+			set_bossmidlife(env, enemy);
+		sound_enemies(env, enemy, p);
 		enemy = enemy->next;
 	}
 }

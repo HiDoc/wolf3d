@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 15:49:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 19:01:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,71 +24,78 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 	lt_release(sprite);
 }
 
-static void	thread_current_sprite(t_bloc *child, char *path, int line, int size)
-{
-	int	i;
+// static void	thread_current_sprite(t_bloc *child, char *path, int line, int size)
+// {
+// 	int	i;
 
-	i = line;
-	while (i < size)
-	{
-		current_sprite(&child[i], path, i);
-		i += NB_THREAD_IMG;
-	}
-}
+// 	i = line;
+// 	while (i < size)
+// 	{
+// 		current_sprite(&child[i], path, i);
+// 		i += NB_THREAD_IMG;
+// 	}
+// }
 
-static void		set_thread(t_weapon *mother, t_bloc *child, char *path, int size)
-{
-	int	i;
+// static void		set_thread(t_weapon *mother, t_bloc *child, char *path, int size)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < NB_THREAD_IMG)
-	{
-		mother->threads[i].mother = mother;
-		mother->threads[i].child = child;
-		mother->threads[i].path = path;
-		mother->threads[i].size = size;
-		mother->threads[i].nb = i;
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < NB_THREAD_IMG)
+// 	{
+// 		mother->threads[i].mother = mother;
+// 		mother->threads[i].child = child;
+// 		mother->threads[i].path = path;
+// 		mother->threads[i].size = size;
+// 		mother->threads[i].nb = i;
+// 		i++;
+// 	}
+// }
 
-static void		*launch_thread(void *arg)
-{
-	t_thread	*tmp;
+// static void		*launch_thread(void *arg)
+// {
+// 	t_thread	*tmp;
 
-	tmp = (t_thread *)arg;
-	thread_current_sprite(tmp->child, tmp->path, tmp->nb, tmp->size);
-	pthread_exit(NULL);
-}
+// 	tmp = (t_thread *)arg;
+// 	thread_current_sprite(tmp->child, tmp->path, tmp->nb, tmp->size);
+// 	pthread_exit(NULL);
+// }
 
-static void		init_thread(t_weapon *mother, t_bloc *child, char *path, int size)
-{
-	int	i;
+// static void		init_thread(t_weapon *mother, t_bloc *child, char *path, int size)
+// {
+// 	int	i;
 
-	i = 0;
-	set_thread(mother, child, path, size);
-	while (i < NB_THREAD_IMG)
-	{
-		if (pthread_create(&mother->threads[i].th, NULL,
-		launch_thread, &mother->threads[i]))
-			doom_error_exit("Doom_nukem error on pthread_create");
-		i++;
-	}
-	i = 0;
-	while (i < NB_THREAD_IMG)
-	{
-		if (pthread_join(mother->threads[i].th, NULL))
-			doom_error_exit("Doom_nukem error on pthread_join");
-		i++;
-	}
-}
+// 	i = 0;
+// 	set_thread(mother, child, path, size);
+// 	while (i < NB_THREAD_IMG)
+// 	{
+// 		if (pthread_create(&mother->threads[i].th, NULL,
+// 		launch_thread, &mother->threads[i]))
+// 			doom_error_exit("Doom_nukem error on pthread_create");
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < NB_THREAD_IMG)
+// 	{
+// 		if (pthread_join(mother->threads[i].th, NULL))
+// 			doom_error_exit("Doom_nukem error on pthread_join");
+// 		i++;
+// 	}
+// }
 
-static t_bloc *weapon_fill(t_weapon *mother, char *path, int size)
+static t_bloc *weapon_fill(char *path, int size)
 {
 	t_bloc	*weapons;
+	int		i;
 
 	weapons = ft_memalloc(sizeof(t_bloc) * size);
-	init_thread(mother, weapons, path, size);
+	i = -1;
+	while (++i < size)
+	{
+		current_sprite(&weapons[i], path, i);
+	}
+
+	// init_thread(mother, weapons, path, size);
 	return (weapons);
 }
 
@@ -102,8 +109,8 @@ static void     weapon_sprites(t_weapon *weapon, char *name)
 	s_path = ft_strjoin(name, "/shoot/");
 	sprite = ft_strjoin(name, "/");
 	current_sprite(&weapon->sprite, sprite, 0);
-	weapon->sprite_reload = weapon_fill(weapon, r_path, weapon->time_reload);
-	weapon->sprite_shoot = weapon_fill(weapon, s_path, weapon->time_shoot);
+	weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload);
+	weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot);
 	lt_release(r_path);
 	lt_release(s_path);
 	lt_release(sprite);

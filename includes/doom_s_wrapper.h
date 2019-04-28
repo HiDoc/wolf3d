@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 00:31:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:14:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ struct						s_object
 	int			nb_use;
 	int			max_stack;
 	int			ref;
-	int			sectorno;
 	t_vtx		vertex;
 	t_l_float	size;
 };
@@ -96,12 +95,15 @@ struct					s_wrap_sect
 	int			is_wpn;
     int         (*action)(void *, t_wrap_inv *);
 	int			is_pickable;
+	int			sectorno;
 	t_wrap_sect	*next;
+	t_wrap_sect	*prev;
 };
 
 struct 					s_wrap_enmy
 {
 	int				ref;
+	int				sectorno;
 	int				health;
 	int				shield;
 	int				damage;
