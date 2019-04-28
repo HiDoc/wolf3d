@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:57:32 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/23 21:32:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:23:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	print_edg(t_edge edge)
 {
-	printf("\t[%f, %f], [%f, %f]\n", edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+	(void)edge;
+	//printf("\t[%f, %f], [%f, %f]\n", edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
 }
 
 void	print_sect(t_sector *sect)

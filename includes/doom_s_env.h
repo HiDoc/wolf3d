@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 19:05:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:14:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,26 +99,20 @@ struct								s_env
 	t_menu			menu;
 	int				god_mod;
 
-	/* skybox */
 	t_skybox		skybox;
 
+	int				curr_lvl;	// level courant
 	int				nb_games;	// nb worlds
 	char			**games;	// all worlds
 	int				nb_levels;	//nb world levels
 	t_level			**levels;	// world levels
 	int				finish;		// flag fin de level
-
-	// Comment je penses que ce serait mieux :
-	//
-	// t_sdl			sdl; 		(trucs sdl ...)
-	// t_ressources		ressources; (audio / images / fonts ...)
-	// t_player			player; 	(pos / health / stats ...)
-	// t_level			level; 		(map / entitee ...)
-	// t_hud			hud; 		(inventory / minimap / ...)
 };
 
 
 // a rander dans un header fonctions
+
+void			free_map(t_env *env);
 
 SDL_Surface		*make_surface(int height, int width);
 SDL_Surface		*make_string(t_font str_data);

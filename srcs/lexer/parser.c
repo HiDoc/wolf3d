@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 12:27:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:27:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 	unsigned	pos;
 
 	number = token_calc(line) - 3;
-	printf("number of vertexes: %u\n", number);
+	//printf("number of vertexes: %u\n", number);
 	sect->npoints = number;
 	sect->neighbors = ft_memalloc(sizeof(signed) * number);
 	sect->vertex = ft_memalloc(sizeof(t_vtx) * (sect->npoints + 1));
@@ -95,7 +95,7 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 				if (count > 2)
 				{
 					sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
-					printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
+					//printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
 				}
 				count++;
 				pos = 0;
@@ -107,7 +107,7 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 	if (count > 2)
 		sect->vertex[0] = (t_vtx){sect->vertex[sect->npoints].x,
 		sect->vertex[sect->npoints].y};
-	printf("Vertex: [%.0f, %.0f]\n", vtx[0].x, vtx[0].y);
+	//printf("Vertex: [%.0f, %.0f]\n", vtx[0].x, vtx[0].y);
 }
 
 void 	retrieve_player(t_engine *engine, t_parseline *line)
@@ -142,7 +142,7 @@ void 	retrieve_player(t_engine *engine, t_parseline *line)
 	}
 	engine->player.where = (t_vctr) {x, y, EYEHEIGHT};
 	engine->player.sector = n;
-	printf("player :%.0f, %.0f, %.0f, %.0f\n", x, y, engine->player.angle, n);
+	//printf("player :%.0f, %.0f, %.0f, %.0f\n", x, y, engine->player.angle, n);
 }
 
 void	load_vertex(t_parsefile *file, t_vtx *vert)
@@ -159,7 +159,7 @@ void	load_vertex(t_parsefile *file, t_vtx *vert)
 			if (line->first->type == (1U << 1))
 			{
 				retrieve_vertex(line, &vert[pos]);
-				printf("v %.0f %.0f \n", vert[pos].x, vert[pos].y);
+				//printf("v %.0f %.0f \n", vert[pos].x, vert[pos].y);
 				pos++;
 			}
 		}
@@ -180,7 +180,7 @@ void	load_sector(t_engine *engine, t_parsefile *file, t_vtx *vert)
 		{
 			if (line->first->type == (1U))
 			{
-				printf("Currently on sector : %u\n", pos);
+				//printf("Currently on sector : %u\n", pos);
 				retrieve_sector(&engine->sectors[pos], line, vert);
 				pos++;
 			}
@@ -225,7 +225,7 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 		}
 		iter = iter->next;
 	}
-	printf("object %.0f %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x, ref.y);
+	//printf("object %.0f %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x, ref.y);
 	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
 }
 
@@ -262,7 +262,7 @@ void	retrieve_enemy(t_engine *engine, t_parseline *line)
 		}
 		iter = iter->next;
 	}
-	printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x);
+	//printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x);
 	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
 }
 
@@ -317,7 +317,7 @@ int		parser(t_env *env, char *filename)
 	load(env, &file, nvertex, nsector);
 	free_file(&file);
 	env->engine.nsectors = nsector;
-	printf("vertexes: %u\n", nvertex);
-	printf("sectors: %u\n", nsector);
+	//printf("vertexes: %u\n", nvertex);
+	//printf("sectors: %u\n", nsector);
 	return (1);
 }

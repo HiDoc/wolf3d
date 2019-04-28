@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:39:10 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 12:27:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:26:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	print_line(t_parseline *line)
 	iter = line->first;
 	while (iter)
 	{
-		printf("[%u: %c]", iter->pos, iter->value);
+		//printf("[%u: %c]", iter->pos, iter->value);
 		iter = iter->next;
 	}
-	printf("\n");
+	//printf("\n");
 }
 
 void	print_file(t_parsefile *file)
