@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 20:36:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:20:10 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,8 @@ void		delete_obj_sector(t_env *e, t_wrap_sect *obj)
 {
 	t_sector	*s;
 	t_wrap_sect	*head;
-	t_wrap_sect	*tmp;
 
-	s = e->engine.sectors[obj->sectorno];
+	s = &e->engine.sectors[obj->sectorno];
 	head = s->head_object;
 	while (head)
 	{
@@ -139,9 +138,12 @@ void		delete_obj_sector(t_env *e, t_wrap_sect *obj)
 			if (head->ref == s->head_object->ref)
 				s->head_object = s->head_object->next;
 			else
-
+				head->prev->next = head->next;
+			free(head);
+			head = NULL;
 		}
-		head = head->next;
+		else
+			head = head->next;
 	}
 }
 
@@ -158,12 +160,13 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 			vertex.x = env->engine.player.where.x + 1;
 			vertex.y = env->engine.player.where.y;
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
-			vertex, object->current->ref, object->current->is_wpn);
+				vertex, (t_ixy){object->current->ref, env->engine.player.sector},
+				object->current->is_wpn);
 			sector->nb_objects++;
 			env->engine.player.sound.drop = 1;
 		}
 		else
-			delete_obj_sector(env, obj->current);
+			delete_obj_sector(env, object->current);
 		if (object->nb_stack > 1)
 			object->nb_stack--;
 		else

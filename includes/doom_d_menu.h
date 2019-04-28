@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 21:08:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:20:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DOOM_D_MENU_H
 
 # define NB_IMG_MENU	13
+# define NB_INTER_IMG	6
 # define NB_BLOC_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
@@ -29,12 +30,13 @@
 # define I_LOADMENU		4
 # define I_IBTN			5
 # define I_INEWGAME		6
+
 # define I_INTER1		7
 # define I_INTER2		8
 # define I_INTER3		9
-# define I_END1			10
-# define I_END2			11
-# define I_END3			12
+# define I_INTER4		10
+# define I_INTER5		11
+# define I_INTER6		12
 
 /*
 ** MENU String
@@ -84,36 +86,5 @@
 # define I_OGREEGEM		12
 # define I_OREDGEM		13
 # define I_OPURPGEM		14
-
-/*
-** INTER intro str
-*/
-# define S_INTRO1_1	"Doom has come... Only you can send all the demons back to Hell.."
-# define S_INTRO1_2	"Killing them all is the only way to success.."
-# define S_INTRO1_3	"They are rage, brutal, without mercy. But you. You will be worse. Rip and tear, until it is done."
-# define S_INTRO2_1	"It seems like someone did'nt entirely get what he deserved.."
-# define S_INTRO2_2	"MECHA-FUHRER's been brought back from the dead with only one goal: to stop you."
-# define S_INTRO2_3	"Don't let him.."
-# define S_INTRO3_1	"Now you're at the CYBER DEMON's gates.. He's waiting for you.."
-# define S_INTRO3_2	"You'd better be prepared for what's coming.."
-# define S_INTRO3_3	"Take him down, and we all might live long enough to see the sun rise.."
-# define S_END1_1	"Not bad.."
-# define S_END1_2	"This was only a warm-up."
-# define S_END1_3	"Now the real game begins.."
-# define S_END2_1	"You're impressive, I give you that.. But don't rest yet."
-# define S_END2_2	"There is still plenty to do.."
-# define S_END2_3	"And many to kill."
-# define S_END3_1	"Well.. You did it.."
-# define S_END3_2	"Not that surprising, we expected nothing less from the Duke.."
-# define S_END3_3	"Come at the Corp and meet the Conseil, it's time to get your... paiement."
-/*
-** INTRO str index
-*/
-# define I_INTRO1_1	0
-# define I_INTRO2_1	3
-# define I_INTRO3_1	6
-# define I_END1_1	9
-# define I_END2_1	12
-# define I_END3_1	15
 
 #endif

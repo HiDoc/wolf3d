@@ -70,7 +70,7 @@ void			load_map(t_engine *e, t_env *env)
 					 int		ref = 0;
 					 int		is_wpn = 0;
 					 sscanf(ptr += n, "%f %f %d %d %d%n", &vertex.x, &vertex.y, &s, &ref, &is_wpn, &n);
-					 fill_objects_sector(&e->sectors[s], vertex, ref, is_wpn);
+					 fill_objects_sector(&e->sectors[s], vertex, (t_ixy){ref, s}, is_wpn);
 					 break;
 			case 'e':; // enemy
 					 sscanf(ptr += n, "%f %f %d %d%n", &vertex.x, &vertex.y, &s, &ref, &n);

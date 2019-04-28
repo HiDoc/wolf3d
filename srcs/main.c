@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/26 20:56:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:13:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int		main(int ac, char **av)
 
 	/* world loop */
 	int iprovisoire = 0;
-	while (/**env.level*/iprovisoire < 3)
+	while (/**env.level*/iprovisoire < 5)
 	{
 		env.finish = 0;
+		env.menu.status.inter = 1;
 
 		// display text start
-		loop_intro(&env, iprovisoire, 1);
+		loop_intro(&env, iprovisoire);
 
 		/* load level */
 		load_map(&env.engine, &env);
@@ -39,9 +40,6 @@ int		main(int ac, char **av)
 
 		/* gameloop */
 		sdl_loop(&env);
-
-		// display text end
-		loop_intro(&env, iprovisoire, 0);
 
 		/* free level */
 		//free_map();
