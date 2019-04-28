@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 17:35:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 13:30:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		create_element(int id, int type, SDL_Rect rect, t_env *env)
 	}
 }
 
-static void		create_btn_obj(int id, int ref, int type, char *str, SDL_Rect rect, t_env *env)
+static void		create_btn_obj(int id, int ref, int type, char *str, t_env *env)
 {
 	t_elem   *new;
 
@@ -45,29 +45,26 @@ static void		create_btn_obj(int id, int ref, int type, char *str, SDL_Rect rect,
 	new->type = type;
 	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	new->rect = rect;
-	if (!(env->btn_objs))
+	if (!(env->editor.btn_objs))
 	{
-		env->btn_objs = new;
-		env->btn_objs->next = 0;
+		env->editor.btn_objs = new;
+		env->editor.btn_objs->next = 0;
 	}
 	else
 	{
-		new->next = env->btn_objs;
-		env->btn_objs = new;
+		new->next = env->editor.btn_objs;
+		env->editor.btn_objs = new;
 	}
 }
 
-static void		create_btn_map(char *str, SDL_Rect rect, t_env *env)
+static void		create_btn_map(char *str, t_env *env)
 {
 	t_elem   *new;
 
 	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	// ...
 	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	new->rect = rect;
 	if (!(env->menu.btn_maps))
 	{
 		env->menu.btn_maps = new;
@@ -147,6 +144,12 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_ELM_DOWN, BUTTON, rect, env);
 
+	rect = (SDL_Rect){1130, 350, 20, 20};
+	create_element(E_B_DRW_UP, BUTTON, rect, env);
+
+	rect = (SDL_Rect){1130, 380, 20, 20};
+	create_element(E_B_DRW_DOWN, BUTTON, rect, env);
+
 	rect = (SDL_Rect){900, 110, 270, 20};
 	create_element(E_B_ELM_OBWL, BUTTON, rect, env);
 
@@ -194,9 +197,12 @@ static void		init_elems(t_env *env)
 	create_element(E_B_MISC_SKY, BUTTON, rect, env);
 }
 
-static void		load_obj(char *path, int type, t_env *env)
+/*
+**	Return nb of loaded objects
+*/
+
+static int		load_obj(char *path, int type, t_env *env)
 {
-	SDL_Rect	rect;
 	struct dirent       *de;
 	DIR                 *dr;
 	char				*name;
@@ -210,65 +216,83 @@ static void		load_obj(char *path, int type, t_env *env)
 	{
 		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
 		{
-			rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
 			if (!(name = lt_push(ft_strsub(
 				de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_btn_obj(i, ref, type, name, rect, env);
+			create_btn_obj(i, ref, type, name, env);
 			lt_release(name);
 			i++;
 		}
 	}
 	lt_release(dr);
+	return (i);
 }
 
-static void		load_specials(int type, t_env *env)
-{
-	SDL_Rect	rect;
+/*
+**	Return nb of loaded objects
+*/
 
-	rect = (SDL_Rect){910, 330, 200, 30};
-	create_btn_obj(0, 0, type, "Spawn", rect, env);
-	rect = (SDL_Rect){910, 330 + 40, 200, 30};
-	create_btn_obj(1, 0, type, "Interest", rect, env);
+static int		load_specials(int type, t_env *env)
+{
+	create_btn_obj(0, 0, type, "Spawn", env);
+	create_btn_obj(1, 0, type, "Interest", env);
+	return (2);
 }
 
 static void		init_objs(t_env *env)
 {
-	// wall_objects
-	load_obj("ressources/objects/wall_objects", WALL_OBJ, env);
-	// consumables
-	load_obj("ressources/objects/consumables", CONSUMABLE, env);
-	// entities
-	load_obj("ressources/objects/entities", ENTITY, env);
-	// specials
-	load_specials(SPECIAL, env);
+	env->editor.nb_btn_wobj =
+		load_obj("ressources/objects/wall_objects", WALL_OBJ, env);
+	env->editor.nb_btn_cons =
+		load_obj("ressources/objects/consumables", CONSUMABLE, env);
+	env->editor.nb_btn_ntty =
+		load_obj("ressources/objects/entities", ENTITY, env);
+	env->editor.nb_btn_spec = load_specials(SPECIAL, env);
 }
 
 static void		init_menu(t_env *env)
 {
-	SDL_Rect			rect;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
 
 	i = 0;
-	// compteur de nb de maps
 	if (!(dr = lt_push(opendir("maps/"), dir_del)))
 		ui_error_exit_sdl("Editor: Unable to open maps/");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			rect = (SDL_Rect){220, 310 + (40 * i), 300, 25};
+			create_btn_map(de->d_name, env);
 			env->menu.nb_maps++;
-			create_btn_map(de->d_name, rect, env);
 			i++;
 		}
 	}
 	lt_release(dr);
+
 	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
+}
+
+static void     create_wall_txtr(char *str, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
+	if (!(env->editor.wall_txtr))
+	{
+		env->editor.wall_txtr = new;
+		env->editor.wall_txtr->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.wall_txtr;
+		env->editor.wall_txtr = new;
+	}
 }
 
 static void		init_editor(t_env *env)
@@ -277,38 +301,22 @@ static void		init_editor(t_env *env)
 	DIR					*dr;
 	int					i;
 
-	env->grid_scale = 45;
-	env->editor.grid_translate = (t_pos){0, 0};
-
 	i = 0;
-	// compteur nb wall textures
-	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.')
-			env->editor.nb_wall_txtr++;
-	}
-	lt_release(dr);
-
-	// stockage des wall textures
-	if (!(env->editor.wall_txtr = lt_push(
-	ft_memalloc(sizeof(char *) * (env->editor.nb_wall_txtr + 1)), ft_memdel)))
-		ui_error_exit_sdl("Libui: Out of memory");
-
 	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
 		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			if (!(env->editor.wall_txtr[i] =
-			lt_push(ft_strdup(de->d_name), ft_memdel)))
-				ui_error_exit_sdl("Editor: Out of memory");
+			create_wall_txtr(de->d_name, env);
+			env->editor.nb_wall_txtr++;
 			i++;
 		}
 	}
 	lt_release(dr);
+
+	env->grid_scale = 45;
+	env->editor.grid_translate = (t_pos){0, 0};
 }
 
 void		init_env(t_env *env, t_data *data)

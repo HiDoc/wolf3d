@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 18:28:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 13:29:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ enum					e_elements
 	E_B_PLAY,
 	E_B_ELM_UP,
 	E_B_ELM_DOWN,
+	E_B_DRW_UP,
+	E_B_DRW_DOWN,
 	E_B_ELM_OBWL,
 	E_B_ELM_CONS,
 	E_B_ELM_NTTY,
@@ -157,9 +159,12 @@ struct					s_object
 struct					s_menu
 {
 	int				state;
+
+	// dropdown list
 	int				nb_maps;
 	int				idx_map;
-	t_elem			*btn_maps;		// upload list
+	t_elem			*btn_maps;
+
 	t_elem			*selected;		// upload selected
 	SDL_Surface		*background;
 };
@@ -169,13 +174,26 @@ struct					s_editor
 	time_t			timestamp;	// error_msg timestamp
 	char			*error_msg;
 
-	// mouse handling
-	int				mouse_mode;
+	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe ??????????
+	t_elem			*obj_elem;	// obj selectionne ??????????????
 
-	// wall textures
+	// objects dropdown_lists
+	int				nb_btn_wobj;
+	int				nb_btn_cons;
+	int				nb_btn_ntty;
+	int				nb_btn_pref;
+	int				nb_btn_spec;
+	int				idx_btn_obj;
+	t_elem			*btn_objs;
+
+	// wall textures dropdown_list
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
-	char            **wall_txtr;
+	t_elem			*wall_txtr;
+
+
+	// mouse handling
+	int				mouse_mode;
 
 	// drag vertex;
 	int				mouse_drag;
@@ -222,14 +240,10 @@ struct					s_env
 	// lst objects
 	t_object		*objects;
 	// lst elements
-	t_elem			*elements;
-	// lst button objects
-	t_elem			*btn_objs;
+	t_elem			*elements;	// ui elements
 
 	// current elem / objects flags
-	t_elem			*obj_elem;	// obj selectionne
 	int				spawn_set;	// spawn pose, en attente de direction
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
 
 	// variables
 	float			grid_scale;

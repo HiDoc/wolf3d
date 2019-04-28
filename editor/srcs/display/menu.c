@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/27 18:30:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:29:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	left_panel(t_pos origin, t_env *env)
 		ui_error_exit_sdl("Libui: Blit error in menu left panel");
 
 	// display maps file
-	rect = (SDL_Rect){0, origin.y + 100, 0, 320};
+	rect = (SDL_Rect){origin.x + 20, origin.y + 130, 290, 310};
 	display_dropdown_list(rect, env->menu.btn_maps, env->menu.idx_map, env);
 }
 

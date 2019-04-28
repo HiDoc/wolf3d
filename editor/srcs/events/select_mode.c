@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 16:13:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 13:40:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ int				select_mode(t_env *env)
 			unselect_all(env);
 			return (1);	
 		}
-		return (0);
+		return (1);
 	}
 	else if (event.type == SDL_KEYDOWN)
 		return (select_input_events(env));
