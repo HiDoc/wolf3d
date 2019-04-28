@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_shoot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 14:21:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 15:32:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 			env->player.health = 0;
 			env->stats.data[I_DEATHS]++;
 			env->engine.player.sound.dead = 1;
+			// PLAYER REPART AU DEBUT (sauf si save)
 		}
 		else if (env->player.health <= 50 && health > env->player.health
 		&& !env->engine.player.sound.lowlife)
@@ -90,9 +91,9 @@ void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
 			{
 				enemy->is_dying = 1;
 				enemy->is_alive = 0;
+				enemy->player.sound.dead = 1;
 				env->stats.data[I_KILLS]++;
 				env->stats.data[I_K_MAGNUM + wpn]++;
-				enemy->player.sound.dead = 1;
 			}
 			enemy->is_shot = 1;
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;

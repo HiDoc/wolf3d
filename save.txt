@@ -1,0 +1,21 @@
+nb_save
+save_name
+
+player::health:shield:wherex:wherey
+
+current::current->current->ref
+weapon::weapons.current->ref:ammo[0]:ammo[1]:ammo[2]  * nb_wpn in inv
+
+objects::objects.current->ref:objects.nb_stack * nb_current_obj
+
+gems::objects.current->ref:objects.nb_stack * nb_gem
+
+stats::data[0]:data[1]:data[2]... * NB_STATS
+
+settings::keys[0]:keys[1]:keys[2] ... * NB_OPT_KEY
+msc_vol
+
+sectorno::/obj:object->ref:object->is_picked:object->wherex:object->wherey/
+etc * nb_obj
+sectorno::/en:enemy->ref:enemy->is_alive:enemy->health:enemy->shield:enemy->wherex:enemy->wherey/
+etc * nb_enemies

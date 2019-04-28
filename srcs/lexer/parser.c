@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 16:27:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:44:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,10 +226,10 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 		iter = iter->next;
 	}
 	//printf("object %.0f %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x, ref.y);
-	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
+	fill_objects_sector(&engine->sectors[(unsigned)s], pos, (t_ixy){ref.x, s}, ref.y);
 }
 
-void	retrieve_enemy(t_engine *engine, t_parseline *line)
+/*void	retrieve_enemy(t_engine *engine, t_parseline *line)
 {
 	t_token		*iter;
 	t_vtx		pos;
@@ -264,7 +264,7 @@ void	retrieve_enemy(t_engine *engine, t_parseline *line)
 	}
 	//printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x);
 	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
-}
+}*/
 
 void	load_object(t_engine *engine, t_parsefile *file)
 {
@@ -277,8 +277,8 @@ void	load_object(t_engine *engine, t_parsefile *file)
 		{
 			if (line->first->type == (1U << 3))
 				retrieve_object(engine, line);
-			if (line->first->type == (1U << 6))
-				retrieve_enemy(engine, line);
+			//if (line->first->type == (1U << 6))
+			//	retrieve_enemy(engine, line);
 		}
 		line = line->next;
 	}

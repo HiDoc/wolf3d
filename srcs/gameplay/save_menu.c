@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 11:43:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/24 20:56:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_bloc	*new_save(t_env *e)
 	t_bloc		*new;
 
 	new = ft_memalloc(sizeof(t_bloc));
-	make_surface(W / 10, H / 10);
+	new->use.sprite = make_surface(W / 10, H / 10);
 	img_scaled_copy(e->stats.save_img, new->use.sprite);
 	new->use.rect = (SDL_Rect){W / 2.5, H / 3, W / 10, H / 10};
 	create_save_name(&new->name);
@@ -73,10 +73,11 @@ void	create_save(t_env *e, t_status *s)
 	{
 		s->nb_save++;
 		s->nb_save < 6 ? e->menu.status.end++ : 0;
-		cur_save = e->menu.save_game;
-		while (cur_save->next != NULL)
+		cur_save = e->menu.save_game->next;
+		while (cur_save)
 			cur_save = cur_save->next;
-		cur_save->next = new_save(e);
+		cur_save = new_save(e);
+		save_data_file(e, cur_save->name);
 		ui_put_data(e, (t_font){M_WHITE, "Game saved", e->hud.text.quantify,
 			(t_vtx){W / 2, H / 20}, W / 60, -1, -1});
 		e->stats.save = 0;
