@@ -79,7 +79,6 @@ OPTI :	corriger le reframes inutiles
 TODO :	door is a sector
 TODO :	height ceil / height floor sector
 
-** TODO :	refactor liste deroulantes sur interface modes
 * TODO :	floor / ceil casting texture on sectors
 * TODO :	misc lists
 * TODO :	walls : texture par walls

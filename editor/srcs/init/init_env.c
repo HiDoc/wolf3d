@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:30:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 13:49:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,23 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){1130, 350, 20, 20};
 	create_element(E_B_ELM_UP, BUTTON, rect, env);
+	get_element(E_B_ELM_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
 
 	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_ELM_DOWN, BUTTON, rect, env);
+	get_element(E_B_ELM_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	rect = (SDL_Rect){1130, 350, 20, 20};
 	create_element(E_B_DRW_UP, BUTTON, rect, env);
+	get_element(E_B_DRW_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
 
 	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_DRW_DOWN, BUTTON, rect, env);
+	get_element(E_B_DRW_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	rect = (SDL_Rect){900, 110, 270, 20};
 	create_element(E_B_ELM_OBWL, BUTTON, rect, env);
