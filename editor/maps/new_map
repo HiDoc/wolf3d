@@ -1,16 +1,10 @@
 # map name
 new_map
+# game misc: music skybox
+music skybox
 # vertex: x y
-vertex 34 0
-vertex 0 23
-vertex 23 40
-vertex 43 15
-# sector: ceil floor n-vertex n-neighbors
-sector /**/ /**//**/
-# wall_object: x y sector ref
-# consumable: x y sector ref is_wpn
-# entity: x y sector ref
-entity 25 16 /**/ /**/
-entity 19 16 /**/ /**/
-entity 25 10 /**/ /**/
-# special: x y ref
+vertex 7 -14
+vertex 11 -12
+vertex 6 -10
+# sector: ceil_h ceil_tx floor_h floor_txgravity door n-vertex n-neighbors
+sector // //
