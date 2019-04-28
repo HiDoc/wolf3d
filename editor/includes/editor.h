@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 12:39:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:01:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+void		display_dropdown_list(SDL_Rect rect, t_elem *elem,
+			int index, t_env *env);
 void		display_error_msg(char *msg, t_env *env);
 t_pos		vtx_transform(t_pos pos, t_env *env);
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst);

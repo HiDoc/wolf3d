@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 11:53:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 14:19:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,23 @@ void		display_selection(t_env *env)
 		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
 		ui_make_string(
 		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
+	}
+	else
+	{
+		rect = (SDL_Rect){890, 100, 290, 680};
+		ui_make_rect(env->data->surface, rect, C_WHITE);
+
+		rect = (SDL_Rect){910, 110, 250, 30};
+		ui_make_string(rect, "Misc", env->data);
+
+		ui_make_rect(env->data->surface,
+		get_element(E_B_SELEC_MUSIC, env)->rect, C_WHITE);
+		ui_make_string(
+		get_element(E_B_SELEC_MUSIC, env)->rect, "BACKGROUND MUSIC", env->data);
+
+		ui_make_rect(env->data->surface,
+		get_element(E_B_SELEC_SBTX, env)->rect, C_WHITE);
+		ui_make_string(
+		get_element(E_B_SELEC_SBTX, env)->rect, "SKYBOX TEXTURE", env->data);
 	}
 }

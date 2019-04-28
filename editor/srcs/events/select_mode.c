@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 12:40:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 13:40:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
 
 int				select_mode(t_env *env)
 {
+	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;	
 	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
 
@@ -164,7 +165,7 @@ int				select_mode(t_env *env)
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		reset_values(env);
-		if (ui_mouseenter(m.x, m.y, get_element(E_R_RECT, env)->rect))
+		if (ui_mouseenter(m.x, m.y, rect))
 			return (select_interface_events(env));
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))
@@ -248,11 +249,9 @@ int				select_mode(t_env *env)
 			unselect_all(env);
 			return (1);	
 		}
-		return (0);
+		return (1);
 	}
 	else if (event.type == SDL_KEYDOWN)
 		return (select_input_events(env));
-	else if (env->data->mouse.x || env->data->mouse.y)
-		return (1);
-	return (0);
+	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

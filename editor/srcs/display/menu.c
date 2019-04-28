@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 23:13:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 11:29:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	left_panel(t_pos origin, t_env *env)
 {
 	SDL_Rect	rect;
-	Uint32		color;
 
 	// square
 	rect = (SDL_Rect){origin.x, origin.y, 400, 450};
@@ -44,23 +43,8 @@ static void	left_panel(t_pos origin, t_env *env)
 		ui_error_exit_sdl("Libui: Blit error in menu left panel");
 
 	// display maps file
-	t_elem		*elem;
-
-	elem = env->menu.btn_maps;
-	while (elem)
-	{
-		color = C_WHITE;
-		rect = (SDL_Rect){elem->rect.x, elem->rect.y + env->menu.idx_map * 40,
-		elem->rect.w, elem->rect.h};
-		if (elem == env->menu.selected)
-			color = C_GREEN;
-		if (rect.y >= origin.y + 100 && rect.y <= origin.y + 420)
-		{
-			ui_make_rect(env->data->surface, rect, color);
-			ui_make_string(rect, elem->str, env->data);
-		}
-		elem = elem->next;
-	}
+	rect = (SDL_Rect){origin.x + 20, origin.y + 130, 290, 310};
+	display_dropdown_list(rect, env->menu.btn_maps, env->menu.idx_map, env);
 }
 
 static void	right_panel(t_pos origin, t_env *env)
