@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_enemies.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 14:20:53 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:58:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,13 +158,16 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 void	bot_action(t_env *env, t_sector *sector)
 {
 	t_wrap_enmy	*enemy;
+	t_vtx 		p;
 
+	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	(void)env;
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
 		if (enemy->is_alive && !enemy->is_dying && !enemy->is_shot)
 		{
+			bot_status(env, p, enemy, env->sdl.keycodes);
 			if (enemy->next && enemy->next->is_alive)
 				bot_check_friend(enemy, enemy->next);
 			if (enemy->is_shooting)
@@ -195,7 +198,10 @@ void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
 		if (e->is_alerted || e->has_detected || e->close_seen)
 		{
 			if (dist_vertex(player, where) > e->brain.dist_player)
+			{
+				e->is_shooting = 0;
 				bot_move(env, player, e, e->brain.velocity);
+			}
 			else
 				bot_dist_detect(e);
 		}

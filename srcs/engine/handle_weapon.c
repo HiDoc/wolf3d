@@ -23,7 +23,7 @@ int		handle_weapon(t_env *env)
 	{
 		if (actions->is_loading)
 		{
-			actions->is_shooting = !actions->is_shooting;
+			actions->is_shooting = 0;
 			put_gun_load(env, env->time.frame);
 			env->time.frame++;
 		}

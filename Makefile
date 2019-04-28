@@ -12,7 +12,7 @@
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -84,6 +84,7 @@ SRC_NAME 	= main.c \
 			draw_inventory.c \
 			draw_menu.c \
 			edge.c \
+			file_save.c \
 			function.c \
 			free_map.c \
 			handle_enemy_sprite.c \
@@ -100,6 +101,7 @@ SRC_NAME 	= main.c \
 			init_weapons.c \
 			init_sound.c \
 			init_strings.c \
+			inter_loop.c \
 			load_worlds.c \
 			load.c \
 			load_image.c \

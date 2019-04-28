@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:56:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 11:51:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/27 17:12:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ struct 						s_sd_stat
 	int			drop;
 	int			ammo;
 	int			nope;
-	int			open;
 	int			chan;
+	int			end_level;
+	int			open;
+	int			is_open;
 };
 
 

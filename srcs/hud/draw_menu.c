@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 19:04:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/26 14:33:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	draw_saves(t_env *e, t_bloc *b)
 	ft_bzero(&f, sizeof(t_bloc));
 	cur = b->next;
 	i = e->menu.status.start;
-	// r = (SDL_Rect){}
 	while (cur && ++i < e->menu.status.end)
 	{
 		ui_put_data(e, (t_font){
@@ -152,5 +151,4 @@ void	draw_menu(t_env *e)
 		draw_img(e, e->world.surfaces.img_menu[I_INEWGAME].sprite, &f);
 		draw_games(e);
 	}
-
 }

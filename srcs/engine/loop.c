@@ -29,26 +29,27 @@ static int				sdl_render(t_env *env)
 		dfs(env);
 		ui_put_fps(env, env->time.fps);
 		ui_minimap(env);
-		//handle_weapon(env);
+		handle_weapon(env);
 
 		// si retire alors segv :
 		print_hud(env);
 
 		//handle_gems(env);
-		//if (!env->god_mod)
-		//	bot_action(env, &env->engine.sectors[env->engine.player.sector]);
-		//player_bullet(env, &env->player, *env->player.inventory.current->damage);
+
+		if (!env->god_mod)
+			bot_action(env, &env->engine.sectors[env->engine.player.sector]);
+		player_bullet(env, &env->player, *env->player.inventory.current->damage);
 
 		// si retire alors segv :
 		enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 
 		//if (env->hud.is_txt)
 		//	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
-		//handle_doors(env);
-		//wpn_mouse_wheel(env, env->sdl.event);
+		handle_doors(env);
+		wpn_mouse_wheel(env, env->sdl.event);
 		sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 		player_move(&env->engine, &env->engine.player.vision, env->sdl.keycodes);
-		//handle_sound(env, &env->engine.player.sound);
+		handle_sound(env, &env->engine.player.sound);
 	}
 
 	SDL_UpdateTexture(env->sdl.texture, NULL,

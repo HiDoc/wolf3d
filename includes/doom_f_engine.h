@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 02:19:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/24 20:58:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 
 int			sdl_set_velocity(t_env *env, t_vision *v, const Uint8 *keycodes);
-int			sdl_mouse(t_engine *e, t_vision *v);
-void		player_set(t_engine *e, t_vtx d);
 
 t_edge		translation_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge  	rotation_edge(t_edge v, float pcos, float psin);
