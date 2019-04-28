@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 16:42:20 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 12:27:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 	number = token_calc(line) - 3;
 	printf("number of vertexes: %u\n", number);
 	sect->npoints = number;
-	sect->neighbors = malloc(sizeof(signed) * number);
-	sect->vertex = malloc(sizeof(t_vtx) * (sect->npoints + 1));
+	sect->neighbors = ft_memalloc(sizeof(signed) * number);
+	sect->vertex = ft_memalloc(sizeof(t_vtx) * (sect->npoints + 1));
 	ft_memset(sect->neighbors, -1, number);
 	iter = line->first;
 	if (iter)
@@ -291,10 +291,8 @@ int		load(t_env *env, t_parsefile *file, unsigned nvertex, unsigned nsector)
 
 	engine = &env->engine;
 	engine->nsectors = nsector;
-	engine->sectors = malloc(sizeof(t_sector) * nsector);
-	ft_bzero(engine->sectors, sizeof(t_sector) * nsector);
-	vert = (t_vtx *)malloc(sizeof(t_vtx) * nvertex);
-	ft_bzero(vert, sizeof(t_vtx) * nvertex);
+	engine->sectors = ft_memalloc(sizeof(t_sector) * nsector);
+	vert = (t_vtx *)ft_memalloc(sizeof(t_vtx) * nvertex);
 	load_vertex(file, vert);
 	load_sector(engine, file, vert);
 	load_object(engine, file);

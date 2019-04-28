@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 17:03:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 12:27:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ t_token	*new_token(char c, unsigned pos)
 			break ;
 		iter++;
 	}
-	if ((new = malloc(sizeof(t_token))) == NULL)
-		return (NULL);
+	new = ft_memalloc(sizeof(t_token));
 	new->next = NULL;
 	new->type = funct(iter, c, TOKEN_VALUE);
 	new->pos = pos;

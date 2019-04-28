@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:39:10 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 15:15:07 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/04/28 12:27:20 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int		free_file(t_parsefile *file)
 		{
 			iter = line->first;
 			line->first = iter->next;
-			free(iter);
+			lt_release(iter);
 			iter = NULL;
 		}
 		file->first = line->next;
-		free(line);
+		lt_release(line);
 		line = NULL;
 	}
 	return (1);
