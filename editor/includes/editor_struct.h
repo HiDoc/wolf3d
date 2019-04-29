@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 18:13:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:08:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ enum					e_elements
 	E_B_SELEC_FDOOR,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
+	E_B_SELEC_CEILTX,
+	E_B_SELEC_FLOORTX,
 	E_B_SELEC_MUSIC,
 	E_B_SELEC_SBTX
 };
@@ -204,6 +206,16 @@ struct					s_editor
 	int             nb_bg_audio;
 	int             idx_bg_audio;
 	t_elem			*bg_audio;
+
+	// ceil_txtr dropdown_list
+	int             nb_ceil_txtr;
+	int             idx_ceil_txtr;
+	t_elem			*ceil_txtr;
+
+	// floor_txtr dropdown_list
+	int             nb_floor_txtr;
+	int             idx_floor_txtr;
+	t_elem			*floor_txtr;
 
 	// mouse handling
 	int				mouse_mode;

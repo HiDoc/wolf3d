@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 18:20:22 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:26:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		display_selection(t_env *env)
 {
+	Uint32		color;
 	char		*obj_tab[5] = {
 	"Wall_object", "Consumable", "Entity", "Prefab", "Special"};
 	SDL_Rect	rect;
@@ -78,19 +79,43 @@ void		display_selection(t_env *env)
 		ui_make_input(env->data->surface,
 		get_element(E_I_SELEC_HFLOOR, env), env->data);
 
-		get_element(E_B_SELEC_CEIL, env)->color = (
-			env->editor.sct_select->roof == 0) ? C_GREEN : C_WHITE;
-		ui_make_string(get_element(E_B_SELEC_CEIL, env)->rect,
-			"CEIL", env->data);
-		ui_make_input(env->data->surface,
-		get_element(E_B_SELEC_CEIL, env), env->data);
+		color = (env->editor.sct_select->roof == 0) ? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_CEIL, env)->rect, "CEIL", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_CEIL, env)->rect, color);
 
-		get_element(E_B_SELEC_SKY, env)->color = (
-			env->editor.sct_select->roof == 1) ? C_GREEN : C_WHITE;
-		ui_make_string(get_element(E_B_SELEC_SKY, env)->rect,
-			"SKY", env->data);
-		ui_make_input(env->data->surface,
-		get_element(E_B_SELEC_SKY, env), env->data);
+		color = (env->editor.sct_select->roof == 1) ? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_SKY, env)->rect, "SKY", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_SKY, env)->rect, color);
+
+		color = (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_CEILTX, env)->rect,
+			"CEIL TEXTURE", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_CEILTX, env)->rect, color);
+
+		color = (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_FLOORTX, env)->rect,
+			"FLOOR TEXTURE", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_FLOORTX, env)->rect, color);
+
+		rect = (SDL_Rect){910, 510, 200, 190};
+		if (get_element(E_B_SELEC_CEILTX, env)->clicked)
+		{
+			// display skybox textures
+			display_dropdown_list(rect, env->editor.ceil_txtr,
+				env->editor.idx_ceil_txtr, env);
+		}
+		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
+		{
+			// display background audio
+			display_dropdown_list(rect, env->editor.floor_txtr,
+				env->editor.idx_floor_txtr, env);
+		}
 	}
 	else if (env->editor.vtx_select)
 	{
@@ -141,8 +166,6 @@ void		display_selection(t_env *env)
 	}
 	else
 	{
-		Uint32		color;
-
 		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 

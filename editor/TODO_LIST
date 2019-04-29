@@ -75,7 +75,8 @@ TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [29] TODO :	floor / ceil casting texture on sectors
+* [29] TODO :	up dowm ceil/floor list buttons
+* [29] TODO :	up down misc list buttons 
 * [29] TODO :	modifs texture edge en selection
 
 [30] TODO :	display size selected edge
@@ -94,6 +95,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 [03] TODO :	update export
 [03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
+[03] TODO : check coherence du programme et du fonctionnemenet des features
 [03] TODO :	tout refactor
 
 [04] TODO :	parsing : parsing todo

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 18:23:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:20:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,19 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 400, 110, 30};
+	rect = (SDL_Rect){910, 370, 110, 30};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEIL, env)->color = C_GREEN;
 
-	rect = (SDL_Rect){1040, 400, 120, 30};
+	rect = (SDL_Rect){1040, 370, 120, 30};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 420, 250, 30};
+	create_element(E_B_SELEC_CEILTX, BUTTON, rect, env);
+	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
+
+	rect = (SDL_Rect){910, 460, 250, 30};
+	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
 
 	rect = (SDL_Rect){910, 150, 250, 25};
 	create_element(E_B_SELEC_MUSIC, BUTTON, rect, env);
@@ -403,6 +410,104 @@ static void		load_background_audio(t_env *env)
 	lt_release(dr);
 }
 
+static void     create_ceil_txtr(char *str, int ref, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_ceil_txtr, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_ceil_txtr, out of memory");
+	new->ref = ref;
+	if (!(env->editor.ceil_txtr))
+	{
+		env->editor.ceil_txtr = new;
+		env->editor.ceil_txtr->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.ceil_txtr;
+		env->editor.ceil_txtr = new;
+	}
+}
+
+static void		load_ceil_txtr(t_env *env)
+{
+	char				*name;
+	int					ref;
+	struct dirent		*de;
+	DIR					*dr;
+	int					i;
+
+	i = 0;
+	if (!(dr = lt_push(opendir("ressources/images/ceil/"), dir_del)))
+		ui_error_exit_sdl("Editor: Unable to open ressources/images/ceil/");
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memory in laod_ceil_txtr");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_ceil_txtr(name, ref, env);
+			lt_release(name);
+			env->editor.nb_ceil_txtr++;
+			i++;
+		}
+	}
+	lt_release(dr);
+}
+
+static void     create_floor_txtr(char *str, int ref, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_floor_txtr, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_floor_txtr, out of memory");
+	new->ref = ref;
+	if (!(env->editor.floor_txtr))
+	{
+		env->editor.floor_txtr = new;
+		env->editor.floor_txtr->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.floor_txtr;
+		env->editor.floor_txtr = new;
+	}
+}
+
+static void		load_floor_txtr(t_env *env)
+{
+	char				*name;
+	int					ref;
+	struct dirent		*de;
+	DIR					*dr;
+	int					i;
+
+	i = 0;
+	if (!(dr = lt_push(opendir("ressources/images/floor/"), dir_del)))
+		ui_error_exit_sdl("Editor: Unable to open ressources/images/floor/");
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memory in laod_floor_txtr");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_floor_txtr(name, ref, env);
+			lt_release(name);
+			env->editor.nb_floor_txtr++;
+			i++;
+		}
+	}
+	lt_release(dr);
+}
+
 static void		init_editor(t_env *env)
 {
 	char				*name;
@@ -411,6 +516,8 @@ static void		init_editor(t_env *env)
 	int					i;
 	int					ref;
 
+	load_ceil_txtr(env);
+	load_floor_txtr(env);
 	load_skybox_txtr(env);
 	load_background_audio(env);
 
