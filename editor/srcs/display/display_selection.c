@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 19:26:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:02:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void		display_selection(t_env *env)
 		get_element(E_I_SELEC_GRAVITY, env), env->data);
 
 		rect = (SDL_Rect){910, 215, 250, 30};
-		ui_make_string(rect, "ceil", env->data);
+		ui_make_string(rect, "ceil height", env->data);
 		ui_make_input(env->data->surface,
 		get_element(E_I_SELEC_HCEIL, env), env->data);
 
 		rect = (SDL_Rect){910, 285, 250, 30};
-		ui_make_string(rect, "floor", env->data);
+		ui_make_string(rect, "floor height", env->data);
 		ui_make_input(env->data->surface,
 		get_element(E_I_SELEC_HFLOOR, env), env->data);
 
@@ -116,6 +116,15 @@ void		display_selection(t_env *env)
 			display_dropdown_list(rect, env->editor.floor_txtr,
 				env->editor.idx_floor_txtr, env);
 		}
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_TX_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		// down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_TX_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
 	}
 	else if (env->editor.vtx_select)
 	{
@@ -200,5 +209,14 @@ void		display_selection(t_env *env)
 			display_dropdown_list(rect, env->editor.bg_audio,
 				env->editor.idx_bg_audio, env);
 		}
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_MISC_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		// down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_MISC_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
 	}
 }

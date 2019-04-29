@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 19:23:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:06:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,28 @@ int				select_mode(t_env *env)
 			get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
 			get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
 		}
+		else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_TX_UP, env)->rect))
+			{
+				if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+					(env->editor.idx_ceil_txtr < 0)
+						? env->editor.idx_ceil_txtr++ : 0;
+				else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+					(env->editor.idx_floor_txtr < 0)
+						? env->editor.idx_floor_txtr++ : 0;
+				return (1);
+			}
+			else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_TX_DOWN, env)->rect))
+			{
+				if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+					(env->editor.idx_ceil_txtr > -env->editor.nb_ceil_txtr + 1)
+						? env->editor.idx_ceil_txtr-- : 0;
+				else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+					(env->editor.idx_floor_txtr > -env->editor.nb_floor_txtr + 1)
+						? env->editor.idx_floor_txtr-- : 0;
+				return (1);
+			}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
@@ -269,10 +291,32 @@ int				select_mode(t_env *env)
 				get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
 				get_element(E_B_SELEC_SBTX, env)->clicked = 0;
 			}
-			if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SBTX, env)->rect))
+			else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SBTX, env)->rect))
 			{
 				get_element(E_B_SELEC_SBTX, env)->clicked = 1;
 				get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
+			}
+			else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_MISC_UP, env)->rect))
+			{
+				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+					(env->editor.idx_bg_audio < 0)
+						? env->editor.idx_bg_audio++ : 0;
+				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+					(env->editor.idx_sb_txtr < 0)
+						? env->editor.idx_sb_txtr++ : 0;
+				return (1);
+			}
+			else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_MISC_DOWN, env)->rect))
+			{
+				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+					(env->editor.idx_bg_audio > -env->editor.nb_bg_audio + 1)
+						? env->editor.idx_bg_audio-- : 0;
+				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+					(env->editor.idx_sb_txtr > -env->editor.nb_sb_txtr + 1)
+						? env->editor.idx_sb_txtr-- : 0;
+				return (1);
 			}
 		}
 		return (1);

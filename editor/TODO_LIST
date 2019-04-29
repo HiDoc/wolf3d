@@ -75,8 +75,6 @@ TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [29] TODO :	up dowm ceil/floor list buttons
-* [29] TODO :	up down misc list buttons 
 * [29] TODO :	modifs texture edge en selection
 
 [30] TODO :	display size selected edge
@@ -92,6 +90,8 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 [02] TODO :	front design selected / hovered color and stuff
 [02] TODO :	door is a sector
+[02] TODO : selection des buttons de toutes les dropdown_list
+[02] TODO : refactor - generiser code
 
 [03] TODO :	update export
 [03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
@@ -107,11 +107,13 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 [05] TODO :	beta testing
 [05] TODO :	norme : total norme
 
+OPTIONAL :	texture per door
 OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
-OPTIONAL :	set cursor middle of grid
+OPTIONAL :	set crosshair middle of grid
+OPTIONAL :	zoom on cursor
 OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one

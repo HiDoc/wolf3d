@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 19:20:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:04:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,12 +204,32 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 460, 250, 30};
 	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
 
+	rect = (SDL_Rect){1130, 540, 20, 20};
+	create_element(E_B_SELEC_TX_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_TX_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 570, 20, 20};
+	create_element(E_B_SELEC_TX_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_TX_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
+
 	rect = (SDL_Rect){910, 150, 250, 25};
 	create_element(E_B_SELEC_MUSIC, BUTTON, rect, env);
 	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
 
 	rect = (SDL_Rect){910, 190, 250, 25};
 	create_element(E_B_SELEC_SBTX, BUTTON, rect, env);
+
+	rect = (SDL_Rect){1130, 270, 20, 20};
+	create_element(E_B_SELEC_MISC_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_MISC_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 300, 20, 20};
+	create_element(E_B_SELEC_MISC_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_MISC_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 }
 
 /*

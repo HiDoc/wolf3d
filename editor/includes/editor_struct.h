@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 19:08:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:40:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,12 @@ enum					e_elements
 	E_B_SELEC_SKY,
 	E_B_SELEC_CEILTX,
 	E_B_SELEC_FLOORTX,
+	E_B_SELEC_TX_UP,
+	E_B_SELEC_TX_DOWN,
 	E_B_SELEC_MUSIC,
-	E_B_SELEC_SBTX
+	E_B_SELEC_SBTX,
+	E_B_SELEC_MISC_UP,
+	E_B_SELEC_MISC_DOWN
 };
 
 enum					e_obj_category
