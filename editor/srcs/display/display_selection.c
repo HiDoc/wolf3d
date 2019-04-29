@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 14:19:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:24:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		display_selection(t_env *env)
 {
+	Uint32		color;
 	char		*obj_tab[5] = {
 	"Wall_object", "Consumable", "Entity", "Prefab", "Special"};
 	SDL_Rect	rect;
@@ -31,7 +32,7 @@ void		display_selection(t_env *env)
 
 	if (env->editor.obj_select)
 	{
-		rect = (SDL_Rect){890, 100, 290, 250};
+		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 		
 		rect = (SDL_Rect){910, 110, 250, 30};
@@ -49,7 +50,7 @@ void		display_selection(t_env *env)
 	}
 	else if (env->editor.sct_select)
 	{
-		rect = (SDL_Rect){890, 100, 290, 300};
+		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 
 		rect = (SDL_Rect){910, 110, 250, 30};
@@ -69,27 +70,65 @@ void		display_selection(t_env *env)
 		get_element(E_I_SELEC_GRAVITY, env), env->data);
 
 		rect = (SDL_Rect){910, 215, 250, 30};
-		ui_make_string(rect, "height", env->data);
+		ui_make_string(rect, "ceil height", env->data);
 		ui_make_input(env->data->surface,
-		get_element(E_I_SELEC_HEIGHT, env), env->data);
+		get_element(E_I_SELEC_HCEIL, env), env->data);
 
-		get_element(E_B_SELEC_CEIL, env)->color = (
-			env->editor.sct_select->roof == 0) ? C_GREEN : C_WHITE;
-		ui_make_string(get_element(E_B_SELEC_CEIL, env)->rect,
-			"CEIL", env->data);
+		rect = (SDL_Rect){910, 285, 250, 30};
+		ui_make_string(rect, "floor height", env->data);
 		ui_make_input(env->data->surface,
-		get_element(E_B_SELEC_CEIL, env), env->data);
+		get_element(E_I_SELEC_HFLOOR, env), env->data);
 
-		get_element(E_B_SELEC_SKY, env)->color = (
-			env->editor.sct_select->roof == 1) ? C_GREEN : C_WHITE;
-		ui_make_string(get_element(E_B_SELEC_SKY, env)->rect,
-			"SKY", env->data);
-		ui_make_input(env->data->surface,
-		get_element(E_B_SELEC_SKY, env), env->data);
+		color = (env->editor.sct_select->roof == 0) ? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_CEIL, env)->rect, "CEIL", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_CEIL, env)->rect, color);
+
+		color = (env->editor.sct_select->roof == 1) ? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_SKY, env)->rect, "SKY", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_SKY, env)->rect, color);
+
+		color = (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_CEILTX, env)->rect,
+			"CEIL TEXTURE", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_CEILTX, env)->rect, color);
+
+		color = (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
+		ui_make_string(get_element(E_B_SELEC_FLOORTX, env)->rect,
+			"FLOOR TEXTURE", env->data);
+		ui_make_rect(env->data->surface,
+			get_element(E_B_SELEC_FLOORTX, env)->rect, color);
+
+		rect = (SDL_Rect){910, 510, 200, 190};
+		if (get_element(E_B_SELEC_CEILTX, env)->clicked)
+		{
+			// display skybox textures
+			display_dropdown_list(rect, env->editor.ceil_txtr,
+				env->editor.idx_ceil_txtr, env);
+		}
+		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
+		{
+			// display background audio
+			display_dropdown_list(rect, env->editor.floor_txtr,
+				env->editor.idx_floor_txtr, env);
+		}
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_TX_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		// down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_TX_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
 	}
 	else if (env->editor.vtx_select)
 	{
-		rect = (SDL_Rect){890, 100, 290, 250};
+		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 
 		rect = (SDL_Rect){910, 110, 250, 30};
@@ -102,7 +141,7 @@ void		display_selection(t_env *env)
 	}
 	else if (env->editor.edg_select)
 	{
-		rect = (SDL_Rect){890, 100, 290, 250};
+		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 
 		rect = (SDL_Rect){910, 110, 250, 30};
@@ -123,6 +162,23 @@ void		display_selection(t_env *env)
 		ui_make_string(
 		get_element(E_B_SELEC_SPLIT, env)->rect, "SPLIT", env->data);
 
+		rect = (SDL_Rect){910, 310, 250, 30};
+		ui_make_string(rect, "Wall texture ", env->data);
+
+		// display modif wall txtr
+		rect = (SDL_Rect){910, 350, 200, 350};
+		display_dropdown_list(rect, env->editor.wall_txtr,
+		env->editor.idx_m_wall_txtr, env);
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_M_WALL_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		 // down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_M_WALL_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
+
 		ui_make_rect(env->data->surface,
 		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
 		ui_make_string(
@@ -136,14 +192,42 @@ void		display_selection(t_env *env)
 		rect = (SDL_Rect){910, 110, 250, 30};
 		ui_make_string(rect, "Misc", env->data);
 
+		color = (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_MUSIC, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_MUSIC, env)->rect, color);
 		ui_make_string(
 		get_element(E_B_SELEC_MUSIC, env)->rect, "BACKGROUND MUSIC", env->data);
 
+		color = (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_SBTX, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_SBTX, env)->rect, color);
 		ui_make_string(
 		get_element(E_B_SELEC_SBTX, env)->rect, "SKYBOX TEXTURE", env->data);
+
+		// display skybox textures
+		if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+		{
+			rect = (SDL_Rect){910, 250, 200, 400};
+			display_dropdown_list(rect, env->editor.sb_txtr,
+				env->editor.idx_sb_txtr, env);
+		}
+		else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+		{
+			// display background audio
+			rect = (SDL_Rect){910, 250, 200, 400};
+			display_dropdown_list(rect, env->editor.bg_audio,
+				env->editor.idx_bg_audio, env);
+		}
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_MISC_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		// down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_MISC_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
 	}
 }

@@ -50,8 +50,8 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 
 ---------------------------------------------------------------
 
-*FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-*FLO* BUG : angle du spawn
+BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+BUG : angle du spawn
 BUG : execve ./doom completement KC
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
@@ -61,6 +61,8 @@ BUG : fix edge hover
 BUG : color of error_msg
 BUG : reframe click boutons sur right pannel
 BUG : taille du nom des object depasse du carre
+BUG : coherence retour menu - start - cancel
+BUG : fix and finish input ceil/floor/gravity
 
 LEAK: protect gnl
 
@@ -71,46 +73,46 @@ TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 
 PROTEC : set min edge size for split edge
+PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-OPTI :	minmax sync
-OPTI :	multithreading
-OPTI :	corriger le reframes inutiles
+[30] TODO : selection des buttons de toutes les dropdown_list
+[30] TODO : generiser init_env (load/init & create) + refactor select_mode.c
+[30] TODO :	display size selected edge
+[30] TODO :	spawn : display line on spawn direction
+[30] TODO :	wall object dock
 
-TODO :	door is a sector
-TODO :	height ceil / height floor sector
+[01] TODO :	bloquer split / door / fdor si c'est une door
+[01] TODO :	bloquer vtx move si sct is a door
+[01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup
+[01] TODO : empecher export si croisement edge
 
-* TODO :	fix click on buttons in dropdown lists
-* TODO :	floor / ceil casting texture on sectors
-* TODO :	misc lists on select mode
-* TODO :	walls : texture par walls
-* TODO :	modifs texture edge en selection
+[02] TODO :	grid : limite left / bot
+[02] TODO :	interface element clipping
+[02] TODO :	front design selected / hovered color and stuff
+[02] TODO :	door is a sector
+[02] TODO : refactor - generiser code
 
-TODO :	display size selected edge
-TODO :	interface element clipping
-TODO :	spawn : display line on spawn direction
-TODO :	grid : limite left / bot
+[03] TODO :	update export
+[03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
+[03] TODO : check coherence du programme et du fonctionnemenet des features
+[03] TODO :	tout refactor
 
-TODO :	wall object dock
-TODO :	bloquer split / door / fdor si c'est une door
-TODO :	bloquer modif size de vertex door
-TODO :	bloquer les croisement de sectors // soluce : bloquer a la sauvegarde
-TODO :	bloquer les sorties d'object lors d'un edit de sector
+[04] TODO :	parsing : parsing todo
+[04] OPTI :	minmax sync
+[04] OPTI :	multithreading
+[04] OPTI :	corriger le reframes inutiles
 
-TODO :	find image for misc_mode
-TODO :	front design selected / hovered color and stuff
+[05] TODO : details et finitions
+[05] TODO :	beta testing
+[05] TODO :	norme : total norme
 
-* TODO :	parsing : parsing todo
-* TODO :	update export
-TODO :	menu preview
-
-TODO :	refactor : total cleaning
-TODO :	beta testing
-TODO :	norme : total norme
-
+OPTIONAL :	texture per door
+OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
-OPTIONAL :	set cursor middle of grid
+OPTIONAL :	set crosshair middle of grid
+OPTIONAL :	zoom on cursor
 OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one

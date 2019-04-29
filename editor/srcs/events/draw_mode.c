@@ -6,11 +6,20 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:41:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:18:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+static void     reset_values(t_env *env)
+{
+	if (env->editor.curr_wall_txtr)
+	{
+		env->editor.curr_wall_txtr->clicked = 0;
+		env->editor.curr_wall_txtr = 0;
+	}
+}
 
 static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 {
@@ -31,6 +40,7 @@ int			draw_mode(t_env *env)
 	SDL_Rect			rect = get_element(E_R_RECT, env)->rect;
 	const t_pos			m = env->data->mouse;
 	const SDL_Event 	event = env->data->sdl.event;
+	t_elem				*wall_txtr;
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
@@ -76,12 +86,25 @@ int			draw_mode(t_env *env)
 				}
 			}
 		}
+
+		// click on object button
+		wall_txtr = env->editor.wall_txtr;
+		while (wall_txtr)
+		{
+			if (ui_mouseenter(m.x, m.y, wall_txtr->rect))
+			{
+				reset_values(env);
+				env->editor.curr_wall_txtr = wall_txtr;
+				wall_txtr->clicked = 1;
+			}
+			wall_txtr = wall_txtr->next;
+		}
 		return (1);
 	}
 	if (env->sct_current)
 	{
 		env->editor.vtx_size = pythagore(
-		env->sct_current->w_vtx_current->vtx->pos, env->mouse);
+				env->sct_current->w_vtx_current->vtx->pos, env->mouse);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }
