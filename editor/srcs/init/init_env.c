@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 14:19:39 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:18:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 300, 250, 30};
+	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
 
 	rect = (SDL_Rect){910, 250, 250, 30};
@@ -220,7 +220,8 @@ static int		load_obj(char *path, int type, t_env *env)
 		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
 		{
 			if (!(name = lt_push(ft_strsub(
-				de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memeory in load_obj");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_btn_obj(i, ref, type, name, env);
 			lt_release(name);
@@ -278,7 +279,7 @@ static void		init_menu(t_env *env)
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
 }
 
-static void     create_wall_txtr(char *str, t_env *env)
+static void     create_wall_txtr(char *str, int ref, t_env *env)
 {
 	t_elem   *new;
 
@@ -286,6 +287,7 @@ static void     create_wall_txtr(char *str, t_env *env)
 		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
 	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
+	new->ref = ref;
 	if (!(env->editor.wall_txtr))
 	{
 		env->editor.wall_txtr = new;
@@ -300,9 +302,11 @@ static void     create_wall_txtr(char *str, t_env *env)
 
 static void		init_editor(t_env *env)
 {
+	char				*name;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
+	int					ref;
 
 	i = 0;
 	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
@@ -311,12 +315,24 @@ static void		init_editor(t_env *env)
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			create_wall_txtr(de->d_name, env);
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memeory in init_editor");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_wall_txtr(name, ref, env);
+			lt_release(name);
 			env->editor.nb_wall_txtr++;
 			i++;
 		}
 	}
 	lt_release(dr);
+
+	// wall txtr par default
+	if (!env->editor.curr_wall_txtr)
+	{
+		env->editor.curr_wall_txtr = env->editor.wall_txtr;
+		env->editor.wall_txtr->clicked = 1;
+	}
 
 	env->grid_scale = 45;
 	env->editor.grid_translate = (t_pos){0, 0};

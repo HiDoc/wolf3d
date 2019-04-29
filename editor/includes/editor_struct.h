@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 14:14:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:47:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ struct					s_w_vtx
 {
 	int			fdoor;	// is final door
 	int			door;	// is door
+
+	int			ref;	// texture ref
+
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
@@ -126,7 +129,7 @@ struct					s_sct
 
 struct					s_elem
 {
-	int				ref;		// if btn object
+	int				ref;
 	int				id;
 	int				type;
 	SDL_Rect		rect;
@@ -189,6 +192,7 @@ struct					s_editor
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
 	t_elem			*wall_txtr;
+	t_elem			*curr_wall_txtr;
 
 
 	// mouse handling

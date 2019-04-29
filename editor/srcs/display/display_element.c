@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:51:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/28 17:20:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@ static void		display_dropdown_elem_list(SDL_Rect rect, t_elem *elem,
 				int index, t_env *env)
 {
 	Uint32		color;
-	SDL_Rect	box;
 	int			i;
 
 	i = 0;
 	while (elem)
 	{
 		color = (elem->clicked == 1) ? C_GREEN : C_WHITE;
-		box = (SDL_Rect){rect.x, rect.y + i * 40 + index * 40, rect.w, 25};
+		elem->rect = (SDL_Rect){rect.x, rect.y + i * 40 + index * 40, rect.w, 25};
 		if (elem->type == env->editor.obj_mode)
 		{
-			if (box.y >= rect.y && box.y <= rect.y + rect.h)
+			if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
 			{
-				ui_make_rect(env->data->surface, box, color);
-				ui_make_string(box, elem->str, env->data);
+				ui_make_rect(env->data->surface, elem->rect, color);
+				ui_make_string(elem->rect, elem->str, env->data);
 			}
 			i++;
 		}
