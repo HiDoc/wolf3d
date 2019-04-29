@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:04:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:25:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,16 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
+
+	rect = (SDL_Rect){1130, 540, 20, 20};
+	create_element(E_B_SELEC_M_WALL_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_M_WALL_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 570, 20, 20};
+	create_element(E_B_SELEC_M_WALL_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_M_WALL_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	rect = (SDL_Rect){910, 370, 110, 30};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);

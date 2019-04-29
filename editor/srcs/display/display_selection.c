@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:02:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:24:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,21 @@ void		display_selection(t_env *env)
 		get_element(E_B_SELEC_SPLIT, env)->rect, "SPLIT", env->data);
 
 		rect = (SDL_Rect){910, 310, 250, 30};
-		ui_make_rect(env->data->surface, rect, C_WHITE);
 		ui_make_string(rect, "Wall texture ", env->data);
-		rect = (SDL_Rect){1100, 310, 250, 30};
-		ui_make_nbrstring(rect, env->editor.edg_select->ref, env->data);
+
+		// display modif wall txtr
+		rect = (SDL_Rect){910, 350, 200, 350};
+		display_dropdown_list(rect, env->editor.wall_txtr,
+		env->editor.idx_m_wall_txtr, env);
+
+		// up
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_UP, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_M_WALL_UP, env)->rect)))
+			ui_error_exit_sdl("Editor: blit error in display selection");
+		 // down
+		if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_DOWN, env)->image,
+		0, env->data->surface, &get_element(E_B_SELEC_M_WALL_DOWN, env)->rect)) < 0)
+			ui_error_exit_sdl("Editor: blit error in display selection");
 
 		ui_make_rect(env->data->surface,
 		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);

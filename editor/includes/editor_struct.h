@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 19:40:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:23:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ enum					e_elements
 	E_B_SELEC_SPLIT,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
+	E_B_SELEC_M_WALL_UP,
+	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
 	E_B_SELEC_CEILTX,
@@ -200,6 +202,9 @@ struct					s_editor
 	int             idx_wall_txtr;
 	t_elem			*wall_txtr;
 	t_elem			*curr_wall_txtr;
+
+	// modifs_wall_textures dropdown_list
+	int             idx_m_wall_txtr;
 
 	// skybox_textures dropdown_list
 	int             nb_sb_txtr;

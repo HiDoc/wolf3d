@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:06:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 21:03:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,28 +197,28 @@ int				select_mode(t_env *env)
 			get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
 			get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
 		}
-		else if (ui_mouseenter(m.x, m.y,
-				get_element(E_B_SELEC_TX_UP, env)->rect))
-			{
-				if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-					(env->editor.idx_ceil_txtr < 0)
-						? env->editor.idx_ceil_txtr++ : 0;
-				else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-					(env->editor.idx_floor_txtr < 0)
-						? env->editor.idx_floor_txtr++ : 0;
-				return (1);
-			}
-			else if (ui_mouseenter(m.x, m.y,
-				get_element(E_B_SELEC_TX_DOWN, env)->rect))
-			{
-				if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-					(env->editor.idx_ceil_txtr > -env->editor.nb_ceil_txtr + 1)
-						? env->editor.idx_ceil_txtr-- : 0;
-				else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-					(env->editor.idx_floor_txtr > -env->editor.nb_floor_txtr + 1)
-						? env->editor.idx_floor_txtr-- : 0;
-				return (1);
-			}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_UP, env)->rect))
+		{
+			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+				(env->editor.idx_ceil_txtr < 0)
+					? env->editor.idx_ceil_txtr++ : 0;
+			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+				(env->editor.idx_floor_txtr < 0)
+					? env->editor.idx_floor_txtr++ : 0;
+			return (1);
+		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_DOWN, env)->rect))
+		{
+			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+				(env->editor.idx_ceil_txtr > -env->editor.nb_ceil_txtr + 1)
+					? env->editor.idx_ceil_txtr-- : 0;
+			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+				(env->editor.idx_floor_txtr > -env->editor.nb_floor_txtr + 1)
+					? env->editor.idx_floor_txtr-- : 0;
+			return (1);
+		}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
@@ -269,6 +269,19 @@ int				select_mode(t_env *env)
 			}
 			else
 				display_error_msg("Wall too small to make a final door", env);
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_UP, env)->rect))
+		{
+			(env->editor.idx_m_wall_txtr < 0) ? env->editor.idx_m_wall_txtr++ : 0;
+			return (1);
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_DOWN, env)->rect))
+		{
+				(env->editor.idx_m_wall_txtr > -env->editor.nb_wall_txtr + 1)
+					? env->editor.idx_m_wall_txtr-- : 0;
+			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
