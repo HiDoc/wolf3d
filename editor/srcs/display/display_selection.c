@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 17:23:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:20:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,20 +141,41 @@ void		display_selection(t_env *env)
 	}
 	else
 	{
+		Uint32		color;
+
 		rect = (SDL_Rect){890, 100, 290, 680};
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 
 		rect = (SDL_Rect){910, 110, 250, 30};
 		ui_make_string(rect, "Misc", env->data);
 
+		color = (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_MUSIC, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_MUSIC, env)->rect, color);
 		ui_make_string(
 		get_element(E_B_SELEC_MUSIC, env)->rect, "BACKGROUND MUSIC", env->data);
 
+		color = (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+			? C_GREEN : C_WHITE;
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_SBTX, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_SBTX, env)->rect, color);
 		ui_make_string(
 		get_element(E_B_SELEC_SBTX, env)->rect, "SKYBOX TEXTURE", env->data);
+
+		// display skybox textures
+		if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+		{
+			rect = (SDL_Rect){910, 250, 200, 400};
+			display_dropdown_list(rect, env->editor.sb_txtr,
+				env->editor.idx_sb_txtr, env);
+		}
+		else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+		{
+			// display background audio
+			rect = (SDL_Rect){910, 250, 200, 400};
+			display_dropdown_list(rect, env->editor.bg_audio,
+				env->editor.idx_bg_audio, env);
+		}
 	}
 }

@@ -50,8 +50,8 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 
 ---------------------------------------------------------------
 
-*FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-*FLO* BUG : angle du spawn
+BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+BUG : angle du spawn
 BUG : execve ./doom completement KC
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
@@ -73,9 +73,9 @@ TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 
 PROTEC : set min edge size for split edge
+PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 * [29] TODO :	floor / ceil casting texture on sectors
-* [29] TODO :	misc lists on select mode
 * [29] TODO :	modifs texture edge en selection
 
 [30] TODO :	display size selected edge
@@ -94,13 +94,14 @@ PROTEC : set min edge size for split edge
 
 [03] TODO :	update export
 [03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
+[03] TODO :	tout refactor
 
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync
 [04] OPTI :	multithreading
 [04] OPTI :	corriger le reframes inutiles
 
-[05] TODO :	refactor : total cleaning
+[05] TODO : details et finitions
 [05] TODO :	beta testing
 [05] TODO :	norme : total norme
 

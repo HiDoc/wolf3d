@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 17:29:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:23:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){910, 150, 250, 25};
 	create_element(E_B_SELEC_MUSIC, BUTTON, rect, env);
+	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
 
 	rect = (SDL_Rect){910, 190, 250, 25};
 	create_element(E_B_SELEC_SBTX, BUTTON, rect, env);
@@ -304,6 +305,104 @@ static void     create_wall_txtr(char *str, int ref, t_env *env)
 	}
 }
 
+static void     create_sb_txtr(char *str, int ref, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_sb_txtr, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_sb_txtr, out of memory");
+	new->ref = ref;
+	if (!(env->editor.sb_txtr))
+	{
+		env->editor.sb_txtr = new;
+		env->editor.sb_txtr->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.sb_txtr;
+		env->editor.sb_txtr = new;
+	}
+}
+
+static void		load_skybox_txtr(t_env *env)
+{
+	char				*name;
+	int					ref;
+	struct dirent		*de;
+	DIR					*dr;
+	int					i;
+
+	i = 0;
+	if (!(dr = lt_push(opendir("ressources/skybox/"), dir_del)))
+		ui_error_exit_sdl("Editor: Unable to open ressources/skybox");
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memeory in init_editor");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_sb_txtr(name, ref, env);
+			lt_release(name);
+			env->editor.nb_sb_txtr++;
+			i++;
+		}
+	}
+	lt_release(dr);
+}
+
+static void     create_bg_audio(char *str, int ref, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_bg_audio, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_bg_audio, out of memory");
+	new->ref = ref;
+	if (!(env->editor.bg_audio))
+	{
+		env->editor.bg_audio = new;
+		env->editor.bg_audio->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.bg_audio;
+		env->editor.bg_audio = new;
+	}
+}
+
+static void		load_background_audio(t_env *env)
+{
+	char				*name;
+	int					ref;
+	struct dirent		*de;
+	DIR					*dr;
+	int					i;
+
+	i = 0;
+	if (!(dr = lt_push(opendir("ressources/audio/"), dir_del)))
+		ui_error_exit_sdl("Editor: Unable to open ressources/audio/");
+	while ((de = readdir(dr)))
+	{
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memory load_background_audio");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_bg_audio(name, ref, env);
+			lt_release(name);
+			env->editor.nb_bg_audio++;
+			i++;
+		}
+	}
+	lt_release(dr);
+}
+
 static void		init_editor(t_env *env)
 {
 	char				*name;
@@ -311,6 +410,9 @@ static void		init_editor(t_env *env)
 	DIR					*dr;
 	int					i;
 	int					ref;
+
+	load_skybox_txtr(env);
+	load_background_audio(env);
 
 	i = 0;
 	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))

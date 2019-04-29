@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 17:28:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:19:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,20 @@ int				select_mode(t_env *env)
 				delete_edge(env->editor.edg_select, env);
 			unselect_all(env);
 			return (1);	
+		}
+		else if (!env->editor.obj_select && !env->editor.sct_select
+			&& !env->editor.vtx_select && !env->editor.edg_select)
+		{
+			if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_MUSIC, env)->rect))
+			{
+				get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
+				get_element(E_B_SELEC_SBTX, env)->clicked = 0;
+			}
+			if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SBTX, env)->rect))
+			{
+				get_element(E_B_SELEC_SBTX, env)->clicked = 1;
+				get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
+			}
 		}
 		return (1);
 	}

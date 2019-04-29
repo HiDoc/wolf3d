@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 17:25:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 18:13:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,12 +189,21 @@ struct					s_editor
 	int				idx_btn_obj;
 	t_elem			*btn_objs;
 
-	// wall textures dropdown_list
+	// wall_textures dropdown_list
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
 	t_elem			*wall_txtr;
 	t_elem			*curr_wall_txtr;
 
+	// skybox_textures dropdown_list
+	int             nb_sb_txtr;
+	int             idx_sb_txtr;
+	t_elem			*sb_txtr;
+
+	// background_audio dropdown_list
+	int             nb_bg_audio;
+	int             idx_bg_audio;
+	t_elem			*bg_audio;
 
 	// mouse handling
 	int				mouse_mode;
