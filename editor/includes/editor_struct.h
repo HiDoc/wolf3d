@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 14:14:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 20:23:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,24 @@ enum					e_elements
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
 	E_B_SELEC_DEL,
-	E_I_SELEC_HEIGHT,
+	E_I_SELEC_HCEIL,
+	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,
 	E_B_SELEC_SPLIT,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
+	E_B_SELEC_M_WALL_UP,
+	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
+	E_B_SELEC_CEILTX,
+	E_B_SELEC_FLOORTX,
+	E_B_SELEC_TX_UP,
+	E_B_SELEC_TX_DOWN,
 	E_B_SELEC_MUSIC,
-	E_B_SELEC_SBTX
+	E_B_SELEC_SBTX,
+	E_B_SELEC_MISC_UP,
+	E_B_SELEC_MISC_DOWN
 };
 
 enum					e_obj_category
@@ -88,6 +97,9 @@ struct					s_w_vtx
 {
 	int			fdoor;	// is final door
 	int			door;	// is door
+
+	int			ref;	// texture ref
+
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
@@ -109,24 +121,24 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
-	int				height;
-	int				gravity;
-
 	int				roof;		// ceil or sky : 0 / 1
+	int				ceil;		// hauteur ceil
+	int				floor;		// hauteur floor
+	int				gravity;
 
 	float			xmin;
 	float			xmax;
 	float			ymin;
 	float			ymax;
 
-	Uint32			color;
+	Uint32			color;		// ?
 
 	t_sct			*next;
 };
 
 struct					s_elem
 {
-	int				ref;		// if btn object
+	int				ref;
 	int				id;
 	int				type;
 	SDL_Rect		rect;
@@ -185,11 +197,34 @@ struct					s_editor
 	int				idx_btn_obj;
 	t_elem			*btn_objs;
 
-	// wall textures dropdown_list
+	// wall_textures dropdown_list
 	int             nb_wall_txtr;
 	int             idx_wall_txtr;
 	t_elem			*wall_txtr;
+	t_elem			*curr_wall_txtr;
 
+	// modifs_wall_textures dropdown_list
+	int             idx_m_wall_txtr;
+
+	// skybox_textures dropdown_list
+	int             nb_sb_txtr;
+	int             idx_sb_txtr;
+	t_elem			*sb_txtr;
+
+	// background_audio dropdown_list
+	int             nb_bg_audio;
+	int             idx_bg_audio;
+	t_elem			*bg_audio;
+
+	// ceil_txtr dropdown_list
+	int             nb_ceil_txtr;
+	int             idx_ceil_txtr;
+	t_elem			*ceil_txtr;
+
+	// floor_txtr dropdown_list
+	int             nb_floor_txtr;
+	int             idx_floor_txtr;
+	t_elem			*floor_txtr;
 
 	// mouse handling
 	int				mouse_mode;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 13:40:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 21:03:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void		unselect_all(t_env *env)
 static void     reset_values(t_env *env)
 {
 	// reset menu input new
-	get_element(E_I_SELEC_HEIGHT, env)->clicked = 0;
-	get_element(E_I_SELEC_HEIGHT, env)->color = C_WHITE;
+	get_element(E_I_SELEC_HCEIL, env)->clicked = 0;
+	get_element(E_I_SELEC_HCEIL, env)->color = C_WHITE;
 }
 
 static int		select_interface_events(t_env *env)
@@ -46,11 +46,11 @@ static int		select_interface_events(t_env *env)
 	{
 		env->editor.sct_select = env->editor.sct_hover;
 		// height input
-		if (get_element(E_I_SELEC_HEIGHT, env)->str)
-			lt_release(get_element(E_I_SELEC_HEIGHT, env)->str);
-		if (env->editor.sct_select->height > 0
-		&& !(get_element(E_I_SELEC_HEIGHT, env)->str =
-		lt_push(ft_itoa(env->editor.sct_select->height), ft_memdel)))
+		if (get_element(E_I_SELEC_HCEIL, env)->str)
+			lt_release(get_element(E_I_SELEC_HCEIL, env)->str);
+		if (env->editor.sct_select->ceil > 0
+		&& !(get_element(E_I_SELEC_HCEIL, env)->str =
+		lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
 		// gravity input
 		if (get_element(E_I_SELEC_GRAVITY, env)->str)
@@ -69,7 +69,7 @@ static int		select_input_events(t_env *env)
 		env->data->sdl.event.key.keysym.scancode));
 		const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
 
-		if (get_element(E_I_SELEC_HEIGHT, env)->clicked == 1)
+		if (get_element(E_I_SELEC_HCEIL, env)->clicked == 1)
 		{
 			if (scancode >= 89 && scancode <= 98)
 			{ // numeric keypad
@@ -78,15 +78,15 @@ static int		select_input_events(t_env *env)
 			if ((scancode >= 89 && scancode <= 98)
 			|| (scancode >= 30 && scancode <= 39))
 			{
-				if ((input_add(E_I_SELEC_HEIGHT, key, env)))
+				if ((input_add(E_I_SELEC_HCEIL, key, env)))
 				{
-					env->editor.sct_select->height = ft_atoi(
-					get_element(E_I_SELEC_HEIGHT, env)->str);
+					env->editor.sct_select->ceil = ft_atoi(
+					get_element(E_I_SELEC_HCEIL, env)->str);
 				}
 			}
 			else if (scancode == 42)
 			{
-				input_del(E_I_SELEC_HEIGHT, env);
+				input_del(E_I_SELEC_HCEIL, env);
 			}
 			return (1);
 		}
@@ -168,10 +168,10 @@ int				select_mode(t_env *env)
 		if (ui_mouseenter(m.x, m.y, rect))
 			return (select_interface_events(env));
 		else if (env->editor.sct_select
-		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HEIGHT, env)->rect))
+		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_HCEIL, env)->rect))
 		{
-			get_element(E_I_SELEC_HEIGHT, env)->clicked = 1;
-			get_element(E_I_SELEC_HEIGHT, env)->color = C_GREEN;
+			get_element(E_I_SELEC_HCEIL, env)->clicked = 1;
+			get_element(E_I_SELEC_HCEIL, env)->color = C_GREEN;
 		}
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_I_SELEC_GRAVITY, env)->rect))
@@ -185,6 +185,40 @@ int				select_mode(t_env *env)
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SKY, env)->rect))
 			env->editor.sct_select->roof = 1;
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_CEILTX, env)->rect))
+		{
+			get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
+			get_element(E_B_SELEC_FLOORTX, env)->clicked = 0;
+		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_FLOORTX, env)->rect))
+		{
+			get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
+			get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
+		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_UP, env)->rect))
+		{
+			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+				(env->editor.idx_ceil_txtr < 0)
+					? env->editor.idx_ceil_txtr++ : 0;
+			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+				(env->editor.idx_floor_txtr < 0)
+					? env->editor.idx_floor_txtr++ : 0;
+			return (1);
+		}
+		else if (env->editor.sct_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_DOWN, env)->rect))
+		{
+			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+				(env->editor.idx_ceil_txtr > -env->editor.nb_ceil_txtr + 1)
+					? env->editor.idx_ceil_txtr-- : 0;
+			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+				(env->editor.idx_floor_txtr > -env->editor.nb_floor_txtr + 1)
+					? env->editor.idx_floor_txtr-- : 0;
+			return (1);
+		}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
@@ -236,6 +270,19 @@ int				select_mode(t_env *env)
 			else
 				display_error_msg("Wall too small to make a final door", env);
 		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_UP, env)->rect))
+		{
+			(env->editor.idx_m_wall_txtr < 0) ? env->editor.idx_m_wall_txtr++ : 0;
+			return (1);
+		}
+		else if (env->editor.edg_select
+		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_DOWN, env)->rect))
+		{
+				(env->editor.idx_m_wall_txtr > -env->editor.nb_wall_txtr + 1)
+					? env->editor.idx_m_wall_txtr-- : 0;
+			return (1);
+		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
 			if (env->editor.obj_select)
@@ -248,6 +295,42 @@ int				select_mode(t_env *env)
 				delete_edge(env->editor.edg_select, env);
 			unselect_all(env);
 			return (1);	
+		}
+		else if (!env->editor.obj_select && !env->editor.sct_select
+			&& !env->editor.vtx_select && !env->editor.edg_select)
+		{
+			if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_MUSIC, env)->rect))
+			{
+				get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
+				get_element(E_B_SELEC_SBTX, env)->clicked = 0;
+			}
+			else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SBTX, env)->rect))
+			{
+				get_element(E_B_SELEC_SBTX, env)->clicked = 1;
+				get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
+			}
+			else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_MISC_UP, env)->rect))
+			{
+				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+					(env->editor.idx_bg_audio < 0)
+						? env->editor.idx_bg_audio++ : 0;
+				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+					(env->editor.idx_sb_txtr < 0)
+						? env->editor.idx_sb_txtr++ : 0;
+				return (1);
+			}
+			else if (ui_mouseenter(m.x, m.y,
+				get_element(E_B_SELEC_MISC_DOWN, env)->rect))
+			{
+				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+					(env->editor.idx_bg_audio > -env->editor.nb_bg_audio + 1)
+						? env->editor.idx_bg_audio-- : 0;
+				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+					(env->editor.idx_sb_txtr > -env->editor.nb_sb_txtr + 1)
+						? env->editor.idx_sb_txtr-- : 0;
+				return (1);
+			}
 		}
 		return (1);
 	}
