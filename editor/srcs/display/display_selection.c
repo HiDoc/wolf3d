@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 14:39:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:23:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,14 @@ void		display_selection(t_env *env)
 		get_element(E_I_SELEC_GRAVITY, env), env->data);
 
 		rect = (SDL_Rect){910, 215, 250, 30};
-		ui_make_string(rect, "height", env->data);
+		ui_make_string(rect, "ceil", env->data);
 		ui_make_input(env->data->surface,
-		get_element(E_I_SELEC_HEIGHT, env), env->data);
+		get_element(E_I_SELEC_HCEIL, env), env->data);
+
+		rect = (SDL_Rect){910, 285, 250, 30};
+		ui_make_string(rect, "floor", env->data);
+		ui_make_input(env->data->surface,
+		get_element(E_I_SELEC_HFLOOR, env), env->data);
 
 		get_element(E_B_SELEC_CEIL, env)->color = (
 			env->editor.sct_select->roof == 0) ? C_GREEN : C_WHITE;

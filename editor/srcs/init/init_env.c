@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 15:18:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:29:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){900, 110, 270, 20};
 	create_element(E_B_ELM_OBWL, BUTTON, rect, env);
+	get_element(E_B_ELM_OBWL, env)->clicked = 1;
 
 	rect = (SDL_Rect){900, 140, 270, 20};
 	create_element(E_B_ELM_CONS, BUTTON, rect, env);
@@ -172,7 +173,10 @@ static void		init_elems(t_env *env)
 	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
 
 	rect = (SDL_Rect){910, 250, 250, 30};
-	create_element(E_I_SELEC_HEIGHT, INPUT, rect, env);
+	create_element(E_I_SELEC_HCEIL, INPUT, rect, env);
+
+	rect = (SDL_Rect){910, 320, 250, 30};
+	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
 
 	rect = (SDL_Rect){910, 180, 250, 30};
 	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
@@ -186,11 +190,11 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 350, 110, 30};
+	rect = (SDL_Rect){910, 400, 110, 30};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEIL, env)->color = C_GREEN;
 
-	rect = (SDL_Rect){1040, 350, 120, 30};
+	rect = (SDL_Rect){1040, 400, 120, 30};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
 
 	rect = (SDL_Rect){910, 150, 250, 25};

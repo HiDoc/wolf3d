@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 17:28:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:14:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int				elem_mode(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, get_element(tab[i], env)->rect))
 			{
+				get_element(tab[env->editor.obj_mode], env)->clicked = 0;
+				get_element(tab[i], env)->clicked = 1;
 				env->editor.idx_btn_obj = 0;
 				env->editor.obj_mode = i;
 				return (1);

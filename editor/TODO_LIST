@@ -61,6 +61,8 @@ BUG : fix edge hover
 BUG : color of error_msg
 BUG : reframe click boutons sur right pannel
 BUG : taille du nom des object depasse du carre
+BUG : coherence retour menu - start - cancel
+BUG : fix and finish input ceil/floor/gravity
 
 LEAK: protect gnl
 
@@ -72,40 +74,37 @@ TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 
 PROTEC : set min edge size for split edge
 
-OPTI :	minmax sync
-OPTI :	multithreading
-OPTI :	corriger le reframes inutiles
+* [29] TODO :	floor / ceil casting texture on sectors
+* [29] TODO :	misc lists on select mode
+* [29] TODO :	modifs texture edge en selection
 
-TODO :	door is a sector
-TODO :	height ceil / height floor sector
+[30] TODO :	display size selected edge
+[30] TODO :	interface element clipping
+[30] TODO :	spawn : display line on spawn direction
+[30] TODO :	grid : limite left / bot
+[30] TODO :	wall object dock
 
-* TODO :	floor / ceil casting texture on sectors
-* TODO :	misc lists on select mode
-* TODO :	modifs texture edge en selection
+[01] TODO :	bloquer split / door / fdor si c'est une door
+[01] TODO :	bloquer vtx move si sct is a door
+[01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup
+[01] TODO : empecher export si croisement edge
 
-TODO :	color on object mode button
-TODO :	display size selected edge
-TODO :	interface element clipping
-TODO :	spawn : display line on spawn direction
-TODO :	grid : limite left / bot
+[02] TODO :	front design selected / hovered color and stuff
+[02] TODO :	door is a sector
 
-TODO :	wall object dock
-TODO :	bloquer split / door / fdor si c'est une door
-TODO :	bloquer modif size de vertex door
-TODO :	bloquer les croisement de sectors // soluce : bloquer a la sauvegarde
-TODO :	bloquer les sorties d'object lors d'un edit de sector
+[03] TODO :	update export
+[03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
 
-TODO :	find image for misc_mode
-TODO :	front design selected / hovered color and stuff
+[04] TODO :	parsing : parsing todo
+[04] OPTI :	minmax sync
+[04] OPTI :	multithreading
+[04] OPTI :	corriger le reframes inutiles
 
-* TODO :	parsing : parsing todo
-* TODO :	update export
-TODO :	menu preview
+[05] TODO :	refactor : total cleaning
+[05] TODO :	beta testing
+[05] TODO :	norme : total norme
 
-TODO :	refactor : total cleaning
-TODO :	beta testing
-TODO :	norme : total norme
-
+OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 14:47:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:25:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ enum					e_elements
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
 	E_B_SELEC_DEL,
-	E_I_SELEC_HEIGHT,
+	E_I_SELEC_HCEIL,
+	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,
 	E_B_SELEC_SPLIT,
 	E_B_SELEC_DOOR,
@@ -112,17 +113,17 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
-	int				height;
-	int				gravity;
-
 	int				roof;		// ceil or sky : 0 / 1
+	int				ceil;		// hauteur ceil
+	int				floor;		// hauteur floor
+	int				gravity;
 
 	float			xmin;
 	float			xmax;
 	float			ymin;
 	float			ymax;
 
-	Uint32			color;
+	Uint32			color;		// ?
 
 	t_sct			*next;
 };
