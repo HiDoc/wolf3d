@@ -75,12 +75,11 @@ TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-** [30] TODO : generiser init_env (load/init & create)
-[30] TODO : refactor select_mode.c
 [30] TODO :	display size selected edge
 [30] TODO :	spawn : display line on spawn direction
 [30] TODO : display interest point
 [30] TODO :	wall object dock
+[30] TODO :	refactor dropdown element list
 [30] TODO :	debug relier element et buttons display on dropdown lists
 
 [01] TODO :	bloquer split / door / fdor si c'est une door

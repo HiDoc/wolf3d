@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:32:21 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:40:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,7 +385,7 @@ void		init_env(t_env *env, t_data *data)
 	init_menu(env);
 	init_editor(env);
 
-	ui_make_window("EDITOR", data);
-
 	ui_load_font("ressources/fonts/Arial.ttf", data);
+
+	ui_make_window("EDITOR", data);
 }

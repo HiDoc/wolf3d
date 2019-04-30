@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:37:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:38:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ struct					s_menu
 
 struct					s_editor
 {
-	time_t			timestamp;	// error_msg timestamp
+	// Error message
+	time_t			timestamp;
 	char			*error_msg;
 
 	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe ??????????
