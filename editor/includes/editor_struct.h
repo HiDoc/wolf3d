@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:38:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 22:46:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ struct					s_w_vtx
 	int			door;	// is door
 
 	int			ref;	// texture ref
+
+	int			size;	// size edge
 
 	t_vtx		*vtx;
 	t_sct		*sector;
@@ -237,9 +239,6 @@ struct					s_editor
 	t_w_vtx			*edg_select;
 	t_sct			*sct_select;
 	t_object		*obj_select;
-
-	// size current edge draw
-	int				vtx_size;
 
 	// state
 	int				drawing;		// am i drawing an edge

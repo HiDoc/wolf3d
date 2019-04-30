@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:56:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 22:48:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
 
 	center = get_edge_center(a, b);
 
-	size = env->editor.vtx_size = pythagore(a, b);
+	size = pythagore(a, b);
 	scale = doorsize / size;
 
 	door.a.x = -scale * (a.x - center.x) + center.x;

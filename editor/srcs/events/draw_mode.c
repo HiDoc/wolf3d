@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 15:29:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 22:53:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int			draw_mode(t_env *env)
 		{
 			if (!env->editor.sct_hover)
 			{
-				env->editor.vtx_size = 0;
 				if (!env->editor.drawing)
 				{
 					env->editor.drawing = 1;
@@ -95,8 +94,8 @@ int			draw_mode(t_env *env)
 	}
 	if (env->sct_current)
 	{
-		env->editor.vtx_size = pythagore(
-				env->sct_current->w_vtx_current->vtx->pos, env->mouse);
+		env->sct_current->w_vtx_current->size =
+			pythagore(env->sct_current->w_vtx_current->vtx->pos, env->mouse);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

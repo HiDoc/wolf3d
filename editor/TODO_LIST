@@ -63,6 +63,7 @@ BUG : reframe click boutons sur right pannel
 BUG : taille du nom des object depasse du carre
 BUG : coherence retour menu - start - cancel
 BUG : fix and finish input ceil/floor/gravity
+BUG : edge size n'est pas update si split, moving etc...
 
 LEAK: protect gnl
 
@@ -75,13 +76,12 @@ TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-[30] TODO :	display size selected edge
 [30] TODO :	spawn : display line on spawn direction
 [30] TODO : display interest point
 [30] TODO :	wall object dock
-[30] TODO :	refactor dropdown element list
-[30] TODO :	debug relier element et buttons display on dropdown lists
 
+[01] TODO :	refactor dropdown element list
+[01] TODO :	debug relier element et buttons display on dropdown lists
 [01] TODO :	bloquer split / door / fdor si c'est une door
 [01] TODO :	bloquer vtx move si sct is a door
 [01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup

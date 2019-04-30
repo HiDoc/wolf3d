@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 13:59:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 22:46:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void		display_infos(t_env *env)
 		rect = (SDL_Rect){190, 750, 0, 20};
 		ui_make_string(rect, "size : ", env->data);
 		rect = (SDL_Rect){240, 750, 0, 20};
-		ui_make_nbrstring(rect, env->editor.vtx_size, env->data);
+		ui_make_nbrstring(rect, env->sct_current->w_vtx_current->size, env->data);
 	}
 
 	// display scale
