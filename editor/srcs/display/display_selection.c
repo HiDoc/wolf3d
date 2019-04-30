@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:24:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:32:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		display_selection(t_env *env)
 		ui_make_nbrstring(rect, env->editor.obj_select->dir, env->data);
 
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_DEL, env)->rect, C_RED);
 		ui_make_string(
 		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
 	}
@@ -58,11 +58,6 @@ void		display_selection(t_env *env)
 
 		rect = (SDL_Rect){1000, 110, 250, 30};
 		ui_make_nbrstring(rect, env->editor.sct_select->id, env->data);
-
-		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
-		ui_make_string(
-		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
 
 		rect = (SDL_Rect){910, 145, 250, 30};
 		ui_make_string(rect, "gravity", env->data);
@@ -107,14 +102,14 @@ void		display_selection(t_env *env)
 		if (get_element(E_B_SELEC_CEILTX, env)->clicked)
 		{
 			// display skybox textures
-			display_dropdown_list(rect, env->editor.ceil_txtr,
-				env->editor.idx_ceil_txtr, env);
+			display_dropdown_list(rect, env->editor.dropdown[DD_CEILTX].start,
+				env->editor.dropdown[DD_CEILTX].idx_element, env);
 		}
 		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
 		{
 			// display background audio
-			display_dropdown_list(rect, env->editor.floor_txtr,
-				env->editor.idx_floor_txtr, env);
+			display_dropdown_list(rect, env->editor.dropdown[DD_FLOORTX].start,
+				env->editor.dropdown[DD_FLOORTX].idx_element, env);
 		}
 
 		// up
@@ -125,6 +120,11 @@ void		display_selection(t_env *env)
 		if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_DOWN, env)->image,
 		0, env->data->surface, &get_element(E_B_SELEC_TX_DOWN, env)->rect)) < 0)
 			ui_error_exit_sdl("Editor: blit error in display selection");
+
+		ui_make_rect(env->data->surface,
+		get_element(E_B_SELEC_DEL, env)->rect, C_RED);
+		ui_make_string(
+		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
 	}
 	else if (env->editor.vtx_select)
 	{
@@ -135,7 +135,7 @@ void		display_selection(t_env *env)
 		ui_make_string(rect, "vertex [id vertex]", env->data);
 
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_DEL, env)->rect, C_RED);
 		ui_make_string(
 		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
 	}
@@ -167,7 +167,7 @@ void		display_selection(t_env *env)
 
 		// display modif wall txtr
 		rect = (SDL_Rect){910, 350, 200, 350};
-		display_dropdown_list(rect, env->editor.wall_txtr,
+		display_dropdown_list(rect, env->editor.dropdown[DD_WALLTX].start,
 		env->editor.idx_m_wall_txtr, env);
 
 		// up
@@ -180,7 +180,7 @@ void		display_selection(t_env *env)
 			ui_error_exit_sdl("Editor: blit error in display selection");
 
 		ui_make_rect(env->data->surface,
-		get_element(E_B_SELEC_DEL, env)->rect, C_WHITE);
+		get_element(E_B_SELEC_DEL, env)->rect, C_RED);
 		ui_make_string(
 		get_element(E_B_SELEC_DEL, env)->rect, "DELETE", env->data);
 	}
@@ -210,15 +210,15 @@ void		display_selection(t_env *env)
 		if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
 		{
 			rect = (SDL_Rect){910, 250, 200, 400};
-			display_dropdown_list(rect, env->editor.sb_txtr,
-				env->editor.idx_sb_txtr, env);
+			display_dropdown_list(rect, env->editor.dropdown[DD_SBTX].start,
+				env->editor.dropdown[DD_SBTX].idx_element, env);
 		}
 		else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
 		{
 			// display background audio
 			rect = (SDL_Rect){910, 250, 200, 400};
-			display_dropdown_list(rect, env->editor.bg_audio,
-				env->editor.idx_bg_audio, env);
+			display_dropdown_list(rect, env->editor.dropdown[DD_BGAUDIO].start,
+				env->editor.dropdown[DD_BGAUDIO].idx_element, env);
 		}
 
 		// up

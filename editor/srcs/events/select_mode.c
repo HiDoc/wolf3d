@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 21:03:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:31:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,25 +201,53 @@ int				select_mode(t_env *env)
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_UP, env)->rect))
 		{
 			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-				(env->editor.idx_ceil_txtr < 0)
-					? env->editor.idx_ceil_txtr++ : 0;
+				(env->editor.dropdown[DD_CEILTX].idx_element < 0)
+					? env->editor.dropdown[DD_CEILTX].idx_element++ : 0;
 			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-				(env->editor.idx_floor_txtr < 0)
-					? env->editor.idx_floor_txtr++ : 0;
+				(env->editor.dropdown[DD_FLOORTX].idx_element < 0)
+					? env->editor.dropdown[DD_FLOORTX].idx_element++ : 0;
 			return (1);
 		}
 		else if (env->editor.sct_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_TX_DOWN, env)->rect))
 		{
 			if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-				(env->editor.idx_ceil_txtr > -env->editor.nb_ceil_txtr + 1)
-					? env->editor.idx_ceil_txtr-- : 0;
+				(env->editor.dropdown[DD_CEILTX].idx_element
+				> -env->editor.dropdown[DD_CEILTX].nb_element + 1)
+					? env->editor.dropdown[DD_CEILTX].idx_element-- : 0;
 			else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-				(env->editor.idx_floor_txtr > -env->editor.nb_floor_txtr + 1)
-					? env->editor.idx_floor_txtr-- : 0;
+				(env->editor.dropdown[DD_FLOORTX].idx_element
+				> -env->editor.dropdown[DD_FLOORTX].nb_element + 1)
+					? env->editor.dropdown[DD_FLOORTX].idx_element-- : 0;
 			return (1);
 		}
-		else if (env->editor.edg_select
+		// click music list button
+		t_elem  *button;
+		button = env->editor.dropdown[DD_CEILTX].start;
+		while (button)
+		{
+			if (ui_mouseenter(m.x, m.y, button->rect))
+			{
+				env->editor.dropdown[DD_CEILTX].current->clicked = 0;
+				env->editor.dropdown[DD_CEILTX].current = button;
+				button->clicked = 1;
+			}
+			button = button->next;
+		}
+		// click sb_txtr list button
+		button = env->editor.dropdown[DD_FLOORTX].start;
+		while (button)
+		{
+			if (ui_mouseenter(m.x, m.y, button->rect))
+			{
+				env->editor.dropdown[DD_FLOORTX].current = 0;
+				env->editor.dropdown[DD_FLOORTX].current = button;
+				button->clicked = 1;
+			}
+			button = button->next;
+		}
+
+		if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_SPLIT, env)->rect))
 		{
 			if (env->editor.edg_select->next)
@@ -279,11 +307,24 @@ int				select_mode(t_env *env)
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_DOWN, env)->rect))
 		{
-				(env->editor.idx_m_wall_txtr > -env->editor.nb_wall_txtr + 1)
+				(env->editor.idx_m_wall_txtr
+				 > -env->editor.dropdown[DD_WALLTX].nb_element + 1)
 					? env->editor.idx_m_wall_txtr-- : 0;
 			return (1);
 		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
+		// click music list button
+		button = env->editor.dropdown[DD_WALLTX].start;
+		while (button)
+		{
+			if (ui_mouseenter(m.x, m.y, button->rect))
+			{
+				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
+				env->editor.dropdown[DD_WALLTX].current = button;
+				button->clicked = 1;
+			}
+			button = button->next;
+		}
+		if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 		{
 			if (env->editor.obj_select)
 				delete_object(env->editor.obj_select, env);
@@ -313,23 +354,50 @@ int				select_mode(t_env *env)
 				get_element(E_B_SELEC_MISC_UP, env)->rect))
 			{
 				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-					(env->editor.idx_bg_audio < 0)
-						? env->editor.idx_bg_audio++ : 0;
+					(env->editor.dropdown[DD_BGAUDIO].idx_element < 0)
+						? env->editor.dropdown[DD_BGAUDIO].idx_element++ : 0;
 				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-					(env->editor.idx_sb_txtr < 0)
-						? env->editor.idx_sb_txtr++ : 0;
+					(env->editor.dropdown[DD_SBTX].idx_element < 0)
+						? env->editor.dropdown[DD_SBTX].idx_element++ : 0;
 				return (1);
 			}
 			else if (ui_mouseenter(m.x, m.y,
 				get_element(E_B_SELEC_MISC_DOWN, env)->rect))
 			{
 				if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-					(env->editor.idx_bg_audio > -env->editor.nb_bg_audio + 1)
-						? env->editor.idx_bg_audio-- : 0;
+					(env->editor.dropdown[DD_BGAUDIO].idx_element
+					> -env->editor.dropdown[DD_BGAUDIO].nb_element + 1)
+						? env->editor.dropdown[DD_BGAUDIO].idx_element-- : 0;
 				else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-					(env->editor.idx_sb_txtr > -env->editor.nb_sb_txtr + 1)
-						? env->editor.idx_sb_txtr-- : 0;
+					(env->editor.dropdown[DD_SBTX].idx_element
+					> -env->editor.dropdown[DD_SBTX].nb_element + 1)
+						? env->editor.dropdown[DD_SBTX].idx_element-- : 0;
 				return (1);
+			}
+
+			// click music list button
+			button = env->editor.dropdown[DD_BGAUDIO].start;
+			while (button)
+			{
+				if (ui_mouseenter(m.x, m.y, button->rect))
+				{
+					env->editor.dropdown[DD_BGAUDIO].current->clicked = 0;
+					env->editor.dropdown[DD_BGAUDIO].current = button;
+					button->clicked = 1;
+				}
+				button = button->next;
+			}
+			// click sb_txtr list button
+			button = env->editor.dropdown[DD_SBTX].start;
+			while (button)
+			{
+				if (ui_mouseenter(m.x, m.y, button->rect))
+				{
+					env->editor.dropdown[DD_SBTX].current->clicked = 0;
+					env->editor.dropdown[DD_SBTX].current = button;
+					button->clicked = 1;
+				}
+				button = button->next;
 			}
 		}
 		return (1);

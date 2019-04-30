@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 01:05:43 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 15:08:40 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:36:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		create_w_vertex(t_vtx *vtx, t_env *env)
 	new->vtx = vtx;
 	new->sector = env->sct_current;
 	new->next = 0;
-	new->ref = env->editor.curr_wall_txtr->ref;
+	new->ref = env->editor.dropdown[DD_WALLTX].current->ref;
 	if (!(env->sct_current->w_vtx_start))
 	{
 		env->sct_current->w_vtx_current = new;

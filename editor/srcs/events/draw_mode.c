@@ -6,20 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 15:18:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:29:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-static void     reset_values(t_env *env)
-{
-	if (env->editor.curr_wall_txtr)
-	{
-		env->editor.curr_wall_txtr->clicked = 0;
-		env->editor.curr_wall_txtr = 0;
-	}
-}
 
 static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 {
@@ -46,13 +37,14 @@ int			draw_mode(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_DRW_UP, env)->rect))
 		{
-			(env->editor.idx_wall_txtr < 0)
-				? env->editor.idx_wall_txtr++ : 0;
+			(env->editor.dropdown[DD_WALLTX].idx_element < 0)
+				? env->editor.dropdown[DD_WALLTX].idx_element++ : 0;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_DRW_DOWN, env)->rect))
 		{
-			(env->editor.idx_wall_txtr > -env->editor.nb_wall_txtr + 1)
-				? env->editor.idx_wall_txtr-- : 0;
+			(env->editor.dropdown[DD_WALLTX].idx_element
+			> -env->editor.dropdown[DD_WALLTX].nb_element + 1)
+				? env->editor.dropdown[DD_WALLTX].idx_element-- : 0;
 		}
 		else if (ui_mouseenter(m.x, m.y, rect))
 		{
@@ -88,13 +80,13 @@ int			draw_mode(t_env *env)
 		}
 
 		// click on object button
-		wall_txtr = env->editor.wall_txtr;
+		wall_txtr = env->editor.dropdown[DD_WALLTX].start;
 		while (wall_txtr)
 		{
 			if (ui_mouseenter(m.x, m.y, wall_txtr->rect))
 			{
-				reset_values(env);
-				env->editor.curr_wall_txtr = wall_txtr;
+				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
+				env->editor.dropdown[DD_WALLTX].current = wall_txtr;
 				wall_txtr->clicked = 1;
 			}
 			wall_txtr = wall_txtr->next;

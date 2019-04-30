@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 17:18:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 13:14:31 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,21 @@ static int	click_event(t_env *env)
 	{
 		env->menu.state = 0;
 	}
-
-	// reseting
-	reset_values(env);
-
-	if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
+	else if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
 	{
 		(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
+		return (1);
 	}
 	else if (ui_mouseenter(m.x, m.y, get_element(M_B_DOWN, env)->rect))
 	{
 		(env->menu.idx_map > -env->menu.nb_maps + 1) ? env->menu.idx_map-- : 0;
+		return (1);
 	}
-	else if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
+
+	// reseting
+	reset_values(env);
+
+	if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
 	{
 		get_element(M_I_NEW, env)->clicked = 1;
 		get_element(M_I_NEW, env)->color = C_GREEN;

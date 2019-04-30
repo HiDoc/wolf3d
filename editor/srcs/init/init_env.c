@@ -6,11 +6,32 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:25:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:37:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+static void		create_dd_button(int dd, int ref, char *str, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	new->ref = ref;
+	if (!(env->editor.dropdown[dd].start))
+	{
+		env->editor.dropdown[dd].start = new;
+		env->editor.dropdown[dd].start->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.dropdown[dd].start;
+		env->editor.dropdown[dd].start = new;
+	}
+}
 
 static void		create_element(int id, int type, SDL_Rect rect, t_env *env)
 {
@@ -321,46 +342,32 @@ static void		init_menu(t_env *env)
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
 }
 
-static void     create_wall_txtr(char *str, int ref, t_env *env)
+static void		load_wall_txtr(t_env *env)
 {
-	t_elem   *new;
+	char                *name;
+	int                 ref;
+	struct dirent       *de;
+	DIR                 *dr;
+	int                 i;
 
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	new->ref = ref;
-	if (!(env->editor.wall_txtr))
+	i = 0;
+	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
+		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
+	while ((de = readdir(dr)))
 	{
-		env->editor.wall_txtr = new;
-		env->editor.wall_txtr->next = 0;
+		if ((de->d_name)[0] != '.')
+		{
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memeory in init_editor");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_dd_button(DD_WALLTX, ref, name, env);
+			lt_release(name);
+			env->editor.dropdown[DD_WALLTX].nb_element++;
+			i++;
+		}
 	}
-	else
-	{
-		new->next = env->editor.wall_txtr;
-		env->editor.wall_txtr = new;
-	}
-}
-
-static void     create_sb_txtr(char *str, int ref, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_sb_txtr, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_sb_txtr, out of memory");
-	new->ref = ref;
-	if (!(env->editor.sb_txtr))
-	{
-		env->editor.sb_txtr = new;
-		env->editor.sb_txtr->next = 0;
-	}
-	else
-	{
-		new->next = env->editor.sb_txtr;
-		env->editor.sb_txtr = new;
-	}
+	lt_release(dr);
 }
 
 static void		load_skybox_txtr(t_env *env)
@@ -382,34 +389,13 @@ static void		load_skybox_txtr(t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memeory in init_editor");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_sb_txtr(name, ref, env);
+			create_dd_button(DD_SBTX, ref, name, env);
 			lt_release(name);
-			env->editor.nb_sb_txtr++;
+			env->editor.dropdown[DD_SBTX].nb_element++;
 			i++;
 		}
 	}
 	lt_release(dr);
-}
-
-static void     create_bg_audio(char *str, int ref, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_bg_audio, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_bg_audio, out of memory");
-	new->ref = ref;
-	if (!(env->editor.bg_audio))
-	{
-		env->editor.bg_audio = new;
-		env->editor.bg_audio->next = 0;
-	}
-	else
-	{
-		new->next = env->editor.bg_audio;
-		env->editor.bg_audio = new;
-	}
 }
 
 static void		load_background_audio(t_env *env)
@@ -431,34 +417,13 @@ static void		load_background_audio(t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory load_background_audio");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_bg_audio(name, ref, env);
+			create_dd_button(DD_BGAUDIO, ref, name, env);
 			lt_release(name);
-			env->editor.nb_bg_audio++;
+			env->editor.dropdown[DD_BGAUDIO].nb_element++;
 			i++;
 		}
 	}
 	lt_release(dr);
-}
-
-static void     create_ceil_txtr(char *str, int ref, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_ceil_txtr, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_ceil_txtr, out of memory");
-	new->ref = ref;
-	if (!(env->editor.ceil_txtr))
-	{
-		env->editor.ceil_txtr = new;
-		env->editor.ceil_txtr->next = 0;
-	}
-	else
-	{
-		new->next = env->editor.ceil_txtr;
-		env->editor.ceil_txtr = new;
-	}
 }
 
 static void		load_ceil_txtr(t_env *env)
@@ -480,34 +445,13 @@ static void		load_ceil_txtr(t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in laod_ceil_txtr");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_ceil_txtr(name, ref, env);
+			create_dd_button(DD_CEILTX, ref, name, env);
 			lt_release(name);
-			env->editor.nb_ceil_txtr++;
+			env->editor.dropdown[DD_CEILTX].nb_element++;
 			i++;
 		}
 	}
 	lt_release(dr);
-}
-
-static void     create_floor_txtr(char *str, int ref, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_floor_txtr, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_floor_txtr, out of memory");
-	new->ref = ref;
-	if (!(env->editor.floor_txtr))
-	{
-		env->editor.floor_txtr = new;
-		env->editor.floor_txtr->next = 0;
-	}
-	else
-	{
-		new->next = env->editor.floor_txtr;
-		env->editor.floor_txtr = new;
-	}
 }
 
 static void		load_floor_txtr(t_env *env)
@@ -529,9 +473,9 @@ static void		load_floor_txtr(t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in laod_floor_txtr");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_floor_txtr(name, ref, env);
+			create_dd_button(DD_FLOORTX, ref, name, env);
 			lt_release(name);
-			env->editor.nb_floor_txtr++;
+			env->editor.dropdown[DD_FLOORTX].nb_element++;
 			i++;
 		}
 	}
@@ -540,42 +484,48 @@ static void		load_floor_txtr(t_env *env)
 
 static void		init_editor(t_env *env)
 {
-	char				*name;
-	struct dirent		*de;
-	DIR					*dr;
-	int					i;
-	int					ref;
-
+	load_wall_txtr(env);
 	load_ceil_txtr(env);
 	load_floor_txtr(env);
 	load_skybox_txtr(env);
 	load_background_audio(env);
 
-	i = 0;
-	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.')
-		{
-			if (!(name = lt_push(ft_strsub(
-					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
-				ui_error_exit_sdl("Editor: Out of memeory in init_editor");
-			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_wall_txtr(name, ref, env);
-			lt_release(name);
-			env->editor.nb_wall_txtr++;
-			i++;
-		}
-	}
-	lt_release(dr);
-
 	// wall txtr par default
-	if (!env->editor.curr_wall_txtr)
+	if (!env->editor.dropdown[DD_WALLTX].current)
 	{
-		env->editor.curr_wall_txtr = env->editor.wall_txtr;
-		env->editor.wall_txtr->clicked = 1;
+		env->editor.dropdown[DD_WALLTX].current
+			= env->editor.dropdown[DD_WALLTX].start;
+		env->editor.dropdown[DD_WALLTX].current->clicked = 1;
 	}
+
+	// set default
+	if (!env->editor.dropdown[DD_BGAUDIO].current)
+	{
+		env->editor.dropdown[DD_BGAUDIO].current =
+			env->editor.dropdown[DD_BGAUDIO].start;
+		env->editor.dropdown[DD_BGAUDIO].current->clicked = 1;
+	}
+	if (!env->editor.dropdown[DD_SBTX].current)
+	{
+		env->editor.dropdown[DD_SBTX].current =
+			env->editor.dropdown[DD_SBTX].start;
+		env->editor.dropdown[DD_SBTX].current->clicked = 1;
+	}
+
+	// set default
+	if (!env->editor.dropdown[DD_CEILTX].current)
+	{
+		env->editor.dropdown[DD_CEILTX].current
+			= env->editor.dropdown[DD_CEILTX].start;
+		env->editor.dropdown[DD_CEILTX].current->clicked = 1;
+	}
+	if (!env->editor.dropdown[DD_FLOORTX].current)
+	{
+		env->editor.dropdown[DD_FLOORTX].current
+			= env->editor.dropdown[DD_FLOORTX].start;
+		env->editor.dropdown[DD_FLOORTX].current->clicked = 1;
+	}
+	
 
 	env->grid_scale = 45;
 	env->editor.grid_translate = (t_pos){0, 0};

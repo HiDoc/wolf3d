@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:23:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:36:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
 typedef struct	s_object	t_object;
 typedef struct	s_menu		t_menu;
+typedef struct	s_dropdown	t_dropdown;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
 
@@ -180,6 +181,23 @@ struct					s_menu
 	SDL_Surface		*background;
 };
 
+enum					e_dropdowm_name
+{
+	DD_WALLTX,
+	DD_SBTX,
+	DD_BGAUDIO,
+	DD_CEILTX,
+	DD_FLOORTX
+};
+
+struct					s_dropdown
+{
+	int				nb_element;
+	int				idx_element;
+	t_elem			*start;
+	t_elem			*current;
+};
+
 struct					s_editor
 {
 	time_t			timestamp;	// error_msg timestamp
@@ -197,34 +215,11 @@ struct					s_editor
 	int				idx_btn_obj;
 	t_elem			*btn_objs;
 
-	// wall_textures dropdown_list
-	int             nb_wall_txtr;
-	int             idx_wall_txtr;
-	t_elem			*wall_txtr;
-	t_elem			*curr_wall_txtr;
-
 	// modifs_wall_textures dropdown_list
 	int             idx_m_wall_txtr;
 
-	// skybox_textures dropdown_list
-	int             nb_sb_txtr;
-	int             idx_sb_txtr;
-	t_elem			*sb_txtr;
-
-	// background_audio dropdown_list
-	int             nb_bg_audio;
-	int             idx_bg_audio;
-	t_elem			*bg_audio;
-
-	// ceil_txtr dropdown_list
-	int             nb_ceil_txtr;
-	int             idx_ceil_txtr;
-	t_elem			*ceil_txtr;
-
-	// floor_txtr dropdown_list
-	int             nb_floor_txtr;
-	int             idx_floor_txtr;
-	t_elem			*floor_txtr;
+	// all dropdown lists
+	t_dropdown		dropdown[5];
 
 	// mouse handling
 	int				mouse_mode;
