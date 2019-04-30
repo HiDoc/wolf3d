@@ -76,8 +76,6 @@ PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 ** [30] TODO : generiser init_env (load/init & create)
-* [30] TODO : refactor make_dropdown (with enum system)
-* [30] TODO : refactor load dropdown lists in init_env
 [30] TODO : refactor select_mode.c
 [30] TODO :	display size selected edge
 [30] TODO :	spawn : display line on spawn direction

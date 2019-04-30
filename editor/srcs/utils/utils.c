@@ -6,17 +6,18 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 17:11:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:05:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		display_dropdown_list(SDL_Rect rect, t_elem *elem,
-			int index, t_env *env)
+void		display_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 {
-	Uint32		color;
-	int			i;
+	t_elem			*elem = env->editor.dropdown[dd].start;
+	int				index = env->editor.dropdown[dd].idx_element;
+	Uint32			color;
+	int				i;
 
 	i = 0;
 	while (elem)
