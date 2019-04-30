@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 15:36:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:37:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
 typedef struct	s_object	t_object;
-typedef struct	s_menu		t_menu;
 typedef struct	s_dropdown	t_dropdown;
+typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
 
@@ -168,22 +168,10 @@ struct					s_object
 	t_object		*next;
 };
 
-struct					s_menu
-{
-	int				state;
-
-	// dropdown list
-	int				nb_maps;
-	int				idx_map;
-	t_elem			*btn_maps;
-
-	t_elem			*selected;		// upload selected
-	SDL_Surface		*background;
-};
-
 enum					e_dropdowm_name
 {
 	DD_WALLTX,
+	DD_MWALLTX,
 	DD_SBTX,
 	DD_BGAUDIO,
 	DD_CEILTX,
@@ -196,6 +184,13 @@ struct					s_dropdown
 	int				idx_element;
 	t_elem			*start;
 	t_elem			*current;
+};
+
+struct					s_menu
+{
+	int				state;
+	t_dropdown		dropdown;
+	SDL_Surface		*background;
 };
 
 struct					s_editor
@@ -215,11 +210,8 @@ struct					s_editor
 	int				idx_btn_obj;
 	t_elem			*btn_objs;
 
-	// modifs_wall_textures dropdown_list
-	int             idx_m_wall_txtr;
-
-	// all dropdown lists
-	t_dropdown		dropdown[5];
+	// editor dropdown lists
+	t_dropdown		dropdown[6];
 
 	// mouse handling
 	int				mouse_mode;

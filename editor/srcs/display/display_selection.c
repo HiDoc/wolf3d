@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:06:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:35:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ void		display_selection(t_env *env)
 		if (get_element(E_B_SELEC_CEILTX, env)->clicked)
 		{
 			// display skybox textures
-			display_dropdown_list(rect, DD_CEILTX, env);
+			display_editor_dropdown_list(rect, DD_CEILTX, env);
 		}
 		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
 		{
 			// display background audio
-			display_dropdown_list(rect, DD_FLOORTX, env);
+			display_editor_dropdown_list(rect, DD_FLOORTX, env);
 		}
 
 		// up
@@ -165,8 +165,7 @@ void		display_selection(t_env *env)
 
 		// display modif wall txtr
 		rect = (SDL_Rect){910, 350, 200, 350};
-		//display_dropdown_list(rect, env->editor.dropdown[DD_WALLTX].start,
-		//env->editor.idx_m_wall_txtr, env);
+		display_editor_dropdown_list(rect, DD_MWALLTX, env);
 
 		// up
 		if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_UP, env)->image,
@@ -208,13 +207,13 @@ void		display_selection(t_env *env)
 		if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
 		{
 			rect = (SDL_Rect){910, 250, 200, 400};
-			display_dropdown_list(rect, DD_SBTX, env);
+			display_editor_dropdown_list(rect, DD_SBTX, env);
 		}
 		else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
 		{
 			// display background audio
 			rect = (SDL_Rect){910, 250, 200, 400};
-			display_dropdown_list(rect, DD_BGAUDIO, env);
+			display_editor_dropdown_list(rect, DD_BGAUDIO, env);
 		}
 
 		// up

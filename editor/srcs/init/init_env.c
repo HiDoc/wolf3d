@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 15:56:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:32:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,29 +199,6 @@ static void		init_elems(t_env *env)
 		ui_load_image("ressources/images/icons/arrowdown.png");
 }
 
-static void		create_dd_button(int dd, int ref, char *str, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
-	new->ref = ref;
-	if (!(env->editor.dropdown[dd].start))
-	{
-		env->editor.dropdown[dd].start = new;
-		env->editor.dropdown[dd].start->next = 0;
-		env->editor.dropdown[dd].current = new;
-		env->editor.dropdown[dd].current->clicked = 1;
-	}
-	else
-	{
-		new->next = env->editor.dropdown[dd].start;
-		env->editor.dropdown[dd].start = new;
-	}
-}
-
 static void		create_btn_obj(int id, int ref, int type, char *str, t_env *env)
 {
 	t_elem   *new;
@@ -242,26 +219,6 @@ static void		create_btn_obj(int id, int ref, int type, char *str, t_env *env)
 	{
 		new->next = env->editor.btn_objs;
 		env->editor.btn_objs = new;
-	}
-}
-
-static void		create_btn_map(char *str, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	if (!(env->menu.btn_maps))
-	{
-		env->menu.btn_maps = new;
-		env->menu.btn_maps->next = 0;
-	}
-	else
-	{
-		new->next = env->menu.btn_maps;
-		env->menu.btn_maps = new;
 	}
 }
 
@@ -297,17 +254,6 @@ static int		load_obj(char *path, int type, t_env *env)
 	return (i);
 }
 
-/*
-**	Return nb of loaded objects
-*/
-
-static int		load_specials(int type, t_env *env)
-{
-	create_btn_obj(0, 0, type, "Spawn", env);
-	create_btn_obj(1, 0, type, "Interest", env);
-	return (2);
-}
-
 static void		init_objs(t_env *env)
 {
 	env->editor.nb_btn_wobj =
@@ -316,7 +262,29 @@ static void		init_objs(t_env *env)
 		load_obj("ressources/objects/consumables", CONSUMABLE, env);
 	env->editor.nb_btn_ntty =
 		load_obj("ressources/objects/entities", ENTITY, env);
-	env->editor.nb_btn_spec = load_specials(SPECIAL, env);
+	create_btn_obj(0, 0, SPECIAL, "Spawn", env);
+	create_btn_obj(1, 0, SPECIAL, "Interest", env);
+	env->editor.nb_btn_spec = 2;;
+}
+
+static void		create_btn_map(char *str, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
+	if (!(env->menu.dropdown.start))
+	{
+		env->menu.dropdown.start = new;
+		env->menu.dropdown.start->next = 0;
+	}
+	else
+	{
+		new->next = env->menu.dropdown.start;
+		env->menu.dropdown.start = new;
+	}
 }
 
 static void		init_menu(t_env *env)
@@ -333,7 +301,7 @@ static void		init_menu(t_env *env)
 		if ((de->d_name)[0] != '.')
 		{
 			create_btn_map(de->d_name, env);
-			env->menu.nb_maps++;
+			env->menu.dropdown.nb_element++;
 			i++;
 		}
 	}
@@ -342,6 +310,29 @@ static void		init_menu(t_env *env)
 	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
+}
+
+static void		create_dd_button(int dd, int ref, char *str, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	new->ref = ref;
+	if (!(env->editor.dropdown[dd].start))
+	{
+		env->editor.dropdown[dd].start = new;
+		env->editor.dropdown[dd].start->next = 0;
+		env->editor.dropdown[dd].current = new;
+		env->editor.dropdown[dd].current->clicked = 1;
+	}
+	else
+	{
+		new->next = env->editor.dropdown[dd].start;
+		env->editor.dropdown[dd].start = new;
+	}
 }
 
 static void		load_dd_list(char *path, int dd, t_env *env)
@@ -375,13 +366,13 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 static void		init_editor(t_env *env)
 {
 	load_dd_list("ressources/images/wall/", DD_WALLTX, env);
+	load_dd_list("ressources/images/wall/", DD_MWALLTX, env);
 	load_dd_list("ressources/skybox/", DD_SBTX, env);
 	load_dd_list("ressources/audio/", DD_BGAUDIO, env);
 	load_dd_list("ressources/images/ceil/", DD_CEILTX, env);
 	load_dd_list("ressources/images/floor/", DD_FLOORTX, env);
 
 	env->grid_scale = 45;
-	env->editor.grid_translate = (t_pos){0, 0};
 }
 
 void		init_env(t_env *env, t_data *data)

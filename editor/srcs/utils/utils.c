@@ -6,16 +6,38 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:05:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:20:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		display_dropdown_list(SDL_Rect rect, int dd, t_env *env)
+void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 {
 	t_elem			*elem = env->editor.dropdown[dd].start;
 	int				index = env->editor.dropdown[dd].idx_element;
+	Uint32			color;
+	int				i;
+
+	i = 0;
+	while (elem)
+	{
+		color = (elem->clicked == 1) ? C_GREEN : C_WHITE;
+		elem->rect = (SDL_Rect){rect.x, rect.y + i * 40 + index * 40, rect.w, 25};
+		if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
+		{
+			ui_make_rect(env->data->surface, elem->rect, color);
+			ui_make_string(elem->rect, elem->str, env->data);
+		}
+		elem = elem->next;
+		i++;
+	}
+}
+
+void		display_menu_dropdown_list(SDL_Rect rect, t_env *env)
+{
+	t_elem			*elem = env->menu.dropdown.start;
+	int				index = env->menu.dropdown.idx_element;
 	Uint32			color;
 	int				i;
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:01:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:21:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	left_panel(t_pos origin, t_env *env)
 
 	// display maps file
 	rect = (SDL_Rect){origin.x + 20, origin.y + 130, 290, 310};
-	//display_dropdown_list(rect, env->menu.btn_maps, env->menu.idx_map, env);
+	display_menu_dropdown_list(rect, env);
 }
 
 static void	right_panel(t_pos origin, t_env *env)
@@ -62,8 +62,8 @@ static void	right_panel(t_pos origin, t_env *env)
 
 	// current map
 	rect = (SDL_Rect){origin.x + 420, origin.y + 10, 380, 30};
-	if (env->menu.selected)
-		ui_make_string(rect, env->menu.selected->str, env->data);
+	if (env->menu.dropdown.current)
+		ui_make_string(rect, env->menu.dropdown.current->str, env->data);
 	else if (get_element(M_I_NEW, env)->str)
 		ui_make_string(rect, get_element(M_I_NEW, env)->str, env->data);
 	else

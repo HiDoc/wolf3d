@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 15:31:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:36:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,25 +301,26 @@ int				select_mode(t_env *env)
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_UP, env)->rect))
 		{
-			(env->editor.idx_m_wall_txtr < 0) ? env->editor.idx_m_wall_txtr++ : 0;
+			(env->editor.dropdown[DD_MWALLTX].idx_element < 0)
+				? env->editor.dropdown[DD_MWALLTX].idx_element++ : 0;
 			return (1);
 		}
 		else if (env->editor.edg_select
 		&& ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_M_WALL_DOWN, env)->rect))
 		{
-				(env->editor.idx_m_wall_txtr
-				 > -env->editor.dropdown[DD_WALLTX].nb_element + 1)
-					? env->editor.idx_m_wall_txtr-- : 0;
+				(env->editor.dropdown[DD_MWALLTX].idx_element
+				> -env->editor.dropdown[DD_MWALLTX].nb_element + 1)
+					? env->editor.dropdown[DD_MWALLTX].idx_element-- : 0;
 			return (1);
 		}
 		// click music list button
-		button = env->editor.dropdown[DD_WALLTX].start;
+		button = env->editor.dropdown[DD_MWALLTX].start;
 		while (button)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
-				env->editor.dropdown[DD_WALLTX].current = button;
+				env->editor.dropdown[DD_MWALLTX].current->clicked = 0;
+				env->editor.dropdown[DD_MWALLTX].current = button;
 				button->clicked = 1;
 			}
 			button = button->next;

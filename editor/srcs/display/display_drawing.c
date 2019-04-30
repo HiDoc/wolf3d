@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:36:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:07:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:22:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void        display_drawing(t_env *env)
 
 	// display wall textures
 	rect = (SDL_Rect){910, 320, 200, 400};
-	display_dropdown_list(rect, DD_WALLTX, env);
+	display_editor_dropdown_list(rect, DD_WALLTX, env);
 }
