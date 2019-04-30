@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/23 14:02:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:01:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,16 @@ static int				sdl_render(t_env *env)
 	}
 	else
 	{
+		// si retire alors segv + a laisser avant dfs sinon segv <3
+		enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
+
 		dfs(env);
-		ui_put_fps(env, env->time.fps);
-		ui_minimap(env);
-		handle_weapon(env);
-
-		// si retire alors segv :
-		print_hud(env);
-
 		//handle_gems(env);
 
 		if (!env->god_mod)
 			bot_action(env, &env->engine.sectors[env->engine.player.sector]);
 		player_bullet(env, &env->player, *env->player.inventory.current->damage);
 
-		// si retire alors segv :
-		enemies_frames(env, &env->engine.sectors[env->engine.player.sector]);
 
 		//if (env->hud.is_txt)
 		//	ui_draw_msg(env, &env->hud.is_txt, &env->time.tframe);
@@ -50,6 +44,12 @@ static int				sdl_render(t_env *env)
 		sdl_keyhook_game(env, env->sdl.event, env->sdl.keycodes);
 		player_move(&env->engine, &env->engine.player.vision, env->sdl.keycodes);
 		handle_sound(env, &env->engine.player.sound);
+		ui_put_fps(env, env->time.fps);
+		ui_minimap(env);
+		handle_weapon(env);
+
+		// si retire alors segv :
+		print_hud(env);
 	}
 
 	SDL_UpdateTexture(env->sdl.texture, NULL,

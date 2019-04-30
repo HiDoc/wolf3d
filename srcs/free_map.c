@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:55:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 16:13:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 14:49:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void		free_sct(t_sector *sct, t_env *env)
 		w_enemy = we_tmp;
 	}
 	lt_release(&(env->engine.sectors[i]));
+	// ft_bzero(&(env->engine.sectors[i]), sizeof(t_sector));
 }
 
 void	free_map(t_env *env)
