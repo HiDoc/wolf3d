@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 17:25:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 19:56:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void			display_element(t_env *env)
 	// display buttons
 	// + rapport a position debut elem list dans enum DD
 	rect = (SDL_Rect){900, 280, 200, 470};
-	display_editor_dropdown_list(rect, env->editor.elem_mode + 6, env);
+	display_editor_dropdown_list(rect, env->editor.elem_mode + 7, env);
 }

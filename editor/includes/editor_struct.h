@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 17:08:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:03:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,8 @@ enum					e_dropdowm_name
 	DD_CONS,
 	DD_NTTY,
 	DD_PRFB,
-	DD_SPEC
+	DD_SPEC,
+	DD_MAPS
 };
 
 struct					s_dropdown
@@ -218,7 +219,7 @@ struct					s_editor
 	int				elem_mode;
 
 	// editor dropdown lists
-	t_dropdown		dropdown[11];
+	t_dropdown		dropdown[12];
 
 	// mouse handling
 	int				mouse_mode;

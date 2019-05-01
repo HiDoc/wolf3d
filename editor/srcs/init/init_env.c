@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 17:29:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:15:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,14 +309,14 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/audio/", DD_BGAUDIO, -1, env);
 	load_dd_list("ressources/images/ceil/", DD_CEILTX, -1, env);
 	load_dd_list("ressources/images/floor/", DD_FLOORTX, -1, env);
-	load_dd_list("ressources/objects/wall_objects", DD_WALLTX, WALL_OBJ, env);
-	load_dd_list("ressources/objects/consumables", DD_WALLTX, CONSUMABLE, env);
-	load_dd_list("ressources/objects/entities", DD_WALLTX, ENTITY, env);
+	load_dd_list("ressources/objects/wall_objects", DD_WOBJ, WALL_OBJ, env);
+	load_dd_list("ressources/objects/consumables", DD_CONS, CONSUMABLE, env);
+	load_dd_list("ressources/objects/entities", DD_NTTY, ENTITY, env);
 	load_dd_list("ressources/objects/prefabs", DD_PRFB, PREFAB, env);
-	load_dd_list("ressources/objects/specials", DD_WALLTX, SPECIAL, env);
+	load_dd_list("ressources/objects/specials", DD_SPEC, SPECIAL, env);
 
 	env->grid_scale = 45;
-	env->editor.elem_mode = -1;
+	env->editor.elem_mode = 0;
 }
 
 void		init_env(t_env *env, t_data *data)
