@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 22:53:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:47:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ int			draw_mode(t_env *env)
 				if (!env->editor.vtx_hover)
 				{
 					create_vertex(env->mouse, env);
-					create_w_vertex(env->vertex, env);
+					create_w_vertex(env->editor.vertex, env);
 				}
-				else if (env->sct_current->w_vtx_start
+				else if (env->editor.sct_current->w_vtx_start
 				&& env->editor.vtx_hover == w_vtx_lst_end(
-				env->sct_current->w_vtx_start)->vtx
-				&& env->sct_current->nb_w_vtx > 2)
+				env->editor.sct_current->w_vtx_start)->vtx
+				&& env->editor.sct_current->nb_w_vtx > 2)
 				{
-					env->sct_current->close = 1;
-					env->sct_current->w_vtx_current = 0;
-					env->sct_current = 0;
+					env->editor.sct_current->close = 1;
+					env->editor.sct_current->w_vtx_current = 0;
+					env->editor.sct_current = 0;
 					env->editor.drawing = 0;
 				}
 				else if (!vertex_of_sector(
-				env->editor.vtx_hover, env->sct_current))
+				env->editor.vtx_hover, env->editor.sct_current))
 				{
 					create_w_vertex(env->editor.vtx_hover, env);
 				}
@@ -92,10 +92,10 @@ int			draw_mode(t_env *env)
 		}
 		return (1);
 	}
-	if (env->sct_current)
+	if (env->editor.sct_current)
 	{
-		env->sct_current->w_vtx_current->size =
-			pythagore(env->sct_current->w_vtx_current->vtx->pos, env->mouse);
+		env->editor.sct_current->w_vtx_current->size =
+			pythagore(env->editor.sct_current->w_vtx_current->vtx->pos, env->mouse);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 22:50:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:59:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ void		display_selection(t_env *env)
 
 		rect = (SDL_Rect){910, 140, 250, 30};
 		ui_make_string(rect, env->editor.obj_select->name, env->data);
+
 		rect = (SDL_Rect){910, 180, 250, 30};
-		ui_make_nbrstring(rect, env->editor.obj_select->dir, env->data);
+		if (env->editor.obj_select->sct)
+			ui_make_nbrstring(rect, env->editor.obj_select->sct->id, env->data);
+		else
+			ui_make_string(rect, "No sector", env->data);
 
 		ui_make_rect(env->data->surface,
 		get_element(E_B_SELEC_DEL, env)->rect, C_RED);

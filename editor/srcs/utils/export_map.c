@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 11:25:21 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:51:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void        export_map(t_env *env)
 	dprintf(fd, "%s %s\n", "music", "skybox");
 
 	ft_putendl_fd("# vertex: x y", fd);
-	vtx = env->vertex;
+	vtx = env->editor.vertex;
 	while (vtx)
 	{
 		dprintf(fd, "vertex %d %d\n",
@@ -43,7 +43,7 @@ void        export_map(t_env *env)
 	}
 
 	ft_putstr_fd("# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx", fd);
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct)
 	{
 		dprintf(fd, "sector // //\n");

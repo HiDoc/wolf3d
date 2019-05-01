@@ -6,11 +6,23 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:20:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:11:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void		refresh_object_sct(t_env *env)
+{
+	t_object	*obj;
+
+	obj = env->editor.objects;
+	while (obj)
+	{
+		obj->sct = target_sector(obj->pos, env);
+		obj = obj->next;
+	}
+}
 
 void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 {
@@ -102,7 +114,7 @@ void			sync_sct_minmax(t_env *env)
 	t_sct		*sct;
 	t_w_vtx		*w_vtx;
 
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct)
 	{
 		w_vtx = sct->w_vtx_start;

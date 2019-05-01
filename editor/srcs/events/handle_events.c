@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 14:02:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:07:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ int				handle_events(t_env *env)
 		edt->sct_hover = (!edt->vtx_hover && !edt->edg_hover && !edt->obj_hover)
 			? target_sector(env->mouse, env) : 0;
 	}
+
+	refresh_object_sct(env);
 
 	/* quit doom_nukem */
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT) ? ui_exit_sdl() : 0;

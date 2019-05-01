@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:16:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:50:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ static void		display_infos(t_env *env)
 	ui_make_nbrstring(rect, env->mouse.y, env->data);
 
 	// display_size
-	if (env->sct_current)
+	if (env->editor.sct_current)
 	{
 		rect = (SDL_Rect){190, 750, 0, 20};
 		ui_make_string(rect, "size : ", env->data);
 		rect = (SDL_Rect){240, 750, 0, 20};
-		ui_make_nbrstring(rect, env->sct_current->w_vtx_current->size, env->data);
+		ui_make_nbrstring(rect,
+			env->editor.sct_current->w_vtx_current->size, env->data);
 	}
 
 	// display scale
@@ -120,7 +121,7 @@ void			display_sector(t_sct *sct, t_env *env)
 	}
 	else
 	{
-		color = (sct == env->sct_start && !sct->close) ? C_GREEN : C_WHITE;
+		color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
 	}
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
@@ -172,7 +173,7 @@ void			display_interface(t_env *env)
 
 	// display all edges
 	t_sct	*sct;
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct)
 	{
 		if (sct != env->editor.sct_hover)
@@ -184,9 +185,9 @@ void			display_interface(t_env *env)
 		display_sector(env->editor.sct_hover, env);
 
 	// display current edge
-	if (env->sct_current)
+	if (env->editor.sct_current)
 	{
-		vec.a = vtx_transform(env->sct_current->w_vtx_current->vtx->pos, env);
+		vec.a = vtx_transform(env->editor.sct_current->w_vtx_current->vtx->pos, env);
 		vec.b = (t_pos){env->data->mouse.x,env->data->mouse.y};
 
 		ui_make_line(env->data->surface, vec, C_CYAN);
@@ -204,7 +205,7 @@ void			display_interface(t_env *env)
 	}
 
 	// display objects
-	t_object	*obj = env->objects;
+	t_object	*obj = env->editor.objects;
 	while (obj)
 	{
 		if (obj->category == CONSUMABLE)
@@ -219,7 +220,7 @@ void			display_interface(t_env *env)
 		{
 			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
 			ui_make_rect(env->data->surface, rect, color);
-			if (env->editor.obj_elem->type == SPECIAL
+			if (obj->category == SPECIAL
 				&& env->editor.obj_elem->id == 0 && env->editor.spawn_set == 0)
 			{
 				// spawn dir

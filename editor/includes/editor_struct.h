@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:20:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:46:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,14 @@ struct					s_menu
 
 struct					s_editor
 {
+	// lst vertex
+	t_vtx			*vertex;
+	// lst sectors
+	t_sct			*sct_current;
+	t_sct			*sct_start;
+	// lst objects
+	t_object		*objects;
+
 	// Error message
 	time_t			timestamp;
 	char			*error_msg;
@@ -257,13 +265,6 @@ struct					s_env
 
 	char			*map_name;
 
-	// lst vertex
-	t_vtx			*vertex;
-	// lst sectors
-	t_sct			*sct_current;
-	t_sct			*sct_start;
-	// lst objects
-	t_object		*objects;
 	// lst elements
 	t_elem			*elements;	// ui elements
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:10:31 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/19 02:37:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:52:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ void		create_object(t_elem *element, t_env *env)
 	new->category = element->type;
 	if (!(new->name = lt_push(ft_strdup(element->str), ft_memdel)))
 		ui_error_exit_sdl("Editor: create object, out of memory");
-	new->sct = env->editor.sct_hover;
 	new->pos = env->mouse;
-	if (!(env->objects))
+	if (!(env->editor.objects))
 	{
-		env->objects = new;
-		env->objects->next = 0;
+		env->editor.objects = new;
+		env->editor.objects->next = 0;
 	}
 	else
 	{
-		new->next = env->objects;
-		env->objects = new;
+		new->next = env->editor.objects;
+		env->editor.objects = new;
 	}
 }

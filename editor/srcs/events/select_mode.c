@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 22:48:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:48:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,9 @@ void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
 	door.b.y = -scale * (b.y - center.y) + center.y;
 
 	create_vertex(door.a, env);
-	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 	create_vertex(door.b, env);
-	insert_w_vertex(env->editor.edg_select, env->vertex, env);
+	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 }
 
 int				select_mode(t_env *env)
@@ -277,7 +277,7 @@ int				select_mode(t_env *env)
 						env->editor.edg_select->sector->w_vtx_start->vtx->pos),
 						env);
 				}
-				insert_w_vertex(env->editor.edg_select, env->vertex, env);
+				insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 			}
 			else if (ui_mouseenter(m.x, m.y,
 				get_element(E_B_SELEC_DOOR, env)->rect))

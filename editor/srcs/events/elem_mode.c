@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:23:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:05:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,37 +55,34 @@ int				elem_mode(t_env *env)
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, rect) && env->editor.obj_elem)
-		{ // si click sur interface et object selectionne
-			if (env->editor.sct_hover)
+		{
+			if (env->editor.spawn_set == 1)
 			{
-				if (env->editor.spawn_set == 1)
+				env->editor.objects->dir = atan(
+				(m.y - env->editor.spawn_pos.y)
+				/ (m.x - env->editor.spawn_pos.x));
+				env->editor.objects->dir = env->editor.objects->dir * 180 / M_PI;
+				printf("[%f]\n",  env->editor.objects->dir);
+				env->editor.spawn_dir = env->editor.objects->dir;
+				env->editor.spawn_set = 0;
+				return (1);
+			}
+			else if (env->editor.obj_elem->type == SPECIAL
+				&& env->editor.obj_elem->id == 0)
+			{
+				if (env->editor.onespawn == 0)
 				{
-					env->objects->dir = atan(
-					(m.y - env->editor.spawn_pos.y)
-					/ (m.x - env->editor.spawn_pos.x));
-					env->objects->dir = env->objects->dir * 180 / M_PI;
-					printf("[%f]\n",  env->objects->dir);
-					env->editor.spawn_dir = env->objects->dir;
-					env->editor.spawn_set = 0;
+					env->editor.spawn_pos = m;
+					env->editor.spawn_set = 1;
+					env->editor.onespawn = 1;
+				}
+				else
+				{
+					display_error_msg("You can not set two spawns", env);
 					return (1);
 				}
-				else if (env->editor.obj_elem->type == SPECIAL
-					&& env->editor.obj_elem->id == 0)
-				{ // if spawn
-					if (env->editor.onespawn == 0)
-					{
-						env->editor.spawn_pos = m;
-						env->editor.spawn_set = 1;
-						env->editor.onespawn = 1;
-					}
-					else
-					{
-						display_error_msg("You can not set two spawns", env);
-						return (1);
-					}
-				}
-				create_object(env->editor.obj_elem, env);
 			}
+			create_object(env->editor.obj_elem, env);
 			return (1);
 		}
 
