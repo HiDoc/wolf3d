@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:50:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:19:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,13 @@ void			display_interface(t_env *env)
 		{
 			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
 			ui_make_rect(env->data->surface, rect, color);
-			if (obj->category == SPECIAL
+			/*if (obj->category == SPECIAL
 				&& env->editor.obj_elem->id == 0 && env->editor.spawn_set == 0)
 			{
 				// spawn dir
 				ui_draw_vector(env->data->surface, pos,
 				env->editor.spawn_dir, 0, 10, C_WHITE);
-			}
+			}*/
 		}
 		obj = obj->next;
 	}

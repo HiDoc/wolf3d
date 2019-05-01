@@ -80,7 +80,6 @@ TOCHECK : si export quand un secteur n'est pas encore clos
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [01] TODO : empecher export si edge du meme sct overlap
 * [01] TODO : refactor dropdown element list
 * [01] TODO : debug relier element et buttons display on dropdown lists
 * [01] TODO : wall object dock
@@ -88,6 +87,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 * [01] TODO : interface element clipping
 * [01] TODO : ranger utils math function
 
+[02] TODO : empecher export si edge du meme sct overlap
 [02] TODO :	front design selected / hovered color and stuff / color on errmsg
 [02] TODO :	door is a sector
 [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door

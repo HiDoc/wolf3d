@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 16:17:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:21:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ int			sector_overlap(t_env *env)
 		{
 			if (sct != current)
 			{
-				//if (sctvtx_in_sct(current, sct))
-				//	return (1);
+				if (sctvtx_in_sct(current, sct))
+					return (1);
 				if (sctedg_intersect(current, sct))
 					return (1);
 			}

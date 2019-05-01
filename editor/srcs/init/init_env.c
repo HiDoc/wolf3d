@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:25:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:29:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,72 +199,9 @@ static void		init_elems(t_env *env)
 		ui_load_image("ressources/images/icons/arrowdown.png");
 }
 
-static void		create_btn_obj(int id, int ref, int type, char *str, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	new->id = id;
-	new->ref = ref;
-	new->type = type;
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	if (!(env->editor.btn_objs))
-	{
-		env->editor.btn_objs = new;
-		env->editor.btn_objs->next = 0;
-	}
-	else
-	{
-		new->next = env->editor.btn_objs;
-		env->editor.btn_objs = new;
-	}
-}
-
 /*
 **	Return nb of loaded objects
 */
-
-static int		load_obj(char *path, int type, t_env *env)
-{
-	struct dirent       *de;
-	DIR                 *dr;
-	char				*name;
-	int					ref;
-	int					i;
-
-	i = 0;
-	if (!(dr = lt_push(opendir(path), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources");
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
-		{
-			if (!(name = lt_push(ft_strsub(
-					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
-				ui_error_exit_sdl("Editor: Out of memeory in load_obj");
-			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_btn_obj(i, ref, type, name, env);
-			lt_release(name);
-			i++;
-		}
-	}
-	lt_release(dr);
-	return (i);
-}
-
-static void		init_objs(t_env *env)
-{
-	env->editor.nb_btn_wobj =
-		load_obj("ressources/objects/wall_objects", WALL_OBJ, env);
-	env->editor.nb_btn_cons =
-		load_obj("ressources/objects/consumables", CONSUMABLE, env);
-	env->editor.nb_btn_ntty =
-		load_obj("ressources/objects/entities", ENTITY, env);
-	create_btn_obj(0, 0, SPECIAL, "Spawn", env);
-	env->editor.nb_btn_spec = 1;;
-}
 
 static void		create_btn_map(char *str, t_env *env)
 {
@@ -311,7 +248,7 @@ static void		init_menu(t_env *env)
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
 }
 
-static void		create_dd_button(int dd, int ref, char *str, t_env *env)
+static void		create_dd_button(int id, int type, int dd, int ref, char *str, t_env *env)
 {
 	t_elem   *new;
 
@@ -320,6 +257,8 @@ static void		create_dd_button(int dd, int ref, char *str, t_env *env)
 	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
 	new->ref = ref;
+	new->id = id;
+	new->type = type;
 	if (!(env->editor.dropdown[dd].start))
 	{
 		env->editor.dropdown[dd].start = new;
@@ -334,7 +273,7 @@ static void		create_dd_button(int dd, int ref, char *str, t_env *env)
 	}
 }
 
-static void		load_dd_list(char *path, int dd, t_env *env)
+static void		load_dd_list(char *path, int dd, int type, t_env *env)
 {
 	char				*name;
 	int					ref;
@@ -353,7 +292,7 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_dd_button(dd, ref, name, env);
+			create_dd_button(i, type, dd, ref, name, env);
 			lt_release(name);
 			env->editor.dropdown[dd].nb_element++;
 			i++;
@@ -364,14 +303,20 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 
 static void		init_editor(t_env *env)
 {
-	load_dd_list("ressources/images/wall/", DD_WALLTX, env);
-	load_dd_list("ressources/images/wall/", DD_MWALLTX, env);
-	load_dd_list("ressources/skybox/", DD_SBTX, env);
-	load_dd_list("ressources/audio/", DD_BGAUDIO, env);
-	load_dd_list("ressources/images/ceil/", DD_CEILTX, env);
-	load_dd_list("ressources/images/floor/", DD_FLOORTX, env);
+	load_dd_list("ressources/images/wall/", DD_WALLTX, -1, env);
+	load_dd_list("ressources/images/wall/", DD_MWALLTX, -1, env);
+	load_dd_list("ressources/skybox/", DD_SBTX, -1, env);
+	load_dd_list("ressources/audio/", DD_BGAUDIO, -1, env);
+	load_dd_list("ressources/images/ceil/", DD_CEILTX, -1, env);
+	load_dd_list("ressources/images/floor/", DD_FLOORTX, -1, env);
+	load_dd_list("ressources/objects/wall_objects", DD_WALLTX, WALL_OBJ, env);
+	load_dd_list("ressources/objects/consumables", DD_WALLTX, CONSUMABLE, env);
+	load_dd_list("ressources/objects/entities", DD_WALLTX, ENTITY, env);
+	load_dd_list("ressources/objects/prefabs", DD_PRFB, PREFAB, env);
+	load_dd_list("ressources/objects/specials", DD_WALLTX, SPECIAL, env);
 
 	env->grid_scale = 45;
+	env->editor.elem_mode = -1;
 }
 
 void		init_env(t_env *env, t_data *data)
@@ -380,7 +325,6 @@ void		init_env(t_env *env, t_data *data)
 	env->data = data;
 
 	init_elems(env);
-	init_objs(env);
 	init_menu(env);
 	init_editor(env);
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:46:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:08:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,12 @@ enum					e_dropdowm_name
 	DD_SBTX,
 	DD_BGAUDIO,
 	DD_CEILTX,
-	DD_FLOORTX
+	DD_FLOORTX,
+	DD_WOBJ,
+	DD_CONS,
+	DD_NTTY,
+	DD_PRFB,
+	DD_SPEC
 };
 
 struct					s_dropdown
@@ -209,20 +214,11 @@ struct					s_editor
 	time_t			timestamp;
 	char			*error_msg;
 
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe ??????????
-	t_elem			*obj_elem;	// obj selectionne ??????????????
-
-	// objects dropdown_lists
-	int				nb_btn_wobj;
-	int				nb_btn_cons;
-	int				nb_btn_ntty;
-	int				nb_btn_pref;
-	int				nb_btn_spec;
-	int				idx_btn_obj;
-	t_elem			*btn_objs;
+	// mode category selected
+	int				elem_mode;
 
 	// editor dropdown lists
-	t_dropdown		dropdown[6];
+	t_dropdown		dropdown[11];
 
 	// mouse handling
 	int				mouse_mode;
