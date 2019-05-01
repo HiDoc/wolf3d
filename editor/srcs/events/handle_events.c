@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 14:07:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 15:46:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,17 @@ static int		click_event(t_env *env)
 	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 				get_element(E_B_SAVE, env)->rect))
 	{ // button save
-		export_map(env);
+		/*if (edge_overlap())
+			display_error_msg("Export failed, edges are overlapping", env);
+		else */if (sector_overlap(env))
+			display_error_msg("Export failed, sectors are overlapping", env);
+		else if (!refresh_object_sct(env))
+			display_error_msg("Export failed, object out of sector", env);
+		else
+		{
+			printf("Export\n");
+			export_map(env);
+		}
 		return (1);
 	}
 	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,

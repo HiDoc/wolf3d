@@ -63,6 +63,7 @@ BUG : coherence retour menu - start - cancel
 BUG : fix and finish input ceil/floor/gravity
 BUG : edge size n'est pas update si split, moving etc...
 BUG : calcul de l'angle spawn
+BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
 
 LEAK: protect gnl
 
@@ -73,20 +74,21 @@ TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
 TOCHECK : possible de remettre un spawn si il a ete suprime ?
 TOCHECK : il se passe quoi si wall obj sur portal ?
+TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
+TOCHECK : si export quand un secteur n'est pas encore clos
 
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [30] TODO : wall object dock
-
-* [01] TODO : empecher export si object pas dans un secteur
-* [01] TODO : empecher export si croisement edge
+* [01] TODO : empecher export si edge du meme sct overlap
 * [01] TODO : refactor dropdown element list
 * [01] TODO : debug relier element et buttons display on dropdown lists
+* [01] TODO : wall object dock
 * [01] TODO : grid : limite left / bot
 * [01] TODO : interface element clipping
+* [01] TODO : ranger utils math function
 
-[02] TODO :	front design selected / hovered color and stuff
+[02] TODO :	front design selected / hovered color and stuff / color on errmsg
 [02] TODO :	door is a sector
 [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
 [02] TODO : refactor - generiser code
@@ -117,5 +119,3 @@ OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
 OPTIONAL :	floodfill on sectors with ceil casting
-OPTIONAL :	front design
-

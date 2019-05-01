@@ -6,22 +6,145 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 14:11:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 16:17:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		refresh_object_sct(t_env *env)
+static int		shared_vtx(t_vtx *vtx, t_sct *current)
+{
+	t_w_vtx		*w_vtx;
+
+	w_vtx = current->w_vtx_start;
+	while (w_vtx)
+	{
+		if (w_vtx->vtx == vtx)
+			return (1);
+		w_vtx = w_vtx->next;
+	}
+	return (0);
+}
+
+/*static*/ int	sctvtx_in_sct(t_sct *current, t_sct *sct)
+{
+	t_w_vtx		*w_vtx;
+
+	w_vtx = sct->w_vtx_start;
+	while (w_vtx)
+	{
+		if (!shared_vtx(w_vtx->vtx, current))
+		{
+			if (vertex_in_sector(current, w_vtx->vtx->pos))
+				return (1);
+		}
+		w_vtx = w_vtx->next;
+	}
+	return (0);
+}
+
+/*
+ * ** Return if ranges a & b are overlaping
+ * */
+static int	overlap(float a0, float a1, float b0, float b1)
+{
+		return (fmin(a0, a1) <= fmax(b0, b1) && fmin(b0, b1) <= fmax(a0, a1));
+}
+
+/*
+ * ** Return if two rectangles got an intersection
+ * */
+static int	intersect_rect(t_pos a_up, t_pos a_bot, t_pos b_up, t_pos b_bot)
+{
+	return (overlap(a_up.x, a_bot.x, b_up.x, b_bot.x)
+		&& overlap(a_up.y, a_bot.y, b_up.y, b_bot.y));
+}
+
+static int	vec_intersect(t_pos p0, t_pos p1, t_pos p2, t_pos p3)
+{
+	return (intersect_rect(p0, p1, p2, p3)
+		&& fabs(pointside(p2, p0, p1) + pointside(p3, p0, p1)) != 2
+		&& fabs(pointside(p0, p2, p3) + pointside(p1, p2, p3)) != 2);
+}
+
+static int	sctedg_intersect(t_sct *current, t_sct *sct)
+{
+	t_w_vtx		*cw_vtx;
+	t_w_vtx		*sw_vtx;
+
+	cw_vtx = current->w_vtx_start;
+	while (cw_vtx && cw_vtx->next)
+	{
+		sw_vtx = sct->w_vtx_start;
+		while (sw_vtx && sw_vtx->next)
+		{
+			if (vec_intersect(cw_vtx->vtx->pos, cw_vtx->next->vtx->pos,
+					sw_vtx->vtx->pos, sw_vtx->next->vtx->pos))
+				return (1);
+			sw_vtx = sw_vtx->next;
+		}
+		if (vec_intersect(cw_vtx->vtx->pos, cw_vtx->next->vtx->pos,
+				sw_vtx->vtx->pos, sct->w_vtx_start->vtx->pos))
+			return (1);
+		cw_vtx = cw_vtx->next;
+	}
+	sw_vtx = sct->w_vtx_start;
+	while (sw_vtx && sw_vtx->next)
+	{
+		if (vec_intersect(cw_vtx->vtx->pos, current->w_vtx_start->vtx->pos,
+				sw_vtx->vtx->pos, sw_vtx->next->vtx->pos))
+			return (1);
+		sw_vtx = sw_vtx->next;
+	}
+	if (vec_intersect(cw_vtx->vtx->pos, current->w_vtx_start->vtx->pos,
+			sw_vtx->vtx->pos, sct->w_vtx_start->vtx->pos))
+		return (1);
+	return (0);
+}
+
+int			sector_overlap(t_env *env)
+{
+	t_sct		*current;
+	t_sct		*sct;
+
+	current = env->editor.sct_start;
+	while (current)
+	{
+		sct = env->editor.sct_start;
+		while (sct)
+		{
+			if (sct != current)
+			{
+				//if (sctvtx_in_sct(current, sct))
+				//	return (1);
+				if (sctedg_intersect(current, sct))
+					return (1);
+			}
+			sct = sct->next;
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
+/*
+**	Return 0 if an object is not in a sector
+*/
+
+int			refresh_object_sct(t_env *env)
 {
 	t_object	*obj;
+	int			ret;
 
+	ret = 1;
 	obj = env->editor.objects;
 	while (obj)
 	{
-		obj->sct = target_sector(obj->pos, env);
+		if (!(obj->sct = target_sector(obj->pos, env)))
+			ret = 0;
 		obj = obj->next;
 	}
+	return (ret);
 }
 
 void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
