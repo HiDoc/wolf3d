@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 17:14:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:23:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,31 @@ int				elem_mode(t_env *env)
 		{ // si click sur interface et object selectionne
 			if (env->editor.sct_hover)
 			{
-				if (env->spawn_set == 1)
+				if (env->editor.spawn_set == 1)
 				{
 					env->objects->dir = atan(
-					(m.y - env->objects->pos.y) / (m.x - env->objects->pos.x));
-					env->spawn_set = 0;
+					(m.y - env->editor.spawn_pos.y)
+					/ (m.x - env->editor.spawn_pos.x));
+					env->objects->dir = env->objects->dir * 180 / M_PI;
+					printf("[%f]\n",  env->objects->dir);
+					env->editor.spawn_dir = env->objects->dir;
+					env->editor.spawn_set = 0;
 					return (1);
 				}
 				else if (env->editor.obj_elem->type == SPECIAL
 					&& env->editor.obj_elem->id == 0)
 				{ // if spawn
-					env->spawn_set = 1;
+					if (env->editor.onespawn == 0)
+					{
+						env->editor.spawn_pos = m;
+						env->editor.spawn_set = 1;
+						env->editor.onespawn = 1;
+					}
+					else
+					{
+						display_error_msg("You can not set two spawns", env);
+						return (1);
+					}
 				}
 				create_object(env->editor.obj_elem, env);
 			}

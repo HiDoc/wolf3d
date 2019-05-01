@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/28 14:01:17 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/01 12:52:06 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC_NAME 	=	main.c \
 				ui_make_rect.c \
 				ui_make_full_rect.c \
 				ui_make_line.c \
+				ui_draw_vector.c \
 				ui_make_dotted_line.c \
 				ui_make_input.c \
 				ui_set_pixel.c \

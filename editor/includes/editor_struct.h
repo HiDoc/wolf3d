@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 22:46:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:20:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,11 @@ struct					s_editor
 	t_sct			*sct_select;
 	t_object		*obj_select;
 
-	// state
+	int				onespawn;	// un spawn a deja ete pose
+	int				spawn_set;	// spawn pose, en attente de direction
+	t_pos			spawn_pos;	// absolute pos	// pour calcul angle
+	int				spawn_dir;	// direction spawn
+
 	int				drawing;		// am i drawing an edge
 };
 
@@ -262,9 +266,6 @@ struct					s_env
 	t_object		*objects;
 	// lst elements
 	t_elem			*elements;	// ui elements
-
-	// current elem / objects flags
-	int				spawn_set;	// spawn pose, en attente de direction
 
 	// variables
 	float			grid_scale;

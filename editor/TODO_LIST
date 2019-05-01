@@ -50,6 +50,18 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 
 ---------------------------------------------------------------
 
+SEGV :	==66439==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x00010d7c976f bp 0x7fff52475a90 sp 0x7fff52475300 T0)
+==66439==The signal is caused by a READ memory access.
+==66439==Hint: address points to the zero page.
+#0 0x10d7c976e in display_interface display_interface.c:222
+#1 0x10d79c31a in editor editor.c:25
+#2 0x10d792eeb in ui_make_frame ui_make_frame.c:22
+#3 0x10d7933b3 in ui_gameloop ui_gameloop.c:22
+#4 0x10d78a8e5 in main main.c:22
+#5 0x7fffa354b234 in start (libdyld.dylib:x86_64+0x5234)
+
+--------------------------------------------------------------
+
 BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 BUG : angle du spawn
 BUG : execve ./doom completement KC
@@ -64,6 +76,7 @@ BUG : taille du nom des object depasse du carre
 BUG : coherence retour menu - start - cancel
 BUG : fix and finish input ceil/floor/gravity
 BUG : edge size n'est pas update si split, moving etc...
+BUG : calcul de l'angle spawn
 
 LEAK: protect gnl
 
@@ -72,20 +85,19 @@ TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
+TOCHECK : possible de remettre un spawn si il a ete suprime ?
 
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-[30] TODO :	spawn : display line on spawn direction
-[30] TODO : display interest point
-[30] TODO :	wall object dock
+* [30] TODO : wall object dock
 
-[01] TODO :	refactor dropdown element list
-[01] TODO :	debug relier element et buttons display on dropdown lists
-[01] TODO :	bloquer split / door / fdor si c'est une door
-[01] TODO :	bloquer vtx move si sct is a door
-[01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup
-[01] TODO : empecher export si croisement edge
+* [01] TODO : refactor dropdown element list
+* [01] TODO : debug relier element et buttons display on dropdown lists
+* [01] TODO : bloquer split / door / fdor si c'est une door
+* [01] TODO : bloquer vtx move si sct is a door
+* [01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup
+* [01] TODO : empecher export si croisement edge
 
 [02] TODO :	grid : limite left / bot
 [02] TODO :	interface element clipping

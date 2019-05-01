@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 16:40:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:25:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,8 +263,7 @@ static void		init_objs(t_env *env)
 	env->editor.nb_btn_ntty =
 		load_obj("ressources/objects/entities", ENTITY, env);
 	create_btn_obj(0, 0, SPECIAL, "Spawn", env);
-	create_btn_obj(1, 0, SPECIAL, "Interest", env);
-	env->editor.nb_btn_spec = 2;;
+	env->editor.nb_btn_spec = 1;;
 }
 
 static void		create_btn_map(char *str, t_env *env)
