@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 14:35:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:25:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,8 @@ void		editor(t_env *env)
 	else if (env->editor.mouse_mode == 2)
 		display_element(env);
 
-	// display menu
-	ui_make_rect(env->data->surface,
-	get_element(E_B_MENU, env)->rect, get_element(E_B_MENU, env)->color);
-	ui_make_string(get_element(E_B_MENU, env)->rect, "MENU", env->data);
-	// display save
-	ui_make_rect(env->data->surface,
-	get_element(E_B_SAVE, env)->rect, get_element(E_B_SAVE, env)->color);
-	ui_make_string(get_element(E_B_SAVE, env)->rect, "SAVE", env->data);
+	display_button(E_B_MENU, "MENU", env);
+	display_button(E_B_SAVE, "SAVE", env);
 
 	// display map name
 	rect = (SDL_Rect){20, 65, 0, 25};
@@ -97,7 +91,5 @@ void		editor(t_env *env)
 	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect)) < 0)
 		ui_error_exit_sdl("Libui: Blit error on editor display");
 
-	// display play
-	ui_make_string(get_element(E_B_PLAY, env)->rect, "PLAY", env->data);
-	ui_make_rect(env->data->surface, get_element(E_B_PLAY, env)->rect, C_WHITE);	
+	display_button(E_B_PLAY, "PLAY", env);
 }

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 13:15:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:27:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,11 @@ void			display_element(t_env *env)
 	rect = (SDL_Rect){890, 100, 290, 680};
 	ui_make_rect(env->data->surface, rect, C_WHITE);	
 
-	color = (get_element(E_B_ELM_OBWL, env)->clicked == 1) ? C_GREEN : C_WHITE;
-	rect = get_element(E_B_ELM_OBWL, env)->rect;
-	ui_make_rect(env->data->surface, rect, color);
-	ui_make_string(rect, "Wall objects", env->data);
-
-	color = (get_element(E_B_ELM_CONS, env)->clicked == 1) ? C_GREEN : C_WHITE;
-	rect = get_element(E_B_ELM_CONS, env)->rect;
-	ui_make_rect(env->data->surface, rect, color);
-	ui_make_string(rect, "Consumables", env->data);
-
-	color = (get_element(E_B_ELM_NTTY, env)->clicked == 1) ? C_GREEN : C_WHITE;
-	rect = get_element(E_B_ELM_NTTY, env)->rect;
-	ui_make_rect(env->data->surface, rect, color);
-	ui_make_string(rect, "Entities", env->data);
-
-	color = (get_element(E_B_ELM_PRFB, env)->clicked == 1) ? C_GREEN : C_WHITE;
-	rect = get_element(E_B_ELM_PRFB, env)->rect;
-	ui_make_rect(env->data->surface, rect, color);
-	ui_make_string(rect, "Prefabs", env->data);
-
-	color = (get_element(E_B_ELM_SPEC, env)->clicked == 1) ? C_GREEN : C_WHITE;
-	rect = get_element(E_B_ELM_SPEC, env)->rect;
-	ui_make_rect(env->data->surface, rect, color);
-	ui_make_string(rect, "Specials", env->data);
+	display_button(E_B_ELM_OBWL, "Wall objects", env);
+	display_button(E_B_ELM_CONS, "Consumables", env);
+	display_button(E_B_ELM_NTTY, "Entities", env);
+	display_button(E_B_ELM_PRFB, "Prefabs", env);
+	display_button(E_B_ELM_SPEC, "Specials", env);
 
 	// up
 	if ((SDL_BlitScaled(get_element(E_B_ELM_UP, env)->image,

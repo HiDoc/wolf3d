@@ -3,12 +3,4 @@ new_map
 # game misc: music skybox
 music skybox
 # vertex: x y
-vertex 6 -5
-vertex 6 -3
-vertex 4 -3
-vertex 5 -5
-vertex 3 -1
-vertex 0 -3
-vertex 3 -5
-# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtxsector // //
-sector // //
+# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx
