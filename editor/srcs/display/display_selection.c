@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:15:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:40:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,7 @@ static void		display_sector_data(t_env *env)
 	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
 		display_editor_dropdown_list(rect, DD_FLOORTX, env);
 
-	// up
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_UP, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_TX_UP, env)->rect)))
-		ui_error_exit_sdl("Editor: blit error in display selection");
-	// down
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_TX_DOWN, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_TX_DOWN, env)->rect)) < 0)
-		ui_error_exit_sdl("Editor: blit error in display selection");
+	display_updown(E_B_SELEC_TX_UP, E_B_SELEC_TX_DOWN, env);
 
 	display_button(E_B_SELEC_DEL, "DELETE", env);
 }
@@ -104,14 +97,7 @@ static void		display_edge_data(t_env *env)
 	rect = (SDL_Rect){910, 350, 200, 350};
 	display_editor_dropdown_list(rect, DD_MWALLTX, env);
 
-	// up
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_UP, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_M_WALL_UP, env)->rect)))
-		ui_error_exit_sdl("Editor: blit error in display selection");
-	 // down
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_M_WALL_DOWN, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_M_WALL_DOWN, env)->rect)) < 0)
-		ui_error_exit_sdl("Editor: blit error in display selection");
+	display_updown(E_B_SELEC_M_WALL_UP, E_B_SELEC_M_WALL_DOWN, env);
 
 	display_button(E_B_SELEC_DEL, "DELETE", env);
 }
@@ -133,14 +119,7 @@ static void		display_misc_data(t_env *env)
 	else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
 		display_editor_dropdown_list(rect, DD_BGAUDIO, env);
 
-	// up
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_UP, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_MISC_UP, env)->rect)))
-		ui_error_exit_sdl("Editor: blit error in display selection");
-	// down
-	if ((SDL_BlitScaled(get_element(E_B_SELEC_MISC_DOWN, env)->image,
-	0, env->data->surface, &get_element(E_B_SELEC_MISC_DOWN, env)->rect)) < 0)
-		ui_error_exit_sdl("Editor: blit error in display selection");
+	display_updown(E_B_SELEC_MISC_UP, E_B_SELEC_MISC_DOWN, env);
 }
 
 void			display_selection(t_env *env)

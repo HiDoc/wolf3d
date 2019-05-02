@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:09:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:37:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+void		display_updown(int id_up, int id_down, t_env *env);
 void		display_labeled_input(int id, char *str, t_env *env);
 void		display_button(int id, char *str, t_env *env);
 int			point_in_rect(t_pos pos, SDL_Rect rect);

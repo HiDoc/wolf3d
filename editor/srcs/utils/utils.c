@@ -6,11 +6,23 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:17:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:38:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void			display_updown(int id_up, int id_down, t_env *env)
+{
+	// up
+	if ((SDL_BlitScaled(get_element(id_up, env)->image,
+	0, env->data->surface, &get_element(id_up, env)->rect)))
+		ui_error_exit_sdl("Editor: blit error in display_updown");
+	// down
+	if ((SDL_BlitScaled(get_element(id_down, env)->image,
+	0, env->data->surface, &get_element(id_down, env)->rect)) < 0)
+		ui_error_exit_sdl("Editor: blit error in display_updown");
+}
 
 void			display_labeled_input(int id, char *str, t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:36:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:17:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:38:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@ void        display_drawing(t_env *env)
 	rect = (SDL_Rect){910, 110, 0, 20};
 	ui_make_string(rect, "Wall texture", env->data);
 
-	// up
-	if ((SDL_BlitScaled(get_element(E_B_DRW_UP, env)->image,
-	0, env->data->surface, &get_element(E_B_DRW_UP, env)->rect)))
-		ui_error_exit_sdl("Editor: blit error in display drawing");
-	// down
-	if ((SDL_BlitScaled(get_element(E_B_DRW_DOWN, env)->image,
-	0, env->data->surface, &get_element(E_B_DRW_DOWN, env)->rect)) < 0)
-		ui_error_exit_sdl("Editor: blit error in display drawing");
+	display_updown(E_B_DRW_UP, E_B_DRW_DOWN, env);
 
 	// display preview
 	rect = (SDL_Rect){910, 150, 250, 150};
