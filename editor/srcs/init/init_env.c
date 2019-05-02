@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 20:15:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:22:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,6 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/objects/specials", DD_SPEC, SPECIAL, env);
 
 	env->grid_scale = 45;
-	env->editor.elem_mode = 0;
 }
 
 void		init_env(t_env *env, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:59:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 13:19:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		display_selection(t_env *env)
 		ui_make_rect(env->data->surface, rect, C_WHITE);
 		
 		rect = (SDL_Rect){910, 110, 250, 30};
+		printf("%d\n", env->editor.obj_select->category);
 		ui_make_string(rect, obj_tab[env->editor.obj_select->category], env->data);
 
 		rect = (SDL_Rect){910, 140, 250, 30};

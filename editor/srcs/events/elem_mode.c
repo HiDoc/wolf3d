@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 20:16:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 13:17:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int				elem_mode(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_UP, env)->rect))
 		{
-			(dropdown[env->editor.elem_mode].idx_element < 0)
-				? dropdown[env->editor.elem_mode].idx_element++ : 0;
+			if (dropdown[env->editor.elem_mode + 6].idx_element < 0)
+				dropdown[env->editor.elem_mode + 6].idx_element++;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_DOWN, env)->rect))
 		{
-			(dropdown[env->editor.elem_mode].idx_element
-			> -dropdown[env->editor.elem_mode].nb_element + 1)
-				? dropdown[env->editor.elem_mode].idx_element-- : 0;
+			if (dropdown[env->editor.elem_mode + 6].idx_element
+			> -dropdown[env->editor.elem_mode + 6].nb_element + 1)
+				dropdown[env->editor.elem_mode + 6].idx_element--;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, rect) && env->editor.elem_mode > -1)
@@ -85,14 +85,14 @@ int				elem_mode(t_env *env)
 		}
 
 		// click on object button
-		button = dropdown[env->editor.elem_mode].start;
+		button = dropdown[env->editor.elem_mode + 6].start;
 		while (button)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				dropdown[env->editor.elem_mode].current->clicked = 0;
-				dropdown[env->editor.elem_mode].current = button;
-				dropdown[env->editor.elem_mode].current->clicked = 1;
+				dropdown[env->editor.elem_mode + 6].current->clicked = 0;
+				dropdown[env->editor.elem_mode + 6].current = button;
+				dropdown[env->editor.elem_mode + 6].current->clicked = 1;
 			}
 			button = button->next;
 		}
