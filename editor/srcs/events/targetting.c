@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/25 12:13:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:49:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 {
 	t_sct   *sector;
 
-	sector = env->sct_start;
+	sector = env->editor.sct_start;
 	while (sector)
 	{
 		if (sector->close == 1)
@@ -47,7 +47,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 	t_sct		*sct;
 	int i;
 
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct && sct->close == 1)
 	{
 		w_vtx = sct->w_vtx_start;
@@ -85,7 +85,7 @@ t_vtx		*target_vertex(t_pos pos, t_env *env)
 	t_w_vtx			*w_vtx;
 	t_sct			*sct;
 
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct)
 	{
 		w_vtx = sct->w_vtx_start;
@@ -104,7 +104,7 @@ t_object	*target_object(t_pos pos, t_env *env)
 {
 	t_object		*obj;
 
-	obj = env->objects;
+	obj = env->editor.objects;
 	while (obj)
 	{
 		if (ui_close_to(pos, vtx_transform(obj->pos, env), 10))

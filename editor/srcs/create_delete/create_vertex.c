@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:13:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 22:30:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:52:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void		create_vertex(t_pos pos, t_env *env)
 	new->pos.y = pos.y;
 	new->next = 0;
 
-	if (!(env->vertex))
+	if (!(env->editor.vertex))
 	{
-		env->vertex = new;
+		env->editor.vertex = new;
 	}
 	else
 	{
-		new->next = env->vertex;
-		env->vertex = new;;
+		new->next = env->editor.vertex;
+		env->editor.vertex = new;;
 	}
 	env->nb_vtx++;
 }

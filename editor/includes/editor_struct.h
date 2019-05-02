@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 20:23:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 15:59:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,12 @@ enum					e_elements
 	E_B_SELEC_MISC_DOWN
 };
 
-enum					e_obj_category
-{
-	WALL_OBJ,
-	CONSUMABLE,
-	ENTITY,
-	PREFAB,
-	SPECIAL
-};
-
 typedef struct	s_w_vtx		t_w_vtx;
 typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
 typedef struct	s_object	t_object;
+typedef struct	s_dropdown	t_dropdown;
 typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
@@ -99,6 +91,8 @@ struct					s_w_vtx
 	int			door;	// is door
 
 	int			ref;	// texture ref
+
+	int			size;	// size edge
 
 	t_vtx		*vtx;
 	t_sct		*sector;
@@ -121,7 +115,6 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
-	int				roof;		// ceil or sky : 0 / 1
 	int				ceil;		// hauteur ceil
 	int				floor;		// hauteur floor
 	int				gravity;
@@ -167,64 +160,56 @@ struct					s_object
 	t_object		*next;
 };
 
+enum					e_dropdowm_name
+{
+	DD_WALLTX,
+	DD_MWALLTX,
+	DD_SBTX,
+	DD_BGAUDIO,
+	DD_CEILTX,
+	DD_FLOORTX,
+	DD_WOBJ,
+	DD_CONS,
+	DD_NTTY,
+	DD_PRFB,
+	DD_SPEC,
+	DD_MAPS
+};
+
+struct					s_dropdown
+{
+	int				nb_element;
+	int				idx_element;
+	t_elem			*start;
+	t_elem			*current;
+};
+
 struct					s_menu
 {
 	int				state;
-
-	// dropdown list
-	int				nb_maps;
-	int				idx_map;
-	t_elem			*btn_maps;
-
-	t_elem			*selected;		// upload selected
+	t_dropdown		dropdown;
 	SDL_Surface		*background;
 };
 
 struct					s_editor
 {
-	time_t			timestamp;	// error_msg timestamp
+	// lst vertex
+	t_vtx			*vertex;
+	// lst sectors
+	t_sct			*sct_current;
+	t_sct			*sct_start;
+	// lst objects
+	t_object		*objects;
+
+	// Error message
+	time_t			timestamp;
 	char			*error_msg;
 
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe ??????????
-	t_elem			*obj_elem;	// obj selectionne ??????????????
+	// mode category selected
+	int				elem_mode;
 
-	// objects dropdown_lists
-	int				nb_btn_wobj;
-	int				nb_btn_cons;
-	int				nb_btn_ntty;
-	int				nb_btn_pref;
-	int				nb_btn_spec;
-	int				idx_btn_obj;
-	t_elem			*btn_objs;
-
-	// wall_textures dropdown_list
-	int             nb_wall_txtr;
-	int             idx_wall_txtr;
-	t_elem			*wall_txtr;
-	t_elem			*curr_wall_txtr;
-
-	// modifs_wall_textures dropdown_list
-	int             idx_m_wall_txtr;
-
-	// skybox_textures dropdown_list
-	int             nb_sb_txtr;
-	int             idx_sb_txtr;
-	t_elem			*sb_txtr;
-
-	// background_audio dropdown_list
-	int             nb_bg_audio;
-	int             idx_bg_audio;
-	t_elem			*bg_audio;
-
-	// ceil_txtr dropdown_list
-	int             nb_ceil_txtr;
-	int             idx_ceil_txtr;
-	t_elem			*ceil_txtr;
-
-	// floor_txtr dropdown_list
-	int             nb_floor_txtr;
-	int             idx_floor_txtr;
-	t_elem			*floor_txtr;
+	// editor dropdown lists
+	t_dropdown		dropdown[12];
 
 	// mouse handling
 	int				mouse_mode;
@@ -250,10 +235,11 @@ struct					s_editor
 	t_sct			*sct_select;
 	t_object		*obj_select;
 
-	// size current edge draw
-	int				vtx_size;
+	int				onespawn;	// un spawn a deja ete pose
+	int				spawn_set;	// spawn pose, en attente de direction
+	t_pos			spawn_pos;	// absolute pos	// pour calcul angle
+	int				spawn_dir;	// direction spawn
 
-	// state
 	int				drawing;		// am i drawing an edge
 };
 
@@ -266,18 +252,8 @@ struct					s_env
 
 	char			*map_name;
 
-	// lst vertex
-	t_vtx			*vertex;
-	// lst sectors
-	t_sct			*sct_current;
-	t_sct			*sct_start;
-	// lst objects
-	t_object		*objects;
 	// lst elements
 	t_elem			*elements;	// ui elements
-
-	// current elem / objects flags
-	int				spawn_set;	// spawn pose, en attente de direction
 
 	// variables
 	float			grid_scale;

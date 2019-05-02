@@ -3,8 +3,4 @@ new_map
 # game misc: music skybox
 music skybox
 # vertex: x y
-vertex 7 -14
-vertex 11 -12
-vertex 6 -10
-# sector: ceil_h ceil_tx floor_h floor_txgravity door n-vertex n-neighbors
-sector // //
+# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx

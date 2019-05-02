@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:41:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 12:40:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:54:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		handle_w_vertex(t_vtx *vtx, t_env *env)
 	int			ret;
 
 	ret = 1;
-	sct_ptr = env->sct_start;
+	sct_ptr = env->editor.sct_start;
 	while (sct_ptr)
 	{
 		if (!(delete_w_vertex(sct_ptr, vtx)))
@@ -38,10 +38,10 @@ void			delete_vertex(t_vtx *vtx, t_env *env)
 		display_error_msg("Some w_vtx have not been deleted", env);
 		return ;
 	}
-	ptr = env->vertex;
+	ptr = env->editor.vertex;
 	if (ptr == vtx)
 	{
-		env->vertex = ptr->next;
+		env->editor.vertex = ptr->next;
 		lt_release(ptr);
 		env->nb_vtx--;
 		return ;
