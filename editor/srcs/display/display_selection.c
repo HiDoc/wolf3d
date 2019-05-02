@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 17:09:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 19:55:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ static void		display_sector_data(t_env *env)
 
 	rect = (SDL_Rect){1000, 110, 250, 30};
 	ui_make_nbrstring(rect, env->editor.sct_select->id, env->data);
-	
+
 	display_labeled_input(E_I_SELEC_GRAVITY, "gravity", env);
 	display_labeled_input(E_I_SELEC_HCEIL, "ceil height", env);
 	display_labeled_input(E_I_SELEC_HFLOOR, "floor height", env);
+
 	display_button(E_B_SELEC_CEIL, "CEIL", env);
 	display_button(E_B_SELEC_SKY, "SKY", env);
+
+	/*env->editor.dropdown[DD_CEILTX].current->clicked = 0;
+	env->editor.dropdown[DD_CEILTX].current
+		= get_element_by_ref(env->editor.sct_select->ceil, DD_CEILTX, env);
+	env->editor.dropdown[DD_CEILTX].current->clicked = 1;*/
 	display_button(E_B_SELEC_CEILTX, "CEIL TEXTURE", env);
 	display_button(E_B_SELEC_FLOORTX, "FLOOR TEXTURE", env);
 
@@ -91,7 +97,8 @@ static void		display_edge_data(t_env *env)
 
 	// dropdown mwalltx
 	env->editor.dropdown[DD_MWALLTX].current->clicked = 0;
-	env->editor.dropdown[DD_MWALLTX].current = get_dd_element(env->editor.edg_select->ref, DD_MWALLTX, env);
+	env->editor.dropdown[DD_MWALLTX].current
+		= get_dd_element(env->editor.edg_select->ref, DD_MWALLTX, env);
 	env->editor.dropdown[DD_MWALLTX].current->clicked = 1;
 	rect = (SDL_Rect){910, 350, 200, 350};
 	display_editor_dropdown_list(rect, DD_MWALLTX, env);
@@ -112,19 +119,19 @@ static void		display_misc_data(t_env *env)
 {
 	SDL_Rect		rect;
 
+	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "Misc", env->data);
 
+	// buttons
 	display_button(E_B_SELEC_MUSIC, "BACKGROUND MUSIC", env);
 	display_button(E_B_SELEC_SBTX, "SKYBOX TEXTURE", env);
 
-	// display skybox textures
+	// dropdown skybox / textures
 	rect = (SDL_Rect){910, 250, 200, 400};
-	if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-		display_editor_dropdown_list(rect, DD_SBTX, env);
-	else if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-		display_editor_dropdown_list(rect, DD_BGAUDIO, env);
-
+	(get_element(E_B_SELEC_SBTX, env)->clicked)
+	? display_editor_dropdown_list(rect, DD_SBTX, env)
+	: display_editor_dropdown_list(rect, DD_BGAUDIO, env);
 	display_updown(E_B_SELEC_MISC_UP, E_B_SELEC_MISC_DOWN, env);
 }
 

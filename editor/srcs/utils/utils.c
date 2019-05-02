@@ -6,11 +6,25 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 17:23:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 19:50:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+t_elem			*get_element_by_ref(int ref, int dd, t_env *env)
+{
+	t_elem		*elem;
+
+	elem = env->editor.dropdown[dd].start;
+	while (elem)
+	{
+		if (elem->ref == ref)
+			return (elem);
+		elem = elem->next;
+	}
+	return (0);
+}
 
 t_elem			*get_dd_element(int id, int dd, t_env *env)
 {

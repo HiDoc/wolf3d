@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:45:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:13:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ enum					e_type
 	BUTTON,
 	RECT
 };
-
-/*
-** M_ : MENU
-** E_ : EDITOR
-** _I : INPUT
-** _B : BUTTON
-** _ELM_ : element page
-** _SELEC_ : selection page
-** _MISC_ : misc page
-*/
 
 enum					e_elements
 {
@@ -204,9 +194,6 @@ struct					s_editor
 	time_t			timestamp;
 	char			*error_msg;
 
-	// mode category selected
-	int				elem_mode;
-
 	// editor dropdown lists
 	t_dropdown		dropdown[12];
 
@@ -216,6 +203,10 @@ struct					s_editor
 	// drag vertex;
 	int				mouse_drag;
 	t_pos			new_pos;
+
+	// selected element category
+	t_elem			*curr_elem_btn;
+	int				curr_elem_dd;
 
 	// grid move
 	int				grid_drag;
