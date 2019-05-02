@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 15:59:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:45:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ struct					s_w_vtx
 	int			door;	// is door
 
 	int			ref;	// texture ref
-
 	int			size;	// size edge
 
 	t_vtx		*vtx;

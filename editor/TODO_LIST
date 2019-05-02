@@ -87,18 +87,17 @@ STANDBY : spawn object
 * [02] TODO : debug relier element et buttons display on dropdown lists
 * [02] TODO : wall object dock
 * [01] TODO : interface element clipping
-* [02] TODO : ranger utils math function
 * [02] TODO : empecher export si edge du meme sct overlap
 * [02] TODO : front design selected / hovered color and stuff / color on errmsg
 * [02] TODO : door is a sector
 * [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-* [02] TODO : refactor - generiser code
+* [02] TODO : refactor, ranger utils
 
+[03] TODO : refactor events
 [03] TODO : grid : limite left / bot
 [03] TODO :	update export
 [03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
 [03] TODO : check coherence du programme et du fonctionnemenet des features
-[03] TODO :	tout refactor
 
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync

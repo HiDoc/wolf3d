@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:40:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 17:09:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void		display_edge_data(t_env *env)
 {
 	SDL_Rect		rect;
 
+	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "edge", env->data);
 
@@ -84,22 +85,27 @@ static void		display_edge_data(t_env *env)
 	display_button(E_B_SELEC_DOOR, "DOOR", env);
 	display_button(E_B_SELEC_SPLIT, "SPLIT", env);
 
+	// dropdown title
 	rect = (SDL_Rect){910, 310, 250, 30};
 	ui_make_string(rect, "Wall texture ", env->data);
 
-	// display_size
+	// dropdown mwalltx
+	env->editor.dropdown[DD_MWALLTX].current->clicked = 0;
+	env->editor.dropdown[DD_MWALLTX].current = get_dd_element(env->editor.edg_select->ref, DD_MWALLTX, env);
+	env->editor.dropdown[DD_MWALLTX].current->clicked = 1;
+	rect = (SDL_Rect){910, 350, 200, 350};
+	display_editor_dropdown_list(rect, DD_MWALLTX, env);
+	display_updown(E_B_SELEC_M_WALL_UP, E_B_SELEC_M_WALL_DOWN, env);
+
+	// delete
+	display_button(E_B_SELEC_DEL, "DELETE", env);
+
+	/* TO SET IN INTERFACE */
+	// display interface size
 	rect = (SDL_Rect){190, 750, 0, 20};
 	ui_make_string(rect, "size : ", env->data);
 	rect = (SDL_Rect){240, 750, 0, 20};
 	ui_make_nbrstring(rect, env->editor.edg_select->size, env->data);
-
-	// display modif wall txtr
-	rect = (SDL_Rect){910, 350, 200, 350};
-	display_editor_dropdown_list(rect, DD_MWALLTX, env);
-
-	display_updown(E_B_SELEC_M_WALL_UP, E_B_SELEC_M_WALL_DOWN, env);
-
-	display_button(E_B_SELEC_DEL, "DELETE", env);
 }
 
 static void		display_misc_data(t_env *env)
