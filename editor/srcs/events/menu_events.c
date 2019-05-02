@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/28 17:18:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:17:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,25 @@ static void		reset_values(t_env *env)
 	get_element(M_I_NEW, env)->color = C_WHITE;
 
 	// reset menu upload
-	if (env->menu.selected)
+	if (env->menu.dropdown.current)
 	{	
-		env->menu.selected->clicked = 0;
-		env->menu.selected = 0;
+		env->menu.dropdown.current->clicked = 0;
+		env->menu.dropdown.current = 0;
 	}
 }
 
 static int	click_event(t_env *env)
 {
-	t_elem			*obj_map = env->menu.btn_maps;
+	t_elem			*obj_map = env->menu.dropdown.start;
 	const t_pos		m = env->data->mouse;
 	const SDL_Rect	r_upload = (SDL_Rect){
 	WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 120, 350, 320};
 
 	if (ui_mouseenter(m.x, m.y, get_element(M_B_START, env)->rect))
 	{
-		if (env->menu.selected)
+		if (env->menu.dropdown.current)
 		{
-			printf("do parsing : %s\n", env->menu.selected->str);
+			printf("do parsing : %s\n", env->menu.dropdown.current->str);
 			exit(0);
 		}
 		else if (get_element(M_I_NEW, env)->str)
@@ -50,19 +50,23 @@ static int	click_event(t_env *env)
 	{
 		env->menu.state = 0;
 	}
+	else if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
+	{
+		(env->menu.dropdown.idx_element < 0)
+			? env->menu.dropdown.idx_element++ : 0;
+		return (1);
+	}
+	else if (ui_mouseenter(m.x, m.y, get_element(M_B_DOWN, env)->rect))
+	{
+		(env->menu.dropdown.idx_element > -env->menu.dropdown.nb_element + 1)
+			? env->menu.dropdown.idx_element-- : 0;
+		return (1);
+	}
 
 	// reseting
 	reset_values(env);
 
-	if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
-	{
-		(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
-	}
-	else if (ui_mouseenter(m.x, m.y, get_element(M_B_DOWN, env)->rect))
-	{
-		(env->menu.idx_map > -env->menu.nb_maps + 1) ? env->menu.idx_map-- : 0;
-	}
-	else if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
+	if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
 	{
 		get_element(M_I_NEW, env)->clicked = 1;
 		get_element(M_I_NEW, env)->color = C_GREEN;
@@ -74,7 +78,7 @@ static int	click_event(t_env *env)
 			if (ui_mouseenter(
 					env->data->mouse.x, env->data->mouse.y, obj_map->rect))
 			{
-				env->menu.selected = obj_map;
+				env->menu.dropdown.current = obj_map;
 				obj_map->clicked = 1;
 			}
 			obj_map = obj_map->next;

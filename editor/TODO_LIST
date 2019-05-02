@@ -48,8 +48,6 @@ SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
 #5 0x102b8cc52 in main main.c:22
 #6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
 
----------------------------------------------------------------
-
 BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 BUG : angle du spawn
 BUG : execve ./doom completement KC
@@ -59,10 +57,13 @@ BUG : draw mode : create vertex in sector close to edge
 BUG : coherence mouse mode (ex: change mouse mode while drawing)
 BUG : fix edge hover
 BUG : color of error_msg
-BUG : reframe click boutons sur right pannel
 BUG : taille du nom des object depasse du carre
 BUG : coherence retour menu - start - cancel
 BUG : fix and finish input ceil/floor/gravity
+BUG : edge size n'est pas update si split, moving etc...
+BUG : calcul de l'angle spawn
+BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
+BUG : pose obj + select this object
 
 LEAK: protect gnl
 
@@ -71,27 +72,29 @@ TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
+TOCHECK : possible de remettre un spawn si il a ete suprime ?
+TOCHECK : il se passe quoi si wall obj sur portal ?
+TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
+TOCHECK : si export quand un secteur n'est pas encore clos
 
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-[30] TODO : selection des buttons de toutes les dropdown_list
-[30] TODO : generiser init_env (load/init & create) + refactor select_mode.c
-[30] TODO :	display size selected edge
-[30] TODO :	spawn : display line on spawn direction
-[30] TODO :	wall object dock
+STANDBY : color per obj
+STANDBY : reset color on elem list button
+STANDBY : spawn object
 
-[01] TODO :	bloquer split / door / fdor si c'est une door
-[01] TODO :	bloquer vtx move si sct is a door
-[01] TODO : empecher export si object pas dans un secteur + refactor obj ducoup
-[01] TODO : empecher export si croisement edge
+* [02] TODO : debug relier element et buttons display on dropdown lists
+* [02] TODO : wall object dock
+* [01] TODO : interface element clipping
+* [02] TODO : ranger utils math function
+* [02] TODO : empecher export si edge du meme sct overlap
+* [02] TODO : front design selected / hovered color and stuff / color on errmsg
+* [02] TODO : door is a sector
+* [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+* [02] TODO : refactor - generiser code
 
-[02] TODO :	grid : limite left / bot
-[02] TODO :	interface element clipping
-[02] TODO :	front design selected / hovered color and stuff
-[02] TODO :	door is a sector
-[02] TODO : refactor - generiser code
-
+[03] TODO : grid : limite left / bot
 [03] TODO :	update export
 [03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
 [03] TODO : check coherence du programme et du fonctionnemenet des features
@@ -106,6 +109,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 [05] TODO :	beta testing
 [05] TODO :	norme : total norme
 
+OPTIONAL :	play preview background audio on misc
 OPTIONAL :	texture per door
 OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
@@ -118,5 +122,3 @@ OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
 OPTIONAL :	floodfill on sectors with ceil casting
-OPTIONAL :	front design
-

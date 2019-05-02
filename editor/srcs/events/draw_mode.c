@@ -6,20 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/29 15:18:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/01 13:47:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-static void     reset_values(t_env *env)
-{
-	if (env->editor.curr_wall_txtr)
-	{
-		env->editor.curr_wall_txtr->clicked = 0;
-		env->editor.curr_wall_txtr = 0;
-	}
-}
 
 static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 {
@@ -46,19 +37,19 @@ int			draw_mode(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_DRW_UP, env)->rect))
 		{
-			(env->editor.idx_wall_txtr < 0)
-				? env->editor.idx_wall_txtr++ : 0;
+			(env->editor.dropdown[DD_WALLTX].idx_element < 0)
+				? env->editor.dropdown[DD_WALLTX].idx_element++ : 0;
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_DRW_DOWN, env)->rect))
 		{
-			(env->editor.idx_wall_txtr > -env->editor.nb_wall_txtr + 1)
-				? env->editor.idx_wall_txtr-- : 0;
+			(env->editor.dropdown[DD_WALLTX].idx_element
+			> -env->editor.dropdown[DD_WALLTX].nb_element + 1)
+				? env->editor.dropdown[DD_WALLTX].idx_element-- : 0;
 		}
 		else if (ui_mouseenter(m.x, m.y, rect))
 		{
 			if (!env->editor.sct_hover)
 			{
-				env->editor.vtx_size = 0;
 				if (!env->editor.drawing)
 				{
 					env->editor.drawing = 1;
@@ -67,20 +58,20 @@ int			draw_mode(t_env *env)
 				if (!env->editor.vtx_hover)
 				{
 					create_vertex(env->mouse, env);
-					create_w_vertex(env->vertex, env);
+					create_w_vertex(env->editor.vertex, env);
 				}
-				else if (env->sct_current->w_vtx_start
+				else if (env->editor.sct_current->w_vtx_start
 				&& env->editor.vtx_hover == w_vtx_lst_end(
-				env->sct_current->w_vtx_start)->vtx
-				&& env->sct_current->nb_w_vtx > 2)
+				env->editor.sct_current->w_vtx_start)->vtx
+				&& env->editor.sct_current->nb_w_vtx > 2)
 				{
-					env->sct_current->close = 1;
-					env->sct_current->w_vtx_current = 0;
-					env->sct_current = 0;
+					env->editor.sct_current->close = 1;
+					env->editor.sct_current->w_vtx_current = 0;
+					env->editor.sct_current = 0;
 					env->editor.drawing = 0;
 				}
 				else if (!vertex_of_sector(
-				env->editor.vtx_hover, env->sct_current))
+				env->editor.vtx_hover, env->editor.sct_current))
 				{
 					create_w_vertex(env->editor.vtx_hover, env);
 				}
@@ -88,23 +79,23 @@ int			draw_mode(t_env *env)
 		}
 
 		// click on object button
-		wall_txtr = env->editor.wall_txtr;
+		wall_txtr = env->editor.dropdown[DD_WALLTX].start;
 		while (wall_txtr)
 		{
 			if (ui_mouseenter(m.x, m.y, wall_txtr->rect))
 			{
-				reset_values(env);
-				env->editor.curr_wall_txtr = wall_txtr;
+				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
+				env->editor.dropdown[DD_WALLTX].current = wall_txtr;
 				wall_txtr->clicked = 1;
 			}
 			wall_txtr = wall_txtr->next;
 		}
 		return (1);
 	}
-	if (env->sct_current)
+	if (env->editor.sct_current)
 	{
-		env->editor.vtx_size = pythagore(
-				env->sct_current->w_vtx_current->vtx->pos, env->mouse);
+		env->editor.sct_current->w_vtx_current->size =
+			pythagore(env->editor.sct_current->w_vtx_current->vtx->pos, env->mouse);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }
