@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:48:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:00:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,12 +185,14 @@ int				select_mode(t_env *env)
 			else if (ui_mouseenter(m.x, m.y,
 				get_element(E_B_SELEC_CEIL, env)->rect))
 			{
-				env->editor.sct_select->roof = 0;
+				get_element(E_B_SELEC_CEIL, env)->clicked = 1;
+				get_element(E_B_SELEC_SKY, env)->clicked = 0;
 			}
 			else if (ui_mouseenter(m.x, m.y,
 				get_element(E_B_SELEC_SKY, env)->rect))
 			{
-				env->editor.sct_select->roof = 1;
+				get_element(E_B_SELEC_CEIL, env)->clicked = 0;
+				get_element(E_B_SELEC_SKY, env)->clicked = 1;
 			}
 			else if (ui_mouseenter(m.x, m.y,
 				get_element(E_B_SELEC_CEILTX, env)->rect))

@@ -6,11 +6,34 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 14:19:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 16:09:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void			display_labeled_input(int id, char *str, t_env *env)
+{
+	SDL_Rect	rect;
+	t_elem		*elem;
+
+	elem = get_element(id, env);
+	rect = (SDL_Rect){elem->rect.x, elem->rect.y - 35,
+		elem->rect.w, elem->rect.h};
+	ui_make_string(rect, str, env->data);
+	ui_make_input(env->data->surface, elem, env->data);
+}
+
+void			display_button(int id, char *str, t_env *env)
+{
+	t_elem	*elem;
+	Uint32	color;
+
+	elem = get_element(id, env);
+	color = (elem->clicked) ? C_GREEN : C_WHITE;
+	ui_make_rect(env->data->surface, elem->rect, color);
+	ui_make_string(elem->rect, str, env->data);
+}
 
 int             point_in_rect(t_pos pos, SDL_Rect rect)
 {

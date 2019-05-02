@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 13:31:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 15:59:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
-	int				roof;		// ceil or sky : 0 / 1
 	int				ceil;		// hauteur ceil
 	int				floor;		// hauteur floor
 	int				gravity;
