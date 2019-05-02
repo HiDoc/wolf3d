@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 13:17:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 13:39:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ int				elem_mode(t_env *env)
 	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
 	t_dropdown		*dropdown = env->editor.dropdown;
 	const t_pos		m = env->data->mouse;
-	const int		tab[5] = {
-	E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
 	const SDL_Event event = env->data->sdl.event;
 	t_elem			*button;
-	int				i;
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
@@ -40,7 +37,7 @@ int				elem_mode(t_env *env)
 		}
 		else if (ui_mouseenter(m.x, m.y, rect) && env->editor.elem_mode > -1)
 		{
-			if (env->editor.spawn_set == 1)
+			/*if (env->editor.spawn_set == 1)
 			{
 				env->editor.objects->dir = atan(
 				(m.y - env->editor.spawn_pos.y)
@@ -65,23 +62,45 @@ int				elem_mode(t_env *env)
 					display_error_msg("You can not set two spawns", env);
 					return (1);
 				}
-			}
+			}*/
 			create_object(dropdown[env->editor.elem_mode].current, env);
 			return (1);
 		}
 
-		i = 0;
-		while (i < 5) // 5 : nb of categories
+		if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_OBWL, env)->rect))
 		{
-			if (ui_mouseenter(m.x, m.y, get_element(tab[i], env)->rect))
-			{
-				get_element(tab[env->editor.elem_mode], env)->clicked = 0;
-				get_element(tab[i], env)->clicked = 1;
-				dropdown[env->editor.elem_mode].idx_element = 0;
-				env->editor.elem_mode = i;
-				return (1);
-			}
-			i++;
+			get_element(E_B_ELM_OBWL, env)->clicked = 1;
+			dropdown[env->editor.elem_mode].idx_element = 0;
+			env->editor.elem_mode = DD_WOBJ;
+			return (1);
+		}
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_CONS, env)->rect))
+		{
+			get_element(E_B_ELM_CONS, env)->clicked = 1;
+			dropdown[env->editor.elem_mode].idx_element = 0;
+			env->editor.elem_mode = DD_CONS;
+			return (1);
+		}
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_NTTY, env)->rect))
+		{
+			get_element(E_B_ELM_NTTY, env)->clicked = 1;
+			dropdown[env->editor.elem_mode].idx_element = 0;
+			env->editor.elem_mode = DD_NTTY;
+			return (1);
+		}
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_PRFB, env)->rect))
+		{
+			get_element(E_B_ELM_PRFB, env)->clicked = 1;
+			dropdown[env->editor.elem_mode].idx_element = 0;
+			env->editor.elem_mode = DD_PRFB;
+			return (1);
+		}
+		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_SPEC, env)->rect))
+		{
+			get_element(E_B_ELM_SPEC, env)->clicked = 1;
+			dropdown[env->editor.elem_mode].idx_element = 0;
+			env->editor.elem_mode = DD_SPEC;
+			return (1);
 		}
 
 		// click on object button

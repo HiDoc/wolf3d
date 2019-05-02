@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 20:22:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 13:40:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ static void		init_menu(t_env *env)
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
 }
 
-static void		create_dd_button(int id, int type, int dd, int ref, char *str, t_env *env)
+static void		create_dd_button(int id, int dd, int ref, char *str, t_env *env)
 {
 	t_elem   *new;
 
@@ -258,7 +258,6 @@ static void		create_dd_button(int id, int type, int dd, int ref, char *str, t_en
 		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
 	new->ref = ref;
 	new->id = id;
-	new->type = type;
 	if (!(env->editor.dropdown[dd].start))
 	{
 		env->editor.dropdown[dd].start = new;
@@ -273,7 +272,7 @@ static void		create_dd_button(int id, int type, int dd, int ref, char *str, t_en
 	}
 }
 
-static void		load_dd_list(char *path, int dd, int type, t_env *env)
+static void		load_dd_list(char *path, int dd, t_env *env)
 {
 	char				*name;
 	int					ref;
@@ -292,7 +291,7 @@ static void		load_dd_list(char *path, int dd, int type, t_env *env)
 					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_dd_button(i, type, dd, ref, name, env);
+			create_dd_button(i, dd, ref, name, env);
 			lt_release(name);
 			env->editor.dropdown[dd].nb_element++;
 			i++;
@@ -303,17 +302,17 @@ static void		load_dd_list(char *path, int dd, int type, t_env *env)
 
 static void		init_editor(t_env *env)
 {
-	load_dd_list("ressources/images/wall/", DD_WALLTX, -1, env);
-	load_dd_list("ressources/images/wall/", DD_MWALLTX, -1, env);
-	load_dd_list("ressources/skybox/", DD_SBTX, -1, env);
-	load_dd_list("ressources/audio/", DD_BGAUDIO, -1, env);
-	load_dd_list("ressources/images/ceil/", DD_CEILTX, -1, env);
-	load_dd_list("ressources/images/floor/", DD_FLOORTX, -1, env);
-	load_dd_list("ressources/objects/wall_objects", DD_WOBJ, WALL_OBJ, env);
-	load_dd_list("ressources/objects/consumables", DD_CONS, CONSUMABLE, env);
-	load_dd_list("ressources/objects/entities", DD_NTTY, ENTITY, env);
-	load_dd_list("ressources/objects/prefabs", DD_PRFB, PREFAB, env);
-	load_dd_list("ressources/objects/specials", DD_SPEC, SPECIAL, env);
+	load_dd_list("ressources/images/wall/", DD_WALLTX, env);
+	load_dd_list("ressources/images/wall/", DD_MWALLTX, env);
+	load_dd_list("ressources/skybox/", DD_SBTX, env);
+	load_dd_list("ressources/audio/", DD_BGAUDIO, env);
+	load_dd_list("ressources/images/ceil/", DD_CEILTX, env);
+	load_dd_list("ressources/images/floor/", DD_FLOORTX, env);
+	load_dd_list("ressources/objects/wall_objects", DD_WOBJ, env);
+	load_dd_list("ressources/objects/consumables", DD_CONS, env);
+	load_dd_list("ressources/objects/entities", DD_NTTY, env);
+	load_dd_list("ressources/objects/prefabs", DD_PRFB, env);
+	load_dd_list("ressources/objects/specials", DD_SPEC, env);
 
 	env->grid_scale = 45;
 }

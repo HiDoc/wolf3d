@@ -6,17 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 17:19:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 14:19:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-int				point_in_rect(t_pos pos, SDL_Rect rect) // set in utils
-{
-	return (pos.x >= rect.x && pos.x <= rect.x + rect.w
-	&& pos.y >= rect.y && pos.y <= rect.y + rect.h);
-}
 
 static void		display_grid(t_env *env)
 {
@@ -171,7 +165,6 @@ void			display_interface(t_env *env)
 	display_grid(env);
 	display_infos(env);
 
-	// display all edges
 	t_sct	*sct;
 	sct = env->editor.sct_start;
 	while (sct)
@@ -208,11 +201,11 @@ void			display_interface(t_env *env)
 	t_object	*obj = env->editor.objects;
 	while (obj)
 	{
-		if (obj->category == CONSUMABLE)
+		/*if (obj->category == CONSUMABLE)
 			color = C_GREEN;
 		else if (obj->category == ENTITY)
 			color = C_RED;
-		else
+		else*/
 			color = C_WHITE;
 
 		pos = vtx_transform(obj->pos, env);

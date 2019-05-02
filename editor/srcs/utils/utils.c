@@ -6,11 +6,17 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 17:21:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 14:19:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+int             point_in_rect(t_pos pos, SDL_Rect rect)
+{
+	return (pos.x >= rect.x && pos.x <= rect.x + rect.w
+	&& pos.y >= rect.y && pos.y <= rect.y + rect.h);
+}
 
 static int		shared_vtx(t_vtx *vtx, t_sct *current)
 {

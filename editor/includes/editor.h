@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 14:27:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 14:17:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+int			point_in_rect(t_pos pos, SDL_Rect rect);
 int			sector_overlap(t_env *env);
 int			refresh_object_sct(t_env *env);
 void        display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 20:03:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 13:31:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,6 @@ enum					e_elements
 	E_B_SELEC_SBTX,
 	E_B_SELEC_MISC_UP,
 	E_B_SELEC_MISC_DOWN
-};
-
-enum					e_obj_category
-{
-	WALL_OBJ,
-	CONSUMABLE,
-	ENTITY,
-	PREFAB,
-	SPECIAL
 };
 
 typedef struct	s_w_vtx		t_w_vtx;

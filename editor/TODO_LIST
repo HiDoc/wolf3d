@@ -57,13 +57,13 @@ BUG : draw mode : create vertex in sector close to edge
 BUG : coherence mouse mode (ex: change mouse mode while drawing)
 BUG : fix edge hover
 BUG : color of error_msg
-BUG : reframe click boutons sur right pannel
 BUG : taille du nom des object depasse du carre
 BUG : coherence retour menu - start - cancel
 BUG : fix and finish input ceil/floor/gravity
 BUG : edge size n'est pas update si split, moving etc...
 BUG : calcul de l'angle spawn
 BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
+BUG : pose obj + select this object
 
 LEAK: protect gnl
 
@@ -80,7 +80,10 @@ TOCHECK : si export quand un secteur n'est pas encore clos
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [02] TODO : fusionner enum dropdown / category
+STANDBY : color per obj
+STANDBY : reset color on elem list button
+STANDBY : spawn object
+
 * [02] TODO : debug relier element et buttons display on dropdown lists
 * [02] TODO : wall object dock
 * [01] TODO : interface element clipping
@@ -106,6 +109,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 [05] TODO :	beta testing
 [05] TODO :	norme : total norme
 
+OPTIONAL :	play preview background audio on misc
 OPTIONAL :	texture per door
 OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
