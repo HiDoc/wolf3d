@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 20:13:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:36:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ struct					s_elem
 	int				ref;
 	int				id;
 	int				type;
+	int				dd;			// dropdown (if part of dropdown)
 	SDL_Rect		rect;
 	Uint32			color;
 	SDL_Surface		*image;
@@ -142,7 +143,7 @@ struct					s_object
 
 	t_sct			*sct;
 	int				ref;
-	int				category;
+	int				dd;		// dropdown
 	char			*name;
 
 	Uint32			icon_color; // replace by image

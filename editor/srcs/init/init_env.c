@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 19:54:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:56:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ static void		init_elems(t_env *env)
 	// editor selection
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
+	get_element(E_B_SELEC_DEL, env)->color = C_RED;
 
 	// editor selection edge
 	rect = (SDL_Rect){910, 250, 250, 30};
@@ -268,6 +269,7 @@ static void		create_dd_button(int id, int dd, int ref, char *str, t_env *env)
 		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
 	new->ref = ref;
 	new->id = id;
+	new->dd = dd;
 	if (!(env->editor.dropdown[dd].start))
 	{
 		env->editor.dropdown[dd].start = new;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 18:06:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:56:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			display_button(int id, char *str, t_env *env)
 	Uint32	color;
 
 	elem = get_element(id, env);
-	color = (elem->clicked) ? C_GREEN : C_WHITE;
+	color = (elem->clicked) ? C_GREEN : elem->color;
 	ui_make_rect(env->data->surface, elem->rect, color);
 	ui_make_string(elem->rect, str, env->data);
 }

@@ -76,30 +76,24 @@ TOCHECK : possible de remettre un spawn si il a ete suprime ?
 TOCHECK : il se passe quoi si wall obj sur portal ?
 TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : si export quand un secteur n'est pas encore clos
+TOCHECK : pertinance de garder enum e_type
 
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-STANDBY : color per obj
-STANDBY : reset color on elem list button
-STANDBY : spawn object
-
-* [02] TODO : fix previous refactor
-* [02] TODO : debug relier element et buttons display on dropdown lists
-* [02] TODO : refactor events
-* [02] TODO : interface element clipping
-* [02] TODO : empecher export si edge du meme sct overlap
-* [02] TODO : front design selected / hovered color and stuff / color on errmsg
-* [02] TODO : STANDBY/LEAK
-
-* [02] TODO : door is a sector
-* [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-
-[03] TODO : wall object dock
-[03] TODO : grid : limite left / bot
-[03] TODO :	update export
-[03] TODO : s'occuper de PROTEC/BUG/SEGV
-[03] TODO : check coherence du programme et du fonctionnemenet des features
+* [03] TODO : STANDBY/SEGV
+* [03] TODO : debug relier element et buttons display on dropdown lists
+* [03] TODO : interface element clipping
+* [03] TODO : front design selected / hovered color and stuff / color on errmsg
+* [03] TODO : door is a sector
+* [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+* [03] TODO : empecher export si edge du meme sct overlap
+* [03] TODO : refactor events
+* [03] TODO : wall object dock
+* [03] TODO : grid : limite left / bot
+* [03] TODO : update export
+* [03] TODO : s'occuper de PROTEC/BUG/LEAK
+* [03] TODO : check coherence du programme et du fonctionnemenet des features
 
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync

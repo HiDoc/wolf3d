@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 19:21:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:06:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int				elem_mode(t_env *env)
 		}
 		else if (ui_mouseenter(m.x, m.y, rect))
 		{
-			/*if (env->editor.spawn_set == 1)
+			if (env->editor.spawn_set == 1)
 			{
 				env->editor.objects->dir = atan(
 				(m.y - env->editor.spawn_pos.y)
 				/ (m.x - env->editor.spawn_pos.x));
 				env->editor.objects->dir = env->editor.objects->dir * 180 / M_PI;
-				printf("[%f]\n",  env->editor.objects->dir);
+				//printf("[%f]\n",  env->editor.objects->dir);
 				env->editor.spawn_dir = env->editor.objects->dir;
-				env->editor.spawn_set = 0;
+				env->editor.spawn_set = 2;
 				return (1);
 			}
-			else if (dropdown[env->editor.elem_mode].current->type == SPECIAL
-				&& dropdown[env->editor.elem_mode].current->id == 0)
+			else if (dropdown[env->editor.curr_elem_dd].current->dd == DD_SPEC
+				&& dropdown[env->editor.curr_elem_dd].current->id == 0)
 			{
 				if (env->editor.onespawn == 0)
 				{
@@ -62,7 +62,7 @@ int				elem_mode(t_env *env)
 					display_error_msg("You can not set two spawns", env);
 					return (1);
 				}
-			}*/
+			}
 			create_object(dropdown[env->editor.curr_elem_dd].current, env);
 			return (1);
 		}

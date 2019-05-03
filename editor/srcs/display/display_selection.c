@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 19:55:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:52:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 
 static void		display_object_data(t_env *env)
 {
-	char        *obj_tab[5] = {
-	"Wall_object", "Consumable", "Entity", "Prefab", "Special"};
 	SDL_Rect		rect;
+	char			*category;
+
+	if (env->editor.obj_select->dd == DD_WOBJ)
+		category = "Wall_object";
+	else if (env->editor.obj_select->dd == DD_CONS)
+		category = "Consumable";
+	else if (env->editor.obj_select->dd == DD_NTTY)
+		category = "Entity";
+	else if (env->editor.obj_select->dd == DD_PRFB)
+		category = "Prefab";
+	else if (env->editor.obj_select->dd == DD_SPEC)
+		category = "Special";
+	else
+		category = 0;
 
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, obj_tab[env->editor.obj_select->category], env->data);
+	ui_make_string(rect, category, env->data);
 
 	rect = (SDL_Rect){910, 140, 250, 30};
 	ui_make_string(rect, env->editor.obj_select->name, env->data);
