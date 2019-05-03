@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 14:07:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:03:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,31 +113,24 @@ void			display_sector(t_sct *sct, t_env *env)
 	Uint32			color;
 	t_vec			vec;
 
-
 	if (env->editor.sct_hover == sct)
-	{
 		color = (env->editor.mouse_mode == 1) ? C_RED : C_GREEN;
-	}
 	else
-	{
 		color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
-	}
+
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
 		vec.a = vtx_transform(w_vtx->vtx->pos, env);
 		vec.b = vtx_transform(w_vtx->next->vtx->pos, env);
-		if ((point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect)))
+		if (w_vtx == env->editor.edg_hover)
+			ui_make_clipped_line(env->data->surface, vec, rect, C_BLUE);
+		else
+			ui_make_clipped_line(env->data->surface, vec, rect, color);
+		if (point_in_rect(vec.a, rect))
 		{
-			if (w_vtx == env->editor.edg_hover)
-				ui_make_line(env->data->surface, vec, C_BLUE);
-			else
-				ui_make_line(env->data->surface, vec, color);
-			if (point_in_rect(vec.a, rect))
-			{
-				vtxrect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
-				ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
-			}
+			vtxrect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
+			ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
 		}
 		w_vtx = w_vtx->next;
 	}
@@ -145,37 +138,33 @@ void			display_sector(t_sct *sct, t_env *env)
 	{
 		vec.a = vtx_transform(sct->w_vtx_start->vtx->pos, env);
 		vec.b = vtx_transform(w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
-		if ((point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect)))
+		if (w_vtx == env->editor.edg_hover)
+			ui_make_clipped_line(env->data->surface, vec, rect, C_BLUE);
+		else
+			ui_make_clipped_line(env->data->surface, vec, rect, color);
+		if (point_in_rect(vec.b, rect))
 		{
-			if (w_vtx == env->editor.edg_hover)
-				ui_make_line(env->data->surface, vec, C_BLUE);
-			else
-				ui_make_line(env->data->surface, vec, color);
-			if (point_in_rect(vec.b, rect))
-			{
-				vtxrect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
-				ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
-			}
+			vtxrect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
+			ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
 		}
 	}
 }
 
-void			display_interface(t_env *env)
+static void		display_spaces(t_env *env)
 {
-	Uint32			color;
 	SDL_Rect		rect;
 	t_pos			pos;
 	t_vec			vec;
-
-	display_grid(env);
-	display_infos(env);
 
 	t_sct	*sct;
 	sct = env->editor.sct_start;
 	while (sct)
 	{
-		if (sct != env->editor.sct_hover)
-			display_sector(sct, env);
+		if (sector_in_rect(sct, get_element(E_R_RECT, env)->rect, env))
+		{
+			if (sct != env->editor.sct_hover)
+				display_sector(sct, env);
+		}
 		sct = sct->next;
 	}
 	// display hovered one overflowing the others
@@ -201,21 +190,27 @@ void			display_interface(t_env *env)
 		circ = (t_circ){pos, 10, 0xFFFFFFFF};
 		ui_make_circle(circ, env->data);
 	}
+}
+
+static void		display_objects(t_env *env)
+{
+	Uint32		color;
+	t_pos		pos;
+	SDL_Rect	rect;
 
 	// display objects
 	t_object	*obj = env->editor.objects;
 	while (obj)
 	{
-		if (obj->dd == DD_CONS)
-			color = C_GREEN;
-		else if (obj->dd == DD_NTTY)
-			color = C_RED;
-		else
-			color = C_WHITE;
-
 		pos = vtx_transform(obj->pos, env);
 		if (point_in_rect(pos, get_element(E_R_RECT, env)->rect))
 		{
+			if (obj->dd == DD_CONS)
+				color = C_GREEN;
+			else if (obj->dd == DD_NTTY)
+				color = C_RED;
+			else
+				color = C_WHITE;
 			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
 			ui_make_rect(env->data->surface, rect, color);
 			if (obj->dd == DD_SPEC && env->editor.spawn_set == 2)
@@ -227,4 +222,12 @@ void			display_interface(t_env *env)
 		}
 		obj = obj->next;
 	}
+}
+
+void			display_interface(t_env *env)
+{
+	display_grid(env);
+	display_infos(env);
+	display_spaces(env);
+	display_objects(env);
 }

@@ -33,7 +33,6 @@ PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 * [03] TODO : debug relier element et buttons display on dropdown lists
-* [03] TODO : interface element clipping
 * [03] TODO : front design selected / hovered color and stuff / color on errmsg
 * [03] TODO : door is a sector
 * [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
@@ -55,6 +54,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 [05] TODO :	beta testing
 [05] TODO :	norme : total norme
 
+OPTIONAL :	ammeliorer clipping du content de l'interface
 OPTIONAL :	play preview background audio on misc
 OPTIONAL :	texture per door
 OPTIONAL :	menu preview
