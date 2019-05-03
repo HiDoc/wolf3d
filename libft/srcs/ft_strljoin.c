@@ -19,7 +19,7 @@ char	*ft_strljoin(char *s1, char *s2)
 	join = ft_strjoin(s1, s2);
 	if (s1)
 	{
-		lt_release(s1);
+		lt_release((void**)&s1);
 		s1 = NULL;
 	}
 	return (join);

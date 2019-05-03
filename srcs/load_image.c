@@ -22,6 +22,6 @@ SDL_Surface		*load_image(char *path)
 	if (!(new = lt_push(SDL_ConvertSurfaceFormat(
 			tmp, SDL_PIXELFORMAT_ARGB32, 0), srf_del)))
 		doom_error_exit("Doom_nukem error on SDL_ConvertSurfaceFormat");
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 	return (new);
 }

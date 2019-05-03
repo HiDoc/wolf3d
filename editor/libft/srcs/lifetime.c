@@ -34,21 +34,21 @@ void	*lt_push(void *ptr, void (*f)(void **))
 	return (ptr);
 }
 
-void	lt_release(void *ptr)
+void	lt_release(void **ptr)
 {
 	t_lt	*lifetime;
 	t_lt	*tmp;
 
 	lifetime = get_lifetime(0);
-	if (lifetime->ptr == ptr)
+	if (lifetime->ptr == *ptr)
 	{
 		get_lifetime(lifetime->next);
 		if (lifetime->ptr)
-			(*(lifetime->f))(&ptr);
+			(*(lifetime->f))(ptr);
 		ft_memdel((void**)&lifetime);
 		return ;
 	}
-	while (lifetime && lifetime->ptr != ptr)
+	while (lifetime && lifetime->ptr != *ptr)
 		lifetime = lifetime->next;
 	if (!lifetime)
 		return ;
@@ -57,7 +57,7 @@ void	lt_release(void *ptr)
 		tmp = tmp->next;
 	tmp->next = lifetime->next;
 	if (lifetime->ptr)
-		(*(lifetime->f))(&ptr);
+		(*(lifetime->f))(ptr);
 	ft_memdel((void**)&lifetime);
 }
 

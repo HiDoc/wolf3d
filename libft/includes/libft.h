@@ -110,7 +110,7 @@ void					ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
 t_lt					*get_lifetime(t_lt *new_ptr);
 void					*lt_push(void *ptr, void (*f)(void **));
-void					lt_release(void *ptr);
+void					lt_release(void **ptr);
 void					lt_destroy(void);
 
 #endif

@@ -30,6 +30,6 @@ void		ui_make_input(SDL_Surface *surface, t_elem *elem, t_data *data)
 		elem->str_max = (rect.w + rect.h > elem->rect.w) ? 1 : 0;
 		if ((SDL_BlitScaled(srf, 0, data->surface, &rect)) < 0)
 			ui_error_exit_sdl("Libui: blit error in ui_make_input");
-		lt_release(srf);
+		lt_release((void**)&srf);
 	}
 }

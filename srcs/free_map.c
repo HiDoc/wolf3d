@@ -23,30 +23,30 @@ static void		free_sct(t_sector *sct, t_env *env)
 	i = 0;
 	while (i < (int)sct->npoints + 1)
 	{
-		lt_release(&(sct->vertex[i]));
+		lt_release((void**)&(sct->vertex[i]));
 		i++;
 	}
 	i = 0;
 	while (i < (int)sct->npoints)
 	{
-		lt_release(&(sct->neighbors[i]));
+		lt_release((void**)&(sct->neighbors[i]));
 		i++;
 	}
 	w_sect = sct->head_object;
 	while (w_sect)
 	{
 		ws_tmp = w_sect->next;
-		lt_release(w_sect);
+		lt_release((void**)&w_sect);
 		w_sect = ws_tmp;;
 	}
 	w_enemy = sct->head_enemy;
 	while (w_enemy)
 	{
 		we_tmp = w_enemy->next;
-		lt_release(w_enemy);
+		lt_release((void**)&w_enemy);
 		w_enemy = we_tmp;
 	}
-	lt_release(&(env->engine.sectors[i]));
+	lt_release((void**)&(env->engine.sectors[i]));
 }
 
 void	free_map(t_env *env)

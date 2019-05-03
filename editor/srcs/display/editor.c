@@ -49,7 +49,7 @@ void		editor(t_env *env)
 		if (time(0) - env->editor.timestamp < 4)
 			ui_make_string(rect, env->editor.error_msg, env->data);
 		else
-			lt_release(env->editor.error_msg);
+			lt_release((void**)&env->editor.error_msg);
 	}
 
 	// display nb element

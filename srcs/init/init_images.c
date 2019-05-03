@@ -53,7 +53,7 @@ static void			init_consumable(t_env *env)
 			env->world.objects[i].size = (t_l_float){6, 1};
 		}
 		env->world.objects[i].sprite = ui_img(name, i);
-		lt_release(name);
+		lt_release((void**)&name);
 		i++;
 	}
 	env->hud.inventory.is_active = 0;

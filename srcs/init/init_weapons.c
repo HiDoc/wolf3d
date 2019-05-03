@@ -21,7 +21,7 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 	img_scaled_copy(sprite, bloc->sprite);
 	bloc->rect = (SDL_Rect){0, 0, W, H};
 	bloc->limit.v1 = (t_vtx){0, 0};
-	lt_release(sprite);
+	lt_release((void**)&sprite);
 }
 
 // static void	thread_current_sprite(t_bloc *child, char *path, int line, int size)
@@ -111,9 +111,9 @@ static void     weapon_sprites(t_weapon *weapon, char *name)
 	current_sprite(&weapon->sprite, sprite, 0);
 	weapon->sprite_reload = weapon_fill(r_path, weapon->time_reload);
 	weapon->sprite_shoot = weapon_fill(s_path, weapon->time_shoot);
-	lt_release(r_path);
-	lt_release(s_path);
-	lt_release(sprite);
+	lt_release((void**)&r_path);
+	lt_release((void**)&s_path);
+	lt_release((void**)&sprite);
 }
 
 static void		weapon_set(t_weapon *weapon, char *name, int dam,

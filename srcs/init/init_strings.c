@@ -40,8 +40,8 @@ SDL_Surface **tab_name_objects(t_env *env, int i, t_vtx n_size)
 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
 		new[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, new[i]);
-		lt_release(tmp);
-		lt_release(name);
+		lt_release((void**)&tmp);
+		lt_release((void**)&name);
 	}
 	return (new);
 }
@@ -63,7 +63,7 @@ static void	set_inv_strings(t_env *env)
 		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
 		env->hud.text.i_obj_description[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
-		lt_release(tmp);
+		lt_release((void**)&tmp);
 	}
 }
 
@@ -77,7 +77,7 @@ static void	set_pick_strings(t_env *env)
 	n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
 	env->hud.text.pick = make_surface(n_size.x, n_size.y);
 	img_scaled_copy(tmp, env->hud.text.pick);
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 }
 
 static void	set_door_strings(t_env *env)
@@ -95,7 +95,7 @@ static void	set_door_strings(t_env *env)
 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
 		env->hud.text.doors[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, env->hud.text.doors[i]);
-		lt_release(tmp);
+		lt_release((void**)&tmp);
 	}
 }
 
@@ -129,7 +129,7 @@ void		init_strings(t_env *env, int i, int j)
 		}
 		env->hud.text.string[i] = make_surface(n_size.x, n_size.y);
 		img_scaled_copy(tmp, env->hud.text.string[i]);
-		lt_release(tmp);
+		lt_release((void**)&tmp);
 		i++;
 	}
 	env->hud.text.obj_names = tab_name_objects(env, -1, (t_vtx){0, 0});

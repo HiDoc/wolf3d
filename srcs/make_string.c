@@ -24,6 +24,6 @@ SDL_Surface		*make_string(t_font str_data)
 	if (!(surface = lt_push(
 			SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_ARGB32, 0), srf_del)))
 		doom_error_exit("Doom_nukem error on TTF_RenderText_Shaded");
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 	return (surface);
 }

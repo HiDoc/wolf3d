@@ -47,14 +47,14 @@ static int		select_interface_events(t_env *env)
 		env->editor.sct_select = env->editor.sct_hover;
 		// height input
 		if (get_element(E_I_SELEC_HCEIL, env)->str)
-			lt_release(get_element(E_I_SELEC_HCEIL, env)->str);
+			lt_release((void**)&get_element(E_I_SELEC_HCEIL, env)->str);
 		if (env->editor.sct_select->ceil > 0
 		&& !(get_element(E_I_SELEC_HCEIL, env)->str =
 		lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
 		// gravity input
 		if (get_element(E_I_SELEC_GRAVITY, env)->str)
-			lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
+			lt_release((void**)&get_element(E_I_SELEC_GRAVITY, env)->str);
 		if (env->editor.sct_select->gravity > 0
 		&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
 		lt_push(ft_itoa(env->editor.sct_select->gravity), ft_memdel)))
@@ -140,7 +140,7 @@ void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
 
 int				select_mode(t_env *env)
 {
-	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;	
+	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
 	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
 	t_elem 			*button;
@@ -285,12 +285,12 @@ int				select_mode(t_env *env)
 				get_element(E_B_SELEC_DOOR, env)->rect))
 			{
 				t_vec	vec;
-	
+
 				vec.a = env->editor.edg_select->vtx->pos;
 				vec.b = (env->editor.edg_select->next)
 					? env->editor.edg_select->next->vtx->pos
 					: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
-	
+
 				if (pythagore(vec.a, vec.b) > 3)
 				{
 					make_door(3, vec.a, vec.b, env);
@@ -303,12 +303,12 @@ int				select_mode(t_env *env)
 				get_element(E_B_SELEC_FDOOR, env)->rect))
 			{
 				t_vec	vec;
-	
+
 				vec.a = env->editor.edg_select->vtx->pos;
 				vec.b = (env->editor.edg_select->next)
 					? env->editor.edg_select->next->vtx->pos
 					: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
-	
+
 				if (pythagore(vec.a, vec.b) > 4)
 				{
 					make_door(4, vec.a, vec.b, env);
