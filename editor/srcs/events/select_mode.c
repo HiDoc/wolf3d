@@ -436,14 +436,14 @@ int				select_mode(t_env *env)
 				env->editor.sct_select = env->editor.sct_hover;
 				// height input
 				if (get_element(E_I_SELEC_HCEIL, env)->str)
-					lt_release(get_element(E_I_SELEC_HCEIL, env)->str);
+					lt_release(&get_element(E_I_SELEC_HCEIL, env)->str);
 				if (env->editor.sct_select->ceil > 0
 				&& !(get_element(E_I_SELEC_HCEIL, env)->str =
 				lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
 					ui_error_exit_sdl("Editor: Out of memory");
 				// gravity input
 				if (get_element(E_I_SELEC_GRAVITY, env)->str)
-					lt_release(get_element(E_I_SELEC_GRAVITY, env)->str);
+					lt_release(&get_element(E_I_SELEC_GRAVITY, env)->str);
 				if (env->editor.sct_select->gravity > 0
 				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
 				lt_push(ft_itoa(env->editor.sct_select->gravity), ft_memdel)))

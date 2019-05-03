@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 19:50:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:54:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int		input_add(int elem, char *key, t_env *env)
 		if (!(get_element(elem, env)->str =
 		lt_push(ft_zstrjoin(get_element(elem, env)->str, key), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
-		lt_release(tmp);
+		lt_release(&tmp);
 		return (1);
 	}
 	return (0);
@@ -164,7 +164,10 @@ int		input_del(int elem, t_env *env)
 			get_element(elem, env)->str[newsize] = 0;
 		else
 		{
-			lt_release(get_element(elem, env)->str);
+			//printf("1: %p\n", get_element(elem, env)->str);
+			lt_release(&(get_element(elem, env)->str));
+		//	get_element(elem, env)->str = 0;
+			printf("2: %p\n", get_element(elem, env)->str);
 			return (0);
 		}
 	}

@@ -43,7 +43,7 @@ void			delete_sector(t_sct *sector, t_env *env)
 	{
 		env->editor.sct_start = ptr->next;
 		delete_sct_content(sector, env);
-		lt_release(sector);
+		lt_release(&sector);
 		env->nb_sct--;
 		return ;
 	}
@@ -53,7 +53,7 @@ void			delete_sector(t_sct *sector, t_env *env)
 		{
 			ptr->next = ptr->next->next;
 			delete_sct_content(sector, env);
-			lt_release(sector);
+			lt_release(&sector);
 		}
 		ptr = ptr->next;
 	}

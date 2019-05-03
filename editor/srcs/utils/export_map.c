@@ -25,7 +25,7 @@ void        export_map(t_env *env)
 	if ((fd = open(path, O_CREAT | O_TRUNC | O_WRONLY,
 	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 		ui_error_exit_sdl("Editor: Error while opening file");
-	lt_release(path);
+	lt_release(&path);
 
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);

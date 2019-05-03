@@ -20,8 +20,8 @@ void		delete_object(t_object *obj, t_env *env)
 	if (ptr == obj)
 	{
 		env->editor.objects = ptr->next;
-		lt_release(obj->name);
-		lt_release(obj);
+		lt_release(&obj->name);
+		lt_release(&obj);
 		return ;
 	}
 	while (ptr && ptr->next)
@@ -29,8 +29,8 @@ void		delete_object(t_object *obj, t_env *env)
 		if (ptr->next == obj)
 		{
 			ptr->next = ptr->next->next;
-			lt_release(obj->name);
-			lt_release(obj);
+			lt_release(&obj->name);
+			lt_release(&obj);
 		}
 		ptr = ptr->next;
 	}

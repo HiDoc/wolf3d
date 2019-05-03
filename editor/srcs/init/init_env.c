@@ -252,7 +252,7 @@ static void		init_menu(t_env *env)
 			i++;
 		}
 	}
-	lt_release(dr);
+	lt_release(&dr);
 
 	env->map_name = "new_map";
 	env->menu.state = 1;
@@ -302,7 +302,7 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_dd_button(i, dd, ref, name, env);
-			lt_release(name);
+			lt_release(&name);
 			env->editor.dropdown[dd].nb_element++;
 			i++;
 		}
@@ -313,7 +313,7 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 		env->editor.dropdown[dd].current = env->editor.dropdown[dd].start;
 		env->editor.dropdown[dd].current->clicked = 1;
 	}
-	lt_release(dr);
+	lt_release(&dr);
 }
 
 static void		init_editor(t_env *env)

@@ -42,7 +42,7 @@ void			delete_vertex(t_vtx *vtx, t_env *env)
 	if (ptr == vtx)
 	{
 		env->editor.vertex = ptr->next;
-		lt_release(ptr);
+		lt_release(&ptr);
 		env->nb_vtx--;
 		return ;
 	}
@@ -52,7 +52,7 @@ void			delete_vertex(t_vtx *vtx, t_env *env)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->next->next;
-			lt_release(tmp);
+			lt_release(&tmp);
 			env->nb_vtx--;
 		}
 		ptr = ptr->next;

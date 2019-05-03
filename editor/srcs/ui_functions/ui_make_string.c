@@ -25,5 +25,5 @@ void	ui_make_string(SDL_Rect rect, char *text, t_data *data)
 	newrect.w = (newrect.h * srf->w) / srf->h;
 	if ((SDL_BlitScaled(srf, 0, data->surface, &newrect)) < 0)
 		ui_error_exit_sdl("Libui: blit error in ui_make_string");
-	lt_release(srf);
+	lt_release(&srf);
 }

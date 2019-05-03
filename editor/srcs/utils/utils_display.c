@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 21:56:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:27:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		display_menu_dropdown_list(SDL_Rect rect, t_env *env)
 void		display_error_msg(char *msg, t_env *env)
 {
 	if (env->editor.error_msg)
-		lt_release(env->editor.error_msg);
+		lt_release(&env->editor.error_msg);
 	env->editor.timestamp = time(0);
 	if (!(env->editor.error_msg = lt_push(ft_strdup(msg), ft_memdel)))
 		ui_error_exit_sdl("Editor: out of memory on delete_vertex");
