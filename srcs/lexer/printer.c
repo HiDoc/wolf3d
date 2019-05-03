@@ -51,11 +51,11 @@ int		free_file(t_parsefile *file)
 		{
 			iter = line->first;
 			line->first = iter->next;
-			lt_release(iter);
+			lt_release((void**)&iter);
 			iter = NULL;
 		}
 		file->first = line->next;
-		lt_release(line);
+		lt_release((void**)&line);
 		line = NULL;
 	}
 	return (1);

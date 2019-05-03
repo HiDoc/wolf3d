@@ -390,7 +390,7 @@ static int		select_misc(t_env *env)
 
 int				select_mode(t_env *env)
 {
-	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;	
+	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
 	const t_pos		m = env->data->mouse;
 	const SDL_Event event = env->data->sdl.event;
 

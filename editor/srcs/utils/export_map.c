@@ -25,7 +25,7 @@ void        export_map(t_env *env)
 	if ((fd = open(path, O_CREAT | O_TRUNC | O_WRONLY,
 	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 		ui_error_exit_sdl("Editor: Error while opening file");
-	lt_release(&path);
+	lt_release((void**)&path);
 
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);
@@ -47,7 +47,7 @@ void        export_map(t_env *env)
 	while (sct)
 	{
 		dprintf(fd, "sector // //\n");
-		sct = sct->next;	
+		sct = sct->next;
 	}
 
 	/*ft_putendl_fd("# wall_object: x y sector ref", fd);
@@ -57,7 +57,7 @@ void        export_map(t_env *env)
 		if (obj->category == WALL_OBJ)
 			//dprintf(fd, "wall_object %d %d // //\n",
 			(int)(obj->pos.x - xmin),(int)(obj->pos.y - ymin));
-		obj = obj->next;	
+		obj = obj->next;
 	}*/
 
 	/*ft_putendl_fd("# consumable: x y sector ref is_wpn", fd);
@@ -67,17 +67,17 @@ void        export_map(t_env *env)
 		if (obj->category == CONSUMABLE)
 			//dprintf(fd, "consumable %d %d // // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
-		obj = obj->next;	
+		obj = obj->next;
 	}*/
-	
-	/*ft_putendl_fd("# entity: x y sector ref", fd);	
+
+	/*ft_putendl_fd("# entity: x y sector ref", fd);
 	obj = env->objects;
 	while (obj)
 	{
 		if (obj->category == ENTITY)
 			//dprintf(fd, "entity %d %d // //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
-		obj = obj->next;	
+		obj = obj->next;
 	}
 
 	ft_putendl_fd("# special: x y ref", fd);
@@ -87,7 +87,7 @@ void        export_map(t_env *env)
 		if (obj->category == SPECIAL)
 			//dprintf(fd, "special %d %d //\n",
 			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
-		obj = obj->next;	
+		obj = obj->next;
 	}
 
 	close(fd);*/

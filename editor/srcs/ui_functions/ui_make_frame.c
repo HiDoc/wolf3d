@@ -25,7 +25,7 @@ void	ui_make_frame(void (*fc)(t_env *env), t_env *env)
 		ui_error_exit_sdl("Libui: Error while creating the texture");
 	if ((SDL_RenderCopy(env->data->sdl.renderer, env->data->texture, 0, 0)) != 0)
 		ui_error_exit_sdl("Libui: Error while RenderCopy");
-	lt_release(&env->data->texture);
+	lt_release((void**)&env->data->texture);
 	SDL_RenderPresent(env->data->sdl.renderer);
 	env->data->nb_frames++;
 }

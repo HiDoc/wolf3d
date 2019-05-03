@@ -43,12 +43,12 @@ void	create_save_name(char **name)
 	*name = ft_strljoin(t, " h ");
 	t = ft_itoa(min);
 	*name = ft_strljoin(*name, t);
-	lt_release(t);
+	lt_release((void**)&t);
 	t = ft_itoa(sec);
 	*name = ft_strljoin(*name, " mn ");
 	*name = ft_strljoin(*name, t);
 	*name = ft_strljoin(*name, " sec");
-	lt_release(t);
+	lt_release((void**)&t);
 }
 
 t_bloc	*new_save(t_env *e)

@@ -19,5 +19,5 @@ void		ui_make_nbrstring(SDL_Rect rect, int value, t_data *data)
 	if (!(str = lt_push(ft_itoa(value), ft_memdel)))
 		ui_error_exit_sdl("Libui: Error out of memory");
 	ui_make_string(rect, str, data);
-	lt_release(&str);
+	lt_release((void**)&str);
 }

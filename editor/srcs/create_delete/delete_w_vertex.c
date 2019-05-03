@@ -30,7 +30,7 @@ int			delete_w_vertex(t_sct *sct, t_vtx *vtx)
 		else
 		{
 			sct->w_vtx_start = w_ptr->next;
-			lt_release(&w_ptr);
+			lt_release((void**)&w_ptr);
 			sct->nb_w_vtx--;
 			return (1);
 		}
@@ -45,7 +45,7 @@ int			delete_w_vertex(t_sct *sct, t_vtx *vtx)
 			{
 				tmp = w_ptr->next;
 				w_ptr->next = w_ptr->next->next;
-				lt_release(&tmp);
+				lt_release((void**)&tmp);
 				sct->nb_w_vtx--;
 			}
 		}
