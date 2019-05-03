@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:03:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:31:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,27 @@ static void		display_infos(t_env *env)
 
 	// display position
 	rect = (SDL_Rect){30, 750, 0, 20};
-	ui_make_string(rect, "x : ", env->data);
+	ui_make_string(rect, "x : ", C_WHITE, env->data);
 	rect = (SDL_Rect){60, 750, 0, 20};
-	ui_make_nbrstring(rect, env->mouse.x, env->data);
+	ui_make_nbrstring(rect, env->mouse.x, C_WHITE, env->data);
 	rect = (SDL_Rect){110, 750, 0, 20};
-	ui_make_string(rect, "y : ", env->data);
+	ui_make_string(rect, "y : ", C_WHITE, env->data);
 	rect = (SDL_Rect){140, 750, 0, 20};
-	ui_make_nbrstring(rect, env->mouse.y, env->data);
+	ui_make_nbrstring(rect, env->mouse.y, C_WHITE, env->data);
 
 	// display_size
 	if (env->editor.sct_current)
 	{
 		rect = (SDL_Rect){190, 750, 0, 20};
-		ui_make_string(rect, "size : ", env->data);
+		ui_make_string(rect, "size : ", C_WHITE, env->data);
 		rect = (SDL_Rect){240, 750, 0, 20};
 		ui_make_nbrstring(rect,
-			env->editor.sct_current->w_vtx_current->size, env->data);
+			env->editor.sct_current->w_vtx_current->size, C_WHITE, env->data);
 	}
 
 	// display scale
 	rect = (SDL_Rect){840, 750, 0, 20};
-	ui_make_string(rect, "5", env->data);
+	ui_make_string(rect, "5", C_WHITE, env->data);
 	vec = (t_vec){
 		(t_pos){820 - (5 * env->grid_scale), 765},
 		(t_pos){820, 765}};

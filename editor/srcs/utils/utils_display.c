@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 16:14:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:30:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			display_labeled_input(int id, char *str, t_env *env)
 	(elem->clicked) ? elem->color = C_GREEN : 0;
 	rect = (SDL_Rect){elem->rect.x, elem->rect.y - 35,
 		elem->rect.w, elem->rect.h};
-	ui_make_string(rect, str, env->data);
+	ui_make_string(rect, str, C_WHITE, env->data);
 	ui_make_input(env->data->surface, elem, env->data);
 }
 
@@ -45,7 +45,7 @@ void			display_button(int id, char *str, t_env *env)
 	elem = get_element(id, env);
 	color = (elem->clicked) ? C_GREEN : elem->color;
 	ui_make_rect(env->data->surface, elem->rect, color);
-	ui_make_string(elem->rect, str, env->data);
+	ui_make_string(elem->rect, str, C_WHITE, env->data);
 }
 
 void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
@@ -63,7 +63,7 @@ void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 		if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
 		{
 			ui_make_rect(env->data->surface, elem->rect, color);
-			ui_make_string(elem->rect, elem->str, env->data);
+			ui_make_string(elem->rect, elem->str, C_WHITE, env->data);
 		}
 		elem = elem->next;
 		i++;
@@ -85,7 +85,7 @@ void		display_menu_dropdown_list(SDL_Rect rect, t_env *env)
 		if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
 		{
 			ui_make_rect(env->data->surface, elem->rect, color);
-			ui_make_string(elem->rect, elem->str, env->data);
+			ui_make_string(elem->rect, elem->str, C_WHITE, env->data);
 		}
 		elem = elem->next;
 		i++;
