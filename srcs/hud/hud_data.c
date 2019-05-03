@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 03:26:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 03:44:34 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ int		print_description_object(t_env *env, int i, int j, int txt)
 	return (1);
 }
 
+void	update_data(t_env *e)
+{
+	t_stats	*s;
+
+	s = &e->stats;
+	s->data[I_KD_PERMN] = (s->data[I_KILLS])
+		? s->data[I_KILLS] / (SDL_GetTicks() / 60000) : 0;
+	s->data[I_KD_RATIO] = (s->data[I_DEATHS])
+		? s->data[I_KILLS] / s->data[I_DEATHS] : s->data[I_KILLS];
+}
+
 void	print_stats(t_env *env, float size, t_vtx w, t_vtx h)
 {
 	int			i;
@@ -77,6 +88,7 @@ void	print_stats(t_env *env, float size, t_vtx w, t_vtx h)
 	const char *str[NB_STATS - 3] = {D_KILLS, D_DEATHS, D_TIMEPLAY, D_KD_RATIO,
 	D_KD_PERMN, D_K_MAGNUM, D_K_SHOTGUN, D_K_RIFLE, D_K_RPG, D_K_FIST};
 
+	update_data(env);
 	i = -1;
 	while (++i < NB_STATS - 3)
 	{
