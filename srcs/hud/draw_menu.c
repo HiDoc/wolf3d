@@ -28,7 +28,7 @@ void		getsizebloc_n_draw(t_env *e, t_font d, t_bloc *b, int l)
 	l < NB_OPT_MENU ? f.rect.x = b->rect.x - b->rect.w / 2 : 0;
 	l < NB_OPT_MENU ? b->cross.rect.x = f.rect.x - b->cross.rect.w - H / 50 : 0;
 	draw_img(e, tmp, &f);
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 }
 
 void		draw_page_menu(t_env *e, t_bloc *b, const char **s, int limit)
@@ -59,7 +59,7 @@ void		draw_page_menu(t_env *e, t_bloc *b, const char **s, int limit)
 		st->current == i && !st->options_menu && !st->load_menu
 		&& (st->main_menu || (st->ingame_menu && i != limit - 1))
 		? draw_img(e, b[i].cross.sprite, &f) : 0;
-		lt_release(s);
+		lt_release((void**)&s);
 	}
 }
 

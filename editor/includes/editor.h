@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:09:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 19:49:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,33 @@ int			onSegment(t_pos p, t_pos q, t_pos r); // temporaire // replace par pointsi
 **	utils/
 */
 
+void		export_map(t_env *env);
+
+float       pointside(t_pos p, t_pos p0, t_pos p1);
+t_pos		get_edge_center(t_pos a, t_pos b);
+float		pythagore(t_pos p1, t_pos p2);
+int			sector_overlap(t_env *env);
+int			point_in_rect(t_pos pos, SDL_Rect rect);
+int			poscmp(t_pos a, t_pos b);
+
+void		display_updown(int id_up, int id_down, t_env *env);
 void		display_labeled_input(int id, char *str, t_env *env);
 void		display_button(int id, char *str, t_env *env);
-int			point_in_rect(t_pos pos, SDL_Rect rect);
-int			sector_overlap(t_env *env);
-int			refresh_object_sct(t_env *env);
 void        display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env);
 void        display_menu_dropdown_list(SDL_Rect rect, t_env *env);
 void		display_error_msg(char *msg, t_env *env);
+
+t_elem		*get_element_by_ref(int ref, int dd, t_env *env);
+int			shared_vtx(t_vtx *vtx, t_sct *current);
+t_elem		*get_dd_element(int id, int dd, t_env *env);
+int			refresh_object_sct(t_env *env);
 t_pos		vtx_transform(t_pos pos, t_env *env);
 t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst);
 t_sct		*sct_lst_end(t_sct *lst);
 void		sync_sct_minmax(t_env *env);
-t_pos		get_edge_center(t_pos a, t_pos b);
-float       pointside(t_pos p, t_pos p0, t_pos p1);
 int			input_add(int elem, char *key, t_env *env);
 int			input_del(int elem, t_env *env);
 int			ft_strchri(char *str, char c);
-float		pythagore(t_pos p1, t_pos p2);
-void		export_map(t_env *env);
-int			poscmp(t_pos a, t_pos b);
 t_elem		*get_element(int id, t_env *env);
 char		*ft_zstrjoin(char *s1, char *s2);
 int			vertex_in_sector(t_sct *sector, t_pos pos);

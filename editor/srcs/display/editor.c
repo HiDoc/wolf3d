@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:25:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 18:04:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		editor(t_env *env)
 		if (time(0) - env->editor.timestamp < 4)
 			ui_make_string(rect, env->editor.error_msg, env->data);
 		else
-			lt_release(env->editor.error_msg);
+			lt_release((void**)&env->editor.error_msg);
 	}
 
 	// display nb element

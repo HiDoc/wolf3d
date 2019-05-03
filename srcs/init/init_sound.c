@@ -30,8 +30,8 @@ void	musics_pack(char *name, Mix_Music **pack, int limit, const char **str)
 		file = ft_strljoin(file, (char*)wav);
 		if (!(pack[i] = lt_push(Mix_LoadMUS(file), &msc_del)))
 			doom_error_exit("Doom_nukem error on Mix_LoadMUS");
-		lt_release(prefix);
-		lt_release(file);
+		lt_release((void**)&prefix);
+		lt_release((void**)&file);
 	}
 }
 
@@ -52,8 +52,8 @@ void	chunks_pack(char *name, Mix_Chunk **pack, int limit)
 		file = ft_strljoin(file, (char*)wav);
 		if (!(pack[i] = lt_push(Mix_LoadWAV(file), &chk_del)))
 			doom_error_exit("Doom_nukem error on Mix_LoadWAV");
-		lt_release(prefix);
-		lt_release(file);
+		lt_release((void**)&prefix);
+		lt_release((void**)&file);
 	}
 }
 

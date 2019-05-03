@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:25:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:07:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void		display_grid(t_env *env)
 static void		display_infos(t_env *env)
 {
 	SDL_Rect	rect;
-	//t_vec		vec;
+	t_vec		vec;
 
 	// display position
 	rect = (SDL_Rect){30, 750, 0, 20};
@@ -89,15 +89,20 @@ static void		display_infos(t_env *env)
 	}
 
 	// display scale
-	/*rect = (SDL_Rect){830, 750, 0, 20};
-	ui_make_string(rect, "20", env->data);
-	vec = (t_vec){(t_pos){820 - (20 * env->pixel_value), 765}, (t_pos){820, 765}};
+	rect = (SDL_Rect){840, 750, 0, 20};
+	ui_make_string(rect, "5", env->data);
+	vec = (t_vec){
+		(t_pos){820 - (5 * env->grid_scale), 765},
+		(t_pos){820, 765}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){820, 765}, (t_pos){820, 755}};
+	vec = (t_vec){
+		(t_pos){820, 765},
+		(t_pos){820, 755}};
 	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){(t_pos){820 - (20 * env->pixel_value), 765},
-	(t_pos){820 - (20 * env->pixel_value), 755}};
-	ui_make_line(env->data->surface, vec, C_WHITE);*/
+	vec = (t_vec){
+		(t_pos){820 - (5 * env->grid_scale), 765},
+		(t_pos){820 - (5 * env->grid_scale), 755}};
+	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
 void			display_sector(t_sct *sct, t_env *env)
@@ -201,11 +206,11 @@ void			display_interface(t_env *env)
 	t_object	*obj = env->editor.objects;
 	while (obj)
 	{
-		/*if (obj->category == CONSUMABLE)
+		if (obj->dd == DD_CONS)
 			color = C_GREEN;
-		else if (obj->category == ENTITY)
+		else if (obj->dd == DD_NTTY)
 			color = C_RED;
-		else*/
+		else
 			color = C_WHITE;
 
 		pos = vtx_transform(obj->pos, env);
@@ -213,13 +218,12 @@ void			display_interface(t_env *env)
 		{
 			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
 			ui_make_rect(env->data->surface, rect, color);
-			/*if (obj->category == SPECIAL
-				&& env->editor.obj_elem->id == 0 && env->editor.spawn_set == 0)
+			if (obj->dd == DD_SPEC && env->editor.spawn_set == 2)
 			{
 				// spawn dir
 				ui_draw_vector(env->data->surface, pos,
 				env->editor.spawn_dir, 0, 10, C_WHITE);
-			}*/
+			}
 		}
 		obj = obj->next;
 	}

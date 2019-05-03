@@ -23,8 +23,8 @@ int		ft_subjoinfree(char **line, char *buf, int i)
 	temp = *line;
 	temp2 = ft_strsub(buf, 0, i);
 	*line = ft_strjoin(*line, temp2);
-	lt_release(temp);
-	lt_release(temp2);
+	lt_release((void**)&temp);
+	lt_release((void**)&temp2);
 	return (i);
 }
 
