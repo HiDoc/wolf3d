@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:23:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:27:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,7 @@ static void	left_panel(t_pos origin, t_env *env)
 	rect = (SDL_Rect){origin.x + 10, origin.y + 120, 380, 320};
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 
-	// up
-	if ((SDL_BlitScaled(get_element(M_B_UP, env)->image,
-	0, env->data->surface, &get_element(M_B_UP, env)->rect)))
-		ui_error_exit_sdl("Libui: Blit error in menu left panel");
-	// down
-	if ((SDL_BlitScaled(get_element(M_B_DOWN, env)->image,
-	0, env->data->surface, &get_element(M_B_DOWN, env)->rect)) < 0)
-		ui_error_exit_sdl("Libui: Blit error in menu left panel");
+	display_updown(M_B_UP, M_B_DOWN, env);
 
 	// display maps file
 	rect = (SDL_Rect){origin.x + 20, origin.y + 130, 290, 310};

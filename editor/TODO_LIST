@@ -1,53 +1,3 @@
-
-SEGV :
-==84925==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000035c30 at pc 0x0001016ccd46 bp 0x7fff5e6e4450 sp 0x7fff5e6e3bf8
-READ of size 2 at 0x602000035c30 thread T0
-#0 0x1016ccd45 in wrap_strlen (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x12d45)
-#1 0x101685b72 in TTF_RenderText_Blended (libSDL2_ttf-2.0.0.dylib:x86_64+0x3b72)
-#2 0x101521e39 in ui_make_input ui_make_input.c:27
-#3 0x101558491 in display_selection display_selection.c:68
-#4 0x10152c23c in editor editor.c:28
-#5 0x10152261b in ui_make_frame ui_make_frame.c:22
-#6 0x101522ae3 in ui_gameloop ui_gameloop.c:22
-#7 0x10151a970 in main main.c:22
-#8 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
-
-0x602000035c30 is located 0 bytes inside of 6-byte region [0x602000035c30,0x602000035c36)
-freed by thread T0 here:
-#0 0x101710126 in wrap_free (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x56126)
-#1 0x101571cd0 in ft_memdel (editor:x86_64+0x100058cd0)
-#2 0x10157202b in lt_release (editor:x86_64+0x10005902b)
-#3 0x101537660 in select_interface_events select_mode.c:57
-#4 0x10153357e in select_mode select_mode.c:168
-#5 0x10153c0b1 in handle_events handle_events.c:155
-#6 0x10151afb8 in ui_get_events ui_get_events.c:29
-#7 0x101522acd in ui_gameloop ui_gameloop.c:21
-#8 0x10151a970 in main main.c:22
-#9 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
-
-previously allocated by thread T0 here:
-#0 0x10170ff5c in wrap_malloc (libclang_rt.asan_osx_dynamic.dylib:x86_64+0x55f5c)
-#1 0x101571d04 in ft_memalloc (editor:x86_64+0x100058d04)
-#2 0x101542202 in ft_zstrjoin utils.c:180
-#3 0x1015420b6 in input_add utils.c:120
-#4 0x101537c69 in select_input_events select_mode.c:102
-#5 0x101536ba4 in select_mode select_mode.c:254
-#6 0x10153c0b1 in handle_events handle_events.c:155
-#7 0x10151afb8 in ui_get_events ui_get_events.c:29
-#8 0x101522acd in ui_gameloop ui_gameloop.c:21
-#9 0x10151a970 in main main.c:22
-#10 0x7fffe87b2234 in start (libdyld.dylib:x86_64+0x5234)
-
----------------------------------------------------------------
-
-SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
-#1 0x102ba2641 in draw_mode draw_mode.c:43
-#2 0x102ba8905 in handle_events handle_events.c:154
-#3 0x102b8d298 in ui_get_events ui_get_events.c:30
-#4 0x102b950ad in ui_gameloop ui_gameloop.c:21
-#5 0x102b8cc52 in main main.c:22
-#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
-
 BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
 BUG : angle du spawn
 BUG : execve ./doom completement KC
@@ -64,6 +14,7 @@ BUG : edge size n'est pas update si split, moving etc...
 BUG : calcul de l'angle spawn
 BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
 BUG : pose obj + select this object
+BUG : makefile recompile pas la libft
 
 LEAK: protect gnl
 
@@ -76,29 +27,24 @@ TOCHECK : possible de remettre un spawn si il a ete suprime ?
 TOCHECK : il se passe quoi si wall obj sur portal ?
 TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : si export quand un secteur n'est pas encore clos
+TOCHECK : pertinance de garder enum e_type
 
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-STANDBY : color per obj
-STANDBY : reset color on elem list button
-STANDBY : spawn object
-
-* [02] TODO : debug relier element et buttons display on dropdown lists
-* [02] TODO : wall object dock
-* [01] TODO : interface element clipping
-* [02] TODO : ranger utils math function
-* [02] TODO : empecher export si edge du meme sct overlap
-* [02] TODO : front design selected / hovered color and stuff / color on errmsg
-* [02] TODO : door is a sector
-* [02] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-* [02] TODO : refactor - generiser code
-
-[03] TODO : grid : limite left / bot
-[03] TODO :	update export
-[03] TODO : s'occuper de LEAK/PROTEC/BUG/SEGV
-[03] TODO : check coherence du programme et du fonctionnemenet des features
-[03] TODO :	tout refactor
+* [03] TODO : SEGV + fix inputs
+* [03] TODO : debug relier element et buttons display on dropdown lists
+* [03] TODO : interface element clipping
+* [03] TODO : front design selected / hovered color and stuff / color on errmsg
+* [03] TODO : door is a sector
+* [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+* [03] TODO : empecher export si edge du meme sct overlap
+* [03] TODO : refactor events
+* [03] TODO : wall object dock
+* [03] TODO : grid : limite left / bot
+* [03] TODO : update export
+* [03] TODO : s'occuper de PROTEC/BUG/LEAK
+* [03] TODO : check coherence du programme et du fonctionnemenet des features
 
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync

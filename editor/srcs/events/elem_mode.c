@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 13:39:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:06:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,32 @@ int				elem_mode(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_UP, env)->rect))
 		{
-			if (dropdown[env->editor.elem_mode + 6].idx_element < 0)
-				dropdown[env->editor.elem_mode + 6].idx_element++;
+			if (dropdown[env->editor.curr_elem_dd].idx_element < 0)
+				dropdown[env->editor.curr_elem_dd].idx_element++;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_DOWN, env)->rect))
 		{
-			if (dropdown[env->editor.elem_mode + 6].idx_element
-			> -dropdown[env->editor.elem_mode + 6].nb_element + 1)
-				dropdown[env->editor.elem_mode + 6].idx_element--;
+			if (dropdown[env->editor.curr_elem_dd].idx_element
+			> -dropdown[env->editor.curr_elem_dd].nb_element + 1)
+				dropdown[env->editor.curr_elem_dd].idx_element--;
 			return (1);
 		}
-		else if (ui_mouseenter(m.x, m.y, rect) && env->editor.elem_mode > -1)
+		else if (ui_mouseenter(m.x, m.y, rect))
 		{
-			/*if (env->editor.spawn_set == 1)
+			if (env->editor.spawn_set == 1)
 			{
 				env->editor.objects->dir = atan(
 				(m.y - env->editor.spawn_pos.y)
 				/ (m.x - env->editor.spawn_pos.x));
 				env->editor.objects->dir = env->editor.objects->dir * 180 / M_PI;
-				printf("[%f]\n",  env->editor.objects->dir);
+				//printf("[%f]\n",  env->editor.objects->dir);
 				env->editor.spawn_dir = env->editor.objects->dir;
-				env->editor.spawn_set = 0;
+				env->editor.spawn_set = 2;
 				return (1);
 			}
-			else if (dropdown[env->editor.elem_mode].current->type == SPECIAL
-				&& dropdown[env->editor.elem_mode].current->id == 0)
+			else if (dropdown[env->editor.curr_elem_dd].current->dd == DD_SPEC
+				&& dropdown[env->editor.curr_elem_dd].current->id == 0)
 			{
 				if (env->editor.onespawn == 0)
 				{
@@ -62,56 +62,41 @@ int				elem_mode(t_env *env)
 					display_error_msg("You can not set two spawns", env);
 					return (1);
 				}
-			}*/
-			create_object(dropdown[env->editor.elem_mode].current, env);
+			}
+			create_object(dropdown[env->editor.curr_elem_dd].current, env);
 			return (1);
 		}
 
-		if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_OBWL, env)->rect))
+		int		tab[5] = {
+		E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
+		int		ddtab[5] = {
+		DD_WOBJ, DD_CONS, DD_NTTY, DD_PRFB, DD_SPEC};
+
+		int i = 0;
+		while (i < 5)
 		{
-			get_element(E_B_ELM_OBWL, env)->clicked = 1;
-			dropdown[env->editor.elem_mode].idx_element = 0;
-			env->editor.elem_mode = DD_WOBJ;
-			return (1);
-		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_CONS, env)->rect))
-		{
-			get_element(E_B_ELM_CONS, env)->clicked = 1;
-			dropdown[env->editor.elem_mode].idx_element = 0;
-			env->editor.elem_mode = DD_CONS;
-			return (1);
-		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_NTTY, env)->rect))
-		{
-			get_element(E_B_ELM_NTTY, env)->clicked = 1;
-			dropdown[env->editor.elem_mode].idx_element = 0;
-			env->editor.elem_mode = DD_NTTY;
-			return (1);
-		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_PRFB, env)->rect))
-		{
-			get_element(E_B_ELM_PRFB, env)->clicked = 1;
-			dropdown[env->editor.elem_mode].idx_element = 0;
-			env->editor.elem_mode = DD_PRFB;
-			return (1);
-		}
-		else if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_SPEC, env)->rect))
-		{
-			get_element(E_B_ELM_SPEC, env)->clicked = 1;
-			dropdown[env->editor.elem_mode].idx_element = 0;
-			env->editor.elem_mode = DD_SPEC;
-			return (1);
+			if (ui_mouseenter(m.x, m.y, get_element(tab[i], env)->rect))
+			{
+				if (env->editor.curr_elem_btn)
+					env->editor.curr_elem_btn->clicked = 0;
+				dropdown[env->editor.curr_elem_dd].idx_element = 0;
+				get_element(tab[i], env)->clicked = 1;
+				env->editor.curr_elem_dd = ddtab[i];
+				env->editor.curr_elem_btn = get_element(tab[i], env);
+				return (1);
+			}
+			i++;
 		}
 
 		// click on object button
-		button = dropdown[env->editor.elem_mode + 6].start;
+		button = dropdown[env->editor.curr_elem_dd].start;
 		while (button)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				dropdown[env->editor.elem_mode + 6].current->clicked = 0;
-				dropdown[env->editor.elem_mode + 6].current = button;
-				dropdown[env->editor.elem_mode + 6].current->clicked = 1;
+				dropdown[env->editor.curr_elem_dd].current->clicked = 0;
+				dropdown[env->editor.curr_elem_dd].current = button;
+				dropdown[env->editor.curr_elem_dd].current->clicked = 1;
 			}
 			button = button->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 15:59:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:36:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ enum					e_type
 	BUTTON,
 	RECT
 };
-
-/*
-** M_ : MENU
-** E_ : EDITOR
-** _I : INPUT
-** _B : BUTTON
-** _ELM_ : element page
-** _SELEC_ : selection page
-** _MISC_ : misc page
-*/
 
 enum					e_elements
 {
@@ -91,7 +81,6 @@ struct					s_w_vtx
 	int			door;	// is door
 
 	int			ref;	// texture ref
-
 	int			size;	// size edge
 
 	t_vtx		*vtx;
@@ -134,6 +123,7 @@ struct					s_elem
 	int				ref;
 	int				id;
 	int				type;
+	int				dd;			// dropdown (if part of dropdown)
 	SDL_Rect		rect;
 	Uint32			color;
 	SDL_Surface		*image;
@@ -153,7 +143,7 @@ struct					s_object
 
 	t_sct			*sct;
 	int				ref;
-	int				category;
+	int				dd;		// dropdown
 	char			*name;
 
 	Uint32			icon_color; // replace by image
@@ -205,9 +195,6 @@ struct					s_editor
 	time_t			timestamp;
 	char			*error_msg;
 
-	// mode category selected
-	int				elem_mode;
-
 	// editor dropdown lists
 	t_dropdown		dropdown[12];
 
@@ -217,6 +204,10 @@ struct					s_editor
 	// drag vertex;
 	int				mouse_drag;
 	t_pos			new_pos;
+
+	// selected element category
+	t_elem			*curr_elem_btn;
+	int				curr_elem_dd;
 
 	// grid move
 	int				grid_drag;
