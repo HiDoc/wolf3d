@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 16:14:21 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:29:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,38 @@ typedef struct	s_vision		t_vision;
 typedef struct	s_player		t_player;
 typedef struct s_impact			t_impact;
 typedef struct s_brain			t_brain;
+typedef struct s_actions		t_actions;
+
+
+struct						s_actions
+{
+	t_edge		edge;
+    int         is_shield;
+    int         is_health;
+    int         is_ammo;
+	int			is_alive;
+	int			is_dying;
+	int			is_moving;
+	int			is_running;
+	int			is_flying;
+	int			is_shot;
+	int			is_shooting;
+	int			is_loading;
+	int			is_ammo_illimited;
+	int			is_invulnerable;
+	int			is_invisible;
+	int			is_superstrong;
+	int			is_alerted;
+	int			has_detected;
+	int			close_seen;
+	int			mouse_state;
+};
 
 struct						s_brain
 {
 	int			health;
 	int			shield;
+	int			scop;
 	float		yaw;
 	float		dist_player; /* bot dist limit from player */
 	float		dist_alert; /* player running */
@@ -96,8 +123,8 @@ struct					s_wrap_sect
     int         (*action)(void *, t_wrap_inv *);
 	int			is_pickable;
 	int			sectorno;
+	int			used;
 	t_wrap_sect	*next;
-	t_wrap_sect	*prev;
 };
 
 struct 					s_wrap_enmy
@@ -107,13 +134,6 @@ struct 					s_wrap_enmy
 	int				health;
 	int				shield;
 	int				damage;
-	int				is_alive;
-	int				is_shot;
-	int				is_dying;
-	int				is_shooting;
-	int				is_alerted;
-	int				has_detected;
-	int				close_seen;
 	int				frame;
 	int				hit_frame;
 	int				walk_frame;
@@ -122,7 +142,8 @@ struct 					s_wrap_enmy
 	SDL_Surface		*sprite;
 	t_brain			brain;
 	t_player		player;
-	t_impact		*shot;
+	t_actions		a;
+	t_impact		shot[NB_SHOT];
 	t_wrap_enmy		*next;
 };
 

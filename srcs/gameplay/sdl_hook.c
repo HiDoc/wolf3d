@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 19:05:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 17:53:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu
-				&& !s->ingame_menu && !s->load_menu && !s->new_game)
+				&& !s->ingame && !s->load_menu && !s->new_game)
 			action_mainmenu(e, s, k);
-		else if (s->ingame_menu && !s->options_menu)
+		else if (s->ingame && !s->options_menu)
 			action_ingame_menu(e, s, k);
 		else if (s->load_menu)
 			action_loadmenu(e, s, k);
@@ -60,11 +60,11 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			else if (!s->main_menu)
 			{
 				s->on = 0;
-				s->ingame_menu = 0;
+				s->ingame = 0;
 				set_msc_menu(e, s);
 				SDL_Delay(300);
 			}
-			s->current = 0;
+			s->cur = 0;
 		}
 	}
 }
@@ -144,7 +144,7 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		{
 			create_save_image(env);
 			env->menu.status.on = 1;
-			env->menu.status.ingame_menu = 1;
+			env->menu.status.ingame = 1;
 			set_msc_menu(env, &env->menu.status);
 			SDL_Delay(300);
 		}

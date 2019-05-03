@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 23:12:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 01:35:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,22 @@ void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 {
 	int			iter;
-	SDL_Surface	*sprite;
 	t_bloc		*bloc;
-	t_bloc		fill;
+	const char	*numb[5] = {"1", "2", "3", "4", "5"};
 
 	bloc = &env->hud.objects[ref.y];
-	ft_bzero(&fill, sizeof(t_bloc));
-	fill.rect = bloc->use.rect;
 	if ((iter = check_object_type(pack, ref.x, limit)) > -1)
 	{
-		sprite = env->world.objects[ref.x].sprite;
 		draw_img(env, bloc->bg_fill, bloc);
-		draw_img(env, sprite, bloc);
+		draw_img(env, env->world.objects[ref.x].sprite, bloc);
 		ui_put_data(env, (t_font){GOLD, "", env->hud.text.text,
-		(t_vtx){fill.rect.x, fill.rect.y}, W / 90, -1,
-		pack[iter].nb_stack});
+			(t_vtx){bloc->use.rect.x, bloc->use.rect.y}, W / 90, -1,
+			pack[iter].nb_stack});
 	}
 	else
 		draw_img(env, bloc->bg_empty, bloc);
-	fill.rect = bloc->cross.rect;
-	draw_img(env, bloc->cross.sprite, &fill);
+	ui_put_data(env, (t_font){WHITE, numb[(int)ref.y], env->hud.text.text,
+		(t_vtx){bloc->cross.rect.x, bloc->cross.rect.y}, W / 90, -1, -1});
 }
 
 void	print_pad(t_env *env)
@@ -92,7 +88,10 @@ void	print_cross(t_env *env)
 		y = 0;
 		while (y < 20)
 		{
-			dst[w * (y + h / 2 - 10) + (x + w / 2 - 10)] = 0xBB4EFF;
+			if (y + h / 2 == h / 2)
+				dst[w * (y + h / 2) + (x + w / 2 - 10)] = 0xBB4EFF;
+			if (x + w / 2 == w / 2)
+				dst[w * (y + h / 2 - 10) + (x + w / 2)] = 0xBB4EFF;
 			y++;
 		}
 		x++;

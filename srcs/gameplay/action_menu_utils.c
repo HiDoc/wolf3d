@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/22 16:26:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 13:51:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
 		? *cur = start : 0;
 }
 
+void	long_scroll_menu(t_status *s, const Uint8 *k)
+{
+	if (k[SDL_SCANCODE_DOWN] && s->cur >= s->end && s->end < s->nb_save)
+	{
+		s->start++;
+		s->end++;
+	}
+	if (k[SDL_SCANCODE_UP] && s->cur <= s->start && s->start > 1)
+	{
+		s->start--;
+		s->end--;
+	}
+}
+
 int		check_doublon(t_status *s, int scan, int *ktab)
 {
 	int	i;
@@ -28,7 +42,7 @@ int		check_doublon(t_status *s, int scan, int *ktab)
 	i = 0;
 	while (++i < NB_OPT_KEY)
 	{
-		if (ktab[i] == scan && i != s->current)
+		if (ktab[i] == scan && i != s->cur)
 		{
 			s->key_change = 0;
 			return (0);
@@ -43,7 +57,7 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 	if (!k[SDL_SCANCODE_RETURN] && !k[SDL_SCANCODE_ESCAPE] && s->key_change)
 	{
 		SDL_WaitEvent(&e->sdl.event);
-		if (s->current == 0)
+		if (s->cur == 0)
 		{
 			k[SDL_SCANCODE_LEFT] ? s->msc_vol-- : 0;
 			k[SDL_SCANCODE_RIGHT] ? s->msc_vol++ : 0;
@@ -62,7 +76,7 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 	}
 	if (k[SDL_SCANCODE_RETURN] && !s->key_change && s->options_menu)
 		s->key_change = 1;
-	else if (k[SDL_SCANCODE_RETURN] && s->key_change && s->current == 0)
+	else if (k[SDL_SCANCODE_RETURN] && s->key_change && s->cur == 0)
 		s->key_change = 0;
 }
 

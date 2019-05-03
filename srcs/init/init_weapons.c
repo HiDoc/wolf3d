@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 14:53:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:55:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void			init_weapon(t_env *env)
 	weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100,
 		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 0);
 	printf("time weapon shotgun: %u\n", SDL_GetTicks());
-	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 30,
+	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 37,
 		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0);
 	printf("time weapon rifle: %u\n", SDL_GetTicks());
 	weapon_set(&env->world.armory[RPG], "weapons/rpg", 100,

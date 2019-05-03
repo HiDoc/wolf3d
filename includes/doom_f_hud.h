@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/10 15:21:39 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 17:52:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int         print_hud(t_env *env);
 void		print_inventory(t_env *env);
 
 void    	ui_put_data(t_env *env, t_font data);
-int         ui_txt_inv(t_env *env);
+int     	ui_txt_inv(t_env *env, int i, int r);
 int         ui_put_fps(t_env *env, int fps);
 int		    ui_icon_data(t_env *env, t_vtx v, int iter);
 int			draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref);
+
+void		print_stats(t_env *env, float size, t_vtx w, t_vtx h);
 
 Uint32		mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p);
 

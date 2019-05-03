@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 19:52:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 17:39:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_msc_menu(t_env *e, t_status *s)
 {
-	if (s->on && (s->home || s->main_menu || s->ingame_menu))
+	if (s->on && (s->home || s->main_menu || s->ingame))
 	{
 		if (Mix_Playing(-1))
 			Mix_HaltChannel(-1);
@@ -22,7 +22,15 @@ void	set_msc_menu(t_env *e, t_status *s)
 		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
 		: 0;
 	}
-	else
+	else if (s->on && s->gameover)
+	{
+		if (Mix_Playing(-1))
+			Mix_HaltChannel(-1);
+		Mix_FadeInMusic(e->sound.ambiance[AB_GAMEOVER], -1, 3000) < 0
+		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
+		: 0;
+	}
+	if (!s->on && Mix_Playing(-1))
 		!Mix_FadeOutMusic(500)
 		? doom_error_exit("Doom_nukem error on Mix_FadeOutMusic")
 		: 0;
@@ -61,11 +69,11 @@ void	sound_enemies(t_env *e, t_wrap_enmy *enmy, t_vtx player)
 	vol = MIX_MAX_VOLUME - dist_vertex(player,
 		(t_vtx){enmy->player.where.x, enmy->player.where.y}) / 2;
 	vol < 0 ? vol = 0 : 0;
-	enmy->is_shooting && enmy->player.sound.shootin
+	enmy->a.is_shooting && enmy->player.sound.shootin
 		? play_chunk(-1, e->sound.e_shot[enmy->ref], 0) : 0;
 	Mix_VolumeChunk(e->sound.e_shot[enmy->ref], vol);
 	enmy->player.sound.shootin = 0;
-	enmy->is_dying && enmy->player.sound.dead
+	enmy->a.is_dying && enmy->player.sound.dead
 		? play_chunk(-1, e->sound.e_death[enmy->ref], 0) : 0;
 	Mix_VolumeChunk(e->sound.e_death[enmy->ref], vol);
 	enmy->player.sound.dead = 0;
@@ -86,7 +94,6 @@ static void	sound_player_life(t_env *e, t_sd_stat *s)
 
 void		sd_stat_player(t_engine *e, t_vision *v, t_sd_stat *s)
 {
-	s->move = (v->moving && !v->ducking) ? s->move + 1 : 0;
 	(!s->o_duck && v->ducking) ? s->duck = 1 : 0;
 	(s->o_duck && v->ducking) ? s->duck = 2 : 0;
 	(s->o_duck && !v->ducking) ? s->duck = 3 : 0;
@@ -95,6 +102,7 @@ void		sd_stat_player(t_engine *e, t_vision *v, t_sd_stat *s)
 	s->move = (!s->duck && !s->jump
 	&& dist_vertex((t_vtx){e->player.origin.x, e->player.origin.y},
 	(t_vtx){e->player.where.x, e->player.where.y})) ? 1 : 0;
+	(s->move && s->run) ? s->move = 0 : 0;
 }
 
 static void	sound_player_move(t_env *e, t_sd_stat *s)
@@ -120,6 +128,8 @@ static void	sound_player_move(t_env *e, t_sd_stat *s)
 	}
 	if (s->move && !Mix_Playing(CHAN_MOVE))
 		play_chunk(CHAN_MOVE, e->sound.p_sound[P_WALK], 0);
+	if (s->run && !Mix_Playing(CHAN_MOVE))
+		play_chunk(CHAN_MOVE, e->sound.p_sound[P_RUN], 0);
 }
 
 void	sound_player(t_env *e, t_sd_stat *s)
@@ -167,8 +177,10 @@ void	sound_effect(t_env *e, t_sd_stat *s)
 	(s->open == 1) ? play_chunk(-1, e->sound.s_effect[EFCT_BTNDOOR], 0) : 0;
 	(s->open == 2) ? play_chunk(-1,	e->sound.s_effect[EFCT_DOORLOCK], 0) : 0;
 	s->open = 0;
-	(s->is_open == 1) ? play_chunk(CHAN_DOOR,	e->sound.s_effect[EFCT_OP_LILDOOR], 0) : 0;
-	(s->is_open == 2) ? play_chunk(CHAN_DOOR,	e->sound.s_effect[EFCT_CL_LILDOOR], 0) : 0;
+	(s->is_open == 1)
+		? play_chunk(CHAN_DOOR, e->sound.s_effect[EFCT_OP_LILDOOR], 0) : 0;
+	(s->is_open == 2)
+		? play_chunk(CHAN_DOOR, e->sound.s_effect[EFCT_CL_LILDOOR], 0) : 0;
 	s->is_open = 0;
 }
 

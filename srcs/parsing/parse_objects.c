@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:31 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 16:29:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:30:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			pick_action(t_wrap_sect *new)
 	return (0);
 }
 
-t_wrap_sect	*new_wrap(t_vtx curr, t_ixy ref_sect, int is_wpn, t_wrap_sect *prev)
+t_wrap_sect	*new_wrap(t_vtx curr, t_ixy ref_sect, int is_wpn)
 {
 	t_wrap_sect *new;
 
@@ -35,30 +35,26 @@ t_wrap_sect	*new_wrap(t_vtx curr, t_ixy ref_sect, int is_wpn, t_wrap_sect *prev)
 	new->is_pickable = 0;
 	new->is_wpn = is_wpn;
 	new->next = NULL;
-	new->prev = prev;
 	if (!is_wpn)
 		pick_action(new);
 	return (new);
 }
 
-void		fill_objects_sector(t_sector *sector, t_vtx v, t_ixy ref_sect, int is_wpn)
+void		fill_objects_sector(t_sector *s, t_vtx v, t_ixy ref_sct, int is_wpn)
 {
 	t_wrap_sect *iter;
 	t_wrap_sect *prev;
 
 	iter = NULL;
 	prev = NULL;
-	if (sector->head_object == NULL)
-		sector->head_object = new_wrap(v, ref_sect, is_wpn, prev);
+	if (s->head_object == NULL)
+		s->head_object = new_wrap(v, ref_sct, is_wpn);
 	else
 	{
-		iter = sector->head_object;
+		iter = s->head_object;
 		while (iter->next != NULL)
-		{
-			prev = iter;
 			iter = iter->next;
-		}
-		iter->next = new_wrap(v, ref_sect, is_wpn, prev);
+		iter->next = new_wrap(v, ref_sct, is_wpn);
 	}
-	sector->nb_objects++;
+	s->nb_objects++;
 }

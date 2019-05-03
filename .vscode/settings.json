@@ -3,6 +3,7 @@
     "editor.insertSpaces": false,
     "files.trimTrailingWhitespace": true,
     "files.associations": {
-        "doom.h": "c"
+        "doom.h": "c",
+        "type_traits": "c"
     },
 }

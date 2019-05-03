@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/26 12:14:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 17:41:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	mainmenu_blocs(t_env *env, t_bloc *data)
 	r = (SDL_Rect){W / 2, H / 2.25, W / 23.53f, 0};
 	fill_menu(env, &data[0], &r, H / 10);
 	data[0].limit.v1.x = I_IMAINMENU;
-	data[0].limit.v2.x = NB_BLOC_NG;
+	data[0].limit.v2.x = NB_BL_NG;
 	fill_menu(env, &data[1], &r, H / 10);
 	fill_menu(env, &data[2], &r, H / 10);
 	fill_menu(env, &data[3], &r, H / 10);
@@ -138,7 +138,7 @@ void		init_blocs_menu(t_env *env)
 	r = (SDL_Rect){W / 2, H / 1.17, W / 50, 0};
 	mainmenu_blocs(env, menu->main_menu);
 	ingame_blocs(env, menu->ingame_menu);
-	loadgame_blocs(env, &menu->save_game);
+	loadgame_blocs(env, &menu->save);
 	options_blocs(env, menu->options_menu);
 	newgame_blocs(env, &menu->new_game);
 	printf("name %s\n", menu->new_game.name);

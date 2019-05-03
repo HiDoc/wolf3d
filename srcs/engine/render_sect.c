@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 14:57:51 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 03:28:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,9 @@ void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *queue)
 	int	i;
 
 	i = 0;
-	while (i < p.nb_shot)
+	while (i < NB_SHOT)
 	{
-		render_sprites(env, queue, p.sprite, shot[i].position.where, (t_l_float){3, 3});
+		render_sprites(env, queue, p.sprite, shot[i].position.where, (t_l_float){5, 0});
 		i++;
 	}
 }
@@ -138,6 +138,8 @@ void		render_enemies(t_env *env, t_queue *queue)
 	while (en)
 	{
 		render_sprites(env, queue, en->sprite, en->player.where, en->brain.size);
+		// if (en->a.is_shooting)
+		// 	render_bullet(env, env->engine.player, en->shot, queue);
 		en = en->next;
 	}
 }

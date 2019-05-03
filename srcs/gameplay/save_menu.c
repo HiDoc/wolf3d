@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/24 20:56:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 17:41:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void convert_time(int *hour,int *min,int *sec)
 	*hour = timems;
 }
 
-void	create_save_name(char **name)
+char	*time_to_str(void)
 {
+	char	*name;
 	int		hour;
 	int		min;
 	int		sec;
@@ -40,15 +41,16 @@ void	create_save_name(char **name)
 
 	convert_time(&hour, &min, &sec);
 	t = ft_itoa(hour);
-	*name = ft_strljoin(t, " h ");
+	name = ft_strljoin(t, " h ");
 	t = ft_itoa(min);
-	*name = ft_strljoin(*name, t);
+	name = ft_strljoin(name, t);
 	lt_release(t);
 	t = ft_itoa(sec);
-	*name = ft_strljoin(*name, " mn ");
-	*name = ft_strljoin(*name, t);
-	*name = ft_strljoin(*name, " sec");
+	name = ft_strljoin(name, " mn ");
+	name = ft_strljoin(name, t);
+	name = ft_strljoin(name, " sec");
 	lt_release(t);
+	return (name);
 }
 
 t_bloc	*new_save(t_env *e)
@@ -59,7 +61,7 @@ t_bloc	*new_save(t_env *e)
 	new->use.sprite = make_surface(W / 10, H / 10);
 	img_scaled_copy(e->stats.save_img, new->use.sprite);
 	new->use.rect = (SDL_Rect){W / 2.5, H / 3, W / 10, H / 10};
-	create_save_name(&new->name);
+	new->name = time_to_str();
 	new->rect = (SDL_Rect){W / 2.5, H / 2.5, W / 40, 0};
 	new->next = NULL;
 	return (new);
@@ -73,7 +75,7 @@ void	create_save(t_env *e, t_status *s)
 	{
 		s->nb_save++;
 		s->nb_save < 6 ? e->menu.status.end++ : 0;
-		cur_save = e->menu.save_game->next;
+		cur_save = e->menu.save->next;
 		while (cur_save)
 			cur_save = cur_save->next;
 		cur_save = new_save(e);

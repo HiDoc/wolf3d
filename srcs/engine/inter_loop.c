@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 12:01:18 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 16:21:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 12:26:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		draw_inter(t_env *e, int l)
 	t_bloc	f;
 	int		ref;
 
-	ref = (l % NB_INTER_IMG) + 7;
+	ref = (l % NB_INTER_IMG) + I_INTER1;
 	ft_bzero(&f, sizeof(t_bloc));
 	f.rect = (SDL_Rect){0, 0, W, H};
 	draw_img(e,

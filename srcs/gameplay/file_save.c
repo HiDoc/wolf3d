@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 20:24:40 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 19:42:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/30 15:40:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	save_data_file(t_env *e, char *name)
 		while (en)
 		{
 			j = -1;
-			if (en->is_alive && ++j < e->engine.sectors[i].nb_enemies)
+			if (en->a.is_alive && ++j < e->engine.sectors[i].nb_enemies)
 			{
 				j == 0 ? concat_data(&data, i, 0, "#s") : 0;
 				concat_data(&data, en->ref, 0, "e:");

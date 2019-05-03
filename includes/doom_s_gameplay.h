@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 18:34:12 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/24 19:07:39 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/30 15:39:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_surface	t_surface;
 typedef struct s_container	t_container;
 typedef struct s_world		t_world;
 typedef struct s_inventory	t_inventory;
-typedef struct s_actions	t_actions;
 typedef struct s_character	t_character;
 typedef struct s_thread		t_thread;
 
@@ -108,24 +107,6 @@ struct						s_container
 	t_surface	img_menu[NB_IMG_MENU];
 };
 
-struct						s_actions
-{
-	t_edge		edge;
-    int         is_shield;
-    int         is_health;
-    int         is_ammo;
-	int			is_running;
-	int			sub_action;
-	int			is_shooting;
-	int			is_loading;
-	int			is_flying;
-	int			is_ammo_illimited;
-	int			is_invulnerable;
-	int			is_invisible;
-	int			is_superstrong;
-	int			mouse_state;
-};
-
 struct						s_character
 {
 	long		ref;
@@ -146,7 +127,7 @@ struct						s_character
 	SDL_Surface	*bullet;
 	t_inventory	inventory;
 	t_actions	actions;
-	t_impact	*shot;
+	t_impact	shot[NB_SHOT];
 	t_brain		brain;
 	t_thread	threads[NB_THREAD_IMG];
 };

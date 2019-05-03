@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 14:20:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:31:58 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,30 +123,6 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	return (!obj->is_wpn ? FULL_INV : pick_weapon(env, obj));
 }
 
-
-void		delete_obj_sector(t_env *e, t_wrap_sect *obj)
-{
-	t_sector	*s;
-	t_wrap_sect	*head;
-
-	s = &e->engine.sectors[obj->sectorno];
-	head = s->head_object;
-	while (head)
-	{
-		if (head->ref == obj->ref)
-		{
-			if (head->ref == s->head_object->ref)
-				s->head_object = s->head_object->next;
-			else
-				head->prev->next = head->next;
-			free(head);
-			head = NULL;
-		}
-		else
-			head = head->next;
-	}
-}
-
 void		drop_object(t_env *env, t_wrap_inv *object)
 {
 	t_vtx		vertex;
@@ -166,7 +142,7 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 			env->engine.player.sound.drop = 1;
 		}
 		else
-			delete_obj_sector(env, object->current);
+			object->current->used = 1;
 		if (object->nb_stack > 1)
 			object->nb_stack--;
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/22 14:14:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:53:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 	const float	sin_move = e->player.anglesin * speed;
 	const float	cos_move = e->player.anglecos * speed;
 
+	e->player.sound.run = (speed == SPEED_RUN) ? 1 : 0;
 	velocity = &e->player.velocity;
 	move_vec = (t_vtx){0.f, 0.f};
 	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);

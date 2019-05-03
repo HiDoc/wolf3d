@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/30 14:56:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/02 12:29:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int		main(int ac, char **av)
 	while (env.curr_lvl < env.nb_levels)
 	{
 		env.finish = 0;
+
+		mainmenu_loop(&env);
 		env.menu.status.inter = 1;
 
 		// display text start

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 16:35:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/30 15:11:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 # define NB_DOOR_IMG	2
 
-# define BOT_NB_SHOT	12
 # define BOT_V_SHOT		1.1f
 
-# define PLYR_NB_SHOT	35
+# define NB_SHOT		35
 # define GAME_NB_WPN	4
 
 # define FRAME_RATIO	6
