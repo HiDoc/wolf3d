@@ -32,7 +32,6 @@ TOCHECK : pertinance de garder enum e_type
 PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-* [03] TODO : SEGV + fix inputs
 * [03] TODO : debug relier element et buttons display on dropdown lists
 * [03] TODO : interface element clipping
 * [03] TODO : front design selected / hovered color and stuff / color on errmsg
@@ -45,6 +44,7 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 * [03] TODO : update export
 * [03] TODO : s'occuper de PROTEC/BUG/LEAK
 * [03] TODO : check coherence du programme et du fonctionnemenet des features
+* [03] TODO : input hfloor + couleur input
 
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync

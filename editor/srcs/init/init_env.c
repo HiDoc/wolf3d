@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 21:56:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 16:00:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 		env->editor.dropdown[dd].current = env->editor.dropdown[dd].start;
 		env->editor.dropdown[dd].current->clicked = 1;
 	}
-	lt_release(&dr);
+	lt_release((void **)&dr);
 }
 
 static void		init_editor(t_env *env)
