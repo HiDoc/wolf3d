@@ -19,10 +19,8 @@ TOCHECK : il se passe quoi si wall obj sur portal ?
 TOCHECK : si export quand un secteur n'est pas encore clos
 
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
+PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 
-* BUG : edge size n'est pas update si split, moving etc...
-* LEAK : protect gnl
-* TOCHECK : coherence retour menu - start - cancel
 * TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
 * TOCHECK : coherence du sct_current dans le programme
 * TOCHECK : possible de remettre un spawn si il a ete suprime ?
@@ -30,21 +28,23 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 * TOCHECK : pertinance de garder enum e_type
 * PROTEC : set min edge size for split edge
 
-* [03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
-* [03] TODO : door is a sector
-* [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-* [03] TODO : empecher export si edge du meme sct overlap
-* [03] TODO : wall object dock
-* [03] TODO : grid : limite left / bot
-* [03] TODO : update export
-* [03] TODO : input hfloor + couleur input
+[03] TODO : update export
 
-* [03] TODO : debug relier element et buttons display on dropdown lists
-* [03] TODO : front design selected / hovered color and stuff / color on errmsg
-* [03] TODO : refactor events
-* [03] TODO : check coherence du programme et du fonctionnemenet des features
-
-
+[04] TODO : une seule porte de fin ou monstre de fin
+[04] TODO : spawn et interest obligatoire
+[03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
+[03] TODO : door is a sector
+[03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+[03] TODO : empecher export si edge du meme sct overlap
+[03] TODO : wall object dock
+[03] TODO : grid : limite left / bot
+[03] TODO : input hfloor + couleur input
+[03] TODO : edge size n'est pas update si split, moving etc...
+[03] TODO : free si retour menu + click start
+[03] TODO : debug relier element et buttons display on dropdown lists
+[03] TODO : front design selected / hovered color and stuff / color on errmsg
+[03] TODO : refactor events
+[03] TODO : check coherence du programme et du fonctionnemenet des features
 [04] TODO : s'occuper de BUG/PROTEC/TOCHECK
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync
@@ -53,7 +53,8 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 [05] TODO : details et finitions
 [05] TODO :	beta testing
-[05] TODO :	norme : total norme
+
+[06] TODO :	norme : total norme
 
 OPTIONAL :	ammeliorer clipping du content de l'interface
 OPTIONAL :	play preview background audio on misc

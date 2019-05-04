@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:34:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:59:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ static void		display_misc_data(t_env *env)
 	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "Misc", C_WHITE, env->data);
-
 	// buttons
 	display_button(E_B_SELEC_MUSIC, "BACKGROUND MUSIC", env);
 	display_button(E_B_SELEC_SBTX, "SKYBOX TEXTURE", env);

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 16:15:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:07:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,14 @@ static void		select_sector(t_env *env)
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_CEIL, env)->rect))
 	{
+		env->editor.sct_select->roof = 1;
 		get_element(E_B_SELEC_CEIL, env)->clicked = 1;
 		get_element(E_B_SELEC_SKY, env)->clicked = 0;
 	}
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_SKY, env)->rect))
 	{
+		env->editor.sct_select->roof = 0;
 		get_element(E_B_SELEC_CEIL, env)->clicked = 0;
 		get_element(E_B_SELEC_SKY, env)->clicked = 1;
 	}
@@ -171,6 +173,7 @@ static void		select_sector(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, button->rect))
 		{
+			env->editor.sct_select->ceiltx = button->ref;
 			env->editor.dropdown[DD_CEILTX].current->clicked = 0;
 			env->editor.dropdown[DD_CEILTX].current = button;
 			button->clicked = 1;
@@ -183,6 +186,7 @@ static void		select_sector(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, button->rect))
 		{
+			env->editor.sct_select->floortx = button->ref;
 			env->editor.dropdown[DD_FLOORTX].current = 0;
 			env->editor.dropdown[DD_FLOORTX].current = button;
 			button->clicked = 1;

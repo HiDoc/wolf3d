@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:51:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:17:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void        export_map(t_env *env)
 {
-	t_sct	*sct;
-	t_vtx	*vtx;
-	char	*path;
-	int		fd;
+	t_sct		*sct;
+	t_w_vtx		*w_vtx;
+	t_vtx		*vtx;
+	t_object	*obj;
+	char		*path;
+	int			fd;
+	int			i;
 
 	if (!(path = lt_push(ft_strjoin("maps/", env->map_name), ft_memdel)))
 		ui_error_exit_sdl("Editor: Error while opening file");
@@ -27,68 +30,94 @@ void        export_map(t_env *env)
 		ui_error_exit_sdl("Editor: Error while opening file");
 	lt_release((void**)&path);
 
+	// map name
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);
 
-	ft_putendl_fd("# game misc: music skybox", fd);
-	dprintf(fd, "%s %s\n", "music", "skybox");
+	// meta
+	ft_putendl_fd("# background music", fd);
+	dprintf(fd, "m %d\n", env->editor.dropdown[DD_BGAUDIO].current->ref);
+	ft_putendl_fd("# skybox texture", fd);
+	dprintf(fd, "b %d\n", env->editor.dropdown[DD_SBTX].current->ref);
 
+	// vertex
 	ft_putendl_fd("# vertex: x y", fd);
+	i = 0;
 	vtx = env->editor.vertex;
 	while (vtx)
 	{
-		dprintf(fd, "vertex %d %d\n",
+		vtx->id = i;
+		dprintf(fd, "v %d %d\n",
 		(int)(vtx->pos.x), (int)(vtx->pos.y));
 		vtx = vtx->next;
+		i++;
 	}
 
-	ft_putstr_fd("# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx", fd);
+	// sectors
+	dprintf(fd, "# sector: cl_h cl_tx fl_h fl_tx gravity roof type n-vtx n-tx\n");
+	i = 0;
 	sct = env->editor.sct_start;
 	while (sct)
 	{
-		dprintf(fd, "sector // //\n");
+		sct->id = i;
+		dprintf(fd, "s %d %d %d %d %d %d %d",
+			sct->ceil, sct->ceiltx, sct->floor, sct->floortx,
+			sct->gravity, sct->roof, sct->type);
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx)
+		{
+			dprintf(fd, " %d", w_vtx->vtx->id);
+			w_vtx = w_vtx->next;
+		}
+		dprintf(fd, " :");
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx)
+		{
+			dprintf(fd, " %d", w_vtx->ref);
+			w_vtx = w_vtx->next;
+		}
+		dprintf(fd, "\n");
 		sct = sct->next;
+		i++;
 	}
 
-	/*ft_putendl_fd("# wall_object: x y sector ref", fd);
-	obj = env->objects;
+	// objects
+	ft_putendl_fd("# object: x y sct ref iswpn", fd);
+	obj = env->editor.objects;
 	while (obj)
 	{
-		if (obj->category == WALL_OBJ)
-			//dprintf(fd, "wall_object %d %d // //\n",
-			(int)(obj->pos.x - xmin),(int)(obj->pos.y - ymin));
-		obj = obj->next;
-	}*/
-
-	/*ft_putendl_fd("# consumable: x y sector ref is_wpn", fd);
-	obj = env->objects;
-	while (obj)
-	{
-		if (obj->category == CONSUMABLE)
-			//dprintf(fd, "consumable %d %d // // //\n",
-			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
-		obj = obj->next;
-	}*/
-
-	/*ft_putendl_fd("# entity: x y sector ref", fd);
-	obj = env->objects;
-	while (obj)
-	{
-		if (obj->category == ENTITY)
-			//dprintf(fd, "entity %d %d // //\n",
-			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
+		if (obj->dd != DD_NTTY && obj->dd != DD_SPEC)
+			dprintf(fd, "o %d %d %d %d %d\n",
+			(int)obj->pos.x, (int)obj->pos.y,
+			obj->sct->id, obj->ref, obj->iswpn);
 		obj = obj->next;
 	}
 
-	ft_putendl_fd("# special: x y ref", fd);
-	obj = env->objects;
+	// entities
+	ft_putendl_fd("# entity: x y sct ref", fd);
+	obj = env->editor.objects;
 	while (obj)
 	{
-		if (obj->category == SPECIAL)
-			//dprintf(fd, "special %d %d //\n",
-			(int)(obj->pos.x - xmin), (int)(obj->pos.y - ymin));
+		if (obj->dd == DD_NTTY)
+			dprintf(fd, "e %d %d %d %d\n",
+			(int)obj->pos.x, (int)obj->pos.y, obj->sct->id, obj->ref);
+		obj = obj->next;
+	
+	}
+
+	// player
+	ft_putendl_fd("# player: x y angle sct", fd);
+	obj = env->editor.objects;
+	while (obj)
+	{
+		if (obj->dd == DD_SPEC)
+		{
+			dprintf(fd, "p %d %d %d %d\n",
+			(int)obj->pos.x, (int)obj->pos.y, (int)obj->dir, obj->sct->id);
+			break ;
+		}
 		obj = obj->next;
 	}
 
-	close(fd);*/
+	close(fd);
 }

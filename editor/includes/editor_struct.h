@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 21:36:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:14:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,17 @@ struct					s_w_vtx
 
 struct					s_vtx
 {
+	// identifiant du w_vtx, est mis a l export
+	int				id;
+
 	t_pos			pos;
 	t_vtx			*next;
 };
 
 struct					s_sct
 {
-	int				id;			// identifiant du secteur
+	// identifiant du secteur, est mis a jour a la creation et a l export
+	int				id;
 
 	int				nb_w_vtx;
 	t_w_vtx			*w_vtx_current;	// vertex wrapper
@@ -105,8 +109,13 @@ struct					s_sct
 	int				close;		// is sector close;
 
 	int				ceil;		// hauteur ceil
+	int				ceiltx;		// texture ceil
 	int				floor;		// hauteur floor
+	int				floortx;	// texture floor
 	int				gravity;
+
+	int				roof;		// ceil / skybox
+	int				type;		// 0 normal / 1 door / 2 fdoor
 
 	float			xmin;
 	float			xmax;
@@ -143,6 +152,7 @@ struct					s_object
 
 	t_sct			*sct;
 	int				ref;
+	int				iswpn;	// is a weapon
 	int				dd;		// dropdown
 	char			*name;
 
