@@ -13,7 +13,6 @@ BUG : taille du nom des object depasse du carre
 # apres fix target edge
 BUG : draw mode : create vertex in sector close to edge
 
-TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : il se passe quoi si wall obj sur portal ?
 TOCHECK : si export quand un secteur n'est pas encore clos
@@ -23,7 +22,6 @@ PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 
 * TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
 * TOCHECK : coherence du sct_current dans le programme
-* TOCHECK : possible de remettre un spawn si il a ete suprime ?
 * TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 * TOCHECK : pertinance de garder enum e_type
 * PROTEC : set min edge size for split edge
@@ -31,7 +29,6 @@ PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 [03] TODO : update export
 
 [04] TODO : une seule porte de fin ou monstre de fin
-[04] TODO : spawn et interest obligatoire
 [03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
 [03] TODO : door is a sector
 [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door

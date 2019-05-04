@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 16:44:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:57:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int		click_event(t_env *env)
 			display_error_msg("Export failed, sectors are overlapping", env);
 		else if (!refresh_object_sct(env))
 			display_error_msg("Export failed, object out of sector", env);
+		else if (!env->editor.onespawn)
+			display_error_msg("Export failed, no player spawn", env);
 		else
 		{
 			printf("Export\n");
