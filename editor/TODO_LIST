@@ -13,7 +13,6 @@ BUG : taille du nom des object depasse du carre
 BUG : draw mode : create vertex in sector close to edge
 
 TOCHECK : si memory push et release est bien dynamique partout
-TOCHECK : il se passe quoi si wall obj sur portal ?
 TOCHECK : si export quand un secteur n'est pas encore clos
 
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)

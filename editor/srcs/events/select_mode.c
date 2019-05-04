@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 16:03:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 23:06:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,14 +315,6 @@ static int		select_object(t_env *env)
 
 	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 	{
-		if (env->editor.obj_select->dd == DD_SPEC
-			&& env->editor.obj_select->ref == 0)
-		{
-			env->editor.onespawn = 0;
-			env->editor.spawn_set = 0;
-			ft_bzero(&env->editor.spawn_pos, sizeof(t_pos));
-			env->editor.spawn_dir = 0;
-		}
 		delete_object(env->editor.obj_select, env);
 		unselect_all(env);
 		return (1);
