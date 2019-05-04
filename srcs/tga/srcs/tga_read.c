@@ -72,12 +72,10 @@ SDL_Surface		*tga_start(const unsigned char *buffer)
 	else
 		pixels = tga_read(&tga_map, tga);
 	return (SDL_CreateRGBSurfaceFrom((void *)pixels, tga.width, tga.height,
-		tga.depth, (tga.width * sizeof(int)),
+		tga.depth, tga.width * 4,
 		(Uint32)(0xFF << tga.order.rs), (Uint32)(0xFF << tga.order.gs),
 		(Uint32)(0xFF << tga.order.bs), (Uint32)(0xFF << tga.order.as)));
 }
-
-
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -104,17 +102,15 @@ int main(void) {
 
 	int size;
 	size = 0;
-	if (file) {
-		fseek(file, 0, SEEK_END);
-		size = ftell(file);
-		fseek(file, 0, SEEK_SET);
-		unsigned char *buffer = (unsigned char *)malloc(size);
-		fread(buffer, 1, size, file);
-		fclose(file);
-		surface = tga_start(buffer);
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		SDL_RenderCopy(renderer, texture, NULL, NULL);
-	}
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	unsigned char *buffer = (unsigned char *)malloc(size);
+	fseek(file, 0, SEEK_SET);
+	fread(buffer, 1, size, file);
+	surface = tga_start(buffer);
+	fclose(file);
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	int quit = 0;
 	while (quit == 0)
 	{
@@ -125,6 +121,8 @@ int main(void) {
         		quit = 1;
         		break;
 			}
+			SDL_RenderCopy(renderer, texture, NULL, NULL);
+			SDL_RenderPresent(renderer);
 		}
 	}
 	SDL_DestroyWindow(window);

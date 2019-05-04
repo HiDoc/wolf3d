@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 13:15:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 17:24:57 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 11:08:19 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		*tga_map(int (*tga_sum)(t_tga *), t_tga data, int *pix)
 {
 	t_rgba	rgba;
 	int		index;
+	int		pos;
 
 	data.index = data.bytes[pos_depth(&data)] & 0xFF - data.origin;
 	data.color = 0xFFFFFFFF;
@@ -40,7 +41,8 @@ int		*tga_map(int (*tga_sum)(t_tga *), t_tga data, int *pix)
 		(data.depth == 32 ? data.palette[index + 3] : 0xFF)};
 		data.color = tga_to_color(rgba, data.order);
 	}
-	pix[tga_sum(&data)] = data.color;
+	pos = tga_sum(&data);
+	pix[pos] = data.color;
 	return (pix);
 }
 
