@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:52:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 21:08:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_HUD_H
 # define DOOM_F_HUD_H
 
-SDL_Surface *ui_img(char *file, int i);
+SDL_Surface *ui_img(char *file, int i, int variable);
 void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
 int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
