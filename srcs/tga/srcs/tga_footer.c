@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 14:12:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 19:03:03 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:17:11 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void tga_set_offset(uint32_t *set, uint8_t *buffer, uint8_t pad)
 {
 	uint32_t	offset;
 
-	offset = footer_buffer[0 + pad];
+	offset = buffer[0 + pad];
 	offset += ((uint16_t)(buffer[1 + pad])) << 8;
 	offset += ((uint32_t)(buffer[2 + pad])) << 16;
 	offset += ((uint32_t)(buffer[3 + pad])) << 24;
@@ -29,9 +29,11 @@ uint8_t		tga_footer(t_tga *image, FILE *file)
     uint8_t		footer_buffer[TGA_FOOTER_SIZE];
     uint32_t	ext_off;
     uint32_t	dev_off;
+	t_meta		*meta;
 
 	if (!image || !file)
 		return (0);
+	meta = &image->meta;
     if (fseek(file, -TGA_FOOTER_SIZE, SEEK_END) == -1)
 		return (0);
     if (fread(&footer_buffer, TGA_FOOTER_SIZE, 1, file) != 1)
@@ -43,16 +45,16 @@ uint8_t		tga_footer(t_tga *image, FILE *file)
 		tga_set_offset(&ext_off, footer_buffer, 0);
 		tga_set_offset(&dev_off, footer_buffer, 4);
         ext_off = footer_buffer[0];
-        image->meta->extension_offset = ext_off;
+        meta->extension_offset = ext_off;
 
         dev_off = footer_buffer[4];
-        image->meta->developer_offset = dev_off;
+        meta->developer_offset = dev_off;
     }
     else
     {
         image->version = 1;
-        image->meta->extension_offset = 0;
-        image->meta->developer_offset = 0;
+        meta->extension_offset = 0;
+        meta->developer_offset = 0;
     }
     return (1);
 }

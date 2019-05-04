@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/04 18:41:28 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/04 19:35:47 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,16 @@ INC_PATH	= ./includes/
 SDL_LIB		= -I ~/.brew/Cellar/sdl2/2.0.9_1/include/SDL2/ \
 			-L ~/.brew/Cellar/sdl2/2.0.9_1/lib/ -lSDL2
 
+LIBFT		= 	-I ~/doom/libft/includes \
+				-L /Users/fmadura/doom/libft -lft
+
 UNAME 		:= $(shell uname)
 
 SRC_NAME 	=	tga_colormap.c \
 				tga_field.c \
 				tga_footer.c \
 				tga_header.c \
+				test.c \
 				tga_image.c \
 				tga_encoded.c \
 				tga_unencoded.c
@@ -65,7 +69,7 @@ all: $(NAME)
 $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
-	$(CC) $(CFLAGS) $(SDL_LIB) $(INC) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(SDL_LIB) $(LIBFT) $(INC) $(OBJ) -o $(NAME)
 
 $(OBJ_PATH) :
 	@mkdir -p $@
@@ -76,7 +80,7 @@ $(OBJ_PATH)%.o: %.c | $(OBJ_PATH)
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46);index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
 	@printf "\r\033[38;5;%dm⌛ [%s]: %2d%% `printf '█%.0s' {0..$(DONE)}`%*s❙%*.*s\033[0m\033[K" $(COLOR) $(NAME) $(PERCENT) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
-	@$(CC) -MMD $(SDL_LIB) $(CFLAGS) $(INC) -o $@ -c $<
+	@$(CC) -MMD -I ~/doom/libft/includes -I ~/.brew/Cellar/sdl2/2.0.9_1/include/SDL2/ $(CFLAGS) $(INC) -o $@ -c $<
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 clean:

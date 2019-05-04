@@ -6,13 +6,14 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:37:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 19:04:16 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:33:11 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TGA_H
 # define TGA_H
 
+# include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -82,9 +83,9 @@ struct s_tga
 };
 
 int		read_tga_image(FILE *file, t_tga *image);
-int		read_tga_color_map(t_tga *image, FILE *file);
 int     read_encoded(t_tga *image, FILE *file);
-int     read_unencoded(t_tga *image, FILE *file)
+int     read_unencoded(t_tga *image, FILE *file);
+int		read_colormap(t_tga *image, FILE *file);
 int		tga_header(t_tga *image, FILE *file);
 uint8_t	tga_footer(t_tga *image, FILE *file);
 uint8_t tga_id_field(t_tga *image, FILE *file);
