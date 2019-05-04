@@ -6,11 +6,23 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 23:48:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 20:12:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void		dir_del(void **ap)
+{
+	DIR			*dr;
+
+	dr = (DIR *)(*ap);
+	if (ap && *ap)
+	{
+		closedir(dr);
+		dr = 0;
+	}
+}
 
 void		chk_del(void **ap)
 {

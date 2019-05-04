@@ -20,7 +20,7 @@ static SDL_Surface	**enemy_fill(char *path, int size)
 	i = -1;
 	enemy = ft_memalloc(sizeof(SDL_Surface*) * size);
 	while (++i < size)
-		enemy[i] = ui_img(path, i);
+		enemy[i] = ui_img(path, i, 0);
 	return (enemy);
 }
 

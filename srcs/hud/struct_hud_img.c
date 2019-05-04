@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 18:30:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 21:09:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 	}
 }
 
-SDL_Surface	*ui_img(char *file, int i)
+SDL_Surface	*ui_img(char *file, int i, int variable)
 {
 	SDL_Surface	*new;
 	char		*nb;
@@ -76,6 +76,11 @@ SDL_Surface	*ui_img(char *file, int i)
 	nb = ft_itoa(i + 1);
 	path = ft_strjoin("./rsrc/img/", file);
 	final_path = ft_strjoin(path, nb);
+	if (variable == 1)
+	{
+		final_path = ft_strljoin(final_path, "+");
+		final_path = ft_strljoin(final_path, nb);
+	}
 	lt_release((void**)&path);
 	lt_release((void**)&nb);
 	path = ft_strjoin(final_path, (char *)png);
