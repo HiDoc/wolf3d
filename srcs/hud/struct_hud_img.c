@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 18:30:22 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:10:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ SDL_Surface	*ui_img(char *file, int i)
 	lt_release((void**)&path);
 	lt_release((void**)&nb);
 	path = ft_strjoin(final_path, (char *)png);
+
 	new = load_image(path);
+
 	lt_release((void**)&final_path);
 	lt_release((void**)&path);
 	return (new);
