@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 19:49:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:05:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void        display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env);
 void        display_menu_dropdown_list(SDL_Rect rect, t_env *env);
 void		display_error_msg(char *msg, t_env *env);
 
+int			sector_in_rect(t_sct *sector, SDL_Rect rect, t_env *env);
 t_elem		*get_element_by_ref(int ref, int dd, t_env *env);
 int			shared_vtx(t_vtx *vtx, t_sct *current);
 t_elem		*get_dd_element(int id, int dd, t_env *env);

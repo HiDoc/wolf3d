@@ -1,51 +1,45 @@
-BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-BUG : angle du spawn
-BUG : execve ./doom completement KC
-BUG : bloquer value max des input
-BUG : input del bugge avec le refactor dans utils.c
-BUG : draw mode : create vertex in sector close to edge
-BUG : coherence mouse mode (ex: change mouse mode while drawing)
+# aide fmadura
+BUG : hovering : curseur sur la ligne des sommets d'un secteur, \
+	  fonction math/intersect_vtx truc
 BUG : fix edge hover
-BUG : color of error_msg
-BUG : taille du nom des object depasse du carre
-BUG : coherence retour menu - start - cancel
-BUG : fix and finish input ceil/floor/gravity
-BUG : edge size n'est pas update si split, moving etc...
-BUG : calcul de l'angle spawn
 BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
-BUG : pose obj + select this object
+# aide tblaudez
+BUG : execve ./doom completement KC
 BUG : makefile recompile pas la libft
+# apres fix inputs
+BUG : bloquer value max des input
+BUG : taille du nom des object depasse du carre
+# apres fix target edge
+BUG : draw mode : create vertex in sector close to edge
 
-LEAK: protect gnl
-
-TOCHECK : coherence du sct_current dans le programme
-TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
-TOCHECK : si le get elem du rect interface a bien ete remplace partout
-TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
-TOCHECK : possible de remettre un spawn si il a ete suprime ?
 TOCHECK : il se passe quoi si wall obj sur portal ?
-TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : si export quand un secteur n'est pas encore clos
-TOCHECK : pertinance de garder enum e_type
 
-PROTEC : set min edge size for split edge
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
+PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 
-* [03] TODO : SEGV + fix inputs
-* [03] TODO : debug relier element et buttons display on dropdown lists
-* [03] TODO : interface element clipping
-* [03] TODO : front design selected / hovered color and stuff / color on errmsg
-* [03] TODO : door is a sector
-* [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-* [03] TODO : empecher export si edge du meme sct overlap
-* [03] TODO : refactor events
-* [03] TODO : wall object dock
-* [03] TODO : grid : limite left / bot
-* [03] TODO : update export
-* [03] TODO : s'occuper de PROTEC/BUG/LEAK
-* [03] TODO : check coherence du programme et du fonctionnemenet des features
+* TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
+* TOCHECK : coherence du sct_current dans le programme
+* TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
+* TOCHECK : pertinance de garder enum e_type
+* PROTEC : set min edge size for split edge
 
+[04] TODO : une seule porte de fin ou monstre de fin
+[03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
+[03] TODO : door is a sector
+[03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+[03] TODO : empecher export si edge du meme sct overlap
+[03] TODO : wall object dock
+[03] TODO : grid : limite left / bot
+[03] TODO : input hfloor + couleur input
+[03] TODO : edge size n'est pas update si split, moving etc...
+[03] TODO : free si retour menu + click start
+[03] TODO : debug relier element et buttons display on dropdown lists
+[03] TODO : front design selected / hovered color and stuff / color on errmsg
+[03] TODO : refactor events
+[03] TODO : check coherence du programme et du fonctionnemenet des features
+[04] TODO : s'occuper de BUG/PROTEC/TOCHECK
 [04] TODO :	parsing : parsing todo
 [04] OPTI :	minmax sync
 [04] OPTI :	multithreading
@@ -53,8 +47,10 @@ PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
 [05] TODO : details et finitions
 [05] TODO :	beta testing
-[05] TODO :	norme : total norme
 
+[06] TODO :	norme : total norme
+
+OPTIONAL :	ammeliorer clipping du content de l'interface
 OPTIONAL :	play preview background audio on misc
 OPTIONAL :	texture per door
 OPTIONAL :	menu preview

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 18:04:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:29:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,31 @@ void		editor(t_env *env)
 
 	// display map name
 	rect = (SDL_Rect){20, 65, 0, 25};
-	ui_make_string(rect, env->map_name, env->data);
+	ui_make_string(rect, env->map_name, C_WHITE, env->data);
 
 	// display nb frames
 	rect = (SDL_Rect){300, 20, 0, 20};
-	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
+	ui_make_nbrstring(rect, env->data->nb_frames, C_WHITE, env->data);
 
 	// display error_msg
 	rect = (SDL_Rect){30, 120, 0, 20};
 	if (env->editor.error_msg)
 	{
 		if (time(0) - env->editor.timestamp < 4)
-			ui_make_string(rect, env->editor.error_msg, env->data);
+			ui_make_string(rect, env->editor.error_msg, C_RED, env->data);
 		else
 			lt_release((void**)&env->editor.error_msg);
 	}
 
 	// display nb element
 	rect = (SDL_Rect){30, 150, 0, 20};
-	ui_make_string(rect, "Nb sectors : ", env->data);
+	ui_make_string(rect, "Nb sectors : ", C_WHITE, env->data);
 	rect = (SDL_Rect){170, 150, 0, 20};
-	ui_make_nbrstring(rect, env->nb_sct, env->data);
+	ui_make_nbrstring(rect, env->nb_sct, C_WHITE, env->data);
 	rect = (SDL_Rect){30, 180, 0, 20};
-	ui_make_string(rect, "Nb vertex : ", env->data);
+	ui_make_string(rect, "Nb vertex : ", C_WHITE, env->data);
 	rect = (SDL_Rect){170, 180, 0, 20};
-	ui_make_nbrstring(rect, env->nb_vtx, env->data);
+	ui_make_nbrstring(rect, env->nb_vtx, C_WHITE, env->data);
 
 	// display mouse mode buttons
 	ui_make_rect(env->data->surface,

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 04:14:48 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:53:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:28:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		create_sector(t_env *env)
 	new->ymax = -1;
 	new->color = C_CYAN;
 	new->next = 0;
-
+	new->ceil = 20;
 	if (!(env->editor.sct_start))
 	{
 		new->id = 0;

@@ -6,11 +6,31 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 14:54:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:22:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+int				sector_in_rect(t_sct *sct, SDL_Rect rect, t_env *env)
+{
+	t_w_vtx		*w_vtx;
+	t_pos		pos;
+
+	while (sct)
+	{
+		w_vtx = sct->w_vtx_start;
+		while (w_vtx)
+		{
+			pos = vtx_transform(w_vtx->vtx->pos, env);
+			if (point_in_rect(pos, rect))
+				return (1);
+			w_vtx = w_vtx->next;
+		}
+		sct = sct->next;
+	}
+	return (0);
+}
 
 t_elem			*get_element_by_ref(int ref, int dd, t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 21:56:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 16:05:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 		env->editor.dropdown[dd].current = env->editor.dropdown[dd].start;
 		env->editor.dropdown[dd].current->clicked = 1;
 	}
-	lt_release(&dr);
+	lt_release((void **)&dr);
 }
 
 static void		init_editor(t_env *env)
@@ -330,7 +330,7 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/objects/prefabs", DD_PRFB, env);
 	load_dd_list("ressources/objects/specials", DD_SPEC, env);
 
-	env->grid_scale = 45;
+	env->grid_scale = 5;
 }
 
 void		init_env(t_env *env, t_data *data)

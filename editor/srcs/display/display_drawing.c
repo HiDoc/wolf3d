@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:36:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 16:38:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:34:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void        display_drawing(t_env *env)
 
 	// display title
 	rect = (SDL_Rect){910, 110, 0, 20};
-	ui_make_string(rect, "Wall texture", env->data);
+	ui_make_string(rect, "Wall texture", C_WHITE, env->data);
 
 	display_updown(E_B_DRW_UP, E_B_DRW_DOWN, env);
 

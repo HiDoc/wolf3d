@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 14:27:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:28:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	left_panel(t_pos origin, t_env *env)
 
 	// upload title
 	rect = (SDL_Rect){origin.x + 10, origin.y + 90, 0, 25};
-	ui_make_string(rect, "Upload a map", env->data);
+	ui_make_string(rect, "Upload a map", C_WHITE, env->data);
 
 	// upload rect
 	rect = (SDL_Rect){origin.x + 10, origin.y + 120, 380, 320};
@@ -55,11 +55,11 @@ static void	right_panel(t_pos origin, t_env *env)
 	// current map
 	rect = (SDL_Rect){origin.x + 420, origin.y + 10, 380, 30};
 	if (env->menu.dropdown.current)
-		ui_make_string(rect, env->menu.dropdown.current->str, env->data);
+		ui_make_string(rect, env->menu.dropdown.current->str, C_WHITE, env->data);
 	else if (get_element(M_I_NEW, env)->str)
-		ui_make_string(rect, get_element(M_I_NEW, env)->str, env->data);
+		ui_make_string(rect, get_element(M_I_NEW, env)->str, C_WHITE, env->data);
 	else
-		ui_make_string(rect, env->map_name, env->data);
+		ui_make_string(rect, env->map_name, C_WHITE, env->data);
 
 	// start button
 	display_button(M_B_START, "Start", env);
@@ -84,7 +84,7 @@ void		menu(t_env *env)
 
 	// display popup
 	rect = (SDL_Rect){origin.x + 230, origin.y - 50, 0, 35};
-	ui_make_string(rect, "DOOM NUKEM EDITOR", env->data);
+	ui_make_string(rect, "DOOM NUKEM EDITOR", C_WHITE, env->data);
 
 	// display left
 	left_panel(origin, env);
@@ -94,5 +94,5 @@ void		menu(t_env *env)
 
 	// display nb frames
 	rect = (SDL_Rect){300, 20, 0, 20};
-	ui_make_nbrstring(rect, env->data->nb_frames, env->data);
+	ui_make_nbrstring(rect, env->data->nb_frames, C_WHITE, env->data);
 }

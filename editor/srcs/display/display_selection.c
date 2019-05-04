@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 21:52:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 17:59:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ static void		display_object_data(t_env *env)
 		category = 0;
 
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, category, env->data);
+	ui_make_string(rect, category, C_WHITE, env->data);
 
 	rect = (SDL_Rect){910, 140, 250, 30};
-	ui_make_string(rect, env->editor.obj_select->name, env->data);
+	ui_make_string(rect, env->editor.obj_select->name, C_WHITE, env->data);
 
 	rect = (SDL_Rect){910, 180, 250, 30};
 	if (env->editor.obj_select->sct)
-		ui_make_nbrstring(rect, env->editor.obj_select->sct->id, env->data);
+		ui_make_nbrstring(rect, env->editor.obj_select->sct->id, C_WHITE, env->data);
 	else
-		ui_make_string(rect, "No sector", env->data);
+		ui_make_string(rect, "No sector", C_WHITE, env->data);
 
 	display_button(E_B_SELEC_DEL, "DELETE", env);
 }
@@ -50,10 +50,10 @@ static void		display_sector_data(t_env *env)
 	SDL_Rect		rect;
 
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, "sector", env->data);
+	ui_make_string(rect, "sector", C_WHITE, env->data);
 
 	rect = (SDL_Rect){1000, 110, 250, 30};
-	ui_make_nbrstring(rect, env->editor.sct_select->id, env->data);
+	ui_make_nbrstring(rect, env->editor.sct_select->id, C_WHITE, env->data);
 
 	display_labeled_input(E_I_SELEC_GRAVITY, "gravity", env);
 	display_labeled_input(E_I_SELEC_HCEIL, "ceil height", env);
@@ -85,7 +85,7 @@ static void		display_vertex_data(t_env *env)
 	SDL_Rect		rect;
 
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, "vertex", env->data);
+	ui_make_string(rect, "vertex", C_WHITE, env->data);
 
 	display_button(E_B_SELEC_DEL, "DELETE", env);
 }
@@ -96,7 +96,7 @@ static void		display_edge_data(t_env *env)
 
 	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, "edge", env->data);
+	ui_make_string(rect, "edge", C_WHITE, env->data);
 
 	// display buttons
 	display_button(E_B_SELEC_FDOOR, "FINAL DOOR", env);
@@ -105,7 +105,7 @@ static void		display_edge_data(t_env *env)
 
 	// dropdown title
 	rect = (SDL_Rect){910, 310, 250, 30};
-	ui_make_string(rect, "Wall texture ", env->data);
+	ui_make_string(rect, "Wall texture ", C_WHITE, env->data);
 
 	// dropdown mwalltx
 	env->editor.dropdown[DD_MWALLTX].current->clicked = 0;
@@ -122,9 +122,9 @@ static void		display_edge_data(t_env *env)
 	/* TO SET IN INTERFACE */
 	// display interface size
 	rect = (SDL_Rect){190, 750, 0, 20};
-	ui_make_string(rect, "size : ", env->data);
+	ui_make_string(rect, "size : ", C_WHITE, env->data);
 	rect = (SDL_Rect){240, 750, 0, 20};
-	ui_make_nbrstring(rect, env->editor.edg_select->size, env->data);
+	ui_make_nbrstring(rect, env->editor.edg_select->size, C_WHITE, env->data);
 }
 
 static void		display_misc_data(t_env *env)
@@ -133,8 +133,7 @@ static void		display_misc_data(t_env *env)
 
 	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
-	ui_make_string(rect, "Misc", env->data);
-
+	ui_make_string(rect, "Misc", C_WHITE, env->data);
 	// buttons
 	display_button(E_B_SELEC_MUSIC, "BACKGROUND MUSIC", env);
 	display_button(E_B_SELEC_SBTX, "SKYBOX TEXTURE", env);
@@ -156,13 +155,13 @@ void			display_selection(t_env *env)
 
 	rect = (SDL_Rect){env->data->mouse.x, env->data->mouse.y - 40, 250, 30};
 	if (env->editor.obj_hover)
-		ui_make_string(rect, "object", env->data);
+		ui_make_string(rect, "object", C_WHITE, env->data);
 	else if (env->editor.sct_hover)
-		ui_make_string(rect, "sector", env->data);
+		ui_make_string(rect, "sector", C_WHITE, env->data);
 	else if (env->editor.vtx_hover)
-		ui_make_string(rect, "vertex", env->data);
+		ui_make_string(rect, "vertex", C_WHITE, env->data);
 	else if (env->editor.edg_hover)
-		ui_make_string(rect, "edge", env->data);
+		ui_make_string(rect, "edge", C_WHITE, env->data);
 
 	if (env->editor.obj_select)
 		display_object_data(env);
