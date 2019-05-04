@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:56:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 17:12:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:38:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ struct 						s_sd_stat
 	int			dead;
 	int			medkit;
 	int			move;
+	int			run;
 	int			o_duck;
 	float		o_veloc;
 	int			jump;

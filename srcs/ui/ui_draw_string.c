@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 15:50:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 	ft_bzero(&str_data, sizeof(t_font));
 	str_data.color = ui_hex_to_rgb(color);
 	str_data.str = text;
-	str_data.font = env->hud.text.arial;
+	str_data.font = env->hud.font.arial;
 
 	surface = make_string(str_data);
 	rect.w = (rect.h * surface->w) / surface->h;

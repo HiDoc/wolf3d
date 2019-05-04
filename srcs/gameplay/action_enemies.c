@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 14:58:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 17:54:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	bot_move(t_env *env, t_vtx p, t_wrap_enmy *enemy, float speed)
 	t_vtx		move;
 
 	enemy->player.whereto = (t_vctr){p.x, p.y, EYEHEIGHT};
-	enemy->player.angle = -p.x * 0.03f;
+	enemy->player.angle = -enemy->player.where.x * 0.002f;
 	enemy->player.anglesin = -sinf(enemy->player.angle);
 	enemy->player.anglecos = -cosf(enemy->player.angle);
 	move = bot_orientation(&enemy->player, enemy->player.whereto, speed);
@@ -55,9 +55,9 @@ void	bot_check_friend(t_wrap_enmy *enemy, t_wrap_enmy *next)
 
 	first = (t_vtx){enemy->player.where.x, enemy->player.where.y};
 	secd = (t_vtx){next->player.where.x, next->player.where.y};
-	if (dist_vertex(first, secd) <= 5)
+	if (dist_vertex(first, secd) <= 9)
 	{
-		if (first.x <= secd.x && first.y <= secd.y)
+		if (first.x < secd.x && first.y <= secd.y)
 			next->player.where.x -= next->player.velocity.x;
 		else if (first.x >= secd.x && first.y >= secd.y)
 			next->player.where.x -= next->player.velocity.x;
@@ -71,34 +71,37 @@ void	bot_check_friend(t_wrap_enmy *enemy, t_wrap_enmy *next)
 int		bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
 {
 	int	i;
+	// t_vtx	move;
 
+	(void)p;
 	i = 0;
 	if (shooting)
 	{
-		while (i < BOT_NB_SHOT)
+		while (i < NB_SHOT)
 		{
 			if (!enemy->shot[i].is_alive)
 			{
 				new_bullet(&enemy->shot[i], p, BOT_V_SHOT);
+				// move = bot_orientation(&enemy->shot[i].position, enemy->shot[i].position.whereto, BOT_V_SHOT);
+				// enemy->shot[i].position.whereto = (t_vctr){move.x, move.y, 0};
 				return (1);
 			}
 			i++;
 		}
-		ft_bzero(&enemy->shot[0], sizeof(t_impact));
-		new_bullet(&enemy->shot[0], p, BOT_V_SHOT);
-		ft_bzero(&enemy->shot[1], sizeof(t_impact));
 	}
 	return (1);
 }
 
-t_player	bot_angle(t_player src)
+t_player	bot_angle(t_player e, t_player src)
 {
 	t_player	new;
-
-	new.where = src.where;
-	new.angle = -src.where.x * 0.03f;
-	new.anglecos = -sinf(src.angle);
-	new.anglecos = -cosf(src.angle);
+	// (void)e;
+	// (void)src;
+	new.where = e.where;
+	new.whereto = src.where;
+	new.angle = -e.where.x * 0.002f;
+	new.anglesin = -sinf(new.angle);
+	new.anglecos = -cosf(new.angle);
 	new.sprite = src.sprite;
 	return (new);
 }
@@ -109,8 +112,9 @@ static void	bot_shoot_cadence(t_env *env, t_wrap_enmy *e, t_player p)
 
 	if (e->frame >= env->world.enemies[e->ref].cadence_shoot)
 	{
-		new_look = bot_angle(p);
-		bot_new_kill(e->is_shooting, &new_look, e);
+		(void)p;
+		new_look = bot_angle(e->player, p);
+		bot_new_kill(e->a.is_shooting, &new_look, e);
 		e->player.sound.shootin = 1;
 		e->frame = 0;
 	}
@@ -125,12 +129,16 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 	t_sector	*sector;
 
 	i = 0;
+	move = (t_vtx){0.f, 0.f};
 	sector = &env->engine.sectors[env->engine.player.sector];
-	while (i < BOT_NB_SHOT)
+	while (i < NB_SHOT)
 	{
-		if (e->shot[i].is_shooting)
+		if (e->shot[i].is_shooting && dist_vertex((t_vtx){e->shot[i].position.origin.x,
+			e->shot[i].position.origin.y}, (t_vtx){e->shot[i].position.where.x,
+			e->shot[i].position.where.y}) < e->brain.scop)
 		{
-			move = bot_orientation(&e->shot[i].position, e->player.whereto, BOT_V_SHOT);
+			// move = add_vertex(move, (t_vtx){e->shot[i].position.anglecos, e->shot[i].position.anglesin});
+			move = bot_orientation(&e->shot[i].position, e->shot[i].position.whereto, BOT_V_SHOT);
 			e->shot[i].position.velocity.x = e->shot[i].position.velocity.x * (1 - BOT_V_SHOT) + move.x * BOT_V_SHOT;
 			e->shot[i].position.velocity.y = e->shot[i].position.velocity.y * (1 - BOT_V_SHOT) + move.y * BOT_V_SHOT;
 			if (bot_wall_collision(&e->shot[i].position, sector))
@@ -147,9 +155,14 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 			}
 			else
 			{
-				e->ref == LOSTSOUL && e->is_alive ? e->is_dying = 1 : 0;
+				e->ref == LOSTSOUL && e->a.is_alive ? e->a.is_dying = 1 : 0;
 				ft_bzero(&e->shot[i], sizeof(t_impact));
 			}
+		}
+		else if (e->shot[i].is_shooting)
+		{
+			e->shot[i].is_shooting = 0;
+			e->shot[i].is_alive = 0;
 		}
 		i++;
 	}
@@ -165,12 +178,12 @@ void	bot_action(t_env *env, t_sector *sector)
 	enemy = sector->head_enemy;
 	while (enemy)
 	{
-		if (enemy->is_alive && !enemy->is_dying && !enemy->is_shot)
+		if (enemy->a.is_alive && !enemy->a.is_dying && !enemy->a.is_shot)
 		{
 			bot_status(env, p, enemy, env->sdl.keycodes);
-			if (enemy->next && enemy->next->is_alive)
+			if (enemy->next && enemy->next->a.is_alive)
 				bot_check_friend(enemy, enemy->next);
-			if (enemy->is_shooting)
+			if (enemy->a.is_shooting)
 				bot_shoot_cadence(env, enemy, env->engine.player);
 			bot_bullet(env, enemy, enemy->damage);
 		}
@@ -178,34 +191,30 @@ void	bot_action(t_env *env, t_sector *sector)
 	}
 }
 
-static void	bot_dist_detect(t_wrap_enmy *e)
-{
-	e->is_shooting = (e->has_detected || e->close_seen);
-}
-
 void	bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
 {
 	t_vtx	where;
 
 	where = (t_vtx){e->player.where.x, e->player.where.y};
-	if (!env->player.actions.is_invisible && !e->is_dying && !e->is_shot)
+	if (!env->player.actions.is_invisible && !e->a.is_dying && !e->a.is_shot)
 	{
-		e->is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
+		e->a.is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
 		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		e->has_detected = (dist_vertex(player, where) < e->brain.dist_detect
+		e->a.has_detected = (dist_vertex(player, where) < e->brain.dist_detect
 		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
-		e->close_seen = (dist_vertex(player, where) < e->brain.dist_close);
-		if (e->is_alerted || e->has_detected || e->close_seen)
-		{
+		e->a.close_seen = (dist_vertex(player, where) < e->brain.dist_close);
+		// if (e->a.is_alerted)
+		// {
 			if (dist_vertex(player, where) > e->brain.dist_player)
 			{
-				e->is_shooting = 0;
 				bot_move(env, player, e, e->brain.velocity);
+				e->a.is_moving = 1;
+				e->a.is_shooting = 0;
+			e->a.is_shooting = 1;
 			}
-			else
-				bot_dist_detect(e);
-		}
+		// }
+		// if (e->a.has_detected || e->a.close_seen)
 	}
 	else
-		e->is_shooting = 0;
+		e->a.is_shooting = 0;
 }

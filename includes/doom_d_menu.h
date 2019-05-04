@@ -6,16 +6,16 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 16:20:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 00:39:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_MENU_H
 # define DOOM_D_MENU_H
 
-# define NB_IMG_MENU	13
+# define NB_IMG_MENU	16
 # define NB_INTER_IMG	6
-# define NB_BLOC_NG		4
+# define NB_BL_NG		4
 # define NB_BLOC_IG		4
 # define NB_OPT_KEY		15
 # define NB_OPT_MENU	17
@@ -30,20 +30,23 @@
 # define I_LOADMENU		4
 # define I_IBTN			5
 # define I_INEWGAME		6
+# define I_GAMEOVER		7
+# define I_ENDGAME		8
+# define I_CREDITS		9
 
-# define I_INTER1		7
-# define I_INTER2		8
-# define I_INTER3		9
-# define I_INTER4		10
-# define I_INTER5		11
-# define I_INTER6		12
+# define I_INTER1		10
+# define I_INTER2		11
+# define I_INTER3		12
+# define I_INTER4		13
+# define I_INTER5		14
+# define I_INTER6		15
 
 /*
 ** MENU String
 */
 # define S_MAINMENU		"MAIN MENU"
-# define S_NEWGAME		"NEW GAME"
-# define S_LOADGAME		"LOAD GAME"
+# define S_NGAME		"NEW GAME"
+# define S_LGAME		"LOAD GAME"
 # define S_OPTIONS		"SETTINGS"
 # define S_SAVE			"SAVE"
 # define S_QUIT			"QUIT"

@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/23 12:12:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:30:22 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
+void		img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 {
 	int		x;
 	int		y;
@@ -28,7 +28,7 @@ void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 		while (y < dst->h)
 		{
 			c = getpixel(src, (int)(x * scale.x), (int)(y * scale.y));
-			if (c & 0xFF)
+			if (c & 0xFF00)
 				setpixel(dst, x, y, c);
 			y++;
 		}
@@ -36,7 +36,7 @@ void				img_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 	}
 }
 
-void				draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
+void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 {
 	int			i;
 	int			j;
@@ -63,7 +63,7 @@ void				draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 	}
 }
 
-SDL_Surface		*ui_img(char *file, int i)
+SDL_Surface	*ui_img(char *file, int i)
 {
 	SDL_Surface	*new;
 	char		*nb;

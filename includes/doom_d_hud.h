@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/11 00:12:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 20:49:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define UI_NB_STRING	30
 # define HUD_NB_STRING	19
 # define UI_NB_STR_INV	11
-# define DSCRIP_STR_INV	12
+# define DSCRIP_STR_INV	14
 # define NB_STATS		13
 /*
 ** HUD index img -- NB_HUD_OBJ
@@ -81,8 +81,8 @@
 # define STRING_20		"Weapons"
 # define STRING_21		"Gems"
 # define STRING_22		"Statistics"
-# define STRING_23		"X"
-# define STRING_24		"Use"
+# define S_CROSS		"X"
+# define S_USE			"Use"
 # define STRING_25		"1"
 # define STRING_26		"2"
 # define STRING_27		"3"
@@ -131,8 +131,10 @@
 # define I_STRING_7		"Give Invisibility - for 30 sec"
 # define I_STRING_8		"Give Super Strength - for 30 sec"
 # define I_STRING_9		"Give Invulnerability - for 30 sec"
-# define I_STRING_10	"Drop object"
-# define I_STRING_11	" "
+# define I_STRING_10	"Magnum - Damage : 56 - Scop : 300"
+# define I_STRING_11	"Shotgun - Damage : 100 - Scop : 100"
+# define I_STRING_12	"Pulsar Rifle - Damage : 37 - Scop : 1000"
+# define I_STRING_13	"RPG-7 - Damage : 250 - Scop : 2000"
 
 /*
 ** HUD string - Pick up description
@@ -178,4 +180,11 @@
 # define I_K_RIFLE		10
 # define I_K_RPG		11
 # define I_K_FIST		12
+
+/*
+** stats per level
+*/
+# define L_TPLAY		0
+# define L_KILLS		1
+
 #endif

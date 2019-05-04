@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/27 19:51:00 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:35:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 ** Sounds constants
 */
-# define SD_PLAYER		14
+# define SD_PLAYER		15
 # define SD_HUD			7
 # define SD_EFFECT		13
 # define SD_AMBIANCE	20
@@ -42,6 +42,7 @@
 # define P_JTPACK	11
 # define P_JTPACKOF	12
 # define P_HIT		13
+# define P_RUN		14
 
 /*
 ** AMBIANCE sounds index
@@ -106,6 +107,7 @@
 # define CHAN_DUCK		26
 # define CHAN_MOVE		25
 # define CHAN_AMBIANCE	24
-# define CHAN_DOOR		25
+# define CHAN_DOOR		23
+# define CHAN_MENU		22
 
 #endif

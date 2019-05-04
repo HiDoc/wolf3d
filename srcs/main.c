@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 18:45:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 03:32:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ int		main(int ac, char **av)
 	while (env.curr_lvl < env.nb_levels)
 	{
 		env.finish = 0;
+
+		mainmenu_loop(&env);
 		env.menu.status.inter = 1;
 
 		// display text start
-		loop_intro(&env, env.curr_lvl);
 
 		/* load level */
 		load_map(&env.engine, &env);
 		init_minimap(&env);
+		loop_intro(&env, env.curr_lvl);
 
 		/* gameloop */
 		if (sdl_loop(&env))
 			return (0);
 
+		action_endlevel(&env, env.curr_lvl);
 		/* free level */
 		free_map(&env);
 		lt_release((void**)&env.engine.minimap.surface);

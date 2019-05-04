@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:39:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 03:24:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void        action_inventory(t_env *env, int x, int y);
 int			handle_gems(t_env *env);
 int			action_gems(t_env *env, t_wrap_inv *shortcut, int i);
 
+int			select_wpn(t_wrap_wpn *wpn, t_ixy xy, t_bloc *p, int limit);
 int			pick_weapon(t_env *env, t_wrap_sect *obj);
 int			set_current_wpn(t_env *env, t_inventory *inv, int i);
 int			drop_wpn(t_env *env, t_wrap_wpn *wpn);

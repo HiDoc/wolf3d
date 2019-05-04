@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 18:44:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:00:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ unsigned	token_calc(t_parseline *line)
 	return (count);
 }
 
-void	select_type_sector(t_sector *sect)
+void	select_type_sector(t_sector *s)
 {
-	if (sect->type == 0x00)
-		sect->is_door = 0x00;
+	if (s->type == SECT_DOOR || s->type == SECT_ENDLEVEL)
+		s->is_door = s->type == SECT_DOOR ? 1 : 2;
 }
 
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
@@ -110,7 +110,7 @@ void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 	//printf("Vertex: [%.0f, %.0f]\n", vtx[0].x, vtx[0].y);
 }
 
-void 	retrieve_player(t_engine *engine, t_parseline *line)
+void 	retrieve_player(t_env *e, t_parseline *line)
 {
 	t_token		*iter;
 	float		*value;
@@ -134,14 +134,16 @@ void 	retrieve_player(t_engine *engine, t_parseline *line)
 			if (value == &x)
 				value = &y;
 			else if (value == &y)
-				value = &engine->player.angle;
-			else if (value == &engine->player.angle)
+				value = &e->engine.player.angle;
+			else if (value == &e->engine.player.angle)
 				value = &n;
 		}
 		iter = iter->next;
 	}
-	engine->player.where = (t_vctr) {x, y, EYEHEIGHT};
-	engine->player.sector = n;
+	e->engine.player.where = (t_vctr) {x, y, EYEHEIGHT};
+	e->engine.player.sector = n;
+	e->player.health = 200;
+	e->player.shield = 200;
 	//printf("player :%.0f, %.0f, %.0f, %.0f\n", x, y, engine->player.angle, n);
 }
 
@@ -167,7 +169,7 @@ void	load_vertex(t_parsefile *file, t_vtx *vert)
 	}
 }
 
-void	load_sector(t_engine *engine, t_parsefile *file, t_vtx *vert)
+void	load_sector(t_env *e, t_parsefile *file, t_vtx *vert)
 {
 	t_parseline	*line;
 	unsigned	pos;
@@ -181,11 +183,11 @@ void	load_sector(t_engine *engine, t_parsefile *file, t_vtx *vert)
 			if (line->first->type == (1U))
 			{
 				//printf("Currently on sector : %u\n", pos);
-				retrieve_sector(&engine->sectors[pos], line, vert);
+				retrieve_sector(&e->engine.sectors[pos], line, vert);
 				pos++;
 			}
 			if (line->first->type == (1U << 2))
-				retrieve_player(engine, line);
+				retrieve_player(e, line);
 		}
 		line = line->next;
 	}
@@ -229,12 +231,11 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 	fill_objects_sector(&engine->sectors[(unsigned)s], pos, (t_ixy){ref.x, s}, ref.y);
 }
 
-/*void	retrieve_enemy(t_engine *engine, t_parseline *line)
+void	retrieve_enemy(t_env *e, t_parseline *line)
 {
 	t_token		*iter;
 	t_vtx		pos;
 	t_vtx		ref;
-	float		s;
 	float		*ptr;
 
 	iter = line->first;
@@ -253,8 +254,6 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 				if (ptr == &pos.x)
 					ptr = &pos.y;
 				else if (ptr == &pos.y)
-					ptr = &s;
-				else if (ptr == &s)
 					ptr = &ref.x;
 				else if (ptr == &ref.x)
 					ptr = &ref.y;
@@ -262,14 +261,16 @@ void	retrieve_object(t_engine *engine, t_parseline *line)
 		}
 		iter = iter->next;
 	}
-	//printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, s, ref.x);
-	fill_objects_sector(&engine->sectors[(unsigned)s], pos, ref.x, ref.y);
-}*/
+	//printf("enemy %.0f %.0f %.0f %.0f\n", pos.x, pos.y, ref.x);
+	fill_enemies_sector(e, &e->engine.sectors[(unsigned)ref.x], pos, ref.y);
+}
 
-void	load_object(t_engine *engine, t_parsefile *file)
+void	load_object(t_env *e, t_parsefile *file)
 {
 	t_parseline	*line;
+	t_engine	*engine;
 
+	engine = &e->engine;
 	line = file->first;
 	while (line)
 	{
@@ -277,8 +278,8 @@ void	load_object(t_engine *engine, t_parsefile *file)
 		{
 			if (line->first->type == (1U << 3))
 				retrieve_object(engine, line);
-			//if (line->first->type == (1U << 6))
-			//	retrieve_enemy(engine, line);
+			if (line->first->type == (1U << 6))
+				retrieve_enemy(e, line);
 		}
 		line = line->next;
 	}
@@ -294,8 +295,8 @@ int		load(t_env *env, t_parsefile *file, unsigned nvertex, unsigned nsector)
 	engine->sectors = ft_memalloc(sizeof(t_sector) * nsector);
 	vert = (t_vtx *)ft_memalloc(sizeof(t_vtx) * nvertex);
 	load_vertex(file, vert);
-	load_sector(engine, file, vert);
-	load_object(engine, file);
+	load_sector(env, file, vert);
+	load_object(env, file);
 	return(1);
 }
 

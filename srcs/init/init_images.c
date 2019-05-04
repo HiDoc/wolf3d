@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/24 12:37:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:33:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,8 @@ static void			init_consumable(t_env *env)
 static void			init_character(t_character *new)
 {
 	ft_bzero(&new->actions, sizeof(new));
-	new->health = 200;
-	new->shield = 200;
 	new->max_health = 200;
 	new->max_shield = 200;
-	new->bullet = ui_img("bullet/", 0);
-	new->shot = ft_memalloc(sizeof(t_impact) * PLYR_NB_SHOT);
-	ft_bzero(new->shot, sizeof(t_impact) * PLYR_NB_SHOT);
 }
 
 static void			init_skybox_img(t_env *env)
@@ -89,4 +84,5 @@ void				load_images(t_env *env)
 	init_consumable(env);
 	init_character(&env->player);
 	init_skybox_img(env);
+	env->engine.player.sprite = ui_img("bullet/", 0);
 }

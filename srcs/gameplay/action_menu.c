@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 19:06:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 13:28:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static void		load_world_data(int index, t_env *env)
 
 void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 {
-	scroll_menu(&s->current, k, 0, NB_BLOC_NG);
+	scroll_menu(&s->cur, k, 0, NB_BL_NG);
 	if (k[SDL_SCANCODE_RETURN])
 	{
-		s->current == 0 ? s->new_game = 1 : 0;
-		s->current == 1 ? s->load_menu = 1 : 0;
-		s->current == 2 ? s->options_menu = 1 : 0;
-		s->current == 3 ? s->quit = 1 : 0;
-		s->new_game || s->load_menu || s->options_menu ? s->current = 0 : 0;
+		s->cur == 0 ? s->new_game = 1 : 0;
+		s->cur == 1 ? s->load_menu = 1 : 0;
+		s->cur == 2 ? s->options_menu = 1 : 0;
+		s->cur == 3 ? s->quit = 1 : 0;
+		s->new_game || s->load_menu || s->options_menu ? s->cur = 0 : 0;
 	}
 	menu_btn_sound(e, k);
 }
@@ -64,22 +64,24 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
 	if (e->nb_games)
-		scroll_menu(&s->current, k, 0, e->nb_games);
-	else if (k[SDL_SCANCODE_LEFT] && s->current == 0)
-		s->current = e->nb_games;
-	else if (k[SDL_SCANCODE_RIGHT] && s->current == e->nb_games)
-		s->current = 0;
+		scroll_menu(&s->cur, k, 0, e->nb_games);
+	if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
+		s->cur = e->nb_games;
+	if (k[SDL_SCANCODE_RIGHT] && s->cur == e->nb_games)
+		s->cur = 0;
 	if ((k[SDL_SCANCODE_RETURN]))
 	{
-		if (s->current == 0 || s->current < e->nb_games)
+		if (s->cur < e->nb_games)
 		{
-			load_world_data(s->current, e);
+			load_world_data(s->cur, e);
 			s->inter = 1;
 			s->on = 0;
 			s->main_menu = 0;
+			e->curr_lvl = 0;
+			e->levels[s->cur]->tplay = SDL_GetTicks();
 		}
 		s->new_game = 0;
-		s->current = 0;
+		s->cur = 0;
 		!s->main_menu ? set_msc_menu(e, s) : 0;
 	}
 	menu_btn_sound(e, k);
@@ -87,21 +89,25 @@ void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 
 void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
-	scroll_menu(&s->current, k, 0, NB_BLOC_IG - 1);
-	if (k[SDL_SCANCODE_LEFT] && s->current == 0)
-		s->current = 3;
-	else if (k[SDL_SCANCODE_RIGHT] && s->current == 3)
-		s->current = 0;
+	Uint32	*t;
+
+	scroll_menu(&s->cur, k, 0, NB_BLOC_IG - 1);
+	if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
+		s->cur = 3;
+	else if (k[SDL_SCANCODE_RIGHT] && s->cur == 3)
+		s->cur = 0;
 	else if ((k[SDL_SCANCODE_RETURN]))
 	{
-		s->current == 0 ? create_save(e, s) : 0;
-		s->current == 1 ? s->options_menu = 1 : 0;
-		s->current == 2 ? s->main_menu = 1 : 0;
-		s->current == 3 ? s->on = !s->on : 0;
-		!s->options_menu && s->current ? s->ingame_menu = 0 : 0;
-		if (!s->ingame_menu && !s->main_menu)
+		s->cur == 0 ? create_save(e, s) : 0;
+		s->cur == 1 ? s->options_menu = 1 : 0;
+		s->cur == 2 ? s->main_menu = 1 : 0;
+		s->cur == 3 ? s->on = !s->on : 0;
+		!s->options_menu && s->cur ? s->ingame = 0 : 0;
+		if (!s->ingame && !s->main_menu)
 			set_msc_menu(e, s);
-		s->current = 0;
+		s->cur = 0;
+		t = &e->levels[e->curr_lvl]->tplay;
+		s->main_menu ? *t = SDL_GetTicks() - *t : 0;
 	}
 	menu_btn_sound(e, k);
 }
@@ -112,27 +118,18 @@ void	action_loadmenu(t_env *e, t_status *s, const Uint8 *k)
 	t_bloc	*b;
 
 	i = 0;
-	b = e->menu.save_game;
+	b = e->menu.save;
 	if (s->nb_save && s->nb_save < 6)
-		scroll_menu(&s->current, k, 0, s->nb_save);
+		scroll_menu(&s->cur, k, 0, s->nb_save);
 	else if (s->nb_save)
-	{
-		if (k[SDL_SCANCODE_DOWN] && s->current >= s->end && s->end < s->nb_save)
-		{
-			s->start++;
-			s->end++;
-		}
-		if (k[SDL_SCANCODE_UP] && s->current <= s->start && s->start > 1)
-		{
-			s->start--;
-			s->end--;
-		}
-	}
+		long_scroll_menu(s, k);
 	if (k[SDL_SCANCODE_RETURN])
 	{
-		s->current == 0 ? s->load_menu = 0 : 0;
-		while (b && ++i < s->nb_save && s->current != 0)
+		s->cur == 0 ? s->load_menu = 0 : 0;
+		while (b && ++i < s->nb_save && s->cur != 0)
 		{
+			if (i == s->cur)
+				//go select save
 			b = b->next;
 		}
 	}
@@ -141,27 +138,25 @@ void	action_loadmenu(t_env *e, t_status *s, const Uint8 *k)
 void	action_optionmenu(t_env *e, t_status *s, const Uint8 *k)
 {
 	if ((k[SDL_SCANCODE_UP] || k[SDL_SCANCODE_DOWN]) && !s->key_change)
-		scroll_menu(&s->current, k, 0, NB_OPT_MENU);
+		scroll_menu(&s->cur, k, 0, NB_OPT_MENU);
 	if (k[SDL_SCANCODE_LEFT] && !s->key_change)
 	{
-		s->current == 0 ? s->current = NB_OPT_KEY : 0;
-		s->current > I_OINVENTR && s->current != NB_OPT_KEY
-		? s->current -= I_OINVENTR : 0;
+		s->cur == 0 ? s->cur = NB_OPT_KEY : 0;
+		s->cur > I_OINVENTR && s->cur != NB_OPT_KEY
+		? s->cur -= I_OINVENTR : 0;
 	}
 	else if (k[SDL_SCANCODE_RIGHT] && !s->key_change)
 	{
-		s->current == NB_OPT_KEY ? s->current = 0 : 0;
-		s->current < I_OPICKOPN && s->current
-		? s->current += I_OINVENTR : 0;
+		(s->cur == NB_OPT_KEY) ? s->cur = 0 : 0;
+		(s->cur < I_OPICKOPN) && s->cur ? s->cur += I_OINVENTR : 0;
 	}
-	else if ((k[SDL_SCANCODE_RETURN])
-		&& !s->key_change && (s->current == NB_OPT_KEY
-		|| s->current == NB_OPT_KEY + 1))
+	else if ((k[SDL_SCANCODE_RETURN]) && !s->key_change
+		&& (s->cur == NB_OPT_KEY || s->cur == NB_OPT_KEY + 1))
 	{
-		s->current == NB_OPT_KEY ? s->options_menu = 0 : key_binding(&e->engine);
-		s->current = 0;
+		s->cur == NB_OPT_KEY ? s->options_menu = 0 : key_binding(&e->engine);
+		s->cur = 0;
 	}
 	else
-		change_option(e, s, k, &e->engine.keys[s->current]);
+		change_option(e, s, k, &e->engine.keys[s->cur]);
 	menu_btn_sound(e, k);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 20:26:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	green_gem(t_env *env)
 	{
 		if (env->time.t_green < 600 && !env->player.actions.is_shooting)
 		{
+			printf("coucou\n");
 			env->time.t_green++;
 			return (1);
 		}
@@ -149,12 +150,16 @@ int	purple_gem(t_env *env)
 int	handle_gems(t_env *env)
 {
 	if (blue_gem(env))
-		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON",
+			env->hud.font.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
 	if (green_gem(env))
-		ui_put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !", env->hud.text.text, (t_vtx){W / 1.3, H / 1.7}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !",
+			env->hud.font.text, (t_vtx){W / 1.3, H / 1.7}, W / 60, -1, -1});
 	if (red_gem(env))
-		ui_put_data(env, (t_font){RED, "Super Strength ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.6}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){RED, "Super Strength ON",
+			env->hud.font.text, (t_vtx){W / 1.3, H / 1.6}, W / 60, -1, -1});
 	if (purple_gem(env))
-		ui_put_data(env, (t_font){GOLD, "Invulnerability ON", env->hud.text.text, (t_vtx){W / 1.3, H / 1.5}, W / 60, -1, -1});
+		ui_put_data(env, (t_font){GOLD, "Invulnerability ON",
+			env->hud.font.text, (t_vtx){W / 1.3, H / 1.5}, W / 60, -1, -1});
 	return (1);
 }
