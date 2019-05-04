@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/03 03:12:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 22:18:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,60 @@ static void		initialisation_cursor(void)
 		doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
 }
 
+void	init_rsrc(t_env *e, int i)
+{
+	SDL_Surface	*img;
+	SDL_Rect	r;
+	t_bloc		fi;
+	void		(* const f[6])(t_env *) = {
+		&load_fonts,
+		&load_images,
+		&init_sounds,
+		&init_blocs_menu,
+		&init_hud,
+		&init_weapon};
+	const char	*state[6] = {"Loading fonts...", "Loading textures...",
+	"Loading sounds...", "Loading menu...", "Loading hud elements...",
+	"Loading weapons..."};
+	TTF_Font	*font;
+
+	e->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
+	if (!(font = lt_push(TTF_OpenFont(F_QTFY, 100), ttf_del)))
+		doom_error_exit("Doom_nukem error on TTF_OpenFont");
+	ft_bzero(&fi, sizeof(t_bloc));
+	img = load_image("./rsrc/img/menu/loadin.png");
+	r = (SDL_Rect){W / 5, H / 1.6, 0, H / 24};
+	fi.rect = (SDL_Rect){0, 0, W, H};
+	while (1)
+	{
+		draw_img(e, img, &fi);
+		// ui_put_data(e, (t_font){GOLD, "LOADING", font,
+		// 	(t_vtx){W / 3, H / 2}, W / 30, -1, -1});
+		if (++i < 6)
+		{
+			ui_draw_full_rect(e->sdl.surface, r, 0x47d147ff);
+			ui_put_data(e, (t_font){GOLD, state[i], font,
+				(t_vtx){W / 1.7, H / 1.4}, W / 50, -1, -1});
+			f[i](e);
+			r.w += (W / 1.5) / 6;
+		}
+		ui_draw_full_rect(e->sdl.surface, r, 0x47d147ff);
+		(i > 5) ? ui_put_data(e, (t_font){GREEN, "Loading completed", font,
+			(t_vtx){W / 1.7, H / 1.4}, W / 50, -1, -1}) : 0;
+		ui_put_data(e, (t_font){GOLD, "Continue", font,
+			(t_vtx){W / 1.1, H / 100}, W / 60, -1, -1});
+		SDL_WaitEvent(&e->sdl.event);
+		if (e->sdl.event.type == SDL_KEYDOWN)
+			break ;
+		SDL_UpdateTexture(e->sdl.texture, NULL,
+			e->sdl.surface->pixels, e->sdl.surface->pitch);
+		SDL_RenderCopy(e->sdl.renderer, e->sdl.texture, NULL, NULL);
+		SDL_RenderPresent(e->sdl.renderer);
+	}
+	lt_release((void**)&img);
+	lt_release((void**)&font);
+}
+
 void	init_env(int ac, char **av, t_env *env)
 {
 	ft_bzero(env, sizeof(t_env));
@@ -70,22 +124,7 @@ void	init_env(int ac, char **av, t_env *env)
 	initialisation_sound_text();
 	initialisation_cursor();
 
-	// init ressources
-	load_fonts(env);
-	load_images(env);
-	printf("time image: %u\n", SDL_GetTicks());
-	// init_strings(env, 0);
-	// printf("time string: %u\n", SDL_GetTicks());
-	init_sounds(env);
-	printf("time sound: %u\n", SDL_GetTicks());
-
-	// init game data
-	init_blocs_menu(env);
-	printf("time menu: %u\n", SDL_GetTicks());
-	init_hud(env);
-	printf("time hud hud: %u\n", SDL_GetTicks());
-	init_weapon(env);
-	printf("time wpn init: %u\n", SDL_GetTicks());
+	init_rsrc(env, -1);
 	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
 	printf("time enemies: %u\n", SDL_GetTicks());
 }

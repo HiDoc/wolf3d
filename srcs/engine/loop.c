@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 03:08:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 17:52:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static int		YourEventFilter(void *userdata, SDL_Event *event)
 int				sdl_loop(t_env *env)
 {
 	env->engine.player.vision.falling = 1;
-	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (!env->finish)
 	{
 		(!env->menu.status.on)
