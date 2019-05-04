@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 12:01:18 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 03:54:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:08:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	display_credits(t_env *e)
 		{
 			draw_img(e, e->world.surfaces.img_menu[I_ENDGAME].sprite, &f);
 			stats_endgame(e);
-			print_stats(e, W / 60,
-				(t_vtx){W / 3.9, W / 1.7}, (t_vtx){H / 4.5, H / 18});
+			// print_stats(e, W / 60,
+			// 	(t_vtx){W / 3.9, W / 1.7}, (t_vtx){H / 4.5, H / 18});
 		}
 		if (e->menu.status.endgame == 1)
 			draw_img(e, e->world.surfaces.img_menu[I_CREDITS].sprite, &f);
