@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 14:24:05 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 18:07:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	click_event(t_env *env)
 
 	if (ui_mouseenter(m.x, m.y, get_element(M_B_START, env)->rect))
 	{
+		//if (env->menu.state == 2)
+		//	free wip
 		if (env->menu.dropdown.current)
 		{
 			printf("do parsing : %s\n", env->menu.dropdown.current->str);

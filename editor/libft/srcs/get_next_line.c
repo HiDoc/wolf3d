@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 14:10:24 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 02:08:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 18:02:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int		ft_subjoinfree(char **line, char *buf, int i)
 		i++;
 	temp = *line;
 	temp2 = ft_strsub(buf, 0, i);
-	if (!(*line = ft_strjoin(*line, temp2)))
+	if (!(*line = lt_push(ft_strjoin(*line, temp2), ft_memdel)))
 		return (-1);
-	free(temp);
-	free(temp2);
+	lt_release((void **)&temp);
+	lt_release((void **)&temp2);
 	return (i);
 }
 
