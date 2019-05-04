@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:31:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:42:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,41 @@ static void		display_grid(t_env *env)
 	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 
 	i = 0;
-	while (i < 250)
+	while (i < 500)
 	{
-		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-
-		vec.a = (t_pos){
-			origin.x + (i + translate.x - (250 / 2)) * env->grid_scale,
-			rect.y};
-		vec.b = (t_pos){
-			origin.x + (i + translate.x - (250 / 2)) * env->grid_scale,
-			rect.y + rect.h};
-
-		if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
-			ui_make_line(env->data->surface, vec, color);
+		if (i % 2 == 0)
+		{
+			color = (i % 10 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+	
+			vec.a = (t_pos){
+				origin.x + (i + translate.x - (500 / 2)) * env->grid_scale,
+				rect.y};
+			vec.b = (t_pos){
+				origin.x + (i + translate.x - (500 / 2)) * env->grid_scale,
+				rect.y + rect.h};
+	
+			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
+				ui_make_line(env->data->surface, vec, color);
+		}
 		i++;
 	}
 	i = 0;
-	while (i < 250)
+	while (i < 500)
 	{
-		color = (i % 5 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-
-		vec.a = (t_pos){
-			rect.x,
-			origin.y + (i + translate.y - (250 / 2)) * env->grid_scale};
-		vec.b = (t_pos){
-			rect.x + rect.w,
-			origin.y + (i + translate.y - (250 / 2)) * env->grid_scale};
-
-		if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
-			ui_make_line(env->data->surface, vec, color);
+		if (i % 2 == 0)
+		{
+			color = (i % 10 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
+	
+			vec.a = (t_pos){
+				rect.x,
+				origin.y + (i + translate.y - (500 / 2)) * env->grid_scale};
+			vec.b = (t_pos){
+				rect.x + rect.w,
+				origin.y + (i + translate.y - (500 / 2)) * env->grid_scale};
+	
+			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
+				ui_make_line(env->data->surface, vec, color);
+		}
 		i++;
 	}
 	ui_make_rect(env->data->surface, get_element(E_R_RECT, env)->rect, C_WHITE);

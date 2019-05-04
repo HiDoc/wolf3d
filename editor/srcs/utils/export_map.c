@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 15:17:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:54:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void        export_map(t_env *env)
 		ui_error_exit_sdl("Editor: Error while opening file");
 	lt_release((void**)&path);
 
+	int		xmin = 0;
+	int		ymin = 0;
+
+	vtx = env->editor.vertex;
+	while (vtx)
+	{
+		if (vtx->pos.x < xmin)
+			xmin = vtx->pos.x;
+		if (vtx->pos.y < ymin)
+			ymin = vtx->pos.y;
+		vtx = vtx->next;
+	}
+
 	// map name
 	ft_putendl_fd("# map name", fd);
 	ft_putendl_fd(env->map_name, fd);
@@ -48,7 +61,7 @@ void        export_map(t_env *env)
 	{
 		vtx->id = i;
 		dprintf(fd, "v %d %d\n",
-		(int)(vtx->pos.x), (int)(vtx->pos.y));
+		(int)(vtx->pos.x - xmin), (int)(vtx->pos.y - ymin));
 		vtx = vtx->next;
 		i++;
 	}
@@ -88,7 +101,7 @@ void        export_map(t_env *env)
 	{
 		if (obj->dd != DD_NTTY && obj->dd != DD_SPEC)
 			dprintf(fd, "o %d %d %d %d %d\n",
-			(int)obj->pos.x, (int)obj->pos.y,
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin,
 			obj->sct->id, obj->ref, obj->iswpn);
 		obj = obj->next;
 	}
@@ -100,7 +113,8 @@ void        export_map(t_env *env)
 	{
 		if (obj->dd == DD_NTTY)
 			dprintf(fd, "e %d %d %d %d\n",
-			(int)obj->pos.x, (int)obj->pos.y, obj->sct->id, obj->ref);
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin,
+			obj->sct->id, obj->ref);
 		obj = obj->next;
 	
 	}
@@ -113,7 +127,8 @@ void        export_map(t_env *env)
 		if (obj->dd == DD_SPEC)
 		{
 			dprintf(fd, "p %d %d %d %d\n",
-			(int)obj->pos.x, (int)obj->pos.y, (int)obj->dir, obj->sct->id);
+			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin,
+			(int)obj->dir, obj->sct->id);
 			break ;
 		}
 		obj = obj->next;
