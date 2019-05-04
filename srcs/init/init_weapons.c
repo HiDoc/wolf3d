@@ -16,7 +16,7 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 {
 	SDL_Surface	*sprite;
 
-	sprite = ui_img(file, i);
+	sprite = ui_img(file, i, 0);
 	bloc->sprite = make_surface(W, H);
 	img_scaled_copy(sprite, bloc->sprite);
 	bloc->rect = (SDL_Rect){0, 0, W, H};

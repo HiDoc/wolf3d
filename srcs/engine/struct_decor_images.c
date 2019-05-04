@@ -19,7 +19,7 @@ int	init_doors_images(t_env *env)
 	i = 0;
 	while (i < NB_DOOR_IMG)
 	{
-		if (!(env->world.surfaces.doors[i].sprite = ui_img("decor/door/", i)))
+		if (!(env->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
 			return (0);
 		i++;
 	}
