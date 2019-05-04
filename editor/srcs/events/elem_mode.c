@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 14:06:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:07:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,26 @@ int				elem_mode(t_env *env)
 		{
 			if (env->editor.spawn_set == 1)
 			{
-				env->editor.objects->dir = atan(
-				(m.y - env->editor.spawn_pos.y)
-				/ (m.x - env->editor.spawn_pos.x));
-				env->editor.objects->dir = env->editor.objects->dir * 180 / M_PI;
-				//printf("[%f]\n",  env->editor.objects->dir);
+				float		angle;
+				t_pos b = (t_pos){m.x, m.y};
+				t_pos a = (t_pos){env->editor.spawn_pos.x,
+						env->editor.spawn_pos.y};
+				angle = 0;
+				if (a.x < b.x)
+				{
+					if (a.y > b.y)
+						angle = atan((a.y - b.y) / (b.x - a.x));
+					else
+						angle = 2 * M_PI - atan((b.y - a.y) / (b.x - a.x));
+				}
+				else if (a.x > b.x)
+				{
+					if (a.y > b.y)
+						angle = M_PI / 2 + atan((a.x - b.x) / (a.y - b.y));	
+					else
+						angle = (M_PI + M_PI / 2) - atan((a.x - b.x) / (b.y - a.y));	
+				}
+				env->editor.objects->dir = angle;
 				env->editor.spawn_dir = env->editor.objects->dir;
 				env->editor.spawn_set = 2;
 				return (1);

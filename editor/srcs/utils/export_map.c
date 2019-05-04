@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 15:54:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:10:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,10 @@ void        export_map(t_env *env)
 		if (obj->dd == DD_SPEC)
 		{
 			dprintf(fd, "p %d %d %d %d\n",
-			(int)obj->pos.x - xmin, (int)obj->pos.y - ymin,
-			(int)obj->dir, obj->sct->id);
+			(int)obj->pos.x - xmin,
+			(int)obj->pos.y - ymin,
+			(int)(obj->dir * 180 / M_PI),
+			obj->sct->id);
 			break ;
 		}
 		obj = obj->next;

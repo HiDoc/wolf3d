@@ -1,7 +1,6 @@
 # aide fmadura
 BUG : hovering : curseur sur la ligne des sommets d'un secteur, \
 	  fonction math/intersect_vtx truc
-BUG : angle du spawn
 BUG : fix edge hover
 BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
 # aide tblaudez
@@ -25,8 +24,6 @@ PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 * TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 * TOCHECK : pertinance de garder enum e_type
 * PROTEC : set min edge size for split edge
-
-[03] TODO : update export
 
 [04] TODO : une seule porte de fin ou monstre de fin
 [03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 16:03:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:03:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ struct					s_editor
 	int				onespawn;	// un spawn a deja ete pose
 	int				spawn_set;	// spawn pose, en attente de direction
 	t_pos			spawn_pos;	// absolute pos	// pour calcul angle
-	int				spawn_dir;	// direction spawn
+	float			spawn_dir;	// direction spawn
 
 	int				drawing;		// am i drawing an edge
 };

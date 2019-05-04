@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 15:42:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:06:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ static void		display_objects(t_env *env)
 			{
 				// spawn dir
 				ui_draw_vector(env->data->surface, pos,
-				env->editor.spawn_dir, 0, 10, C_WHITE);
+				env->editor.spawn_dir, 10, C_WHITE);
 			}
 		}
 		obj = obj->next;
