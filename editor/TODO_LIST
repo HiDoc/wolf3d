@@ -1,14 +1,5 @@
-
-SEGV :	#0 0x102bd8d93 in create_sector create_sector.c:37
-		#1 0x102ba2641 in draw_mode draw_mode.c:43
-	    #2 0x102ba8905 in handle_events handle_events.c:154
-		#3 0x102b8d298 in ui_get_events ui_get_events.c:30
-		#4 0x102b950ad in ui_gameloop ui_gameloop.c:21
-		#5 0x102b8cc52 in main main.c:22
-		#6 0x7fff91928234 in start (libdyld.dylib:x86_64+0x5234)
-
-*FLO* BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
-*FLO* BUG : angle du spawn
+BUG : hovering : curseur sur la ligne des sommets d'un secteur, fonction math/intersect_vtx truc
+BUG : angle du spawn
 BUG : execve ./doom completement KC
 BUG : bloquer value max des input
 BUG : input del bugge avec le refactor dans utils.c
@@ -16,6 +7,14 @@ BUG : draw mode : create vertex in sector close to edge
 BUG : coherence mouse mode (ex: change mouse mode while drawing)
 BUG : fix edge hover
 BUG : color of error_msg
+BUG : taille du nom des object depasse du carre
+BUG : coherence retour menu - start - cancel
+BUG : fix and finish input ceil/floor/gravity
+BUG : edge size n'est pas update si split, moving etc...
+BUG : calcul de l'angle spawn
+BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
+BUG : pose obj + select this object
+BUG : makefile recompile pas la libft
 
 LEAK: protect gnl
 
@@ -24,45 +23,48 @@ TOCHECK : delete sector, check si l'index qui ne change pas pose probleme
 TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si le get elem du rect interface a bien ete remplace partout
 TOCHECK : si toutes les surfaces sont cree en RGB32 au meme endroit
+TOCHECK : possible de remettre un spawn si il a ete suprime ?
+TOCHECK : il se passe quoi si wall obj sur portal ?
+TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
+TOCHECK : si export quand un secteur n'est pas encore clos
+TOCHECK : pertinance de garder enum e_type
 
 PROTEC : set min edge size for split edge
+PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 
-OPTI :	minmax sync
-OPTI :	multithreading
-OPTI :	corriger le reframes inutiles
+* [03] TODO : SEGV + fix inputs
+* [03] TODO : debug relier element et buttons display on dropdown lists
+* [03] TODO : interface element clipping
+* [03] TODO : front design selected / hovered color and stuff / color on errmsg
+* [03] TODO : door is a sector
+* [03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
+* [03] TODO : empecher export si edge du meme sct overlap
+* [03] TODO : refactor events
+* [03] TODO : wall object dock
+* [03] TODO : grid : limite left / bot
+* [03] TODO : update export
+* [03] TODO : s'occuper de PROTEC/BUG/LEAK
+* [03] TODO : check coherence du programme et du fonctionnemenet des features
 
-TODO :	walls : texture par walls
-TODO :	modifs texture edge en selection
+[04] TODO :	parsing : parsing todo
+[04] OPTI :	minmax sync
+[04] OPTI :	multithreading
+[04] OPTI :	corriger le reframes inutiles
 
-TODO :	music & skybox
-TODO :	floor / ceil casting texture
+[05] TODO : details et finitions
+[05] TODO :	beta testing
+[05] TODO :	norme : total norme
 
-TODO :	display size selected edge
-TODO :	interface element clipping
-TODO :	spawn : display line on spawn direction
-TODO :	grid : limite left / bot
-
-TODO :	refactor liste deroulantes sur interface modes
-TODO :	bloquer split / door / fdor si c'est une door
-TODO :	bloquer modif size de vertex door
-TODO :	bloquer les croisement de sectors // soluce : bloquer la sauvegarde
-TODO :	bloquer les sorties d'object lors d'un edit de sector
-TODO :	front design selected / hovered color and stuff
-
-TODO :	parsing : parsing todo
-TODO :	update export
-
-TODO :	refactor : total cleaning
-TODO :	beta testing
-TODO :	norme : total norme
-
-OPTIONAL :	floor / ceil casting texture per sector
+OPTIONAL :	play preview background audio on misc
+OPTIONAL :	texture per door
+OPTIONAL :	menu preview
+OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
 OPTIONAL :	wheel scroll pas precis sur la souris
 OPTIONAL :	shift pour tracer ligne horizontale ou verticale
-OPTIONAL :	set cursor middle of grid
+OPTIONAL :	set crosshair middle of grid
+OPTIONAL :	zoom on cursor
 OPTIONAL :	sector move
 OPTIONAL :	docking vertex using vtx move, between two sct
 OPTIONAL :	revoir coherence deleting sector conected with another one
 OPTIONAL :	objects : prefabs
 OPTIONAL :	floodfill on sectors with ceil casting
-OPTIONAL :	front design

@@ -36,7 +36,7 @@ void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
 
 	if ((SDL_BlitScaled(surface, 0, dst_surface, &rect)) < 0)
 		doom_error_exit("Doom_nukem: Blit error on ui_draw_string");
-	lt_release(surface);
+	lt_release((void**)&surface);
 }
 
 void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
@@ -75,7 +75,7 @@ SDL_Surface	*str_join_text(t_font data)
 		strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r));
 	str_data = (t_font){data.color, (strjoin) ? strjoin : data.str, data.font, {0, 0}, 0, 0, 0};
 	new = make_string(str_data);
-	lt_release(strjoin);
+	lt_release((void**)&strjoin);
 	return (new);
 }
 
@@ -114,5 +114,5 @@ void    		ui_put_data(t_env *env, t_font data)
 
 	surface = str_join_text(data);
 	draw_scaled_string(env->sdl.surface, data, surface, (t_vtx){0, 0});
-	lt_release(surface);
+	lt_release((void**)&surface);
 }

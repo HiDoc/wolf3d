@@ -76,12 +76,12 @@ SDL_Surface	*ui_img(char *file, int i)
 	nb = ft_itoa(i + 1);
 	path = ft_strjoin("./rsrc/img/", file);
 	final_path = ft_strjoin(path, nb);
-	lt_release(path);
-	lt_release(nb);
+	lt_release((void**)&path);
+	lt_release((void**)&nb);
 	path = ft_strjoin(final_path, (char *)png);
 	new = load_image(path);
-	lt_release(final_path);
-	lt_release(path);
+	lt_release((void**)&final_path);
+	lt_release((void**)&path);
 	return (new);
 }
 

@@ -6,19 +6,73 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 12:39:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:54:24 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		display_error_msg(char *msg, t_env *env)
+t_elem			*get_element_by_ref(int ref, int dd, t_env *env)
 {
-	if (env->editor.error_msg)
-		lt_release(env->editor.error_msg);
-	env->editor.timestamp = time(0);
-	if (!(env->editor.error_msg = lt_push(ft_strdup(msg), ft_memdel)))
-		ui_error_exit_sdl("Editor: out of memory on delete_vertex");
+	t_elem		*elem;
+
+	elem = env->editor.dropdown[dd].start;
+	while (elem)
+	{
+		if (elem->ref == ref)
+			return (elem);
+		elem = elem->next;
+	}
+	return (0);
+}
+
+t_elem			*get_dd_element(int id, int dd, t_env *env)
+{
+	t_elem		*elem;
+	int			i;
+
+	i = 0;
+	elem = env->editor.dropdown[dd].start;
+	while (elem && i < id)
+	{
+		elem = elem->next;
+		i++;
+	}
+	return (elem);
+}
+
+int				shared_vtx(t_vtx *vtx, t_sct *current)
+{
+	t_w_vtx		*w_vtx;
+
+	w_vtx = current->w_vtx_start;
+	while (w_vtx)
+	{
+		if (w_vtx->vtx == vtx)
+			return (1);
+		w_vtx = w_vtx->next;
+	}
+	return (0);
+}
+
+/*
+**	Return 0 if an object is not in a sector
+*/
+
+int			refresh_object_sct(t_env *env)
+{
+	t_object	*obj;
+	int			ret;
+
+	ret = 1;
+	obj = env->editor.objects;
+	while (obj)
+	{
+		if (!(obj->sct = target_sector(obj->pos, env)))
+			ret = 0;
+		obj = obj->next;
+	}
+	return (ret);
 }
 
 t_pos		vtx_transform(t_pos pos, t_env *env)
@@ -58,7 +112,7 @@ void			sync_sct_minmax(t_env *env)
 	t_sct		*sct;
 	t_w_vtx		*w_vtx;
 
-	sct = env->sct_start;
+	sct = env->editor.sct_start;
 	while (sct)
 	{
 		w_vtx = sct->w_vtx_start;
@@ -72,37 +126,6 @@ void			sync_sct_minmax(t_env *env)
 		}
 		sct = sct->next;
 	}
-}
-
-float	pythagore(t_pos p1, t_pos p2)
-{
-	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
-}
-
-t_pos			get_edge_center(t_pos a, t_pos b)
-{
-	t_pos	center;
-
-	center.x = (a.x + b.x) / 2;
-	center.y = (a.y + b.y) / 2;
-	return (center);
-}
-
-/*
-** Determine which side of a line the point is on.
-** Return value: left < 0, on line 0, right > 0.
-*/
-
-float		pointside(t_pos p, t_pos p0, t_pos p1)
-{
-	t_pos	res1;
-	t_pos	res2;
-	float	res;
-
-	res1 = (t_pos){p1.x - p0.x, p1.y - p0.y};
-	res2 = (t_pos){p.x - p0.x, p.y - p0.y};
-	res = res1.x * res2.y - res2.x * res1.y;
-	return (res);
 }
 
 /*
@@ -119,7 +142,7 @@ int		input_add(int elem, char *key, t_env *env)
 		if (!(get_element(elem, env)->str =
 		lt_push(ft_zstrjoin(get_element(elem, env)->str, key), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
-		lt_release(tmp);
+		lt_release((void**)&tmp);
 		return (1);
 	}
 	return (0);
@@ -141,7 +164,7 @@ int		input_del(int elem, t_env *env)
 			get_element(elem, env)->str[newsize] = 0;
 		else
 		{
-			lt_release(get_element(elem, env)->str);
+			lt_release((void**)&get_element(elem, env)->str);
 			return (0);
 		}
 	}
@@ -160,11 +183,6 @@ int		ft_strchri(char *str, char c)
 		count++;
 	}
 	return (-1);
-}
-
-int		poscmp(t_pos a, t_pos b)
-{
-	return (a.x == b.x && a.y == b.y);
 }
 
 char	*ft_zstrjoin(char *s1, char *s2)

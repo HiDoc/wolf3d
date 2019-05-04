@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 12:01:18 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 13:08:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:33:31 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ void		draw_inter(t_env *e, int l)
 	ref = (l % NB_INTER_IMG) + I_INTER1;
 	ft_bzero(&f, sizeof(t_bloc));
 	f.rect = (SDL_Rect){0, 0, W, H};
-	draw_img(e,
-		e->world.surfaces.img_menu[ref].sprite, &f);
+	draw_img(e, e->world.surfaces.img_menu[ref].sprite, &f);
 	ui_put_data(e, (t_font){M_WHITE, "Continue",
 		e->hud.font.quantify, (t_vtx){W / 1.1, H / 100}, W / 60, -1, -1});
-	ui_put_data(e, (t_font){M_WHITE, e->levels[l % 3]->text_start,
+	ui_put_data(e, (t_font){M_WHITE, e->levels[l % 3]->text,
 		e->hud.font.text, (t_vtx){0, H / 1.2}, W / 40, -1, -1});
 }
 
@@ -46,8 +45,8 @@ void	stats_endgame(t_env *e)
 		string = ft_strljoin(string, t);
 		ui_put_data(e, (t_font){GOLD, string, e->hud.font.text,
 			pos, W / 40, -1, -1});
-		lt_release(t);
-		lt_release(string);
+		lt_release((void**)&t);
+		lt_release((void**)&string);
 		pos.y += H / 18;
 	}
 }

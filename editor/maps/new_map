@@ -1,16 +1,6 @@
 # map name
 new_map
+# game misc: music skybox
+music skybox
 # vertex: x y
-vertex 34 0
-vertex 0 23
-vertex 23 40
-vertex 43 15
-# sector: ceil floor n-vertex n-neighbors
-sector /**/ /**//**/
-# wall_object: x y sector ref
-# consumable: x y sector ref is_wpn
-# entity: x y sector ref
-entity 25 16 /**/ /**/
-entity 19 16 /**/ /**/
-entity 25 10 /**/ /**/
-# special: x y ref
+# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx

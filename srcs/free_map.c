@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:55:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/30 14:49:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:30:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,30 @@ static void		free_sct(t_sector *sct, t_env *env)
 	i = 0;
 	while (i < (int)sct->npoints + 1)
 	{
-		lt_release(&(sct->vertex[i]));
+		lt_release((void**)&(sct->vertex[i]));
 		i++;
 	}
 	i = 0;
 	while (i < (int)sct->npoints)
 	{
-		lt_release(&(sct->neighbors[i]));
+		lt_release((void**)&(sct->neighbors[i]));
 		i++;
 	}
 	w_sect = sct->head_object;
 	while (w_sect)
 	{
 		ws_tmp = w_sect->next;
-		lt_release(w_sect);
+		lt_release((void**)&w_sect);
 		w_sect = ws_tmp;;
 	}
 	w_enemy = sct->head_enemy;
 	while (w_enemy)
 	{
 		we_tmp = w_enemy->next;
-		lt_release(w_enemy);
+		lt_release((void**)&w_enemy);
 		w_enemy = we_tmp;
 	}
-	lt_release(&(env->engine.sectors[i]));
-	// ft_bzero(&(env->engine.sectors[i]), sizeof(t_sector));
+	lt_release((void**)&(env->engine.sectors[i]));
 }
 
 void	free_map(t_env *env)

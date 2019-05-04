@@ -34,7 +34,7 @@ void	*lt_push(void *ptr, void (*f)(void **))
 	return (ptr);
 }
 
-void	lt_release(void *ptr)
+void	lt_release(void **ptr)
 {
 	t_lt	*lifetime;
 	t_lt	*tmp;

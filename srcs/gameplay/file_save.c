@@ -21,7 +21,7 @@ static void	concat_data(char **d, int nb, int endflag, char *entete)
 	entete ? tmp = ft_strrjoin(entete, tmp) : 0;
 	tmp = !endflag ? ft_strljoin(tmp, ":") : ft_strljoin(tmp, "\n");
 	*d = *d ? ft_strljoin(*d, tmp) : ft_strdup(tmp);
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 }
 
 static void	print_data(int fd, char **data)
@@ -29,7 +29,7 @@ static void	print_data(int fd, char **data)
 	if (*data)
 	{
 		write(fd, *data, ft_strlen(*data));
-		lt_release(*data);
+		lt_release((void**)&*data);
 		*data = NULL;
 	}
 }
@@ -46,10 +46,10 @@ void	save_data_file(t_env *e, char *name)
 	if ((fd = open(data, O_CREAT | O_TRUNC | O_WRONLY,
     	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 		doom_error_exit("Doom_nukem error on create file save");
-	lt_release(data);
+	lt_release((void**)&data);
 	data = NULL;
 	ft_putendl_fd(tmp, fd);
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 	ft_putendl_fd(name, fd);
 	concat_data(&data, e->engine.player.sector, 0, "#p:");
 	concat_data(&data, e->player.health, 0, NULL);

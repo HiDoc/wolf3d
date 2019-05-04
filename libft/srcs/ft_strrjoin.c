@@ -20,7 +20,7 @@ char	*ft_strrjoin(char *s1, char *s2)
 	if (s1 != NULL && s2 != NULL)
 	{
 		new = ft_strjoin(s1, s2);
-		lt_release(s2);
+		lt_release((void**)&s2);
 	}
 	return (new);
 }

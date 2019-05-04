@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 02:04:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:28:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		load_world_data(int index, t_env *env)
 	while ((get_next_line(fd, &line)) > 0 && i < index)
 	{
 		(line[0] == '#') ? i++ : 0;
-		lt_release(line);
+		lt_release((void**)&line);
 	}
 	env->nb_levels = ft_atoi(line);
 	env->levels = ft_memalloc(sizeof(t_level *) * (env->nb_levels + 1));
@@ -36,17 +36,12 @@ static void		load_world_data(int index, t_env *env)
 		if ((get_next_line(fd, &line)) < 0)
 			doom_error_exit("Doom_nukem: out of memory in load_world_data");
 		env->levels[i]->index = ft_atoi(line);
-		lt_release(line);
+		lt_release((void**)&line);
 
 		if ((get_next_line(fd, &line)) < 0)
 			doom_error_exit("Doom_nukem: out of memory in load_world_data");
-		env->levels[i]->text_start = ft_strdup(line);
-		lt_release(line);
-
-		if ((get_next_line(fd, &line)) < 0)
-			doom_error_exit("Doom_nukem: out of memory in load_world_data");
-		env->levels[i]->text_end = ft_strdup(line);
-		lt_release(line);
+		env->levels[i]->text = ft_strdup(line);
+		lt_release((void**)&line);
 		i++;
 	}
 	close(fd);

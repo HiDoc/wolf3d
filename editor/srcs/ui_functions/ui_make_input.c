@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 11:02:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 01:15:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:30:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void		ui_make_input(SDL_Surface *surface, t_elem *elem, t_data *data)
 		elem->str_max = (rect.w + rect.h > elem->rect.w) ? 1 : 0;
 		if ((SDL_BlitScaled(srf, 0, data->surface, &rect)) < 0)
 			ui_error_exit_sdl("Libui: blit error in ui_make_input");
-		lt_release(srf);
+		lt_release((void**)&srf);
 	}
 }

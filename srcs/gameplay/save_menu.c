@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 01:40:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:36:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ char	*time_to_str(Uint32 times)
 	name = ft_strljoin(t, " h ");
 	t = ft_itoa(min);
 	name = ft_strljoin(name, t);
-	lt_release(t);
+	lt_release((void**)&t);
 	t = ft_itoa(sec);
 	name = ft_strljoin(name, " mn ");
 	name = ft_strljoin(name, t);
 	name = ft_strljoin(name, " sec");
-	lt_release(t);
+	lt_release((void**)&t);
 	return (name);
 }
 

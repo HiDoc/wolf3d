@@ -46,8 +46,8 @@ int		main(int ac, char **av)
 		action_endlevel(&env, env.curr_lvl);
 		/* free level */
 		free_map(&env);
-		lt_release(env.engine.minimap.surface);
-		lt_release(env.engine.minimap.background);
+		lt_release((void**)&env.engine.minimap.surface);
+		lt_release((void**)&env.engine.minimap.background);
 
 		env.curr_lvl++;
 	}

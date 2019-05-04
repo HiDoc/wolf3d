@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 12:41:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:36:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ enum					e_type
 	BUTTON,
 	RECT
 };
-
-/*
-** M_ : MENU
-** E_ : EDITOR
-** _I : INPUT
-** _B : BUTTON
-** _ELM_ : element page
-*/
 
 enum					e_elements
 {
@@ -45,28 +37,32 @@ enum					e_elements
 	E_B_PLAY,
 	E_B_ELM_UP,
 	E_B_ELM_DOWN,
+	E_B_DRW_UP,
+	E_B_DRW_DOWN,
 	E_B_ELM_OBWL,
 	E_B_ELM_CONS,
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
 	E_B_SELEC_DEL,
-	E_I_SELEC_HEIGHT,
+	E_I_SELEC_HCEIL,
+	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,
 	E_B_SELEC_SPLIT,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
+	E_B_SELEC_M_WALL_UP,
+	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
-	E_B_SELEC_SKY
-};
-
-enum					e_obj_category
-{
-	WALL_OBJ,
-	CONSUMABLE,
-	ENTITY,
-	PREFAB,
-	SPECIAL
+	E_B_SELEC_SKY,
+	E_B_SELEC_CEILTX,
+	E_B_SELEC_FLOORTX,
+	E_B_SELEC_TX_UP,
+	E_B_SELEC_TX_DOWN,
+	E_B_SELEC_MUSIC,
+	E_B_SELEC_SBTX,
+	E_B_SELEC_MISC_UP,
+	E_B_SELEC_MISC_DOWN
 };
 
 typedef struct	s_w_vtx		t_w_vtx;
@@ -74,6 +70,7 @@ typedef struct  s_vtx   	t_vtx;
 typedef struct  s_sct   	t_sct;
 typedef struct	s_elem		t_elem;
 typedef struct	s_object	t_object;
+typedef struct	s_dropdown	t_dropdown;
 typedef struct	s_menu		t_menu;
 typedef struct	s_editor	t_editor;
 typedef struct  s_env   	t_env;
@@ -82,6 +79,10 @@ struct					s_w_vtx
 {
 	int			fdoor;	// is final door
 	int			door;	// is door
+
+	int			ref;	// texture ref
+	int			size;	// size edge
+
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
@@ -103,33 +104,35 @@ struct					s_sct
 
 	int				close;		// is sector close;
 
-	int				height;
+	int				ceil;		// hauteur ceil
+	int				floor;		// hauteur floor
 	int				gravity;
-
-	int				roof;		// ceil or sky : 0 / 1
 
 	float			xmin;
 	float			xmax;
 	float			ymin;
 	float			ymax;
 
-	Uint32			color;
+	Uint32			color;		// ?
 
 	t_sct			*next;
 };
 
 struct					s_elem
 {
-	int				ref;		// if btn object
+	int				ref;
 	int				id;
 	int				type;
+	int				dd;			// dropdown (if part of dropdown)
 	SDL_Rect		rect;
 	Uint32			color;
 	SDL_Surface		*image;
 	char			*str;		// if type == input
 	int				str_max;	// if type == input
+
 	int				clicked;
-	int				hovered;
+	int				hovered; // delete if not used ?
+
 	t_elem			*next;
 };
 
@@ -140,39 +143,71 @@ struct					s_object
 
 	t_sct			*sct;
 	int				ref;
-	int				category;
+	int				dd;		// dropdown
 	char			*name;
 
 	Uint32			icon_color; // replace by image
 	t_object		*next;
 };
 
+enum					e_dropdowm_name
+{
+	DD_WALLTX,
+	DD_MWALLTX,
+	DD_SBTX,
+	DD_BGAUDIO,
+	DD_CEILTX,
+	DD_FLOORTX,
+	DD_WOBJ,
+	DD_CONS,
+	DD_NTTY,
+	DD_PRFB,
+	DD_SPEC,
+	DD_MAPS
+};
+
+struct					s_dropdown
+{
+	int				nb_element;
+	int				idx_element;
+	t_elem			*start;
+	t_elem			*current;
+};
+
 struct					s_menu
 {
 	int				state;
-	int				nb_maps;
-	int				idx_map;
-	t_elem			*btn_maps;		// upload list
-	t_elem			*selected;		// upload selected
+	t_dropdown		dropdown;
 	SDL_Surface		*background;
 };
 
 struct					s_editor
 {
-	time_t			timestamp;	// error_msg timestamp
+	// lst vertex
+	t_vtx			*vertex;
+	// lst sectors
+	t_sct			*sct_current;
+	t_sct			*sct_start;
+	// lst objects
+	t_object		*objects;
+
+	// Error message
+	time_t			timestamp;
 	char			*error_msg;
+
+	// editor dropdown lists
+	t_dropdown		dropdown[12];
 
 	// mouse handling
 	int				mouse_mode;
 
-	// wall textures
-	int             nb_wall_txtr;
-	int             idx_wall_txtr;
-	char            **wall_txtr;
-
 	// drag vertex;
 	int				mouse_drag;
 	t_pos			new_pos;
+
+	// selected element category
+	t_elem			*curr_elem_btn;
+	int				curr_elem_dd;
 
 	// grid move
 	int				grid_drag;
@@ -191,10 +226,11 @@ struct					s_editor
 	t_sct			*sct_select;
 	t_object		*obj_select;
 
-	// size current edge draw
-	int				vtx_size;
+	int				onespawn;	// un spawn a deja ete pose
+	int				spawn_set;	// spawn pose, en attente de direction
+	t_pos			spawn_pos;	// absolute pos	// pour calcul angle
+	int				spawn_dir;	// direction spawn
 
-	// state
 	int				drawing;		// am i drawing an edge
 };
 
@@ -207,22 +243,8 @@ struct					s_env
 
 	char			*map_name;
 
-	// lst vertex
-	t_vtx			*vertex;
-	// lst sectors
-	t_sct			*sct_current;
-	t_sct			*sct_start;
-	// lst objects
-	t_object		*objects;
 	// lst elements
-	t_elem			*elements;
-	// lst button objects
-	t_elem			*btn_objs;
-
-	// current elem / objects flags
-	t_elem			*obj_elem;	// obj selectionne
-	int				spawn_set;	// spawn pose, en attente de direction
-	int				obj_mode;	// 0/1/2/3/4 wall/cons/ntty/prfb/spe
+	t_elem			*elements;	// ui elements
 
 	// variables
 	float			grid_scale;

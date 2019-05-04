@@ -36,9 +36,9 @@ static void			enemy_sprite(t_character *enemy, char *name)
 	enemy->walk = enemy_fill(w_path, enemy->time_walk);
 	enemy->shoot = enemy_fill(s_path, enemy->time_shoot);
 	enemy->death = enemy_fill(d_path, enemy->time_death);
-	lt_release(w_path);
-	lt_release(s_path);
-	lt_release(d_path);
+	lt_release((void**)&w_path);
+	lt_release((void**)&s_path);
+	lt_release((void**)&d_path);
 }
 
 static void			enemy_set(char *name, t_character *enemy, t_brain b)

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/18 21:27:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 14:24:05 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,25 @@ static void		reset_values(t_env *env)
 	get_element(M_I_NEW, env)->color = C_WHITE;
 
 	// reset menu upload
-	env->menu.selected = 0;
+	if (env->menu.dropdown.current)
+	{	
+		env->menu.dropdown.current->clicked = 0;
+		env->menu.dropdown.current = 0;
+	}
 }
 
-static int	click_event(t_env *env)
+static void	click_event(t_env *env)
 {
-	SDL_Rect		rect;
-	t_elem			*obj_map = env->menu.btn_maps;
+	t_elem			*obj_map = env->menu.dropdown.start;
 	const t_pos		m = env->data->mouse;
 	const SDL_Rect	r_upload = (SDL_Rect){
 	WIN_W / 2 - 400 + 10, WIN_H / 2 - 225 + 120, 350, 320};
 
 	if (ui_mouseenter(m.x, m.y, get_element(M_B_START, env)->rect))
 	{
-		if (env->menu.selected)
+		if (env->menu.dropdown.current)
 		{
-			printf("do parsing : %s\n", env->menu.selected->str);
+			printf("do parsing : %s\n", env->menu.dropdown.current->str);
 			exit(0);
 		}
 		else if (get_element(M_I_NEW, env)->str)
@@ -47,19 +50,21 @@ static int	click_event(t_env *env)
 	{
 		env->menu.state = 0;
 	}
+	else if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
+	{
+		(env->menu.dropdown.idx_element < 0)
+			? env->menu.dropdown.idx_element++ : 0;
+	}
+	else if (ui_mouseenter(m.x, m.y, get_element(M_B_DOWN, env)->rect))
+	{
+		(env->menu.dropdown.idx_element > -env->menu.dropdown.nb_element + 1)
+			? env->menu.dropdown.idx_element-- : 0;
+	}
 
 	// reseting
 	reset_values(env);
 
-	if (ui_mouseenter(m.x, m.y, get_element(M_B_UP, env)->rect))
-	{
-		(env->menu.idx_map < 0) ? env->menu.idx_map++ : 0;
-	}
-	else if (ui_mouseenter(m.x, m.y, get_element(M_B_DOWN, env)->rect))
-	{
-		(env->menu.idx_map > -env->menu.nb_maps + 1) ? env->menu.idx_map-- : 0;
-	}
-	else if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
+	if (ui_mouseenter(m.x, m.y, get_element(M_I_NEW, env)->rect))
 	{
 		get_element(M_I_NEW, env)->clicked = 1;
 		get_element(M_I_NEW, env)->color = C_GREEN;
@@ -68,15 +73,15 @@ static int	click_event(t_env *env)
 	{
 		while (obj_map)
 		{
-			rect = (SDL_Rect){
-			obj_map->rect.x, obj_map->rect.y + env->menu.idx_map * 40,
-			obj_map->rect.w, obj_map->rect.h};
-			if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y, rect))
-				env->menu.selected = obj_map;
+			if (ui_mouseenter(
+					env->data->mouse.x, env->data->mouse.y, obj_map->rect))
+			{
+				env->menu.dropdown.current = obj_map;
+				obj_map->clicked = 1;
+			}
 			obj_map = obj_map->next;
 		}
 	}
-	return (1);
 }
 
 static int	keydown_event(t_env *env)
@@ -116,12 +121,15 @@ static int	keydown_event(t_env *env)
 
 int			menu_events(t_env *env)
 {
-	int		change;
-
-	change = 0;
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
-		(click_event(env)) ? change = 1 : 0;
+	{
+		click_event(env);
+		return (1);
+	}
 	if (env->data->sdl.event.type == SDL_KEYDOWN)
-		(keydown_event(env)) ? change = 1 : 0;
-	return (change);
+	{
+		if (keydown_event(env))
+			return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:29:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		getsizebloc_n_draw(t_env *e, t_font d, t_bloc *b, int l)
 	l < NB_OPT_MENU ? f.x = b->rect.x - b->rect.w / 2 : 0;
 	l < NB_OPT_MENU ? b->cross.rect.x = f.x - b->cross.rect.w - H / 50 : 0;
 	draw_scaled_string(e->sdl.surface, (t_font){d.color, "", d.font, {f.x, f.y}, b->use.rect.w, -1, -1}, tmp, (t_vtx){0, 0});
-	lt_release(tmp);
+	lt_release((void**)&tmp);
 }
 
 void		render_menu(t_env *e, t_bloc *b, const char **s, int limit)
@@ -58,7 +58,7 @@ void		render_menu(t_env *e, t_bloc *b, const char **s, int limit)
 		st->cur == i && !st->options_menu && !st->load_menu
 		&& (st->main_menu || (st->ingame && i != limit - 1))
 		? draw_img(e, b[i].cross.sprite, &f) : 0;
-		lt_release(s);
+		lt_release((void**)&s);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/26 11:45:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:56:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,56 +34,11 @@ static void		create_element(int id, int type, SDL_Rect rect, t_env *env)
 	}
 }
 
-static void		create_btn_obj(int id, int ref, int type, char *str, SDL_Rect rect, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	new->id = id;
-	new->ref = ref;
-	new->type = type;
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_obj, out of memory");
-	new->rect = rect;
-	if (!(env->btn_objs))
-	{
-		env->btn_objs = new;
-		env->btn_objs->next = 0;
-	}
-	else
-	{
-		new->next = env->btn_objs;
-		env->btn_objs = new;
-	}
-}
-
-static void		create_btn_map(char *str, SDL_Rect rect, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	// ...
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	new->rect = rect;
-	if (!(env->menu.btn_maps))
-	{
-		env->menu.btn_maps = new;
-		env->menu.btn_maps->next = 0;
-	}
-	else
-	{
-		new->next = env->menu.btn_maps;
-		env->menu.btn_maps = new;
-	}
-}
-
 static void		init_elems(t_env *env)
 {
 	SDL_Rect		rect;
 
+	// menu
 	rect = (SDL_Rect){WIN_W / 2 - 390, WIN_H / 2 - 225 + 40, 300, 25};
 	create_element(M_I_NEW, INPUT, rect, env);
 
@@ -92,15 +47,6 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_CANCEL, BUTTON, rect, env);
-
-	rect = (SDL_Rect){20, 20, 125, 40};
-	create_element(E_B_MENU, BUTTON, rect, env);
-
-	rect = (SDL_Rect){170, 20, 100, 40};
-	create_element(E_B_SAVE, BUTTON, rect, env);
-
-	rect = (SDL_Rect){20, 100, 850, 680};
-	create_element(E_R_RECT, RECT, rect, env);
 
 	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
 	create_element(M_B_UP, BUTTON, rect, env);
@@ -111,6 +57,16 @@ static void		init_elems(t_env *env)
 	create_element(M_B_DOWN, BUTTON, rect, env);
 	get_element(M_B_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
+
+	// editor
+	rect = (SDL_Rect){20, 100, 850, 680};
+	create_element(E_R_RECT, RECT, rect, env);
+
+	rect = (SDL_Rect){20, 20, 125, 40};
+	create_element(E_B_MENU, BUTTON, rect, env);
+
+	rect = (SDL_Rect){170, 20, 100, 40};
+	create_element(E_B_SAVE, BUTTON, rect, env);
 
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, rect, env);
@@ -136,14 +92,33 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){1030, 20, 150, 40};
 	create_element(E_B_PLAY, BUTTON, rect, env);
 
+	// editor drawing
+	rect = (SDL_Rect){1130, 350, 20, 20};
+	create_element(E_B_DRW_UP, BUTTON, rect, env);
+	get_element(E_B_DRW_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 380, 20, 20};
+	create_element(E_B_DRW_DOWN, BUTTON, rect, env);
+	get_element(E_B_DRW_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
+
+	// editor element
 	rect = (SDL_Rect){1130, 350, 20, 20};
 	create_element(E_B_ELM_UP, BUTTON, rect, env);
+	get_element(E_B_ELM_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
 
 	rect = (SDL_Rect){1130, 380, 20, 20};
 	create_element(E_B_ELM_DOWN, BUTTON, rect, env);
+	get_element(E_B_ELM_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	rect = (SDL_Rect){900, 110, 270, 20};
 	create_element(E_B_ELM_OBWL, BUTTON, rect, env);
+	env->editor.curr_elem_btn = get_element(E_B_ELM_OBWL, env);
+	env->editor.curr_elem_dd = DD_WOBJ;
+	env->editor.curr_elem_btn->clicked = 1;;
 
 	rect = (SDL_Rect){900, 140, 270, 20};
 	create_element(E_B_ELM_CONS, BUTTON, rect, env);
@@ -157,15 +132,12 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 300, 250, 30};
+	// editor selection
+	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_DEL, BUTTON, rect, env);
+	get_element(E_B_SELEC_DEL, env)->color = C_RED;
 
-	rect = (SDL_Rect){910, 250, 250, 30};
-	create_element(E_I_SELEC_HEIGHT, INPUT, rect, env);
-
-	rect = (SDL_Rect){910, 180, 250, 30};
-	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
-
+	// editor selection edge
 	rect = (SDL_Rect){910, 250, 250, 30};
 	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
 
@@ -175,137 +147,202 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 350, 110, 30};
+	rect = (SDL_Rect){1130, 540, 20, 20};
+	create_element(E_B_SELEC_M_WALL_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_M_WALL_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 570, 20, 20};
+	create_element(E_B_SELEC_M_WALL_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_M_WALL_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
+
+	// editor selection sector
+	rect = (SDL_Rect){910, 250, 250, 30};
+	create_element(E_I_SELEC_HCEIL, INPUT, rect, env);
+
+	rect = (SDL_Rect){910, 320, 250, 30};
+	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+
+	rect = (SDL_Rect){910, 180, 250, 30};
+	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
+
+	rect = (SDL_Rect){910, 370, 110, 30};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
-	get_element(E_B_SELEC_CEIL, env)->color = C_GREEN;
+	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
 
-	rect = (SDL_Rect){1040, 350, 120, 30};
+	rect = (SDL_Rect){1040, 370, 120, 30};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
+
+	rect = (SDL_Rect){910, 420, 250, 30};
+	create_element(E_B_SELEC_CEILTX, BUTTON, rect, env);
+	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
+
+	rect = (SDL_Rect){910, 460, 250, 30};
+	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
+
+	rect = (SDL_Rect){1130, 540, 20, 20};
+	create_element(E_B_SELEC_TX_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_TX_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 570, 20, 20};
+	create_element(E_B_SELEC_TX_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_TX_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
+
+	// editor selection misc
+	rect = (SDL_Rect){910, 150, 250, 25};
+	create_element(E_B_SELEC_MUSIC, BUTTON, rect, env);
+	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
+
+	rect = (SDL_Rect){910, 190, 250, 25};
+	create_element(E_B_SELEC_SBTX, BUTTON, rect, env);
+
+	rect = (SDL_Rect){1130, 270, 20, 20};
+	create_element(E_B_SELEC_MISC_UP, BUTTON, rect, env);
+	get_element(E_B_SELEC_MISC_UP, env)->image =
+		ui_load_image("ressources/images/icons/arrowup.png");
+
+	rect = (SDL_Rect){1130, 300, 20, 20};
+	create_element(E_B_SELEC_MISC_DOWN, BUTTON, rect, env);
+	get_element(E_B_SELEC_MISC_DOWN, env)->image =
+		ui_load_image("ressources/images/icons/arrowdown.png");
 }
 
-static void		load_obj(char *path, int type, t_env *env)
-{
-	SDL_Rect	rect;
-	struct dirent       *de;
-	DIR                 *dr;
-	char				*name;
-	int					ref;
-	int					i;
+/*
+**	Return nb of loaded objects
+*/
 
-	i = 0;
-	if (!(dr = lt_push(opendir(path), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources");
-	while ((de = readdir(dr)))
+static void		create_btn_map(char *str, t_env *env)
+{
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
+	if (!(env->menu.dropdown.start))
 	{
-		if ((de->d_name)[0] != '.' && ft_strchr(de->d_name, '+'))
-		{
-			rect = (SDL_Rect){910, 330 + 40 * (i /*+ var arrow */), 200, 30};
-			name = ft_strncpy(name, de->d_name, ft_strchri(de->d_name, '+'));
-			ref = ft_atoi(ft_strchr(de->d_name, '+'));
-			create_btn_obj(i, ref, type, name, rect, env);
-			i++;
-		}
+		env->menu.dropdown.start = new;
+		env->menu.dropdown.start->next = 0;
 	}
-	lt_release(dr);
-}
-
-static void		load_specials(int type, t_env *env)
-{
-	SDL_Rect	rect;
-
-	rect = (SDL_Rect){910, 330, 200, 30};
-	create_btn_obj(0, 0, type, "Spawn", rect, env);
-	rect = (SDL_Rect){910, 330 + 40, 200, 30};
-	create_btn_obj(1, 0, type, "Interest", rect, env);
-}
-
-static void		init_objs(t_env *env)
-{
-	// wall_objects
-	load_obj("ressources/objects/wall_objects", WALL_OBJ, env);
-	// consumables
-	load_obj("ressources/objects/consumables", CONSUMABLE, env);
-	// entities
-	load_obj("ressources/objects/entities", ENTITY, env);
-	// specials
-	load_specials(SPECIAL, env);
+	else
+	{
+		new->next = env->menu.dropdown.start;
+		env->menu.dropdown.start = new;
+	}
 }
 
 static void		init_menu(t_env *env)
 {
-	SDL_Rect			rect;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
 
 	i = 0;
-	// compteur de nb de maps
 	if (!(dr = lt_push(opendir("maps/"), dir_del)))
 		ui_error_exit_sdl("Editor: Unable to open maps/");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			rect = (SDL_Rect){220, 310 + (40 * i), 300, 25};
-			env->menu.nb_maps++;
-			create_btn_map(de->d_name, rect, env);
+			create_btn_map(de->d_name, env);
+			env->menu.dropdown.nb_element++;
 			i++;
 		}
 	}
-	lt_release(dr);
+	lt_release((void**)&dr);
+
 	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
 }
 
-static void		init_editor(t_env *env)
+static void		create_dd_button(int id, int dd, int ref, char *str, t_env *env)
 {
+	t_elem   *new;
+
+	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
+		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
+	new->ref = ref;
+	new->id = id;
+	new->dd = dd;
+	if (!(env->editor.dropdown[dd].start))
+	{
+		env->editor.dropdown[dd].start = new;
+		env->editor.dropdown[dd].start->next = 0;
+	}
+	else
+	{
+		new->next = env->editor.dropdown[dd].start;
+		env->editor.dropdown[dd].start = new;
+	}
+}
+
+static void		load_dd_list(char *path, int dd, t_env *env)
+{
+	char				*name;
+	int					ref;
 	struct dirent		*de;
 	DIR					*dr;
 	int					i;
 
-	env->grid_scale = 45;
-	env->editor.grid_translate = (t_pos){0, 0};
-
 	i = 0;
-	// compteur nb wall textures
-	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.')
-			env->editor.nb_wall_txtr++;
-	}
-	lt_release(dr);
-
-	// stockage des wall textures
-	if (!(env->editor.wall_txtr = lt_push(
-	ft_memalloc(sizeof(char *) * (env->editor.nb_wall_txtr + 1)), ft_memdel)))
-		ui_error_exit_sdl("Libui: Out of memory");
-
-	if (!(dr = lt_push(opendir("ressources/images/wall/"), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open ressources/images/wall/");
+	if (!(dr = lt_push(opendir(path), dir_del)))
+		ui_error_exit_sdl("Editor: Load_dd_list, unable to open path");
 	while ((de = readdir(dr)))
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			if (!(env->editor.wall_txtr[i] =
-			lt_push(ft_strdup(de->d_name), ft_memdel)))
-				ui_error_exit_sdl("Editor: Out of memory");
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
+			ref = ft_atoi(ft_strchr(de->d_name, '+'));
+			create_dd_button(i, dd, ref, name, env);
+			lt_release((void**)&name);
+			env->editor.dropdown[dd].nb_element++;
 			i++;
 		}
 	}
-	lt_release(dr);
+
+	if (env->editor.dropdown[dd].start)
+	{
+		env->editor.dropdown[dd].current = env->editor.dropdown[dd].start;
+		env->editor.dropdown[dd].current->clicked = 1;
+	}
+	lt_release(&dr);
+}
+
+static void		init_editor(t_env *env)
+{
+	load_dd_list("ressources/images/wall/", DD_WALLTX, env);
+	load_dd_list("ressources/images/wall/", DD_MWALLTX, env);
+	load_dd_list("ressources/skybox/", DD_SBTX, env);
+	load_dd_list("ressources/audio/", DD_BGAUDIO, env);
+	load_dd_list("ressources/images/ceil/", DD_CEILTX, env);
+	load_dd_list("ressources/images/floor/", DD_FLOORTX, env);
+	load_dd_list("ressources/objects/wall_objects", DD_WOBJ, env);
+	load_dd_list("ressources/objects/consumables", DD_CONS, env);
+	load_dd_list("ressources/objects/entities", DD_NTTY, env);
+	load_dd_list("ressources/objects/prefabs", DD_PRFB, env);
+	load_dd_list("ressources/objects/specials", DD_SPEC, env);
+
+	env->grid_scale = 45;
 }
 
 void		init_env(t_env *env, t_data *data)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->data = data;
+
 	init_elems(env);
-	init_objs(env);
 	init_menu(env);
 	init_editor(env);
-	ui_make_window("EDITOR", data);
+
 	ui_load_font("ressources/fonts/Arial.ttf", data);
+
+	ui_make_window("EDITOR", data);
 }

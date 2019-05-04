@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 02:25:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 13:31:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref)
 		tmp = ft_strrjoin(PICK_STRING, tmp);
 		ui_put_data(env, (t_font){WHITE, tmp, env->hud.font.text,
 			(t_vtx){W / 2, H / 2}, W / 40, -1, -1});
-		lt_release(tmp);
+		lt_release((void**)&tmp);
 	}
 	return (1);
 }
@@ -105,7 +105,7 @@ void	print_stats(t_env *env, float size, t_vtx w, t_vtx h)
 			stime = ft_strrjoin((char *)str[i], stime);
 			ui_put_data(env, (t_font){GOLD, stime,
 				env->hud.font.text, p, size, -1, -1});
-			lt_release(stime);
+			lt_release((void**)&stime);
 		}
 	}
 }

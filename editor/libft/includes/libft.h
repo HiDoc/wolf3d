@@ -117,7 +117,7 @@ struct				s_lt
 
 t_lt				*get_lifetime(t_lt	*new_ptr);
 void				*lt_push(void *ptr, void (*f)(void **));
-void				lt_release(void *ptr);
+void				lt_release(void **ptr);
 void				lt_destroy(void);
 
 #endif

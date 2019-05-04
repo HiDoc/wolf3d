@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/04/26 10:57:22 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/02 17:21:47 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC_NAME 	=	main.c \
 				ui_make_rect.c \
 				ui_make_full_rect.c \
 				ui_make_line.c \
+				ui_draw_vector.c \
 				ui_make_dotted_line.c \
 				ui_make_input.c \
 				ui_set_pixel.c \
@@ -63,17 +64,19 @@ SRC_NAME 	=	main.c \
 				draw_mode.c \
 				select_mode.c \
 				move_mode.c \
+				elem_mode.c \
 				handle_events.c \
 				utils.c \
+				utils_math.c \
+				utils_display.c \
 				targetting.c \
 				vertex_in_sector.c \
 				display_interface.c \
 				display_selection.c \
 				display_drawing.c \
+				display_element.c \
 				menu_events.c \
 				get_element.c \
-				elem_mode.c \
-				display_element.c \
 				export_map.c \
 				init_env.c \
 				release_functions.c \
