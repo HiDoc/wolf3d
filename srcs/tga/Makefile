@@ -6,11 +6,11 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/04/28 17:45:49 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/04 18:41:28 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 			= doom
+NAME 			= tga
 CC 				= gcc
 CFLAGS 			= -g
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
@@ -39,12 +39,13 @@ SDL_LIB		= -I ~/.brew/Cellar/sdl2/2.0.9_1/include/SDL2/ \
 
 UNAME 		:= $(shell uname)
 
-SRC_NAME 	= tga_index.c \
-				tga_map.c \
-				tga_pos.c \
-				tga_rle.c \
-				tga_utils.c \
-				tga_read.c
+SRC_NAME 	=	tga_colormap.c \
+				tga_field.c \
+				tga_footer.c \
+				tga_header.c \
+				tga_image.c \
+				tga_encoded.c \
+				tga_unencoded.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 
@@ -64,8 +65,7 @@ all: $(NAME)
 $(NAME): $(OBJ_PATH) $(OBJ) $(HEAD) Makefile
 	@printf "\r\033[38;5;46m⌛ [$(NAME)]: 100%% ████████████████████❙ \\033[0m"
 	@printf "\nSources are ready to be used !\n"
-	@$(CC) $(CFLAGS) $(SDL_LIB) $(INC) $(OBJ) -o $(NAME)
-
+	$(CC) $(CFLAGS) $(SDL_LIB) $(INC) $(OBJ) -o $(NAME)
 
 $(OBJ_PATH) :
 	@mkdir -p $@

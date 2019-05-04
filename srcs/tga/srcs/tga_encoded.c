@@ -6,27 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 15:11:23 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 18:23:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 18:33:55 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
-
-typedef struct s_encode t_encode;
-
-struct s_encode
-{
-	uint16_t	line;
-	uint32_t	offset;
-    uint8_t		depth;
-    uint32_t	total;
-    uint8_t		packet;
-    uint8_t		current_packet_cnt;
-    uint16_t	current_line_pos;
-    uint8_t		current_pixel;
-    uint32_t	data_offset;
-    uint8_t		*run_packet;
-};
 
 static int encoded_check(t_tga *iage, FILE *file)
 {

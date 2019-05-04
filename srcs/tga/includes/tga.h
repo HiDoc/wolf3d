@@ -6,84 +6,88 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:37:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 17:29:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:04:16 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TGA_H
 # define TGA_H
-# define COLORMAP 1
-# define RGB 2
-# define GRAYSCALE 3
-# define COLORMAP_RLE 9
-# define RGB_RLE 10
-# define GRAYSCALE_RLE 11
-# define RIGHT_ORIGIN 0x10
-# define UPPER_ORIGIN 0x20
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <SDL.h>
 
+#define TGA_HEADER_SIZE 18
+#define TGA_FOOTER_SIZE 26
+#define TGA_SIG_SIZE  18
+#define TRUEVISION_SIG "TRUEVISION-XFILE."
+
+typedef struct s_encode	t_encode;
+typedef struct s_meta	t_meta;
 typedef struct s_tga	t_tga;
-typedef struct s_rgba	t_rgba;
-typedef struct s_rle	t_rle;
-typedef struct s_order	t_order;
 
-
-struct s_rle
-{
-	int					count;
-	unsigned char		copy[4];
-	int					length;
-	int					decoded;
-	int					packet;
+enum {
+    TGA_NO_DATA                 = 0,
+    TGA_COLOR_MAPPED            = 1,
+    TGA_TRUECOLOR               = 2,
+    TGA_MONOCHROME              = 3,
+    TGA_ENCODED_COLOR_MAPPED    = 9,
+    TGA_ENCODED_TRUECOLOR       = 10,
+    TGA_ENCODED_MONOCHROME      = 11,
+    TGA_UNKNOWN_TYPE            = 255
 };
 
-struct s_rgba
+struct s_encode
 {
-	int 				r;
-	int 				g;
-	int 				b;
-	int 				a;
+	uint16_t	line;
+	uint32_t	offset;
+    uint8_t		depth;
+    uint32_t	total;
+    uint8_t		packet;
+    uint8_t		current_packet_cnt;
+    uint16_t	current_line_pos;
+    uint8_t		current_pixel;
+    uint32_t	data_offset;
+    uint8_t		*run_packet;
 };
 
-struct s_order
+struct s_meta
 {
-	int					rs;
-	int					gs;
-	int					bs;
-	int					as;
+	uint32_t	extension_offset;
+    uint32_t	developer_offset;
+
+    uint16_t	c_map_length;
+    uint16_t	x_offset;
+    uint16_t	y_offset;
+    uint16_t	width;
+    uint16_t	height;
+
+    uint16_t	c_map_start;
+    uint8_t		c_map_type;
+    uint8_t		c_map_depth;
+    uint8_t		id_length;
+    uint8_t		image_type;
+    uint8_t		pixel_depth;
+    uint8_t		image_descriptor;
 };
 
 struct s_tga
 {
-	const unsigned char	*bytes;
-	const unsigned char	*palette;
-	t_order				order;
-	int 				descriptor;
-	int 				color;
-	int					type;
-	int 				origin;
-	int					index;
-	int					length;
-	int 				offset;
-	int 				height;
-	int 				width;
-	int 				depth;
-	int 				i;
-	int 				j;
+    uint8_t	*id_field;
+    uint8_t	*data;
+    uint8_t	*color_map;
+    uint8_t version;
+    t_meta	meta;
 };
 
-int				*tga_read(void *tga_parse, t_tga data);
-int				*tga_rgb(int (*tga_sum)(t_tga *), t_tga data, int *pix);
-int				*tga_map(int (*tga_sum)(t_tga *), t_tga data, int *pix);
-int				*tga_greyscale(int (*)(t_tga *), t_tga data, int *pix);
-unsigned char	*tga_rle(t_tga data);
-int				pos_depth(t_tga *d);
-int				tga_to_color(t_rgba c, t_order o);
-int				tga_width(const unsigned char *buffer);
-int				tga_height(const unsigned char *buffer);
-void			*get_ft_index(t_tga *data);
+int		read_tga_image(FILE *file, t_tga *image);
+int		read_tga_color_map(t_tga *image, FILE *file);
+int     read_encoded(t_tga *image, FILE *file);
+int     read_unencoded(t_tga *image, FILE *file)
+int		tga_header(t_tga *image, FILE *file);
+uint8_t	tga_footer(t_tga *image, FILE *file);
+uint8_t tga_id_field(t_tga *image, FILE *file);
+
 
 #endif

@@ -6,14 +6,12 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 14:12:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 14:44:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:03:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
 
-#define TRUEVISION_SIG "TRUEVISION-XFILE."
-#define TGA_SIG_SIZE  18
 
 static void tga_set_offset(uint32_t *set, uint8_t *buffer, uint8_t pad)
 {

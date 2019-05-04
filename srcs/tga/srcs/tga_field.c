@@ -6,13 +6,13 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 14:48:16 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 14:53:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:04:32 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
 
-uint8_t tga_id_field(TGAImage *image, FILE *file)
+uint8_t tga_id_field(t_tga *image, FILE *file)
 {
 	uint8_t	ret;
 

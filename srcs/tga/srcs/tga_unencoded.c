@@ -6,14 +6,14 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 18:24:24 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 18:28:48 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 19:04:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
 
 
-int read_unencoded(TGAImage *image, FILE *file)
+int read_unencoded(t_tga *image, FILE *file)
 {
     int32_t		offset;
     uint8_t		depth_mult;
