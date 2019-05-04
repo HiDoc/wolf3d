@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:29:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/21 13:29:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/03 22:23:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		load_fonts(t_env *env)
 {
-	t_uitxt	*f;
+	t_pfont	*f;
 
-	f = &env->hud.text;
+	f = &env->hud.font;
 	if (!(f->arial = lt_push(TTF_OpenFont(F_ARIAL, 100), ttf_del)))
 		doom_error_exit("Doom_nukem error on TTF_OpenFont");
 	if (!(f->doom = lt_push(TTF_OpenFont(F_DOOM, 100), ttf_del)))

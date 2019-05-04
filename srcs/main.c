@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/02 12:29:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 03:32:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		main(int ac, char **av)
 		if (sdl_loop(&env))
 			return (0);
 
+		action_endlevel(&env, env.curr_lvl);
 		/* free level */
 		free_map(&env);
 		lt_release(env.engine.minimap.surface);

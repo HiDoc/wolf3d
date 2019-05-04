@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:19:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 03:14:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:28:07 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static void	init_iwpn_bloc(t_uinv *inventory, t_container *surfaces)
 	index = 0;
 	while (i < INV_PISTOL && j < HUD_PISTOL)
 	{
-		inventory->wpn[index].cross.rect = (SDL_Rect){rect.x + rect.w, rect.y, rect.w / 6, rect.h / 5};
+		inventory->wpn[index].cross.rect = (SDL_Rect){rect.x + rect.w, rect.y,
+			rect.w / 6, rect.h / 5};
 		inventory->wpn[index].bg_empty = surfaces->hud[i].sprite;
 		inventory->wpn[index].bg_fill = surfaces->hud[j].sprite;
 		inventory->wpn[index].rect = rect;
@@ -167,17 +168,12 @@ static void	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 	int			i;
 	SDL_Rect	rect;
 	int			interx;
-	// SDL_Surface	**str;
 
 	interx = W / 404;
 	rect = (SDL_Rect){W - W / 1.22, H - H  / 8, W / 20, W / 20};
-	// str = hud->text.string;
 	i = 0;
 	while (i < 5)
 	{
-		// hud->objects[i].cross = (t_mbloc){
-		// (SDL_Rect){rect.x + rect.w / 2, rect.y - W / 700,
-		// str[i + PAD_INDEX]->w, str[i + PAD_INDEX]->h}, str[i + PAD_INDEX]};
 		hud->objects[i].use.rect = (SDL_Rect){
 		rect.x, rect.y + rect.h - rect.w / 6, rect.w / 6, rect.w / 6};
 		hud->objects[i].bg_empty = surfaces->hud[BOX_E].sprite;

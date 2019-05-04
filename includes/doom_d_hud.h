@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 03:03:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 20:49:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,4 +180,11 @@
 # define I_K_RIFLE		10
 # define I_K_RPG		11
 # define I_K_FIST		12
+
+/*
+** stats per level
+*/
+# define L_TPLAY		0
+# define L_KILLS		1
+
 #endif

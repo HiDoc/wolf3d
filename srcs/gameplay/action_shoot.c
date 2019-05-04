@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 16:07:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:56:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,22 @@ int		bot_wall_collision(t_player *bot, t_sector *sect)
 
 void	gameover(t_env *e)
 {
+	e->player.health = 0;
 	e->stats.data[I_DEATHS]++;
 	e->engine.player.sound.dead = 1;
 	e->menu.status.gameover = 1;
-	e->curr_lvl = 0;
 	e->stats.data[I_KTOGO] = 0;
+	ft_bzero(&e->player.inventory, sizeof(t_inventory));
+	e->player.inventory.f.ref = FIST;
+	e->player.inventory.weapons[FIST].current =
+		&e->player.inventory.f;
+	e->player.inventory.weapons[FIST].ammo[0] =
+		e->world.armory[FIST].ammo_current;
+	e->player.inventory.weapons[FIST].ammo[1] =
+		e->world.armory[FIST].ammo_magazine;
+	e->player.inventory.weapons[FIST].ammo[2] =
+		e->world.armory[FIST].damage;
+	set_current_wpn(e, &e->player.inventory, FIST);
 }
 
 void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
@@ -59,11 +70,7 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 			? env->player.shield -= damage : 0;
 		!env->player.shield ? env->player.health -= damage : 0;
 		if (env->player.health <= 0)
-		{
-			env->player.health = 0;
 			gameover(env);
-			// PLAYER REPART AU DEBUT (sauf si save)
-		}
 		else if (env->player.health <= 50 && health > env->player.health
 		&& !env->engine.player.sound.lowlife)
 			env->engine.player.sound.lowlife = 1;
@@ -74,39 +81,42 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 	}
 }
 
-void	impact_bot(t_env *env, t_impact *shot, t_sector *sector, int damage)
+void	bot_life(t_env *e, t_wrap_enmy *en, int damage, int wpn)
 {
-	t_wrap_enmy	*enemy;
-	t_vtx		first;
+	en->brain.health -= damage;
+	if (en->brain.health < 1)
+	{
+		en->a.is_dying = 1;
+		en->a.is_alive = 0;
+		en->player.sound.dead = 1;
+		e->stats.data[I_KILLS]++;
+		e->stats.data[I_K_MAGNUM + wpn]++;
+	}
+	en->a.is_shot = 1;
+}
+
+void	impact_bot(t_env *e, t_impact *shot, t_sector *sector, int damage)
+{
+	t_wrap_enmy	*en;
+	t_vtx		f;
 	t_vtx		scd;
 	t_weapon	*rwpn;
 	int			wpn;
 
-
-	enemy = sector->head_enemy;
-	wpn = env->player.inventory.current->current->ref;
-	rwpn = &env->world.armory[wpn];
-	while (enemy && shot->is_shooting)
+	en = sector->head_enemy;
+	wpn = e->player.inventory.current->current->ref;
+	rwpn = &e->world.armory[wpn];
+	while (en && shot->is_shooting)
 	{
-		first = (t_vtx){shot->position.where.x, shot->position.where.y};
-		scd = (t_vtx){enemy->player.where.x, enemy->player.where.y};
-		if (enemy->a.is_alive && dist_vertex(first, scd) <= rwpn->ray)
+		f = (t_vtx){shot->position.where.x, shot->position.where.y};
+		scd = (t_vtx){en->player.where.x, en->player.where.y};
+		if (en->a.is_alive && dist_vertex(f, scd) <= rwpn->ray)
 		{
-			enemy->brain.health -= damage;
-			printf("vie bot : %i\n", enemy->brain.health);
-			if (enemy->brain.health < 1)
-			{
-				enemy->a.is_dying = 1;
-				enemy->a.is_alive = 0;
-				enemy->player.sound.dead = 1;
-				env->stats.data[I_KILLS]++;
-				env->stats.data[I_K_MAGNUM + wpn]++;
-			}
-			enemy->a.is_shot = 1;
+			bot_life(e, en, damage, wpn);
 			shot->is_shooting = rwpn->ray > 1 ? shot->is_shooting + 1 : 0;
 			shot->is_alive = rwpn->ray > 1 ? shot->is_alive + 1 : 0;
 		}
-		enemy = enemy->next;
+		en = en->next;
 	}
 	shot->is_alive = shot->is_alive > 1 ? 0 : 1;
 	shot->is_shooting = shot->is_shooting > 1 ? 0 : 1;

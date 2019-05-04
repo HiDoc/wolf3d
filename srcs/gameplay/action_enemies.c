@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 09:56:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 17:54:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ static void	bot_shoot_cadence(t_env *env, t_wrap_enmy *e, t_player p)
 		bot_new_kill(e->a.is_shooting, &new_look, e);
 		e->player.sound.shootin = 1;
 		e->frame = 0;
-		printf("new bullet bot\n");
 	}
 	else
 		e->frame++;
@@ -138,12 +137,6 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 			e->shot[i].position.origin.y}, (t_vtx){e->shot[i].position.where.x,
 			e->shot[i].position.where.y}) < e->brain.scop)
 		{
-		printf("dist scop %f\n", dist_vertex((t_vtx){e->shot[i].position.origin.x,
-			e->shot[i].position.origin.y}, (t_vtx){e->shot[i].position.where.x,
-			e->shot[i].position.where.y}));
-		printf("scop %i\n", e->brain.scop);
-		printf("WHERE TO x %f\n", e->shot[i].position.whereto.x);
-				printf("WHERE TO y %f\n", e->shot[i].position.whereto.y);
 			// move = add_vertex(move, (t_vtx){e->shot[i].position.anglecos, e->shot[i].position.anglesin});
 			move = bot_orientation(&e->shot[i].position, e->shot[i].position.whereto, BOT_V_SHOT);
 			e->shot[i].position.velocity.x = e->shot[i].position.velocity.x * (1 - BOT_V_SHOT) + move.x * BOT_V_SHOT;
@@ -159,12 +152,6 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e, int damage)
 			{
 				e->shot[i].position.where.x += e->shot[i].position.velocity.x;
 				e->shot[i].position.where.y += e->shot[i].position.velocity.y;
-				printf("shot x %f\n", e->shot[i].position.where.x);
-				printf("shot y %f\n", e->shot[i].position.where.y);
-				printf("PLAYER x %f\n", env->engine.player.where.x);
-				printf("PLAYER y %f\n", env->engine.player.where.y);
-				printf("WHERE TO x %f\n", e->shot[i].position.whereto.x);
-				printf("WHERE TO y %f\n", e->shot[i].position.whereto.y);
 			}
 			else
 			{

@@ -6,4 +6,5 @@
         "doom.h": "c",
         "type_traits": "c"
     },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
 }

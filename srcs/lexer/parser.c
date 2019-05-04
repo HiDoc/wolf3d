@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/30 15:17:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:00:47 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ unsigned	token_calc(t_parseline *line)
 	return (count);
 }
 
-void	select_type_sector(t_sector *sect)
+void	select_type_sector(t_sector *s)
 {
-	if (sect->type == 0x00)
-		sect->is_door = 0x00;
+	if (s->type == SECT_DOOR || s->type == SECT_ENDLEVEL)
+		s->is_door = s->type == SECT_DOOR ? 1 : 2;
 }
 
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)

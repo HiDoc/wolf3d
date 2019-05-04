@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 02:03:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 03:23:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		open_door(t_env *e)
 	{
 		sector = &e->engine.sectors[index];
 		e->sound.state.open = 1;
-		if (sector->is_door)
+		if (sector->is_door == 1 || !e->stats.data[I_KTOGO])
 		{
 			e->sound.state.is_open = !sector->door.is_open ? 1 : 2;
 			sector->door.is_opening = 1;
@@ -93,14 +93,15 @@ void	print_infos_door(t_env *env, t_sector *sector)
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
+		printf("devant une door \n");
 		pos = (t_vtx){W / 2, H / 2};
 		front_player = &sector[index].door;
 		if (sector[index].is_door == 2)
 			ui_put_data(env, (t_font){
-				WHITE, string[1], env->hud.text.text, pos, W / 40, -1, -1});
+				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
 		else if (!front_player->is_open && !front_player->is_opening)
 			ui_put_data(env, (t_font){
-				WHITE, string[0], env->hud.text.text, pos, W / 40, -1, -1});
+				WHITE, string[0], env->hud.font.text, pos, W / 40, -1, -1});
 	}
 }
 
@@ -113,10 +114,8 @@ void	handle_doors(t_env *env)
 	sector = env->engine.sectors;
 	while (++i < (int)env->engine.nsectors)
 	{
-		if (sector[i].is_door
-			&& (sector[i].is_door == 1 || !env->stats.data[I_KTOGO]))
+		if (sector[i].is_door)
 		{
-			sector[i].is_door = 1;
 			if (sector[i].door.is_opening
 			&& !sector[i].door.is_open && sector[i].ceil < 40)
 				sector[i].ceil = (int)(sector[i].ceil + 1) % 41;
@@ -128,6 +127,8 @@ void	handle_doors(t_env *env)
 			{
 				sector[i].door.is_open = !sector[i].door.is_open;
 				sector[i].door.is_opening = 0;
+				if (sector[i].is_door == 2)
+					env->finish = 1;
 			}
 		}
 	}

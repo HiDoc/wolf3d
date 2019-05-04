@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 02:37:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		fill_wpn(t_env *env, int iter)
 	if (env->player.inventory.weapons[iter].current)
 	{
 		draw_img(env, bloc->bg_fill, bloc);
-		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.text.text,
+		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
 			(t_vtx){bloc->cross.rect.x, bloc->cross.rect.y}, W / 80, -1, -1});
 	}
 	else
@@ -77,11 +77,11 @@ static void		fill_bloc(t_env *env, int i)
 		fill.rect = rect;
 		draw_img(env, b->sprite, &fill);
 		fill.rect = b->cross.rect;
-		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.text.text,
+		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
 			(t_vtx){b->cross.rect.x, b->cross.rect.y}, W / 60, -1, -1});
-		ui_put_data(env, (t_font){WHITE, S_USE, env->hud.text.text,
+		ui_put_data(env, (t_font){WHITE, S_USE, env->hud.font.text,
 			(t_vtx){b->use.rect.x, b->use.rect.y}, W / 60, -1, -1});
-		ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
+		ui_put_data(env, (t_font){GOLD, "", env->hud.font.number,
 		(t_vtx){b->rect.x + W / 80,	b->rect.y + 5}, W / 60, -1,
 		env->player.inventory.objects[i].nb_stack});
 	}

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:39:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:39:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 void	set_msc_menu(t_env *e, t_status *s)
 {
+	printf("s->on %i\n", s->on);
 	if (s->on && (s->home || s->main_menu || s->ingame))
 	{
-		if (Mix_Playing(-1))
-			Mix_HaltChannel(-1);
-		Mix_FadeInMusic(e->sound.ambiance[AB_IGMENU], -1, 3000) < 0
+		if (Mix_Playing(CHAN_MENU))
+			Mix_HaltChannel(CHAN_MENU);
+		Mix_FadeInMusic(e->sound.ambiance[AB_IGMENU], CHAN_MENU, 3000) < 0
 		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
 		: 0;
 	}
 	else if (s->on && s->gameover)
 	{
-		if (Mix_Playing(-1))
-			Mix_HaltChannel(-1);
-		Mix_FadeInMusic(e->sound.ambiance[AB_GAMEOVER], -1, 3000) < 0
+		if (Mix_Playing(CHAN_MENU))
+			Mix_HaltChannel(CHAN_MENU);
+		Mix_FadeInMusic(e->sound.ambiance[AB_GAMEOVER], CHAN_MENU, 3000) < 0
 		? doom_error_exit("Doom_nukem error on Mix_FadeInMusic")
 		: 0;
 	}
-	if (!s->on && Mix_Playing(-1))
+	if (!s->on && Mix_Playing(CHAN_MENU))
+	{
+		printf("ferme\n");
 		!Mix_FadeOutMusic(500)
 		? doom_error_exit("Doom_nukem error on Mix_FadeOutMusic")
 		: 0;
+	}
 }
 
 void	menu_btn_sound(t_env *e, const Uint8 *k)

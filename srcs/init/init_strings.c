@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 03:11:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	underscore_off_name(char *name, int size)
 // // 	while (++i < DSCRIP_STR_INV)
 // // 	{
 // // 		tmp = make_string((t_font){
-// // 			WHITE, string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
+// // 			WHITE, string[i], env->hud.font.text, {0, 0}, 0, -1, -1});
 // // 		n_size = (t_vtx){tmp->w / (100 / (W / 50)), tmp->h / (100 / (W / 50))};
-// // 		env->hud.text.i_obj_description[i] = make_surface(n_size.x, n_size.y);
-// // 		img_scaled_copy(tmp, env->hud.text.i_obj_description[i]);
+// // 		env->hud.font.i_obj_description[i] = make_surface(n_size.x, n_size.y);
+// // 		img_scaled_copy(tmp, env->hud.font.i_obj_description[i]);
 // // 		lt_release(tmp);
 // // 	}
 // // }
@@ -53,10 +53,10 @@ void	underscore_off_name(char *name, int size)
 // 	while (++i < 2)
 // 	{
 // 		tmp = make_string((t_font){
-// 			WHITE, string[i], env->hud.text.text, {0, 0}, 0, -1, -1});
+// 			WHITE, string[i], env->hud.font.text, {0, 0}, 0, -1, -1});
 // 		n_size = (t_vtx){tmp->w / (100 / (W / 40)), tmp->h / (100 / (W / 40))};
-// 		env->hud.text.doors[i] = make_surface(n_size.x, n_size.y);
-// 		img_scaled_copy(tmp, env->hud.text.doors[i]);
+// 		env->hud.font.doors[i] = make_surface(n_size.x, n_size.y);
+// 		img_scaled_copy(tmp, env->hud.font.doors[i]);
 // 		lt_release(tmp);
 // 	}
 // }
@@ -74,8 +74,8 @@ void	underscore_off_name(char *name, int size)
 // 	while (i < UI_NB_STRING)
 // 	{
 // 		font = (i <= T_STATS && i >= T_INVENTORY)
-// 			? env->hud.text.doom : env->hud.text.text;
-// 		env->hud.text.string[i] = make_string((t_font){WHITE, string[i],
+// 			? env->hud.font.doom : env->hud.font.text;
+// 		env->hud.font.string[i] = make_string((t_font){WHITE, string[i],
 // 			font, {0, 0}, 0, -1, -1});
 // 		i++;
 // 	}

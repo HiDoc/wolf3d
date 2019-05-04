@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/02 19:36:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 03:08:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ static int				sdl_render(t_env *e)
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
 
 		dfs(e);
-		//handle_gems(e);
+		handle_gems(e);
 
 		if (!e->god_mod)
 			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
 		player_bullet(e, &e->player, *e->player.inventory.current->damage);
 
+		handle_doors(e);
 
 		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
-		handle_doors(e);
 		wpn_mouse_wheel(e, e->sdl.event);
 		sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);
 		player_move(&e->engine, &e->engine.player.vision, e->sdl.keycodes);
@@ -76,7 +76,7 @@ int				sdl_loop(t_env *env)
 {
 	env->engine.player.vision.falling = 1;
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
-	while (env->finish == 0)
+	while (!env->finish)
 	{
 		(!env->menu.status.on)
 		? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:41:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 17:54:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,5 @@ void		init_blocs_menu(t_env *env)
 	loadgame_blocs(env, &menu->save);
 	options_blocs(env, menu->options_menu);
 	newgame_blocs(env, &menu->new_game);
-	printf("name %s\n", menu->new_game.name);
 }
 

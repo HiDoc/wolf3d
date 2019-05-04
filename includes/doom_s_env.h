@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 16:14:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 01:14:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ struct								s_skybox
 struct								s_level
 {
 	int				index;
+	Uint32			tplay;
 	char			*text_start;
 	char			*text_end;
 };

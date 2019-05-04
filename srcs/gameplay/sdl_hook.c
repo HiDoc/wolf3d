@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:53:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:28:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 		if (keycodes[SDL_SCANCODE_N])
 		{
 			env->finish = 1;
-			env->menu.status.inter = 0;
 			// provisoire (sgalasso)
 		}
 		if (keycodes[SDL_SCANCODE_O])

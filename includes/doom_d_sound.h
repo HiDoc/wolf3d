@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/30 16:30:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:35:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@
 # define CHAN_DUCK		26
 # define CHAN_MOVE		25
 # define CHAN_AMBIANCE	24
-# define CHAN_DOOR		25
+# define CHAN_DOOR		23
+# define CHAN_MENU		22
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 01:35:05 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 
 	bloc = &env->hud.hud_wpn[wpn->current->ref];
 	draw_img(env, bloc->sprite, bloc);
-	ui_put_data(env, (t_font){GOLD, "", env->hud.text.number,
+	ui_put_data(env, (t_font){GOLD, "", env->hud.font.number,
 	(t_vtx){W - W / 7, H / 1.3}, W / 40,
 	*env->player.inventory.current->ammo_current, -1});
-	ui_put_data(env, (t_font){GOLD, "/", env->hud.text.number,
+	ui_put_data(env, (t_font){GOLD, "/", env->hud.font.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, W / 40,
 	-1, *env->player.inventory.current->ammo_magazine});
 }
@@ -37,13 +37,13 @@ void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
 	{
 		draw_img(env, bloc->bg_fill, bloc);
 		draw_img(env, env->world.objects[ref.x].sprite, bloc);
-		ui_put_data(env, (t_font){GOLD, "", env->hud.text.text,
+		ui_put_data(env, (t_font){GOLD, "", env->hud.font.text,
 			(t_vtx){bloc->use.rect.x, bloc->use.rect.y}, W / 90, -1,
 			pack[iter].nb_stack});
 	}
 	else
 		draw_img(env, bloc->bg_empty, bloc);
-	ui_put_data(env, (t_font){WHITE, numb[(int)ref.y], env->hud.text.text,
+	ui_put_data(env, (t_font){WHITE, numb[(int)ref.y], env->hud.font.text,
 		(t_vtx){bloc->cross.rect.x, bloc->cross.rect.y}, W / 90, -1, -1});
 }
 

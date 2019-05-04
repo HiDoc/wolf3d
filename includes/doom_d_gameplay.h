@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/30 15:11:19 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 16:42:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@
 # define SECT_DEAD		3
 # define SECT_ENDGAME	4
 # define SECT_DOOR		5
+# define SECT_ENDLEVEL	6
 # define SECT_CYBER		7
 #endif

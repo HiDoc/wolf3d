@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 17:41:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/02 14:20:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:42:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void					mainmenu_loop(t_env *env)
 {
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	(env->menu.status.gameover) ? env->menu.status.on = 1 : 0;
-	set_msc_menu(env, &env->menu.status);
+	// set_msc_menu(env, &env->menu.status);
 	while (env->menu.status.on)
 	{
 		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)

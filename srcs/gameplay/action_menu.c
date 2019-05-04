@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:41:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:04:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,20 @@ void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
 	if (e->nb_games)
 		scroll_menu(&s->cur, k, 0, e->nb_games);
-	else if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
+	if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
 		s->cur = e->nb_games;
-	else if (k[SDL_SCANCODE_RIGHT] && s->cur == e->nb_games)
+	if (k[SDL_SCANCODE_RIGHT] && s->cur == e->nb_games)
 		s->cur = 0;
 	if ((k[SDL_SCANCODE_RETURN]))
 	{
-		if (s->cur == 0 || s->cur < e->nb_games)
+		if (s->cur < e->nb_games)
 		{
 			load_world_data(s->cur, e);
 			s->inter = 1;
 			s->on = 0;
 			s->main_menu = 0;
+			e->curr_lvl = 0;
+			e->levels[s->cur]->tplay = SDL_GetTicks();
 		}
 		s->new_game = 0;
 		s->cur = 0;
@@ -92,6 +94,8 @@ void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 
 void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
+	Uint32	*t;
+
 	scroll_menu(&s->cur, k, 0, NB_BLOC_IG - 1);
 	if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
 		s->cur = 3;
@@ -107,6 +111,8 @@ void	action_ingame_menu(t_env *e, t_status *s, const Uint8 *k)
 		if (!s->ingame && !s->main_menu)
 			set_msc_menu(e, s);
 		s->cur = 0;
+		t = &e->levels[e->curr_lvl]->tplay;
+		s->main_menu ? *t = SDL_GetTicks() - *t : 0;
 	}
 	menu_btn_sound(e, k);
 }

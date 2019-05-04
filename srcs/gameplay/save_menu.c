@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 17:41:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:40:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ void	create_save_image(t_env *e)
 	img_scaled_copy(e->sdl.surface, e->stats.save_img);
 }
 
-void convert_time(int *hour,int *min,int *sec)
+void convert_time(int *hour,int *min,int *sec, Uint32 timems)
 {
-	int	timems;
-
-	timems = SDL_GetTicks();
 	timems /= 1000;
 	*sec = timems % 60;
 	timems /= 60;
@@ -31,7 +28,7 @@ void convert_time(int *hour,int *min,int *sec)
 	*hour = timems;
 }
 
-char	*time_to_str(void)
+char	*time_to_str(Uint32 times)
 {
 	char	*name;
 	int		hour;
@@ -39,7 +36,7 @@ char	*time_to_str(void)
 	int		sec;
 	char	*t;
 
-	convert_time(&hour, &min, &sec);
+	convert_time(&hour, &min, &sec, times);
 	t = ft_itoa(hour);
 	name = ft_strljoin(t, " h ");
 	t = ft_itoa(min);
@@ -61,7 +58,7 @@ t_bloc	*new_save(t_env *e)
 	new->use.sprite = make_surface(W / 10, H / 10);
 	img_scaled_copy(e->stats.save_img, new->use.sprite);
 	new->use.rect = (SDL_Rect){W / 2.5, H / 3, W / 10, H / 10};
-	new->name = time_to_str();
+	new->name = time_to_str(SDL_GetTicks());
 	new->rect = (SDL_Rect){W / 2.5, H / 2.5, W / 40, 0};
 	new->next = NULL;
 	return (new);
@@ -80,11 +77,11 @@ void	create_save(t_env *e, t_status *s)
 			cur_save = cur_save->next;
 		cur_save = new_save(e);
 		save_data_file(e, cur_save->name);
-		ui_put_data(e, (t_font){M_WHITE, "Game saved", e->hud.text.quantify,
+		ui_put_data(e, (t_font){M_WHITE, "Game saved", e->hud.font.quantify,
 			(t_vtx){W / 2, H / 20}, W / 60, -1, -1});
 		e->stats.save = 0;
 	}
 	else
-		ui_put_data(e, (t_font){M_WHITE, "Already saved", e->hud.text.quantify,
+		ui_put_data(e, (t_font){M_WHITE, "Already saved", e->hud.font.quantify,
 			(t_vtx){W / 1.5, H / 20}, W / 60, -1, -1});
 }

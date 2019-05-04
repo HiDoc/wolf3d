@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:12:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 13:30:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 00:39:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_D_MENU_H
 # define DOOM_D_MENU_H
 
-# define NB_IMG_MENU	14
+# define NB_IMG_MENU	16
 # define NB_INTER_IMG	6
 # define NB_BL_NG		4
 # define NB_BLOC_IG		4
@@ -31,13 +31,15 @@
 # define I_IBTN			5
 # define I_INEWGAME		6
 # define I_GAMEOVER		7
+# define I_ENDGAME		8
+# define I_CREDITS		9
 
-# define I_INTER1		8
-# define I_INTER2		9
-# define I_INTER3		10
-# define I_INTER4		11
-# define I_INTER5		12
-# define I_INTER6		13
+# define I_INTER1		10
+# define I_INTER2		11
+# define I_INTER3		12
+# define I_INTER4		13
+# define I_INTER5		14
+# define I_INTER6		15
 
 /*
 ** MENU String

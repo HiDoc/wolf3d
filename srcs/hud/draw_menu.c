@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 00:53:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		render_menu(t_env *e, t_bloc *b, const char **s, int limit)
 		else
 			p = ft_strjoin(s[i], (char*)SDL_GetScancodeName(e->engine.keys[i]));
 		d = (t_font){st->cur == i ? M_GOLD : M_WHITE,
-		p, e->hud.text.quantify, (t_vtx){b[i].rect.x, b[i].rect.y}, 0, -1, -1};
+		p, e->hud.font.quantify, (t_vtx){b[i].rect.x, b[i].rect.y}, 0, -1, -1};
 		getsizebloc_n_draw(e, d, &b[i], limit);
 		f.rect = b[i].cross.rect;
 		st->cur == i && !st->options_menu && !st->load_menu
@@ -76,7 +76,7 @@ void	draw_saves(t_env *e, t_bloc *b)
 	{
 		ui_put_data(e, (t_font){
 			i == (e->menu.status.cur + e->menu.status.start)
-			? GOLD : M_WHITE, cur->name, e->hud.text.quantify,
+			? GOLD : M_WHITE, cur->name, e->hud.font.quantify,
 			(t_vtx){r.x, r.y}, W / 60, -1, -1});
 		f.rect = cur->use.rect;
 		r = cur->use.rect;
@@ -96,7 +96,7 @@ void	draw_games(t_env *e)
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
 	ui_put_data(e, (t_font){
 		(e->menu.status.cur == e->nb_games)
-		? GOLD : M_WHITE, e->menu.new_game.name, e->hud.text.quantify,
+		? GOLD : M_WHITE, e->menu.new_game.name, e->hud.font.quantify,
 		(t_vtx){r.x, r.y}, r.w, -1, -1});
 	r = (SDL_Rect){W / 4, H / 3, W / 60, 0};
 	if (e->games)
@@ -105,7 +105,7 @@ void	draw_games(t_env *e)
 		{
 			ui_put_data(e, (t_font){
 				i == (e->menu.status.cur)
-				? GOLD : M_WHITE, e->games[i], e->hud.text.quantify,
+				? GOLD : M_WHITE, e->games[i], e->hud.font.quantify,
 				(t_vtx){r.x, r.y}, r.w, -1, -1});
 			r.y += H / 10;
 		}
@@ -117,12 +117,12 @@ void	render_loadmenu(t_env *e, t_bloc *f, t_menu *m)
 	draw_img(e, e->world.surfaces.img_menu[I_LOADMENU].sprite, f);
 	ui_put_data(e, (t_font){
 		e->menu.status.cur == e->menu.status.nb_save ? GOLD : M_WHITE,
-		m->save->name, e->hud.text.quantify, (t_vtx){m->save->rect.x,
+		m->save->name, e->hud.font.quantify, (t_vtx){m->save->rect.x,
 		m->save->rect.y}, m->save->rect.w, -1, -1});
 	if (m->status.nb_save)
 		draw_saves(e, m->save);
 	else
-		ui_put_data(e, (t_font){M_WHITE, "No save yet", e->hud.text.quantify,
+		ui_put_data(e, (t_font){M_WHITE, "No save yet", e->hud.font.quantify,
 		(t_vtx){W / 2.5, H / 2.5}, W / 40, -1, -1});
 }
 
