@@ -16,18 +16,18 @@ int		read_tga_image(FILE *file, t_tga *image)
 {
 	if (!file)
 		return (0);
-    tga_footer(image, file);
-    tga_header(image, file);
-    if (image->meta.id_length && tga_id_field(image, file) == 0)
+	tga_footer(image, file);
+	tga_header(image, file);
+	if (image->meta.id_length && tga_id_field(image, file) == 0)
 		return (0);
-    if (image->meta.image_type == TGA_COLOR_MAPPED)
-        read_colormap(image, file);
-    if (image->meta.image_type == TGA_ENCODED_TRUECOLOR
+	if (image->meta.image_type == TGA_COLOR_MAPPED)
+		read_colormap(image, file);
+	if (image->meta.image_type == TGA_ENCODED_TRUECOLOR
 		|| image->meta.image_type == TGA_ENCODED_MONOCHROME)
 		read_encoded(image, file);
-    else if (image->meta.image_type == TGA_TRUECOLOR
-    	|| image->meta.image_type == TGA_MONOCHROME
-    	|| image->meta.image_type == TGA_COLOR_MAPPED)
+	else if (image->meta.image_type == TGA_TRUECOLOR
+		|| image->meta.image_type == TGA_MONOCHROME
+		|| image->meta.image_type == TGA_COLOR_MAPPED)
 		read_unencoded(image, file);
 	else
 		return (0);

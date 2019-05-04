@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:33:14 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 16:35:32 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 21:23:39 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,9 @@ int	is_cmt(int c)
 int	is_dgt(int c)
 {
 	return (c) >= '0' && (c) <= '9';
+}
+
+int	is_ptn(int c)
+{
+	return (c == ':');
 }

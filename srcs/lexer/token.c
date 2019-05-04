@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/28 12:27:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/04 21:26:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int		verify_token_next(int iter, char c, unsigned which)
 {
-	const t_op	op_next[6] = {
+	const t_op	op_next[TOKEN_NEXT_MAX] = {
 		{(1U << 0), "Space", &is_spc, 1},
 		{(1U << 1), "Tabulation", &is_tab, 1},
 		{(1U << 2), "Integer", &is_dgt, 1},
 		{(1U << 3), "Minus", &is_min, 1},
 		{(1U << 4), "End", &is_end, 1},
-		{(1U << 5), "None", NULL, 1}};
+		{(1U << 5), "Point", &is_ptn, 1},
+		{(1U << 6), "None", NULL, 1}};
 
 	if (which == TOKEN_VERIF)
 		return (op_next[iter].verify(c));
@@ -30,7 +31,7 @@ int		verify_token_next(int iter, char c, unsigned which)
 
 int		verify_token_first(int iter, char c, unsigned which)
 {
-	const t_op	op_first[12] = {
+	const t_op	op_first[TOKEN_FRST_MAX] = {
 		{(1U << SECTOR), "Sector", &is_sec, 10},
 		{(1U << VERTEX), "Vertex", &is_vtx, 2},
 		{(1U << PLAYER), "Player", &is_plr, 4},
@@ -58,7 +59,7 @@ t_token	*new_token(char c, unsigned pos)
 	int			(*funct)(int, char, unsigned);
 
 	iter = 0;
-	maxiter = pos ? 5 : 9;
+	maxiter = pos ? TOKEN_NEXT_MAX - 1: TOKEN_FRST_MAX - 1;
 	funct = pos ? &verify_token_next : &verify_token_first;
 	new = NULL;
 	while (iter < maxiter)
