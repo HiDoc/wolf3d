@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 03:23:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:46:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	print_infos_door(t_env *env, t_sector *sector)
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
-		printf("devant une door \n");
 		pos = (t_vtx){W / 2, H / 2};
 		front_player = &sector[index].door;
 		if (sector[index].is_door == 2)

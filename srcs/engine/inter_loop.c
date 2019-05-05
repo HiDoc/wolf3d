@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 12:01:18 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 13:33:31 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/04 22:23:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	display_credits(t_env *e)
 		{
 			draw_img(e, e->world.surfaces.img_menu[I_ENDGAME].sprite, &f);
 			stats_endgame(e);
-			// print_stats(e, W / 60,
-			// 	(t_vtx){W / 3.9, W / 1.7}, (t_vtx){H / 4.5, H / 18});
+			print_stats(e, W / 60,
+				(t_vtx){W / 3.9, W / 1.7}, (t_vtx){H / 4.5, H / 18});
 		}
 		if (e->menu.status.endgame == 1)
 			draw_img(e, e->world.surfaces.img_menu[I_CREDITS].sprite, &f);
@@ -87,15 +87,15 @@ void	action_endlevel(t_env *e, int level)
 {
 	Uint32	*t;
 
-	if (level == e->nb_levels - 1)
-		display_credits(e);
-	else if (e->finish)
+	if (e->finish)
 	{
 		e->menu.status.inter = 0;
 		e->finish = 0;
 		t = &e->levels[e->curr_lvl]->tplay;
 		*t = SDL_GetTicks() - *t;
 	}
+	if (level == e->nb_levels - 1)
+		display_credits(e);
 }
 
 static void	sdl_intro_render(t_env *env, int level)

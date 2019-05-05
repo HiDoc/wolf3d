@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 15:47:13 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:33:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		give_life(void *e, t_wrap_inv *object)
 	int		ref;
 
 	env = (t_env*)e;
-	ref = object->current->ref;
+	ref = object->ref;
 	data = ref == HEALTH ? &env->player.health : &env->player.shield;
 	max = ref == HEALTH ? env->player.max_health : env->player.max_shield;
 	if (*data < max)
@@ -48,11 +48,11 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 	env = (t_env*)e;
 	if (obj)
 	{
-		ammo = obj->current->ref * 10;
-		wpn = &env->player.inventory.weapons[obj->current->ref - 2];
+		ammo = obj->ref * 10;
+		wpn = &env->player.inventory.weapons[obj->ref - 2];
 		stack = wpn->ammo[0] + wpn->ammo[1];
-		wpn_ref = &env->world.armory[obj->current->ref - 2];
-		if (wpn->current && stack < wpn_ref->ammo_curr_max + wpn_ref->ammo_mag_max)
+		wpn_ref = &env->world.armory[obj->ref - 2];
+		if (wpn->is_full && stack < wpn_ref->ammo_curr_max + wpn_ref->ammo_mag_max)
 		{
 			ammo -= wpn_ref->ammo_curr_max - wpn->ammo[0];
 			wpn->ammo[0] = wpn_ref->ammo_curr_max;
@@ -65,7 +65,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 			env->engine.player.sound.ammo = 1;
 			return (BLANK);
 		}
-		return (wpn->current ? WPN_FULL : NO_AMMO);
+		return (wpn->is_full ? WPN_FULL : NO_AMMO);
 	}
 	return (WPN_LOADED);
 }

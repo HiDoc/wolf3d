@@ -19,7 +19,7 @@ int		handle_weapon(t_env *env)
 	t_bloc				*bloc;
 
 	actions = &env->player.actions;
-	if (curr)
+	if (curr->is_full)
 	{
 		if (actions->is_loading)
 		{
@@ -32,9 +32,9 @@ int		handle_weapon(t_env *env)
 			put_gun_shoot(env, env->time.frame);
 			env->time.frame++;
 		}
-		else if (curr)
+		else
 		{
-			bloc = &env->world.armory[curr->current->ref].sprite;
+			bloc = &env->world.armory[curr->ref].sprite;
 			put_gun(env, bloc);
 			env->time.frame = 0;
 		}

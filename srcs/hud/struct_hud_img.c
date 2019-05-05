@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 21:09:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 12:52:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ SDL_Surface	*ui_img(char *file, int i, int variable)
 
 	path = NULL;
 	final_path = NULL;
-	nb = ft_itoa(i + 1);
+	nb = ft_itoa(i);
 	path = ft_strjoin("./rsrc/img/", file);
 	final_path = ft_strjoin(path, nb);
 	if (variable == 1)

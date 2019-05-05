@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 16:03:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 12:55:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -453,14 +453,14 @@ int				select_mode(t_env *env)
 				env->editor.sct_select = env->editor.sct_hover;
 				// height input
 				if (get_element(E_I_SELEC_HCEIL, env)->str)
-					lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);
+					lt_release((void**)&get_element(E_I_SELEC_HCEIL, env)->str);
 				if (env->editor.sct_select->ceil > 0
 				&& !(get_element(E_I_SELEC_HCEIL, env)->str =
 				lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
 					ui_error_exit_sdl("Editor: Out of memory");
 				// gravity input
 				if (get_element(E_I_SELEC_GRAVITY, env)->str)
-					lt_release((void **)&get_element(E_I_SELEC_GRAVITY, env)->str);
+					lt_release((void**)&get_element(E_I_SELEC_GRAVITY, env)->str);
 				if (env->editor.sct_select->gravity > 0
 				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
 				lt_push(ft_itoa(env->editor.sct_select->gravity), ft_memdel)))

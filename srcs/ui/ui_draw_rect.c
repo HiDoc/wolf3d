@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ui_draw_rect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 17:19:50 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/18 20:07:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/04 18:11:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
+void		ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
 {
 	t_edge		edge;
 
@@ -32,3 +32,4 @@ void	ui_draw_rect(SDL_Surface *surface, SDL_Rect rect, Uint32 color)
 	edge.v2 = (t_vtx){rect.x, rect.y};
 	ui_draw_line(surface, edge, color);
 }
+

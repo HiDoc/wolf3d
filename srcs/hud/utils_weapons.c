@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/21 13:30:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 18:04:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		reload_ammo(t_env *env)
 	int				*mag;
 	int				tmp;
 
-	cur_max = env->world.armory[wp->current->ref].ammo_curr_max;
+	cur_max = env->world.armory[wp->ref].ammo_curr_max;
 	cur = wp->ammo_current;
 	mag = wp->ammo_magazine;
 	tmp = cur_max - *cur;
@@ -35,9 +35,9 @@ int		load_weapon(t_env *env)
 	int				curr_max;
 
 	wpn = env->player.inventory.current;
-	if (wpn && wpn->current->ref != FIST)
+	if (wpn && wpn->ref != FIST)
 	{
-		curr_max = env->world.armory[wpn->current->ref].ammo_curr_max;
+		curr_max = env->world.armory[wpn->ref].ammo_curr_max;
 		if (*wpn->ammo_magazine && *wpn->ammo_current < curr_max)
 		{
 			env->player.actions.is_loading = 1;
@@ -49,7 +49,7 @@ int		load_weapon(t_env *env)
 
 int		put_gun(t_env *env, t_bloc *bloc)
 {
-	const int		ref = env->player.inventory.current->current->ref;
+	const int		ref = env->player.inventory.current->ref;
 	const t_actions *a = &env->player.actions;
 
 	if (((!a->is_loading && !a->is_shooting) && ref != 4)
@@ -74,7 +74,7 @@ int		put_gun(t_env *env, t_bloc *bloc)
 int		put_gun_load(t_env *env, int frame)
 {
 	const t_wrap_wpn	*weapon = env->player.inventory.current;
-	const t_weapon		*wpn_ref = &env->world.armory[weapon->current->ref];
+	const t_weapon		*wpn_ref = &env->world.armory[weapon->ref];
 
 	frame /= 1.2;
 	if (frame < wpn_ref->time_reload - 1)
@@ -99,7 +99,7 @@ int		put_gun_shoot(t_env *env, int frame)
 	t_bloc			*sprite;
 
 	weapon = env->player.inventory.current;
-	wpn_ref = &env->world.armory[weapon->current->ref];
+	wpn_ref = &env->world.armory[weapon->ref];
 	sprite = &wpn_ref->sprite_shoot[frame];
 	if (frame < wpn_ref->time_shoot - 1)
 		put_gun(env, sprite);
