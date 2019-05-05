@@ -6,11 +6,47 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 15:14:55 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:35:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+unsigned	token_count_until(t_token *start, unsigned type, unsigned until)
+{
+	unsigned	count;
+	t_token		*iter;
+
+	count = 0;
+	iter = start;
+	while (iter)
+	{
+		if (iter->type == (1U << until))
+			break;
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
+			count++;
+		iter = iter->next;
+	}
+	return (count);
+}
+
+unsigned	token_count(t_parseline *line, unsigned type)
+{
+	t_token		*iter;
+	unsigned	count;
+
+	iter = line->first;
+	count = 0;
+	while (iter)
+	{
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
+			count++;
+		iter = iter->next;
+	}
+	return (count);
+}
 
 int		verify_token_next(int iter, char c, unsigned which)
 {
@@ -37,8 +73,6 @@ int		verify_token_first(int iter, char c, unsigned which)
 		{(1U << PLAYER), "Player", &is_plr, 4},
 		{(1U << OBJECT), "Object", &is_obj, 5},
 		{(1U << SKYBOX), "Skybox Texture", &is_sky, 3},
-		{(1U << SPECIA), "Special", &is_spe, 3},
-		{(1U << MAPNAME), "Map name", &is_nam, 3},
 		{(1U << ENTITY), "Entity", &is_ent, 4},
 		{(1U << COMMNT), "Comment", &is_cmt, 100},
 		{(1U << TXTURE), "Texture", &is_txt, 3},

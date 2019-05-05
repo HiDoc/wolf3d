@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:19:50 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 11:35:09 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:36:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,4 @@ int		no_op_int(int c)
 int		is_mus(int c)
 {
 	return (c == 'm');
-}
-
-int		is_nam(int c)
-{
-	return (c == 'n');
 }

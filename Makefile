@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/05 11:21:08 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/05 18:02:49 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,6 +156,12 @@ SRC_NAME 	= main.c \
 			parser_utils2.c \
 			parser_utils3.c \
 			parser_utils4.c \
+			parser_entity.c \
+			parser_object.c \
+			parser_player.c \
+			parser_other.c \
+			parser_sector.c \
+			parser_vertex.c \
 			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
