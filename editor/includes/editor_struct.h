@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 16:55:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 18:40:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ enum					e_elements
 	E_B_SELEC_MUSIC,
 	E_B_SELEC_SBTX,
 	E_B_SELEC_MISC_UP,
-	E_B_SELEC_MISC_DOWN
+	E_B_SELEC_MISC_DOWN,
+	ENUM_END
 };
 
 typedef struct	s_w_vtx		t_w_vtx;
@@ -136,7 +137,9 @@ struct					s_elem
 	SDL_Surface		*image;
 	Mix_Music		*audio;		// if button audio
 	char			*str;		// if type == input
-	int				str_max;	// if type == input
+	int				str_max;	// if type == inpu
+	
+	void			(*event_fc)(t_env *);	// event ptr
 
 	int				clicked;
 	int				hovered; // delete if not used ?
@@ -234,6 +237,8 @@ struct					s_editor
 	t_w_vtx			*edg_select;
 	t_sct			*sct_select;
 	t_object		*obj_select;
+
+	int				oneend;		// une seule fin
 
 	int				onespawn;	// un spawn a deja ete pose
 	int				spawn_set;	// spawn pose, en attente de direction

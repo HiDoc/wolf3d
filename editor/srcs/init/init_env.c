@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 17:27:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 18:36:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,39 +154,51 @@ static void		init_elems(t_env *env)
 	// editor selection sector
 	rect = (SDL_Rect){910, 370, 120, 25};
 	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+	get_element(E_I_SELEC_HFLOOR, env)->event_fc = click_sct_hfloor;
 	rect = (SDL_Rect){1040, 370, 120, 25};
 	create_element(E_I_SELEC_HCEIL, INPUT, rect, env);
+	get_element(E_I_SELEC_HCEIL, env)->event_fc = click_sct_hceil;
 
 	rect = (SDL_Rect){910, 150, 250, 25};
 	create_element(E_B_SELEC_NORMAL, BUTTON, rect, env);
+	get_element(E_B_SELEC_NORMAL, env)->event_fc = click_sct_normal;
 	rect = (SDL_Rect){910, 190, 80, 25};
 	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
+	get_element(E_B_SELEC_DOOR, env)->event_fc = click_sct_door;
 	rect = (SDL_Rect){1010, 190, 150, 25};
 	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
+	get_element(E_B_SELEC_FDOOR, env)->event_fc = click_sct_fdoor;
 
 	rect = (SDL_Rect){910, 230, 110, 25};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
+	get_element(E_B_SELEC_CEIL, env)->event_fc = click_sct_ceil;
 	rect = (SDL_Rect){1040, 230, 120, 25};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
+	get_element(E_B_SELEC_SKY, env)->event_fc = click_sct_sky;
 
 	rect = (SDL_Rect){910, 300, 250, 25};
 	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
+	get_element(E_I_SELEC_GRAVITY, env)->event_fc = click_sct_gravity;
 	
 	rect = (SDL_Rect){910, 420, 250, 25};
 	create_element(E_B_SELEC_CEILTX, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
+	get_element(E_B_SELEC_CEILTX, env)->event_fc = click_sct_ceiltx;
 	rect = (SDL_Rect){910, 460, 250, 25};
 	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
+	get_element(E_B_SELEC_FLOORTX, env)->event_fc = click_sct_floortx;
 
 	rect = (SDL_Rect){1130, 540, 20, 20};
 	create_element(E_B_SELEC_TX_UP, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_UP, env)->image =
 		ui_load_image("ressources/images/icons/arrowup.png");
+	get_element(E_B_SELEC_TX_UP, env)->event_fc = click_sct_txup;
 	rect = (SDL_Rect){1130, 570, 20, 20};
 	create_element(E_B_SELEC_TX_DOWN, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
+	get_element(E_B_SELEC_TX_DOWN, env)->event_fc = click_sct_txdown;
 
 	// editor selection misc
 	rect = (SDL_Rect){910, 150, 250, 25};

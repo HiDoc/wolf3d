@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 17:11:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 18:36:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,19 @@ void		display_element(t_env *env);
 /*
 **	events/
 */
+
+void        click_sct_normal(t_env *env);
+void        click_sct_door(t_env *env);
+void        click_sct_fdoor(t_env *env);
+void        click_sct_hceil(t_env *env);
+void        click_sct_hfloor(t_env *env);
+void        click_sct_gravity(t_env *env);
+void        click_sct_ceil(t_env *env);
+void        click_sct_sky(t_env *env);
+void        click_sct_ceiltx(t_env *env);
+void        click_sct_floortx(t_env *env);
+void        click_sct_txup(t_env *env);
+void        click_sct_txdown(t_env *env);
 
 int	        menu_events(t_env *env);
 int			handle_events(t_env *env);

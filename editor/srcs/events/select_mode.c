@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 17:34:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 18:41:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,102 @@ static int		select_input_events(t_env *env)
 		return (0);
 }
 
+void		click_sct_normal(t_env *env)
+{
+	if (env->editor.sct_select->type == 2)
+		env->editor.oneend = 0;
+	get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
+	env->editor.sct_select->type = 0;
+}
+
+void		click_sct_door(t_env *env)
+{
+	if (env->editor.sct_select->type == 2)
+		env->editor.oneend = 0;
+	get_element(E_B_SELEC_DOOR, env)->clicked = 1;
+	env->editor.sct_select->type = 1;
+}
+
+void		click_sct_fdoor(t_env *env)
+{
+	get_element(E_B_SELEC_FDOOR	, env)->clicked = 1;
+	if (env->editor.oneend == 1)
+		display_error_msg("You can not have 2 end system", env);
+	else
+	{
+		env->editor.oneend = 1;
+		env->editor.sct_select->type = 2;
+	}
+}
+
+void		click_sct_hceil(t_env *env)
+{
+	get_element(E_I_SELEC_HCEIL, env)->clicked = 1;
+}
+
+void		click_sct_hfloor(t_env *env)
+{
+	get_element(E_I_SELEC_HFLOOR, env)->clicked = 1;
+}
+
+void		click_sct_gravity(t_env *env)
+{
+	get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
+}
+
+void		click_sct_ceil(t_env *env)
+{
+	env->editor.sct_select->roof = 1;
+	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
+	get_element(E_B_SELEC_SKY, env)->clicked = 0;
+}
+
+void		click_sct_sky(t_env *env)
+{
+	env->editor.sct_select->roof = 0;
+	get_element(E_B_SELEC_CEIL, env)->clicked = 0;
+	get_element(E_B_SELEC_SKY, env)->clicked = 1;
+}
+
+void		click_sct_ceiltx(t_env *env)
+{
+	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
+	get_element(E_B_SELEC_FLOORTX, env)->clicked = 0;
+}
+
+void		click_sct_floortx(t_env *env)
+{
+	get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
+	get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
+}
+
+void		click_sct_txup(t_env *env)
+{
+	if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_CEILTX].idx_element < 0)
+			? env->editor.dropdown[DD_CEILTX].idx_element++ : 0;
+	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_FLOORTX].idx_element < 0)
+			? env->editor.dropdown[DD_FLOORTX].idx_element++ : 0;
+}
+
+void		click_sct_txdown(t_env *env)
+{
+	if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_CEILTX].idx_element
+		> -env->editor.dropdown[DD_CEILTX].nb_element + 1)
+			? env->editor.dropdown[DD_CEILTX].idx_element-- : 0;
+	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_FLOORTX].idx_element
+		> -env->editor.dropdown[DD_FLOORTX].nb_element + 1)
+			? env->editor.dropdown[DD_FLOORTX].idx_element-- : 0;
+}
+
 static void		select_sector(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem 			*button;
+	int				i;
 
 	get_element(E_I_SELEC_GRAVITY, env)->clicked = 0;
 	get_element(E_I_SELEC_HCEIL, env)->clicked = 0;
@@ -111,86 +203,16 @@ static void		select_sector(t_env *env)
 	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
 	get_element(E_B_SELEC_FDOOR	, env)->clicked = 0;
 
-	if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_NORMAL, env)->rect))
+	// click sct element
+	i = 0;
+	while (i < ENUM_END)
 	{
-		get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
-		env->editor.sct_select->type = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_DOOR, env)->rect))
-	{
-		get_element(E_B_SELEC_DOOR, env)->clicked = 1;
-		env->editor.sct_select->type = 1;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_FDOOR, env)->rect))
-	{
-		get_element(E_B_SELEC_FDOOR	, env)->clicked = 1;
-		env->editor.sct_select->type = 2;
-	}
-	if (ui_mouseenter(m.x, m.y,
-		get_element(E_I_SELEC_HCEIL, env)->rect))
-	{
-		get_element(E_I_SELEC_HCEIL, env)->clicked = 1;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_I_SELEC_HFLOOR, env)->rect))
-	{
-		get_element(E_I_SELEC_HFLOOR, env)->clicked = 1;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_I_SELEC_GRAVITY, env)->rect))
-	{
-		get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_CEIL, env)->rect))
-	{
-		env->editor.sct_select->roof = 1;
-		get_element(E_B_SELEC_CEIL, env)->clicked = 1;
-		get_element(E_B_SELEC_SKY, env)->clicked = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_SKY, env)->rect))
-	{
-		env->editor.sct_select->roof = 0;
-		get_element(E_B_SELEC_CEIL, env)->clicked = 0;
-		get_element(E_B_SELEC_SKY, env)->clicked = 1;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_CEILTX, env)->rect))
-	{
-		get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
-		get_element(E_B_SELEC_FLOORTX, env)->clicked = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_FLOORTX, env)->rect))
-	{
-		get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
-		get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_TX_UP, env)->rect))
-	{
-		if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_CEILTX].idx_element < 0)
-				? env->editor.dropdown[DD_CEILTX].idx_element++ : 0;
-		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_FLOORTX].idx_element < 0)
-				? env->editor.dropdown[DD_FLOORTX].idx_element++ : 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_TX_DOWN, env)->rect))
-	{
-		if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_CEILTX].idx_element
-			> -env->editor.dropdown[DD_CEILTX].nb_element + 1)
-				? env->editor.dropdown[DD_CEILTX].idx_element-- : 0;
-		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_FLOORTX].idx_element
-			> -env->editor.dropdown[DD_FLOORTX].nb_element + 1)
-				? env->editor.dropdown[DD_FLOORTX].idx_element-- : 0;
+		if (ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
+		{
+			if (get_element(i, env)->event_fc)
+			get_element(i, env)->event_fc(env);
+		}
+		i++;
 	}
 	// click music list button
 	button = env->editor.dropdown[DD_CEILTX].start;
@@ -420,7 +442,7 @@ int				select_mode(t_env *env)
 		if (Mix_PlayingMusic())
 			Mix_HaltMusic();
 		if (ui_mouseenter(m.x, m.y, rect))
-		{
+		{// interface
 			unselect_all(env);
 			if (env->editor.vtx_hover)
 			{
@@ -475,26 +497,15 @@ int				select_mode(t_env *env)
 			return (1);
 		}
 		else if (env->editor.sct_select)
-		{
 			select_sector(env);
-		}
 		else if (env->editor.edg_select)
-		{
 			select_edge(env);
-		}
 		else if (env->editor.obj_select)
-		{
 			select_object(env);
-		}
 		else if (env->editor.vtx_select)
-		{
 			select_vertex(env);
-		}
-		else if (!env->editor.obj_select && !env->editor.sct_select
-			&& !env->editor.vtx_select && !env->editor.edg_select)
-		{
-		select_misc(env);
-		}
+		else
+			select_misc(env);
 		return (1);
 	}
 	else if (event.type == SDL_KEYDOWN)

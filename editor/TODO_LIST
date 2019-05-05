@@ -26,17 +26,19 @@ PROTEC : set min edge size for split edge
 
 TODO : une seule porte de fin ou monstre de fin
 TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
+TODO : export error si input superieur a une cetaine valeure
+TODO : changement de mode / check comportement programme
+TODO : s'occuper de BUG/PROTEC/TOCHECK
+TODO : parsing : parsing todo
+
 TODO : empecher export si edge du meme sct overlap
 TODO : wall object dock
 TODO : grid : limite left / bot
-TODO : export error si input superieur a une cetaine valeure
+TODO : refactor events
 TODO : edge size n'est pas update si split, moving etc...
 TODO : free si retour menu + click start
 TODO : front design selected / hovered color and stuff / color on errmsg
-TODO : refactor events
-TODO : check coherence du programme et du fonctionnemenet des features
-TODO : s'occuper de BUG/PROTEC/TOCHECK
-TODO : parsing : parsing todo
+TODO : button pour music preview stop / play
 OPTI : minmax sync
 OPTI : multithreading
 OPTI : corriger le reframes inutiles
@@ -45,7 +47,6 @@ TODO : beta testing
 TODO : norme : total norme
 
 OPTIONAL :	ammeliorer clipping du content de l'interface
-OPTIONAL :	play preview background audio on misc
 OPTIONAL :	texture per door
 OPTIONAL :	menu preview
 OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
