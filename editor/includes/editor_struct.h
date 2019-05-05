@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 18:40:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 19:26:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ enum					e_type
 	INPUT,
 	BUTTON,
 	RECT
+};
+
+enum					e_pages
+{
+	MENU,
+	EDITOR,
+	S_VTX,
+	S_EDG,
+	S_SCT,
+	S_MSC,
+	SELEC,
+	DRAW,
+	ELEM
 };
 
 enum					e_elements
@@ -140,6 +153,8 @@ struct					s_elem
 	int				str_max;	// if type == inpu
 	
 	void			(*event_fc)(t_env *);	// event ptr
+
+	int				page;		// page (e_pages)
 
 	int				clicked;
 	int				hovered; // delete if not used ?

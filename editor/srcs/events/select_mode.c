@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 18:41:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 19:28:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,10 +207,11 @@ static void		select_sector(t_env *env)
 	i = 0;
 	while (i < ENUM_END)
 	{
-		if (ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
+		if (get_element(i, env)->page == S_SCT
+			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
 		{
 			if (get_element(i, env)->event_fc)
-			get_element(i, env)->event_fc(env);
+				get_element(i, env)->event_fc(env);
 		}
 		i++;
 	}
@@ -247,43 +248,54 @@ static void		select_sector(t_env *env)
 	}
 }
 
-static int		select_edge(t_env *env)
+void			click_edg_split(t_env *env)
+{
+	if (env->editor.edg_select->next)
+	{ // normal eddge
+		create_vertex(get_edge_center(
+		env->editor.edg_select->vtx->pos,
+			env->editor.edg_select->next->vtx->pos), env);
+	}
+	else
+	{ // last edge
+		create_vertex(get_edge_center(
+		env->editor.edg_select->vtx->pos,
+			env->editor.edg_select->sector->w_vtx_start->vtx->pos),
+			env);
+	}
+	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
+}
+
+void			click_edg_mwallup(t_env *env)
+{
+	(env->editor.dropdown[DD_MWALLTX].idx_element < 0)
+	? env->editor.dropdown[DD_MWALLTX].idx_element++ : 0;
+}
+
+void			click_edg_mwalldown(t_env *env)
+{
+	(env->editor.dropdown[DD_MWALLTX].idx_element
+	> -env->editor.dropdown[DD_MWALLTX].nb_element + 1)
+	? env->editor.dropdown[DD_MWALLTX].idx_element-- : 0;
+}
+
+static void		select_edge(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem			*button;
+	int				i;
 
-	if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_SPLIT, env)->rect))
+	// click sct element
+	i = 0;
+	while (i < ENUM_END)
 	{
-		if (env->editor.edg_select->next)
-		{ // normal eddge
-			create_vertex(get_edge_center(
-			env->editor.edg_select->vtx->pos,
-				env->editor.edg_select->next->vtx->pos), env);
+		if (get_element(i, env)->page == S_EDG
+			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
+		{
+			if (get_element(i, env)->event_fc)
+				get_element(i, env)->event_fc(env);
 		}
-		else
-		{ // last edge
-			create_vertex(get_edge_center(
-			env->editor.edg_select->vtx->pos,
-				env->editor.edg_select->sector->w_vtx_start->vtx->pos),
-				env);
-		}
-		insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_M_WALL_UP, env)->rect))
-	{
-		(env->editor.dropdown[DD_MWALLTX].idx_element < 0)
-		? env->editor.dropdown[DD_MWALLTX].idx_element++ : 0;
-		return (1);
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_M_WALL_DOWN, env)->rect))
-	{
-		(env->editor.dropdown[DD_MWALLTX].idx_element
-		> -env->editor.dropdown[DD_MWALLTX].nb_element + 1)
-			? env->editor.dropdown[DD_MWALLTX].idx_element-- : 0;
-		return (1);
+		i++;
 	}
 
 	// click music list button
@@ -302,9 +314,7 @@ static int		select_edge(t_env *env)
 	{
 		delete_edge(env->editor.edg_select, env);
 		unselect_all(env);
-		return (1);
 	}
-	return (0);
 }
 
 static int		select_vertex(t_env *env)
