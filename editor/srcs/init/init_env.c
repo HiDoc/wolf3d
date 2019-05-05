@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 19:26:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 21:13:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,19 +207,23 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 150, 250, 25};
 	create_element(E_B_SELEC_MUSIC, BUTTON, S_MSC, rect, env);
 	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
+	get_element(E_B_SELEC_MUSIC, env)->event_fc = click_msc_music;
 
 	rect = (SDL_Rect){910, 190, 250, 25};
 	create_element(E_B_SELEC_SBTX, BUTTON, S_MSC, rect, env);
+	get_element(E_B_SELEC_SBTX, env)->event_fc = click_msc_sbtx;
 
 	rect = (SDL_Rect){1130, 270, 20, 20};
 	create_element(E_B_SELEC_MISC_UP, BUTTON, S_MSC, rect, env);
 	get_element(E_B_SELEC_MISC_UP, env)->image =
 		ui_load_image("ressources/images/icons/arrowup.png");
+	get_element(E_B_SELEC_MISC_UP, env)->event_fc = click_msc_miscup;
 
 	rect = (SDL_Rect){1130, 300, 20, 20};
 	create_element(E_B_SELEC_MISC_DOWN, BUTTON, S_MSC, rect, env);
 	get_element(E_B_SELEC_MISC_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
+	get_element(E_B_SELEC_MISC_DOWN, env)->event_fc = click_msc_miscdown;
 }
 
 /*

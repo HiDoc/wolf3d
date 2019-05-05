@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 19:28:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 21:09:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ static void		select_edge(t_env *env)
 	t_elem			*button;
 	int				i;
 
-	// click sct element
+	// click edg element
 	i = 0;
 	while (i < ENUM_END)
 	{
@@ -343,46 +343,57 @@ static int		select_object(t_env *env)
 	return (0);
 }
 
-static int		select_misc(t_env *env)
+void			click_msc_music(t_env *env)
+{
+	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
+	get_element(E_B_SELEC_SBTX, env)->clicked = 0;
+}
+
+void			click_msc_sbtx(t_env *env)
+{
+	get_element(E_B_SELEC_SBTX, env)->clicked = 1;
+	get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
+}
+
+void			click_msc_miscup(t_env *env)
+{
+	if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+		(env->editor.dropdown[DD_BGAUDIO].idx_element < 0)
+			? env->editor.dropdown[DD_BGAUDIO].idx_element++ : 0;
+	else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_SBTX].idx_element < 0)
+			? env->editor.dropdown[DD_SBTX].idx_element++ : 0;
+}
+
+void			click_msc_miscdown(t_env *env)
+{
+	if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
+		(env->editor.dropdown[DD_BGAUDIO].idx_element
+		> -env->editor.dropdown[DD_BGAUDIO].nb_element + 1)
+			? env->editor.dropdown[DD_BGAUDIO].idx_element-- : 0;
+	else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
+		(env->editor.dropdown[DD_SBTX].idx_element
+		> -env->editor.dropdown[DD_SBTX].nb_element + 1)
+			? env->editor.dropdown[DD_SBTX].idx_element-- : 0;
+}
+
+static void		select_misc(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem			*button;
+	int				i;
 
-	if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_MUSIC, env)->rect))
+	// click msc element
+	i = 0;
+	while (i < ENUM_END)
 	{
-		get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
-		get_element(E_B_SELEC_SBTX, env)->clicked = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_SBTX, env)->rect))
-	{
-		get_element(E_B_SELEC_SBTX, env)->clicked = 1;
-		get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_MISC_UP, env)->rect))
-	{
-		if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-			(env->editor.dropdown[DD_BGAUDIO].idx_element < 0)
-				? env->editor.dropdown[DD_BGAUDIO].idx_element++ : 0;
-		else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_SBTX].idx_element < 0)
-				? env->editor.dropdown[DD_SBTX].idx_element++ : 0;
-		return (1);
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_MISC_DOWN, env)->rect))
-	{
-		if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-			(env->editor.dropdown[DD_BGAUDIO].idx_element
-			> -env->editor.dropdown[DD_BGAUDIO].nb_element + 1)
-				? env->editor.dropdown[DD_BGAUDIO].idx_element-- : 0;
-		else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-			(env->editor.dropdown[DD_SBTX].idx_element
-			> -env->editor.dropdown[DD_SBTX].nb_element + 1)
-				? env->editor.dropdown[DD_SBTX].idx_element-- : 0;
-		return (1);
+		if (get_element(i, env)->page == S_MSC
+			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
+		{
+			if (get_element(i, env)->event_fc)
+				get_element(i, env)->event_fc(env);
+		}
+		i++;
 	}
 
 	if (get_element(E_B_SELEC_MUSIC, env)->clicked)
@@ -420,7 +431,6 @@ static int		select_misc(t_env *env)
 			button = button->next;
 		}
 	}
-	return (0);
 }
 
 int				select_mode(t_env *env)

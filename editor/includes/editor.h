@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 19:04:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 21:12:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void		display_element(t_env *env);
 **	events/
 */
 
+void            click_msc_music(t_env *env);
+void            click_msc_sbtx(t_env *env);
+void            click_msc_miscup(t_env *env);
+void            click_msc_miscdown(t_env *env);
 void            click_edg_mwalldown(t_env *env);
 void            click_edg_mwallup(t_env *env);
 void            click_edg_split(t_env *env);

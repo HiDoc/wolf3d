@@ -7,7 +7,6 @@ BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
 BUG : execve ./doom completement KC
 BUG : makefile recompile pas la libft
 # apres fix inputs
-BUG : bloquer value max des input
 BUG : taille du nom des object depasse du carre
 # apres fix target edge
 BUG : draw mode : create vertex in sector close to edge
@@ -24,6 +23,8 @@ TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : pertinance de garder enum e_type
 PROTEC : set min edge size for split edge
 
+TODO : refactor events
+TODO : clean t_elem
 TODO : une seule porte de fin ou monstre de fin
 TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
 TODO : export error si input superieur a une cetaine valeure
@@ -34,7 +35,6 @@ TODO : parsing : parsing todo
 TODO : empecher export si edge du meme sct overlap
 TODO : wall object dock
 TODO : grid : limite left / bot
-TODO : refactor events
 TODO : edge size n'est pas update si split, moving etc...
 TODO : free si retour menu + click start
 TODO : front design selected / hovered color and stuff / color on errmsg
