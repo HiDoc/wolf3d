@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 23:06:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:21:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ void		unselect_all(t_env *env)
 	env->editor.vtx_select = 0;
 	env->editor.edg_select = 0;
 	env->editor.sct_select = 0;
+
+	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
+	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
+	get_element(E_B_SELEC_FDOOR, env)->clicked = 0;
 }
 
 static int		select_input_events(t_env *env)
@@ -47,6 +51,27 @@ static int		select_input_events(t_env *env)
 			}
 			return (1);
 		}
+		else if (get_element(E_I_SELEC_HFLOOR, env)->clicked == 1)
+		{
+			if (scancode >= 89 && scancode <= 98)
+			{ // numeric keypad
+				key += 7;
+			}
+			if ((scancode >= 89 && scancode <= 98)
+			|| (scancode >= 30 && scancode <= 39))
+			{
+				if ((input_add(E_I_SELEC_HFLOOR, key, env)))
+				{
+					env->editor.sct_select->floor = ft_atoi(
+					get_element(E_I_SELEC_HFLOOR, env)->str);
+				}
+			}
+			else if (scancode == 42)
+			{
+				input_del(E_I_SELEC_HFLOOR, env);
+			}
+			return (1);
+		}
 		else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
 		{
 			if (scancode >= 89 && scancode <= 98)
@@ -71,30 +96,6 @@ static int		select_input_events(t_env *env)
 		return (0);
 }
 
-void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
-{
-	float		size;
-	float		scale;
-	t_vec		door;
-	t_pos		center;
-
-	center = get_edge_center(a, b);
-
-	size = pythagore(a, b);
-	scale = doorsize / size;
-
-	door.a.x = -scale * (a.x - center.x) + center.x;
-	door.a.y = -scale * (a.y - center.y) + center.y;
-
-	door.b.x = -scale * (b.x - center.x) + center.x;
-	door.b.y = -scale * (b.y - center.y) + center.y;
-
-	create_vertex(door.a, env);
-	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
-	create_vertex(door.b, env);
-	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
-}
-
 static void		select_sector(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
@@ -103,7 +104,28 @@ static void		select_sector(t_env *env)
 	get_element(E_I_SELEC_GRAVITY, env)->clicked = 0;
 	get_element(E_I_SELEC_HCEIL, env)->clicked = 0;
 	get_element(E_I_SELEC_HFLOOR, env)->clicked = 0;
+	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
+	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
+	get_element(E_B_SELEC_FDOOR	, env)->clicked = 0;
 
+	if (ui_mouseenter(m.x, m.y,
+		get_element(E_B_SELEC_NORMAL, env)->rect))
+	{
+		get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
+		env->editor.sct_select->type = 0;
+	}
+	else if (ui_mouseenter(m.x, m.y,
+		get_element(E_B_SELEC_DOOR, env)->rect))
+	{
+		get_element(E_B_SELEC_DOOR, env)->clicked = 1;
+		env->editor.sct_select->type = 1;
+	}
+	else if (ui_mouseenter(m.x, m.y,
+		get_element(E_B_SELEC_FDOOR, env)->rect))
+	{
+		get_element(E_B_SELEC_FDOOR	, env)->clicked = 1;
+		env->editor.sct_select->type = 2;
+	}
 	if (ui_mouseenter(m.x, m.y,
 		get_element(E_I_SELEC_HCEIL, env)->rect))
 	{
@@ -222,42 +244,6 @@ static int		select_edge(t_env *env)
 				env);
 		}
 		insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_DOOR, env)->rect))
-	{
-		t_vec	vec;
-
-		vec.a = env->editor.edg_select->vtx->pos;
-		vec.b = (env->editor.edg_select->next)
-			? env->editor.edg_select->next->vtx->pos
-			: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
-
-		if (pythagore(vec.a, vec.b) > 3)
-		{
-			make_door(3, vec.a, vec.b, env);
-			// w_vtx.door = 1;
-		}
-		else
-			display_error_msg("Wall too small to make a door", env);
-	}
-	else if (ui_mouseenter(m.x, m.y,
-		get_element(E_B_SELEC_FDOOR, env)->rect))
-	{
-		t_vec	vec;
-
-		vec.a = env->editor.edg_select->vtx->pos;
-		vec.b = (env->editor.edg_select->next)
-			? env->editor.edg_select->next->vtx->pos
-			: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
-
-		if (pythagore(vec.a, vec.b) > 4)
-		{
-			make_door(4, vec.a, vec.b, env);
-			// w_vtx.door = 1;
-		}
-		else
-			display_error_msg("Wall too small to make a final door", env);
 	}
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_M_WALL_UP, env)->rect))
@@ -443,12 +429,32 @@ int				select_mode(t_env *env)
 			else if (env->editor.sct_hover)
 			{
 				env->editor.sct_select = env->editor.sct_hover;
-				// height input
+				// buttons
+				if (env->editor.sct_hover->type == 0)
+				{
+					get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
+				}
+				else if (env->editor.sct_hover->type == 1)
+				{
+					get_element(E_B_SELEC_DOOR, env)->clicked = 1;
+				}
+				else if (env->editor.sct_hover->type == 2)
+				{
+					get_element(E_B_SELEC_FDOOR, env)->clicked = 1;
+				}
+				// hceil input
 				if (get_element(E_I_SELEC_HCEIL, env)->str)
 					lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);
 				if (env->editor.sct_select->ceil > 0
 				&& !(get_element(E_I_SELEC_HCEIL, env)->str =
 				lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
+					ui_error_exit_sdl("Editor: Out of memory");
+				// hfloor input
+				if (get_element(E_I_SELEC_HFLOOR, env)->str)
+					lt_release((void **)&get_element(E_I_SELEC_HFLOOR, env)->str);
+				if (env->editor.sct_select->floor > 0
+				&& !(get_element(E_I_SELEC_HFLOOR, env)->str =
+				lt_push(ft_itoa(env->editor.sct_select->floor), ft_memdel)))
 					ui_error_exit_sdl("Editor: Out of memory");
 				// gravity input
 				if (get_element(E_I_SELEC_GRAVITY, env)->str)
@@ -461,27 +467,25 @@ int				select_mode(t_env *env)
 			return (1);
 		}
 		else if (env->editor.sct_select)
+		{
 			select_sector(env);
+		}
 		else if (env->editor.edg_select)
 		{
-			if (select_edge(env))
-				return (1);
+			select_edge(env);
 		}
 		else if (env->editor.obj_select)
 		{
-			if (select_object(env))
-				return (1);
+			select_object(env);
 		}
 		else if (env->editor.vtx_select)
 		{
-			if (select_vertex(env))
-				return (1);
+			select_vertex(env);
 		}
 		else if (!env->editor.obj_select && !env->editor.sct_select
 			&& !env->editor.vtx_select && !env->editor.edg_select)
 		{
-			if (select_misc(env))
-				return (1);
+		select_misc(env);
 		}
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 17:01:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 15:22:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 #define TOKEN_VALUE 0x01
 #define TOKEN_VERIF 0x02
+
+# define TOKEN_NEXT_MAX 7
+# define TOKEN_FRST_MAX 12
 
 /*
 ** AST function to assign token
@@ -90,5 +93,6 @@ int			parser(t_env *env, char *filename);
 void		print_line(t_parseline *line);
 void		print_file(t_parsefile *file);
 int			free_file(t_parsefile *file);
+int			is_ptn(int c);
 
 #endif

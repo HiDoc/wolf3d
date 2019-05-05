@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 22:23:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 15:31:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,8 @@ static void		init_elems(t_env *env)
 	get_element(E_B_SELEC_DEL, env)->color = C_RED;
 
 	// editor selection edge
-	rect = (SDL_Rect){910, 250, 250, 30};
-	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
-
-	rect = (SDL_Rect){910, 200, 250, 30};
-	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
-
 	rect = (SDL_Rect){910, 150, 250, 30};
-	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
+	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
 
 	rect = (SDL_Rect){1130, 540, 20, 20};
 	create_element(E_B_SELEC_M_WALL_UP, BUTTON, rect, env);
@@ -158,34 +152,37 @@ static void		init_elems(t_env *env)
 		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	// editor selection sector
-	rect = (SDL_Rect){910, 250, 250, 30};
+	rect = (SDL_Rect){910, 370, 120, 25};
+	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+	rect = (SDL_Rect){1040, 370, 120, 25};
 	create_element(E_I_SELEC_HCEIL, INPUT, rect, env);
 
-	rect = (SDL_Rect){910, 320, 250, 30};
-	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+	rect = (SDL_Rect){910, 150, 250, 25};
+	create_element(E_B_SELEC_NORMAL, BUTTON, rect, env);
+	rect = (SDL_Rect){910, 190, 80, 25};
+	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
+	rect = (SDL_Rect){1010, 190, 150, 25};
+	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 180, 250, 30};
-	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
-
-	rect = (SDL_Rect){910, 370, 110, 30};
+	rect = (SDL_Rect){910, 230, 110, 25};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
-
-	rect = (SDL_Rect){1040, 370, 120, 30};
+	rect = (SDL_Rect){1040, 230, 120, 25};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 420, 250, 30};
+	rect = (SDL_Rect){910, 300, 250, 25};
+	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
+	
+	rect = (SDL_Rect){910, 420, 250, 25};
 	create_element(E_B_SELEC_CEILTX, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
-
-	rect = (SDL_Rect){910, 460, 250, 30};
+	rect = (SDL_Rect){910, 460, 250, 25};
 	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
 
 	rect = (SDL_Rect){1130, 540, 20, 20};
 	create_element(E_B_SELEC_TX_UP, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_UP, env)->image =
 		ui_load_image("ressources/images/icons/arrowup.png");
-
 	rect = (SDL_Rect){1130, 570, 20, 20};
 	create_element(E_B_SELEC_TX_DOWN, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_DOWN, env)->image =

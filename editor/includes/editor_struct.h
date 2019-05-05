@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 18:03:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 15:51:43 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ enum					e_elements
 	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,
 	E_B_SELEC_SPLIT,
+	E_B_SELEC_NORMAL,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
 	E_B_SELEC_M_WALL_UP,
@@ -77,9 +78,6 @@ typedef struct  s_env   	t_env;
 
 struct					s_w_vtx
 {
-	int			fdoor;	// is final door
-	int			door;	// is door
-
 	int			ref;	// texture ref
 	int			size;	// size edge
 

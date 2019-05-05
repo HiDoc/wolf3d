@@ -24,25 +24,26 @@ PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 * TOCHECK : pertinance de garder enum e_type
 * PROTEC : set min edge size for split edge
 
-[04] TODO : une seule porte de fin ou monstre de fin
-[03] TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
-[03] TODO : door is a sector
-[03] TODO : bloquer select / split / door/fdor / vtxmove etc... si sct == door
-[03] TODO : empecher export si edge du meme sct overlap
-[03] TODO : wall object dock
-[03] TODO : grid : limite left / bot
-[03] TODO : input hfloor + couleur input
-[03] TODO : edge size n'est pas update si split, moving etc...
-[03] TODO : free si retour menu + click start
-[03] TODO : debug relier element et buttons display on dropdown lists
-[03] TODO : front design selected / hovered color and stuff / color on errmsg
-[03] TODO : refactor events
-[03] TODO : check coherence du programme et du fonctionnemenet des features
-[04] TODO : s'occuper de BUG/PROTEC/TOCHECK
-[04] TODO :	parsing : parsing todo
-[04] OPTI :	minmax sync
-[04] OPTI :	multithreading
-[04] OPTI :	corriger le reframes inutiles
+TODO : une seule porte de fin ou monstre de fin
+TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
+TODO : empecher export si edge du meme sct overlap
+TODO : wall object dock
+TODO : grid : limite left / bot
+
+TODO : export error si input superieur a une cetaine valeure
+TODO : debugger select buttons
+TODO : debug relier element et buttons display on dropdown lists
+
+TODO : edge size n'est pas update si split, moving etc...
+TODO : free si retour menu + click start
+TODO : front design selected / hovered color and stuff / color on errmsg
+TODO : refactor events
+TODO : check coherence du programme et du fonctionnemenet des features
+TODO : s'occuper de BUG/PROTEC/TOCHECK
+TODO : parsing : parsing todo
+OPTI : minmax sync
+OPTI : multithreading
+OPTI : corriger le reframes inutiles
 
 [05] TODO : details et finitions
 [05] TODO :	beta testing
