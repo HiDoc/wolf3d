@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/03 18:00:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 15:44:45 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,77 +37,144 @@ void 	retrieve_vertex(t_parseline *line, t_vtx *vtx)
 	vtx->y = y;
 }
 
-unsigned	token_calc(t_parseline *line)
+unsigned	token_count_until(t_token *start, unsigned type, unsigned until)
 {
-	t_token		*iter;
 	unsigned	count;
+	t_token		*iter;
 
-	iter = line->first;
 	count = 0;
+	iter = start;
 	while (iter)
 	{
-		if (iter->type == (1U << 2) &&
-			(iter->next && iter->next->type != (1U << 2)))
+		if (iter->type == (1U << until))
+			break;
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
 			count++;
 		iter = iter->next;
 	}
 	return (count);
 }
 
-void	select_type_sector(t_sector *s)
+unsigned	token_count(t_parseline *line, unsigned type)
 {
-	if (s->type == SECT_DOOR || s->type == SECT_ENDLEVEL)
-		s->is_door = s->type == SECT_DOOR ? 1 : 2;
+	t_token		*iter;
+	unsigned	count;
+
+	iter = line->first;
+	count = 0;
+	while (iter)
+	{
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
+			count++;
+		iter = iter->next;
+	}
+	return (count);
+}
+
+void	fill_sector(t_sector *sect, unsigned value, unsigned count)
+{
+	if (count == 0)
+		sect->ceil = value;
+	else if (count == 1)
+		return ;
+	else if (count == 2)
+		sect->floor = value;
+	else if (count == 3)
+		return ;
+	else if (count == 4)
+		sect->gravity = value;
+	else if (count == 5)
+		sect->has_skybox = value;
+	else if (count == 6)
+		sect->type = value;
 }
 
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)
 {
 	t_token		*iter;
-	unsigned	number;
+	unsigned	value;
 	unsigned	count;
-	unsigned	pos;
 
-	number = token_calc(line) - 3;
-	//printf("number of vertexes: %u\n", number);
-	sect->npoints = number;
-	sect->neighbors = ft_memalloc(sizeof(signed) * number);
-	sect->vertex = ft_memalloc(sizeof(t_vtx) * (sect->npoints + 1));
-	ft_memset(sect->neighbors, -1, number);
 	iter = line->first;
+	value = 0;
+	count = 0;
 	if (iter)
 		iter = iter->next;
-	count = 0;
-	pos = 0;
+	else
+		return;
 	while (iter)
 	{
-		if (iter->type == (1U << 2))
+		if (iter->type == (1U << POINT))
+			break;
+		if (iter->type == (1U << INT))
 		{
-			if (!count)
-				sect->floor = sect->floor * 10 + (iter->value - '0');
-			else if (count == 1)
-				sect->ceil = sect->ceil * 10 + (iter->value - '0');
-			else if (count > 1)
-				pos = pos * 10 + (iter->value - '0');
-			if (iter->next && iter->next->type != (1U << 2))
+			value = (value * 10) + (iter->value - '0');
+			if (iter->next && iter->next->type != (1U << INT))
 			{
-				if (count == 2)
-					sect->type = pos;
-				if (count > 2)
-				{
-					sect->vertex[count - 2] = (t_vtx){vtx[pos].x, vtx[pos].y};
-					//printf("Vertex: [%.0f, %.0f] pos: %u\n", vtx[pos].x, vtx[pos].y, pos);
-				}
+				fill_sector(sect, value, count);
+				value = 0;
 				count++;
-				pos = 0;
 			}
 		}
 		iter = iter->next;
 	}
-	select_type_sector(sect);
-	if (count > 2)
-		sect->vertex[0] = (t_vtx){sect->vertex[sect->npoints].x,
-		sect->vertex[sect->npoints].y};
-	//printf("Vertex: [%.0f, %.0f]\n", vtx[0].x, vtx[0].y);
+	printf("%f, 0, %f, 0, %d, %d, %d \n",
+		sect->ceil, sect->floor, sect->gravity, sect->has_skybox, sect->type);
+	count = 1;
+	value = 0;
+	if (iter && iter->type == (1U << POINT))
+	{
+		iter = iter->next;
+		sect->npoints = token_count_until(iter, INT, POINT);
+		printf("npoints :%d\n", sect->npoints);
+		sect->vertex = ft_memalloc(sizeof(t_vtx) * (sect->npoints + 1));
+		sect->neighbors = ft_memalloc(sizeof(signed char) * sect->npoints);
+		ft_memset(sect->neighbors, -1, sizeof(signed char) * sect->npoints);
+		while (iter)
+		{
+			if (iter->type == (1U << POINT))
+				break;
+			if (iter->type == (1U << INT))
+			{
+				value = (value * 10) + (iter->value - '0');
+				if (iter->next && iter->next->type != (1U << INT))
+				{
+					sect->vertex[count] = (t_vtx){vtx[value].x, vtx[value].y};
+					printf("[vtx: %d] [value: %d] [%f, %f]\n", count, value, vtx[value].x, vtx[value].y);
+					value = 0;
+					count++;
+				}
+			}
+			iter = iter->next;
+		}
+		sect->vertex[0] = (t_vtx){sect->vertex[sect->npoints].x, sect->vertex[sect->npoints].y};
+		printf("[vtx: %d] [value: %d] [%f, %f]\n", 0, 0, sect->vertex[0].x, sect->vertex[0].y);
+	}
+	count = 0;
+	value = 0;
+	if (iter && iter->type == (1U << POINT))
+	{
+		iter = iter->next;
+		sect->textures = ft_memalloc(sizeof(signed char) * (sect->npoints + 1));
+		while (iter)
+		{
+			if (iter->type == (1U << POINT))
+				break;
+			if (iter->type == (1U << INT))
+			{
+				value = (value * 10) + (iter->value - '0');
+				if (iter->next && iter->next->type != (1U << INT))
+				{
+					sect->textures[count] = value;
+					value = 0;
+					count++;
+				}
+			}
+			iter = iter->next;
+		}
+	}
 }
 
 void 	retrieve_player(t_env *e, t_parseline *line)
@@ -182,7 +249,6 @@ void	load_sector(t_env *e, t_parsefile *file, t_vtx *vert)
 		{
 			if (line->first->type == (1U))
 			{
-				//printf("Currently on sector : %u\n", pos);
 				retrieve_sector(&e->engine.sectors[pos], line, vert);
 				pos++;
 			}

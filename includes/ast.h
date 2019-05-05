@@ -6,16 +6,16 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 17:01:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 15:13:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-#define TOKEN_VALUE 0x01
-#define TOKEN_VERIF 0x02
-
+# define TOKEN_VALUE 0x01
+# define TOKEN_VERIF 0x02
+# define TOKEN_STRING 0x04
 /*
 ** AST function to assign token
 */
@@ -33,6 +33,11 @@ int			is_spe(int c);
 int			is_plr(int c);
 int			is_cmt(int c);
 int			is_dgt(int c);
+int			is_ptn(int c);
+int			is_mus(int c);
+int			is_nam(int c);
+int			is_sky(int c);
+int			no_op_int(int c);
 
 typedef struct s_parsefile	t_parsefile;
 typedef struct s_parseline	t_parseline;
@@ -70,16 +75,35 @@ struct	s_parsefile
 	t_parseline	*first;
 };
 
-enum e_op_first{
+enum e_op_next
+{
+	SPACE,
+	TAB,
+	INT,
+	MINUS,
+	POINT,
+	NEND,
+	NNONE,
+	TOKEN_NEXT_MAX
+};
+
+enum e_op_first
+{
 	SECTOR,
 	VERTEX,
 	PLAYER,
 	OBJECT,
-	WOJECT,
+	SKYBOX,
 	SPECIA,
+	MAPNAME,
 	ENTITY,
 	COMMNT,
-	TXTURE
+	TXTURE,
+	MUSIC,
+	END,
+	NONE,
+	ERROR,
+	TOKEN_FRST_MAX
 };
 
 t_token		*new_token(char c, unsigned pos);
@@ -90,5 +114,8 @@ int			parser(t_env *env, char *filename);
 void		print_line(t_parseline *line);
 void		print_file(t_parsefile *file);
 int			free_file(t_parsefile *file);
-
+int			verify_token_first(int iter, char c, unsigned which);
+int			verify_token_next(int iter, char c, unsigned which);
+unsigned	token_count_until(t_token *start, unsigned type, unsigned until);
+unsigned	token_count(t_parseline *line, unsigned type);
 #endif

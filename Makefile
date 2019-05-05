@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/04 02:54:24 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/05 11:21:08 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,12 +150,12 @@ SRC_NAME 	= main.c \
 			lexer.c \
 			parser.c \
 			line.c \
-			op.c \
 			printer.c \
 			reader.c \
 			parser_utils1.c \
 			parser_utils2.c \
 			parser_utils3.c \
+			parser_utils4.c \
 			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)

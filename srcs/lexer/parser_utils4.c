@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*   parser_utils4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 16:32:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 11:37:23 by fmadura          ###   ########.fr       */
+/*   Created: 2019/05/05 11:19:50 by fmadura           #+#    #+#             */
+/*   Updated: 2019/05/05 11:35:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	is_vtx(int c)
+int		no_op_int(int c)
 {
-	return c == 'v';
+	(void)c;
+	return (0);
 }
 
-int	is_obj(int c)
+int		is_mus(int c)
 {
-	return c == 'o';
+	return (c == 'm');
 }
 
-int	is_txt(int c)
+int		is_nam(int c)
 {
-	return c == 't';
-}
-
-int	is_ent(int c)
-{
-	return c == 'e';
-}
-
-int	is_sky(int c)
-{
-	return c == 'b';
+	return (c == 'n');
 }

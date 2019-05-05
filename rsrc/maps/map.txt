@@ -1,14 +1,50 @@
-v  0 0
-v  0 20
-v  20 20
-v  20 0
-v  3 1
-v  5 1
-v  5 3
-v  3 3
+# background music
+# *
+m 1
 
-s  	0 20	001		0 1 2
-s  	0 6		002 	4 5 6
-e	18 15	0	0
-o	8 	4	0	0 1
-p	2 6	0	0
+# skybox texture
+# *
+b 1
+
+# vertex: x y
+#	*	*
+v	1	1
+v	80	1
+v	80	8
+v	80	16
+v	80	64
+v	1	64
+v	1	16
+v	1	8
+v	0	8
+v	0	16
+v	81	16
+v	81	124
+v	120	0
+v	120	80
+
+# sector: cl_h cl_tx fl_h fl_tx gravity roof type n-vtx n-tx
+#	* *		* *		* * *	: * * * * * * * *	: * * * * * * *
+s 	40 0 	0 0		1 0 0	: 0 1 2 3 4 5 6 7	: 0 0 0 0 0 0 0
+s 	0 0 	0 0		1 0 0 	: 7 6 9 8			: 0 0 0 0
+s 	40 0 	0 0		1 0 0	: 10 11 4 3			: 0 0 0 0
+s 	0 0 	0 0		1 0 0	: 12 13 11 10		: 0 0 0 0
+
+# object: x y sct ref iswpn
+#	*	*	*	* *
+o  	8 	4	0	0 1
+o  	10 	13	0	1 1
+o  	13 	13	0	2 1
+o  	17 	13	0	3 1
+o  	40 	13	0	0 0
+o  	25 	13	0	1 0
+o  	17 	20	0	7 0
+o  	17 	38	0	8 0
+
+# entity: x y sct ref
+#	*	*	*	*
+e	18	15	0	0
+
+# player: x y angle sct
+#	*	*	*	*
+p  	1 	1	0	0
