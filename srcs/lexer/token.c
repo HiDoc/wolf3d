@@ -6,22 +6,58 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 21:26:33 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:35:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
+unsigned	token_count_until(t_token *start, unsigned type, unsigned until)
+{
+	unsigned	count;
+	t_token		*iter;
+
+	count = 0;
+	iter = start;
+	while (iter)
+	{
+		if (iter->type == (1U << until))
+			break;
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
+			count++;
+		iter = iter->next;
+	}
+	return (count);
+}
+
+unsigned	token_count(t_parseline *line, unsigned type)
+{
+	t_token		*iter;
+	unsigned	count;
+
+	iter = line->first;
+	count = 0;
+	while (iter)
+	{
+		if (iter->type == (1U << type) &&
+			(iter->next && iter->next->type != (1U << type)))
+			count++;
+		iter = iter->next;
+	}
+	return (count);
+}
+
 int		verify_token_next(int iter, char c, unsigned which)
 {
 	const t_op	op_next[TOKEN_NEXT_MAX] = {
-		{(1U << 0), "Space", &is_spc, 1},
-		{(1U << 1), "Tabulation", &is_tab, 1},
-		{(1U << 2), "Integer", &is_dgt, 1},
-		{(1U << 3), "Minus", &is_min, 1},
-		{(1U << 4), "End", &is_end, 1},
-		{(1U << 5), "Point", &is_ptn, 1},
-		{(1U << 6), "None", NULL, 1}};
+		{(1U << SPACE), "Space", &is_spc, 1},
+		{(1U << TAB), "Tabulation", &is_tab, 1},
+		{(1U << INT), "Integer", &is_dgt, 1},
+		{(1U << MINUS), "Minus", &is_min, 1},
+		{(1U << POINT), "Point", &is_ptn, 1},
+		{(1U << NEND), "End", &is_end, 1},
+		{(1U << NNONE), "None", NULL, 1}};
 
 	if (which == TOKEN_VERIF)
 		return (op_next[iter].verify(c));
@@ -36,14 +72,14 @@ int		verify_token_first(int iter, char c, unsigned which)
 		{(1U << VERTEX), "Vertex", &is_vtx, 2},
 		{(1U << PLAYER), "Player", &is_plr, 4},
 		{(1U << OBJECT), "Object", &is_obj, 5},
-		{(1U << WOJECT), "Wall object", &is_wob, 3},
-		{(1U << SPECIA), "Special", &is_spe, 3},
+		{(1U << SKYBOX), "Skybox Texture", &is_sky, 3},
 		{(1U << ENTITY), "Entity", &is_ent, 4},
 		{(1U << COMMNT), "Comment", &is_cmt, 100},
 		{(1U << TXTURE), "Texture", &is_txt, 3},
-		{(1U << 9), "End", &is_end, 1},
-		{(1U << 10), "None", NULL, 0},
-		{(1U << 11), "Error", NULL, 0}};
+		{(1U << MUSIC), "Music", &is_mus, 3},
+		{(1U << END), "End", &is_end, 1},
+		{(1U << NONE), "None", &no_op_int, 0},
+		{(1U << ERROR), "Error", &no_op_int, 0}};
 
 	if (which == TOKEN_VERIF)
 		return (op_first[iter].verify(c));

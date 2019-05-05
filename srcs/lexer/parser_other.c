@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*   parser_other.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/27 16:32:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 11:37:23 by fmadura          ###   ########.fr       */
+/*   Created: 2019/05/05 17:57:50 by fmadura           #+#    #+#             */
+/*   Updated: 2019/05/05 18:01:18 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	is_vtx(int c)
+void		no_op_ft(t_env *env, t_parseline *line, t_vtx *vtx)
 {
-	return c == 'v';
+	(void)env;
+	(void)line;
+	(void)vtx;
 }
 
-int	is_obj(int c)
+void		load_comment(t_env *e, t_parseline *line, t_vtx *vert)
 {
-	return c == 'o';
+	no_op_ft(e, line, vert);
 }
 
-int	is_txt(int c)
+void		load_music(t_env *e, t_parseline *line, t_vtx *vert)
 {
-	return c == 't';
+	no_op_ft(e, line, vert);
 }
 
-int	is_ent(int c)
+void		load_skybox(t_env *e, t_parseline *line, t_vtx *vert)
 {
-	return c == 'e';
+	no_op_ft(e, line, vert);
 }
 
-int	is_sky(int c)
+void		load_texture(t_env *e, t_parseline *line, t_vtx *vert)
 {
-	return c == 'b';
+	no_op_ft(e, line, vert);
 }

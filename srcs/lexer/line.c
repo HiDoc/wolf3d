@@ -6,13 +6,13 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 14:37:18 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 14:56:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:13:42 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-t_parseline	*new_line(unsigned nline)
+t_parseline	*new_line(unsigned nline, unsigned absolute)
 {
 	t_parseline	*new;
 
@@ -21,6 +21,7 @@ t_parseline	*new_line(unsigned nline)
 	new->first = NULL;
 	new->next = NULL;
 	new->nline = nline;
+	new->absolute = absolute;
 	new->len = 0;
 	return (new);
 }

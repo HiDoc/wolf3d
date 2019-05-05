@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:09:19 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 14:58:54 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:17:08 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 {
 	(*pos) = 0;
 	(*nline)++;
-	(*line)->next = new_line(*nline);
+	(*line)->next = new_line(*nline, 0);
 	(*line) = (*line)->next;
 	return (1);
 }
@@ -38,6 +38,14 @@ int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
 		{
 			line->first = new_token(*buffer, pos);
 			iter = line->first;
+			if (line->first->type == (1U << SECTOR))
+				line->absolute = *nsct;
+			if (line->first->type == (1U << VERTEX))
+				line->absolute = *nvtx;
+			if (iter->value == 'v')
+				(*nvtx)++;
+			if (iter->value == 's')
+				(*nsct)++;
 			pos++;
 		}
 		else
@@ -48,10 +56,6 @@ int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
 		}
 		if (iter->value == '\n')
 			set_new_line(&line, &nline, &pos);
-		if (iter->value == 'v')
-			(*nvtx)++;
-		if (iter->value == 's')
-			(*nsct)++;
 	}
 	return (1);
 }
