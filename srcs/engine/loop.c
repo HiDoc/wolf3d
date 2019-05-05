@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 16:36:47 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 22:55:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int				sdl_render(t_env *e)
 {
+	//time_t		last;
 	god_mod(e);
 	if (e->menu.status.on)
 		draw_menu(e);
@@ -27,17 +28,18 @@ static int				sdl_render(t_env *e)
 	else
 	{
 		// si retire alors segv + a laisser avant dfs sinon segv <3
+		system("clear");
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
-
 		dfs(e);
 		handle_gems(e);
+		if (!e->god_mod) // perte de fps : check why
+		{
 
-		if (!e->god_mod)
 			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
+
+		}
 		player_bullet(e, &e->player, *e->player.inventory.current->damage);
-
 		handle_doors(e);
-
 		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
 		wpn_mouse_wheel(e, e->sdl.event);
 		sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);
@@ -47,8 +49,9 @@ static int				sdl_render(t_env *e)
 		ui_minimap(e);
 		handle_weapon(e);
 
-		// si retire alors segv :
+		//last = clock();
 		print_hud(e);
+		//printf("hud : %ld\n", clock() - last);
 	}
 
 	SDL_UpdateTexture(e->sdl.texture, NULL,

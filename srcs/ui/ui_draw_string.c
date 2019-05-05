@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 22:58:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,17 @@ SDL_Surface	*str_join_text(t_font data)
 
 void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
 {
-	int		x;
-	int		y;
 	t_vtx	new_size;
-	t_vtx	scale;
-	Uint32	color;
-
+	SDL_Rect rect;
+(void)pos;
 	new_size = (t_vtx){src->w / (100 / data.size), src->h / (100 / data.size)};
-	scale = (t_vtx){src->w / new_size.x, src->h / new_size.y};
-	x = 0;
+
+	rect = (SDL_Rect){data.pos.x, data.pos.y, new_size.x, new_size.y};
+
+	if ((SDL_BlitScaled(src, 0, dst, &rect)) < 0)
+		doom_error_exit("Libui: blit error in draw_scaled_string");
+
+	/*x = 0;
 	pos.x = data.pos.x;
 	while (pos.x < data.pos.x + new_size.x && pos.x < W)
 	{
@@ -105,7 +107,10 @@ void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx 
 		}
 		x++;
 		pos.x++;
-	}
+	}*/
+
+
+
 }
 
 void    		ui_put_data(t_env *env, t_font data)
