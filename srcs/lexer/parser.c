@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:29:49 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 20:00:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,30 @@ void	*load_function(unsigned type)
 	return (NULL);
 }
 
-void	load_iter(t_token *iter)
-{
-	unsigned	value;
-	unsigned	count;
+// void	load_iter(t_token *iter)
+// {
+// 	unsigned	value;
+// 	unsigned	count;
 
-	value = 0;
-	count = 0;
-	while (iter)
-	{
-		if (iter->type == (1U << POINT))
-			break;
-		if (iter->type == (1U << INT))
-		{
-			value = (value * 10) + (iter->value - '0');
-			if (iter->next && iter->next->type != (1U << INT))
-			{
-				fill_sector(sect, value, count);
-				value = 0;
-				count++;
-			}
-		}
-		iter = iter->next;
-	}
-}
+// 	value = 0;
+// 	count = 0;
+// 	while (iter)
+// 	{
+// 		if (iter->type == (1U << POINT))
+// 			break;
+// 		if (iter->type == (1U << INT))
+// 		{
+// 			value = (value * 10) + (iter->value - '0');
+// 			if (iter->next && iter->next->type != (1U << INT))
+// 			{
+// 				fill_sector(sect, value, count);
+// 				value = 0;
+// 				count++;
+// 			}
+// 		}
+// 		iter = iter->next;
+// 	}
+// }
 
 void	*pre_load(t_env *env, t_vtx *vert, unsigned nsector, unsigned nvertex)
 {

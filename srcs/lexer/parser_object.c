@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:06:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:31:29 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 20:00:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	fill_object()
-
+// void	fill_object()
+//
 void	retrieve_object(t_engine *engine, t_parseline *line)
 {
 	t_token		*iter;
