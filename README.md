@@ -11,7 +11,7 @@ C language, SDL2 library, Portal rendering method
 * Compile it with `make`
 
 ## Make it work
-Run `./doom_nukem`
+Run `./doom`
 
 ## Authors
 Fmadura</br>
