@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:33:40 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 18:10:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:48:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void        export_map(t_env *env)
 	while (sct)
 	{
 		sct->id = i;
-		dprintf(fd, "s %d %d %d %d %d %d %d",
+		dprintf(fd, "s %d %d %d %d %d %d %d :",
 			sct->ceil, sct->ceiltx, sct->floor, sct->floortx,
 			sct->gravity, sct->roof, sct->type);
 		w_vtx = sct->w_vtx_start;
