@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 23:06:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 01:00:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,23 @@ void	print_pad(t_env *env)
 
 	last = clock();
 	check_object_stack(env, env->player.inventory.objects, (t_ixy){5, 0}, 6);
-	printf("ok : %ld\n", clock() - last);
+	//printf("ok : %ld\n", clock() - last);
 
 last = clock();
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){6, 6 - 5}, 4);
-	printf("ok : %ld\n", clock() - last);
+	//printf("ok : %ld\n", clock() - last);
 
 last = clock();
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){7, 7 - 5}, 4);
-	printf("ok : %ld\n", clock() - last);
+	//printf("ok : %ld\n", clock() - last);
 
 last = clock();
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){8, 8 - 5}, 4);
-	printf("ok : %ld\n", clock() - last);
+	//printf("ok : %ld\n", clock() - last);
 
 last = clock();
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){9, 9 - 5}, 4);
-	printf("ok : %ld\n", clock() - last);
+	//printf("ok : %ld\n", clock() - last);
 }
 
 float	size_bar(int tmax, int datamax, int data)
@@ -127,9 +127,11 @@ int print_hud(t_env *env)
 	time_t		last;
 
 	player = &env->player;
+
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;
+
 	if (player->inventory.current->is_full
 	&& player->inventory.current->ref != 4)
 	{
@@ -137,11 +139,13 @@ int print_hud(t_env *env)
 		print_wpn_hud(env, player->inventory.current);
 		printf("wpn : %ld\n", clock() - last);
 	}
-	index = h > 50 ? (int)(h / 50) - 1 : 0;
-	bloc = &env->hud.faces[index];
 
+	last = clock();
+	index = (h > 50) ? (int)(h / 50) - 1 : 0;
+	bloc = &env->hud.faces[index];
 	if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
 		doom_error_exit("Doom_nukem: blit error on print_hud");
+	printf("head : %ld\n", clock() - last);
 
 	last = clock();
 	draw_hp_bars(env, &env->hud.bar[0], player->max_health, player->health);
@@ -152,7 +156,8 @@ int print_hud(t_env *env)
 	print_pad(env);
 	printf("pad : %ld\n", clock() - last);
 
-
+	last = clock();
 	print_cross(env);
+	printf("cross : %ld\n", clock() - last);
 	return (1);
 }
