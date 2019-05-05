@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:59:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 15:30:19 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ static void		display_sector_data(t_env *env)
 	rect = (SDL_Rect){1000, 110, 250, 30};
 	ui_make_nbrstring(rect, env->editor.sct_select->id, C_WHITE, env->data);
 
+	display_button(E_B_SELEC_NORMAL, "NORMAL", env);
+	display_button(E_B_SELEC_DOOR, "DOOR", env);
+	display_button(E_B_SELEC_FDOOR, "FINAL DOOR", env);
+
 	display_labeled_input(E_I_SELEC_GRAVITY, "gravity", env);
 	display_labeled_input(E_I_SELEC_HCEIL, "ceil height", env);
 	display_labeled_input(E_I_SELEC_HFLOOR, "floor height", env);
@@ -99,12 +103,10 @@ static void		display_edge_data(t_env *env)
 	ui_make_string(rect, "edge", C_WHITE, env->data);
 
 	// display buttons
-	display_button(E_B_SELEC_FDOOR, "FINAL DOOR", env);
-	display_button(E_B_SELEC_DOOR, "DOOR", env);
 	display_button(E_B_SELEC_SPLIT, "SPLIT", env);
 
 	// dropdown title
-	rect = (SDL_Rect){910, 310, 250, 30};
+	rect = (SDL_Rect){910, 210, 250, 30};
 	ui_make_string(rect, "Wall texture ", C_WHITE, env->data);
 
 	// dropdown mwalltx
@@ -112,7 +114,7 @@ static void		display_edge_data(t_env *env)
 	env->editor.dropdown[DD_MWALLTX].current
 		= get_dd_element(env->editor.edg_select->ref, DD_MWALLTX, env);
 	env->editor.dropdown[DD_MWALLTX].current->clicked = 1;
-	rect = (SDL_Rect){910, 350, 200, 350};
+	rect = (SDL_Rect){910, 250, 200, 420};
 	display_editor_dropdown_list(rect, DD_MWALLTX, env);
 	display_updown(E_B_SELEC_M_WALL_UP, E_B_SELEC_M_WALL_DOWN, env);
 

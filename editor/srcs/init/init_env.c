@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 12:55:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:27:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,8 @@ static void		init_elems(t_env *env)
 	get_element(E_B_SELEC_DEL, env)->color = C_RED;
 
 	// editor selection edge
-	rect = (SDL_Rect){910, 250, 250, 30};
-	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
-
-	rect = (SDL_Rect){910, 200, 250, 30};
-	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
-
 	rect = (SDL_Rect){910, 150, 250, 30};
-	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
+	create_element(E_B_SELEC_SPLIT, BUTTON, rect, env);
 
 	rect = (SDL_Rect){1130, 540, 20, 20};
 	create_element(E_B_SELEC_M_WALL_UP, BUTTON, rect, env);
@@ -158,34 +152,37 @@ static void		init_elems(t_env *env)
 		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	// editor selection sector
-	rect = (SDL_Rect){910, 250, 250, 30};
+	rect = (SDL_Rect){910, 370, 120, 25};
+	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+	rect = (SDL_Rect){1040, 370, 120, 25};
 	create_element(E_I_SELEC_HCEIL, INPUT, rect, env);
 
-	rect = (SDL_Rect){910, 320, 250, 30};
-	create_element(E_I_SELEC_HFLOOR, INPUT, rect, env);
+	rect = (SDL_Rect){910, 150, 250, 25};
+	create_element(E_B_SELEC_NORMAL, BUTTON, rect, env);
+	rect = (SDL_Rect){910, 190, 80, 25};
+	create_element(E_B_SELEC_DOOR, BUTTON, rect, env);
+	rect = (SDL_Rect){1010, 190, 150, 25};
+	create_element(E_B_SELEC_FDOOR, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 180, 250, 30};
-	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
-
-	rect = (SDL_Rect){910, 370, 110, 30};
+	rect = (SDL_Rect){910, 230, 110, 25};
 	create_element(E_B_SELEC_CEIL, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
-
-	rect = (SDL_Rect){1040, 370, 120, 30};
+	rect = (SDL_Rect){1040, 230, 120, 25};
 	create_element(E_B_SELEC_SKY, BUTTON, rect, env);
 
-	rect = (SDL_Rect){910, 420, 250, 30};
+	rect = (SDL_Rect){910, 300, 250, 25};
+	create_element(E_I_SELEC_GRAVITY, INPUT, rect, env);
+	
+	rect = (SDL_Rect){910, 420, 250, 25};
 	create_element(E_B_SELEC_CEILTX, BUTTON, rect, env);
 	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
-
-	rect = (SDL_Rect){910, 460, 250, 30};
+	rect = (SDL_Rect){910, 460, 250, 25};
 	create_element(E_B_SELEC_FLOORTX, BUTTON, rect, env);
 
 	rect = (SDL_Rect){1130, 540, 20, 20};
 	create_element(E_B_SELEC_TX_UP, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_UP, env)->image =
 		ui_load_image("ressources/images/icons/arrowup.png");
-
 	rect = (SDL_Rect){1130, 570, 20, 20};
 	create_element(E_B_SELEC_TX_DOWN, BUTTON, rect, env);
 	get_element(E_B_SELEC_TX_DOWN, env)->image =
@@ -285,6 +282,7 @@ static void		create_dd_button(int id, int dd, int ref, char *str, t_env *env)
 static void		load_dd_list(char *path, int dd, t_env *env)
 {
 	char				*name;
+	char				*str;
 	int					ref;
 	struct dirent		*de;
 	DIR					*dr;
@@ -302,6 +300,15 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_dd_button(i, dd, ref, name, env);
+			if (dd == DD_BGAUDIO)
+			{
+				if (!(str = lt_push(ft_strjoin(path, de->d_name), ft_memdel)))
+					ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
+				if (!(env->editor.dropdown[dd].start->audio =
+						lt_push(Mix_LoadMUS(str), msc_del)))
+					ui_error_exit_sdl("Editor error on Mix_LoadMUS");
+				lt_release((void**)&str);
+			}
 			lt_release((void**)&name);
 			env->editor.dropdown[dd].nb_element++;
 			i++;

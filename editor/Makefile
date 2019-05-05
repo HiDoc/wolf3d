@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/05/03 17:01:25 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/05 17:14:43 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,13 @@ GREEN       =	"\\033[32m"
 SDL_NUM		=	$(shell ls /Users/$(ID_UN)/.brew/Cellar/sdl2/ | tail -1)
 TTF_NUM		=	$(shell ls /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/ | tail -1)
 IMG_NUM		=	$(shell ls /Users/$(ID_UN)/.brew/Cellar/sdl2_image/ | tail -1)
+MIX_NUM		=	$(shell ls /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/ | tail -1)
 
 INC_PATH	+=	/Users/$(ID_UN)/.brew/Cellar/sdl2/$(SDL_NUM)/include/ \
 				/Users/$(ID_UN)/.brew/Cellar/sdl2/$(SDL_NUM)/include/SDL2/ \
 				/Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/$(TTF_NUM)/include/ \
 				/Users/$(ID_UN)/.brew/Cellar/sdl2_image/$(IMG_NUM)/include/ \
+				/Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/$(MIX_NUM)/include/ \
 
 SRC_NAME 	=	main.c \
 				ui_exit_sdl.c \
@@ -92,7 +94,8 @@ SRC_NAME 	=	main.c \
 				delete_edge.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
-LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image
+LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ \
+				-lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ			=	$(addprefix $(OBJ_PATH), $(OBJ_NAME))
