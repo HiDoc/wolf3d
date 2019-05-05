@@ -18,22 +18,18 @@ TOCHECK : si export quand un secteur n'est pas encore clos
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 PROTEC : lifetimer les fd, dr etc et release avec close() etc...
 
-* TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
-* TOCHECK : coherence du sct_current dans le programme
-* TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
-* TOCHECK : pertinance de garder enum e_type
-* PROTEC : set min edge size for split edge
+TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
+TOCHECK : coherence du sct_current dans le programme
+TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
+TOCHECK : pertinance de garder enum e_type
+PROTEC : set min edge size for split edge
 
 TODO : une seule porte de fin ou monstre de fin
 TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
 TODO : empecher export si edge du meme sct overlap
 TODO : wall object dock
 TODO : grid : limite left / bot
-
 TODO : export error si input superieur a une cetaine valeure
-TODO : debugger select buttons
-TODO : debug relier element et buttons display on dropdown lists
-
 TODO : edge size n'est pas update si split, moving etc...
 TODO : free si retour menu + click start
 TODO : front design selected / hovered color and stuff / color on errmsg
@@ -44,11 +40,9 @@ TODO : parsing : parsing todo
 OPTI : minmax sync
 OPTI : multithreading
 OPTI : corriger le reframes inutiles
-
-[05] TODO : details et finitions
-[05] TODO :	beta testing
-
-[06] TODO :	norme : total norme
+TODO : details et finitions
+TODO : beta testing
+TODO : norme : total norme
 
 OPTIONAL :	ammeliorer clipping du content de l'interface
 OPTIONAL :	play preview background audio on misc

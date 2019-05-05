@@ -6,11 +6,23 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 22:18:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/17 02:10:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 17:18:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void        msc_del(void **ap)
+{
+	Mix_Music	*music;
+
+	music = (Mix_Music *)(*ap);
+	if (ap && *ap)
+	{
+		Mix_FreeMusic(music);
+		music = 0;
+	}
+}
 
 void		dir_del(void **ap)
 {

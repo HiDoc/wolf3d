@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 16:21:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 17:34:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void		unselect_all(t_env *env)
 	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
 	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
 	get_element(E_B_SELEC_FDOOR, env)->clicked = 0;
+
+	get_element(E_B_SELEC_SKY, env)->clicked = 0;
+	get_element(E_B_SELEC_CEIL, env)->clicked = 0;
 }
 
 static int		select_input_events(t_env *env)
@@ -358,6 +361,11 @@ static int		select_misc(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
+				if (Mix_PlayMusic(button->audio, -1) < 0)
+				{
+					printf("Mix_FadeInMusic: %s\n", Mix_GetError());
+					ui_error_exit_sdl("Editor error on Mix_FadeInMusic");
+				}
 				env->editor.dropdown[DD_BGAUDIO].current->clicked = 0;
 				env->editor.dropdown[DD_BGAUDIO].current = button;
 				button->clicked = 1;
@@ -409,6 +417,8 @@ int				select_mode(t_env *env)
 	}
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
+		if (Mix_PlayingMusic())
+			Mix_HaltMusic();
 		if (ui_mouseenter(m.x, m.y, rect))
 		{
 			unselect_all(env);
@@ -431,17 +441,15 @@ int				select_mode(t_env *env)
 				env->editor.sct_select = env->editor.sct_hover;
 				// buttons
 				if (env->editor.sct_hover->type == 0)
-				{
 					get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
-				}
 				else if (env->editor.sct_hover->type == 1)
-				{
 					get_element(E_B_SELEC_DOOR, env)->clicked = 1;
-				}
 				else if (env->editor.sct_hover->type == 2)
-				{
 					get_element(E_B_SELEC_FDOOR, env)->clicked = 1;
-				}
+				if (env->editor.sct_hover->roof == 0)
+					get_element(E_B_SELEC_SKY, env)->clicked = 1;
+				else if (env->editor.sct_hover->roof == 1)
+					get_element(E_B_SELEC_CEIL, env)->clicked = 1;
 				// hceil input
 				if (get_element(E_I_SELEC_HCEIL, env)->str)
 					lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:20:45 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/16 22:15:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:50:48 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ void		ui_exit_sdl(void)
 	lt_destroy();
 	TTF_Quit();
 	SDL_Quit();
+	Mix_CloseAudio();
 	exit(EXIT_SUCCESS);
 }

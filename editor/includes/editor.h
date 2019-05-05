@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 13:09:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 17:11:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_ttf.h>
 # include <SDL2/SDL_image.h>
+# include <SDL2/SDL_mixer.h>
 # include <dirent.h>
 # include <math.h>
 
@@ -48,6 +49,7 @@ void		init_env(t_env *env, t_data *data);
 ** release ////////////////// a ranger
 */
 
+void		msc_del(void **ap);		// free music
 void        dir_del(void **ap);		// close directory
 void        wdw_del(void **ap);		// destroy window
 void        rdr_del(void **ap);		// destroy renderer

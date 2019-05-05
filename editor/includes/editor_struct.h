@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 15:51:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:55:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ struct					s_elem
 	SDL_Rect		rect;
 	Uint32			color;
 	SDL_Surface		*image;
+	Mix_Music		*audio;		// if button audio
 	char			*str;		// if type == input
 	int				str_max;	// if type == input
 

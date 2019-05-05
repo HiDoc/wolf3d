@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 15:31:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 17:27:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ static void		create_dd_button(int id, int dd, int ref, char *str, t_env *env)
 static void		load_dd_list(char *path, int dd, t_env *env)
 {
 	char				*name;
+	char				*str;
 	int					ref;
 	struct dirent		*de;
 	DIR					*dr;
@@ -299,6 +300,15 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_dd_button(i, dd, ref, name, env);
+			if (dd == DD_BGAUDIO)
+			{
+				if (!(str = lt_push(ft_strjoin(path, de->d_name), ft_memdel)))
+					ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
+				if (!(env->editor.dropdown[dd].start->audio =
+						lt_push(Mix_LoadMUS(str), msc_del)))
+					ui_error_exit_sdl("Editor error on Mix_LoadMUS");
+				lt_release((void**)&str);
+			}
 			lt_release((void**)&name);
 			env->editor.dropdown[dd].nb_element++;
 			i++;
