@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 13:31:06 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 16:59:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int		print_description_object(t_env *env, int i, int j, int txt)
 	SDL_GetMouseState(&x, &y);
 	if ((i = select_object(env->player.inventory.objects, (t_ixy){x, y},
 	env->hud.inventory.objects, 6)) > -1)
-		txt = env->player.inventory.objects[i].current->ref;
+		txt = env->player.inventory.objects[i].ref;
 	else if ((j = select_object(env->player.inventory.gems, (t_ixy){x, y},
 	env->hud.inventory.gems, 4)) > -1)
-		txt = env->player.inventory.gems[j].current->ref;
+		txt = env->player.inventory.gems[j].ref;
 	else if ((txt = select_wpn(env->player.inventory.weapons, (t_ixy){x, y},
 	env->hud.inventory.wpn, 4)) > -1)
-		txt = env->player.inventory.weapons[txt].current->ref + 10;
+		txt = env->player.inventory.weapons[txt].ref + 10;
 	else
 		return (1);
 	(txt < 6) ? s = (t_vtx){W / 6, H / 100} : (t_vtx){0, 0};

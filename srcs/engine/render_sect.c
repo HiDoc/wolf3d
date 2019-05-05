@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/03 03:28:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 16:37:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ void		render_sector(t_env *env, t_queue *queue)
 		render_sector_edges(env, queue, s);
 	render_object(env, queue);
 	render_enemies(env, queue);
-	if (env->player.inventory.current)
-		env->player.inventory.current->current->ref == 3
+	if (env->player.inventory.current->is_full)
+		env->player.inventory.current->ref == 3
 		? render_bullet(env, env->engine.player, env->player.shot, queue)
 		: 0;
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 16:58:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
 	t_bloc	*bloc;
 
-	bloc = &env->hud.hud_wpn[wpn->current->ref];
+	bloc = &env->hud.hud_wpn[wpn->ref];
 	draw_img(env, bloc->sprite, bloc);
 	ui_put_data(env, (t_font){GOLD, "", env->hud.font.number,
 	(t_vtx){W - W / 7, H / 1.3}, W / 40,
@@ -109,8 +109,8 @@ int print_hud(t_env *env)
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;
-	if (player->inventory.current
-	&& player->inventory.current->current->ref != 4)
+	if (player->inventory.current->is_full
+	&& player->inventory.current->ref != 4)
 		print_wpn_hud(env, player->inventory.current);
 	index = h > 50 ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];

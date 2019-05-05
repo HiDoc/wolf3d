@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 02:39:03 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 16:38:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,10 @@ void	sound_player(t_env *e, t_sd_stat *s)
 	(s->medkit) ? play_chunk(-1, e->sound.p_sound[P_HEALTH], 0) : 0;
 	s->medkit = 0;
 	wpn = e->player.inventory.current;
-	(s->shootin) ? play_chunk(-1, e->sound.shot[wpn->current->ref], 0) : 0;
+	(s->shootin) ? play_chunk(-1, e->sound.shot[wpn->ref], 0) : 0;
 	s->shootin = 0;
-	if (wpn->current->ref != FIST)
-		(s->loadin) ? play_chunk(-1, e->sound.reload[wpn->current->ref], 0) : 0;
+	if (wpn->ref != FIST)
+		(s->loadin) ? play_chunk(-1, e->sound.reload[wpn->ref], 0) : 0;
 	s->loadin = 0;
 	if (s->gem)
 	{

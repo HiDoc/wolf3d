@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 22:44:16 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:32:11 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 	if (shortcut)
 	{
 		if (i == 0)
-			shortcut->current->action(e, shortcut);
+			e->player.actions.is_flying = !e->player.actions.is_flying;
 		if (i == 1)
 			e->player.actions.is_ammo_illimited = 1;
 		if (i == 2)
@@ -45,7 +45,7 @@ int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 			if (i != 0 && !shortcut->nb_stack)
 			{
 				shortcut = NULL;
-				e->player.inventory.gems[i - 1].current = NULL;
+				ft_bzero(&e->player.inventory.gems[i - 1], sizeof(t_wrap_inv));
 			}
 			e->engine.player.sound.gem = 1;
 		}
@@ -63,7 +63,7 @@ int	blue_gem(t_env *env)
 	if (env->player.actions.is_ammo_illimited)
 	{
 		cur = env->player.inventory.current;
-		ref = cur->current->ref;
+		ref = cur->ref;
 		if (env->time.t_blue < 600)
 		{
 			*cur->ammo_current = env->world.armory[ref].ammo_current;
@@ -86,7 +86,6 @@ int	green_gem(t_env *env)
 	{
 		if (env->time.t_green < 600 && !env->player.actions.is_shooting)
 		{
-			printf("coucou\n");
 			env->time.t_green++;
 			return (1);
 		}
@@ -101,16 +100,16 @@ int	green_gem(t_env *env)
 
 int	red_gem(t_env *env)
 {
-	t_wrap_sect	*current;
+	t_wrap_wpn	*current;
 	t_weapon	*ref;
 
 	if (env->player.actions.is_superstrong)
 	{
-		if (env->player.inventory.current)
+		if (env->player.inventory.current->is_full)
 		{
 			if (env->time.t_red < 600)
 			{
-				current = env->player.inventory.current->current;
+				current = env->player.inventory.current;
 				ref = &env->world.armory[current->ref];
 				*env->player.inventory.current->damage = ref->damage + 100;
 				env->time.t_red++;

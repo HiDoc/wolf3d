@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 17:57:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 19:32:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,6 @@ void			init_weapon(t_env *env)
 	int	i;
 
 	i = 0;
-	while (i < WORLD_NB_WEAPONS)
-		env->player.inventory.weapons[i++].current = NULL;
-	env->player.inventory.current = NULL;
 	env->world.armory[MAGNUM].ref = 0xa2a0601042a2;
 	env->world.armory[SHOTGUN].ref = 0xa2a020105123;
 	env->world.armory[RIFLE].ref = 0xa8e2000042a4;
@@ -166,10 +163,9 @@ void			init_weapon(t_env *env)
 	weapon_set(&env->world.armory[FIST], "weapons/fist", 45,
 		(t_vctr){R_FIST, S_FIST, V_FIST}, 1);
 	printf("time weapon fist: %u\n", SDL_GetTicks());
-
-	env->player.inventory.f.ref = FIST;
-	env->player.inventory.weapons[FIST].current =
-		&env->player.inventory.f;
+	env->player.inventory.current = ft_memalloc(sizeof(t_wrap_wpn));
+	env->player.inventory.weapons[FIST].is_full = 1;
+	env->player.inventory.weapons[FIST].ref = FIST;
 	env->player.inventory.weapons[FIST].ammo[0] =
 		env->world.armory[FIST].ammo_current;
 	env->player.inventory.weapons[FIST].ammo[1] =
