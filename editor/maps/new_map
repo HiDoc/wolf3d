@@ -1,6 +1,18 @@
 # map name
 new_map
-# game misc: music skybox
-music skybox
+# background music
+m 2
+# skybox texture
+b 4
 # vertex: x y
-# sector: cl_h cl_tx fl_h fl_tx gravity type n-vtx
+v 39 17
+v 19 35
+v 0 11
+v 29 0
+# sector: cl_h cl_tx fl_h fl_tx gravity roof type n-vtx n-tx
+s 20 0 0 0 0 0 0 0 1 2 3 : 9 9 9 9
+# object: x y sct ref iswpn
+o 17 10 0 9 0
+# entity: x y sct ref
+# player: x y angle sct
+p 23 19 24 0

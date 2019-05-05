@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 17:03:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:55:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void			display_labeled_input(int id, char *str, t_env *env)
 	t_elem		*elem;
 
 	elem = get_element(id, env);
+	(elem->clicked) ? elem->color = C_GREEN : 0;
 	rect = (SDL_Rect){elem->rect.x, elem->rect.y - 35,
 		elem->rect.w, elem->rect.h};
-	ui_make_string(rect, str, env->data);
+	ui_make_string(rect, str, C_WHITE, env->data);
 	ui_make_input(env->data->surface, elem, env->data);
 }
 
@@ -44,7 +45,7 @@ void			display_button(int id, char *str, t_env *env)
 	elem = get_element(id, env);
 	color = (elem->clicked) ? C_GREEN : elem->color;
 	ui_make_rect(env->data->surface, elem->rect, color);
-	ui_make_string(elem->rect, str, env->data);
+	ui_make_string(elem->rect, str, C_WHITE, env->data);
 }
 
 void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
@@ -62,7 +63,7 @@ void		display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 		if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
 		{
 			ui_make_rect(env->data->surface, elem->rect, color);
-			ui_make_string(elem->rect, elem->str, env->data);
+			ui_make_string(elem->rect, elem->str, C_WHITE, env->data);
 		}
 		elem = elem->next;
 		i++;
@@ -84,7 +85,7 @@ void		display_menu_dropdown_list(SDL_Rect rect, t_env *env)
 		if (elem->rect.y >= rect.y && elem->rect.y <= rect.y + rect.h)
 		{
 			ui_make_rect(env->data->surface, elem->rect, color);
-			ui_make_string(elem->rect, elem->str, env->data);
+			ui_make_string(elem->rect, elem->str, C_WHITE, env->data);
 		}
 		elem = elem->next;
 		i++;
@@ -94,7 +95,7 @@ void		display_menu_dropdown_list(SDL_Rect rect, t_env *env)
 void		display_error_msg(char *msg, t_env *env)
 {
 	if (env->editor.error_msg)
-		lt_release((void**)&env->editor.error_msg);
+		lt_release((void **)&env->editor.error_msg);
 	env->editor.timestamp = time(0);
 	if (!(env->editor.error_msg = lt_push(ft_strdup(msg), ft_memdel)))
 		ui_error_exit_sdl("Editor: out of memory on delete_vertex");

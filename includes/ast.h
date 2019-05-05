@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 17:01:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 13:02:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-#define TOKEN_VALUE 0x01
-#define TOKEN_VERIF 0x02
+# define TOKEN_VALUE 0x01
+# define TOKEN_VERIF 0x02
+# define TOKEN_NEXT_MAX 7
+# define TOKEN_FRST_MAX	12
 
 /*
 ** AST function to assign token
@@ -33,6 +35,7 @@ int			is_spe(int c);
 int			is_plr(int c);
 int			is_cmt(int c);
 int			is_dgt(int c);
+int			is_ptn(int c);
 
 typedef struct s_parsefile	t_parsefile;
 typedef struct s_parseline	t_parseline;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 17:03:38 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:55:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,19 +318,19 @@ static void		load_dd_list(char *path, int dd, t_env *env)
 
 static void		init_editor(t_env *env)
 {
-	load_dd_list("ressources/images/wall/", DD_WALLTX, env);
-	load_dd_list("ressources/images/wall/", DD_MWALLTX, env);
+	load_dd_list("ressources/images/walls/", DD_WALLTX, env);
+	load_dd_list("ressources/images/walls/", DD_MWALLTX, env);
 	load_dd_list("ressources/skybox/", DD_SBTX, env);
-	load_dd_list("ressources/audio/", DD_BGAUDIO, env);
+	load_dd_list("ressources/ambiance/", DD_BGAUDIO, env);
 	load_dd_list("ressources/images/ceil/", DD_CEILTX, env);
-	load_dd_list("ressources/images/floor/", DD_FLOORTX, env);
-	load_dd_list("ressources/objects/wall_objects", DD_WOBJ, env);
-	load_dd_list("ressources/objects/consumables", DD_CONS, env);
-	load_dd_list("ressources/objects/entities", DD_NTTY, env);
+	load_dd_list("ressources/images/floors/", DD_FLOORTX, env);
+	load_dd_list("ressources/objects/posters", DD_WOBJ, env);
+	load_dd_list("ressources/objects/consumable", DD_CONS, env);
+	load_dd_list("ressources/objects/enemies", DD_NTTY, env);
 	load_dd_list("ressources/objects/prefabs", DD_PRFB, env);
 	load_dd_list("ressources/objects/specials", DD_SPEC, env);
 
-	env->grid_scale = 45;
+	env->grid_scale = 5;
 }
 
 void		init_env(t_env *env, t_data *data)

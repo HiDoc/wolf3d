@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:27:29 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 15:01:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 13:11:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static SDL_Surface	**enemy_fill(char *path, int size)
 	i = -1;
 	enemy = ft_memalloc(sizeof(SDL_Surface*) * size);
 	while (++i < size)
-		enemy[i] = ui_img(path, i);
+		enemy[i] = ui_img(path, i, 0);
 	return (enemy);
 }
 
@@ -78,7 +78,7 @@ void				init_enemies(t_env *env, t_brain b, int i)
 	b = (t_brain){400, 0, 5, 0, 7, 1000, 400, 100, 0.1f, {15, 0}};
 	enemy_set("enemies/pinkboy+5", &e[PINKBOY], b);
 	b = (t_brain){3000, 0, 300, 0, 200, 700, 700, 300, 0.05f, {20, 0}};
-	enemy_set("enemies/cyberdemon+6", &e[CYBERDEMON], b);
+	enemy_set("enemies/-cyberdemon+6", &e[CYBERDEMON], b);
 	b = (t_brain){1000, 0, 200, 0, 100, 600, 300, 300, 0.1f, {20, 0}};
 	enemy_set("enemies/boss+7", &e[BOSS], b);
 	b = (t_brain){1000, 0, 200, 0, 50, 600, 300, 200, 0.2f, {10, 0}};

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 17:02:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:55:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,24 @@ void			make_door(int doorsize, t_pos a, t_pos b, t_env *env)
 	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 }
 
-static int		select_sector(t_env *env)
+static void		select_sector(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem 			*button;
+
+	get_element(E_I_SELEC_GRAVITY, env)->clicked = 0;
+	get_element(E_I_SELEC_HCEIL, env)->clicked = 0;
+	get_element(E_I_SELEC_HFLOOR, env)->clicked = 0;
 
 	if (ui_mouseenter(m.x, m.y,
 		get_element(E_I_SELEC_HCEIL, env)->rect))
 	{
 		get_element(E_I_SELEC_HCEIL, env)->clicked = 1;
+	}
+	else if (ui_mouseenter(m.x, m.y,
+		get_element(E_I_SELEC_HFLOOR, env)->rect))
+	{
+		get_element(E_I_SELEC_HFLOOR, env)->clicked = 1;
 	}
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_I_SELEC_GRAVITY, env)->rect))
@@ -113,12 +122,14 @@ static int		select_sector(t_env *env)
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_CEIL, env)->rect))
 	{
+		env->editor.sct_select->roof = 1;
 		get_element(E_B_SELEC_CEIL, env)->clicked = 1;
 		get_element(E_B_SELEC_SKY, env)->clicked = 0;
 	}
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_SKY, env)->rect))
 	{
+		env->editor.sct_select->roof = 0;
 		get_element(E_B_SELEC_CEIL, env)->clicked = 0;
 		get_element(E_B_SELEC_SKY, env)->clicked = 1;
 	}
@@ -143,7 +154,6 @@ static int		select_sector(t_env *env)
 		else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
 			(env->editor.dropdown[DD_FLOORTX].idx_element < 0)
 				? env->editor.dropdown[DD_FLOORTX].idx_element++ : 0;
-		return (1);
 	}
 	else if (ui_mouseenter(m.x, m.y,
 		get_element(E_B_SELEC_TX_DOWN, env)->rect))
@@ -156,7 +166,6 @@ static int		select_sector(t_env *env)
 			(env->editor.dropdown[DD_FLOORTX].idx_element
 			> -env->editor.dropdown[DD_FLOORTX].nb_element + 1)
 				? env->editor.dropdown[DD_FLOORTX].idx_element-- : 0;
-		return (1);
 	}
 	// click music list button
 	button = env->editor.dropdown[DD_CEILTX].start;
@@ -164,6 +173,7 @@ static int		select_sector(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, button->rect))
 		{
+			env->editor.sct_select->ceiltx = button->ref;
 			env->editor.dropdown[DD_CEILTX].current->clicked = 0;
 			env->editor.dropdown[DD_CEILTX].current = button;
 			button->clicked = 1;
@@ -176,6 +186,7 @@ static int		select_sector(t_env *env)
 	{
 		if (ui_mouseenter(m.x, m.y, button->rect))
 		{
+			env->editor.sct_select->floortx = button->ref;
 			env->editor.dropdown[DD_FLOORTX].current = 0;
 			env->editor.dropdown[DD_FLOORTX].current = button;
 			button->clicked = 1;
@@ -186,9 +197,7 @@ static int		select_sector(t_env *env)
 	{
 		delete_sector(env->editor.sct_select, env);
 		unselect_all(env);
-		return (1);
 	}
-	return (0);
 }
 
 static int		select_edge(t_env *env)
@@ -306,6 +315,14 @@ static int		select_object(t_env *env)
 
 	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
 	{
+		if (env->editor.obj_select->dd == DD_SPEC
+			&& env->editor.obj_select->ref == 0)
+		{
+			env->editor.onespawn = 0;
+			env->editor.spawn_set = 0;
+			ft_bzero(&env->editor.spawn_pos, sizeof(t_pos));
+			env->editor.spawn_dir = 0;
+		}
 		delete_object(env->editor.obj_select, env);
 		unselect_all(env);
 		return (1);
@@ -452,10 +469,7 @@ int				select_mode(t_env *env)
 			return (1);
 		}
 		else if (env->editor.sct_select)
-		{
-			if (select_sector(env))
-				return (1);
-		}
+			select_sector(env);
 		else if (env->editor.edg_select)
 		{
 			if (select_edge(env))

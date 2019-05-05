@@ -6,20 +6,20 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 12:43:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:53:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		init_pack_img(t_surface *pack, char *name, int limit)
+static void		init_pack_img(t_surface *pack, char *name, int limit, int var)
 {
 	int	i;
 
 	i = 0;
 	while (i < limit)
 	{
-		pack[i].sprite = ui_img(name, i);
+		pack[i].sprite = ui_img(name, i, var);
 		i++;
 	}
 }
@@ -29,8 +29,8 @@ static void			init_consumable(t_env *env)
 	int 		i;
 	char		*name;
 	const char	*tab[WORLD_NB_OBJECTS] = {N_HEALTH, N_SHIELD, N_AMMO_M_R,
-	N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
-	N_SHOTGUN, N_RIFLE, N_RPG};
+		N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
+		N_SHOTGUN, N_RIFLE, N_RPG};
 
 	i = 0;
 	while (i < WORLD_NB_OBJECTS)
@@ -52,7 +52,7 @@ static void			init_consumable(t_env *env)
 			env->world.objects[i].max_stack = -1;
 			env->world.objects[i].size = (t_l_float){6, 1};
 		}
-		env->world.objects[i].sprite = ui_img(name, i);
+		env->world.objects[i].sprite = ui_img(name, i, 0);
 		lt_release((void**)&name);
 		i++;
 	}
@@ -75,13 +75,15 @@ static void			init_skybox_img(t_env *env)
 
 void				load_images(t_env *env)
 {
-	init_pack_img(env->world.surfaces.poster, "posters/", WORLD_NB_POSTERS);
-	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS);
-	init_pack_img(env->world.surfaces.floors, "floors/", WORLD_NB_FLOORS);
-	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ);
-	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU);
+	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS, 1);
+
+	init_pack_img(env->world.surfaces.poster, "posters/", WORLD_NB_POSTERS, 1);
+	init_pack_img(env->world.surfaces.floors, "floors/", WORLD_NB_FLOORS, 1);
+
+	init_pack_img(env->world.surfaces.hud, "hud/", NB_HUD_OBJ, 0);
+	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU, 0);
 	init_consumable(env);
 	init_character(&env->player);
 	init_skybox_img(env);
-	env->engine.player.sprite = ui_img("bullet/", 0);
+	env->engine.player.sprite = ui_img("bullet/", 0, 0);
 }

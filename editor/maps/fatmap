@@ -1,0 +1,18 @@
+# map name
+new_map
+# background music
+m 2
+# skybox texture
+b 4
+# vertex: x y
+v 47 1
+v 43 13
+v 33 37
+v 0 15
+v 30 0
+# sector: cl_h cl_tx fl_h fl_tx gravity roof type n-vtx n-tx
+s 20 0 0 0 0 0 0 0 1 2 3 4 : 9 9 9 9 9
+# object: x y sct ref iswpn
+# entity: x y sct ref
+# player: x y angle sct
+p 28 20 0 0
