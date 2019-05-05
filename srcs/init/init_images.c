@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 14:33:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:43:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ static void			init_character(t_character *new)
 
 static void			init_skybox_img(t_env *env)
 {
-	env->skybox.sb_top = load_image("rsrc/skybox/sb_top.jpg");
-	env->skybox.sb = load_image("rsrc/skybox/sb.jpg");
+	env->skybox.sb = load_image("rsrc/skybox/bluesky+0.jpg");
 }
 
 void				load_images(t_env *env)
