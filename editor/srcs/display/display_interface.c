@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 18:06:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 15:16:46 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void		display_grid(t_env *env)
 static void		display_infos(t_env *env)
 {
 	SDL_Rect	rect;
-	t_vec		vec;
 
 	// display position
 	rect = (SDL_Rect){30, 750, 0, 20};
@@ -93,22 +92,6 @@ static void		display_infos(t_env *env)
 		ui_make_nbrstring(rect,
 			env->editor.sct_current->w_vtx_current->size, C_WHITE, env->data);
 	}
-
-	// display scale
-	rect = (SDL_Rect){840, 750, 0, 20};
-	ui_make_string(rect, "5", C_WHITE, env->data);
-	vec = (t_vec){
-		(t_pos){820 - (5 * env->grid_scale), 765},
-		(t_pos){820, 765}};
-	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){
-		(t_pos){820, 765},
-		(t_pos){820, 755}};
-	ui_make_line(env->data->surface, vec, C_WHITE);
-	vec = (t_vec){
-		(t_pos){820 - (5 * env->grid_scale), 765},
-		(t_pos){820 - (5 * env->grid_scale), 755}};
-	ui_make_line(env->data->surface, vec, C_WHITE);
 }
 
 void			display_sector(t_sct *sct, t_env *env)
