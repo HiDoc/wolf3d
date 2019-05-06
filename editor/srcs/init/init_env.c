@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:57:15 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 14:41:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ static void		create_element(int id, int type, int page, SDL_Rect rect, t_env *en
 	}
 }
 
-static void		init_elems(t_env *env)
+static void		init_menu_elems(t_env *env)
 {
 	SDL_Rect		rect;
 
-	// menu
 	rect = (SDL_Rect){WIN_W / 2 - 390, WIN_H / 2 - 225 + 40, 300, 25};
 	create_element(M_I_NEW, INPUT, MENU, rect, env);
 
@@ -48,12 +47,16 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_CANCEL, BUTTON, MENU, rect, env);
+}
 
-	// editor
+static void		init_editor_elems(t_env *env)
+{
+	SDL_Rect		rect;
+
 	rect = (SDL_Rect){20, 100, 850, 680};
 	create_element(E_R_RECT, RECT, EDITOR, rect, env);
 
-	rect = (SDL_Rect){170, 20, 100, 40};
+	rect = (SDL_Rect){20, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, EDITOR, rect, env);
 
 	rect = (SDL_Rect){600, 20, 50, 50};
@@ -76,6 +79,11 @@ static void		init_elems(t_env *env)
 	create_element(E_B_MODE_ELEM, EDITOR, BUTTON, rect, env);
 	get_element(E_B_MODE_ELEM, env)->image =
 		ui_load_image("ressources/images/icons/object.png");
+}
+
+static void		init_draw_elems(t_env *env)
+{
+	SDL_Rect		rect;
 
 	// editor drawing
 	rect = (SDL_Rect){1130, 350, 20, 20};
@@ -87,6 +95,11 @@ static void		init_elems(t_env *env)
 	create_element(E_B_DRW_DOWN, BUTTON, DRAW, rect, env);
 	get_element(E_B_DRW_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
+}
+
+static void		init_elm_elems(t_env *env)
+{
+	SDL_Rect	rect;
 
 	// editor element
 	rect = (SDL_Rect){1130, 350, 20, 20};
@@ -116,6 +129,11 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, ELEM, rect, env);
+}
+
+static void		init_slc_edg_elems(t_env *env)
+{
+	SDL_Rect	rect;
 
 	// editor selection edge
 	rect = (SDL_Rect){910, 150, 250, 30};
@@ -126,6 +144,11 @@ static void		init_elems(t_env *env)
 	create_element(E_B_SELEC_EDG_DEL, BUTTON, S_EDG, rect, env);
 	get_element(E_B_SELEC_EDG_DEL, env)->color = C_RED;
 	get_element(E_B_SELEC_EDG_DEL, env)->event_fc = click_edg_del;
+}
+
+static void		init_slc_sct_elems(t_env *env)
+{
+	SDL_Rect	rect;
 
 	// editor selection sector
 	rect = (SDL_Rect){910, 370, 120, 25};
@@ -161,18 +184,33 @@ static void		init_elems(t_env *env)
 	create_element(E_B_SELEC_SCT_DEL, BUTTON, S_SCT, rect, env);
 	get_element(E_B_SELEC_SCT_DEL, env)->color = C_RED;
 	get_element(E_B_SELEC_SCT_DEL, env)->event_fc = click_sct_del;
+}
+
+static void		init_slc_vtx_elems(t_env *env)
+{
+	SDL_Rect		rect;
 
 	// editor selection vtx
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_VTX_DEL, BUTTON, S_VTX, rect, env);
 	get_element(E_B_SELEC_VTX_DEL, env)->color = C_RED;
 	get_element(E_B_SELEC_VTX_DEL, env)->event_fc = click_vtx_del;
+}
+
+static void		init_slc_obj_elems(t_env *env)
+{	
+	SDL_Rect		rect;
 
 	// editor selection obj
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_OBJ_DEL, BUTTON, S_OBJ, rect, env);
 	get_element(E_B_SELEC_OBJ_DEL, env)->color = C_RED;
 	get_element(E_B_SELEC_OBJ_DEL, env)->event_fc = click_obj_del;
+}
+
+static void		init_slc_msc_elems(t_env *env)
+{
+	SDL_Rect		rect;
 
 	// editor selection misc
 	rect = (SDL_Rect){910, 150, 250, 25};
@@ -293,7 +331,16 @@ void		init_env(t_env *env, t_data *data)
 	ft_bzero(env, sizeof(t_env));
 	env->data = data;
 
-	init_elems(env);
+	init_menu_elems(env);	
+	init_editor_elems(env);
+	init_draw_elems(env);
+	init_elm_elems(env);
+	init_slc_edg_elems(env);
+	init_slc_sct_elems(env);
+	init_slc_vtx_elems(env);
+	init_slc_obj_elems(env);
+	init_slc_msc_elems(env);
+
 	init_menu(env);
 	init_editor(env);
 
