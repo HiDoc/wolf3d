@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:33:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:38:23 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ static void		init_elems(t_env *env)
 
 	rect = (SDL_Rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_CANCEL, BUTTON, MENU, rect, env);
-
-	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 5, 40, 40};
-	create_element(M_B_UP, BUTTON, MENU, rect, env);
-	get_element(M_B_UP, env)->image =
-		ui_load_image("ressources/images/icons/arrowup.png");
-
-	rect = (SDL_Rect){WIN_W / 2 - 60, WIN_H / 2 + 55, 40, 40};
-	create_element(M_B_DOWN, BUTTON, MENU, rect, env);
-	get_element(M_B_DOWN, env)->image =
-		ui_load_image("ressources/images/icons/arrowdown.png");
 
 	// editor
 	rect = (SDL_Rect){20, 100, 850, 680};
@@ -224,50 +214,8 @@ static void		init_elems(t_env *env)
 	get_element(E_B_SELEC_MISC_DOWN, env)->event_fc = click_msc_miscdown;
 }
 
-/*
-**	Return nb of loaded objects
-*/
-
-static void		create_btn_map(char *str, t_env *env)
-{
-	t_elem   *new;
-
-	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	if (!(new->str = lt_push(ft_strdup(str), ft_memdel)))
-		ui_error_exit_sdl("Editor: create_btn_map, out of memory");
-	if (!(env->menu.dropdown.start))
-	{
-		env->menu.dropdown.start = new;
-		env->menu.dropdown.start->next = 0;
-	}
-	else
-	{
-		new->next = env->menu.dropdown.start;
-		env->menu.dropdown.start = new;
-	}
-}
-
 static void		init_menu(t_env *env)
 {
-	struct dirent		*de;
-	DIR					*dr;
-	int					i;
-
-	i = 0;
-	if (!(dr = lt_push(opendir("maps/"), dir_del)))
-		ui_error_exit_sdl("Editor: Unable to open maps/");
-	while ((de = readdir(dr)))
-	{
-		if ((de->d_name)[0] != '.')
-		{
-			create_btn_map(de->d_name, env);
-			env->menu.dropdown.nb_element++;
-			i++;
-		}
-	}
-	lt_release((void**)&dr);
-
 	env->map_name = "new_map";
 	env->menu.state = 1;
 	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");

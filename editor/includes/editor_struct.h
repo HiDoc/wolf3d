@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:31:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:38:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ enum					e_elements
 	M_I_NEW,
 	M_B_START,
 	M_B_CANCEL,
-	M_B_UP,
-	M_B_DOWN,
 	E_R_RECT,
 	E_B_MENU,
 	E_B_SAVE,
@@ -184,8 +182,7 @@ enum					e_dropdowm_name
 	DD_CONS,
 	DD_NTTY,
 	DD_PRFB,
-	DD_SPEC,
-	DD_MAPS
+	DD_SPEC
 };
 
 struct					s_dropdown
@@ -199,7 +196,6 @@ struct					s_dropdown
 struct					s_menu
 {
 	int				state;
-	t_dropdown		dropdown;
 	SDL_Surface		*background;
 };
 

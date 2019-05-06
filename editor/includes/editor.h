@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:31:31 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:40:17 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void		display_updown(int id_up, int id_down, t_env *env);
 void		display_labeled_input(int id, char *str, t_env *env);
 void		display_button(int id, char *str, t_env *env);
 void        display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env);
-void        display_menu_dropdown_list(SDL_Rect rect, t_env *env);
 void		display_error_msg(char *msg, t_env *env);
 
 int			sector_in_rect(t_sct *sector, SDL_Rect rect, t_env *env);
