@@ -6,38 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 21:14:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 01:20:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-static SDL_Color	ui_hex_to_rgb(int hexa)
-{
-	SDL_Color color;
-
-	color = (SDL_Color){hexa >> 24, hexa >> 16, hexa >> 8, hexa};
-	return (color);
-}
-
-void		ui_draw_string(SDL_Surface *dst_surface, SDL_Rect rect,
-			char *text, Uint32 color, t_env *env)
-{
-	SDL_Surface			*surface;
-	t_font				str_data;
-
-	ft_bzero(&str_data, sizeof(t_font));
-	str_data.color = ui_hex_to_rgb(color);
-	str_data.str = text;
-	str_data.font = env->hud.font.arial;
-
-	surface = make_string(str_data);
-	rect.w = (rect.h * surface->w) / surface->h;
-
-	if ((SDL_BlitScaled(surface, 0, dst_surface, &rect)) < 0)
-		doom_error_exit("Doom_nukem: Blit error on ui_draw_string");
-	lt_release((void**)&surface);
-}
 
 void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 {
@@ -73,7 +46,8 @@ SDL_Surface	*str_join_text(t_font data)
 		strjoin = ft_strljoin(ft_itoa(data.l), (char *)data.str);
 	else if (data.r > -1)
 		strjoin = ft_strrjoin((char *)data.str, ft_itoa(data.r));
-	str_data = (t_font){data.color, (strjoin) ? strjoin : data.str, data.font, {0, 0}, 0, 0, 0};
+	str_data = (t_font){data.color,
+	(strjoin) ? strjoin : data.str, data.font, {0, 0}, 0, 0, 0};
 	new = make_string(str_data);
 	lt_release((void**)&strjoin);
 	return (new);
@@ -81,6 +55,9 @@ SDL_Surface	*str_join_text(t_font data)
 
 void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
 {
+	/*if ((SDL_BlitScaled(src, 0, dst, &rect)) < 0)
+		doom_error_exit("Libui: blit error in draw_scaled_string");
+*/
 	int		x;
 	int		y;
 	t_vtx	new_size;
@@ -106,6 +83,8 @@ void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx 
 		x++;
 		pos.x++;
 	}
+
+
 }
 
 void    		ui_put_data(t_env *env, t_font data)

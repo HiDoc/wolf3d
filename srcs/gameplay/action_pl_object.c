@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 18:36:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 20:22:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 	? env->player.inventory.gems[ref].ref = obj->ref : 0;
 	i == -1 ? env->hud.shortcut[ref + 1] = &env->player.inventory.gems[ref] : 0;
 	i = i == -1 ? ref : i;
+	env->player.inventory.gems[i].is_full = 1;
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
 	sector->nb_objects--;

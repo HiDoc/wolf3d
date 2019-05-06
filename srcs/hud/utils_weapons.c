@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 18:04:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 21:46:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		load_weapon(t_env *env)
 
 int		put_gun(t_env *env, t_bloc *bloc)
 {
+	SDL_Rect		rect;
 	const int		ref = env->player.inventory.current->ref;
 	const t_actions *a = &env->player.actions;
 
@@ -67,7 +68,10 @@ int		put_gun(t_env *env, t_bloc *bloc)
 		bloc->limit.v1 = (t_vtx){0, H / 4};
 	else
 		bloc->limit.v1 = (t_vtx){0, 0};
-	draw_img(env, bloc->sprite, bloc);
+	rect = (SDL_Rect){bloc->limit.v1.x, bloc->limit.v1.y,
+		W - bloc->limit.v1.x, H - bloc->limit.v1.y};
+	if ((SDL_BlitScaled(bloc->sprite, &rect, env->sdl.surface, &rect)) < 0)
+		doom_error_exit("Doom_nukem: blit error on put_gun");
 	return (1);
 }
 
