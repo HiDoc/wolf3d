@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 17:11:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 15:38:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 
 # define C_GREY 0xFF8C8C8C
 
-# define VRX_MAX 500
-# define EDG_MAX 250
-# define SCT_MAX 50
+# define SCN_CODE_SPACE 44
+# define SCN_CODE_KP_MIN 89
+# define SCN_CODE_KP_MAX 98
+# define SCN_CODE_ALPHA_MIN 4
+# define SCN_CODE_ALPHA_MAX 29
+# define SCN_CODE_BACK 42
 
 # include <stdio.h>
 
@@ -88,6 +91,26 @@ void		display_element(t_env *env);
 **	events/
 */
 
+void		click_sct_del(t_env *env);
+void		click_edg_del(t_env *env);
+void		click_vtx_del(t_env *env);
+void		click_obj_del(t_env *env);
+void		click_msc_music_btn(t_env *env);
+void            click_msc_sbtx_btn(t_env *env);
+void            click_msc_music(t_env *env);
+void            click_msc_sbtx(t_env *env);
+void            click_msc_miscup(t_env *env);
+void            click_msc_miscdown(t_env *env);
+void            click_edg_split(t_env *env);
+void        click_sct_normal(t_env *env);
+void        click_sct_door(t_env *env);
+void        click_sct_fdoor(t_env *env);
+void        click_sct_hceil(t_env *env);
+void        click_sct_hfloor(t_env *env);
+void        click_sct_gravity(t_env *env);
+void        click_sct_ceil(t_env *env);
+void        click_sct_sky(t_env *env);
+
 int	        menu_events(t_env *env);
 int			handle_events(t_env *env);
 int			draw_mode(t_env *env);
@@ -117,7 +140,6 @@ void		display_updown(int id_up, int id_down, t_env *env);
 void		display_labeled_input(int id, char *str, t_env *env);
 void		display_button(int id, char *str, t_env *env);
 void        display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env);
-void        display_menu_dropdown_list(SDL_Rect rect, t_env *env);
 void		display_error_msg(char *msg, t_env *env);
 
 int			sector_in_rect(t_sct *sector, SDL_Rect rect, t_env *env);

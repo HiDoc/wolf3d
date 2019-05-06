@@ -4,57 +4,28 @@ BUG : hovering : curseur sur la ligne des sommets d'un secteur, \
 BUG : fix edge hover
 BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
 # aide tblaudez
-BUG : execve ./doom completement KC
 BUG : makefile recompile pas la libft
 # apres fix inputs
-BUG : bloquer value max des input
 BUG : taille du nom des object depasse du carre
-# apres fix target edge
-BUG : draw mode : create vertex in sector close to edge
 
-TOCHECK : si memory push et release est bien dynamique partout
 TOCHECK : si export quand un secteur n'est pas encore clos
-
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 PROTEC : lifetimer les fd, dr etc et release avec close() etc...
-
 TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
 TOCHECK : coherence du sct_current dans le programme
 TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : pertinance de garder enum e_type
 PROTEC : set min edge size for split edge
 
-TODO : une seule porte de fin ou monstre de fin
-TODO : s'occuper de PROTEC/BUG/LEAK/TOCHECK
-TODO : empecher export si edge du meme sct overlap
-TODO : wall object dock
+TODO : changement de mode / check comportement programme
 TODO : grid : limite left / bot
-TODO : export error si input superieur a une cetaine valeure
-TODO : edge size n'est pas update si split, moving etc...
-TODO : free si retour menu + click start
-TODO : front design selected / hovered color and stuff / color on errmsg
+TODO : empecher export si edge du meme sct overlap
+TODO : faire fonctionner edge size
+
 TODO : refactor events
-TODO : check coherence du programme et du fonctionnemenet des features
-TODO : s'occuper de BUG/PROTEC/TOCHECK
-TODO : parsing : parsing todo
-OPTI : minmax sync
-OPTI : multithreading
-OPTI : corriger le reframes inutiles
-TODO : details et finitions
+TODO : clean t_elem
+
+TOCHECK : si memory push et release est bien dynamique partout
+
 TODO : beta testing
 TODO : norme : total norme
-
-OPTIONAL :	ammeliorer clipping du content de l'interface
-OPTIONAL :	play preview background audio on misc
-OPTIONAL :	texture per door
-OPTIONAL :	menu preview
-OPTIONAL :	reframe if error_msg != 0 (todo after reframe refactor)
-OPTIONAL :	wheel scroll pas precis sur la souris
-OPTIONAL :	shift pour tracer ligne horizontale ou verticale
-OPTIONAL :	set crosshair middle of grid
-OPTIONAL :	zoom on cursor
-OPTIONAL :	sector move
-OPTIONAL :	docking vertex using vtx move, between two sct
-OPTIONAL :	revoir coherence deleting sector conected with another one
-OPTIONAL :	objects : prefabs
-OPTIONAL :	floodfill on sectors with ceil casting

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 16:55:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:54:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,30 @@ enum					e_type
 	RECT
 };
 
+enum					e_pages
+{
+	MENU,
+	EDITOR,
+	S_VTX,
+	S_OBJ,
+	S_EDG,
+	S_SCT,
+	S_MSC,
+	DRAW,
+	ELEM
+};
+
 enum					e_elements
 {
 	M_I_NEW,
 	M_B_START,
 	M_B_CANCEL,
-	M_B_UP,
-	M_B_DOWN,
 	E_R_RECT,
-	E_B_MENU,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
 	E_B_MODE_MOVE,
 	E_B_MODE_DRAW,
 	E_B_MODE_ELEM,
-	E_B_PLAY,
 	E_B_ELM_UP,
 	E_B_ELM_DOWN,
 	E_B_DRW_UP,
@@ -44,7 +53,10 @@ enum					e_elements
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
-	E_B_SELEC_DEL,
+	E_B_SELEC_VTX_DEL,
+	E_B_SELEC_OBJ_DEL,
+	E_B_SELEC_EDG_DEL,
+	E_B_SELEC_SCT_DEL,
 	E_I_SELEC_HCEIL,
 	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,
@@ -52,18 +64,13 @@ enum					e_elements
 	E_B_SELEC_NORMAL,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
-	E_B_SELEC_M_WALL_UP,
-	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
-	E_B_SELEC_CEILTX,
-	E_B_SELEC_FLOORTX,
-	E_B_SELEC_TX_UP,
-	E_B_SELEC_TX_DOWN,
 	E_B_SELEC_MUSIC,
 	E_B_SELEC_SBTX,
 	E_B_SELEC_MISC_UP,
-	E_B_SELEC_MISC_DOWN
+	E_B_SELEC_MISC_DOWN,
+	ENUM_END
 };
 
 typedef struct	s_w_vtx		t_w_vtx;
@@ -107,9 +114,7 @@ struct					s_sct
 	int				close;		// is sector close;
 
 	int				ceil;		// hauteur ceil
-	int				ceiltx;		// texture ceil
 	int				floor;		// hauteur floor
-	int				floortx;	// texture floor
 	int				gravity;
 
 	int				roof;		// ceil / skybox
@@ -136,7 +141,11 @@ struct					s_elem
 	SDL_Surface		*image;
 	Mix_Music		*audio;		// if button audio
 	char			*str;		// if type == input
-	int				str_max;	// if type == input
+	int				str_max;	// if type == inpu
+	
+	void			(*event_fc)(t_env *);	// event ptr
+
+	int				page;		// page (e_pages)
 
 	int				clicked;
 	int				hovered; // delete if not used ?
@@ -162,17 +171,13 @@ struct					s_object
 enum					e_dropdowm_name
 {
 	DD_WALLTX,
-	DD_MWALLTX,
 	DD_SBTX,
 	DD_BGAUDIO,
-	DD_CEILTX,
-	DD_FLOORTX,
 	DD_WOBJ,
 	DD_CONS,
 	DD_NTTY,
 	DD_PRFB,
-	DD_SPEC,
-	DD_MAPS
+	DD_SPEC
 };
 
 struct					s_dropdown
@@ -186,7 +191,6 @@ struct					s_dropdown
 struct					s_menu
 {
 	int				state;
-	t_dropdown		dropdown;
 	SDL_Surface		*background;
 };
 
@@ -234,6 +238,8 @@ struct					s_editor
 	t_w_vtx			*edg_select;
 	t_sct			*sct_select;
 	t_object		*obj_select;
+
+	int				oneend;		// une seule fin
 
 	int				onespawn;	// un spawn a deja ete pose
 	int				spawn_set;	// spawn pose, en attente de direction
