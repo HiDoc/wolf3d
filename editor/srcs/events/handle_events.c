@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:50:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:51:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ static void     reset_values(t_env *env)
 static int		click_event(t_env *env)
 {
 	if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
-				get_element(E_B_MENU, env)->rect))
-	{ // button menu
-		env->menu.state = 2;
-		return (1);
-	}
-	else if (ui_mouseenter(env->data->mouse.x, env->data->mouse.y,
 				get_element(E_B_SAVE, env)->rect))
 	{ // button save
 		/*if (edge_overlap())

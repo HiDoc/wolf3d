@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:50:38 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:57:15 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ static void		init_elems(t_env *env)
 	// editor
 	rect = (SDL_Rect){20, 100, 850, 680};
 	create_element(E_R_RECT, RECT, EDITOR, rect, env);
-
-	rect = (SDL_Rect){20, 20, 125, 40};
-	create_element(E_B_MENU, BUTTON, EDITOR, rect, env);
 
 	rect = (SDL_Rect){170, 20, 100, 40};
 	create_element(E_B_SAVE, BUTTON, EDITOR, rect, env);
@@ -124,17 +121,6 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_SPLIT, BUTTON, S_EDG, rect, env);
 	get_element(E_B_SELEC_SPLIT, env)->event_fc = click_edg_split;
-
-	rect = (SDL_Rect){1130, 540, 20, 20};
-	create_element(E_B_SELEC_M_WALL_UP, BUTTON, S_EDG, rect, env);
-	get_element(E_B_SELEC_M_WALL_UP, env)->image =
-		ui_load_image("ressources/images/icons/arrowup.png");
-	get_element(E_B_SELEC_M_WALL_UP, env)->event_fc = click_edg_mwallup;
-	rect = (SDL_Rect){1130, 570, 20, 20};
-	create_element(E_B_SELEC_M_WALL_DOWN, BUTTON, S_EDG, rect, env);
-	get_element(E_B_SELEC_M_WALL_DOWN, env)->image =
-		ui_load_image("ressources/images/icons/arrowdown.png");
-	get_element(E_B_SELEC_M_WALL_DOWN, env)->event_fc = click_edg_mwalldown;
 
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_EDG_DEL, BUTTON, S_EDG, rect, env);
@@ -291,7 +277,6 @@ static void		load_dd_list(char *path, int dd,
 static void		init_editor(t_env *env)
 {
 	load_dd_list("ressources/images/walls/", DD_WALLTX, 0, env);
-	load_dd_list("ressources/images/walls/", DD_MWALLTX, click_edg_mwall_btn, env);
 	load_dd_list("ressources/skybox/", DD_SBTX, click_msc_sbtx_btn, env);
 	load_dd_list("ressources/ambiance/", DD_BGAUDIO, click_msc_music_btn, env);
 	load_dd_list("ressources/objects/posters", DD_WOBJ, 0, env);

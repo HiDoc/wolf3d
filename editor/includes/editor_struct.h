@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:49:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:54:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ enum					e_elements
 	M_B_START,
 	M_B_CANCEL,
 	E_R_RECT,
-	E_B_MENU,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
 	E_B_MODE_MOVE,
@@ -65,8 +64,6 @@ enum					e_elements
 	E_B_SELEC_NORMAL,
 	E_B_SELEC_DOOR,
 	E_B_SELEC_FDOOR,
-	E_B_SELEC_M_WALL_UP,
-	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
 	E_B_SELEC_MUSIC,
@@ -174,7 +171,6 @@ struct					s_object
 enum					e_dropdowm_name
 {
 	DD_WALLTX,
-	DD_MWALLTX,
 	DD_SBTX,
 	DD_BGAUDIO,
 	DD_WOBJ,

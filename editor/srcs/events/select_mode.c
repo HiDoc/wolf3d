@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:32:32 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:56:07 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,24 +182,6 @@ void			click_edg_split(t_env *env)
 	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 }
 
-void			click_edg_mwallup(t_env *env)
-{
-	(env->editor.dropdown[DD_MWALLTX].idx_element < 0)
-	? env->editor.dropdown[DD_MWALLTX].idx_element++ : 0;
-}
-
-void			click_edg_mwalldown(t_env *env)
-{
-	(env->editor.dropdown[DD_MWALLTX].idx_element
-	> -env->editor.dropdown[DD_MWALLTX].nb_element + 1)
-	? env->editor.dropdown[DD_MWALLTX].idx_element-- : 0;
-}
-
-void			click_edg_mwall_btn(t_env *env)
-{
-	env->editor.dropdown[DD_MWALLTX].current->clicked = 1;
-}
-
 void			click_edg_del(t_env *env)
 {
 	delete_edge(env->editor.edg_select, env);
@@ -326,7 +308,6 @@ static void		select_panel(t_env *env)
 	else if (env->editor.edg_select)
 	{
 		page = S_EDG;
-		id = DD_MWALLTX;
 	}
 	else if (env->editor.obj_select)
 	{

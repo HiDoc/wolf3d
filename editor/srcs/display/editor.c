@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:49:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:51:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void		editor(t_env *env)
 	else if (env->editor.mouse_mode == 2)
 		display_element(env);
 
-	display_button(E_B_MENU, "MENU", env);
 	display_button(E_B_SAVE, "SAVE", env);
 
 	// display map name
