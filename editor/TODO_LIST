@@ -17,6 +17,7 @@ TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : pertinance de garder enum e_type
 PROTEC : set min edge size for split edge
 
+TODO : ne pas clicker sur bouton de dd quand hiden
 TODO : changement de mode / check comportement programme
 TODO : grid : limite left / bot
 TODO : empecher export si edge du meme sct overlap

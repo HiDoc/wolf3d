@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:51:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:10:30 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int				handle_events(t_env *env)
 			- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
 	}
 
+	// interface event
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
 	{	
 		edt->vtx_hover = target_vertex(env->data->mouse, env);

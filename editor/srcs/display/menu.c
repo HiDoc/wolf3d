@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 15:25:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:11:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ static void		menu_right_panel(t_env *env)
 
 	// start button
 	display_button(M_B_START, "Start", env);
-
-	// Cancel button
-	if (env->menu.state == 2)
-		display_button(M_B_CANCEL, "Cancel", env);
 }
 
 void			menu(t_env *env)

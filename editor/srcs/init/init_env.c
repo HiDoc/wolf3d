@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 14:41:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:12:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ static void		init_menu_elems(t_env *env)
 
 	rect = (SDL_Rect){WIN_W / 2 - 400 + 410, WIN_H / 2 - 225 + 400, 150, 25};
 	create_element(M_B_START, BUTTON, MENU, rect, env);
-
-	rect = (SDL_Rect){WIN_W / 2 - 400 + 610, WIN_H / 2 - 225 + 400, 150, 25};
-	create_element(M_B_CANCEL, BUTTON, MENU, rect, env);
 }
 
 static void		init_editor_elems(t_env *env)

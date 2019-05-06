@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:54:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:11:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ enum					e_elements
 {
 	M_I_NEW,
 	M_B_START,
-	M_B_CANCEL,
 	E_R_RECT,
 	E_B_SAVE,
 	E_B_MODE_SELECT,
