@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 21:54:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:43:25 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,20 +166,19 @@ void		click_sct_del(t_env *env)
 
 void			click_edg_split(t_env *env)
 {
-	if (env->editor.edg_select->next)
-	{ // normal eddge
-		create_vertex(get_edge_center(
-		env->editor.edg_select->vtx->pos,
-			env->editor.edg_select->next->vtx->pos), env);
+	t_pos		pos;
+
+	pos = (env->editor.edg_select->next)
+	? env->editor.edg_select->next->vtx->pos
+	: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
+	if (pythagore(env->editor.edg_select->vtx->pos, pos) > 10)
+	{
+		create_vertex(
+		get_edge_center(env->editor.edg_select->vtx->pos, pos), env);
+		insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
 	}
 	else
-	{ // last edge
-		create_vertex(get_edge_center(
-		env->editor.edg_select->vtx->pos,
-			env->editor.edg_select->sector->w_vtx_start->vtx->pos),
-			env);
-	}
-	insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
+		display_error_msg("Edge too small to be split", env);
 }
 
 void			click_edg_del(t_env *env)
