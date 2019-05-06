@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:38:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:49:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ enum					e_elements
 	E_B_MODE_MOVE,
 	E_B_MODE_DRAW,
 	E_B_MODE_ELEM,
-	E_B_PLAY,
 	E_B_ELM_UP,
 	E_B_ELM_DOWN,
 	E_B_DRW_UP,

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:38:23 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:50:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ static void		init_elems(t_env *env)
 	create_element(E_B_MODE_ELEM, EDITOR, BUTTON, rect, env);
 	get_element(E_B_MODE_ELEM, env)->image =
 		ui_load_image("ressources/images/icons/object.png");
-
-	rect = (SDL_Rect){1030, 20, 150, 40};
-	create_element(E_B_PLAY, BUTTON, EDITOR, rect, env);
 
 	// editor drawing
 	rect = (SDL_Rect){1130, 350, 20, 20};

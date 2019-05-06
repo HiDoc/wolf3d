@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:29:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:49:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,4 @@ void		editor(t_env *env)
 	if ((SDL_BlitScaled(get_element(E_B_MODE_ELEM, env)->image,
 	0, env->data->surface, &get_element(E_B_MODE_ELEM, env)->rect)) < 0)
 		ui_error_exit_sdl("Libui: Blit error on editor display");
-
-	display_button(E_B_PLAY, "PLAY", env);
 }
