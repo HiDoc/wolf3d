@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 10:51:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 12:21:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,14 @@ void		display_element(t_env *env);
 **	events/
 */
 
+void		click_sct_del(t_env *env);
+void		click_edg_del(t_env *env);
+void		click_vtx_del(t_env *env);
+void		click_obj_del(t_env *env);
 void        click_sct_floortx_btn(t_env *env);
 void        click_sct_ceiltx_btn(t_env *env);
 void            click_edg_mwall_btn(t_env *env);
-void            click_msc_music_btn(t_env *env);
+void		click_msc_music_btn(t_env *env);
 void            click_msc_sbtx_btn(t_env *env);
 void            click_msc_music(t_env *env);
 void            click_msc_sbtx(t_env *env);

@@ -6,26 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 11:33:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:21:02 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-void		unselect_all(t_env *env)
-{
-	env->editor.obj_select = 0;
-	env->editor.vtx_select = 0;
-	env->editor.edg_select = 0;
-	env->editor.sct_select = 0;
-
-	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
-	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
-	get_element(E_B_SELEC_FDOOR, env)->clicked = 0;
-
-	get_element(E_B_SELEC_SKY, env)->clicked = 0;
-	get_element(E_B_SELEC_CEIL, env)->clicked = 0;
-}
 
 static int		select_input_events(t_env *env)
 {
@@ -104,7 +89,6 @@ static int		select_input_events(t_env *env)
 void		click_obj_del(t_env *env)
 {
 	delete_object(env->editor.obj_select, env);
-	unselect_all(env);
 }
 
 // OBJS /////////////////////////////////////////////////////////////
@@ -112,7 +96,6 @@ void		click_obj_del(t_env *env)
 void		click_vtx_del(t_env *env)
 {
 	delete_vertex(env->editor.vtx_select, env);
-	unselect_all(env);
 }
 
 // SECT /////////////////////////////////////////////////////////////
@@ -223,7 +206,6 @@ void		click_sct_floortx_btn(t_env *env)
 void		click_sct_del(t_env *env)
 {
 	delete_sector(env->editor.sct_select, env);
-	unselect_all(env);
 }
 
 // EDGE /////////////////////////////////////////////////////////////
@@ -267,7 +249,6 @@ void			click_edg_mwall_btn(t_env *env)
 void			click_edg_del(t_env *env)
 {
 	delete_edge(env->editor.edg_select, env);
-	unselect_all(env);
 }
 
 // MISC /////////////////////////////////////////////////////////////
@@ -321,7 +302,61 @@ void			click_msc_sbtx_btn(t_env *env)
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-static void		select_misc(t_env *env)
+static void		select_interface(t_env *env)
+{
+	if (env->editor.vtx_hover)
+	{
+		env->editor.mouse_drag = 1;
+		env->editor.vtx_select = env->editor.vtx_hover;
+	}
+	else if (env->editor.edg_hover)
+	{
+		env->editor.edg_select = env->editor.edg_hover;
+	}
+	else if (env->editor.obj_hover)
+	{
+		env->editor.mouse_drag = 1;
+		env->editor.obj_select = env->editor.obj_hover;
+	}
+	else if (env->editor.sct_hover)
+	{
+		env->editor.sct_select = env->editor.sct_hover;
+		// buttons
+		if (env->editor.sct_hover->type == 0)
+			get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
+		else if (env->editor.sct_hover->type == 1)
+			get_element(E_B_SELEC_DOOR, env)->clicked = 1;
+		else if (env->editor.sct_hover->type == 2)
+			get_element(E_B_SELEC_FDOOR, env)->clicked = 1;
+		if (env->editor.sct_hover->roof == 0)
+			get_element(E_B_SELEC_SKY, env)->clicked = 1;
+		else if (env->editor.sct_hover->roof == 1)
+			get_element(E_B_SELEC_CEIL, env)->clicked = 1;
+		// hceil input
+		if (get_element(E_I_SELEC_HCEIL, env)->str)
+			lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);
+		if (env->editor.sct_select->ceil > 0
+		&& !(get_element(E_I_SELEC_HCEIL, env)->str =
+		lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+		// hfloor input
+		if (get_element(E_I_SELEC_HFLOOR, env)->str)
+			lt_release((void **)&get_element(E_I_SELEC_HFLOOR, env)->str);
+		if (env->editor.sct_select->floor > 0
+		&& !(get_element(E_I_SELEC_HFLOOR, env)->str =
+		lt_push(ft_itoa(env->editor.sct_select->floor), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+		// gravity input
+		if (get_element(E_I_SELEC_GRAVITY, env)->str)
+			lt_release((void **)&get_element(E_I_SELEC_GRAVITY, env)->str);
+		if (env->editor.sct_select->gravity > 0
+		&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
+		lt_push(ft_itoa(env->editor.sct_select->gravity), ft_memdel)))
+			ui_error_exit_sdl("Editor: Out of memory");
+	}
+}
+
+static void		select_panel(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem			*button;
@@ -329,6 +364,7 @@ static void		select_misc(t_env *env)
 	int				page;
 	int				id;
 
+	id = -1;
 	if (env->editor.sct_select)
 	{
 		page = S_SCT;
@@ -364,23 +400,29 @@ static void		select_misc(t_env *env)
 		{
 			if (get_element(i, env)->event_fc)
 				get_element(i, env)->event_fc(env);
+			return ;
 		}
 		i++;
 	}
 
 	// click music list button
-	button = env->editor.dropdown[id].start;
-	while (button)
+	if (id > -1)
 	{
-		if (ui_mouseenter(m.x, m.y, button->rect))
+		button = env->editor.dropdown[id].start;
+		while (button)
 		{
-			if (button->event_fc)
+			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				env->editor.dropdown[id].current = button;
-				button->event_fc(env);
+				if (button->event_fc)
+				{
+					env->editor.dropdown[id].current->clicked = 0;
+					env->editor.dropdown[id].current = button;
+					button->event_fc(env);
+					return ;
+				}
 			}
+			button = button->next;
 		}
-		button = button->next;
 	}
 }
 
@@ -393,7 +435,9 @@ int				select_mode(t_env *env)
 	if (env->editor.mouse_drag)
 	{
 		if (event.type == SDL_MOUSEBUTTONUP)
+		{
 			env->editor.mouse_drag = 0;
+		}
 		else
 		{
 			if (env->editor.vtx_select)
@@ -411,69 +455,26 @@ int				select_mode(t_env *env)
 	else if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		if (Mix_PlayingMusic())
+		{
 			Mix_HaltMusic();
+		}
 		if (ui_mouseenter(m.x, m.y, rect))
-		{// interface
-			unselect_all(env);
-			if (env->editor.vtx_hover)
-			{
-				env->editor.mouse_drag = 1;
-				env->editor.vtx_select = env->editor.vtx_hover;
-			}
-			else if (env->editor.edg_hover)
-			{
-				env->editor.edg_select = env->editor.edg_hover;
-			}
-			else if (env->editor.obj_hover)
-			{
-				env->editor.mouse_drag = 1;
-				env->editor.obj_select = env->editor.obj_hover;
-			}
-			else if (env->editor.sct_hover)
-			{
-				env->editor.sct_select = env->editor.sct_hover;
-				// buttons
-				if (env->editor.sct_hover->type == 0)
-					get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
-				else if (env->editor.sct_hover->type == 1)
-					get_element(E_B_SELEC_DOOR, env)->clicked = 1;
-				else if (env->editor.sct_hover->type == 2)
-					get_element(E_B_SELEC_FDOOR, env)->clicked = 1;
-				if (env->editor.sct_hover->roof == 0)
-					get_element(E_B_SELEC_SKY, env)->clicked = 1;
-				else if (env->editor.sct_hover->roof == 1)
-					get_element(E_B_SELEC_CEIL, env)->clicked = 1;
-				// hceil input
-				if (get_element(E_I_SELEC_HCEIL, env)->str)
-					lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);
-				if (env->editor.sct_select->ceil > 0
-				&& !(get_element(E_I_SELEC_HCEIL, env)->str =
-				lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-				// hfloor input
-				if (get_element(E_I_SELEC_HFLOOR, env)->str)
-					lt_release((void **)&get_element(E_I_SELEC_HFLOOR, env)->str);
-				if (env->editor.sct_select->floor > 0
-				&& !(get_element(E_I_SELEC_HFLOOR, env)->str =
-				lt_push(ft_itoa(env->editor.sct_select->floor), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-				// gravity input
-				if (get_element(E_I_SELEC_GRAVITY, env)->str)
-					lt_release((void **)&get_element(E_I_SELEC_GRAVITY, env)->str);
-				if (env->editor.sct_select->gravity > 0
-				&& !(get_element(E_I_SELEC_GRAVITY, env)->str =
-				lt_push(ft_itoa(env->editor.sct_select->gravity), ft_memdel)))
-					ui_error_exit_sdl("Editor: Out of memory");
-			}
-			return (1);
+		{
+			env->editor.obj_select = 0;
+			env->editor.vtx_select = 0;
+			env->editor.edg_select = 0;
+			env->editor.sct_select = 0;
+			select_interface(env);
 		}
 		else
-		{// click right panel
-			select_misc(env);
+		{
+			select_panel(env);
 		}
 		return (1);
 	}
 	else if (event.type == SDL_KEYDOWN)
+	{
 		return (select_input_events(env));
+	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

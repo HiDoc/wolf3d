@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 11:28:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 12:35:36 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_EDG_DEL, BUTTON, S_EDG, rect, env);
 	get_element(E_B_SELEC_EDG_DEL, env)->color = C_RED;
+	get_element(E_B_SELEC_EDG_DEL, env)->event_fc = click_edg_del;
 
 	// editor selection sector
 	rect = (SDL_Rect){910, 370, 120, 25};
@@ -205,16 +206,19 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_SCT_DEL, BUTTON, S_SCT, rect, env);
 	get_element(E_B_SELEC_SCT_DEL, env)->color = C_RED;
+	get_element(E_B_SELEC_SCT_DEL, env)->event_fc = click_sct_del;
 
 	// editor selection vtx
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_VTX_DEL, BUTTON, S_VTX, rect, env);
 	get_element(E_B_SELEC_VTX_DEL, env)->color = C_RED;
+	get_element(E_B_SELEC_VTX_DEL, env)->event_fc = click_vtx_del;
 
 	// editor selection obj
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_OBJ_DEL, BUTTON, S_OBJ, rect, env);
 	get_element(E_B_SELEC_OBJ_DEL, env)->color = C_RED;
+	get_element(E_B_SELEC_OBJ_DEL, env)->event_fc = click_obj_del;
 
 	// editor selection misc
 	rect = (SDL_Rect){910, 150, 250, 25};
