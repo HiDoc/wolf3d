@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:56:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:16:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void		display_object_data(t_env *env)
 	rect = (SDL_Rect){910, 140, 250, 30};
 	ui_make_string(rect, env->editor.obj_select->name, C_WHITE, env->data);
 
-	rect = (SDL_Rect){910, 180, 250, 30};
 	if (env->editor.obj_select->sct)
-		ui_make_nbrstring(rect, env->editor.obj_select->sct->id, C_WHITE, env->data);
+		ui_make_nbrstring(rect, env->editor.obj_select->sct->id,
+		C_WHITE, env->data);
 	else
 		ui_make_string(rect, "No sector", C_WHITE, env->data);
 
@@ -92,13 +92,6 @@ static void		display_edge_data(t_env *env)
 
 	// delete
 	display_button(E_B_SELEC_EDG_DEL, "DELETE", env);
-
-	/* TO SET IN INTERFACE */
-	// display interface size
-	rect = (SDL_Rect){190, 750, 0, 20};
-	ui_make_string(rect, "size : ", C_WHITE, env->data);
-	rect = (SDL_Rect){240, 750, 0, 20};
-	ui_make_nbrstring(rect, env->editor.edg_select->size, C_WHITE, env->data);
 }
 
 static void		display_misc_data(t_env *env)

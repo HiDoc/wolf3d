@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 15:16:46 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 23:51:53 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static void		display_grid(t_env *env)
 			color = (i % 10 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
 	
 			vec.a = (t_pos){
-				origin.x + (i + translate.x - (500 / 2)) * env->grid_scale,
+				origin.x + (i + translate.x - (500 / 2)) * env->editor.grid_scale,
 				rect.y};
 			vec.b = (t_pos){
-				origin.x + (i + translate.x - (500 / 2)) * env->grid_scale,
+				origin.x + (i + translate.x - (500 / 2)) * env->editor.grid_scale,
 				rect.y + rect.h};
 	
 			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
@@ -55,10 +55,10 @@ static void		display_grid(t_env *env)
 	
 			vec.a = (t_pos){
 				rect.x,
-				origin.y + (i + translate.y - (500 / 2)) * env->grid_scale};
+				origin.y + (i + translate.y - (500 / 2)) * env->editor.grid_scale};
 			vec.b = (t_pos){
 				rect.x + rect.w,
-				origin.y + (i + translate.y - (500 / 2)) * env->grid_scale};
+				origin.y + (i + translate.y - (500 / 2)) * env->editor.grid_scale};
 	
 			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
 				ui_make_line(env->data->surface, vec, color);
@@ -102,10 +102,7 @@ void			display_sector(t_sct *sct, t_env *env)
 	Uint32			color;
 	t_vec			vec;
 
-	if (env->editor.sct_hover == sct)
-		color = (env->editor.mouse_mode == 1) ? C_RED : C_GREEN;
-	else
-		color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
+	color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
 
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)

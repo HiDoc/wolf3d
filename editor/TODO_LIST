@@ -8,6 +8,9 @@ BUG : makefile recompile pas la libft
 # apres fix inputs
 BUG : taille du nom des object depasse du carre
 
+BUG : click sur dd button meme si il est hiden
+BUG : comportement programme si change mode, ex: draw current & change
+
 TOCHECK : si export quand un secteur n'est pas encore clos
 PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 PROTEC : lifetimer les fd, dr etc et release avec close() etc...
@@ -17,9 +20,6 @@ TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
 TOCHECK : pertinance de garder enum e_type
 PROTEC : set min edge size for split edge
 
-TODO : ne pas clicker sur bouton de dd quand hiden
-TODO : changement de mode / check comportement programme
-TODO : grid : limite left / bot
 TODO : empecher export si edge du meme sct overlap
 TODO : faire fonctionner edge size
 

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 16:12:16 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 23:52:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,7 +320,8 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/objects/prefabs", DD_PRFB, 0, env);
 	load_dd_list("ressources/objects/specials", DD_SPEC, 0, env);
 
-	env->grid_scale = 5;
+	env->editor.grid_scale = 5;
+	env->editor.mode = select_mode;
 }
 
 void		init_env(t_env *env, t_data *data)

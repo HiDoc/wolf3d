@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 16:11:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 23:53:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,8 @@ struct					s_editor
 	// editor dropdown lists
 	t_dropdown		dropdown[12];
 
-	// mouse handling
-	int				mouse_mode;
+	// select / move / draw / element
+	int				(*mode)(t_env *);
 
 	// drag vertex;
 	int				mouse_drag;
@@ -246,27 +246,21 @@ struct					s_editor
 	float			spawn_dir;	// direction spawn
 
 	int				drawing;		// am i drawing an edge
+
+	// variables
+	float			grid_scale;
 };
 
 struct					s_env
 {
 	t_data          *data;
-
+	char			*map_name;
 	t_menu			menu;
 	t_editor		editor;
-
-	char			*map_name;
-
-	// lst elements
-	t_elem			*elements;	// ui elements
-
-	// variables
-	float			grid_scale;
-
-	// relative mouse_position
+	t_elem			*elements;
 	t_pos			mouse;
 
-	// data infos
+	// data infos TO REMOVE
 	int				nb_vtx;
 	int				nb_sct;
 };

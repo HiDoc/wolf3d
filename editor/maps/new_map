@@ -5,13 +5,17 @@ m 11
 # skybox texture
 b 0
 # vertex: x y
-v 55 46
-v 3 45
-v 0 13
-v 47 0
+v 1188 0
+v 2195 469
+v 2351 925
+v 1707 1833
+v 258 1587
+v 531 1399
+v 0 701
+v 1188 44
 # sector: cl_h cl_tx fl_h fl_tx gravity roof type n-vtx n-tx
-s 20 0 0 0 0 0 0 : 0 1 2 3 : 9 9 9 9
+s 20 0 0 0 0 0 0 : 0 1 2 3 4 5 6 7 : 9 9 9 9 9 9 9 9
 # object: x y sct ref iswpn
 # entity: x y sct ref
 # player: x y angle sct
-p 28 28 46 0
+p 1978 598 203 0

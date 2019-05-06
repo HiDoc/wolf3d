@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:25:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 21:52:59 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 	return (0);
 }
 
-int			draw_mode(t_env *env)
+int				draw_mode(t_env *env)
 {
 	SDL_Rect			rect = get_element(E_R_RECT, env)->rect;
 	const t_pos			m = env->data->mouse;

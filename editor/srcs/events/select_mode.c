@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:56:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 21:54:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,8 @@ int				select_mode(t_env *env)
 	}
 	else if (event.type == SDL_KEYDOWN)
 	{
-		return (select_input_events(env));
+		select_input_events(env);
+		return (1);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

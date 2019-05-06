@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 15:14:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 20:33:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void			editor(t_env *env)
 
 	display_interface(env);
 
-	if (env->editor.mouse_mode == 0)
+	if (env->editor.mode == select_mode)
 		display_selection(env);
-	else if (env->editor.mouse_mode == 1)
+	else if (env->editor.mode == draw_mode)
 		display_drawing(env);
-	else if (env->editor.mouse_mode == 2)
+	else if (env->editor.mode == elem_mode)
 		display_element(env);
 
 	display_button(E_B_SAVE, "SAVE", env);
