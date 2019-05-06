@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:54:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 15:38:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 
 # define C_GREY 0xFF8C8C8C
 
-# define VRX_MAX 500
-# define EDG_MAX 250
-# define SCT_MAX 50
+# define SCN_CODE_SPACE 44
+# define SCN_CODE_KP_MIN 89
+# define SCN_CODE_KP_MAX 98
+# define SCN_CODE_ALPHA_MIN 4
+# define SCN_CODE_ALPHA_MAX 29
+# define SCN_CODE_BACK 42
 
 # include <stdio.h>
 
