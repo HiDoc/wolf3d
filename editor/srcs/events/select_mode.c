@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:21:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:32:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,52 +155,6 @@ void		click_sct_sky(t_env *env)
 	env->editor.sct_select->roof = 0;
 	get_element(E_B_SELEC_CEIL, env)->clicked = 0;
 	get_element(E_B_SELEC_SKY, env)->clicked = 1;
-}
-
-void		click_sct_ceiltx(t_env *env)
-{
-	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
-	get_element(E_B_SELEC_FLOORTX, env)->clicked = 0;
-}
-
-void		click_sct_floortx(t_env *env)
-{
-	get_element(E_B_SELEC_FLOORTX, env)->clicked = 1;
-	get_element(E_B_SELEC_CEILTX, env)->clicked = 0;
-}
-
-void		click_sct_txup(t_env *env)
-{
-	if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_CEILTX].idx_element < 0)
-			? env->editor.dropdown[DD_CEILTX].idx_element++ : 0;
-	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_FLOORTX].idx_element < 0)
-			? env->editor.dropdown[DD_FLOORTX].idx_element++ : 0;
-}
-
-void		click_sct_txdown(t_env *env)
-{
-	if (get_element(E_B_SELEC_CEILTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_CEILTX].idx_element
-		> -env->editor.dropdown[DD_CEILTX].nb_element + 1)
-			? env->editor.dropdown[DD_CEILTX].idx_element-- : 0;
-	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_FLOORTX].idx_element
-		> -env->editor.dropdown[DD_FLOORTX].nb_element + 1)
-			? env->editor.dropdown[DD_FLOORTX].idx_element-- : 0;
-}
-
-void		click_sct_ceiltx_btn(t_env *env)
-{
-	env->editor.sct_select->ceiltx = env->editor.dropdown[DD_CEILTX].current->ref;
-	env->editor.dropdown[DD_CEILTX].current->clicked = 1;
-}
-
-void		click_sct_floortx_btn(t_env *env)
-{
-	env->editor.sct_select->floortx = env->editor.dropdown[DD_FLOORTX].current->ref;
-	env->editor.dropdown[DD_FLOORTX].current->clicked = 1;
 }
 
 void		click_sct_del(t_env *env)
@@ -368,8 +322,6 @@ static void		select_panel(t_env *env)
 	if (env->editor.sct_select)
 	{
 		page = S_SCT;
-		id = (get_element(E_B_SELEC_CEILTX, env)->clicked)
-		? DD_CEILTX : DD_FLOORTX;
 	}
 	else if (env->editor.edg_select)
 	{

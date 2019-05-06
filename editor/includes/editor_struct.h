@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 11:26:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:31:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,6 @@ enum					e_elements
 	E_B_SELEC_M_WALL_DOWN,
 	E_B_SELEC_CEIL,
 	E_B_SELEC_SKY,
-	E_B_SELEC_CEILTX,
-	E_B_SELEC_FLOORTX,
-	E_B_SELEC_TX_UP,
-	E_B_SELEC_TX_DOWN,
 	E_B_SELEC_MUSIC,
 	E_B_SELEC_SBTX,
 	E_B_SELEC_MISC_UP,
@@ -124,9 +120,7 @@ struct					s_sct
 	int				close;		// is sector close;
 
 	int				ceil;		// hauteur ceil
-	int				ceiltx;		// texture ceil
 	int				floor;		// hauteur floor
-	int				floortx;	// texture floor
 	int				gravity;
 
 	int				roof;		// ceil / skybox
@@ -186,8 +180,6 @@ enum					e_dropdowm_name
 	DD_MWALLTX,
 	DD_SBTX,
 	DD_BGAUDIO,
-	DD_CEILTX,
-	DD_FLOORTX,
 	DD_WOBJ,
 	DD_CONS,
 	DD_NTTY,

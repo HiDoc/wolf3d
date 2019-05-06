@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 12:35:36 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:33:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,25 +184,6 @@ static void		init_elems(t_env *env)
 	create_element(E_I_SELEC_GRAVITY, INPUT, S_SCT, rect, env);
 	get_element(E_I_SELEC_GRAVITY, env)->event_fc = click_sct_gravity;
 	
-	rect = (SDL_Rect){910, 420, 250, 25};
-	create_element(E_B_SELEC_CEILTX, BUTTON, S_SCT, rect, env);
-	get_element(E_B_SELEC_CEILTX, env)->clicked = 1;
-	get_element(E_B_SELEC_CEILTX, env)->event_fc = click_sct_ceiltx;
-	rect = (SDL_Rect){910, 460, 250, 25};
-	create_element(E_B_SELEC_FLOORTX, BUTTON, S_SCT, rect, env);
-	get_element(E_B_SELEC_FLOORTX, env)->event_fc = click_sct_floortx;
-
-	rect = (SDL_Rect){1130, 540, 20, 20};
-	create_element(E_B_SELEC_TX_UP, BUTTON, S_SCT, rect, env);
-	get_element(E_B_SELEC_TX_UP, env)->image =
-		ui_load_image("ressources/images/icons/arrowup.png");
-	get_element(E_B_SELEC_TX_UP, env)->event_fc = click_sct_txup;
-	rect = (SDL_Rect){1130, 570, 20, 20};
-	create_element(E_B_SELEC_TX_DOWN, BUTTON, S_SCT, rect, env);
-	get_element(E_B_SELEC_TX_DOWN, env)->image =
-		ui_load_image("ressources/images/icons/arrowdown.png");
-	get_element(E_B_SELEC_TX_DOWN, env)->event_fc = click_sct_txdown;
-
 	rect = (SDL_Rect){910, 720, 250, 30};
 	create_element(E_B_SELEC_SCT_DEL, BUTTON, S_SCT, rect, env);
 	get_element(E_B_SELEC_SCT_DEL, env)->color = C_RED;
@@ -368,8 +349,6 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/images/walls/", DD_MWALLTX, click_edg_mwall_btn, env);
 	load_dd_list("ressources/skybox/", DD_SBTX, click_msc_sbtx_btn, env);
 	load_dd_list("ressources/ambiance/", DD_BGAUDIO, click_msc_music_btn, env);
-	load_dd_list("ressources/images/ceil/", DD_CEILTX, click_sct_ceiltx_btn, env);
-	load_dd_list("ressources/images/floors/", DD_FLOORTX, click_sct_floortx_btn, env);
 	load_dd_list("ressources/objects/posters", DD_WOBJ, 0, env);
 	load_dd_list("ressources/objects/consumable", DD_CONS, 0, env);
 	load_dd_list("ressources/objects/enemies", DD_NTTY, 0, env);

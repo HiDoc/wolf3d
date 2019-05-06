@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 11:29:04 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:34:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,6 @@ static void		display_sector_data(t_env *env)
 
 	display_button(E_B_SELEC_CEIL, "CEIL", env);
 	display_button(E_B_SELEC_SKY, "SKY", env);
-
-	/*env->editor.dropdown[DD_CEILTX].current->clicked = 0;
-	env->editor.dropdown[DD_CEILTX].current
-		= get_element_by_ref(env->editor.sct_select->ceil, DD_CEILTX, env);
-	env->editor.dropdown[DD_CEILTX].current->clicked = 1;*/
-	display_button(E_B_SELEC_CEILTX, "CEIL TEXTURE", env);
-	display_button(E_B_SELEC_FLOORTX, "FLOOR TEXTURE", env);
-
-	rect = (SDL_Rect){910, 510, 200, 190};
-	if (get_element(E_B_SELEC_CEILTX, env)->clicked)
-		display_editor_dropdown_list(rect, DD_CEILTX, env);
-	else if (get_element(E_B_SELEC_FLOORTX, env)->clicked)
-		display_editor_dropdown_list(rect, DD_FLOORTX, env);
-
-	display_updown(E_B_SELEC_TX_UP, E_B_SELEC_TX_DOWN, env);
 
 	display_button(E_B_SELEC_SCT_DEL, "DELETE", env);
 }
