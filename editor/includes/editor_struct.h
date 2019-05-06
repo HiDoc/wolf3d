@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 19:26:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 11:26:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ enum					e_pages
 	MENU,
 	EDITOR,
 	S_VTX,
+	S_OBJ,
 	S_EDG,
 	S_SCT,
 	S_MSC,
-	SELEC,
 	DRAW,
 	ELEM
 };
@@ -57,7 +57,10 @@ enum					e_elements
 	E_B_ELM_NTTY,
 	E_B_ELM_PRFB,
 	E_B_ELM_SPEC,
-	E_B_SELEC_DEL,
+	E_B_SELEC_VTX_DEL,
+	E_B_SELEC_OBJ_DEL,
+	E_B_SELEC_EDG_DEL,
+	E_B_SELEC_SCT_DEL,
 	E_I_SELEC_HCEIL,
 	E_I_SELEC_HFLOOR,
 	E_I_SELEC_GRAVITY,

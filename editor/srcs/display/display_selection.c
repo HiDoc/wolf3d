@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 15:30:19 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 11:29:04 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void		display_object_data(t_env *env)
 	else
 		ui_make_string(rect, "No sector", C_WHITE, env->data);
 
-	display_button(E_B_SELEC_DEL, "DELETE", env);
+	display_button(E_B_SELEC_OBJ_DEL, "DELETE", env);
 }
 
 static void		display_sector_data(t_env *env)
@@ -81,7 +81,7 @@ static void		display_sector_data(t_env *env)
 
 	display_updown(E_B_SELEC_TX_UP, E_B_SELEC_TX_DOWN, env);
 
-	display_button(E_B_SELEC_DEL, "DELETE", env);
+	display_button(E_B_SELEC_SCT_DEL, "DELETE", env);
 }
 
 static void		display_vertex_data(t_env *env)
@@ -91,7 +91,7 @@ static void		display_vertex_data(t_env *env)
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "vertex", C_WHITE, env->data);
 
-	display_button(E_B_SELEC_DEL, "DELETE", env);
+	display_button(E_B_SELEC_VTX_DEL, "DELETE", env);
 }
 
 static void		display_edge_data(t_env *env)
@@ -119,7 +119,7 @@ static void		display_edge_data(t_env *env)
 	display_updown(E_B_SELEC_M_WALL_UP, E_B_SELEC_M_WALL_DOWN, env);
 
 	// delete
-	display_button(E_B_SELEC_DEL, "DELETE", env);
+	display_button(E_B_SELEC_EDG_DEL, "DELETE", env);
 
 	/* TO SET IN INTERFACE */
 	// display interface size

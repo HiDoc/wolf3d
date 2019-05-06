@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 11:03:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 11:33:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,22 @@ static int		select_input_events(t_env *env)
 			return (1);
 		}
 		return (0);
+}
+
+// VRTX /////////////////////////////////////////////////////////////
+
+void		click_obj_del(t_env *env)
+{
+	delete_object(env->editor.obj_select, env);
+	unselect_all(env);
+}
+
+// OBJS /////////////////////////////////////////////////////////////
+
+void		click_vtx_del(t_env *env)
+{
+	delete_vertex(env->editor.vtx_select, env);
+	unselect_all(env);
 }
 
 // SECT /////////////////////////////////////////////////////////////
@@ -204,6 +220,12 @@ void		click_sct_floortx_btn(t_env *env)
 	env->editor.dropdown[DD_FLOORTX].current->clicked = 1;
 }
 
+void		click_sct_del(t_env *env)
+{
+	delete_sector(env->editor.sct_select, env);
+	unselect_all(env);
+}
+
 // EDGE /////////////////////////////////////////////////////////////
 
 void			click_edg_split(t_env *env)
@@ -240,6 +262,12 @@ void			click_edg_mwalldown(t_env *env)
 void			click_edg_mwall_btn(t_env *env)
 {
 	env->editor.dropdown[DD_MWALLTX].current->clicked = 1;
+}
+
+void			click_edg_del(t_env *env)
+{
+	delete_edge(env->editor.edg_select, env);
+	unselect_all(env);
 }
 
 // MISC /////////////////////////////////////////////////////////////
@@ -293,126 +321,45 @@ void			click_msc_sbtx_btn(t_env *env)
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-static int		select_vertex(t_env *env)
-{
-	const t_pos		m = env->data->mouse;
-
-	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
-	{
-		delete_vertex(env->editor.vtx_select, env);
-		unselect_all(env);
-		return (1);
-	}
-	return (0);
-}
-
-static int		select_object(t_env *env)
-{
-	const t_pos		m = env->data->mouse;
-
-	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
-	{
-		delete_object(env->editor.obj_select, env);
-		unselect_all(env);
-		return (1);
-	}
-	return (0);
-}
-
-static void		select_sector(t_env *env)
-{
-	const t_pos		m = env->data->mouse;
-	t_elem 			*button;
-	int				i;
-
-	// click sct element
-	i = 0;
-	while (i < ENUM_END)
-	{
-		if (get_element(i, env)->page == S_SCT
-			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
-		{
-			if (get_element(i, env)->event_fc)
-				get_element(i, env)->event_fc(env);
-		}
-		i++;
-	}
-
-	int		id;
-	id = (get_element(E_B_SELEC_CEILTX, env)->clicked) ? DD_CEILTX : DD_FLOORTX;
-	// click music list button
-	button = env->editor.dropdown[id].start;
-	while (button)
-	{
-		if (ui_mouseenter(m.x, m.y, button->rect))
-		{
-			if (button->event_fc)
-			{
-				env->editor.dropdown[id].current = button;
-				button->event_fc(env);
-			}
-		}
-		button = button->next;
-	}
-
-	// delete
-	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
-	{
-		delete_sector(env->editor.sct_select, env);
-		unselect_all(env);
-	}
-}
-
-static void		select_edge(t_env *env)
-{
-	const t_pos		m = env->data->mouse;
-	t_elem			*button;
-	int				i;
-
-	// click edg element
-	i = 0;
-	while (i < ENUM_END)
-	{
-		if (get_element(i, env)->page == S_EDG
-			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
-		{
-			if (get_element(i, env)->event_fc)
-				get_element(i, env)->event_fc(env);
-		}
-		i++;
-	}
-
-	// click music list button
-	button = env->editor.dropdown[DD_MWALLTX].start;
-	while (button)
-	{
-		if (ui_mouseenter(m.x, m.y, button->rect))
-		{
-			env->editor.dropdown[DD_MWALLTX].current = button;
-			button->event_fc(env);
-		}
-		button = button->next;
-	}
-
-	// delete
-	if (ui_mouseenter(m.x, m.y, get_element(E_B_SELEC_DEL, env)->rect))
-	{
-		delete_edge(env->editor.edg_select, env);
-		unselect_all(env);
-	}
-}
-
 static void		select_misc(t_env *env)
 {
 	const t_pos		m = env->data->mouse;
 	t_elem			*button;
 	int				i;
+	int				page;
+	int				id;
+
+	if (env->editor.sct_select)
+	{
+		page = S_SCT;
+		id = (get_element(E_B_SELEC_CEILTX, env)->clicked)
+		? DD_CEILTX : DD_FLOORTX;
+	}
+	else if (env->editor.edg_select)
+	{
+		page = S_EDG;
+		id = DD_MWALLTX;
+	}
+	else if (env->editor.obj_select)
+	{
+		page = S_OBJ;
+	}
+	else if (env->editor.vtx_select)
+	{
+		page = S_VTX;
+	}
+	else
+	{
+		page = S_MSC;
+		id = (get_element(E_B_SELEC_MUSIC, env)->clicked)
+		? id = DD_BGAUDIO : DD_SBTX;
+	}
 
 	// click msc element
 	i = 0;
 	while (i < ENUM_END)
 	{
-		if (get_element(i, env)->page == S_MSC
+		if (get_element(i, env)->page == page
 			&& ui_mouseenter(m.x, m.y, get_element(i, env)->rect))
 		{
 			if (get_element(i, env)->event_fc)
@@ -421,8 +368,6 @@ static void		select_misc(t_env *env)
 		i++;
 	}
 
-	int		id;
-	id = (get_element(E_B_SELEC_MUSIC, env)->clicked) ? DD_BGAUDIO : DD_SBTX;
 	// click music list button
 	button = env->editor.dropdown[id].start;
 	while (button)
@@ -522,16 +467,10 @@ int				select_mode(t_env *env)
 			}
 			return (1);
 		}
-		else if (env->editor.sct_select)
-			select_sector(env);
-		else if (env->editor.edg_select)
-			select_edge(env);
-		else if (env->editor.obj_select)
-			select_object(env);
-		else if (env->editor.vtx_select)
-			select_vertex(env);
 		else
+		{// click right panel
 			select_misc(env);
+		}
 		return (1);
 	}
 	else if (event.type == SDL_KEYDOWN)

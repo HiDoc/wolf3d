@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 10:53:12 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/06 11:28:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,6 @@ static void		init_elems(t_env *env)
 	rect = (SDL_Rect){900, 230, 270, 20};
 	create_element(E_B_ELM_SPEC, BUTTON, ELEM, rect, env);
 
-	// editor selection
-	rect = (SDL_Rect){910, 720, 250, 30};
-	create_element(E_B_SELEC_DEL, BUTTON, SELEC, rect, env);
-	get_element(E_B_SELEC_DEL, env)->color = C_RED;
-
 	// editor selection edge
 	rect = (SDL_Rect){910, 150, 250, 30};
 	create_element(E_B_SELEC_SPLIT, BUTTON, S_EDG, rect, env);
@@ -153,6 +148,10 @@ static void		init_elems(t_env *env)
 	get_element(E_B_SELEC_M_WALL_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
 	get_element(E_B_SELEC_M_WALL_DOWN, env)->event_fc = click_edg_mwalldown;
+
+	rect = (SDL_Rect){910, 720, 250, 30};
+	create_element(E_B_SELEC_EDG_DEL, BUTTON, S_EDG, rect, env);
+	get_element(E_B_SELEC_EDG_DEL, env)->color = C_RED;
 
 	// editor selection sector
 	rect = (SDL_Rect){910, 370, 120, 25};
@@ -202,6 +201,20 @@ static void		init_elems(t_env *env)
 	get_element(E_B_SELEC_TX_DOWN, env)->image =
 		ui_load_image("ressources/images/icons/arrowdown.png");
 	get_element(E_B_SELEC_TX_DOWN, env)->event_fc = click_sct_txdown;
+
+	rect = (SDL_Rect){910, 720, 250, 30};
+	create_element(E_B_SELEC_SCT_DEL, BUTTON, S_SCT, rect, env);
+	get_element(E_B_SELEC_SCT_DEL, env)->color = C_RED;
+
+	// editor selection vtx
+	rect = (SDL_Rect){910, 720, 250, 30};
+	create_element(E_B_SELEC_VTX_DEL, BUTTON, S_VTX, rect, env);
+	get_element(E_B_SELEC_VTX_DEL, env)->color = C_RED;
+
+	// editor selection obj
+	rect = (SDL_Rect){910, 720, 250, 30};
+	create_element(E_B_SELEC_OBJ_DEL, BUTTON, S_OBJ, rect, env);
+	get_element(E_B_SELEC_OBJ_DEL, env)->color = C_RED;
 
 	// editor selection misc
 	rect = (SDL_Rect){910, 150, 250, 25};
