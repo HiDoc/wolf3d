@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:36:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 03:23:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 02:25:54 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define DOOM_F_MENU_H
 
 void		init_blocs_menu(t_env *env);
+void		fill_menu(t_env *e, t_bloc *b, SDL_Rect *r, float s);
+void		newgame_blocs(t_env *e, t_bloc *b);
+void		options_blocs(t_env *e, t_bloc *data);
 void		draw_menu(t_env *env);
 void		action_mainmenu(t_env *e, t_status *s, const Uint8 *k);
 void		action_ingame_menu(t_env *e, t_status *s, const Uint8 *k);

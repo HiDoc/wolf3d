@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hud_draw_stats.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/07 02:11:44 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/07 02:13:32 by abaille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "doom.h"
+
+int		ui_put_fps(t_env *env, int fps)
+{
+	ui_put_data(env, (t_font){RED, "fps : ",
+		env->hud.font.number, (t_vtx){10, 10}, W / 40, -1, fps});
+	return (1);
+}
+
+void	update_data(t_env *e)
+{
+	t_stats	*s;
+
+	s = &e->stats;
+	s->data[I_KD_RATIO] = (s->data[I_DEATHS])
+		? s->data[I_KILLS] / s->data[I_DEATHS] : s->data[I_KILLS];
+}
+
+void	print_stats(t_env *env, float size, t_vtx w, t_vtx h)
+{
+	int			i;
+	t_vtx		p;
+	char		*stime;
+	float		div_y;
+	const char	*str[NB_STATS - 3] = {D_KILLS, D_DEATHS, D_TIMEPLAY, D_KD_RATIO,
+	D_KD_PERMN, D_K_MAGNUM, D_K_SHOTGUN, D_K_RIFLE, D_K_RPG, D_K_FIST};
+
+	i = -1;
+	while (++i < NB_STATS - 3)
+	{
+		p.x = i < 5 ? w.x : w.y;
+		div_y = (i == 0 || i == 5) ? h.x : div_y + h.y;
+		p.y = H - div_y;
+		if (i != 2)
+			ui_put_data(env, (t_font){GOLD, str[i], env->hud.font.text, p,
+				size, -1, env->stats.data[i + 3]});
+		else
+		{
+			stime = time_to_str(SDL_GetTicks() - ((!env->menu.status.gameover)
+				? env->levels[env->curr_lvl]->tplay : 0));
+			stime = ft_strrjoin((char *)str[i], stime);
+			ui_put_data(env, (t_font){GOLD, stime, env->hud.font.text,
+				p, size, -1, -1});
+			lt_release((void**)&stime);
+		}
+	}
+}

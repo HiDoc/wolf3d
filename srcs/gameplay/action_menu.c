@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 19:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 13:28:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 00:25:38 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ void	action_mainmenu(t_env *e, t_status *s, const Uint8 *k)
 
 void	action_newgame_menu(t_env *e, t_status *s, const Uint8 *k)
 {
-	if (e->nb_games)
+	if (e->nb_games && e->nb_games < 6)
 		scroll_menu(&s->cur, k, 0, e->nb_games);
+	else if (e->nb_games)
+		long_scroll_menu(s, k);
+	// if (e->nb_games)
+	// 	scroll_menu(&s->cur, k, 0, e->nb_games);
 	if (k[SDL_SCANCODE_LEFT] && s->cur == 0)
 		s->cur = e->nb_games;
 	if (k[SDL_SCANCODE_RIGHT] && s->cur == e->nb_games)

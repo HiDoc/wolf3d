@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/05 19:36:09 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/07 02:27:56 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3
+CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -75,6 +75,7 @@ SRC_NAME 	= main.c \
 			action_menu_utils.c \
 			action_object.c \
 			action_pl_object.c \
+			action_pl_object_utils.c \
 			action_pl_weapon.c \
 			action_shoot.c \
 			checking.c \
@@ -88,8 +89,10 @@ SRC_NAME 	= main.c \
 			function.c \
 			free_map.c \
 			handle_enemy_sprite.c \
+			handle_gems.c \
 			handle_weapon.c \
 			hud_data.c \
+			hud_draw_stats.c \
 			hull.c \
 			init.c \
 			init_hud.c \
@@ -97,10 +100,11 @@ SRC_NAME 	= main.c \
 			init_images.c \
 			init_enemies.c \
 			init_menu.c \
+			init_menu2.c \
 			init_minimap.c \
 			init_weapons.c \
 			init_sound.c \
-			init_strings.c \
+			inter_display.c \
 			inter_loop.c \
 			load_worlds.c \
 			load.c \
@@ -110,13 +114,16 @@ SRC_NAME 	= main.c \
 			make_string.c \
 			make_surface.c \
 			map.c \
+			menu_sound.c \
 			move.c \
+			move_enemies.c \
 			musics.c \
 			no_op.c \
 			parse_door.c \
 			parse_enemies.c \
 			parse_objects.c \
 			perspective.c \
+			player_sound.c \
 			position.c \
 			print_bug.c \
 			projection.c \
@@ -124,6 +131,7 @@ SRC_NAME 	= main.c \
 			render_sect.c \
 			save_menu.c \
 			sdl_hook.c \
+			sdl_hook_access.c \
 			sdl_mouse.c \
 			sounds.c \
 			struct_drawline.c \
@@ -140,7 +148,6 @@ SRC_NAME 	= main.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \
-			utils_hud_img.c \
 			utils_pixels.c \
 			utils_vertex.c \
 			utils_weapons.c \

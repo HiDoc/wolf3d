@@ -6,27 +6,16 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 17:41:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 02:42:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 18:32:02 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static int				sdl_mainmenu_render(t_env *env)
-{
-	draw_menu(env);
-	SDL_UpdateTexture(env->sdl.texture, NULL,
-		env->sdl.surface->pixels, env->sdl.surface->pitch);
-	SDL_RenderCopy(env->sdl.renderer, env->sdl.texture, NULL, NULL);
-	SDL_RenderPresent(env->sdl.renderer);
-	return (1);
-}
-
-void					mainmenu_loop(t_env *env)
+void	mainmenu_loop(t_env *env)
 {
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	(env->menu.status.gameover) ? env->menu.status.on = 1 : 0;
-	// set_msc_menu(env, &env->menu.status);
 	while (env->menu.status.on)
 	{
 		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
@@ -43,8 +32,9 @@ void					mainmenu_loop(t_env *env)
 				env->menu.status.gameover = 0;
 				env->menu.status.main_menu = 1;
 			}
-			sdl_mainmenu_render(env);
-			sdl_key_menu(env, env->sdl.event, env->sdl.keycodes);
+			draw_menu(env);
+			update_render(env);
+			sdl_keyhook_menu(env, env->sdl.event, env->sdl.keycodes);
 		}
 	}
 }

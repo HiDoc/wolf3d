@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_decor_images.c                              :+:      :+:    :+:   */
+/*   action_pl_object_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 16:22:08 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/06 16:53:25 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/06 17:44:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_doors_images(t_env *e)
+int	get_inventory_place(t_env *env)
 {
 	int	i;
 
 	i = 0;
-	while (i < NB_DOOR_IMG)
+	while (i < 6)
 	{
-		if (!(e->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
-			return (0);
+		if (!env->player.inventory.objects[i].is_full)
+			return (i);
 		i++;
 	}
-	return (1);
+	return (i);
+}
+
+int	check_object_type(t_wrap_inv *pack, int ref, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i < limit)
+	{
+		if (pack[i].is_full)
+		{
+			if (ref == pack[i].ref)
+				return (i);
+		}
+		i++;
+	}
+	return (-1);
 }

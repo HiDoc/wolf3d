@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 03:24:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 18:12:23 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ static void	bot_is_dying(t_env *e, t_character *ref,
 		enemy->a.is_alive = 0;
 		enemy->a.is_dying = 0;
 		(enemy->ref != BOSS) ? e->stats.data[I_KTOGO]-- : 0;
-		(temp && !e->stats.data[I_KTOGO] && e->curr_lvl < e->nb_levels - 1)
+		(temp && !e->stats.data[I_KTOGO] && e->curr_lvl < e->nb_levels)
 			? e->engine.player.sound.end_level = 1 : 0;
-		(temp && !e->stats.data[I_KTOGO] && e->curr_lvl == e->nb_levels - 1)
-			? e->finish = 1 : 0;
+		// (temp && !e->stats.data[I_KTOGO] && e->curr_lvl == e->nb_levels - 1)
+		// 	? e->finish = 1 : 0;
 		s->nb_enemies--;
 	}
 }

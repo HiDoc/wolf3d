@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 19:00:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 23:58:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,29 @@ static void		fill_wpn(t_env *env, int iter)
 		draw_img(env, bloc->bg_empty, bloc);
 }
 
-static void		fill_gems(t_env *env, int iter)
+static void		fill_gems(t_env *e, int iter)
 {
 	t_bloc		*bloc;
-	int			g_ref;
 	t_bloc		fill;
 	SDL_Rect	rect;
 
-	bloc = &env->hud.inventory.gems[iter];
+	bloc = &e->hud.inventory.gems[iter];
 	rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16,
 	bloc->rect.y + bloc->rect.w / 16,
 	bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
 	ft_bzero(&fill, sizeof(t_bloc));
 	fill.rect = rect;
-	if (env->player.inventory.gems[iter].is_full)
+	if (e->player.inventory.gems[iter].is_full)
 	{
-		g_ref = env->player.inventory.gems[iter].ref;
-		draw_img(env, bloc->bg_fill, bloc);
-		draw_img(env, env->world.objects[g_ref].sprite, &fill);
+		draw_img(e, bloc->bg_fill, bloc);
+		draw_img(e,
+			e->world.objects[e->player.inventory.gems[iter].ref].sprite, &fill);
+		ui_put_data(e, (t_font){WHITE, "", e->hud.font.text,
+			(t_vtx){bloc->rect.x, bloc->rect.y}, W / 60,
+			e->player.inventory.gems[iter].nb_stack, -1});
 	}
 	else
-		draw_img(env, bloc->bg_empty, bloc);
+		draw_img(e, bloc->bg_empty, bloc);
 }
 
 static void		fill_bloc(t_env *env, int i)

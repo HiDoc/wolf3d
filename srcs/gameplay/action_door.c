@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 12:46:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 18:27:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	select_door(t_engine *e)
 	return (-1);
 }
 
-int		open_door(t_env *e)
+int		access_door(t_env *e)
 {
 	int			index;
 	t_sector	*sector;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 01:20:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:12:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void		ui_scaled_copy(SDL_Surface *src, SDL_Surface *dst)
 
 SDL_Surface	*str_join_text(t_font data)
 {
-	char				*strjoin;
-	SDL_Surface			*new;
-	t_font				str_data;
+	char		*strjoin;
+	t_font		str_data;
+	SDL_Surface	*new;
 
 	strjoin = NULL;
 	if (data.l > -1)
@@ -53,11 +53,9 @@ SDL_Surface	*str_join_text(t_font data)
 	return (new);
 }
 
-void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx pos)
+void		draw_scaled_string(SDL_Surface *dst,
+	t_font data, SDL_Surface *src, t_vtx pos)
 {
-	/*if ((SDL_BlitScaled(src, 0, dst, &rect)) < 0)
-		doom_error_exit("Libui: blit error in draw_scaled_string");
-*/
 	int		x;
 	int		y;
 	t_vtx	new_size;
@@ -83,15 +81,16 @@ void		draw_scaled_string(SDL_Surface *dst, t_font data, SDL_Surface *src, t_vtx 
 		x++;
 		pos.x++;
 	}
-
-
 }
 
-void    		ui_put_data(t_env *env, t_font data)
+void		ui_put_data(t_env *env, t_font data)
 {
 	SDL_Surface	*surface;
-
 	surface = str_join_text(data);
+	// SDL_Rect	r = (SDL_Rect){data.pos.x, data.pos.y, surface->w / (100 / data.size), surface->h / (100 / data.size)};
+	// if (SDL_BlitScaled(surface, NULL, env->sdl.surface, &r) < 0)
+	// 	printf("SDL_Init failed: %s\n", SDL_GetError());
+		// doom_error_exit("Doom_Nukem Error BlitScaled\n");
 	draw_scaled_string(env->sdl.surface, data, surface, (t_vtx){0, 0});
 	lt_release((void**)&surface);
 }

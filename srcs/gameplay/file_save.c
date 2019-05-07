@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 20:24:40 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 19:01:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:57:15 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ void	save_data_file(t_env *e, char *name)
 	ft_putendl_fd(tmp, fd);
 	lt_release((void**)&tmp);
 	ft_putendl_fd(name, fd);
-	concat_data(&data, e->engine.player.sector, 0, "#p:");
+	concat_data(&data, e->engine.player.sector, 0, "p:");
 	concat_data(&data, e->player.health, 0, NULL);
 	concat_data(&data, e->player.shield, 0, NULL);
 	concat_data(&data, e->engine.player.where.x, 0, NULL);
 	concat_data(&data, e->engine.player.where.y, 1, NULL);
 	print_data(fd, &data);
-	concat_data(&data, e->player.inventory.current->ref, 1, "#c:");
+	concat_data(&data, e->player.inventory.current->ref, 1, "c:");
 	print_data(fd, &data);
 	i = -1;
 	while (++i < GAME_NB_WPN)
 	{
 		if (e->player.inventory.weapons[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.weapons[i].ref, 0, "#w:");
+			concat_data(&data, e->player.inventory.weapons[i].ref, 0, "w:");
 			concat_data(&data, e->player.inventory.weapons[i].ammo[0], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[1], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[2], 1, NULL);
@@ -76,7 +76,7 @@ void	save_data_file(t_env *e, char *name)
 	{
 		if (e->player.inventory.objects[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.objects[i].ref, 0, "#o:");
+			concat_data(&data, e->player.inventory.objects[i].ref, 0, "o:");
 			concat_data(&data, e->player.inventory.objects[i].nb_stack, 1, NULL);
 		}
 	}
@@ -86,18 +86,18 @@ void	save_data_file(t_env *e, char *name)
 	{
 		if (e->player.inventory.gems[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.gems[i].ref, 0, "#g:");
+			concat_data(&data, e->player.inventory.gems[i].ref, 0, "g:");
 			concat_data(&data, e->player.inventory.gems[i].nb_stack, 1, NULL);
 		}
 	}
 	print_data(fd, &data);
 	i = -1;
 	while (++i < NB_STATS)
-		concat_data(&data, e->stats.data[i], i == NB_STATS - 1 ? 1 : 0, i == 0 ? "#s:" : NULL);
+		concat_data(&data, e->stats.data[i], i == NB_STATS - 1 ? 1 : 0, i == 0 ? "s:" : NULL);
 	print_data(fd, &data);
 	i = 0;
 	while (++i < NB_OPT_KEY)
-		concat_data(&data, e->engine.keys[i], i == NB_OPT_KEY - 1 ? 1 : 0, i == 1 ? "#k:" : NULL);
+		concat_data(&data, e->engine.keys[i], i == NB_OPT_KEY - 1 ? 1 : 0, i == 1 ? "k:" : NULL);
 	print_data(fd, &data);
 	i = -1;
 	int j = -1;
@@ -107,12 +107,11 @@ void	save_data_file(t_env *e, char *name)
 		while (obj)
 		{
 			j = -1;
-			if (++j < e->engine.sectors[i].nb_objects)
+			if (++j < e->engine.sectors[i].nb_objects && !obj->is_picked)
 			{
-				j == 0 ? concat_data(&data, i, 0, "#s") : 0;
+				j == 0 ? concat_data(&data, i, 0, "s:") : 0;
 				concat_data(&data, obj->ref, 0, "o:");
 				concat_data(&data, obj->is_wpn, 0, NULL);
-				concat_data(&data, obj->is_picked, 0, NULL);
 				concat_data(&data, obj->vertex.x, 0, NULL);
 				concat_data(&data, obj->vertex.y, 1, NULL);
 			}
@@ -125,7 +124,7 @@ void	save_data_file(t_env *e, char *name)
 			j = -1;
 			if (en->a.is_alive && ++j < e->engine.sectors[i].nb_enemies)
 			{
-				j == 0 ? concat_data(&data, i, 0, "#s") : 0;
+				j == 0 ? concat_data(&data, i, 0, "s:") : 0;
 				concat_data(&data, en->ref, 0, "e:");
 				concat_data(&data, en->brain.health, 0, NULL);
 				concat_data(&data, en->player.where.x, 0, NULL);

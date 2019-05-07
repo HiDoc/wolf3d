@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 19:31:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 17:59:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int		set_current_wpn(t_env *env, t_inventory *inv, int i)
 	env->player.actions.is_shooting = 0;
 	env->player.actions.is_loading = 0;
 	inv->current = &inv->weapons[i];
-	if (!inv->current)
-		printf("lol i'm segfaulting\n");
 	inv->current->is_full = 1;
 	inv->current->ref = inv->weapons[i].ref;
 	inv->current->ammo_current = &inv->weapons[i].ammo[0];
@@ -100,7 +98,7 @@ int		new_current_wpn(t_env *env, t_inventory *inv)
 
 int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 {
-	t_vtx	vertex;
+	t_vtx		vertex;
 	t_sector	*sector;
 	int			ref;
 	int			cur_ref;
@@ -119,7 +117,8 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		env->hud.is_txt = WPN_DROPPED;
 		sector->nb_objects++;
 		env->engine.player.sound.drop = 1;
-		return (ref == cur_ref ? new_current_wpn(env, &env->player.inventory) : 1);
+		return (ref == cur_ref
+			? new_current_wpn(env, &env->player.inventory) : 1);
 	}
 	return (0);
 }

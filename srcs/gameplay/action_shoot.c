@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 18:58:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 23:38:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ int		bot_wall_collision(t_player *bot, t_sector *sect)
 
 void	gameover(t_env *e)
 {
+	t_inventory	*inv;
+
+	inv = &e->player.inventory;
 	e->player.health = 0;
 	e->stats.data[I_DEATHS]++;
 	e->engine.player.sound.dead = 1;
 	e->menu.status.gameover = 1;
 	e->stats.data[I_KTOGO] = 0;
-	ft_bzero(&e->player.inventory, sizeof(t_inventory));
-	e->player.inventory.f.ref = FIST;
-	e->player.inventory.weapons[FIST].is_full = 1;
-	e->player.inventory.weapons[FIST].ammo[0] =
-		e->world.armory[FIST].ammo_current;
-	e->player.inventory.weapons[FIST].ammo[1] =
-		e->world.armory[FIST].ammo_magazine;
-	e->player.inventory.weapons[FIST].ammo[2] =
-		e->world.armory[FIST].damage;
-	set_current_wpn(e, &e->player.inventory, FIST);
+	ft_bzero(inv, sizeof(t_inventory));
+	inv->weapons[FIST].is_full = 1;
+	inv->weapons[FIST].ref = FIST;
+	inv->weapons[FIST].ammo[0] = e->world.armory[FIST].ammo_current;
+	inv->weapons[FIST].ammo[1] = e->world.armory[FIST].ammo_magazine;
+	inv->weapons[FIST].ammo[2] = e->world.armory[FIST].damage;
+	set_current_wpn(e, inv, FIST);
 }
 
 void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
@@ -170,7 +170,7 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 	}
 }
 
-void		new_bullet(t_impact *new, t_player *p, float velocity)
+void	new_bullet(t_impact *new, t_player *p, float velocity)
 {
 	ft_bzero(new, sizeof(t_impact));
 	new->position.origin = p->where;
@@ -185,7 +185,7 @@ void		new_bullet(t_impact *new, t_player *p, float velocity)
 
 int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 {
-	int	i;
+	int			i;
 	t_weapon	*rwpn;
 
 	i = 0;
