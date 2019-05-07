@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 01:43:25 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:25:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,21 +301,13 @@ static void		select_panel(t_env *env)
 
 	id = -1;
 	if (env->editor.sct_select)
-	{
 		page = S_SCT;
-	}
 	else if (env->editor.edg_select)
-	{
 		page = S_EDG;
-	}
 	else if (env->editor.obj_select)
-	{
 		page = S_OBJ;
-	}
 	else if (env->editor.vtx_select)
-	{
 		page = S_VTX;
-	}
 	else
 	{
 		page = S_MSC;
@@ -345,12 +337,15 @@ static void		select_panel(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				if (button->event_fc)
+				if (button->visible == 1)
 				{
-					env->editor.dropdown[id].current->clicked = 0;
-					env->editor.dropdown[id].current = button;
-					button->event_fc(env);
-					return ;
+					if (button->event_fc)
+					{
+						env->editor.dropdown[id].current->clicked = 0;
+						env->editor.dropdown[id].current = button;
+						button->event_fc(env);
+						return ;
+					}
 				}
 			}
 			button = button->next;

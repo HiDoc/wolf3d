@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 21:52:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:28:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ int				draw_mode(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, wall_txtr->rect))
 			{
-				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
-				env->editor.dropdown[DD_WALLTX].current = wall_txtr;
-				wall_txtr->clicked = 1;
+				if (wall_txtr->visible == 1)
+				{
+					env->editor.dropdown[DD_WALLTX].current->clicked = 0;
+					env->editor.dropdown[DD_WALLTX].current = wall_txtr;
+					wall_txtr->clicked = 1;
+				}
 			}
 			wall_txtr = wall_txtr->next;
 		}

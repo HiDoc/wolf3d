@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 23:53:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:25:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,10 @@ struct					s_elem
 	Mix_Music		*audio;		// if button audio
 	char			*str;		// if type == input
 	int				str_max;	// if type == inpu
-	
+
 	void			(*event_fc)(t_env *);	// event ptr
+
+	int				visible;		// 1 : visible on dd_list
 
 	int				page;		// page (e_pages)
 

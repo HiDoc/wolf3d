@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 16:11:30 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 12:41:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ int			menu_events(t_env *env)
 	t_pos	m = env->data->mouse;
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		// value reset
 		get_element(M_I_NEW, env)->clicked = 0;
-
 		if (ui_mouseenter(m.x, m.y, get_element(M_B_START, env)->rect))
 		{
 			if (get_element(M_I_NEW, env)->str)

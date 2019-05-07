@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 21:53:24 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:29:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,12 @@ int					elem_mode(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, button->rect))
 			{
-				dropdown[env->editor.curr_elem_dd].current->clicked = 0;
-				dropdown[env->editor.curr_elem_dd].current = button;
-				dropdown[env->editor.curr_elem_dd].current->clicked = 1;
+				if (button->visible == 1)
+				{
+					dropdown[env->editor.curr_elem_dd].current->clicked = 0;
+					dropdown[env->editor.curr_elem_dd].current = button;
+					dropdown[env->editor.curr_elem_dd].current->clicked = 1;
+				}
 			}
 			button = button->next;
 		}
