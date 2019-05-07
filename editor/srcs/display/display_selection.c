@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 19:16:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 15:33:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void		display_object_data(t_env *env)
 	SDL_Rect		rect;
 	char			*category;
 
+	category = 0;
 	if (env->editor.obj_select->dd == DD_WOBJ)
 		category = "Wall_object";
 	else if (env->editor.obj_select->dd == DD_CONS)
@@ -27,8 +28,6 @@ static void		display_object_data(t_env *env)
 		category = "Prefab";
 	else if (env->editor.obj_select->dd == DD_SPEC)
 		category = "Special";
-	else
-		category = 0;
 
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, category, C_WHITE, env->data);

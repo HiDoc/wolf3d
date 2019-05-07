@@ -1,10 +1,10 @@
 
-
-BUG : comportement programme si change mode, ex: draw current & change
 BUG : taille du nom des object depasse du carre
 
 TODO : debug if sector & edge overlap
-TODO : empecher export si edge du meme sct overlap
+TODO : empecher export si edge du meme sct overlap + remettre les autres protec
+
+TODO : check logique, conditions de fin etc...
 
 TODO : check leak
 TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
