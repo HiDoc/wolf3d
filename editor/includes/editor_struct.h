@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 17:16:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 21:01:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ struct					s_object
 	float			dir;
 	t_sct			*sct;
 	int				iswpn;
+	Uint32			color;
 	int				dd;
 	char			*name;
 	Uint32			icon_color;

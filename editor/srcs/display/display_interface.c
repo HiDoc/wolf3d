@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 19:45:39 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 22:32:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,55 +90,48 @@ static void		display_infos(t_env *env)
 	}
 }
 
-void			display_sector(t_sct *sct, t_env *env)
+static void		display_edge(t_w_vtx *a, t_w_vtx *b, Uint32 color, t_env *env)
 {
 	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
 	SDL_Rect		vtxrect;
-	t_w_vtx			*w_vtx;
-	Uint32			color;
 	t_vec			vec;
 
-	if (env->editor.sct_hover == sct)
-		color = C_GREEN;
+	vec.a = vtx_transform(a->vtx->pos, env);
+	vec.b = vtx_transform(b->vtx->pos, env);
+	if (a == env->editor.edg_hover)
+		ui_make_clipped_line(env->data->surface, vec, rect, C_BLUE);
 	else
-		color = (sct == env->editor.sct_start && !sct->close)
-		? C_GREEN : C_WHITE;
+		ui_make_clipped_line(env->data->surface, vec, rect, color);
+	if (point_in_rect(vec.a, rect))
+	{
+		vtxrect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
+		ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
+	}
+}
+
+void			display_sector(t_sct *sct, t_env *env)
+{
+	t_w_vtx			*w_vtx;
+	Uint32			color;
+
+	color = C_WHITE;
+	if (sct == env->editor.sct_hover
+	|| (sct == env->editor.sct_start && !sct->close))
+		color = C_GREEN;
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
-		vec.a = vtx_transform(w_vtx->vtx->pos, env);
-		vec.b = vtx_transform(w_vtx->next->vtx->pos, env);
-		if (w_vtx == env->editor.edg_hover)
-			ui_make_clipped_line(env->data->surface, vec, rect, C_BLUE);
-		else
-			ui_make_clipped_line(env->data->surface, vec, rect, color);
-		if (point_in_rect(vec.a, rect))
-		{
-			vtxrect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
-			ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
-		}
+		display_edge(w_vtx, w_vtx->next, color, env);
 		w_vtx = w_vtx->next;
 	}
 	if (sct->close)
-	{
-		vec.a = vtx_transform(sct->w_vtx_start->vtx->pos, env);
-		vec.b = vtx_transform(w_vtx_lst_end(sct->w_vtx_start)->vtx->pos, env);
-		if (w_vtx == env->editor.edg_hover)
-			ui_make_clipped_line(env->data->surface, vec, rect, C_BLUE);
-		else
-			ui_make_clipped_line(env->data->surface, vec, rect, color);
-		if (point_in_rect(vec.b, rect))
-		{
-			vtxrect = (SDL_Rect){vec.b.x - 4, vec.b.y - 4, 8, 8};
-			ui_make_full_rect(env->data->surface, vtxrect, C_CYAN);
-		}
-	}
+		display_edge(sct->w_vtx_start,
+		w_vtx_lst_end(sct->w_vtx_start), color, env);
 }
 
 static void		display_spaces(t_env *env)
 {
 	SDL_Rect		rect;
-	t_pos			pos;
 	t_vec			vec;
 	t_sct			*sct;
 	t_circ			circ;
@@ -146,11 +139,9 @@ static void		display_spaces(t_env *env)
 	sct = env->editor.sct_start;
 	while (sct)
 	{
-		if (sector_in_rect(sct, get_element(E_R_RECT, env)->rect, env))
-		{
-			if (sct != env->editor.sct_hover)
-				display_sector(sct, env);
-		}
+		if (sector_in_rect(sct, get_element(E_R_RECT, env)->rect, env)
+		&& sct != env->editor.sct_hover)
+			display_sector(sct, env);
 		sct = sct->next;
 	}
 	if (env->editor.sct_hover)
@@ -167,15 +158,14 @@ static void		display_spaces(t_env *env)
 	}
 	if (env->editor.vtx_hover)
 	{
-		pos = vtx_transform(env->editor.vtx_hover->pos, env);
-		circ = (t_circ){pos, 10, 0xFFFFFFFF};
+		circ = (t_circ){
+			vtx_transform(env->editor.vtx_hover->pos, env), 10, 0xFFFFFFFF};
 		ui_make_circle(circ, env->data);
 	}
 }
 
 static void		display_objects(t_env *env)
 {
-	Uint32		color;
 	t_pos		pos;
 	SDL_Rect	rect;
 	t_object	*obj;
@@ -186,14 +176,8 @@ static void		display_objects(t_env *env)
 		pos = vtx_transform(obj->pos, env);
 		if (point_in_rect(pos, get_element(E_R_RECT, env)->rect))
 		{
-			if (obj->dd == DD_CONS)
-				color = C_GREEN;
-			else if (obj->dd == DD_NTTY)
-				color = C_RED;
-			else
-				color = C_WHITE;
 			rect = (SDL_Rect){pos.x - 5, pos.y - 5, 10, 10};
-			ui_make_rect(env->data->surface, rect, color);
+			ui_make_rect(env->data->surface, rect, obj->color);
 			if (obj->dd == DD_SPEC && env->editor.spawn_set == 2)
 			{
 				ui_draw_vector(env->data->surface, pos,

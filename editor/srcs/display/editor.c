@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 18:49:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 22:30:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		display_mode_btn(t_elem *elem, t_env *env)
 		ui_error_exit_sdl("Libui: Blit error on editor display");
 }
 
-void		editor(t_env *env)
+void			editor(t_env *env)
 {
 	SDL_Rect		rect;
 

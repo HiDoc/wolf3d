@@ -6,15 +6,16 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 20:08:17 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 22:35:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-static void		create_element(int id, int type, int page, SDL_Rect rect, t_env *env)
+static void		create_element(int id, int type, int page,
+				SDL_Rect rect, t_env *env)
 {
-	t_elem   *new;
+	t_elem		*new;
 
 	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
 		ui_error_exit_sdl("Editor: Out of memory");
@@ -102,7 +103,7 @@ static void		init_elm_elems(t_env *env)
 	create_element(E_B_ELM_OBWL, BUTTON, ELEM, rect, env);
 	env->editor.curr_elem_btn = get_element(E_B_ELM_OBWL, env);
 	env->editor.curr_elem_dd = DD_WOBJ;
-	env->editor.curr_elem_btn->clicked = 1;;
+	env->editor.curr_elem_btn->clicked = 1;
 	rect = (SDL_Rect){900, 140, 270, 20};
 	create_element(E_B_ELM_CONS, BUTTON, ELEM, rect, env);
 	rect = (SDL_Rect){900, 170, 270, 20};
@@ -172,7 +173,7 @@ static void		init_slc_vtx_elems(t_env *env)
 }
 
 static void		init_slc_obj_elems(t_env *env)
-{	
+{
 	SDL_Rect		rect;
 
 	rect = (SDL_Rect){910, 720, 250, 30};
@@ -208,13 +209,14 @@ static void		init_menu(t_env *env)
 {
 	env->map_name = "new_map";
 	env->menu.state = 1;
-	env->menu.background = ui_load_image("ressources/images/doom-background.jpg");
+	env->menu.background
+		= ui_load_image("ressources/images/doom-background.jpg");
 }
 
 static void		create_dd_button(int id, int dd,
 				int ref, char *str, void (*event_fc)(t_env *), t_env *env)
 {
-	t_elem   *new;
+	t_elem		*new;
 
 	if (!(new = lt_push(ft_memalloc(sizeof(t_elem)), ft_memdel)))
 		ui_error_exit_sdl("Editor: create_dd_button, out of memory");
@@ -253,7 +255,8 @@ static void		load_dd_list(char *path, int dd,
 	{
 		if ((de->d_name)[0] != '.')
 		{
-			if (!(name = lt_push(ft_strsub(de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+			if (!(name = lt_push(ft_strsub(
+					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_dd_button(i, dd, ref, name, event_fc, env);

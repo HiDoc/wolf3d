@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:47:21 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 18:48:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 22:32:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void		menu_right_panel(t_env *env)
 	ui_make_rect(env->data->surface, rect, C_WHITE);
 	rect = (SDL_Rect){WIN_W / 2 + 20, WIN_H / 2 - 215, 380, 30};
 	if (get_element(M_I_NEW, env)->str)
-		ui_make_string(rect, get_element(M_I_NEW, env)->str, C_WHITE, env->data);
+		ui_make_string(rect, get_element(M_I_NEW, env)->str,
+		C_WHITE, env->data);
 	else
 		ui_make_string(rect, env->map_name, C_WHITE, env->data);
 	display_button(M_B_START, "Start", env);
