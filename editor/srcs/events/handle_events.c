@@ -6,20 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 12:36:11 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:46:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-static void     reset_values(t_env *env)
-{
-	// reset mode buttons
-	get_element(E_B_MODE_SELECT, env)->color = C_WHITE;
-	get_element(E_B_MODE_MOVE, env)->color = C_WHITE;
-	get_element(E_B_MODE_DRAW, env)->color = C_WHITE;
-	get_element(E_B_MODE_ELEM, env)->color = C_WHITE;
-}
 
 static int		mousewheel_event(t_env *env)
 {
@@ -101,7 +92,6 @@ int				handle_events(t_env *env)
 		get_element(E_B_MODE_DRAW, env)->clicked = 0;
 		get_element(E_B_MODE_MOVE, env)->clicked = 0;
 		get_element(E_B_MODE_ELEM, env)->clicked = 0;
-		reset_values(env);
 
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_SAVE, env)->rect))
 		{ // button save

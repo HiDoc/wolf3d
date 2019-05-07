@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 12:31:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:48:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		display_mode_btn(t_elem *elem, t_env *env)
 {
-	(elem->clicked) ? elem->color = C_GREEN : 0;
+	elem->color = (elem->clicked) ? C_GREEN : C_WHITE;
 	ui_make_rect(env->data->surface, elem->rect, elem->color);
 	if ((SDL_BlitScaled(elem->image, 0, env->data->surface, &elem->rect)) < 0)
 		 ui_error_exit_sdl("Libui: Blit error on editor display");

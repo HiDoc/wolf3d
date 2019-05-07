@@ -2,9 +2,6 @@
 BUG : makefile recompile pas la libft
 
 BUG : comportement programme si change mode, ex: draw current & change
-BUG : segfault suppression sector
-BUG : segfault suppression edge
-BUG : segfault suppression object
 BUG : si export quand un secteur n'est pas encore clos
 BUG : taille du nom des object depasse du carre
 

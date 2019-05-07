@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:25:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:58:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int		select_input_events(t_env *env)
 void		click_obj_del(t_env *env)
 {
 	delete_object(env->editor.obj_select, env);
+	env->editor.obj_select = 0;
 }
 
 // OBJS /////////////////////////////////////////////////////////////
@@ -96,6 +97,7 @@ void		click_obj_del(t_env *env)
 void		click_vtx_del(t_env *env)
 {
 	delete_vertex(env->editor.vtx_select, env);
+	env->editor.vtx_select = 0;
 }
 
 // SECT /////////////////////////////////////////////////////////////
@@ -160,6 +162,7 @@ void		click_sct_sky(t_env *env)
 void		click_sct_del(t_env *env)
 {
 	delete_sector(env->editor.sct_select, env);
+	env->editor.sct_select = 0;
 }
 
 // EDGE /////////////////////////////////////////////////////////////
@@ -184,6 +187,7 @@ void			click_edg_split(t_env *env)
 void			click_edg_del(t_env *env)
 {
 	delete_edge(env->editor.edg_select, env);
+	env->editor.edg_select = 0;
 }
 
 // MISC /////////////////////////////////////////////////////////////

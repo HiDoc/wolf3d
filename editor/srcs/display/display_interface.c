@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 23:51:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:51:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void			display_sector(t_sct *sct, t_env *env)
 	Uint32			color;
 	t_vec			vec;
 
-	color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
+	if (env->editor.sct_hover == sct)
+		color = C_GREEN;
+	else
+		color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
 
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
