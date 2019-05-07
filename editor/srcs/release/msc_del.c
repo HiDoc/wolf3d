@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui_draw_vector.c                                   :+:      :+:    :+:   */
+/*   msc_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/11 15:12:33 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 20:39:45 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/05/07 20:44:51 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/05/07 20:45:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-/*
-**	recup en radian
-*/
-
-void	ui_draw_vector(SDL_Surface *surface, t_pos pos, float angle,
-		float size, Uint32 color) // mettre a la norme
+void		msc_del(void **ap)
 {
-	t_pos	pos_b;
+	Mix_Music	*music;
 
-	pos_b.x = pos.x + cos(angle) * size;
-	pos_b.y = pos.y - sin(angle) * size;
-	ui_make_line(surface, (t_vec){pos, pos_b}, color);
+	music = (Mix_Music *)(*ap);
+	if (ap && *ap)
+	{
+		Mix_FreeMusic(music);
+		music = 0;
+	}
 }
