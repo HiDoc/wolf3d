@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 01:28:29 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 12:36:11 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,15 @@ int				handle_events(t_env *env)
 
 	if (event.type == SDL_MOUSEWHEEL)
 		return (mousewheel_event(env));
-	
+
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
+		get_element(E_B_MODE_SELECT, env)->clicked = 0;
+		get_element(E_B_MODE_DRAW, env)->clicked = 0;
+		get_element(E_B_MODE_MOVE, env)->clicked = 0;
+		get_element(E_B_MODE_ELEM, env)->clicked = 0;
 		reset_values(env);
+
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_SAVE, env)->rect))
 		{ // button save
 			/*if (edge_overlap())
@@ -113,16 +118,31 @@ int				handle_events(t_env *env)
 				printf("Export\n");
 				export_map(env);
 			}
-			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_SELECT, env)->rect))
+		{
+			get_element(E_B_MODE_SELECT, env)->clicked = 1;
 			env->editor.mode = select_mode;
+			return (1);
+		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_DRAW, env)->rect))
+		{
+			get_element(E_B_MODE_DRAW, env)->clicked = 1;
 			env->editor.mode = draw_mode;
+			return (1);
+		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_MOVE, env)->rect))
+		{
+			get_element(E_B_MODE_MOVE, env)->clicked = 1;
 			env->editor.mode = move_mode;
+			return (1);
+		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_ELEM, env)->rect))
+		{
+			get_element(E_B_MODE_ELEM, env)->clicked = 1;
 			env->editor.mode = elem_mode;
+			return (1);
+		}
 	}
 	return (env->editor.mode(env));
 }

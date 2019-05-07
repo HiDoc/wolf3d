@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 23:49:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 12:34:35 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int			move_mode(t_env *env)
 		{
 			env->editor.grid_init_pos = m;
 			env->editor.grid_drag = 1;
+			return (1);
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP)
 		{
@@ -37,6 +38,7 @@ int			move_mode(t_env *env)
 			ft_bzero(&env->editor.grid_init_pos, sizeof(t_pos));
 			ft_bzero(&env->editor.grid_mouse_var, sizeof(t_pos));
 			env->editor.grid_drag = 0;
+			return (1);
 		}
 		if (env->editor.grid_drag == 1)
 		{
@@ -52,6 +54,7 @@ int			move_mode(t_env *env)
 		ft_bzero(&env->editor.grid_init_pos, sizeof(t_pos));
 		ft_bzero(&env->editor.grid_mouse_var, sizeof(t_pos));
 		env->editor.grid_drag = 0;
+		return (1);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }
