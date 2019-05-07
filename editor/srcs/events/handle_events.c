@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:46:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 15:24:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,14 @@ int				handle_events(t_env *env)
 		get_element(E_B_MODE_DRAW, env)->clicked = 0;
 		get_element(E_B_MODE_MOVE, env)->clicked = 0;
 		get_element(E_B_MODE_ELEM, env)->clicked = 0;
-
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_SAVE, env)->rect))
-		{ // button save
+		{
+			if (env->editor.drawing)
+			{
+				display_error_msg("There is an open sector", env);
+				return (1);
+			}
+			// button save
 			/*if (edge_overlap())
 				display_error_msg("Export failed, edges are overlapping", env);
 			else *//*if (sector_overlap(env))
@@ -111,24 +116,44 @@ int				handle_events(t_env *env)
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_SELECT, env)->rect))
 		{
+			if (env->editor.drawing)
+			{
+				display_error_msg("There is an open sector", env);
+				return (1);
+			}
 			get_element(E_B_MODE_SELECT, env)->clicked = 1;
 			env->editor.mode = select_mode;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_DRAW, env)->rect))
 		{
+			if (env->editor.drawing)
+			{
+				display_error_msg("There is an open sector", env);
+				return (1);
+			}
 			get_element(E_B_MODE_DRAW, env)->clicked = 1;
 			env->editor.mode = draw_mode;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_MOVE, env)->rect))
 		{
+			if (env->editor.drawing)
+			{
+				display_error_msg("There is an open sector", env);
+				return (1);
+			}
 			get_element(E_B_MODE_MOVE, env)->clicked = 1;
 			env->editor.mode = move_mode;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_ELEM, env)->rect))
 		{
+			if (env->editor.drawing)
+			{
+				display_error_msg("There is an open sector", env);
+				return (1);
+			}
 			get_element(E_B_MODE_ELEM, env)->clicked = 1;
 			env->editor.mode = elem_mode;
 			return (1);

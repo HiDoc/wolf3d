@@ -1,15 +1,14 @@
-# aide tblaudez
-BUG : makefile recompile pas la libft
+
 
 BUG : comportement programme si change mode, ex: draw current & change
-BUG : si export quand un secteur n'est pas encore clos
 BUG : taille du nom des object depasse du carre
 
 TODO : debug if sector & edge overlap
 TODO : empecher export si edge du meme sct overlap
+
+TODO : check leak
 TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 TODO : lifetimer les fd, dr etc et release avec close() etc...
 
-TODO : check leak
 TODO : beta testing
 TODO : norme : total norme
