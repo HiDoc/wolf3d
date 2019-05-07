@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:31:53 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:16:54 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,100 +72,124 @@ enum					e_elements
 	ENUM_END
 };
 
-typedef struct	s_w_vtx		t_w_vtx;
-typedef struct  s_vtx   	t_vtx;
-typedef struct  s_sct   	t_sct;
-typedef struct	s_elem		t_elem;
-typedef struct	s_object	t_object;
-typedef struct	s_dropdown	t_dropdown;
-typedef struct	s_menu		t_menu;
-typedef struct	s_editor	t_editor;
-typedef struct  s_env   	t_env;
+typedef struct s_w_vtx		t_w_vtx;
+typedef struct s_vtx		t_vtx;
+typedef struct s_sct		t_sct;
+typedef struct s_elem		t_elem;
+typedef struct s_object		t_object;
+typedef struct s_dropdown	t_dropdown;
+typedef struct s_menu		t_menu;
+typedef struct s_editor		t_editor;
+typedef struct s_env		t_env;
+
+/*
+**	s_w_vtx
+**
+**	ref		: texture reference
+**	size	: edge size
+*/
 
 struct					s_w_vtx
 {
-	int			ref;	// texture ref
-	int			size;	// size edge
-
+	int			ref;
+	int			size;
 	t_vtx		*vtx;
 	t_sct		*sector;
 	t_w_vtx		*next;
 };
 
+/*
+**	s_vtx
+**
+**	id		: updated at level_export
+*/
+
 struct					s_vtx
 {
-	// identifiant du w_vtx, est mis a l export
 	int				id;
-
 	t_pos			pos;
 	t_vtx			*next;
 };
 
+/*
+**	s_sct
+**
+**	id		: update at creation and level_export
+**	roof	: 1 ceil / 0 sky
+**	type	: 0 normal / 1 door / 2 fdoor
+**	color	: ?
+*/
+
 struct					s_sct
 {
-	// identifiant du secteur, est mis a jour a la creation et a l export
 	int				id;
-
 	int				nb_w_vtx;
-	t_w_vtx			*w_vtx_current;	// vertex wrapper
-	t_w_vtx			*w_vtx_start;	// vertex wrapper
-
-	int				close;		// is sector close;
-
-	int				ceil;		// hauteur ceil
-	int				floor;		// hauteur floor
+	t_w_vtx			*w_vtx_current;
+	t_w_vtx			*w_vtx_start;
+	int				close;
+	int				ceil;
+	int				floor;
 	int				gravity;
-
-	int				roof;		// ceil / skybox
-	int				type;		// 0 normal / 1 door / 2 fdoor
-
+	int				roof;
+	int				type;
 	float			xmin;
 	float			xmax;
 	float			ymin;
 	float			ymax;
-
-	Uint32			color;		// ?
-
+	Uint32			color;
 	t_sct			*next;
 };
+
+/*
+**	s_elem
+**
+**	ref		: ?
+**	id		: ?
+**	type	: ?
+**	dd		: dropdown (if elem of dropdown)
+**	str_max	: ? for inputs
+**	visible	: if visible on dropdown
+**	page	: ?
+**	clicked	: ?
+**	hovered	: ?
+*/
 
 struct					s_elem
 {
 	int				ref;
 	int				id;
 	int				type;
-	int				dd;			// dropdown (if part of dropdown)
+	int				dd;
 	SDL_Rect		rect;
 	Uint32			color;
 	SDL_Surface		*image;
-	Mix_Music		*audio;		// if button audio
-	char			*str;		// if type == input
-	int				str_max;	// if type == inpu
-
-	void			(*event_fc)(t_env *);	// event ptr
-
-	int				visible;		// 1 : visible on dd_list
-
-	int				page;		// page (e_pages)
-
+	Mix_Music		*audio;
+	char			*str;
+	int				str_max;
+	void			(*event_fc)(t_env *);
+	int				visible;
+	int				page;
 	int				clicked;
-	int				hovered; // delete if not used ?
-
+	int				hovered;
 	t_elem			*next;
 };
 
+/*
+**	s_object
+**
+**	icon_color	: ?
+*/
+
 struct					s_object
 {
-	t_pos			pos;
-	float			dir;	// if entity
-
-	t_sct			*sct;
 	int				ref;
-	int				iswpn;	// is a weapon
-	int				dd;		// dropdown
+	t_pos			pos;
+	float			dir;
+	t_sct			*sct;
+	int				iswpn;
+	int				dd;
 	char			*name;
-
-	Uint32			icon_color; // replace by image
+	Uint32			icon_color;
 	t_object		*next;
 };
 
@@ -195,74 +219,58 @@ struct					s_menu
 	SDL_Surface		*background;
 };
 
+/*
+**	s_editor
+**
+**	timestamp	: for error message
+**	new_ois		: for mouse_drag
+**	oneend		: une seule fin
+**	drawing		: am i drawing an edge
+*/
+
 struct					s_editor
 {
-	// lst vertex
 	t_vtx			*vertex;
-	// lst sectors
 	t_sct			*sct_current;
 	t_sct			*sct_start;
-	// lst objects
 	t_object		*objects;
-
-	// Error message
 	time_t			timestamp;
 	char			*error_msg;
-
-	// editor dropdown lists
 	t_dropdown		dropdown[12];
-
-	// select / move / draw / element
 	int				(*mode)(t_env *);
-
-	// drag vertex;
 	int				mouse_drag;
 	t_pos			new_pos;
-
-	// selected element category
 	t_elem			*curr_elem_btn;
 	int				curr_elem_dd;
-
-	// grid move
 	int				grid_drag;
 	t_pos			grid_init_pos;
 	t_pos			grid_mouse_var;
 	t_pos			grid_translate;
-
-	// hover / select
 	t_vtx			*vtx_hover;
 	t_w_vtx			*edg_hover;
 	t_sct			*sct_hover;
 	t_object		*obj_hover;
-
 	t_vtx			*vtx_select;
 	t_w_vtx			*edg_select;
 	t_sct			*sct_select;
 	t_object		*obj_select;
-
-	int				oneend;		// une seule fin
-
-	int				onespawn;	// un spawn a deja ete pose
-	int				spawn_set;	// spawn pose, en attente de direction
-	t_pos			spawn_pos;	// absolute pos	// pour calcul angle
-	float			spawn_dir;	// direction spawn
-
-	int				drawing;		// am i drawing an edge
-
-	// variables
+	int				oneend;
+	int				onespawn;
+	int				spawn_set;
+	t_pos			spawn_pos;
+	float			spawn_dir;
+	int				drawing;
 	float			grid_scale;
 };
 
 struct					s_env
 {
-	t_data          *data;
+	t_data			*data;
 	char			*map_name;
 	t_menu			menu;
 	t_editor		editor;
 	t_elem			*elements;
 	t_pos			mouse;
-
-	// data infos TO REMOVE
 	int				nb_vtx;
 	int				nb_sct;
 };

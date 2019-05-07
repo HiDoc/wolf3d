@@ -1,14 +1,15 @@
 
+BUG : crash si fichier dd ne contiens pas +
 BUG : taille du nom des object depasse du carre
 
-TODO : debug if sector & edge overlap
-TODO : empecher export si edge du meme sct overlap + remettre les autres protec
-
+TODO : debug if sector & edge overlap + self overtlapping
 TODO : check logique, conditions de fin etc...
 
 TODO : check leak
 TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 TODO : lifetimer les fd, dr etc et release avec close() etc...
 
+TODO : check if iswpn is respected
+TODO : check si fonctions non utilisee
 TODO : beta testing
 TODO : norme : total norme
