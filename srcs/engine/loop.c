@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/07 00:59:52 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 12:04:14 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int				sdl_render(t_env *e)
 	{
 		// si retire alors segv + a laisser avant dfs sinon segv <3
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
-		handle_doors(e);
 		dfs(e);
 		handle_weapon(e);
 		handle_gems(e);
@@ -45,6 +44,7 @@ static int				sdl_render(t_env *e)
 		ui_put_fps(e, e->time.fps);
 		ui_minimap(e);
 		print_hud(e);
+		handle_doors(e);
 	}
 	SDL_UpdateTexture(e->sdl.texture, NULL,
 		e->sdl.surface->pixels, e->sdl.surface->pitch);

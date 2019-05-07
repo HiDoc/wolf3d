@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parser_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:04:31 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:05:37 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/07 12:06:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	which_type(t_sector *sect, int value)
+{
+	sect->type = value;
+	if (sect->type == SECT_DOOR)
+		sect->is_door = 1;
+	else if (sect->type == SECT_ENDLEVEL)
+		sect->is_door = 2;
+}
 
 void	fill_sector(t_sector *sect, unsigned value, unsigned count)
 {
@@ -27,7 +36,7 @@ void	fill_sector(t_sector *sect, unsigned value, unsigned count)
 	else if (count == 5)
 		sect->has_skybox = value;
 	else if (count == 6)
-		sect->type = value;
+		which_type(sect, value);
 }
 
 void 	retrieve_sector(t_sector *sect, t_parseline *line, t_vtx *vtx)

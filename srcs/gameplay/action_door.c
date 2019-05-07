@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 18:27:30 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 12:17:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ int	select_door(t_engine *e)
 	{
 		sect = &e->sectors[i];
 		s = -1;
-		while (++s < (int)sect->npoints)
+		if (sect->is_door)
 		{
-			if (dist_vertex((t_vtx){e->player.where.x, e->player.where.y},
-			sect->vertex[s]) < 5 && sect->is_door)
-				return (i);
+			while (++s < (int)sect->npoints)
+			{
+				if (dist_vertex((t_vtx){e->player.where.x, e->player.where.y},
+				sect->vertex[s]) < 5)
+					return (i);
+			}
 		}
 	}
 	return (-1);
@@ -98,7 +101,8 @@ void	print_infos_door(t_env *env, t_sector *sector)
 		if (sector[index].is_door == 2)
 			ui_put_data(env, (t_font){
 				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
-		else if (!front_player->is_open && !front_player->is_opening)
+		else if ((sector[index].is_door == 1 || env->stats.data[I_KTOGO])
+				&& !front_player->is_open && !front_player->is_opening)
 			ui_put_data(env, (t_font){
 				WHITE, string[0], env->hud.font.text, pos, W / 40, -1, -1});
 	}
