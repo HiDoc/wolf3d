@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 00:37:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:49:55 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 			vertex.y = env->engine.player.where.y;
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
 				vertex, (t_ixy){object->ref, env->engine.player.sector}, 0);
-			sector->nb_objects++;
 			env->engine.player.sound.drop = 1;
 		}
 		if (object->nb_stack > 1)

@@ -6,33 +6,31 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 12:40:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:26:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	door_neighbors(t_engine *e, t_vtx *vertex, int n)
+int		door_neighbors(t_engine *e, t_vtx *v, int n)
 {
-	t_sector	*sect;
 	int			i;
 	int			j;
 
 	i = -1;
 	while (++i < (int)e->nsectors)
 	{
-		sect = &e->sectors[i];
 		j = -1;
-		if (sect->is_door)
+		if (e->sectors[i].is_door)
 		{
-			while (++j < (int)sect->npoints)
+			while (++j < (int)e->sectors[i].npoints)
 			{
-				if (equal_vertex(vertex[n], sect->vertex[j]))
+				if (equal_vertex(v[n], e->sectors[i].vertex[j]))
 				{
 					j = -1;
-					while (++j < (int)sect->npoints)
+					while (++j < (int)e->sectors[i].npoints)
 					{
-						if (equal_vertex(vertex[n + 1], sect->vertex[j]))
+						if (equal_vertex(v[n + 1], e->sectors[i].vertex[j]))
 							return (1);
 					}
 				}
@@ -42,7 +40,7 @@ int	door_neighbors(t_engine *e, t_vtx *vertex, int n)
 	return (0);
 }
 
-int	select_door(t_engine *e)
+int		select_door(t_engine *e)
 {
 	int			i;
 	int			s;
@@ -82,7 +80,6 @@ int		access_door(t_env *e)
 		}
 		else
 			e->sound.state.open = 2;
-
 	}
 	return (1);
 }
@@ -132,8 +129,7 @@ void	handle_doors(t_env *env)
 			{
 				sector[i].door.is_open = !sector[i].door.is_open;
 				sector[i].door.is_opening = 0;
-				if (sector[i].is_door == 2)
-					env->finish = 1;
+				(sector[i].is_door == 2) ? env->finish = 1 : 0;
 			}
 		}
 	}

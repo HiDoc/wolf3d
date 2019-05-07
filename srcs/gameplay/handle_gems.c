@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:34:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 18:13:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:01:09 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	gem_is_usable(t_env *env, int i)
+int		gem_is_usable(t_env *env, int i)
 {
 	if (i == 1 && !env->time.t_blue)
 		return (1);
@@ -25,7 +25,7 @@ int	gem_is_usable(t_env *env, int i)
 	return (0);
 }
 
-int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
+void	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 {
 	if (shortcut)
 	{
@@ -49,13 +49,11 @@ int	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 			}
 			e->engine.player.sound.gem = 1;
 		}
-		if (i == 0)
-			shortcut->nb_stack = 1;
+		(i == 0) ? shortcut->nb_stack = 1 : 0;
 	}
-	return (1);
 }
 
-int	handle_gems(t_env *env)
+void	handle_gems(t_env *env)
 {
 	if (blue_gem(env))
 		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON",
@@ -69,5 +67,4 @@ int	handle_gems(t_env *env)
 	if (purple_gem(env))
 		ui_put_data(env, (t_font){GOLD, "Invulnerability ON",
 			env->hud.font.text, (t_vtx){W / 1.3, H / 1.5}, W / 60, -1, -1});
-	return (1);
 }

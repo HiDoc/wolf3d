@@ -6,13 +6,13 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/07 02:27:56 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/07 23:03:43 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -Ofast
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -31,7 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer:./srcs/exit
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -77,15 +77,19 @@ SRC_NAME 	= main.c \
 			action_pl_object.c \
 			action_pl_object_utils.c \
 			action_pl_weapon.c \
+			action_pl_weapon_utils.c \
 			action_shoot.c \
 			checking.c \
+			chk_del.c \
+			crs_del.c \
+			dir_del.c \
 			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
 			draw_menu.c \
 			edge.c \
-			file_save.c \
+			enemies_frames.c \
 			function.c \
 			free_map.c \
 			handle_enemy_sprite.c \
@@ -117,6 +121,7 @@ SRC_NAME 	= main.c \
 			menu_sound.c \
 			move.c \
 			move_enemies.c \
+			msc_del.c \
 			musics.c \
 			no_op.c \
 			parse_door.c \
@@ -128,15 +133,19 @@ SRC_NAME 	= main.c \
 			print_bug.c \
 			projection.c \
 			queue.c \
+			rdr_del.c \
 			render_sect.c \
-			save_menu.c \
 			sdl_hook.c \
 			sdl_hook_access.c \
 			sdl_mouse.c \
 			sounds.c \
+			srf_del.c \
 			struct_drawline.c \
 			struct_hud_img.c \
+			time_to_str.c \
 			transformation.c \
+			ttf_del.c \
+			txr_del.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_full_rect.c \
@@ -152,6 +161,7 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
+			wdw_del.c \
 			weapons_wheel_hud.c \
 			doom_exit.c \
 			lexer.c \

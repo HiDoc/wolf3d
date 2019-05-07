@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:31:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 19:18:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:04:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_player	bot_angle(t_player e, t_player src)
 
 t_vtx		bot_orientation(t_player *bot, t_vctr p_where, float speed)
 {
-	t_vtx	move;
-	float	cos_move = bot->anglecos * speed;
-	float	sin_move = bot->anglesin * speed;
+	t_vtx		move;
+	const float	cos_move = bot->anglecos * speed;
+	const float	sin_move = bot->anglesin * speed;
 
 	move = (t_vtx){0.f, 0.f};
 	if (bot->where.x < p_where.x && bot->where.y < p_where.y)
@@ -84,7 +84,8 @@ void		bot_check_friend(t_wrap_enmy *enemy, t_wrap_enmy *next)
 	}
 }
 
-void		bot_status(t_env *env, t_vtx player, t_wrap_enmy *e, Uint8 *keycodes)
+void		bot_status(t_env *env, t_vtx player,
+			t_wrap_enmy *e, Uint8 *keycodes)
 {
 	t_vtx	where;
 

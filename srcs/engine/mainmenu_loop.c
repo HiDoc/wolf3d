@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 17:41:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 18:32:02 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:26:19 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	mainmenu_loop(t_env *env)
 		{
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
-
 			SDL_PollEvent(&env->sdl.event);
 			if (env->menu.status.gameover
 				&& env->sdl.keycodes[SDL_SCANCODE_RETURN])

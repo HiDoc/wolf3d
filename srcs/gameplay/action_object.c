@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 18:57:01 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:36:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		give_life(void *e, t_wrap_inv *object)
+int			give_life(void *e, t_wrap_inv *object)
 {
 	t_env	*env;
 	int		*data;
@@ -53,7 +53,7 @@ static void	ammo_to_wpn(t_env *e, t_wrap_inv *obj, int *ammo, t_wrap_wpn *wpn)
 	e->engine.player.sound.ammo = 1;
 }
 
-int	give_ammo(void *e, t_wrap_inv *obj)
+int			give_ammo(void *e, t_wrap_inv *obj)
 {
 	t_env		*env;
 	int			stack;
@@ -79,7 +79,7 @@ int	give_ammo(void *e, t_wrap_inv *obj)
 	return (WPN_LOADED);
 }
 
-int	give_jetpack(void *e, t_wrap_inv *obj)
+int			give_jetpack(void *e, t_wrap_inv *obj)
 {
 	t_env	*env;
 

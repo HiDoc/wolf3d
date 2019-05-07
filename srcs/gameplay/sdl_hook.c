@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 19:20:42 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:43:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@ void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu
-				&& !s->ingame && !s->load_menu && !s->new_game)
+				&& !s->ingame && !s->new_game)
 			action_mainmenu(e, s, k);
 		else if (s->ingame && !s->options_menu)
 			action_ingame_menu(e, s, k);
-		else if (s->load_menu)
-			action_loadmenu(e, s, k);
 		else if (s->options_menu)
 			action_optionmenu(e, s, k);
 		else if (s->new_game)
@@ -82,12 +80,10 @@ void	sdl_keyhook_gems(t_env *env, const Uint8 *keycodes)
 int		sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
-	t_vision	*v;
 	int			*k;
 
 	k = env->engine.keys;
 	e = &env->engine;
-	v = &e->player.vision;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
 		sdl_keyhook_gems(env, keycodes);

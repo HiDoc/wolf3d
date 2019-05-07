@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 00:52:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:15:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,64 +27,43 @@ void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	-1, *env->player.inventory.current->ammo_magazine});
 }
 
-void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref, int limit)
+static void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref)
 {
-	t_bloc		*bloc;
-	// const char	*numb[5] = {"1", "2", "3", "4", "5"};
+	t_bloc	*bloc;
 
-	(void)limit;
 	bloc = &env->hud.objects[ref.y];
 	if ((ref.y != 0 && pack[ref.y - 1].is_full)
 		|| (ref.y == 0 && check_object_type(pack, ref.x, 6) > -1))
 	{
-		if ((SDL_BlitScaled(bloc->bg_fill, NULL, env->sdl.surface, &bloc->rect)) < 0)
+		if ((SDL_BlitScaled(bloc->bg_fill, NULL,
+				env->sdl.surface, &bloc->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-		if ((SDL_BlitScaled(env->world.objects[ref.x].sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
+		if ((SDL_BlitScaled(env->world.objects[ref.x].sprite, NULL,
+				env->sdl.surface, &bloc->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-		// ui_put_data(env, (t_font){GOLD, "", env->hud.font.text,
-		// 	(t_vtx){bloc->use.rect.x, bloc->use.rect.y}, W / 90, -1,
-		// 	pack[ref.y].nb_stack});
 	}
 	else
 	{
 		if ((SDL_BlitScaled(bloc->bg_empty, NULL, env->sdl.surface, &bloc->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
 	}
-	// ui_put_data(env, (t_font){WHITE, numb[(int)ref.y], env->hud.font.text,
-	// 	(t_vtx){bloc->cross.rect.x, bloc->cross.rect.y}, W / 90, -1, -1});
 }
 
-void	print_pad(t_env *env)
+void		print_pad(t_env *env)
 {
-	time_t		last;
-
-	last = clock();
-	check_object_stack(env, env->player.inventory.objects, (t_ixy){5, 0}, 6);
-	//printf("ok : %ld\n", clock() - last);
-
-last = clock();
-	check_object_stack(env, env->player.inventory.gems, (t_ixy){6, 1}, 4);
-	//printf("ok : %ld\n", clock() - last);
-
-last = clock();
-	check_object_stack(env, env->player.inventory.gems, (t_ixy){7, 2}, 4);
-	//printf("ok : %ld\n", clock() - last);
-
-last = clock();
-	check_object_stack(env, env->player.inventory.gems, (t_ixy){8, 3}, 4);
-	//printf("ok : %ld\n", clock() - last);
-
-last = clock();
-	check_object_stack(env, env->player.inventory.gems, (t_ixy){9, 4}, 4);
-	//printf("ok : %ld\n", clock() - last);
+	check_object_stack(env, env->player.inventory.objects, (t_ixy){5, 0});
+	check_object_stack(env, env->player.inventory.gems, (t_ixy){6, 1});
+	check_object_stack(env, env->player.inventory.gems, (t_ixy){7, 2});
+	check_object_stack(env, env->player.inventory.gems, (t_ixy){8, 3});
+	check_object_stack(env, env->player.inventory.gems, (t_ixy){9, 4});
 }
 
-float	size_bar(int tmax, int datamax, int data)
+float		size_bar(int tmax, int datamax, int data)
 {
 	return ((tmax - tmax / 2.8) / datamax * data + tmax / 2.8);
 }
 
-void	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
+void		draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 {
 	if (data < max)
 		bloc->limit.v2.x = bloc->rect.w - size_bar(bloc->rect.w, max, data);
@@ -92,7 +71,7 @@ void	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 	bloc->limit.v2.x = 0;
 }
 
-void	print_cross(t_env *env)
+void		print_cross(t_env *env)
 {
 	Uint32		*dst;
 	int			x;
@@ -117,46 +96,29 @@ void	print_cross(t_env *env)
 	}
 }
 
-int print_hud(t_env *env)
+int			print_hud(t_env *env)
 {
 	t_character *player;
 	t_bloc		*bloc;
 	int			h;
 	int			index;
-	time_t		last;
 
 	player = &env->player;
 
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;
-
 	if (player->inventory.current->is_full
 	&& player->inventory.current->ref != FIST)
-	{
-		last = clock();
 		print_wpn_hud(env, player->inventory.current);
-		printf("wpn : %ld\n", clock() - last);
-	}
-
-	last = clock();
 	index = (h > 50) ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];
-	if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
-		doom_error_exit("Doom_nukem: blit error on print_hud");
-	printf("head : %ld\n", clock() - last);
-
-	last = clock();
+	draw_img(env, bloc->sprite, bloc);
+	// if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
+	// 	doom_error_exit("Doom_nukem: blit error on print_hud");
 	draw_hp_bars(env, &env->hud.bar[0], player->max_health, player->health);
 	draw_hp_bars(env, &env->hud.bar[1], player->max_shield, player->shield);
-	printf("hp : %ld\n", clock() - last);
-
-	last = clock();
 	print_pad(env);
-	printf("pad : %ld\n", clock() - last);
-
-	last = clock();
 	print_cross(env);
-	printf("cross : %ld\n", clock() - last);
 	return (1);
 }

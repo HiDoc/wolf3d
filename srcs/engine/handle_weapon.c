@@ -1,42 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_weapon.c                                      :+:      :+:    :+:   */
+/*   handle_weapon.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:32:57 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/13 16:46:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 16:07:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		handle_weapon(t_env *env)
+int	handle_weapon(t_env *e)
 {
-	const t_wrap_wpn	*curr = env->player.inventory.current;
 	t_actions			*actions;
 	t_bloc				*bloc;
 
-	actions = &env->player.actions;
-	if (curr->is_full)
+	actions = &e->player.actions;
+	if (e->player.inventory.current->is_full)
 	{
 		if (actions->is_loading)
 		{
-			actions->is_shooting = 0;
-			put_gun_load(env, env->time.frame);
-			env->time.frame++;
+			put_gun_load(e, e->time.frame);
+			e->time.frame++;
 		}
 		else if (actions->is_shooting)
 		{
-			put_gun_shoot(env, env->time.frame);
-			env->time.frame++;
+			put_gun_shoot(e, e->time.frame);
+			e->time.frame++;
 		}
 		else
 		{
-			bloc = &env->world.armory[curr->ref].sprite;
-			put_gun(env, bloc);
-			env->time.frame = 0;
+			bloc = &e->world.armory[e->player.inventory.current->ref].sprite;
+			put_gun(e, bloc);
+			e->time.frame = 0;
 		}
 	}
 	return (0);

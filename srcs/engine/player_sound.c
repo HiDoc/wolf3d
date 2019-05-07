@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:17:28 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 16:21:54 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:26:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	sound_player_life(t_env *e, t_sd_stat *s)
 {
 	(s->lowlife) ? play_chunk(CHAN_LOWLIFE, e->sound.p_sound[P_HTBIT], -1) : 0;
-		s->lowlife = 0;
+	s->lowlife = 0;
 	if ((s->dead || e->player.health > 50) && Mix_Playing(CHAN_LOWLIFE))
 		Mix_HaltChannel(CHAN_LOWLIFE);
 	(s->dead) ? play_chunk(-1, e->sound.p_sound[P_DEATH], 0) : 0;

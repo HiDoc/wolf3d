@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 12:01:18 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 19:17:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:41:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	loop_intro(t_env *env, int level)
 	env->sdl.keycodes = (Uint8 *)SDL_GetKeyboardState(NULL);
 	while (env->menu.status.inter)
 	{
-		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
+		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit
+				|| env->sdl.event.type == SDL_QUIT)
 			doom_exit();
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{

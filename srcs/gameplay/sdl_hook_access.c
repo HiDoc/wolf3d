@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 18:28:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 19:23:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:40:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	access_menu(t_env *e, t_status *s, int which)
 {
 	if (which)
 	{
-		create_save_image(e);
 		e->menu.status.on = 1;
 		e->menu.status.ingame = 1;
 		set_msc_menu(e, &e->menu.status);

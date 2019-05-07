@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_decor_images.c                              :+:      :+:    :+:   */
+/*   ttf_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 15:29:32 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/07 20:09:32 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/07 20:10:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_doors_images(t_env *e)
+void	ttf_del(void **ap)
 {
-	int	i;
+	TTF_Font	*font;
 
-	i = -1;
-	while (++i < NB_DOOR_IMG)
+	font = (TTF_Font *)(*ap);
+	if (ap && *ap)
 	{
-		if (!(e->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
-			return (0);
+		TTF_CloseFont(font);
+		font = 0;
 	}
-	return (1);
 }

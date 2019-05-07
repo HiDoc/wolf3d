@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 22:18:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:07:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ void	init_rsrc(t_env *e, int i)
 	img = load_image("./rsrc/img/menu/loadin.png");
 	r = (SDL_Rect){W / 5, H / 1.6, 0, H / 24};
 	fi.rect = (SDL_Rect){0, 0, W, H};
+	// loop_rsrc(e, img, )
 	while (1)
 	{
 		draw_img(e, img, &fi);
-		// ui_put_data(e, (t_font){GOLD, "LOADING", font,
-		// 	(t_vtx){W / 3, H / 2}, W / 30, -1, -1});
 		if (++i < 6)
 		{
 			ui_draw_full_rect(e->sdl.surface, r, 0x47d147ff);

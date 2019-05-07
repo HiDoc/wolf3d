@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/07 12:04:14 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:41:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int				sdl_loop(t_env *env)
 	{
 		(!env->menu.status.on)
 		? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
-		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit)
+		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit
+				|| env->sdl.event.type == SDL_QUIT)
 			doom_exit();
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{

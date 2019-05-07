@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:33:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 16:20:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:27:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			play_chunk(int chan, Mix_Chunk *c, int loop)
 void			sound_enemies(t_env *e, t_wrap_enmy *enmy, t_vtx player)
 {
 	int	vol;
+
 	vol = MIX_MAX_VOLUME - dist_vertex(player,
 		(t_vtx){enmy->player.where.x, enmy->player.where.y}) / 2;
 	vol < 0 ? vol = 0 : 0;
@@ -67,7 +68,7 @@ void			sound_effect(t_env *e, t_sd_stat *s)
 	(s->end_level) ? play_chunk(-1, e->sound.s_effect[EFCT_OP_BIGDOOR], 0) : 0;
 	s->end_level = 0;
 	(s->open == 1) ? play_chunk(-1, e->sound.s_effect[EFCT_BTNDOOR], 0) : 0;
-	(s->open == 2) ? play_chunk(-1,	e->sound.s_effect[EFCT_DOORLOCK], 0) : 0;
+	(s->open == 2) ? play_chunk(-1, e->sound.s_effect[EFCT_DOORLOCK], 0) : 0;
 	s->open = 0;
 	(s->is_open == 1)
 		? play_chunk(CHAN_DOOR, e->sound.s_effect[EFCT_OP_LILDOOR], 0) : 0;
@@ -75,4 +76,3 @@ void			sound_effect(t_env *e, t_sd_stat *s)
 		? play_chunk(CHAN_DOOR, e->sound.s_effect[EFCT_CL_LILDOOR], 0) : 0;
 	s->is_open = 0;
 }
-

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_decor_images.c                              :+:      :+:    :+:   */
+/*   msc_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 15:29:32 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/07 19:46:37 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/07 19:47:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_doors_images(t_env *e)
+void	msc_del(void **ap)
 {
-	int	i;
+	Mix_Music	*music;
 
-	i = -1;
-	while (++i < NB_DOOR_IMG)
+	music = (Mix_Music *)(*ap);
+	if (ap && *ap)
 	{
-		if (!(e->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
-			return (0);
+		Mix_FreeMusic(music);
+		music = 0;
 	}
-	return (1);
 }

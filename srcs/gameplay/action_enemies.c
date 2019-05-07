@@ -6,13 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:32:01 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 18:54:10 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:32:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			bot_new_kill(int shooting, t_player *p, t_wrap_enmy* enemy)
+int			bot_new_kill(int shooting, t_player *p, t_wrap_enmy *enemy)
 {
 	int	i;
 
@@ -108,7 +108,7 @@ static void	bot_bullet(t_env *env, t_wrap_enmy *e)
 void		bot_action(t_env *env, t_sector *sector)
 {
 	t_wrap_enmy	*enemy;
-	t_vtx 		p;
+	t_vtx		p;
 
 	p = (t_vtx){env->engine.player.where.x, env->engine.player.where.y};
 	(void)env;
@@ -127,4 +127,3 @@ void		bot_action(t_env *env, t_sector *sector)
 		enemy = enemy->next;
 	}
 }
-

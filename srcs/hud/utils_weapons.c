@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 02:15:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:24:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		put_gun_load(t_env *env, int frame)
 	const t_wrap_wpn	*weapon = env->player.inventory.current;
 	const t_weapon		*wpn_ref = &env->world.armory[weapon->ref];
 
+	env->player.actions.is_shooting = 0;
 	frame /= 1.2;
 	if (frame < wpn_ref->time_reload - 1)
 		put_gun(env, &wpn_ref->sprite_reload[frame]);

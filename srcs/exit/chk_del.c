@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_decor_images.c                              :+:      :+:    :+:   */
+/*   chk_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 15:29:32 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/07 19:45:59 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/07 19:46:27 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_doors_images(t_env *e)
+void	chk_del(void **ap)
 {
-	int	i;
+	Mix_Chunk	*chunk;
 
-	i = -1;
-	while (++i < NB_DOOR_IMG)
+	chunk = (Mix_Chunk *)(*ap);
+	if (ap && *ap)
 	{
-		if (!(e->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
-			return (0);
+		Mix_FreeChunk(chunk);
+		chunk = 0;
 	}
-	return (1);
 }
+
