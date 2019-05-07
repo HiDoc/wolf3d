@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:20:16 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 20:39:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:02:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 SDL_Surface		*ui_make_surface(int height, int width)
 {
-	SDL_Surface     *surface;
-	Uint32          color[4];
+	SDL_Surface		*surface;
+	Uint32			color[4];
 
 	color[0] = 0x000000ff;
 	color[1] = 0x0000ff00;

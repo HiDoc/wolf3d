@@ -6,13 +6,14 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 10:17:18 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:26:58 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:03:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void		ui_make_nbrstring(SDL_Rect rect, int value, Uint32 color, t_data *data)
+void		ui_make_nbrstring(SDL_Rect rect, int value,
+			Uint32 color, t_data *data)
 {
 	char	*str;
 
