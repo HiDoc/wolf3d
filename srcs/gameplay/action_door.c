@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 12:17:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 12:40:40 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,21 @@ void	print_infos_door(t_env *env, t_sector *sector)
 	int			index;
 	t_door		*front_player;
 	t_vtx		pos;
+	int			door;
 	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
+		door = sector[index].is_door;
 		pos = (t_vtx){W / 2, H / 2};
 		front_player = &sector[index].door;
-		if (sector[index].is_door == 2)
-			ui_put_data(env, (t_font){
-				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
-		else if ((sector[index].is_door == 1 || env->stats.data[I_KTOGO])
+		if ((door == 1 || (!env->stats.data[I_KTOGO] && door == 2))
 				&& !front_player->is_open && !front_player->is_opening)
 			ui_put_data(env, (t_font){
 				WHITE, string[0], env->hud.font.text, pos, W / 40, -1, -1});
+		else if (door == 2)
+			ui_put_data(env, (t_font){
+				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
 	}
 }
 
