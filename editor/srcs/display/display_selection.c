@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:13 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 15:33:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 18:47:45 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,15 @@ static void		display_object_data(t_env *env)
 		category = "Prefab";
 	else if (env->editor.obj_select->dd == DD_SPEC)
 		category = "Special";
-
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, category, C_WHITE, env->data);
-
 	rect = (SDL_Rect){910, 140, 250, 30};
 	ui_make_string(rect, env->editor.obj_select->name, C_WHITE, env->data);
-
 	if (env->editor.obj_select->sct)
 		ui_make_nbrstring(rect, env->editor.obj_select->sct->id,
 		C_WHITE, env->data);
 	else
 		ui_make_string(rect, "No sector", C_WHITE, env->data);
-
 	display_button(E_B_SELEC_OBJ_DEL, "DELETE", env);
 }
 
@@ -50,21 +46,16 @@ static void		display_sector_data(t_env *env)
 
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "sector", C_WHITE, env->data);
-
 	rect = (SDL_Rect){1000, 110, 250, 30};
 	ui_make_nbrstring(rect, env->editor.sct_select->id, C_WHITE, env->data);
-
 	display_button(E_B_SELEC_NORMAL, "NORMAL", env);
 	display_button(E_B_SELEC_DOOR, "DOOR", env);
 	display_button(E_B_SELEC_FDOOR, "FINAL DOOR", env);
-
 	display_labeled_input(E_I_SELEC_GRAVITY, "gravity", env);
 	display_labeled_input(E_I_SELEC_HCEIL, "ceil height", env);
 	display_labeled_input(E_I_SELEC_HFLOOR, "floor height", env);
-
 	display_button(E_B_SELEC_CEIL, "CEIL", env);
 	display_button(E_B_SELEC_SKY, "SKY", env);
-
 	display_button(E_B_SELEC_SCT_DEL, "DELETE", env);
 }
 
@@ -74,7 +65,6 @@ static void		display_vertex_data(t_env *env)
 
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "vertex", C_WHITE, env->data);
-
 	display_button(E_B_SELEC_VTX_DEL, "DELETE", env);
 }
 
@@ -82,14 +72,9 @@ static void		display_edge_data(t_env *env)
 {
 	SDL_Rect		rect;
 
-	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "edge", C_WHITE, env->data);
-
-	// display buttons
 	display_button(E_B_SELEC_SPLIT, "SPLIT", env);
-
-	// delete
 	display_button(E_B_SELEC_EDG_DEL, "DELETE", env);
 }
 
@@ -97,14 +82,10 @@ static void		display_misc_data(t_env *env)
 {
 	SDL_Rect		rect;
 
-	// title
 	rect = (SDL_Rect){910, 110, 250, 30};
 	ui_make_string(rect, "Misc", C_WHITE, env->data);
-	// buttons
 	display_button(E_B_SELEC_MUSIC, "BACKGROUND MUSIC", env);
 	display_button(E_B_SELEC_SBTX, "SKYBOX TEXTURE", env);
-
-	// dropdown skybox / textures
 	rect = (SDL_Rect){910, 250, 200, 400};
 	(get_element(E_B_SELEC_SBTX, env)->clicked)
 	? display_editor_dropdown_list(rect, DD_SBTX, env)
@@ -118,7 +99,6 @@ void			display_selection(t_env *env)
 
 	rect = (SDL_Rect){890, 100, 290, 680};
 	ui_make_rect(env->data->surface, rect, C_WHITE);
-
 	rect = (SDL_Rect){env->data->mouse.x, env->data->mouse.y - 40, 250, 30};
 	if (env->editor.obj_hover)
 		ui_make_string(rect, "object", C_WHITE, env->data);
@@ -128,7 +108,6 @@ void			display_selection(t_env *env)
 		ui_make_string(rect, "vertex", C_WHITE, env->data);
 	else if (env->editor.edg_hover)
 		ui_make_string(rect, "edge", C_WHITE, env->data);
-
 	if (env->editor.obj_select)
 		display_object_data(env);
 	else if (env->editor.sct_select)

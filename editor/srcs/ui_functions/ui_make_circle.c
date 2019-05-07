@@ -6,15 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 14:06:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/20 17:00:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:38:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-//
-// TO RECODE !!!
-//
 
 void	ui_make_circle(t_circ circ, t_data *data)
 {
@@ -34,14 +30,12 @@ void	ui_make_circle(t_circ circ, t_data *data)
 		ui_set_pixel(data->surface, circ.pos.x - y, circ.pos.y - x, circ.color);
 		ui_set_pixel(data->surface, circ.pos.x + y, circ.pos.y - x, circ.color);
 		ui_set_pixel(data->surface, circ.pos.x + x, circ.pos.y - y, circ.color);
-
 		if (err <= 0)
 		{
 			y++;
 			err += dy;
 			dy += 2;
 		}
-
 		if (err > 0)
 		{
 			x--;

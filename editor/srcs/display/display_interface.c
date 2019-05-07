@@ -6,74 +6,72 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:51:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:45:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
+static t_vec	calc_grid_hvec(int i, t_pos tr, t_env *env)
+{
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
+	t_pos			origin;
+	t_vec			vec;
+
+	origin.x = rect.x + 425;
+	vec.a.x = origin.x + (i + tr.x - (500 / 2)) * env->editor.grid_scale;
+	vec.a.y = rect.y;
+	vec.b.x = origin.x + (i + tr.x - (500 / 2)) * env->editor.grid_scale;
+	vec.b.y = rect.y + rect.h;
+	return (vec);
+}
+
+static t_vec	calc_grid_vvec(int i, t_pos tr, t_env *env)
+{
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
+	t_pos			origin;
+	t_vec			vec;
+
+	origin.y = rect.y + 340;
+	vec.a.x = rect.x;
+	vec.a.y = origin.y + (i + tr.y - (500 / 2)) * env->editor.grid_scale;
+	vec.b.x = rect.x + rect.w;
+	vec.b.y = origin.y + (i + tr.y - (500 / 2)) * env->editor.grid_scale;
+	return (vec);
+}
+
 static void		display_grid(t_env *env)
 {
 	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_pos			translate;
-	t_pos			origin;;
 	t_vec			vec;
 	Uint32			color;
+	t_pos			tr;
 	int				i;
 
-	origin.x = rect.x + 425;
-	origin.y = rect.y + 340;
-
-	translate.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
-	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
-
+	tr.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
+	tr.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
 	i = 0;
 	while (i < 500)
 	{
 		if (i % 2 == 0)
 		{
-			color = (i % 10 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-	
-			vec.a = (t_pos){
-				origin.x + (i + translate.x - (500 / 2)) * env->editor.grid_scale,
-				rect.y};
-			vec.b = (t_pos){
-				origin.x + (i + translate.x - (500 / 2)) * env->editor.grid_scale,
-				rect.y + rect.h};
-	
+			color = (i % 10 == 0) ? 0X50FFFFFF : 0X20FFFFFF;
+			vec = calc_grid_hvec(i, tr, env);
 			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
 				ui_make_line(env->data->surface, vec, color);
-		}
-		i++;
-	}
-	i = 0;
-	while (i < 500)
-	{
-		if (i % 2 == 0)
-		{
-			color = (i % 10 == 0) ? 0X50FFFFFF: 0X20FFFFFF;
-	
-			vec.a = (t_pos){
-				rect.x,
-				origin.y + (i + translate.y - (500 / 2)) * env->editor.grid_scale};
-			vec.b = (t_pos){
-				rect.x + rect.w,
-				origin.y + (i + translate.y - (500 / 2)) * env->editor.grid_scale};
-	
+			vec = calc_grid_vvec(i, tr, env);
 			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
 				ui_make_line(env->data->surface, vec, color);
 		}
 		i++;
 	}
 	ui_make_rect(env->data->surface, get_element(E_R_RECT, env)->rect, C_WHITE);
-
 }
 
 static void		display_infos(t_env *env)
 {
 	SDL_Rect	rect;
 
-	// display position
 	rect = (SDL_Rect){30, 750, 0, 20};
 	ui_make_string(rect, "x : ", C_WHITE, env->data);
 	rect = (SDL_Rect){60, 750, 0, 20};
@@ -82,8 +80,6 @@ static void		display_infos(t_env *env)
 	ui_make_string(rect, "y : ", C_WHITE, env->data);
 	rect = (SDL_Rect){140, 750, 0, 20};
 	ui_make_nbrstring(rect, env->mouse.y, C_WHITE, env->data);
-
-	// display_size
 	if (env->editor.sct_current)
 	{
 		rect = (SDL_Rect){190, 750, 0, 20};
@@ -105,8 +101,8 @@ void			display_sector(t_sct *sct, t_env *env)
 	if (env->editor.sct_hover == sct)
 		color = C_GREEN;
 	else
-		color = (sct == env->editor.sct_start && !sct->close) ? C_GREEN : C_WHITE;
-
+		color = (sct == env->editor.sct_start && !sct->close)
+		? C_GREEN : C_WHITE;
 	w_vtx = sct->w_vtx_start;
 	while (w_vtx && w_vtx->next)
 	{
@@ -144,8 +140,9 @@ static void		display_spaces(t_env *env)
 	SDL_Rect		rect;
 	t_pos			pos;
 	t_vec			vec;
+	t_sct			*sct;
+	t_circ			circ;
 
-	t_sct	*sct;
 	sct = env->editor.sct_start;
 	while (sct)
 	{
@@ -156,23 +153,18 @@ static void		display_spaces(t_env *env)
 		}
 		sct = sct->next;
 	}
-	// display hovered one overflowing the others
 	if (env->editor.sct_hover)
 		display_sector(env->editor.sct_hover, env);
-
-	// display current edge
 	if (env->editor.sct_current)
 	{
-		vec.a = vtx_transform(env->editor.sct_current->w_vtx_current->vtx->pos, env);
-		vec.b = (t_pos){env->data->mouse.x,env->data->mouse.y};
-
+		vec.a = vtx_transform(
+			env->editor.sct_current->w_vtx_current->vtx->pos, env);
+		vec.b = (t_pos){
+			env->data->mouse.x, env->data->mouse.y};
 		ui_make_line(env->data->surface, vec, C_CYAN);
 		rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
 		ui_make_full_rect(env->data->surface, rect, C_CYAN);
 	}
-
-	// display vtx hovering
-	t_circ	circ;
 	if (env->editor.vtx_hover)
 	{
 		pos = vtx_transform(env->editor.vtx_hover->pos, env);
@@ -186,9 +178,9 @@ static void		display_objects(t_env *env)
 	Uint32		color;
 	t_pos		pos;
 	SDL_Rect	rect;
+	t_object	*obj;
 
-	// display objects
-	t_object	*obj = env->editor.objects;
+	obj = env->editor.objects;
 	while (obj)
 	{
 		pos = vtx_transform(obj->pos, env);
@@ -204,7 +196,6 @@ static void		display_objects(t_env *env)
 			ui_make_rect(env->data->surface, rect, color);
 			if (obj->dd == DD_SPEC && env->editor.spawn_set == 2)
 			{
-				// spawn dir
 				ui_draw_vector(env->data->surface, pos,
 				env->editor.spawn_dir, 10, C_WHITE);
 			}

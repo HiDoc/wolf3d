@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 22:18:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 17:18:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:10:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void        msc_del(void **ap)
+void		msc_del(void **ap)
 {
 	Mix_Music	*music;
 
@@ -38,7 +38,7 @@ void		dir_del(void **ap)
 
 void		wdw_del(void **ap)
 {
-	SDL_Window      *window;
+	SDL_Window		*window;
 
 	window = (SDL_Window *)(*ap);
 	if (ap && *ap)
@@ -50,7 +50,7 @@ void		wdw_del(void **ap)
 
 void		rdr_del(void **ap)
 {
-	SDL_Renderer      *renderer;
+	SDL_Renderer		*renderer;
 
 	renderer = (SDL_Renderer *)(*ap);
 	if (ap && *ap)

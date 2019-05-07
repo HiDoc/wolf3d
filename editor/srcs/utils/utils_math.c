@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:14:02 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 16:41:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:35:16 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int     poscmp(t_pos a, t_pos b)
 	return (a.x == b.x && a.y == b.y);
 }
 
-int             point_in_rect(t_pos pos, SDL_Rect rect)
+int				point_in_rect(t_pos pos, SDL_Rect rect)
 {
 	return (pos.x >= rect.x && pos.x <= rect.x + rect.w
 	&& pos.y >= rect.y && pos.y <= rect.y + rect.h);
@@ -124,12 +124,12 @@ int			sector_overlap(t_env *env)
 	return (0);
 }
 
-float	pythagore(t_pos p1, t_pos p2)
+float		pythagore(t_pos p1, t_pos p2)
 {
 	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
 }
 
-t_pos			get_edge_center(t_pos a, t_pos b)
+t_pos		get_edge_center(t_pos a, t_pos b)
 {
 	t_pos	center;
 
