@@ -3,52 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   parser_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:06:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 19:39:23 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:05:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-// void	fill_object()
-
 void	retrieve_object(t_engine *engine, t_parseline *line)
 {
 	t_token		*iter;
-	t_vtx		pos;
-	t_vtx		ref;
-	float		s;
-	float		*ptr;
+	unsigned	values[10];
+	unsigned 	count;
+	unsigned	value;
 
 	iter = line->first;
 	if (iter)
 		iter = iter->next;
-	ptr = &pos.x;
-	s = 0;
-	pos = (t_vtx) {0, 0};
-	ref = (t_vtx) {0, 0};
+	count = 0;
+	ft_bzero(values, sizeof(unsigned) * 10);
 	while (iter)
 	{
-		if (iter->type == (1U << INT))
+		if (iter->type ==  INT)
 		{
-			*ptr = (*ptr * 10) + (iter->value - '0');
-			if (iter->next && iter->next->type != (1U << 2))
+			values[count] = (values[count] * 10) + (iter->value - '0');
+			if (iter->next && iter->next->type != INT)
 			{
-				if (ptr == &pos.x)
-					ptr = &pos.y;
-				else if (ptr == &pos.y)
-					ptr = &s;
-				else if (ptr == &s)
-					ptr = &ref.x;
-				else if (ptr == &ref.x)
-					ptr = &ref.y;
+				value = 0;
+				count++;
 			}
 		}
 		iter = iter->next;
 	}
-	fill_objects_sector(&engine->sectors[(unsigned)s], pos, (t_ixy){ref.x, s}, ref.y);
+	fill_objects_sector(&engine->sectors[values[2]], (t_vtx){values[0],
+		values[1]}, (t_ixy){values[3], values[2]}, values[4]);
 }
 
 void	load_object(t_env *e, t_parseline *line, t_vtx *vtx)

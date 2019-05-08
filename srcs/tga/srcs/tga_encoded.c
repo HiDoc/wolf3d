@@ -6,50 +6,60 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 15:11:23 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 21:22:15 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:17:35 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
 
-static int	encoded_check(t_tga *image, FILE *file)
+static int	encoded_check(t_tga *image, int fd)
 {
-	if (!image || !file)
+	if (!image || fd < 0)
 		return (0);
-	if (image->meta.image_type != TGA_ENCODED_TRUECOLOR
-		|| image->meta.image_type == TGA_ENCODED_MONOCHROME)
+	return (!(image->meta.image_type != TGA_ENCODED_TRUECOLOR
+		|| image->meta.image_type == TGA_ENCODED_MONOCHROME));
+}
+
+int			read_packet_solo(t_tga *image, int fd, t_encode *e, t_meta *meta)
+{
+	return (read(fd, image->data + e->data_offset, e->depth
+		* e->current_packet_cnt) < 0);
+}
+
+int			read_packet_full(t_tga *image, int fd, t_encode *e, t_meta *meta)
+{
+	if (read(fd, e->run_packet, e->depth) < 0)
 		return (0);
+	e->current_pixel = 0;
+	while (e->current_pixel < e->current_packet_cnt)
+	{
+		ft_memcpy(image->data + e->data_offset + (e->depth * e->current_pixel),
+			e->run_packet, e->depth);
+		e->current_pixel++;
+	}
 	return (1);
 }
 
-int			read_encoded_loop(t_tga *image, FILE *file, t_encode *e, t_meta *meta)
+int			read_encoded_loop(t_tga *image, int fd, t_encode *e, t_meta *meta)
 {
 	while (e->line < meta->height - 1)
 	{
 		e->current_line_pos = 0;
 		while (e->current_line_pos < meta->width)
 		{
-			if (fread(&e->packet, sizeof(e->packet), 1, file) != 1)
+			if (read(fd, &e->packet, sizeof(e->packet)) < 0)
 				return (0);
 			e->current_packet_cnt = (e->packet & 127) + 1;
 			e->data_offset = (e->current_line_pos + (e->line * meta->width))
 				* e->depth;
 			if (e->packet & 128)
 			{
-				if (fread(e->run_packet, e->depth, 1, file) != 1)
+				if (!read_packet_full(image, fd, e, meta))
 					return (0);
-				e->current_pixel = 0;
-				while (e->current_pixel < e->current_packet_cnt)
-				{
-					ft_memcpy(image->data + e->data_offset + (e->depth *
-					e->current_pixel), e->run_packet, e->depth);
-					e->current_pixel++;
-				}
 			}
 			else
 			{
-				if (fread(image->data + e->data_offset, e->depth,
-					e->current_packet_cnt, file) != e->current_packet_cnt)
+				if (!read_packet_solo(image, fd, e, meta))
 					return (0);
 			}
 			e->current_line_pos += e->current_packet_cnt;
@@ -59,12 +69,12 @@ int			read_encoded_loop(t_tga *image, FILE *file, t_encode *e, t_meta *meta)
 	return (1);
 }
 
-int			read_encoded(t_tga *image, FILE *file)
+int			read_encoded(t_tga *image, int fd)
 {
 	t_encode	code;
 	t_meta		*meta;
 
-	if (!encoded_check(image, file))
+	if (!encoded_check(image, fd))
 		return (0);
 	meta = &image->meta;
 	code.line = 0;
@@ -80,9 +90,9 @@ int			read_encoded(t_tga *image, FILE *file)
 	code.packet = 0;
 	if ((code.run_packet = malloc(sizeof(uint8_t) * code.depth)) == NULL)
 		return (0);
-	if (fseek(file, code.offset, SEEK_SET) != 0)
+	if (lseek(fd, code.offset, SEEK_SET) != 0)
 		return (0);
 	if ((image->data = malloc(sizeof(uint8_t) * code.total)) == NULL)
 		return (0);
-	return (read_encoded_loop(image, file, &code, &image->meta));
+	return (read_encoded_loop(image, fd, &code, &image->meta));
 }

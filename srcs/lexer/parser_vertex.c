@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:07:36 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 17:22:21 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:08:56 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void 	retrieve_vertex(t_parseline *line, t_vtx *vtx)
 	ptr = &x;
 	while (iter)
 	{
-		if (iter->type == (1U << 2))
+		if (iter->type == INT)
 		{
 			*ptr = (*ptr * 10) + (iter->value - '0');
-			if (iter->next && iter->next->type != (1U << 2))
+			if (iter->next && iter->next->type != INT)
 				ptr = &y;
 		}
 		iter = iter->next;

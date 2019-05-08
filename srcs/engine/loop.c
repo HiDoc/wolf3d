@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:35:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 22:05:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				sdl_loop(t_env *env)
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
 			SDL_PollEvent(&env->sdl.event);
-			sdl_render(env); // <- lifetime
+			sdl_render(env);
 			if (env->hud.inventory.is_active)
 				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 			else if (env->menu.status.on)

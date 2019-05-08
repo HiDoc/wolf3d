@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_sect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:18:30 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 16:37:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:53:52 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,22 @@ void		render_sprites(t_env *env, t_queue *q,
 */
 int			render_sector_edges(t_env *env, t_queue *q, int s)
 {
-	const t_vtx	*vertex = q->sect->vertex;
+	t_vtx		*vertex;
 	t_engine	*e;
 	t_raycast	ctn;
 	int			end;
 	int			start;
 
 	e = &env->engine;
+ 	vertex = q->sect->vertex;
 	if (transform_vertex(&ctn, e->player, vertex[s], vertex[s + 1]) == 0
 		|| ctn.x1 >= ctn.x2 || ctn.x2 < q->now.sx1 || ctn.x1 > q->now.sx2)
 		return (0);
-
-	/* get the neighbour of the current vertex if there*/
 	ctn.neighbor = q->sect->neighbors[s];
-
-	// ctn.sprite = door_neighbors(e, (t_vtx*)vertex, s)
-	// ? env->world.surfaces.doors[1].sprite
-	// : env->world.surfaces.walls[0].sprite;
 	ctn.sprite = env->world.surfaces.walls[0].sprite;
-
-	/* Get limits of ceil and floor of current sector */
 	acquire_limits(e, &ctn, (t_l_float){q->sect->ceil, q->sect->floor});
-
-	/* Render the wall. */
 	start = (int)fmax(ctn.x1, q->now.sx1);
 	end = (int)fmin(ctn.x2, q->now.sx2);
-
-	/* Start at x, clamped with screen*/
 	ctn.x = start;
 	ctn.li_sector = (t_l_int){q->sect->ceil, q->sect->floor};
 	while (ctn.x <= end)
@@ -89,7 +78,6 @@ int			render_sector_edges(t_env *env, t_queue *q, int s)
 		render_wall(env, ctn, &q->ytop[ctn.x], &q->ybottom[ctn.x]);
 		++ctn.x;
 	}
-	// render_perspective(env, &ctn);
 	schedule_queue(q, ctn, start, end);
 	return (1);
 }
