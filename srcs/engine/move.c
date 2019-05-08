@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/01 15:53:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:26:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 	e->player.sound.run = (speed == SPEED_RUN) ? 1 : 0;
 	velocity = &e->player.velocity;
 	move_vec = (t_vtx){0.f, 0.f};
-	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
-	v->ground = !keyb[SDL_SCANCODE_SPACE];
+
+	if (keyb[SDL_SCANCODE_SPACE] && v->ground)
+	{
+		v->ground = 0;
+		velocity->z += 1.0;
+	}
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
 	if (keyb[e->keys[I_OUP]])
 		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
