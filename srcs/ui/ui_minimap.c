@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 00:45:08 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:26:50 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ SDL_Surface     *rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 	t_circle		circle;
 
 	circle = (t_circle){
-	(MINIMAP_SIZE) / 2 + origin.x,
-	(MINIMAP_SIZE) / 2 + origin.y,
+	(MINIMAP_SIZE) / 2 + origin.x, (MINIMAP_SIZE) / 2 + origin.y,
 	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	y = 0;
@@ -85,12 +84,18 @@ static t_edge		rotate_edge(t_player player, t_edge v)
 	return (edge);
 }
 
-static void			draw_objects(SDL_Surface *surface, t_engine *engine)
+static void			draw_objects(SDL_Surface *surface, t_engine *engine, t_env *env)
 {
+	const t_minimap     *minimap = &(env->engine.minimap);
 	t_wrap_sect		*obj;
 	SDL_Rect		rect;
 	t_edge			edge;
 	unsigned int	i;
+	t_circle		circle;
+
+	circle = (t_circle){
+	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
+	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	i = 0;
 	while (i < engine->nsectors)
@@ -114,21 +119,28 @@ static void			draw_objects(SDL_Surface *surface, t_engine *engine)
 				rect.x + engine->minimap.origin.x + MINIMAP_SIZE / 2 - 5,
 					rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5,
 					10, 10};
-
-			ui_draw_rect(surface, rect, C_GREEN);
+	
+			if (point_in_circle((t_vtx){rect.x, rect.y}, circle))
+				ui_draw_rect(surface, rect, C_GREEN);
 			obj = obj->next;
 		}
 		i++;
 	}
 }
 
-static void			draw_entities(SDL_Surface *surface, t_engine *engine)
+static void			draw_entities(SDL_Surface *surface, t_engine *engine, t_env *env)
 {
+	const t_minimap     *minimap = &(env->engine.minimap);
 	t_wrap_enmy		*enemy;
 	SDL_Rect		rect;
 	t_edge			edge;
 	unsigned int	i;
 	t_vtx			enmy_where;
+	t_circle		circle;
+
+	circle = (t_circle){
+	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
+	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	i = 0;
 	while (i < engine->nsectors)
@@ -155,7 +167,8 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine)
 					rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5,
 					10, 10};
 
-			ui_draw_rect(surface, rect, C_RED);
+			if (point_in_circle((t_vtx){rect.x, rect.y}, circle))
+				ui_draw_rect(surface, rect, C_RED);
 			enemy = enemy->next;
 		}
 		i++;
@@ -164,7 +177,7 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine)
 
 static void			draw_compass(SDL_Surface *surface, t_env *env)
 {
-	SDL_Rect    rect;
+	t_circle	circle;
 	t_vtx       vtx;
 	float       start;
 	float       size;
@@ -180,13 +193,14 @@ static void			draw_compass(SDL_Surface *surface, t_env *env)
 		start = MINIMAP_SIZE / 2 - 15;
 		size = MINIMAP_SIZE / 2 - 7;
 
-		rect = (SDL_Rect){
-		vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle) * size - 8,
-		vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle) * size - 15,
-				0, 30};
+		circle = (t_circle){
+			vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle) * size,
+			vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle) * size,
+			6, C_WHITE};
 
-		//if (i == 0)
-		//	ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
+		if (i == 0)
+			ui_draw_full_circle(surface, circle);
+
 		if (i != 0)
 		{
 			ui_draw_vector(surface, vtx,
@@ -213,7 +227,7 @@ void		ui_minimap(t_env *env)
 	env->sdl.surface = rotate_surface(src_rect,
 	minimap->surface, env->sdl.surface, minimap->origin, env);
 
-	draw_objects(env->sdl.surface, &(env->engine));
-	draw_entities(env->sdl.surface, &(env->engine));
+	draw_objects(env->sdl.surface, &(env->engine), env);
+	draw_entities(env->sdl.surface, &(env->engine), env);
 	draw_compass(env->sdl.surface, env);
 }
