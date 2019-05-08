@@ -6,13 +6,13 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 14:48:16 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:10:52 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:37:30 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tga.h"
+#include "doom.h"
 
-uint8_t		tga_id_field(t_tga *image, int fd)
+unsigned char		tga_id_field(t_tga *image, int fd)
 {
 	if (!image || fd < -1)
 		return (0);

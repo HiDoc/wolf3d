@@ -6,18 +6,12 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:37:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:24:54 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:38:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TGA_H
 # define TGA_H
-
-# include "libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <SDL.h>
 
 #define TGA_HEADER_SIZE 18
 #define TGA_FOOTER_SIZE 26
@@ -41,54 +35,54 @@ enum {
 
 struct s_encode
 {
-	uint16_t	line;
-	uint32_t	offset;
-    uint8_t		depth;
-    uint32_t	total;
-    uint8_t		packet;
-    uint8_t		current_packet_cnt;
-    uint16_t	current_line_pos;
-    uint8_t		current_pixel;
-    uint32_t	data_offset;
-    uint8_t		*run_packet;
+	unsigned short	line;
+	unsigned int	offset;
+    unsigned char	depth;
+    unsigned int	total;
+    unsigned char	packet;
+    unsigned char	current_packet_cnt;
+    unsigned short	current_line_pos;
+    unsigned char	current_pixel;
+    unsigned int	data_offset;
+    unsigned char	*run_packet;
 };
 
 struct s_meta
 {
-	uint32_t	ext_offset;
-    uint32_t	dev_offset;
+	unsigned int	ext_offset;
+    unsigned int	dev_offset;
 
-    uint16_t	c_map_length;
-    uint16_t	x_offset;
-    uint16_t	y_offset;
-    uint16_t	width;
-    uint16_t	height;
+    unsigned short	c_map_length;
+    unsigned short	x_offset;
+    unsigned short	y_offset;
+    unsigned short	width;
+    unsigned short	height;
 
-    uint16_t	c_map_start;
-    uint8_t		c_map_type;
-    uint8_t		c_map_depth;
-    uint8_t		id_length;
-    uint8_t		image_type;
-    uint8_t		pixel_depth;
-    uint8_t		image_descriptor;
+    unsigned short	c_map_start;
+    unsigned char	c_map_type;
+    unsigned char	c_map_depth;
+    unsigned char	id_length;
+    unsigned char	image_type;
+    unsigned char	pixel_depth;
+    unsigned char	image_descriptor;
 };
 
 struct s_tga
 {
-    uint8_t	*id_field;
-    uint8_t	*data;
-    uint8_t	*color_map;
-    uint8_t version;
-    t_meta	meta;
+    unsigned char	*id_field;
+    unsigned char	*data;
+    unsigned char	*color_map;
+    unsigned char   version;
+    t_meta	        meta;
 };
 
-int		read_tga_image(int fd, t_tga *image);
-int     read_encoded(t_tga *image, int fd);
-int     read_unencoded(t_tga *image, int fd);
-int		read_colormap(t_tga *image, int fd);
-int		tga_header(t_tga *image, int fd);
-uint8_t	tga_footer(t_tga *image, int fd);
-uint8_t tga_id_field(t_tga *image, int fd);
-
+int		        read_tga_image(int fd, t_tga *image);
+int             read_encoded(t_tga *image, int fd);
+int             read_unencoded(t_tga *image, int fd);
+int		        read_colormap(t_tga *image, int fd);
+int		        tga_header(t_tga *image, int fd);
+unsigned char	tga_footer(t_tga *image, int fd);
+unsigned char   tga_id_field(t_tga *image, int fd);
+SDL_Surface     *load_tga(char *filename);
 
 #endif

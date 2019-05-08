@@ -6,28 +6,28 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 14:12:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:26:12 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:44:03 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tga.h"
+#include "doom.h"
 
-uint32_t	tga_set_offset(uint8_t *buffer, uint8_t pad)
+unsigned int	tga_set_offset(unsigned char *buffer, unsigned char pad)
 {
-	uint32_t	offset;
+	unsigned int	offset;
 
 	offset = buffer[0 + pad];
-	offset += ((uint16_t)(buffer[1 + pad])) << 8;
-	offset += ((uint32_t)(buffer[2 + pad])) << 16;
-	offset += ((uint32_t)(buffer[3 + pad])) << 24;
+	offset += ((unsigned short)(buffer[1 + pad])) << 8;
+	offset += ((unsigned int)(buffer[2 + pad])) << 16;
+	offset += ((unsigned int)(buffer[3 + pad])) << 24;
 	return (offset);
 }
 
-uint8_t		tga_footer(t_tga *image, int fd)
+unsigned char	tga_footer(t_tga *image, int fd)
 {
-	uint8_t		footer_buffer[TGA_FOOTER_SIZE];
-	t_meta		*meta;
-	unsigned	is_vision;
+	unsigned char	footer_buffer[TGA_FOOTER_SIZE];
+	t_meta			*meta;
+	unsigned		is_vision;
 
 	if (!image || fd < 0)
 		return (0);

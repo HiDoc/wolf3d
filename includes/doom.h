@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:52:53 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 19:18:48 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:37:31 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 /*
 ** Include Parsing
 */
-#include "ast.h"
+# include "ast.h"
+# include "tga.h"
 
 #endif

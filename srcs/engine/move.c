@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:52:23 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:31:22 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,133 +15,50 @@
 /*
 ** Set velocity of player in {x, y}
 */
+
 int		pushing(const Uint8 *keyb, int *k)
 {
 	return (keyb[k[I_OUP]] || keyb[k[I_ODOWN]]
 		|| keyb[k[I_OLEFT]] || keyb[k[I_ORIGHT]]);
 }
 
-int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
+void	set_velocity(t_engine *e, float speed, const Uint8 *keyb, t_vtx *mvtx)
+{
+	float		sin_move;
+	float		cos_move;
+
+	sin_move = e->player.anglesin * speed;
+	cos_move = e->player.anglecos * speed;
+	if (keyb[e->keys[I_OUP]])
+		*mvtx = add_vertex(*mvtx, (t_vtx){cos_move, sin_move});
+	if (keyb[e->keys[I_ODOWN]])
+		*mvtx = diff_vertex(*mvtx, (t_vtx){cos_move, sin_move});
+	if (keyb[e->keys[I_OLEFT]])
+		*mvtx = add_vertex(*mvtx, (t_vtx){sin_move, -cos_move});
+	if (keyb[e->keys[I_ORIGHT]])
+		*mvtx = diff_vertex(*mvtx, (t_vtx){sin_move, -cos_move});
+}
+
+void	keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 {
 	t_vtx		move_vec;
 	t_vctr		*velocity;
-	const float	speed = keyb[SDL_SCANCODE_LSHIFT] ? SPEED_RUN : SPEED_WALK;
-	const float	sin_move = e->player.anglesin * speed;
-	const float	cos_move = e->player.anglecos * speed;
+	float		speed;
 
+	speed = keyb[SDL_SCANCODE_LSHIFT] ? SPEED_RUN : SPEED_WALK;
 	e->player.sound.run = (speed == SPEED_RUN) ? 1 : 0;
 	velocity = &e->player.velocity;
 	move_vec = (t_vtx){0.f, 0.f};
-
 	if (keyb[SDL_SCANCODE_SPACE] && v->ground)
 	{
 		v->ground = 0;
 		velocity->z += 1.0;
 	}
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
-	if (keyb[e->keys[I_OUP]])
-		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[e->keys[I_ODOWN]])
-		move_vec = diff_vertex(move_vec, (t_vtx){cos_move, sin_move});
-	if (keyb[e->keys[I_OLEFT]])
-		move_vec = add_vertex(move_vec, (t_vtx){sin_move, -cos_move});
-	if (keyb[e->keys[I_ORIGHT]])
-		move_vec = diff_vertex(move_vec, (t_vtx){sin_move, -cos_move});
+	set_velocity(e, speed, keyb, &move_vec);
 	velocity->x = velocity->x * (1 - speed) + move_vec.x * speed;
 	velocity->y = velocity->y * (1 - speed) + move_vec.y * speed;
 	v->moving = pushing(keyb, e->keys);
-	return (1);
-}
-
-/*
-** gravity
-*/
-void	handle_gravity(t_vision *v, t_engine *e, float gravity)
-{
-	float		floor;
-	float		ceil;
-	t_player	*plr;
-	float		nextz;
-	t_vtx		bezier;
-
-	ceil = e->sectors[e->player.sector].ceil;
-	floor = e->sectors[e->player.sector].floor;
-	plr = &e->player;
-	plr->velocity.z -= gravity;
-	bezier = bezier_curve(
-		(t_edge){(t_vtx){0, EYEHEIGHT}, (t_vtx){20, EYEHEIGHT}},
-		(t_vtx){0, 40}, 1 - (plr->velocity.z + 0.12f));
-	nextz = (plr->velocity.z < 0) ? plr->where.z + plr->velocity.z : bezier.y;
-	if (plr->velocity.z < 0 && nextz < (floor + v->eyeheight))
-	{
-		plr->where.z = floor + v->eyeheight;
-		plr->velocity.z = 0;
-		v->falling = 0;
-		v->ground = 1;
-	}
-	if (plr->where.z > ceil || nextz > ceil)
-		plr->where.z = ceil;
-	if (v->falling)
-	{
-		plr->where.z = bezier.y;
-		v->moving = 1;
-	}
-}
-
-/*
-** Verify is player is not in a wall
-*/
-
-int		sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
-{
-	t_vtx		b;
-	float		scale;
-
-	b = (t_vtx)diff_vertex(wall.v2, wall.v1);
-	scale = (dest->x * b.x + b.y * dest->y) / (b.x * b.x + b.y * b.y);
-	dest->x = b.x * scale;
-	dest->y = b.y * scale;
-	return (pointside(add_vertex(player, *dest), wall.v1, wall.v2) < 0.3);
-}
-
-/*
-** Collision detection.
-** Check if the player is crossing an edge and if this edge has a neighbour
-*/
-
-void	collision(t_vision *v, t_engine *e, t_sector *sect)
-{
-	t_vtx			player;
-	t_vtx			*vert;
-	t_vtx			dest;
-	t_edge			wall;
-	int				s;
-
-	player = (t_vtx){e->player.where.x, e->player.where.y};
-	*vert = sect->vertex;
-	s = -1;
-	dest = (t_vtx){e->player.velocity.x, e->player.velocity.y};
-	while (++s < (int)sect->npoints)
-	{
-		wall = (t_edge){vert[s], vert[s + 1]};
-		if (is_crossing(player, dest, vert, s) && is_bumping(sect, v, s, e))
-		{
-			if (sector_collision(player, &dest, wall))
-				v->moving = 0;
-		}
-	}
-	s = -1;
-	while (++s < (int)sect->npoints)
-	{
-		if (sect->neighbors[s] >= 0 && is_crossing(player, dest, vert, s))
-		{
-			e->player.sector = sect->neighbors[s];
-			break;
-		}
-	}
-	e->player.where.x += dest.x;
-	e->player.where.y += dest.y;
-	v->falling = 1;
 }
 
 /*
@@ -150,8 +67,8 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 
 void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 {
-	int	x;
-	int y;
+	int		x;
+	int		y;
 
 	v->falling = 1;
 	SDL_GetRelativeMouseState(&x, &y);

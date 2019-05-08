@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 18:09:54 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 23:13:46 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
 typedef struct	s_save		t_save;
 typedef struct	s_door		t_door;
+typedef struct	s_oline		t_oline;
 
 struct						s_door
 {
@@ -133,5 +134,15 @@ struct						s_engine
 	t_queue			queue;
 	t_minimap		minimap;
 	int				keys[NB_OPT_KEY];
+};
+
+struct						s_oline
+{
+	int				iter;
+	int				x;
+	float			y;
+	float			height;
+	float			width;
+	Uint32			color;
 };
 #endif

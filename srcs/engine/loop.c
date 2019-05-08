@@ -6,13 +6,36 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 18:08:02 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:49:09 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static int				sdl_render(t_env *e)
+static int		sdl_render_norme(t_env *e)
+{
+	enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
+	dfs(e);
+	handle_weapon(e);
+	handle_gems(e);
+	if (!e->god_mod)
+		bot_action(e, &e->engine.sectors[e->engine.player.sector]);
+	player_bullet(e, &e->player, *e->player.inventory.current->damage);
+	e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
+	wpn_mouse_wheel(e, e->sdl.event);
+	sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);
+	player_move(&e->engine, &e->engine.player.vision, e->sdl.keycodes);
+	sound_player(e, &e->engine.player.sound);
+	sound_hud(e, &e->engine.player.sound);
+	sound_effect(e, &e->engine.player.sound);
+	ui_put_fps(e, e->time.fps);
+	ui_minimap(e);
+	print_hud(e);
+	handle_doors(e);
+	return (1);
+}
+
+static int		sdl_render(t_env *e)
 {
 	god_mod(e);
 	if (e->menu.status.on)
@@ -25,26 +48,7 @@ static int				sdl_render(t_env *e)
 		action_inventory(e, 0, 0);
 	}
 	else
-	{
-		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
-		dfs(e);
-		handle_weapon(e);
-		handle_gems(e);
-		if (!e->god_mod)
-			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
-		player_bullet(e, &e->player, *e->player.inventory.current->damage);
-		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
-		wpn_mouse_wheel(e, e->sdl.event);
-		sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);
-		player_move(&e->engine, &e->engine.player.vision, e->sdl.keycodes);
-		sound_player(e, &e->engine.player.sound);
-		sound_hud(e, &e->engine.player.sound);
-		sound_effect(e, &e->engine.player.sound);
-		ui_put_fps(e, e->time.fps);
-		ui_minimap(e);
-		print_hud(e);
-		handle_doors(e);
-	}
+		sdl_render_norme(e);
 	SDL_UpdateTexture(e->sdl.texture, NULL,
 		e->sdl.surface->pixels, e->sdl.surface->pitch);
 	SDL_RenderCopy(e->sdl.renderer, e->sdl.texture, NULL, NULL);
@@ -52,9 +56,9 @@ static int				sdl_render(t_env *e)
 	return (1);
 }
 
-static int		YourEventFilter(void *userdata, SDL_Event *event)
+static int		event_filter_cus(void *userdata, SDL_Event *event)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = (t_env *)userdata;
 	if (event->type == SDL_MOUSEBUTTONDOWN
@@ -72,7 +76,7 @@ int				sdl_loop(t_env *env)
 	while (!env->finish)
 	{
 		(!env->menu.status.on)
-		? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
+		? SDL_SetEventFilter(&event_filter_cus, (void *)env) : 0;
 		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit
 				|| env->sdl.event.type == SDL_QUIT)
 			doom_exit();
@@ -81,7 +85,7 @@ int				sdl_loop(t_env *env)
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
 			SDL_PollEvent(&env->sdl.event);
-			sdl_render(env); // <- lifetime
+			sdl_render(env);
 			if (env->hud.inventory.is_active)
 				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 			else if (env->menu.status.on)

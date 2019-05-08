@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/08 18:09:45 by fmadura          ###   ########.fr        #
+#    Created: 2019/05/08 22:37:25 by fmadura           #+#    #+#              #
+#    Updated: 2019/05/08 23:01:29 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,9 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer:./srcs/exit
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing\
+			:./srcs/debug:./srcs/gameplay:./srcs/hud\
+			:./srcs/init:./srcs/lexer:./srcs/exit:./srcs/tga
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -130,12 +132,12 @@ SRC_NAME 	= main.c \
 			parse_objects.c \
 			perspective.c \
 			player_sound.c \
-			position.c \
 			print_bug.c \
 			projection.c \
 			queue.c \
 			rdr_del.c \
 			render_sect.c \
+			render_entities.c \
 			sdl_hook.c \
 			sdl_hook_access.c \
 			sdl_mouse.c \
@@ -143,6 +145,8 @@ SRC_NAME 	= main.c \
 			srf_del.c \
 			struct_drawline.c \
 			struct_hud_img.c \
+			struct_oline.c \
+			render_wall.c \
 			time_to_str.c \
 			transformation.c \
 			ttf_del.c \
@@ -162,6 +166,8 @@ SRC_NAME 	= main.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
+			gravity.c \
+			collision.c \
 			wdw_del.c \
 			weapons_wheel_hud.c \
 			doom_exit.c \
@@ -180,6 +186,13 @@ SRC_NAME 	= main.c \
 			parser_other.c \
 			parser_sector.c \
 			parser_vertex.c \
+			tga_colormap.c \
+			tga_encoded.c \
+			tga_unencoded.c \
+			tga_field.c \
+			tga_footer.c \
+			tga_header.c \
+			tga_image.c \
 			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)

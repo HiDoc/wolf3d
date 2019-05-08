@@ -6,13 +6,36 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 19:25:56 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:25:58 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:43:48 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tga.h"
+#include "doom.h"
 
-int		read_tga_image(int fd, t_tga *image)
+SDL_Surface	*load_tga(char *filename)
+{
+	int			fd;
+	t_tga		image;
+	SDL_Surface	*new;
+
+	new = NULL;
+	fd = open(filename, O_RDONLY);
+	if (fd > -1)
+	{
+		bzero(&image, sizeof(t_tga));
+		if (read_tga_image(fd, &image))
+		{
+			new = SDL_CreateRGBSurfaceFrom((void *)image.data, image.meta.width,
+				image.meta.height, image.meta.pixel_depth,
+				image.meta.width * image.meta.pixel_depth / 8,
+				0xFF0000, 0xFF00, 0xFF, 0xFF000000);
+			lt_release((void **)&image.data);
+		}
+	}
+	return (new);
+}
+
+int			read_tga_image(int fd, t_tga *image)
 {
 	if (fd < 0)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_f_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 16:29:01 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:01:17 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ int			is_bumping(const t_sector *sect, t_vision *vision,
 			unsigned s, t_engine *e);
 
 void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
-
+void		handle_gravity(t_vision *v, t_engine *e, float gravity);
 int			sector_collision(t_vtx player, t_vtx *dest, t_edge wall);
+void		collision(t_vision *v, t_engine *e, t_sector *sect);
 
-int			keyboard_movement(t_engine *engine, t_vision *v,
+void		keyboard_movement(t_engine *engine, t_vision *v,
 			const Uint8 *keycode);
 int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
@@ -48,9 +49,12 @@ void		render_ceil(t_drawline line, t_env *env);
 void		render_nceil(t_drawline line, t_env *env);
 void		render_sector(t_env *env, t_queue *queue);
 void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybot);
+void		render_object(t_env *env, t_queue *queue);
+void		render_enemies(t_env *env, t_queue *queue);
+void		render_bullet(t_env *env, t_player p, t_impact *shot, t_queue *q);
+void		render_sprites(t_env *env, SDL_Surface *s, t_vctr v, t_l_float si);
 int			transform_vertex(t_raycast *ctn, t_player plr, t_vtx v1, t_vtx v2);
 
-//int			init_pack_img(t_surface **pack, char *name, int limit);
 t_sector	*pick_sector(t_env *env, unsigned sector);
 void		print_sct(t_env *env);
 void		schedule_queue(t_queue *q, t_raycast container, int start, int end);

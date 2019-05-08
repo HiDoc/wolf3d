@@ -6,29 +6,28 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 18:24:24 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:02:24 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:43:38 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tga.h"
+#include "doom.h"
 
-int		read_unencoded(t_tga *image, int fd)
+int	read_unencoded(t_tga *image, int fd)
 {
-	int32_t		offset;
-	uint8_t		depth_mult;
-	uint32_t	pixels;
-	t_meta		*meta;
+	int32_t			offset;
+	unsigned char	depth_mult;
+	unsigned int	pixels;
+	t_meta			*meta;
 
 	if (!image || fd < 0)
 		return (0);
 	meta = &image->meta;
-	offset = (uint32_t)TGA_HEADER_SIZE + meta->id_length + meta->c_map_start
+	offset = (unsigned int)TGA_HEADER_SIZE + meta->id_length + meta->c_map_start
 		+ (meta->c_map_length * (meta->c_map_depth / 8));
 	if (lseek(fd, offset, SEEK_SET) < 0)
 		return (0);
-	depth_mult = (uint8_t)((meta->pixel_depth + 7) / 8);
+	depth_mult = (unsigned char)((meta->pixel_depth + 7) / 8);
 	pixels = meta->width * meta->height;
-	if ((image->data = malloc(sizeof(uint8_t) * pixels * depth_mult)) == NULL)
-		return (0);
+	image->data = ft_memalloc(sizeof(unsigned char) * pixels * depth_mult);
 	return (read(fd, image->data, pixels * depth_mult) > -1);
 }
