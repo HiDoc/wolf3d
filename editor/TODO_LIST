@@ -1,6 +1,0 @@
-
-BUG : crash si fichier dd ne contiens pas +
-TODO : check leak
-TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
-TODO : replace vertex_in_sector(intersect_vrx)
-TODO : close fd -> lifetime release
