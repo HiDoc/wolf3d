@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:05:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 22:03:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 22:57:03 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 void		init_minimap(t_env *env);
 void		ui_minimap(t_env *env);
 int			point_in_circle(t_vtx vtx, t_circle circle);
-SDL_Surface	*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-			SDL_Surface *dst, t_vtx origin, t_circle circle, t_env *env);
+void		rotate_surface(SDL_Rect src_rect, t_circle circle, t_env *env);
 t_edge		translate_edge(t_vctr player_position, t_vtx v1, t_vtx v2);
 t_edge		rotate_edge(t_player player, t_edge v);
 void		ui_draw_line(SDL_Surface *surface, t_edge edge, Uint32 color);

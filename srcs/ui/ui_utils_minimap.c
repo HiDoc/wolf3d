@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 21:48:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 21:51:21 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:02:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,34 @@ int				point_in_circle(t_vtx vtx, t_circle circle)
 		< circle.radius);
 }
 
-SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-		SDL_Surface *dst, t_vtx origin, t_circle circle, t_env *env)
+static void		norme(SDL_Rect src_rect, t_vtx pos,
+	t_circle circle, t_env *env)
 {
-	const t_player  plr = env->engine.player;
-	const t_vtx     c = {src_rect.w / 2, src_rect.h / 2};
-	t_vtx           dest;
-	t_vtx			pos;
-	Uint32          color;
-	const float     angle = -plr.angle;
-	t_vtx			vtx;
+	t_vtx				origin = env->engine.minimap.origin;
+
+	const t_engine		*e = &env->engine;
+	const t_vtx     	c = {src_rect.w / 2, src_rect.h / 2};
+	t_vtx           	dest;
+	Uint32          	color;
+	t_vtx				vtx;
+
+	vtx = (t_vtx){origin.x + pos.x, origin.y + pos.y};
+	if (point_in_circle(vtx, circle))
+	{
+		dest = (t_vtx){
+		c.x + (pos.x - c.x) * sin(-e->player.angle)
+			- (pos.y - c.y) * cos(-e->player.angle),
+		c.y + (pos.x - c.x) * cos(-e->player.angle)
+			+ (pos.y - c.y) * sin(-e->player.angle)};
+		if ((color = getpixel(e->minimap.surface, src_rect.x + dest.x,
+		src_rect.y + dest.y)))
+			setpixel(env->sdl.surface, origin.x + pos.x, origin.y + pos.y, color);
+	}
+}
+
+void			rotate_surface(SDL_Rect src_rect, t_circle circle, t_env *env)
+{
+	t_vtx				pos;
 
 	pos.y = 0;
 	while (pos.y < src_rect.h)
@@ -35,21 +53,11 @@ SDL_Surface		*rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 		pos.x = 0;
 		while (pos.x < src_rect.w)
 		{
-			vtx = (t_vtx){origin.x + pos.x, origin.y + pos.y};
-			if (point_in_circle(vtx, circle))
-			{
-				dest = (t_vtx){
-				c.x + (pos.x - c.x) * sin(angle) - (pos.y - c.y) * cos(angle),
-				c.y + (pos.x - c.x) * cos(angle) + (pos.y - c.y) * sin(angle)};
-				if ((color = getpixel(src, src_rect.x + dest.x,
-						src_rect.y + dest.y)))
-					setpixel(dst, origin.x + pos.x, origin.y + pos.y, color);
-			}
+			norme(src_rect, pos, circle, env);
 			pos.x++;
 		}
 		pos.y++;
 	}
-	return (dst);
 }
 
 t_edge		translate_edge(t_vctr player_position, t_vtx v1, t_vtx v2)

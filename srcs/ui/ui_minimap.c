@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 22:07:10 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:04:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine,
 	unsigned int	i;
 	t_vtx			enmy_where;
 
-	i = 0;
-	while (i < engine->nsectors)
+	i = -1;
+	while (++i < engine->nsectors)
 	{
 		enemy = engine->sectors[i].head_enemy;
 		while (enemy)
@@ -68,7 +68,6 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine,
 				ui_draw_rect(surface, rect, C_RED);
 			enemy = enemy->next;
 		}
-		i++;
 	}
 }
 
@@ -106,8 +105,7 @@ void		ui_minimap(t_env *env)
 		&((SDL_Rect){minimap->origin.x, minimap->origin.y,
 		MINIMAP_SIZE, MINIMAP_SIZE}))) < 0)
 			doom_error_exit("Doom_nukem: Blit error on ui_minimap");
-	env->sdl.surface = rotate_surface(src_rect,
-	minimap->surface, env->sdl.surface, minimap->origin, circle, env);
+	rotate_surface(src_rect, circle, env);
 	draw_objects(env->sdl.surface, &(env->engine), circle);
 	draw_entities(env->sdl.surface, &(env->engine), circle);
 	draw_compass(env->sdl.surface, env);
