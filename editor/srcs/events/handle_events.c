@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 12:11:42 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:59:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,9 @@ int				handle_events(t_env *env)
 	const SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
 	t_editor			*edt = &env->editor;
 	const t_pos			m = env->data->mouse;
-	const Uint8 		*state = env->data->state;
+	const Uint8			*state = env->data->state;
 	const SDL_Event		event = env->data->sdl.event;
 
-	/* calcul relative mouse position */
 	env->mouse = (t_pos){0, 0};
 	if (ui_mouseenter(m.x, m.y, rect))
 	{
@@ -62,10 +61,8 @@ int				handle_events(t_env *env)
 		env->mouse.y = (m.y - rect.y - 340) / env->editor.grid_scale
 			- (env->editor.grid_translate.y + env->editor.grid_mouse_var.y);
 	}
-
-	// interface event
 	if ((m.x || m.y) && ui_mouseenter(m.x, m.y, rect))
-	{	
+	{
 		edt->vtx_hover = target_vertex(env->data->mouse, env);
 		edt->edg_hover = (!edt->vtx_hover)
 			? target_edge(env->data->mouse, env) : 0;
@@ -74,18 +71,12 @@ int				handle_events(t_env *env)
 		edt->sct_hover = (!edt->vtx_hover && !edt->edg_hover && !edt->obj_hover)
 			? target_sector(env->mouse, env) : 0;
 	}
-
 	refresh_object_sct(env);
-
-	/* quit doom_nukem */
 	(state[SDL_SCANCODE_ESCAPE] || event.type == SDL_QUIT) ? ui_exit_sdl() : 0;
-
 	if (env->menu.state > 0)
 		return (menu_events(env));
-
 	if (event.type == SDL_MOUSEWHEEL)
 		return (mousewheel_event(env));
-
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		get_element(E_B_MODE_SELECT, env)->clicked = 0;

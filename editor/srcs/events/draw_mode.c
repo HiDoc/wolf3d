@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:28:44 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:20:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
+static int		vertex_of_sector(t_vtx *vtx, t_sct *sct)
 {
 	t_w_vtx		*ptr;
 
@@ -28,9 +28,9 @@ static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 
 int				draw_mode(t_env *env)
 {
-	SDL_Rect			rect = get_element(E_R_RECT, env)->rect;
+	const SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
 	const t_pos			m = env->data->mouse;
-	const SDL_Event 	event = env->data->sdl.event;
+	const SDL_Event		event = env->data->sdl.event;
 	t_elem				*wall_txtr;
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
@@ -74,8 +74,6 @@ int				draw_mode(t_env *env)
 				create_w_vertex(env->editor.vtx_hover, env);
 			}
 		}
-
-		// click on object button
 		wall_txtr = env->editor.dropdown[DD_WALLTX].start;
 		while (wall_txtr)
 		{
@@ -95,7 +93,8 @@ int				draw_mode(t_env *env)
 	if (env->editor.sct_current)
 	{
 		env->editor.sct_current->w_vtx_current->size =
-			pythagore(env->editor.sct_current->w_vtx_current->vtx->pos, env->mouse);
+			pythagore(env->editor.sct_current->w_vtx_current->vtx->pos,
+			env->mouse);
 	}
 	return (ui_mouseenter(m.x, m.y, rect) && (m.x || m.y));
 }

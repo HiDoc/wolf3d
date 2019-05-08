@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 14:14:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:29:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:57:40 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 int					elem_mode(t_env *env)
 {
-	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_dropdown		*dropdown = env->editor.dropdown;
-	const t_pos		m = env->data->mouse;
-	const SDL_Event event = env->data->sdl.event;
-	t_elem			*button;
+	const SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
+	t_dropdown			*dropdown;
+	const t_pos			m = env->data->mouse;
+	const SDL_Event		event = env->data->sdl.event;
+	t_elem				*button;
+	float				angle;
+	t_pos				a;
+	t_pos				b;
+	int					tab[5] = {
+	E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
+	int					ddtab[5] = {
+	DD_WOBJ, DD_CONS, DD_NTTY, DD_PRFB, DD_SPEC};
+	int					i;
 
+	dropdown = env->editor.dropdown;
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_ELM_UP, env)->rect))
@@ -39,10 +48,8 @@ int					elem_mode(t_env *env)
 		{
 			if (env->editor.spawn_set == 1)
 			{
-				float		angle;
-				t_pos b = (t_pos){m.x, m.y};
-				t_pos a = (t_pos){env->editor.spawn_pos.x,
-						env->editor.spawn_pos.y};
+				b = (t_pos){m.x, m.y};
+				a = (t_pos){env->editor.spawn_pos.x, env->editor.spawn_pos.y};
 				angle = 0;
 				if (a.x < b.x)
 				{
@@ -54,9 +61,9 @@ int					elem_mode(t_env *env)
 				else if (a.x > b.x)
 				{
 					if (a.y > b.y)
-						angle = M_PI / 2 + atan((a.x - b.x) / (a.y - b.y));	
+						angle = M_PI / 2 + atan((a.x - b.x) / (a.y - b.y));
 					else
-						angle = (M_PI + M_PI / 2) - atan((a.x - b.x) / (b.y - a.y));	
+						angle = (M_PI + M_PI / 2) - atan((a.x - b.x) / (b.y - a.y));
 				}
 				env->editor.objects->dir = angle;
 				env->editor.spawn_dir = env->editor.objects->dir;
@@ -81,13 +88,7 @@ int					elem_mode(t_env *env)
 			create_object(dropdown[env->editor.curr_elem_dd].current, env);
 			return (1);
 		}
-
-		int		tab[5] = {
-		E_B_ELM_OBWL, E_B_ELM_CONS, E_B_ELM_NTTY, E_B_ELM_PRFB, E_B_ELM_SPEC};
-		int		ddtab[5] = {
-		DD_WOBJ, DD_CONS, DD_NTTY, DD_PRFB, DD_SPEC};
-
-		int i = 0;
+		i = 0;
 		while (i < 5)
 		{
 			if (ui_mouseenter(m.x, m.y, get_element(tab[i], env)->rect))
@@ -102,7 +103,6 @@ int					elem_mode(t_env *env)
 			}
 			i++;
 		}
-
 		// click on object button
 		button = dropdown[env->editor.curr_elem_dd].start;
 		while (button)

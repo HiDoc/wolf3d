@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 11:45:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:36:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void			editor(t_env *env)
 		menu(env);
 		return ;
 	}
+	display_grid(env);
 	display_interface(env);
-	if (env->editor.display_fc)
-		env->editor.display_fc(env);
+	display_infos(env);
+	(env->editor.display_fc) ? env->editor.display_fc(env) : 0;
 	display_button(E_B_SAVE, "SAVE", env);
 	rect = (SDL_Rect){20, 65, 0, 25};
 	ui_make_string(rect, env->map_name, C_WHITE, env->data);
@@ -46,16 +47,4 @@ void			editor(t_env *env)
 	display_mode_btn(get_element(E_B_MODE_MOVE, env), env);
 	display_mode_btn(get_element(E_B_MODE_DRAW, env), env);
 	display_mode_btn(get_element(E_B_MODE_ELEM, env), env);
-	// display nb element TO REMOVE
-	rect = (SDL_Rect){30, 150, 0, 20};
-	ui_make_string(rect, "Nb sectors : ", C_WHITE, env->data);
-	rect = (SDL_Rect){170, 150, 0, 20};
-	ui_make_nbrstring(rect, env->nb_sct, C_WHITE, env->data);
-	rect = (SDL_Rect){30, 180, 0, 20};
-	ui_make_string(rect, "Nb vertex : ", C_WHITE, env->data);
-	rect = (SDL_Rect){170, 180, 0, 20};
-	ui_make_nbrstring(rect, env->nb_vtx, C_WHITE, env->data);
-	// display nb frames TO REMOVE
-	rect = (SDL_Rect){300, 20, 0, 20};
-	ui_make_nbrstring(rect, env->data->nb_frames, C_WHITE, env->data);
 }
