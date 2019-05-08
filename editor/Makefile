@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/05/08 16:45:03 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/08 18:07:55 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,8 @@ SRC_NAME 	=	main.c \
 				export_sectors.c \
 				export_objects.c \
 				export_vertex.c \
+				display_infos.c \
+				display_grid.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ \

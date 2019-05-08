@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 16:46:56 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:08:14 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ void		delete_edge(t_w_vtx *w_vtx, t_env *env);
 void		menu(t_env *env);
 void		editor(t_env *env);
 void		display_interface(t_env *env);
+void		display_infos(t_env *env);
 void		display_selection(t_env *env);
 void		display_drawing(t_env *env);
 void		display_element(t_env *env);
+void		display_grid(t_env *env);
 
 /*
 **	events/

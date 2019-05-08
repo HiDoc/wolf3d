@@ -6,89 +6,11 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 16:36:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:08:32 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
-
-static t_vec	calc_grid_hvec(int i, t_pos tr, t_env *env)
-{
-	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_pos			origin;
-	t_vec			vec;
-
-	origin.x = rect.x + 425;
-	vec.a.x = origin.x + (i + tr.x - (500 / 2)) * env->editor.grid_scale;
-	vec.a.y = rect.y;
-	vec.b.x = origin.x + (i + tr.x - (500 / 2)) * env->editor.grid_scale;
-	vec.b.y = rect.y + rect.h;
-	return (vec);
-}
-
-static t_vec	calc_grid_vvec(int i, t_pos tr, t_env *env)
-{
-	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_pos			origin;
-	t_vec			vec;
-
-	origin.y = rect.y + 340;
-	vec.a.x = rect.x;
-	vec.a.y = origin.y + (i + tr.y - (500 / 2)) * env->editor.grid_scale;
-	vec.b.x = rect.x + rect.w;
-	vec.b.y = origin.y + (i + tr.y - (500 / 2)) * env->editor.grid_scale;
-	return (vec);
-}
-
-static void		display_grid(t_env *env)
-{
-	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
-	t_vec			vec;
-	Uint32			color;
-	t_pos			tr;
-	int				i;
-
-	tr.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
-	tr.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
-	i = 0;
-	while (i < 500)
-	{
-		if (i % 2 == 0)
-		{
-			color = (i % 10 == 0) ? 0X50FFFFFF : 0X20FFFFFF;
-			vec = calc_grid_hvec(i, tr, env);
-			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
-				ui_make_line(env->data->surface, vec, color);
-			vec = calc_grid_vvec(i, tr, env);
-			if (point_in_rect(vec.a, rect) && point_in_rect(vec.b, rect))
-				ui_make_line(env->data->surface, vec, color);
-		}
-		i++;
-	}
-	ui_make_rect(env->data->surface, get_element(E_R_RECT, env)->rect, C_WHITE);
-}
-
-static void		display_infos(t_env *env)
-{
-	SDL_Rect	rect;
-
-	rect = (SDL_Rect){30, 750, 0, 20};
-	ui_make_string(rect, "x : ", C_WHITE, env->data);
-	rect = (SDL_Rect){60, 750, 0, 20};
-	ui_make_nbrstring(rect, env->mouse.x, C_WHITE, env->data);
-	rect = (SDL_Rect){110, 750, 0, 20};
-	ui_make_string(rect, "y : ", C_WHITE, env->data);
-	rect = (SDL_Rect){140, 750, 0, 20};
-	ui_make_nbrstring(rect, env->mouse.y, C_WHITE, env->data);
-	if (env->editor.sct_current)
-	{
-		rect = (SDL_Rect){190, 750, 0, 20};
-		ui_make_string(rect, "size : ", C_WHITE, env->data);
-		rect = (SDL_Rect){240, 750, 0, 20};
-		ui_make_nbrstring(rect,
-			env->editor.sct_current->w_vtx_current->size, C_WHITE, env->data);
-	}
-}
 
 static void		display_edge(t_w_vtx *a, t_w_vtx *b, Uint32 color, t_env *env)
 {
@@ -185,8 +107,6 @@ void			display_interface(t_env *env)
 {
 	t_circ		circ;
 
-	display_grid(env);
-	display_infos(env);
 	display_spaces(env);
 	if (env->editor.vtx_hover)
 	{
