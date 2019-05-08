@@ -1,13 +1,6 @@
 
 BUG : crash si fichier dd ne contiens pas +
-BUG : taille du nom des object depasse du carre
-
-TODO : check logique, conditions de fin etc...
-
 TODO : check leak
-TODO : dev/null dev/random /dev/zero
 TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
-TODO : lifetimer les fd, dr etc et release avec close() etc...
-
 TODO : replace vertex_in_sector(intersect_vrx)
 TODO : close fd -> lifetime release
