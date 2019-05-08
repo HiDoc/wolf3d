@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:03:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 20:16:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 22:04:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static void		draw_player(SDL_Surface *surface)
 	circle = (t_circle){MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 5, C_CYAN};
 	ui_draw_full_circle(surface, circle);
 	vtx = (t_vtx){circle.x, circle.y};
-	ui_draw_vector(surface, vtx, 240 * (M_PI / 180), 0, 30, 0xFBFCAEFF);
-	ui_draw_vector(surface, vtx, 300 * (M_PI / 180), 0, 30, 0xFBFCAEFF);
+	ui_draw_vector(surface, vtx, 240 * (M_PI / 180), (t_vtx){0, 30});
+	ui_draw_vector(surface, vtx, 300 * (M_PI / 180), (t_vtx){0, 30});
 }
 
 void			init_minimap(t_env *env)

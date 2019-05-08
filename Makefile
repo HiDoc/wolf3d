@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/08 21:39:07 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/08 21:52:04 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,6 +154,7 @@ SRC_NAME 	= main.c \
 			ui_draw_string.c \
 			ui_draw_vector.c \
 			ui_minimap.c \
+			ui_utils_minimap.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \

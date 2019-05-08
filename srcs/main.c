@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:02:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 21:59:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int ac, char **av)
 		mainmenu_loop(&env);
 		env.menu.status.inter = 1;
 		load_map(&env.engine, &env);
-		init_minimap(&env); // to norme
+		init_minimap(&env);
 		loop_intro(&env, env.curr_lvl);
 		sdl_loop(&env);
 		action_endlevel(&env, env.curr_lvl);

@@ -6,74 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 21:32:28 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 22:07:10 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-static int      point_in_circle(t_vtx vtx, t_circle circle)
-{
-	return (sqrt(pow(vtx.x - circle.x, 2) + pow(vtx.y - circle.y, 2))
-		< circle.radius);
-}
-
-SDL_Surface     *rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-		SDL_Surface *dst, t_vtx origin, t_circle circle, t_env *env)
-{
-	const t_player  plr = env->engine.player;
-	const t_vtx     c = {src_rect.w / 2, src_rect.h / 2};
-	t_vtx           dest;
-	float           y;
-	float           x;
-	Uint32          color;
-	const float     angle = -plr.angle;
-	t_vtx			vtx;
-
-	y = 0;
-	while (y < src_rect.h)
-	{
-		x = 0;
-		while (x < src_rect.w)
-		{
-			vtx = (t_vtx){origin.x + x, origin.y + y};
-			if (point_in_circle(vtx, circle))
-			{
-				dest = (t_vtx){
-				c.x + (x - c.x) * sin(angle) - (y - c.y) * cos(angle),
-				c.y + (x - c.x) * cos(angle) + (y - c.y) * sin(angle)};
-				if ((color = getpixel(src, src_rect.x + dest.x,
-						src_rect.y + dest.y)))
-					setpixel(dst, origin.x + x, origin.y + y, color);
-			}
-			x++;
-		}
-		y++;
-	}
-	return (dst);
-}
-
-static t_edge		translate_edge(t_vctr player_position, t_vtx v1, t_vtx v2)
-{
-	t_edge      edge;
-
-	edge.v1 = (t_vtx){v1.x - player_position.x, v1.y - player_position.y};
-	edge.v2 = (t_vtx){v2.x - player_position.x, v2.y - player_position.y};
-	return (edge);
-}
-
-static t_edge		rotate_edge(t_player player, t_edge v)
-{
-	const float pcos = -player.anglecos;
-	const float psin = -player.anglesin;
-	t_edge      edge;
-
-	edge.v1 = (t_vtx){v.v1.x * psin - v.v1.y * pcos,
-		v.v1.x * pcos + v.v1.y * psin};
-	edge.v2 = (t_vtx){v.v2.x * psin - v.v2.y * pcos,
-		v.v2.x * pcos + v.v2.y * psin};
-	return (edge);
-}
 
 static void			draw_objects(SDL_Surface *surface, t_engine *engine,
 					t_circle circle)
@@ -139,7 +76,6 @@ static void			draw_compass(SDL_Surface *surface, t_env *env)
 {
 	const t_player		*player = &env->engine.player;
 	const t_minimap		*minimap = &env->engine.minimap;
-	t_circle			circle;
 	t_vtx       		vtx;
 	int         		i;
 
@@ -148,17 +84,8 @@ static void			draw_compass(SDL_Surface *surface, t_env *env)
 	{
 		vtx.x = minimap->origin.x + MINIMAP_SIZE / 2;
 		vtx.y = minimap->origin.y + MINIMAP_SIZE / 2;
-		circle = (t_circle){
-			vtx.x + cos(i * (M_PI / 8) - player->angle) * MINIMAP_SIZE / 2 - 7,
-			vtx.y + sin(i * (M_PI / 8) - player->angle) * MINIMAP_SIZE / 2 - 7,
-			6, C_WHITE};
-		if (i != 0)
-		{
-			ui_draw_vector(surface, vtx, i * (M_PI / 8) - player->angle,
-			MINIMAP_SIZE / 2 - 15, MINIMAP_SIZE / 2 - 7, C_WHITE);
-		}
-		else
-			ui_draw_full_circle(surface, circle);
+		ui_draw_vector(surface, vtx, i * (M_PI / 8) - player->angle,
+		(t_vtx){MINIMAP_SIZE / 2 - 15, MINIMAP_SIZE / 2 - 7});
 		i++;
 	}
 }
@@ -171,7 +98,6 @@ void		ui_minimap(t_env *env)
 	circle = (t_circle){
 	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
 	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
-
 	SDL_Rect src_rect = (SDL_Rect){
 		(env->engine.player.where.x * COEF_MINIMAP),
 		(env->engine.player.where.y * COEF_MINIMAP),
