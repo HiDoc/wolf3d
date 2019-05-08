@@ -124,15 +124,15 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 				print_edg(*edge);
 				if (neigh->neighbors[chain->c] != (int)chain->a)
 				{
-					fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-						chain->d, edge->v2.x,edge->v2.y, edge->v1.x,edge->v1.y, chain->a, neigh->neighbors[chain->c]);
+					// fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
+					// 	chain->d, edge->v2.x,edge->v2.y, edge->v1.x,edge->v1.y, chain->a, neigh->neighbors[chain->c]);
 					neigh->neighbors[chain->c] = chain->a;
 					return (1);
 				}
 				if (sect->neighbors[chain->b] != (int)chain->d)
 				{
-					fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-						chain->a, edge->v1.x, edge->v1.y,edge->v2.x, edge->v2.y, chain->d, sect->neighbors[chain->b]);
+					// fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
+					// 	chain->a, edge->v1.x, edge->v1.y,edge->v2.x, edge->v2.y, chain->d, sect->neighbors[chain->b]);
 					sect->neighbors[chain->b] = chain->d;
 					return (1);
 				}

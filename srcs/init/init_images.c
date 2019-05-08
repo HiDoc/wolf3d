@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 20:55:47 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/05 15:11:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void			init_consumable(t_env *env)
 	int 		i;
 	char		*name;
 	const char	*tab[WORLD_NB_OBJECTS] = {N_HEALTH, N_SHIELD, N_AMMO_M_R,
-		N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P, N_MAGNUM,
-		N_SHOTGUN, N_RIFLE, N_RPG};
+		N_AMMO_S, N_AMMO_R, N_JETPACK, N_GEM_B, N_GEM_G, N_GEM_R, N_GEM_P,
+		N_MAGNUM, N_SHOTGUN, N_RIFLE, N_RPG};
 
 	i = 0;
 	while (i < WORLD_NB_OBJECTS)
@@ -58,7 +58,6 @@ static void			init_consumable(t_env *env)
 	}
 	env->hud.inventory.is_active = 0;
 	ft_bzero(&env->player.inventory, sizeof(t_inventory));
-	printf("time consumable: %u\n", SDL_GetTicks());
 }
 
 static void			init_character(t_character *new)
@@ -70,7 +69,7 @@ static void			init_character(t_character *new)
 
 static void			init_skybox_img(t_env *env)
 {
-	env->skybox.sb = load_image("rsrc/skybox/sb+0.jpg");
+	env->skybox.sb = load_image("rsrc/skybox/bluesky+0.jpg");
 }
 
 void				load_images(t_env *env)

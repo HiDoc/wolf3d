@@ -3,7 +3,7 @@ save_name
 
 player::health:shield:wherex:wherey
 
-current::current->current->ref
+current::current->ref
 weapon::weapons.current->ref:ammo[0]:ammo[1]:ammo[2]  * nb_wpn in inv
 
 objects::objects.current->ref:objects.nb_stack * nb_current_obj

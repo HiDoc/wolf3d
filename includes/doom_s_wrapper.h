@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/03 02:29:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:30:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,18 +149,23 @@ struct 					s_wrap_enmy
 
 struct					s_wrap_inv
 {
-	t_wrap_sect		*current;
+	// t_wrap_sect		*current;
+    int         	(*action)(void *, t_wrap_inv *);
 	int				nb_stack;
     int             is_used;
+	int				is_full;
+	int				ref;
 };
 
 struct					s_wrap_wpn
 {
-	t_wrap_sect		*current;
+	// t_wrap_sect		*current;
 	int				*ammo_current;
 	int				*ammo_magazine;
 	int				*damage;
 	int				ammo[3];
+	int				is_full;
+	int				ref;
 };
 
 #endif

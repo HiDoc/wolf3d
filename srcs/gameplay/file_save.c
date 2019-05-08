@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 20:24:40 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/30 15:40:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 19:01:41 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ void	save_data_file(t_env *e, char *name)
 	concat_data(&data, e->engine.player.where.x, 0, NULL);
 	concat_data(&data, e->engine.player.where.y, 1, NULL);
 	print_data(fd, &data);
-	concat_data(&data, e->player.inventory.current->current->ref, 1, "#c:");
+	concat_data(&data, e->player.inventory.current->ref, 1, "#c:");
 	print_data(fd, &data);
 	i = -1;
 	while (++i < GAME_NB_WPN)
 	{
-		if (e->player.inventory.weapons[i].current)
+		if (e->player.inventory.weapons[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.weapons[i].current->ref, 0, "#w:");
+			concat_data(&data, e->player.inventory.weapons[i].ref, 0, "#w:");
 			concat_data(&data, e->player.inventory.weapons[i].ammo[0], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[1], 0, NULL);
 			concat_data(&data, e->player.inventory.weapons[i].ammo[2], 1, NULL);
@@ -74,9 +74,9 @@ void	save_data_file(t_env *e, char *name)
 	i = -1;
 	while (++i < 6)
 	{
-		if (e->player.inventory.objects[i].current)
+		if (e->player.inventory.objects[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.objects[i].current->ref, 0, "#o:");
+			concat_data(&data, e->player.inventory.objects[i].ref, 0, "#o:");
 			concat_data(&data, e->player.inventory.objects[i].nb_stack, 1, NULL);
 		}
 	}
@@ -84,9 +84,9 @@ void	save_data_file(t_env *e, char *name)
 	i = -1;
 	while (++i < 4)
 	{
-		if (e->player.inventory.gems[i].current)
+		if (e->player.inventory.gems[i].is_full)
 		{
-			concat_data(&data, e->player.inventory.gems[i].current->ref, 0, "#g:");
+			concat_data(&data, e->player.inventory.gems[i].ref, 0, "#g:");
 			concat_data(&data, e->player.inventory.gems[i].nb_stack, 1, NULL);
 		}
 	}

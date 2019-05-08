@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/28 14:16:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 19:31:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int		check_weapon_type(t_env *env, int ref)
 	i = 0;
 	while (i < GAME_NB_WPN)
 	{
-		if (env->player.inventory.weapons[i].current != NULL)
+		if (env->player.inventory.weapons[i].is_full)
 		{
-			if (ref == env->player.inventory.weapons[i].current->ref)
+			if (ref == env->player.inventory.weapons[i].ref)
 				return (1);
 		}
 		i++;
@@ -34,6 +34,10 @@ int		set_current_wpn(t_env *env, t_inventory *inv, int i)
 	env->player.actions.is_shooting = 0;
 	env->player.actions.is_loading = 0;
 	inv->current = &inv->weapons[i];
+	if (!inv->current)
+		printf("lol i'm segfaulting\n");
+	inv->current->is_full = 1;
+	inv->current->ref = inv->weapons[i].ref;
 	inv->current->ammo_current = &inv->weapons[i].ammo[0];
 	inv->current->ammo_magazine = &inv->weapons[i].ammo[1];
 	inv->current->damage = &inv->weapons[i].ammo[2];
@@ -58,7 +62,8 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		{
 			rwpn = &env->world.armory[obj->ref];
 			env->hud.inventory.nb_wpn++;
-			inv->weapons[obj->ref].current = obj;
+			inv->weapons[obj->ref].is_full = 1;
+			inv->weapons[obj->ref].ref = obj->ref;
 			inv->weapons[obj->ref].ammo[0] = rwpn->ammo_current;
 			inv->weapons[obj->ref].ammo[1] = rwpn->ammo_magazine;
 			inv->weapons[obj->ref].ammo[2] = rwpn->damage;
@@ -85,7 +90,7 @@ int		new_current_wpn(t_env *env, t_inventory *inv)
 	i = 0;
 	while (i < GAME_NB_WPN)
 	{
-		if (inv->weapons[i].current)
+		if (inv->weapons[i].is_full)
 			break ;
 		i++;
 	}
@@ -100,16 +105,15 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 	int			ref;
 	int			cur_ref;
 
-	if (wpn != NULL && wpn->current->ref != FIST)
+	if (wpn->is_full && wpn->ref != FIST)
 	{
-		ref = wpn->current->ref;
-		cur_ref = env->player.inventory.current->current->ref;
+		ref = wpn->ref;
+		cur_ref = env->player.inventory.current->ref;
 		sector = &env->engine.sectors[env->engine.player.sector];
 		vertex.x = env->engine.player.where.x + 5;
 		vertex.y = env->engine.player.where.y;
 		fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
-			vertex, (t_ixy){wpn->current->ref, env->engine.player.sector},
-			wpn->current->is_wpn);
+			vertex, (t_ixy){wpn->ref, env->engine.player.sector}, 1);
 		ft_bzero(wpn, sizeof(t_wrap_wpn));
 		env->hud.inventory.nb_wpn--;
 		env->hud.is_txt = WPN_DROPPED;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils_display.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
 /*   Updated: 2019/05/08 13:46:49 by sgalasso         ###   ########.fr       */

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:41 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/18 16:02:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 16:37:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int		mouse_shoot(t_env *env)
 		&& current && !env->hud.inventory.is_active && !actions->is_loading
 		&& !actions->mouse_state && !env->menu.status.on)
 	{
-		rwpn = &env->world.armory[current->current->ref];
-		if (*current->ammo_current || current->current->ref == FIST)
+		rwpn = &env->world.armory[current->ref];
+		if (*current->ammo_current || current->ref == FIST)
 		{
 			actions->is_shooting = !actions->is_shooting;
 			pl_new_kill(env, &env->engine.player, &env->player);
 			actions->mouse_state = rwpn->time_shoot_between;
 			env->engine.player.sound.shootin = 1;
-			current->current->ref != FIST ? *current->ammo_current -= 1 : 0;
-			current->current->ref == RPG ? load_weapon(env) : 0;
+			current->ref != FIST ? *current->ammo_current -= 1 : 0;
+			current->ref == RPG ? load_weapon(env) : 0;
 		}
 		else
 		{

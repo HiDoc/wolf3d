@@ -14,7 +14,7 @@
 
 void			load_map(t_engine *e, t_env *env)
 {
-	parser(env, "rsrc/maps/segfault.txt");
+	parser(env, "rsrc/maps/map.txt");
 	verify_map(e);
 	if ((e->queue.renderedsectors = (int *)malloc(e->nsectors * sizeof(int))) == NULL)
 		return;

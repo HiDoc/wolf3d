@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 02:31:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 20:22:17 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		get_inventory_place(t_env *env)
 	i = 0;
 	while (i < 6)
 	{
-		if (env->player.inventory.objects[i].current == NULL)
+		if (!env->player.inventory.objects[i].is_full)
 			return (i);
 		i++;
 	}
@@ -55,9 +55,9 @@ int		check_object_type(t_wrap_inv *pack, int ref, int limit)
 	i = 0;
 	while (i < limit)
 	{
-		if (pack[i].current != NULL)
+		if (pack[i].is_full)
 		{
-			if (ref == pack[i].current->ref)
+			if (ref == pack[i].ref)
 				return (i);
 		}
 		i++;
@@ -72,9 +72,10 @@ int		pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 
 	ref = obj->ref - WORLD_NB_CSMBLE;
 	(i = check_object_type(env->player.inventory.gems, obj->ref, 4)) == -1
-	? env->player.inventory.gems[ref].current = obj : 0;
+	? env->player.inventory.gems[ref].ref = obj->ref : 0;
 	i == -1 ? env->hud.shortcut[ref + 1] = &env->player.inventory.gems[ref] : 0;
 	i = i == -1 ? ref : i;
+	env->player.inventory.gems[i].is_full = 1;
 	env->player.inventory.gems[i].nb_stack++;
 	obj->is_picked = 1;
 	sector->nb_objects--;
@@ -105,7 +106,9 @@ int		pick_object(t_env *env, t_wrap_sect *obj)
 	&& obj->ref < WORLD_NB_CSMBLE && !obj->is_wpn)
 	{
 		index = get_inventory_place(env);
-		env->player.inventory.objects[index].current = obj;
+		env->player.inventory.objects[index].ref = obj->ref;
+		env->player.inventory.objects[index].is_full = 1;
+		env->player.inventory.objects[index].action = obj->action;
 		env->player.inventory.nb_current_obj++;
 		env->hud.inventory.objects[index].sprite = env->world.objects[obj->ref].sprite;
 		if (obj->ref == 5)
@@ -128,7 +131,7 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 	t_vtx		vertex;
 	t_sector	*sector;
 
-	if (object->current != NULL)
+	if (object->is_full)
 	{
 		sector = &env->engine.sectors[env->engine.player.sector];
 		if (!object->is_used)
@@ -136,19 +139,16 @@ void		drop_object(t_env *env, t_wrap_inv *object)
 			vertex.x = env->engine.player.where.x + 1;
 			vertex.y = env->engine.player.where.y;
 			fill_objects_sector(&env->engine.sectors[env->engine.player.sector],
-				vertex, (t_ixy){object->current->ref, env->engine.player.sector},
-				object->current->is_wpn);
+				vertex, (t_ixy){object->ref, env->engine.player.sector}, 0);
 			sector->nb_objects++;
 			env->engine.player.sound.drop = 1;
 		}
-		else
-			object->current->used = 1;
 		if (object->nb_stack > 1)
 			object->nb_stack--;
 		else
 		{
-			if (object->current->ref == 5)
-				env->hud.shortcut[object->current->ref] = NULL;
+			if (object->ref == 5)
+				env->hud.shortcut[object->ref] = NULL;
 			ft_bzero(object, sizeof(t_wrap_inv));
 			env->player.inventory.nb_current_obj--;
 		}

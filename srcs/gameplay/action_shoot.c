@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 02:56:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:58:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	gameover(t_env *e)
 	e->stats.data[I_KTOGO] = 0;
 	ft_bzero(&e->player.inventory, sizeof(t_inventory));
 	e->player.inventory.f.ref = FIST;
-	e->player.inventory.weapons[FIST].current =
-		&e->player.inventory.f;
+	e->player.inventory.weapons[FIST].is_full = 1;
 	e->player.inventory.weapons[FIST].ammo[0] =
 		e->world.armory[FIST].ammo_current;
 	e->player.inventory.weapons[FIST].ammo[1] =
@@ -104,7 +103,7 @@ void	impact_bot(t_env *e, t_impact *shot, t_sector *sector, int damage)
 	int			wpn;
 
 	en = sector->head_enemy;
-	wpn = e->player.inventory.current->current->ref;
+	wpn = e->player.inventory.current->ref;
 	rwpn = &e->world.armory[wpn];
 	while (en && shot->is_shooting)
 	{
@@ -155,7 +154,7 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 	t_weapon	*rwpn;
 
 	i = 0;
-	rwpn = &env->world.armory[env->player.inventory.current->current->ref];
+	rwpn = &env->world.armory[env->player.inventory.current->ref];
 	while (i < NB_SHOT)
 	{
 		if (p->shot[i].is_shooting)
@@ -190,7 +189,7 @@ int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 	t_weapon	*rwpn;
 
 	i = 0;
-	rwpn = &env->world.armory[player->inventory.current->current->ref];
+	rwpn = &env->world.armory[player->inventory.current->ref];
 	if (player->actions.is_shooting)
 	{
 		while (i < NB_SHOT)

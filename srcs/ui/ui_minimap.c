@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/22 14:26:41 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/06 00:45:08 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,8 @@ static void			draw_compass(SDL_Surface *surface, t_env *env)
 		vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle) * size - 15,
 				0, 30};
 
-		if (i == 0)
-			ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
+		//if (i == 0)
+		//	ui_draw_string(surface, rect, "N", 0xFFFFFFFF, env);
 		if (i != 0)
 		{
 			ui_draw_vector(surface, vtx,

@@ -6,16 +6,11 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:33:14 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 21:23:39 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 17:36:25 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int	is_spe(int c)
-{
-	return c == 'x';
-}
 
 int	is_plr(int c)
 {

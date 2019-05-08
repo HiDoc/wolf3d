@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:15:58 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/12 12:43:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/05 18:33:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	select_object(t_wrap_inv *object, t_ixy xy, t_bloc *p, int limit)
 		if (xy.x >= p[i].rect.x && xy.x <= p[i].rect.x + p[i].rect.w
 		&& xy.y >= p[i].rect.y && xy.y <= p[i].rect.y + p[i].rect.h)
 		{
-			if (object[i].current)
+			if (object[i].is_full)
 				return (i);
 		}
 		i++;
@@ -46,7 +46,7 @@ int		select_wpn(t_wrap_wpn *wpn, t_ixy xy, t_bloc *p, int limit)
 		if (xy.x >= p[i].rect.x && xy.x <= p[i].rect.x + p[i].rect.w
 		&& xy.y >= p[i].rect.y && xy.y <= p[i].rect.y + p[i].rect.h)
 		{
-			if (wpn[i].current)
+			if (wpn[i].is_full)
 				return (i);
 		}
 		i++;
@@ -74,7 +74,7 @@ void	action_inventory(t_env *env, int x, int y)
 			if (select_action(bloc->cross, x, y))
 				drop_object(env, object);
 			else if (select_action(bloc->use, x, y))
-				env->hud.is_txt = object->current->action((void*)env, object);
+				env->hud.is_txt = object->action((void*)env, object);
 		}
 		else if ((index = select_wpn(env->player.inventory.weapons, (t_ixy){x, y},
 		env->hud.inventory.wpn, 4)) > -1)

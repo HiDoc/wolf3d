@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   select_mode.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
 /*   Updated: 2019/05/08 14:24:18 by sgalasso         ###   ########.fr       */

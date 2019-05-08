@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:32:58 by fmadura           #+#    #+#             */
-/*   Updated: 2019/04/27 16:35:13 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:37:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_ent(int c)
 	return c == 'e';
 }
 
-int	is_wob(int c)
+int	is_sky(int c)
 {
-	return c == 'w';
+	return c == 'b';
 }

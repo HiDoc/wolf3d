@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/04 02:54:24 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/05 19:36:09 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= doom
 CC 				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -O3 #-g -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror -O3
 LIBFT 			= ./libft
 LEN_NAME		= `printf "%s" $(NAME) | wc -c`
 DELTA			= $$(echo "$$(tput cols)-32-$(LEN_NAME)"|bc)
@@ -150,12 +150,18 @@ SRC_NAME 	= main.c \
 			lexer.c \
 			parser.c \
 			line.c \
-			op.c \
 			printer.c \
 			reader.c \
 			parser_utils1.c \
 			parser_utils2.c \
 			parser_utils3.c \
+			parser_utils4.c \
+			parser_entity.c \
+			parser_object.c \
+			parser_player.c \
+			parser_other.c \
+			parser_sector.c \
+			parser_vertex.c \
 			token.c
 
 OBJ_NAME	= $(SRC_NAME:.c=.o)
