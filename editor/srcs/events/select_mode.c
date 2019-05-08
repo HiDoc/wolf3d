@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:24:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:07:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		select_input_events(t_env *env)
 {
-	char 				*key;
+	char				*key;
 	const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
 
 	key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
@@ -22,7 +22,7 @@ static int		select_input_events(t_env *env)
 	if (get_element(E_I_SELEC_HCEIL, env)->clicked == 1)
 	{
 		if (scancode >= SCN_CODE_KP_MIN && scancode <= SCN_CODE_KP_MAX)
-		{ // numeric keypad
+		{
 			key += 7;
 		}
 		if ((scancode >= SCN_CODE_KP_MIN && scancode <= SCN_CODE_KP_MAX)
@@ -43,7 +43,7 @@ static int		select_input_events(t_env *env)
 	else if (get_element(E_I_SELEC_HFLOOR, env)->clicked == 1)
 	{
 		if (scancode >= 89 && scancode <= 98)
-		{ // numeric keypad
+		{
 			key += 7;
 		}
 		if ((scancode >= 89 && scancode <= 98)
@@ -64,7 +64,7 @@ static int		select_input_events(t_env *env)
 	else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
 	{
 		if (scancode >= 89 && scancode <= 98)
-		{ // numeric keypad
+		{
 			key += 7;
 		}
 		if ((scancode >= 89 && scancode <= 98)
@@ -104,34 +104,28 @@ static void		select_interface(t_env *env)
 	else if (env->editor.sct_hover)
 	{
 		env->editor.sct_select = env->editor.sct_hover;
-
-		get_element(E_B_SELEC_NORMAL, env)->clicked
-			= (env->editor.sct_select->type == 0) ? 1 : 0;
-		get_element(E_B_SELEC_DOOR, env)->clicked
-			= (env->editor.sct_select->type == 1) ? 1 : 0;
-		get_element(E_B_SELEC_FDOOR , env)->clicked
-			= (env->editor.sct_select->type == 2) ? 1 : 0;
-
-		get_element(E_B_SELEC_SKY , env)->clicked
-			= (env->editor.sct_select->roof == 1) ? 0 : 1;
-		get_element(E_B_SELEC_CEIL , env)->clicked
-			= (env->editor.sct_select->roof == 0) ? 0 : 1;
-
-		// hceil input
+		get_element(E_B_SELEC_NORMAL, env)->clicked =
+			(env->editor.sct_select->type == 0) ? 1 : 0;
+		get_element(E_B_SELEC_DOOR, env)->clicked =
+			(env->editor.sct_select->type == 1) ? 1 : 0;
+		get_element(E_B_SELEC_FDOOR, env)->clicked =
+			(env->editor.sct_select->type == 2) ? 1 : 0;
+		get_element(E_B_SELEC_SKY, env)->clicked =
+			(env->editor.sct_select->roof == 1) ? 0 : 1;
+		get_element(E_B_SELEC_CEIL, env)->clicked =
+			(env->editor.sct_select->roof == 0) ? 0 : 1;
 		if (get_element(E_I_SELEC_HCEIL, env)->str)
 			lt_release((void **)&get_element(E_I_SELEC_HCEIL, env)->str);
 		if (env->editor.sct_select->ceil > 0
 		&& !(get_element(E_I_SELEC_HCEIL, env)->str =
 		lt_push(ft_itoa(env->editor.sct_select->ceil), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
-		// hfloor input
 		if (get_element(E_I_SELEC_HFLOOR, env)->str)
 			lt_release((void **)&get_element(E_I_SELEC_HFLOOR, env)->str);
 		if (env->editor.sct_select->floor > 0
 		&& !(get_element(E_I_SELEC_HFLOOR, env)->str =
 		lt_push(ft_itoa(env->editor.sct_select->floor), ft_memdel)))
 			ui_error_exit_sdl("Editor: Out of memory");
-		// gravity input
 		if (get_element(E_I_SELEC_GRAVITY, env)->str)
 			lt_release((void **)&get_element(E_I_SELEC_GRAVITY, env)->str);
 		if (env->editor.sct_select->gravity > 0
@@ -164,8 +158,6 @@ static void		select_panel(t_env *env)
 		id = (get_element(E_B_SELEC_MUSIC, env)->clicked)
 		? id = DD_BGAUDIO : DD_SBTX;
 	}
-
-	// click msc element
 	i = 0;
 	while (i < ENUM_END)
 	{
@@ -178,8 +170,6 @@ static void		select_panel(t_env *env)
 		}
 		i++;
 	}
-
-	// click music list button
 	if (id > -1)
 	{
 		button = env->editor.dropdown[id].start;
@@ -205,7 +195,7 @@ static void		select_panel(t_env *env)
 
 int				select_mode(t_env *env)
 {
-	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
 	const t_pos		m = env->data->mouse;
 	const SDL_Event	event = env->data->sdl.event;
 
@@ -241,7 +231,6 @@ int				select_mode(t_env *env)
 			env->editor.vtx_select = 0;
 			env->editor.edg_select = 0;
 			env->editor.sct_select = 0;
-
 			select_interface(env);
 		}
 		else

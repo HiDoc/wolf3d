@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:27:35 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 17:09:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:36:33 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			ui_set_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 */
 
 void			ui_draw_vector(SDL_Surface *surface, t_pos pos, float angle,
-				float size, Uint32 color);
+				float size);
 void			ui_make_line(SDL_Surface *surface,
 				t_vec vec, Uint32 color);
 void			ui_make_clipped_line(SDL_Surface *surface, t_vec vec,

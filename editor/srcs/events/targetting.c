@@ -6,15 +6,15 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 13:59:57 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:02:51 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-t_sct       *target_sector(t_pos pos, t_env *env)
+t_sct		*target_sector(t_pos pos, t_env *env)
 {
-	t_sct   *sector;
+	t_sct		*sector;
 
 	sector = env->editor.sct_start;
 	while (sector)
@@ -29,11 +29,10 @@ t_sct       *target_sector(t_pos pos, t_env *env)
 	return (0);
 }
 
-/*static*/ int  filter_edge(const t_pos pos, t_pos p0, t_pos p1, t_env *env)
+static int	filter_edge(const t_pos pos, t_pos p0, t_pos p1, t_env *env)
 {
 	p0 = vtx_transform(p0, env);
 	p1 = vtx_transform(p1, env);
-
 	if (p0.y < p1.y && (pos.y < p0.y || pos.y > p1.y))
 		return (0);
 	else if (p0.y > p1.y && (pos.y < p1.y || pos.y > p0.y))
@@ -45,7 +44,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 {
 	t_w_vtx		*w_vtx;
 	t_sct		*sct;
-	int i;
+	int			i;
 
 	sct = env->editor.sct_start;
 	while (sct && sct->close == 1)

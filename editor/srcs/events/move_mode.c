@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:14:55 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 12:34:35 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:00:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,8 @@ int			move_mode(t_env *env)
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP)
 		{
-
-			//if (vtx_transform((t_pos){-125, -125}, env).x < rect.x)
-				env->editor.grid_translate.x += env->editor.grid_mouse_var.x;
-
-			//if (vtx_transform((t_pos){-125, -125}, env).y < rect.y)
-				env->editor.grid_translate.y += env->editor.grid_mouse_var.y;
-
+			env->editor.grid_translate.x += env->editor.grid_mouse_var.x;
+			env->editor.grid_translate.y += env->editor.grid_mouse_var.y;
 			ft_bzero(&env->editor.grid_init_pos, sizeof(t_pos));
 			ft_bzero(&env->editor.grid_mouse_var, sizeof(t_pos));
 			env->editor.grid_drag = 0;
@@ -44,7 +39,6 @@ int			move_mode(t_env *env)
 		{
 			env->editor.grid_mouse_var.x =
 				(m.x - env->editor.grid_init_pos.x) / env->editor.grid_scale;
-				
 			env->editor.grid_mouse_var.y =
 				(m.y - env->editor.grid_init_pos.y) / env->editor.grid_scale;
 		}
