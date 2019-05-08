@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:09:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 16:10:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:14:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	draw_inter(t_env *e, int l)
 	ft_bzero(&f, sizeof(t_bloc));
 	f.rect = (SDL_Rect){0, 0, W, H};
 	draw_img(e, e->world.surfaces.img_menu[ref].sprite, &f);
-	ui_put_data(e, (t_font){M_WHITE, "Continue",
+	put_data(e, (t_font){M_WHITE, "Continue",
 		e->hud.font.quantify, (t_vtx){W / 1.1, H / 100}, W / 60, -1, -1});
-	ui_put_data(e, (t_font){M_WHITE, e->levels[l % 3]->text,
+	put_data(e, (t_font){M_WHITE, e->levels[l % 3]->text,
 		e->hud.font.text, (t_vtx){0, H / 1.2}, W / 40, -1, -1});
 }
 
@@ -43,7 +43,7 @@ void	stats_endgame(t_env *e)
 		string = ft_strrjoin("Level ", string);
 		string = ft_strljoin(string, " : ");
 		string = ft_strljoin(string, t);
-		ui_put_data(e, (t_font){GOLD, string, e->hud.font.text,
+		put_data(e, (t_font){GOLD, string, e->hud.font.text,
 			pos, W / 40, -1, -1});
 		lt_release((void**)&t);
 		lt_release((void**)&string);
@@ -51,12 +51,13 @@ void	stats_endgame(t_env *e)
 	}
 }
 
-void	update_render(t_env *e)
+int		update_render(t_env *e)
 {
 	SDL_UpdateTexture(e->sdl.texture, NULL,
 		e->sdl.surface->pixels, e->sdl.surface->pitch);
 	SDL_RenderCopy(e->sdl.renderer, e->sdl.texture, NULL, NULL);
 	SDL_RenderPresent(e->sdl.renderer);
+	return (1);
 }
 
 void	display_credits(t_env *e)

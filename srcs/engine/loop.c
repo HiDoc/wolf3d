@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 16:33:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:35:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static int				sdl_render(t_env *e)
 	}
 	else
 	{
+		player_bullet(e, &e->player, *e->player.inventory.current->damage);
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
 		dfs(e);
 		handle_weapon(e);
 		handle_gems(e);
 		if (!e->god_mod)
 			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
-		player_bullet(e, &e->player, *e->player.inventory.current->damage);
 		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
 		wpn_mouse_wheel(e, e->sdl.event);
 		sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);

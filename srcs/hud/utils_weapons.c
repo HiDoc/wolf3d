@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 15:24:59 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 17:01:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int		reload_ammo(t_env *env)
 {
-	int			cur_max;
-	int			*cur;
-	int			*mag;
-	int			tmp;
-	t_wrap_wpn	*wp = env->player.inventory.current;
+	int					cur_max;
+	int					*cur;
+	int					*mag;
+	int					tmp;
+	const t_wrap_wpn	*wp = env->player.inventory.current;
 
 	cur_max = env->world.armory[wp->ref].ammo_curr_max;
 	cur = wp->ammo_current;

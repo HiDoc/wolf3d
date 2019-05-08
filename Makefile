@@ -6,7 +6,7 @@
 #    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/08 13:03:33 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/08 20:41:23 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,9 +86,11 @@ SRC_NAME 	= main.c \
 			dir_del.c \
 			display_skybox.c \
 			draw.c \
-			draw_hud.c 	\
+			draw_hud.c \
+			draw_hud_utils.c \
 			draw_inventory.c \
 			draw_menu.c \
+			draw_menu_utils.c \
 			edge.c \
 			enemies_frames.c \
 			function.c \
@@ -100,15 +102,17 @@ SRC_NAME 	= main.c \
 			hud_draw_stats.c \
 			hull.c \
 			init.c \
-			init_hud.c \
 			init_fonts.c \
+			init_hud.c \
 			init_images.c \
+			init_inventory.c \
 			init_enemies.c \
 			init_menu.c \
 			init_menu2.c \
 			init_minimap.c \
-			init_weapons.c \
 			init_sound.c \
+			init_rsrc.c \
+			init_weapons.c \
 			inter_display.c \
 			inter_loop.c \
 			load_worlds.c \

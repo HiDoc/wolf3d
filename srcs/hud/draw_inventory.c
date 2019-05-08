@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/08 16:02:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:49:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		fill_wpn(t_env *env, int iter)
 	if (env->player.inventory.weapons[iter].is_full)
 	{
 		draw_img(env, bloc->bg_fill, bloc);
-		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
+		put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
 			(t_vtx){bloc->cross.rect.x, bloc->cross.rect.y}, W / 80, -1, -1});
 	}
 	else
@@ -53,7 +53,7 @@ static void		fill_gems(t_env *e, int iter)
 		draw_img(e, bloc->bg_fill, bloc);
 		draw_img(e,
 			e->world.objects[e->player.inventory.gems[iter].ref].sprite, &fill);
-		ui_put_data(e, (t_font){WHITE, "", e->hud.font.text,
+		put_data(e, (t_font){WHITE, "", e->hud.font.text,
 			(t_vtx){bloc->rect.x, bloc->rect.y}, W / 60,
 			e->player.inventory.gems[iter].nb_stack, -1});
 	}
@@ -77,12 +77,12 @@ static void		fill_bloc(t_env *env, int i)
 			b->rect.w - b->rect.w / 10};
 		draw_img(env, b->sprite, &fill);
 		fill.rect = b->cross.rect;
-		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
+		put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
 			(t_vtx){b->cross.rect.x, b->cross.rect.y}, W / 60, -1, -1});
-		ui_put_data(env, (t_font){WHITE, S_USE, env->hud.font.text,
+		put_data(env, (t_font){WHITE, S_USE, env->hud.font.text,
 			(t_vtx){b->use.rect.x, b->use.rect.y}, W / 60, -1, -1});
-		ui_put_data(env, (t_font){GOLD, "", env->hud.font.number,
-		(t_vtx){b->rect.x + W / 80,	b->rect.y + 5}, W / 60, -1,
+		put_data(env, (t_font){GOLD, "", env->hud.font.number,
+		(t_vtx){b->rect.x + W / 80, b->rect.y + 5}, W / 60, -1,
 		env->player.inventory.objects[i].nb_stack});
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 13:11:48 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:53:04 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void		weapon_sprites(t_weapon *weapon, char *name)
 }
 
 static void		weapon_set(t_weapon *weapon, char *name, int dam,
-				t_vctr ray_scope_vel, int devset)
+				t_vctr ray_scope_vel)
 {
 	long	ref;
 
@@ -71,37 +71,33 @@ static void		weapon_set(t_weapon *weapon, char *name, int dam,
 	weapon->ray = ray_scope_vel.x;
 	weapon->scop = ray_scope_vel.y;
 	weapon->velocity = ray_scope_vel.z;
-	if (devset)
-		weapon_sprites(weapon, name);
+	weapon_sprites(weapon, name);
 }
 
 void			init_weapon(t_env *env)
 {
-	int			i;
 	t_wrap_wpn	*wpn;
+	t_wrap_sect	obj;
 
-	i = 0;
+	ft_bzero(&obj, sizeof(t_wrap_sect));
 	env->world.armory[MAGNUM].ref = 0xa2a0601042a2;
 	env->world.armory[SHOTGUN].ref = 0xa2a020105123;
 	env->world.armory[RIFLE].ref = 0xa8e2000042a4;
 	env->world.armory[RPG].ref = 0xa08010108242;
 	env->world.armory[FIST].ref = 0xa00000103002;
 	weapon_set(&env->world.armory[MAGNUM], "weapons/magnum", 56,
-		(t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM}, 0);
+		(t_vctr){R_MAGNUM, S_MAGNUM, V_MAGNUM});
 	weapon_set(&env->world.armory[SHOTGUN], "weapons/pompe", 100,
-		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN}, 1);
+		(t_vctr){R_SHOTGUN, S_SHOTGUN, V_SHOTGUN});
 	weapon_set(&env->world.armory[RIFLE], "weapons/rifle", 37,
-		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE}, 0);
+		(t_vctr){R_RIFLE, S_RIFLE, V_RIFLE});
 	weapon_set(&env->world.armory[RPG], "weapons/rpg", 100,
-		(t_vctr){R_RPG, S_RPG, V_RPG}, 0);
+		(t_vctr){R_RPG, S_RPG, V_RPG});
 	weapon_set(&env->world.armory[FIST], "weapons/fist", 45,
-		(t_vctr){R_FIST, S_FIST, V_FIST}, 1);
+		(t_vctr){R_FIST, S_FIST, V_FIST});
 	env->player.inventory.current = ft_memalloc(sizeof(t_wrap_wpn));
 	wpn = &env->player.inventory.weapons[FIST];
-	wpn->is_full = 1;
-	wpn->ref = FIST;
-	wpn->ammo[0] = env->world.armory[FIST].ammo_current;
-	wpn->ammo[1] = env->world.armory[FIST].ammo_magazine;
-	wpn->ammo[2] = env->world.armory[FIST].damage;
+	obj.ref = FIST;
+	fill_wpn_inv(wpn, &env->world.armory[FIST], &obj);
 	set_current_wpn(env, &env->player.inventory, FIST);
 }

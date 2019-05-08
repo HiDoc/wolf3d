@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/08 13:06:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:22:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void		handle_doors(t_env *env);
 void		bot_is_moving(t_character *e, t_wrap_enmy *enemy);
 void		bot_is_hit(t_character *e, t_wrap_enmy *enemy);
 void		bot_is_shootin(t_character *e, t_wrap_enmy *enemy);
-void		bot_is_dying(t_env *e, t_character *ref,
-			t_wrap_enmy *en, t_sector *s);
+void		bot_is_dying(t_env *e, t_character *ref, t_wrap_enmy *en);
 void		set_bossmidlife(t_env *e, t_wrap_enmy *en);
 
 #endif

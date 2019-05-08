@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 16:20:59 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:17:51 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ struct						s_sector
 	signed char	*neighbors;
 	signed char	*textures;
 	unsigned	npoints;
-	int			nb_objects;
-	int			nb_enemies;
 	int			is_door;
 	int			has_skybox;
 	int			gravity;

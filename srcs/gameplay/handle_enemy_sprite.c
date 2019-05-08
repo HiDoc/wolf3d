@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:02 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 23:02:27 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:22:12 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ void	bot_is_shootin(t_character *e, t_wrap_enmy *enemy)
 		enemy->shoot_frame = 0;
 }
 
-void	bot_is_dying(t_env *e, t_character *ref,
-	t_wrap_enmy *en, t_sector *s)
+void	bot_is_dying(t_env *e, t_character *ref, t_wrap_enmy *en)
 {
 	int	temp;
 
-	if (en->die_frame / FRAME_RATIO < ref->time_death)
+	if (en->die_frame < ref->time_death)
 	{
 		en->a.is_shooting = 0;
 		en->a.is_shot = 0;
@@ -70,9 +69,10 @@ void	bot_is_dying(t_env *e, t_character *ref,
 		en->a.is_alive = 0;
 		en->a.is_dying = 0;
 		(en->ref != BOSS) ? e->stats.data[I_KTOGO]-- : 0;
-		(temp && !e->stats.data[I_KTOGO] && e->curr_lvl < e->nb_levels)
-			? e->engine.player.sound.end_level = 1 : 0;
-		s->nb_enemies--;
+		if (temp && !e->stats.data[I_KTOGO] && e->curr_lvl < e->nb_levels)
+			e->engine.player.sound.end_level = 1;
+		if (temp && !e->stats.data[I_KTOGO] && e->curr_lvl == e->nb_levels - 1)
+			e->finish = 1;
 	}
 }
 

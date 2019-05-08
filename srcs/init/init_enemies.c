@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:27:29 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 15:39:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 17:02:30 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static SDL_Surface	**enemy_fill(char *path, int size)
 {
 	SDL_Surface	**enemy;
-	int i;
+	int			i;
 
 	i = -1;
 	enemy = ft_memalloc(sizeof(SDL_Surface*) * size);

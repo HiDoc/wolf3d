@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:29:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 02:16:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 18:02:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	underscore_off_name(char *name, int size)
 		name[i] == '_' ? name[i] = ' ' : 0;
 }
 
-void		load_fonts(t_env *env)
+void	ld_fonts(t_env *env)
 {
 	t_pfont	*f;
 

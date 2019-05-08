@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:34:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 23:01:09 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:49:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ void	action_gems(t_env *e, t_wrap_inv *shortcut, int i)
 void	handle_gems(t_env *env)
 {
 	if (blue_gem(env))
-		ui_put_data(env, (t_font){BLUE, "Illimited Ammo ON",
+		put_data(env, (t_font){BLUE, "Illimited Ammo ON",
 			env->hud.font.text, (t_vtx){W / 1.3, H / 1.8}, W / 60, -1, -1});
 	if (green_gem(env))
-		ui_put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !",
+		put_data(env, (t_font){GREEN, "Invisiblity ON - Don't shoot !",
 			env->hud.font.text, (t_vtx){W / 1.3, H / 1.7}, W / 60, -1, -1});
 	if (red_gem(env))
-		ui_put_data(env, (t_font){RED, "Super Strength ON",
+		put_data(env, (t_font){RED, "Super Strength ON",
 			env->hud.font.text, (t_vtx){W / 1.3, H / 1.6}, W / 60, -1, -1});
 	if (purple_gem(env))
-		ui_put_data(env, (t_font){GOLD, "Invulnerability ON",
+		put_data(env, (t_font){GOLD, "Invulnerability ON",
 			env->hud.font.text, (t_vtx){W / 1.3, H / 1.5}, W / 60, -1, -1});
 }
