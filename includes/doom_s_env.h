@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:54:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 13:27:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:37:58 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ enum								e_tileset
 typedef struct	s_env				t_env;
 typedef struct	s_sdl				t_sdl;
 typedef struct	s_time				t_time;
-typedef struct	s_skybox			t_skybox;
 typedef struct	s_level				t_level;
 
 struct								s_sdl
@@ -66,17 +65,6 @@ struct 								s_time
 	int				t_purple;
 };
 
-struct								s_skybox
-{
-	SDL_Surface		*sb_top;
-	SDL_Surface		*sb_front;
-	SDL_Surface		*sb_right;
-	SDL_Surface		*sb_back;
-	SDL_Surface		*sb_left;
-
-	SDL_Surface		*sb;
-};
-
 struct								s_level
 {
 	int				index;
@@ -98,9 +86,6 @@ struct								s_env
 	t_stats			stats;
 	t_menu			menu;
 	int				god_mod;
-
-	t_skybox		skybox;
-
 	int				curr_lvl;	// level courant
 	int				nb_games;	// nb worlds
 	char			**games;	// all worlds
@@ -117,8 +102,6 @@ void			free_map(t_env *env);
 SDL_Surface		*make_surface(int height, int width);
 SDL_Surface		*make_string(t_font str_data);
 SDL_Surface		*load_image(char *path);
-
-void			display_skybox(t_drawline l, t_env *env);
 
 void			no_op(t_env *env);
 int				sdl_loop(t_env *env);

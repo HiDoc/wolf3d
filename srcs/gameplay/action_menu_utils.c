@@ -6,32 +6,57 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 00:12:44 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/02 13:51:57 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:25:36 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	scroll_menu(int *cur, const Uint8 *k, int start, int limit)
+void	fill_levels(t_env *e, char *line, int fd)
 {
-	*cur += k[SDL_SCANCODE_DOWN] ? 1 : 0;
-	*cur -= k[SDL_SCANCODE_UP] ? 1 : 0;
-	*cur < start ? *cur = limit - 1 : 0;
-	*cur >= limit && (k[SDL_SCANCODE_DOWN] || k[SDL_SCANCODE_UP])
-		? *cur = start : 0;
+	int	i;
+
+	i = -1;
+	while (++i < e->nb_levels)
+	{
+		e->levels[i] = ft_memalloc(sizeof(t_level));
+		if ((get_next_line(fd, &line)) < 0)
+			doom_error_exit("Doom_nukem: out of memory in load_world_data");
+		e->levels[i]->index = ft_atoi(line);
+		lt_release((void**)&line);
+		if ((get_next_line(fd, &line)) < 0)
+			doom_error_exit("Doom_nukem: out of memory in load_world_data");
+		e->levels[i]->text = ft_strdup(line);
+		lt_release((void**)&line);
+	}
 }
 
-void	long_scroll_menu(t_status *s, const Uint8 *k)
+void	scroll_menu(t_env *e, int start, int limit, int which)
 {
-	if (k[SDL_SCANCODE_DOWN] && s->cur >= s->end && s->end < s->nb_save)
+	const Uint8	*k = e->sdl.keycodes;
+	t_status	*s;
+
+	s = &e->menu.status;
+	if (!which)
 	{
-		s->start++;
-		s->end++;
+		s->cur += k[SDL_SCANCODE_DOWN] ? 1 : 0;
+		s->cur -= k[SDL_SCANCODE_UP] ? 1 : 0;
+		s->cur < start ? s->cur = limit - 1 : 0;
+		s->cur >= limit && (k[SDL_SCANCODE_DOWN] || k[SDL_SCANCODE_UP])
+			? s->cur = start : 0;
 	}
-	if (k[SDL_SCANCODE_UP] && s->cur <= s->start && s->start > 1)
+	else
 	{
-		s->start--;
-		s->end--;
+		if (k[SDL_SCANCODE_DOWN] && s->cur >= s->end && s->end < s->nb_save)
+		{
+			s->start++;
+			s->end++;
+		}
+		if (k[SDL_SCANCODE_UP] && s->cur <= s->start && s->start > 1)
+		{
+			s->start--;
+			s->end--;
+		}
 	}
 }
 
@@ -67,10 +92,8 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 		}
 		else
 		{
-			printf("1 : %d\n", e->sdl.event.key.keysym.scancode);
 			(check_doublon(s, e->sdl.event.key.keysym.scancode, e->engine.keys))
 			? *key = e->sdl.event.key.keysym.scancode : 0;
-			printf("2 : %d\n", e->sdl.event.key.keysym.scancode);
 			s->key_change = 0;
 		}
 	}
@@ -80,8 +103,7 @@ void	change_option(t_env *e, t_status *s, const Uint8 *k, int *key)
 		s->key_change = 0;
 }
 
-int	ispoint_inrect(int x, int y, SDL_Rect r)
+int		ispoint_inrect(int x, int y, SDL_Rect r)
 {
 	return (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h);
 }
-

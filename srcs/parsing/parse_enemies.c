@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:44:22 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/30 15:41:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:17:03 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	fill_enemies_sector(t_env *env, t_sector *sector, t_vtx v, int ref)
 	iter = NULL;
 	env->stats.data[I_KTOGO]++;
 	if (sector->head_enemy == NULL)
-		return ((sector->head_enemy = new_enemy(env, v, ref)) ? ++sector->nb_enemies : 0);
+		return ((sector->head_enemy = new_enemy(env, v, ref)) ? 1 : 0);
 	iter = sector->head_enemy;
 	while (iter->next != NULL)
 		iter = iter->next;
-	return ((iter->next = new_enemy(env, v, ref)) ? ++sector->nb_enemies : 0);
+	return ((iter->next = new_enemy(env, v, ref)) ? 1 : 0);
 }

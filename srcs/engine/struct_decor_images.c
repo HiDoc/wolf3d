@@ -6,22 +6,21 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 23:37:56 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/05 23:55:32 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:29:32 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	init_doors_images(t_env *env)
+int	init_doors_images(t_env *e)
 {
 	int	i;
 
-	i = 0;
-	while (i < NB_DOOR_IMG)
+	i = -1;
+	while (++i < NB_DOOR_IMG)
 	{
-		if (!(env->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
+		if (!(e->world.surfaces.doors[i].sprite = ui_img("decor/door/", i, 0)))
 			return (0);
-		i++;
 	}
 	return (1);
 }

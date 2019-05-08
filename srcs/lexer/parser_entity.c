@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 17:19:48 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:05:01 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:05:21 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	retrieve_entity(t_env *e, t_parseline *line)
 	ptr = &pos.x;
 	while (iter)
 	{
-		if (iter->type == (1U << 2))
+		if (iter->type == INT)
 		{
 			*ptr = (*ptr * 10) + (iter->value - '0');
-			if (iter->next && iter->next->type != (1U << 2))
+			if (iter->next && iter->next->type != INT)
 			{
 				if (ptr == &pos.x)
 					ptr = &pos.y;

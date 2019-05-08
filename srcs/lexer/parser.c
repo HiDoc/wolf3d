@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:07 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 20:00:18 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:34:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-typedef struct s_op_ft
-{
-	unsigned	val;
-	void		(*retrieve)(t_env *, t_parseline *, t_vtx *);
-} t_op_ft;
 
 void	*load_function(unsigned type)
 {
@@ -38,37 +32,12 @@ void	*load_function(unsigned type)
 	iter = 0;
 	while (iter < NONE)
 	{
-		if (op_first[iter].val == type)
+		if (op_first[iter].val == (1U << type))
 			return op_first[iter].retrieve;
 		iter++;
 	}
 	return (NULL);
 }
-
-// void	load_iter(t_token *iter)
-// {
-// 	unsigned	value;
-// 	unsigned	count;
-
-// 	value = 0;
-// 	count = 0;
-// 	while (iter)
-// 	{
-// 		if (iter->type == (1U << POINT))
-// 			break;
-// 		if (iter->type == (1U << INT))
-// 		{
-// 			value = (value * 10) + (iter->value - '0');
-// 			if (iter->next && iter->next->type != (1U << INT))
-// 			{
-// 				fill_sector(sect, value, count);
-// 				value = 0;
-// 				count++;
-// 			}
-// 		}
-// 		iter = iter->next;
-// 	}
-// }
 
 void	*pre_load(t_env *env, t_vtx *vert, unsigned nsector, unsigned nvertex)
 {
@@ -102,19 +71,21 @@ int		parser(t_env *env, char *filename)
 {
 	int			fd;
 	t_parsefile	file;
-	unsigned	nvertex;
-	unsigned	nsector;
 
+	ft_bzero(&file, sizeof(t_parsefile));
 	file.first = new_line(0, 0);
-	nvertex = 0;
-	nsector = 0;
 	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (0);
-	reader(fd, &file, &nvertex, &nsector);
+	reader(fd, &file);
 	print_file(&file);
-	load(env, &file, nvertex, nsector);
+	env->engine.nsectors = file.nsector;
+	env->engine.nvertex = file.nvertex;
+	if (!lexer(&file))
+	{
+		free_file(&file);
+		doom_error_exit("Invalid map");
+	}
+	load(env, &file, file.nvertex, file.nsector);
 	free_file(&file);
-	env->engine.nsectors = nsector;
+	printf("%u\n", file.nsector);
 	return (1);
 }

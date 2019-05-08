@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/06 01:05:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 22:05:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,25 @@ static int				sdl_render(t_env *e)
 		action_inventory(e, 0, 0);
 	}
 	else
-	{	
-		// si retire alors segv + a laisser avant dfs sinon segv <3
+	{
+		player_bullet(e, &e->player, *e->player.inventory.current->damage);
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
 		dfs(e);
+		handle_weapon(e);
 		handle_gems(e);
-		if (!e->god_mod) // perte de fps : check why
+		if (!e->god_mod)
 			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
-		player_bullet(e, &e->player, *e->player.inventory.current->damage);
-		handle_doors(e);
 		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;
 		wpn_mouse_wheel(e, e->sdl.event);
 		sdl_keyhook_game(e, e->sdl.event, e->sdl.keycodes);
 		player_move(&e->engine, &e->engine.player.vision, e->sdl.keycodes);
-		handle_sound(e, &e->engine.player.sound);
+		sound_player(e, &e->engine.player.sound);
+		sound_hud(e, &e->engine.player.sound);
+		sound_effect(e, &e->engine.player.sound);
 		ui_put_fps(e, e->time.fps);
 		ui_minimap(e);
-		handle_weapon(e);
 		print_hud(e);
+		handle_doors(e);
 	}
 	SDL_UpdateTexture(e->sdl.texture, NULL,
 		e->sdl.surface->pixels, e->sdl.surface->pitch);
@@ -72,23 +73,24 @@ int				sdl_loop(t_env *env)
 	{
 		(!env->menu.status.on)
 		? SDL_SetEventFilter(&YourEventFilter, (void *)env) : 0;
-		if (env->sdl.keycodes[SDL_SCANCODE_Q]
-			|| env->menu.status.quit || env->menu.status.gameover)
+		if (env->sdl.keycodes[SDL_SCANCODE_Q] || env->menu.status.quit
+				|| env->sdl.event.type == SDL_QUIT)
 			doom_exit();
 		if ((env->time.time_a = SDL_GetTicks()) - env->time.time_b > SCREEN_TIC)
 		{
 			env->time.fps = 1000 / (env->time.time_a - env->time.time_b);
 			env->time.time_b = env->time.time_a;
 			SDL_PollEvent(&env->sdl.event);
-			sdl_render(env); // <- lifetime
+			sdl_render(env);
 			if (env->hud.inventory.is_active)
 				sdl_keyhook_inventory(env, env->sdl.event, env->sdl.keycodes);
 			else if (env->menu.status.on)
-				sdl_key_menu(env, env->sdl.event, env->sdl.keycodes);
+				sdl_keyhook_menu(env, env->sdl.event, env->sdl.keycodes);
 			else
 				(env->player.inventory.current->ref == RIFLE)
 				? mouse_shoot(env) : 0;
 		}
+		env->menu.status.gameover ? env->finish = 1 : 0;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 11:53:44 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 19:17:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:08:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@
 ** Colors
 */
 #define RED			(SDL_Color){255, 0, 0, 255}
-#define WHITE		(SDL_Color){255, 255, 255, 255}
+#define WHITE		(SDL_Color){255, 255, 255, 0}
 #define BLACK		(SDL_Color){0, 0, 0, 255}
 #define BLUE		(SDL_Color){8, 8, 255, 0}
 #define GREEN		(SDL_Color){8, 255, 8, 0}

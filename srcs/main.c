@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:56:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 03:32:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:59:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,25 @@ int		main(int ac, char **av)
 {
 	t_env	env;
 
-	/* init env */
 	init_env(ac, av, &env);
 	set_msc_menu(&env, &env.menu.status);
-	load_worlds(&env);
-
-	/* mainmenu loop */
-	mainmenu_loop(&env);
-
-	/* world loop */
+	load_worlds(&env); // to norme
+	mainmenu_loop(&env); // parse_level to norme
 	while (env.curr_lvl < env.nb_levels)
 	{
 		env.finish = 0;
-
 		mainmenu_loop(&env);
 		env.menu.status.inter = 1;
-
-		// display text start
-
-		/* load level */
 		load_map(&env.engine, &env);
 		init_minimap(&env);
 		loop_intro(&env, env.curr_lvl);
-
-		/* gameloop */
-		if (sdl_loop(&env))
-			return (0);
-
+		sdl_loop(&env);
 		action_endlevel(&env, env.curr_lvl);
-		/* free level */
-		free_map(&env);
+		free_map(&env); // to norme
 		lt_release((void**)&env.engine.minimap.surface);
 		lt_release((void**)&env.engine.minimap.background);
-
 		env.curr_lvl++;
 	}
-
-	/* free and exit */
 	doom_exit();
 	return (0);
 }

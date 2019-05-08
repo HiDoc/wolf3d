@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_strings.c                                     :+:      :+:    :+:   */
+/*   parser_save_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 13:29:54 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/06 15:43:43 by abaille           #+#    #+#             */
+/*   Updated: 2019/05/06 15:57:18 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	underscore_off_name(char *name, int size)
+int	is_cur(int c)
 {
-	int	i;
+	return (c == 'c');
+}
 
-	i = -1;
-	while (++i < size)
-		name[i] == '_' ? name[i] = ' ' : 0;
+int	is_wpn(int c)
+{
+	return (c == 'w');
+}
+
+int	is_gem(int c)
+{
+	return (c == 'g')
+}
+
+int	is_sts(int c)
+{
+	return (c == 't');
+}
+
+int	is_stg(int c)
+{
+	return (c == 'i');
 }

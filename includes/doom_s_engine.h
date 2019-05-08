@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_s_engine.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 14:48:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 22:05:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct	s_engine	t_engine;
 typedef struct	s_queue		t_queue;
 typedef struct	s_raycast	t_raycast;
 typedef struct	s_chain		t_chain;
-typedef struct	s_save		t_save;
 typedef struct	s_door		t_door;
 
 struct						s_door
@@ -32,19 +31,6 @@ struct						s_door
 	int						ref_img;
 	int						frame;
 };
-
-struct						s_save
-{
-	int						health;
-	int						shield;
-	t_player				player; //position + angle view
-	t_inventory				inventory; // objects + gems + weapon + current wpn
-	t_sector				*sector; // all sectors (with objects + enemies)
-	t_stats					stats; // game stats
-	int						*keys[NB_OPT_KEY];
-	int						msc_vol;
-};
-
 
 struct						s_scaler
 {
@@ -82,8 +68,6 @@ struct						s_sector
 	signed char	*neighbors;
 	signed char	*textures;
 	unsigned	npoints;
-	int			nb_objects;
-	int			nb_enemies;
 	int			is_door;
 	int			has_skybox;
 	int			gravity;
@@ -128,6 +112,7 @@ struct						s_engine
 {
 	t_sector		*sectors;
 	unsigned		nsectors;
+	unsigned		nvertex;
 	t_player		player;
 	t_queue			queue;
 	t_minimap		minimap;

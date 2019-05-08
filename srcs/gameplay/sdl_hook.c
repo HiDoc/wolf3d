@@ -6,25 +6,13 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 01:28:17 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 12:32:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	god_mod(t_env *env)
-{
-	if (env->god_mod)
-	{
-		env->menu.status.on = 0;
-		env->menu.status.home = 0;
-		env->menu.status.sound = 0;
-		env->player.actions.is_invisible = 1;
-	}
-	return (1);
-}
-
-void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
+void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 {
 	t_status	*s;
 
@@ -38,41 +26,23 @@ void	sdl_key_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 			s->home = 0;
 		}
 		else if (s->main_menu && !s->options_menu
-				&& !s->ingame && !s->load_menu && !s->new_game)
+				&& !s->ingame && !s->new_game)
 			action_mainmenu(e, s, k);
 		else if (s->ingame && !s->options_menu)
 			action_ingame_menu(e, s, k);
-		else if (s->load_menu)
-			action_loadmenu(e, s, k);
 		else if (s->options_menu)
 			action_optionmenu(e, s, k);
 		else if (s->new_game)
 			action_newgame_menu(e, s, k);
 		if (k[SDL_SCANCODE_ESCAPE])
-		{
-			if (s->options_menu || s->load_menu || s->new_game)
-			{
-				s->key_change = 0;
-				s->options_menu = 0;
-				s->load_menu = 0;
-				s->new_game = 0;
-			}
-			else if (!s->main_menu)
-			{
-				s->on = 0;
-				s->ingame = 0;
-				set_msc_menu(e, s);
-				SDL_Delay(300);
-			}
-			s->cur = 0;
-		}
+			access_menu(e, s, 0);
 	}
 }
 
-int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+int		sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
-	t_uinv		*ui;
-	int			*k;
+	t_uinv	*ui;
+	int		*k;
 
 	ui = &env->hud.inventory;
 	k = env->engine.keys;
@@ -90,7 +60,7 @@ int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 	return (1);
 }
 
-void	keyhook_gems(t_env *env, const Uint8 *keycodes)
+void	sdl_keyhook_gems(t_env *env, const Uint8 *keycodes)
 {
 	int	*k;
 
@@ -107,46 +77,30 @@ void	keyhook_gems(t_env *env, const Uint8 *keycodes)
 		action_gems(env, env->hud.shortcut[4], 4);
 }
 
-int	sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+int		sdl_keyhook_game(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_engine	*e;
-	t_vision	*v;
 	int			*k;
 
 	k = env->engine.keys;
 	e = &env->engine;
-	v = &e->player.vision;
 	if (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP)
 	{
-		keyhook_gems(env, keycodes);
-		if (keycodes[SDL_SCANCODE_N])
-		{
+		sdl_keyhook_gems(env, keycodes);
+		if (keycodes[SDL_SCANCODE_N] && env->god_mod)
 			env->finish = 1;
-			// provisoire (sgalasso)
-		}
 		if (keycodes[SDL_SCANCODE_O])
 			env->god_mod = !env->god_mod;
 		if (keycodes[k[I_OPICKOPN]])
-			is_pickable_object(env, &env->engine.sectors[e->player.sector]);
+			access_object(env, &env->engine.sectors[e->player.sector]);
 		if (keycodes[k[I_ORELOAD]])
 			load_weapon(env);
 		if (keycodes[k[I_OPICKOPN]])
-			open_door(env);
+			access_door(env);
 		if (keycodes[k[I_OINVENTR]])
-		{
-			env->hud.inventory.is_active = !env->hud.inventory.is_active;
-			SDL_Delay(300);
-			if ((SDL_SetRelativeMouseMode(SDL_FALSE)) < 0)
-				doom_error_exit("Doom_nukem error on SDL_SetRelativeMouseMode");
-		}
+			access_inventory(env);
 		if (keycodes[SDL_SCANCODE_ESCAPE])
-		{
-			create_save_image(env);
-			env->menu.status.on = 1;
-			env->menu.status.ingame = 1;
-			set_msc_menu(env, &env->menu.status);
-			SDL_Delay(300);
-		}
+			access_menu(env, &env->menu.status, 1);
 	}
 	return (1);
 }
