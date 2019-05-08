@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hull.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 20:17:49 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 23:57:05 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			copy_sectors(t_engine *e)
 	return (1);
 }
 
-int			insert_sct(t_engine *e, t_sector *curr, t_chain *chain)
+int			insert_sct(t_engine *e, t_sector *c, t_chain *chain)
 {
 	t_sector	*new;
 
@@ -64,56 +64,14 @@ int			insert_sct(t_engine *e, t_sector *curr, t_chain *chain)
 	for (size_t i = 0; i < 4; i++)
 		new->neighbors[i] = -1;
 	new->vertex = malloc(sizeof(t_vtx) * 4);
-	new->vertex[0] = (t_vtx){curr->vertex[chain->d].x, curr->vertex[chain->d].y};
-	new->vertex[1] = (t_vtx){curr->vertex[chain->b].x, curr->vertex[chain->b].y};
-	new->vertex[2] = (t_vtx){curr->vertex[chain->c].x, curr->vertex[chain->c].y};
-	new->vertex[3] = (t_vtx){curr->vertex[chain->d].x, curr->vertex[chain->d].y};
-	new->ceil = curr->ceil;
-	new->floor = curr->floor;
+	new->vertex[0] = (t_vtx){c->vertex[chain->d].x, c->vertex[chain->d].y};
+	new->vertex[1] = (t_vtx){c->vertex[chain->b].x, c->vertex[chain->b].y};
+	new->vertex[2] = (t_vtx){c->vertex[chain->c].x, c->vertex[chain->c].y};
+	new->vertex[3] = (t_vtx){c->vertex[chain->d].x, c->vertex[chain->d].y};
+	new->ceil = c->ceil;
+	new->floor = c->floor;
 	new->head_object = NULL;
 	new->npoints = 3;
 	remove_vertex(&e->sectors[chain->a], chain);
 	return (1);
-}
-/*
-** Verify integrity of map and if necessary add a new sector
-** bounded with vertexes
-*/
-int			verify_hull(t_engine *e)
-{
-	t_chain		chain;
-	t_sector	*sect;
-	t_vtx		*vert;
-	t_vtx		*v1;
-	t_vtx		*v2;
-
-	chain.a = 0;
-	return (0);
-	while (chain.a < e->nsectors)
-	{
-		sect = &e->sectors[chain.a];
-		print_sect(sect);
-		if (sect->npoints < 6)
-		{
-			++chain.a;
-			continue ;
-		}
-		vert = sect->vertex;
-		chain.b = 0;
-		while (chain.b < sect->npoints)
-		{
-			chain.c = (chain.b + 1) % sect->npoints;
-			chain.d = (chain.c + 1) % sect->npoints;
-			v1 = &vert[chain.b];
-			v2 = &vert[chain.d];
-			if (pointside(vert[chain.c], *v1, *v2) < 0)
-			{
-				insert_sct(e, sect, &chain);
-				return (1);
-			}
-			++chain.b;
-		}
-		++chain.a;
-	}
-	return (0);
 }

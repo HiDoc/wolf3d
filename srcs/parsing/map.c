@@ -3,6 +3,7 @@
 /*
 ** Verify that vertexes are chained
 */
+
 int     verify_vertex(t_engine *e)
 {
 	unsigned	iter;
@@ -17,10 +18,7 @@ int     verify_vertex(t_engine *e)
 
         if (vertex[0].x != vertex[sect->npoints].x
         	|| vertex[0].y != vertex[sect->npoints].y)
-		{
-            fprintf(stderr, "Internal error: Sector %u: Vertexes don't form a loop at %u!\n", iter, sect->npoints);
 			return (0);
-		}
 		iter++;
     }
 	return (1);
@@ -36,7 +34,6 @@ int		fix_vertex_parallel(t_sector *sec, t_chain *chain)
 	v1 = &sec->vertex[chain->b];
 	v2 = &sec->vertex[chain->c];
 	v3 = &sec->vertex[chain->c + 1];
-
 	if (pointside(*v1, *v2, *v3) == 0)
 	{
 		vertex = malloc(sizeof(t_vtx) * (sec->npoints));
@@ -45,12 +42,8 @@ int		fix_vertex_parallel(t_sector *sec, t_chain *chain)
 		chain->f = chain->c;
 		while (chain->d < sec->npoints)
 		{
-			// printf("%u / %u\n", chain->d, chain->e);
 			if (chain->d != chain->f)
-			{
-				// printf("assign [%f, %f]\n", sec->vertex[chain->d].x, sec->vertex[chain->d].y);
 				vertex[chain->e] = (t_vtx){sec->vertex[chain->d].x, sec->vertex[chain->d].y};
-			}
 			if (chain->d != chain->f)
 				++chain->e;
 			++chain->d;
@@ -105,6 +98,7 @@ int		verify_vertex_parallel(t_engine *e)
 ** Verify that sectors are bounded together if
 ** they share an edge
 */
+
 int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *found)
 {
 	t_sector		*sect;
@@ -120,19 +114,13 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 			if (equal_vertex(neigh->vertex[chain->c + 1], edge->v1)
 				&& equal_vertex(neigh->vertex[chain->c], edge->v2))
 			{
-				// printf("neigbours: %d, %d, %u, %u\n", neigh->neighbors[chain->c], neigh->neighbors[chain->b], chain->a, chain->d);
-				print_edg(*edge);
 				if (neigh->neighbors[chain->c] != (int)chain->a)
 				{
-					// fprintf(stderr, "Sector %d: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-					// 	chain->d, edge->v2.x,edge->v2.y, edge->v1.x,edge->v1.y, chain->a, neigh->neighbors[chain->c]);
 					neigh->neighbors[chain->c] = chain->a;
 					return (1);
 				}
 				if (sect->neighbors[chain->b] != (int)chain->d)
 				{
-					// fprintf(stderr, "Sector %u: Neighbor behind line (%g,%g)-(%g,%g) should be %u, %d found instead. Fixing.\n",
-					// 	chain->a, edge->v1.x, edge->v1.y,edge->v2.x, edge->v2.y, chain->d, sect->neighbors[chain->b]);
 					sect->neighbors[chain->b] = chain->d;
 					return (1);
 				}
@@ -146,9 +134,6 @@ int		verify_bounded_neighbor(t_engine *e, t_chain *chain, t_edge *edge, int *fou
 	return (0);
 }
 
-/*
-** Verify neighbors of vertexes and fix them
-*/
 int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 {
 	t_chain		chain;
@@ -166,23 +151,15 @@ int		verify_neighbor(t_engine *e, t_sector *sect, t_vtx *vert)
 		while (chain.b < sect->npoints)
 		{
 			if (sect->neighbors[chain.b] >= (int)e->nsectors)
-			{
-				fprintf(stderr, "Sector %u: Contains neighbor %d (too large, number of sectors is %u, you will segfault here),\n",
-					chain.a, sect->neighbors[chain.b], e->nsectors);
-				fprintf(stderr, "Please verify that you have as much neighbour as vertexes in your map\n");
 				sect->neighbors[chain.b] = -1;
-			}
 			edge = (t_edge){vert[chain.b], vert[chain.b + 1]};
 			found = 0;
 			chain.d = 0;
 			if (verify_bounded_neighbor(e, &chain, &edge, &found))
 				return (1);
-			if (sect->neighbors[chain.b] >= 0 && sect->neighbors[chain.b] < (int)e->nsectors && found != 1)
-			{
-				fprintf(stderr, "Sectors %u and its neighbor %d don't share line (%g,%g)-(%g,%g)\n",
-					chain.a, sect->neighbors[chain.b], edge.v1.x, edge.v1.y, edge.v2.x, edge.v2.y);
+			if (sect->neighbors[chain.b] >= 0 && sect->neighbors[chain.b]
+				< (int)e->nsectors && found != 1)
 				return (0);
-			}
 			chain.b++;
 		}
 		chain.a++;
@@ -200,16 +177,8 @@ int     verify_map(t_engine *e)
 		iter++;
 		if (iter > 80)
 			return (iter);
-		//if (!verify_vertex(e))
-		 	//printf("vertex does not form a loop\n");
 		if (verify_neighbor(e, NULL, NULL))
 		{
-			//printf("neighbors not linked\n");
-			continue ;
-		}
-		if (verify_hull(e))
-		{
-			//printf("hull redispatch\n");
 			continue ;
 		}
 		else break;
