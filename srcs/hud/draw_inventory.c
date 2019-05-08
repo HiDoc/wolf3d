@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 19:00:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:02:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void		fill_icon(t_env *env, int iter)
 {
-	t_bloc	*bloc;
+	t_bloc	*b;
 
-	bloc = &env->hud.inventory.icons[iter];
-	draw_img(env, bloc->sprite, bloc);
-	ui_icon_data(env, (t_vtx){bloc->rect.x + W / 15, bloc->rect.y + H / 60}, iter);
+	b = &env->hud.inventory.icons[iter];
+	draw_img(env, b->sprite, b);
+	ui_icon_data(env, (t_vtx){b->rect.x + W / 15, b->rect.y + H / 60}, iter);
 }
 
 static void		fill_wpn(t_env *env, int iter)
@@ -36,45 +36,45 @@ static void		fill_wpn(t_env *env, int iter)
 		draw_img(env, bloc->bg_empty, bloc);
 }
 
-static void		fill_gems(t_env *env, int iter)
+static void		fill_gems(t_env *e, int iter)
 {
 	t_bloc		*bloc;
-	int			g_ref;
 	t_bloc		fill;
 	SDL_Rect	rect;
 
-	bloc = &env->hud.inventory.gems[iter];
+	bloc = &e->hud.inventory.gems[iter];
 	rect = (SDL_Rect){bloc->rect.x + bloc->rect.w / 16,
 	bloc->rect.y + bloc->rect.w / 16,
 	bloc->rect.w - bloc->rect.w / 10, bloc->rect.w - bloc->rect.w / 10};
 	ft_bzero(&fill, sizeof(t_bloc));
 	fill.rect = rect;
-	if (env->player.inventory.gems[iter].is_full)
+	if (e->player.inventory.gems[iter].is_full)
 	{
-		g_ref = env->player.inventory.gems[iter].ref;
-		draw_img(env, bloc->bg_fill, bloc);
-		draw_img(env, env->world.objects[g_ref].sprite, &fill);
+		draw_img(e, bloc->bg_fill, bloc);
+		draw_img(e,
+			e->world.objects[e->player.inventory.gems[iter].ref].sprite, &fill);
+		ui_put_data(e, (t_font){WHITE, "", e->hud.font.text,
+			(t_vtx){bloc->rect.x, bloc->rect.y}, W / 60,
+			e->player.inventory.gems[iter].nb_stack, -1});
 	}
 	else
-		draw_img(env, bloc->bg_empty, bloc);
+		draw_img(e, bloc->bg_empty, bloc);
 }
 
 static void		fill_bloc(t_env *env, int i)
 {
 	t_bloc		*b;
 	t_bloc		fill;
-	SDL_Rect	rect;
 
 	b = &env->hud.inventory.objects[i];
 	if (env->player.inventory.objects[i].is_full)
 	{
 		draw_img(env, b->bg_fill, b);
-		rect = (SDL_Rect){b->rect.x + b->rect.w / 16,
-		b->rect.y + b->rect.w / 16,
-		b->rect.w - b->rect.w / 10,
-		b->rect.w - b->rect.w / 10};
 		ft_bzero(&fill, sizeof(t_bloc));
-		fill.rect = rect;
+		fill.rect = (SDL_Rect){b->rect.x + b->rect.w / 16,
+			b->rect.y + b->rect.w / 16,
+			b->rect.w - b->rect.w / 10,
+			b->rect.w - b->rect.w / 10};
 		draw_img(env, b->sprite, &fill);
 		fill.rect = b->cross.rect;
 		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
@@ -89,7 +89,7 @@ static void		fill_bloc(t_env *env, int i)
 		draw_img(env, b->bg_empty, b);
 }
 
-void		print_inventory(t_env *env)
+void			print_inventory(t_env *env)
 {
 	t_bloc	*bloc;
 	int		iter;

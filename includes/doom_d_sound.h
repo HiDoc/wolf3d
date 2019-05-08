@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:55:19 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 02:35:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/06 16:14:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 */
 # define AB_MENU			0
 # define AB_IGMENU			1
-# define AB_GAMEOVER		2
+# define AB_GMOVER		2
 # define AB_SPACE			3
 # define AB_CYBDEMON		4
 # define AB_BOSS			5

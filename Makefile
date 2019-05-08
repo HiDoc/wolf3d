@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
+#    By: abaille <abaille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/05 19:36:09 by abaille          ###   ########.fr        #
+#    Updated: 2019/05/08 13:03:33 by abaille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OK				= $(CYAN)OK$(WHITE)
 WAIT			= $(RED)WAIT$(WHITE)
 
 ID_UN 		= $(shell id -un)
-VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer
+VPATH		:= ./srcs:./srcs/engine:./srcs/math:./srcs/ui:./srcs/parsing:./srcs/debug:./srcs/gameplay:./srcs/hud:./srcs/init:./srcs/lexer:./srcs/exit
 OBJ_PATH 	= ./objs/
 INC_PATH	= ./includes/ \
 			  ./libft/includes/	\
@@ -75,21 +75,29 @@ SRC_NAME 	= main.c \
 			action_menu_utils.c \
 			action_object.c \
 			action_pl_object.c \
+			action_pl_object_utils.c \
 			action_pl_weapon.c \
+			action_pl_weapon_utils.c \
 			action_shoot.c \
+			action_shoot_utils.c \
 			checking.c \
+			chk_del.c \
+			crs_del.c \
+			dir_del.c \
 			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
 			draw_menu.c \
 			edge.c \
-			file_save.c \
+			enemies_frames.c \
 			function.c \
 			free_map.c \
 			handle_enemy_sprite.c \
+			handle_gems.c \
 			handle_weapon.c \
 			hud_data.c \
+			hud_draw_stats.c \
 			hull.c \
 			init.c \
 			init_hud.c \
@@ -97,10 +105,11 @@ SRC_NAME 	= main.c \
 			init_images.c \
 			init_enemies.c \
 			init_menu.c \
+			init_menu2.c \
 			init_minimap.c \
 			init_weapons.c \
 			init_sound.c \
-			init_strings.c \
+			inter_display.c \
 			inter_loop.c \
 			load_worlds.c \
 			load.c \
@@ -110,25 +119,34 @@ SRC_NAME 	= main.c \
 			make_string.c \
 			make_surface.c \
 			map.c \
+			menu_sound.c \
 			move.c \
+			move_enemies.c \
+			msc_del.c \
 			musics.c \
 			no_op.c \
 			parse_door.c \
 			parse_enemies.c \
 			parse_objects.c \
 			perspective.c \
+			player_sound.c \
 			position.c \
 			print_bug.c \
 			projection.c \
 			queue.c \
+			rdr_del.c \
 			render_sect.c \
-			save_menu.c \
 			sdl_hook.c \
+			sdl_hook_access.c \
 			sdl_mouse.c \
 			sounds.c \
+			srf_del.c \
 			struct_drawline.c \
 			struct_hud_img.c \
+			time_to_str.c \
 			transformation.c \
+			ttf_del.c \
+			txr_del.c \
 			ui_draw_circle.c \
 			ui_draw_full_circle.c \
 			ui_draw_full_rect.c \
@@ -140,11 +158,11 @@ SRC_NAME 	= main.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \
-			utils_hud_img.c \
 			utils_pixels.c \
 			utils_vertex.c \
 			utils_weapons.c \
 			vertex.c \
+			wdw_del.c \
 			weapons_wheel_hud.c \
 			doom_exit.c \
 			lexer.c \

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:19:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 18:28:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 02:17:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ static void	init_hobjects_bloc(t_hud *hud, t_container *surfaces)
 
 void	init_hud(t_env *env)
 {
-	int	i_tab;
+	int		i_tab;
 	t_hud	*hud;
 	t_uinv	*inv;
 

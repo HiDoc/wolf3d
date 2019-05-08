@@ -6,16 +6,12 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:08:23 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 18:58:26 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:01:16 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-/*
-** Collision detection.
-** Check if the bot is crossing an edge and if this edge has a neighbour
-*/
 int		bot_wall_collision(t_player *bot, t_sector *sect)
 {
 	const t_vtx		vertex = {bot->where.x, bot->where.y};
@@ -35,25 +31,6 @@ int		bot_wall_collision(t_player *bot, t_sector *sect)
 			return (1);
 	}
 	return (0);
-}
-
-void	gameover(t_env *e)
-{
-	e->player.health = 0;
-	e->stats.data[I_DEATHS]++;
-	e->engine.player.sound.dead = 1;
-	e->menu.status.gameover = 1;
-	e->stats.data[I_KTOGO] = 0;
-	ft_bzero(&e->player.inventory, sizeof(t_inventory));
-	e->player.inventory.f.ref = FIST;
-	e->player.inventory.weapons[FIST].is_full = 1;
-	e->player.inventory.weapons[FIST].ammo[0] =
-		e->world.armory[FIST].ammo_current;
-	e->player.inventory.weapons[FIST].ammo[1] =
-		e->world.armory[FIST].ammo_magazine;
-	e->player.inventory.weapons[FIST].ammo[2] =
-		e->world.armory[FIST].damage;
-	set_current_wpn(e, &e->player.inventory, FIST);
 }
 
 void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
@@ -78,20 +55,6 @@ void	impact_player(t_env *env, t_impact *shot, t_vtx player, int damage)
 		shot->is_shooting = 0;
 		shot->is_alive = 0;
 	}
-}
-
-void	bot_life(t_env *e, t_wrap_enmy *en, int damage, int wpn)
-{
-	en->brain.health -= damage;
-	if (en->brain.health < 1)
-	{
-		en->a.is_dying = 1;
-		en->a.is_alive = 0;
-		en->player.sound.dead = 1;
-		e->stats.data[I_KILLS]++;
-		e->stats.data[I_K_MAGNUM + wpn]++;
-	}
-	en->a.is_shot = 1;
 }
 
 void	impact_bot(t_env *e, t_impact *shot, t_sector *sector, int damage)
@@ -121,33 +84,6 @@ void	impact_bot(t_env *e, t_impact *shot, t_sector *sector, int damage)
 	shot->is_shooting = shot->is_shooting > 1 ? 0 : 1;
 }
 
-void	check_isimpact(t_env *e, t_impact *b, float vel, int damage)
-{
-	t_player	*p;
-	t_vtx		move;
-	t_sector	*sector;
-
-	move = (t_vtx){0.f, 0.f};
-	p = &b->position;
-	sector = &e->engine.sectors[e->engine.player.sector];
-	move = add_vertex(move, (t_vtx){p->anglecos, p->anglesin});
-	p->velocity.x = p->velocity.x * (1 - vel) + move.x * vel;
-	p->velocity.y = p->velocity.y * (1 - vel) + move.y * vel;
-	if (bot_wall_collision(p, sector))
-	{
-		b->is_alive = 0;
-		b->is_shooting = 0;
-	}
-	impact_bot(e, b, sector, damage);
-	if (b->is_shooting)
-	{
-		p->where.x += p->velocity.x;
-		p->where.y += p->velocity.y;
-	}
-	else
-		ft_bzero(b, sizeof(t_impact));
-}
-
 void	player_bullet(t_env *env, t_character *p, int damage)
 {
 	int			i;
@@ -170,22 +106,9 @@ void	player_bullet(t_env *env, t_character *p, int damage)
 	}
 }
 
-void		new_bullet(t_impact *new, t_player *p, float velocity)
+void	pl_new_kill(t_env *env, t_player *p, t_character *player)
 {
-	ft_bzero(new, sizeof(t_impact));
-	new->position.origin = p->where;
-	new->position.where = p->where;
-	new->position.anglecos = p->anglecos * velocity;
-	new->position.anglesin = p->anglesin * velocity;
-	new->position.sprite = p->sprite;
-	new->is_shooting = 1;
-	new->is_alive = 1;
-	new->position.whereto = p->whereto;
-}
-
-int		pl_new_kill(t_env *env, t_player *p, t_character *player)
-{
-	int	i;
+	int			i;
 	t_weapon	*rwpn;
 
 	i = 0;
@@ -197,10 +120,9 @@ int		pl_new_kill(t_env *env, t_player *p, t_character *player)
 			if (!player->shot[i].is_alive)
 			{
 				new_bullet(&player->shot[i], p, rwpn->velocity);
-				return (1);
+				break ;
 			}
 			i++;
 		}
 	}
-	return (1);
 }

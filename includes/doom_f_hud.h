@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 12:00:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/04 21:08:51 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 02:14:44 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 SDL_Surface *ui_img(char *file, int i, int variable);
 void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc);
-int			set_surface_alpha(SDL_Surface *surface, Uint8 alpha, t_rgba *c);
 
 int         print_hud(t_env *env);
 void		print_inventory(t_env *env);
@@ -30,4 +29,9 @@ void		print_stats(t_env *env, float size, t_vtx w, t_vtx h);
 
 Uint32		mix_colors(t_env *env, Uint32 cr1, Uint32 cr2, float p);
 
+
+void		display_credits(t_env *e);
+void		update_render(t_env *e);
+void		stats_endgame(t_env *e);
+void		draw_inter(t_env *e, int l);
 #endif

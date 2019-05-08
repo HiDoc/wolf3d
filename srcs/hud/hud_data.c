@@ -6,18 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:18:57 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 16:59:16 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 02:13:26 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int		ui_put_fps(t_env *env, int fps)
-{
-	ui_put_data(env, (t_font){RED, "fps : ",
-		env->hud.font.number, (t_vtx){10, 10}, W / 40, -1, fps});
-		return (1);
-}
 
 int		draw_pick_infos(t_env *env, t_wrap_sect *obj, int ref)
 {
@@ -68,49 +61,7 @@ int		print_description_object(t_env *env, int i, int j, int txt)
 	return (1);
 }
 
-void	update_data(t_env *e)
-{
-	t_stats	*s;
-
-	s = &e->stats;
-	s->data[I_KD_PERMN] = (s->data[I_KILLS])
-		? s->data[I_KILLS] / (SDL_GetTicks() / 60000) : 0;
-	s->data[I_KD_RATIO] = (s->data[I_DEATHS])
-		? s->data[I_KILLS] / s->data[I_DEATHS] : s->data[I_KILLS];
-}
-
-void	print_stats(t_env *env, float size, t_vtx w, t_vtx h)
-{
-	int					i;
-	t_vtx				p;
-	char				*stime;
-	float				div_y;
-	const char	*str[NB_STATS - 3] = {D_KILLS, D_DEATHS, D_TIMEPLAY, D_KD_RATIO,
-	D_KD_PERMN, D_K_MAGNUM, D_K_SHOTGUN, D_K_RIFLE, D_K_RPG, D_K_FIST};
-
-	update_data(env);
-	i = -1;
-	while (++i < NB_STATS - 3)
-	{
-		p.x = i < 5 ? w.x : w.y;
-		div_y = (i == 0 || i == 5) ? h.x : div_y + h.y;
-		p.y = H - div_y;
-		if (i != 2)
-			ui_put_data(env, (t_font){GOLD, str[i], env->hud.font.text, p,
-				size, -1, env->stats.data[i + 3]});
-		else
-		{
-			stime = time_to_str(SDL_GetTicks() - ((!env->menu.status.gameover)
-				? env->levels[env->curr_lvl]->tplay : 0));
-			stime = ft_strrjoin((char *)str[i], stime);
-			ui_put_data(env, (t_font){GOLD, stime,
-				env->hud.font.text, p, size, -1, -1});
-			lt_release((void**)&stime);
-		}
-	}
-}
-
-int     ui_txt_inv(t_env *env, int i, int r)
+int		ui_txt_inv(t_env *env, int i, int r)
 {
 	const char	*str[7] = {D_LEVEL, D_SECTOR, D_KTOGO, STRING_19, STRING_20,
 	STRING_21, STRING_22};
@@ -137,8 +88,8 @@ int     ui_txt_inv(t_env *env, int i, int r)
 
 int		ui_icon_data(t_env *env, t_vtx v, int iter)
 {
-	int							data;
-	SDL_Color				c;
+	int				data;
+	SDL_Color		c;
 	const SDL_Color	clrs[4] = {
 		{8, 255, 8, 255}, {42, 204, 242, 255},
 		{242, 204, 42, 255}, {255, 0, 0, 255}};
@@ -162,8 +113,8 @@ int		ui_icon_data(t_env *env, t_vtx v, int iter)
 
 int		ui_draw_msg(t_env *env, int *nb, int *tframe)
 {
-	t_font			d;
-	t_vtx				pos;
+	t_font		d;
+	t_vtx		pos;
 	const char	*string[19] = {
 	STRING_0, STRING_1, STRING_2, STRING_3, STRING_4, STRING_5, STRING_6,
 	STRING_7, STRING_8, STRING_9, STRING_10, STRING_11, STRING_12, STRING_13,
@@ -173,7 +124,8 @@ int		ui_draw_msg(t_env *env, int *nb, int *tframe)
 	{
 		ft_bzero(&d, sizeof(t_font));
 		pos = (t_vtx){W / 128, H - H / 2.5};
-		d = (t_font){WHITE, string[*nb], env->hud.font.text, pos, W / 40, -1, -1};
+		d = (t_font){WHITE, string[*nb],
+			env->hud.font.text, pos, W / 40, -1, -1};
 		ui_put_data(env, d);
 		if (*tframe < 60)
 			++(*tframe);

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:54:49 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 20:49:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 21:31:59 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@
 # define WPN_LOADED		14
 # define NEW_WPN		15
 # define HAVE_WPN		16
-# define TOO_MANY_WPN	17
+# define TOOMANY_WPN	17
 # define WPN_DROPPED	18
 
 # define T_INVENTORY	19

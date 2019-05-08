@@ -6,44 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:32 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 19:31:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:24:52 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-int		check_weapon_type(t_env *env, int ref)
-{
-	int	i;
-
-	i = 0;
-	while (i < GAME_NB_WPN)
-	{
-		if (env->player.inventory.weapons[i].is_full)
-		{
-			if (ref == env->player.inventory.weapons[i].ref)
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int		set_current_wpn(t_env *env, t_inventory *inv, int i)
-{
-	env->player.actions.is_shooting = 0;
-	env->player.actions.is_loading = 0;
-	inv->current = &inv->weapons[i];
-	if (!inv->current)
-		printf("lol i'm segfaulting\n");
-	inv->current->is_full = 1;
-	inv->current->ref = inv->weapons[i].ref;
-	inv->current->ammo_current = &inv->weapons[i].ammo[0];
-	inv->current->ammo_magazine = &inv->weapons[i].ammo[1];
-	inv->current->damage = &inv->weapons[i].ammo[2];
-	env->engine.player.sound.pick = 3;
-	return (1);
-}
 
 int		pick_weapon(t_env *env, t_wrap_sect *obj)
 {
@@ -62,25 +29,14 @@ int		pick_weapon(t_env *env, t_wrap_sect *obj)
 		{
 			rwpn = &env->world.armory[obj->ref];
 			env->hud.inventory.nb_wpn++;
-			inv->weapons[obj->ref].is_full = 1;
-			inv->weapons[obj->ref].ref = obj->ref;
-			inv->weapons[obj->ref].ammo[0] = rwpn->ammo_current;
-			inv->weapons[obj->ref].ammo[1] = rwpn->ammo_magazine;
-			inv->weapons[obj->ref].ammo[2] = rwpn->damage;
+			fill_wpn_inv(&inv->weapons[obj->ref], rwpn, obj);
 			set_current_wpn(env, inv, obj->ref);
+			obj->is_picked = 1;
+			env->engine.player.sound.pick = 3;
 		}
-		else
-		{
-			env->engine.player.sound.nope = 1;
-			return (HAVE_WPN);
-		}
-		obj->is_picked = 1;
-		sector->nb_objects--;
-		env->engine.player.sound.pick = 3;
-		return (NEW_WPN);
+		return ((iter) ? NEW_WPN : HAVE_WPN);
 	}
-	return (drop_wpn(env, env->player.inventory.current)
-	? pick_weapon(env, obj) : TOO_MANY_WPN);
+	return (drop_wpn(env, inv->current) ? pick_weapon(env, obj) : 0);
 }
 
 int		new_current_wpn(t_env *env, t_inventory *inv)
@@ -100,7 +56,7 @@ int		new_current_wpn(t_env *env, t_inventory *inv)
 
 int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 {
-	t_vtx	vertex;
+	t_vtx		vertex;
 	t_sector	*sector;
 	int			ref;
 	int			cur_ref;
@@ -119,7 +75,8 @@ int		drop_wpn(t_env *env, t_wrap_wpn *wpn)
 		env->hud.is_txt = WPN_DROPPED;
 		sector->nb_objects++;
 		env->engine.player.sound.drop = 1;
-		return (ref == cur_ref ? new_current_wpn(env, &env->player.inventory) : 1);
+		return (ref == cur_ref
+			? new_current_wpn(env, &env->player.inventory) : 1);
 	}
 	return (0);
 }

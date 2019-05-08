@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:48:08 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/03 16:42:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:16:06 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@
 ** SECTOR - TYPES
 */
 # define SECT_BASE		0
-# define SECT_BEGIN		1
-# define SECT_MECHA		2
-# define SECT_DEAD		3
-# define SECT_ENDGAME	4
-# define SECT_DOOR		5
-# define SECT_ENDLEVEL	6
+# define SECT_DOOR		1
+# define SECT_ENDLEVEL	2
+# define SECT_BEGIN		3
+# define SECT_MECHA		4
+# define SECT_DEAD		5
+# define SECT_ENDGAME	6
 # define SECT_CYBER		7
 #endif
