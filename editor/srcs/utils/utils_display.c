@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:21:23 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 20:44:03 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:46:49 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void			display_button(int id, char *str, t_env *env)
 
 void			display_editor_dropdown_list(SDL_Rect rect, int dd, t_env *env)
 {
-	t_elem			*elem = env->editor.dropdown[dd].start;
-	int				index = env->editor.dropdown[dd].idx_element;
+	t_elem			*elem;
+	int				index;
 	Uint32			color;
 	int				i;
 

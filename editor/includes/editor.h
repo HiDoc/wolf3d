@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 12:16:20 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:29:06 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,26 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
 int			onsegment(t_pos p, t_pos q, t_pos r);
+
+void		click_obj_del(t_env *env);
+void		click_vtx_del(t_env *env);
+void		click_sct_normal(t_env *env);
+void		click_sct_door(t_env *env);
+void		click_sct_fdoor(t_env *env);
+void		click_sct_hceil(t_env *env);
+void		click_sct_hfloor(t_env *env);
+void		click_sct_gravity(t_env *env);
+void		click_sct_ceil(t_env *env);
+void		click_sct_sky(t_env *env);
+void		click_sct_del(t_env *env);
+void		click_edg_split(t_env *env);
+void		click_edg_del(t_env *env);
+void		click_msc_miscup(t_env *env);
+void		click_msc_miscdown(t_env *env);
+void		click_msc_music(t_env *env);
+void		click_msc_sbtx(t_env *env);
+void		click_msc_music_btn(t_env *env);
+void		click_msc_sbtx_btn(t_env *env);
 
 /*
 **	utils/

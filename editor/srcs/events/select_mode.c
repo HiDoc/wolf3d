@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:12:22 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 15:58:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:24:18 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,238 +14,76 @@
 
 static int		select_input_events(t_env *env)
 {
-		char 				*key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
+	char 				*key;
+	const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
+
+	key = (char *)SDL_GetKeyName(SDL_GetKeyFromScancode(
 		env->data->sdl.event.key.keysym.scancode));
-		const SDL_Scancode	scancode = env->data->sdl.event.key.keysym.scancode;
-
-		if (get_element(E_I_SELEC_HCEIL, env)->clicked == 1)
-		{
-			if (scancode >= 89 && scancode <= 98)
-			{ // numeric keypad
-				key += 7;
-			}
-			if ((scancode >= 89 && scancode <= 98)
-			|| (scancode >= 30 && scancode <= 39))
-			{
-				if ((input_add(E_I_SELEC_HCEIL, key, env)))
-				{
-					env->editor.sct_select->ceil = ft_atoi(
-					get_element(E_I_SELEC_HCEIL, env)->str);
-				}
-			}
-			else if (scancode == 42)
-			{
-				input_del(E_I_SELEC_HCEIL, env);
-			}
-			return (1);
-		}
-		else if (get_element(E_I_SELEC_HFLOOR, env)->clicked == 1)
-		{
-			if (scancode >= 89 && scancode <= 98)
-			{ // numeric keypad
-				key += 7;
-			}
-			if ((scancode >= 89 && scancode <= 98)
-			|| (scancode >= 30 && scancode <= 39))
-			{
-				if ((input_add(E_I_SELEC_HFLOOR, key, env)))
-				{
-					env->editor.sct_select->floor = ft_atoi(
-					get_element(E_I_SELEC_HFLOOR, env)->str);
-				}
-			}
-			else if (scancode == 42)
-			{
-				input_del(E_I_SELEC_HFLOOR, env);
-			}
-			return (1);
-		}
-		else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
-		{
-			if (scancode >= 89 && scancode <= 98)
-			{ // numeric keypad
-				key += 7;
-			}
-			if ((scancode >= 89 && scancode <= 98)
-			|| (scancode >= 30 && scancode <= 39))
-			{
-				if ((input_add(E_I_SELEC_GRAVITY, key, env)))
-				{
-					env->editor.sct_select->gravity = ft_atoi(
-					get_element(E_I_SELEC_GRAVITY, env)->str);
-				}
-			}
-			else if (scancode == 42)
-			{
-				input_del(E_I_SELEC_GRAVITY, env);
-			}
-			return (1);
-		}
-		return (0);
-}
-
-// VRTX /////////////////////////////////////////////////////////////
-
-void		click_obj_del(t_env *env)
-{
-	delete_object(env->editor.obj_select, env);
-	env->editor.obj_select = 0;
-}
-
-// OBJS /////////////////////////////////////////////////////////////
-
-void		click_vtx_del(t_env *env)
-{
-	delete_vertex(env->editor.vtx_select, env);
-	env->editor.vtx_select = 0;
-}
-
-// SECT /////////////////////////////////////////////////////////////
-
-void		click_sct_normal(t_env *env)
-{
-	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
-	get_element(E_B_SELEC_FDOOR, env)->clicked = 0;
-	get_element(E_B_SELEC_NORMAL, env)->clicked = 1;
-	if (env->editor.sct_select->type == 2)
-		env->editor.oneend = 0;
-	env->editor.sct_select->type = 0;
-}
-
-void		click_sct_door(t_env *env)
-{
-	get_element(E_B_SELEC_FDOOR, env)->clicked = 0;
-	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
-	get_element(E_B_SELEC_DOOR, env)->clicked = 1;
-	if (env->editor.sct_select->type == 2)
-		env->editor.oneend = 0;
-	env->editor.sct_select->type = 1;
-}
-
-void		click_sct_fdoor(t_env *env)
-{
-	get_element(E_B_SELEC_NORMAL, env)->clicked = 0;
-	get_element(E_B_SELEC_DOOR, env)->clicked = 0;
-	get_element(E_B_SELEC_FDOOR, env)->clicked = 1;
-	if (env->editor.oneend == 1)
-		display_error_msg("You can not have 2 end system", env);
-	else
+	if (get_element(E_I_SELEC_HCEIL, env)->clicked == 1)
 	{
-		env->editor.oneend = 1;
-		env->editor.sct_select->type = 2;
+		if (scancode >= SCN_CODE_KP_MIN && scancode <= SCN_CODE_KP_MAX)
+		{ // numeric keypad
+			key += 7;
+		}
+		if ((scancode >= SCN_CODE_KP_MIN && scancode <= SCN_CODE_KP_MAX)
+		|| (scancode >= 30 && scancode <= 39))
+		{
+			if ((input_add(E_I_SELEC_HCEIL, key, env)))
+			{
+				env->editor.sct_select->ceil = ft_atoi(
+				get_element(E_I_SELEC_HCEIL, env)->str);
+			}
+		}
+		else if (scancode == 42)
+		{
+			input_del(E_I_SELEC_HCEIL, env);
+		}
+		return (1);
 	}
-}
-
-void		click_sct_hceil(t_env *env)
-{
-	get_element(E_I_SELEC_HCEIL, env)->clicked = 1;
-}
-
-void		click_sct_hfloor(t_env *env)
-{
-	get_element(E_I_SELEC_HFLOOR, env)->clicked = 1;
-}
-
-void		click_sct_gravity(t_env *env)
-{
-	get_element(E_I_SELEC_GRAVITY, env)->clicked = 1;
-}
-
-void		click_sct_ceil(t_env *env)
-{
-	env->editor.sct_select->roof = 1;
-	get_element(E_B_SELEC_CEIL, env)->clicked = 1;
-	get_element(E_B_SELEC_SKY, env)->clicked = 0;
-}
-
-void		click_sct_sky(t_env *env)
-{
-	env->editor.sct_select->roof = 0;
-	get_element(E_B_SELEC_CEIL, env)->clicked = 0;
-	get_element(E_B_SELEC_SKY, env)->clicked = 1;
-}
-
-void		click_sct_del(t_env *env)
-{
-	delete_sector(env->editor.sct_select, env);
-	env->editor.sct_select = 0;
-}
-
-// EDGE /////////////////////////////////////////////////////////////
-
-void			click_edg_split(t_env *env)
-{
-	t_pos		pos;
-
-	pos = (env->editor.edg_select->next)
-	? env->editor.edg_select->next->vtx->pos
-	: env->editor.edg_select->sector->w_vtx_start->vtx->pos;
-	if (pythagore(env->editor.edg_select->vtx->pos, pos) > 10)
+	else if (get_element(E_I_SELEC_HFLOOR, env)->clicked == 1)
 	{
-		create_vertex(
-		get_edge_center(env->editor.edg_select->vtx->pos, pos), env);
-		insert_w_vertex(env->editor.edg_select, env->editor.vertex, env);
+		if (scancode >= 89 && scancode <= 98)
+		{ // numeric keypad
+			key += 7;
+		}
+		if ((scancode >= 89 && scancode <= 98)
+		|| (scancode >= 30 && scancode <= 39))
+		{
+			if ((input_add(E_I_SELEC_HFLOOR, key, env)))
+			{
+				env->editor.sct_select->floor = ft_atoi(
+				get_element(E_I_SELEC_HFLOOR, env)->str);
+			}
+		}
+		else if (scancode == 42)
+		{
+			input_del(E_I_SELEC_HFLOOR, env);
+		}
+		return (1);
 	}
-	else
-		display_error_msg("Edge too small to be split", env);
+	else if (get_element(E_I_SELEC_GRAVITY, env)->clicked == 1)
+	{
+		if (scancode >= 89 && scancode <= 98)
+		{ // numeric keypad
+			key += 7;
+		}
+		if ((scancode >= 89 && scancode <= 98)
+		|| (scancode >= 30 && scancode <= 39))
+		{
+			if ((input_add(E_I_SELEC_GRAVITY, key, env)))
+			{
+				env->editor.sct_select->gravity = ft_atoi(
+				get_element(E_I_SELEC_GRAVITY, env)->str);
+			}
+		}
+		else if (scancode == 42)
+		{
+			input_del(E_I_SELEC_GRAVITY, env);
+		}
+		return (1);
+	}
+	return (0);
 }
-
-void			click_edg_del(t_env *env)
-{
-	delete_edge(env->editor.edg_select, env);
-	env->editor.edg_select = 0;
-}
-
-// MISC /////////////////////////////////////////////////////////////
-
-void			click_msc_miscup(t_env *env)
-{
-	if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-		(env->editor.dropdown[DD_BGAUDIO].idx_element < 0)
-			? env->editor.dropdown[DD_BGAUDIO].idx_element++ : 0;
-	else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_SBTX].idx_element < 0)
-			? env->editor.dropdown[DD_SBTX].idx_element++ : 0;
-}
-
-void			click_msc_miscdown(t_env *env)
-{
-	if (get_element(E_B_SELEC_MUSIC, env)->clicked == 1)
-		(env->editor.dropdown[DD_BGAUDIO].idx_element
-		> -env->editor.dropdown[DD_BGAUDIO].nb_element + 1)
-			? env->editor.dropdown[DD_BGAUDIO].idx_element-- : 0;
-	else if (get_element(E_B_SELEC_SBTX, env)->clicked == 1)
-		(env->editor.dropdown[DD_SBTX].idx_element
-		> -env->editor.dropdown[DD_SBTX].nb_element + 1)
-			? env->editor.dropdown[DD_SBTX].idx_element-- : 0;
-}
-
-void			click_msc_music(t_env *env)
-{
-	get_element(E_B_SELEC_MUSIC, env)->clicked = 1;
-	get_element(E_B_SELEC_SBTX, env)->clicked = 0;
-}
-
-void			click_msc_sbtx(t_env *env)
-{
-	get_element(E_B_SELEC_SBTX, env)->clicked = 1;
-	get_element(E_B_SELEC_MUSIC, env)->clicked = 0;
-}
-
-void			click_msc_music_btn(t_env *env)
-{
-	if (Mix_PlayMusic(env->editor.dropdown[DD_BGAUDIO].current->audio, -1) < 0)
-		ui_error_exit_sdl("Editor error on Mix_PlayMusic");
-	env->editor.dropdown[DD_BGAUDIO].current->clicked = 1;
-}
-
-void			click_msc_sbtx_btn(t_env *env)
-{
-	env->editor.dropdown[DD_SBTX].current->clicked = 1;
-}
-
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 
 static void		select_interface(t_env *env)
 {
@@ -369,7 +207,7 @@ int				select_mode(t_env *env)
 {
 	SDL_Rect		rect = get_element(E_R_RECT, env)->rect;
 	const t_pos		m = env->data->mouse;
-	const SDL_Event event = env->data->sdl.event;
+	const SDL_Event	event = env->data->sdl.event;
 
 	if (env->editor.mouse_drag)
 	{

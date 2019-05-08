@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 12:07:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:43:55 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ static void		display_spaces(t_env *env)
 	SDL_Rect		rect;
 	t_vec			vec;
 	t_sct			*sct;
-	t_circ			circ;
 
 	sct = env->editor.sct_start;
 	while (sct)
@@ -155,12 +154,6 @@ static void		display_spaces(t_env *env)
 		ui_make_line(env->data->surface, vec, C_CYAN);
 		rect = (SDL_Rect){vec.a.x - 4, vec.a.y - 4, 8, 8};
 		ui_make_full_rect(env->data->surface, rect, C_CYAN);
-	}
-	if (env->editor.vtx_hover)
-	{
-		circ = (t_circ){
-			vtx_transform(env->editor.vtx_hover->pos, env), 10, 0xFFFFFFFF};
-		ui_make_circle(circ, env->data);
 	}
 }
 
@@ -190,8 +183,16 @@ static void		display_objects(t_env *env)
 
 void			display_interface(t_env *env)
 {
+	t_circ		circ;
+
 	display_grid(env);
 	display_infos(env);
 	display_spaces(env);
+	if (env->editor.vtx_hover)
+	{
+		circ = (t_circ){
+			vtx_transform(env->editor.vtx_hover->pos, env), 10, C_WHITE};
+		ui_make_circle(circ, env->data);
+	}
 	display_objects(env);
 }

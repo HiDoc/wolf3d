@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 12:18:27 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:52:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int				shared_vtx(t_vtx *vtx, t_sct *current)
 **	Return 0 if an object is not in a sector
 */
 
-int			refresh_object_sct(t_env *env)
+int				refresh_object_sct(t_env *env)
 {
 	t_object	*obj;
 	int			ret;
@@ -95,10 +95,10 @@ int			refresh_object_sct(t_env *env)
 	return (ret);
 }
 
-t_pos		vtx_transform(t_pos pos, t_env *env)
+t_pos			vtx_transform(t_pos pos, t_env *env)
 {
-	const SDL_Rect  rect = get_element(E_R_RECT, env)->rect;
-	t_pos           newpos;
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
+	t_pos			newpos;
 	t_pos			translate;
 	t_pos			origin;
 
@@ -111,14 +111,14 @@ t_pos		vtx_transform(t_pos pos, t_env *env)
 	return (newpos);
 }
 
-t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst)
+t_w_vtx			*w_vtx_lst_end(t_w_vtx *lst)
 {
 	while (lst && lst->next)
 		lst = lst->next;
 	return (lst);
 }
 
-t_sct		*sct_lst_end(t_sct *lst)
+t_sct			*sct_lst_end(t_sct *lst)
 {
 	while (lst && lst->next)
 		lst = lst->next;
@@ -167,7 +167,7 @@ static char		*ft_zstrjoin(char *s1, char *s2)
 ** return : 1 if string not empty, 0 if str is empty
 */
 
-int		input_add(int elem, char *key, t_env *env)
+int				input_add(int elem, char *key, t_env *env)
 {
 	char *tmp;
 
@@ -187,7 +187,7 @@ int		input_add(int elem, char *key, t_env *env)
 ** return : 1 if last char has been deleted, 0 if str is now empty
 */
 
-int		input_del(int elem, t_env *env)
+int				input_del(int elem, t_env *env)
 {
 	int		newsize;
 
@@ -206,7 +206,7 @@ int		input_del(int elem, t_env *env)
 	return (1);
 }
 
-int		ft_strchri(char *str, char c)
+int				ft_strchri(char *str, char c)
 {
 	int count;
 

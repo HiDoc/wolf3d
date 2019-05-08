@@ -6,13 +6,13 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 17:14:02 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 12:16:49 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:45:38 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-int				point_in_rect(t_pos pos, SDL_Rect rect)
+int			point_in_rect(t_pos pos, SDL_Rect rect)
 {
 	return (pos.x >= rect.x && pos.x <= rect.x + rect.w
 	&& pos.y >= rect.y && pos.y <= rect.y + rect.h);

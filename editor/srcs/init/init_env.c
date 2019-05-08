@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 11:41:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:10:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,12 +209,12 @@ static void		init_menu(t_env *env)
 {
 	env->map_name = "new_map";
 	env->menu.state = 1;
-	env->menu.background
-		= ui_load_image("ressources/images/doom-background.jpg");
+	env->menu.background =
+		ui_load_image("ressources/images/doom-background.jpg");
 }
 
 static void		create_dd_button(int id, int dd,
-				int ref, char *str, void (*event_fc)(t_env *), t_env *env)
+		int ref, char *str, void (*event_fc)(t_env *), t_env *env)
 {
 	t_elem		*new;
 
@@ -239,7 +239,7 @@ static void		create_dd_button(int id, int dd,
 }
 
 static void		load_dd_list(char *path, int dd,
-				void (*event_fc)(t_env *), t_env *env)
+		void (*event_fc)(t_env *), t_env *env)
 {
 	char				*name;
 	char				*str;
@@ -256,7 +256,7 @@ static void		load_dd_list(char *path, int dd,
 		if ((de->d_name)[0] != '.')
 		{
 			if (!(name = lt_push(ft_strsub(
-					de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
+								de->d_name, 0, ft_strchri(de->d_name, '+')), ft_memdel)))
 				ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 			ref = ft_atoi(ft_strchr(de->d_name, '+'));
 			create_dd_button(i, dd, ref, name, event_fc, env);
@@ -265,7 +265,7 @@ static void		load_dd_list(char *path, int dd,
 				if (!(str = lt_push(ft_strjoin(path, de->d_name), ft_memdel)))
 					ui_error_exit_sdl("Editor: Out of memory in load_dd_list");
 				if (!(env->editor.dropdown[dd].start->audio =
-						lt_push(Mix_LoadMUS(str), msc_del)))
+							lt_push(Mix_LoadMUS(str), msc_del)))
 					ui_error_exit_sdl("Editor error on Mix_LoadMUS");
 				lt_release((void**)&str);
 			}
