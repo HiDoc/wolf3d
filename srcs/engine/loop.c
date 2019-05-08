@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/06 01:05:45 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 12:51:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int				sdl_render(t_env *e)
 		action_inventory(e, 0, 0);
 	}
 	else
-	{	
+	{
 		// si retire alors segv + a laisser avant dfs sinon segv <3
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
 		dfs(e);
@@ -42,7 +42,7 @@ static int				sdl_render(t_env *e)
 		ui_put_fps(e, e->time.fps);
 		ui_minimap(e);
 		handle_weapon(e);
-		print_hud(e);
+		//print_hud(e);
 	}
 	SDL_UpdateTexture(e->sdl.texture, NULL,
 		e->sdl.surface->pixels, e->sdl.surface->pitch);

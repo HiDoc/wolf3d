@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 14:48:22 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 17:04:40 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ struct						s_engine
 {
 	t_sector		*sectors;
 	unsigned		nsectors;
+	unsigned		nvertex;
 	t_player		player;
 	t_queue			queue;
 	t_minimap		minimap;

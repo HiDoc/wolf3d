@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:32:02 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:04:28 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:39:33 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define TOKEN_VALUE 0x01
 # define TOKEN_VERIF 0x02
 # define TOKEN_STRING 0x04
+# define TOKEN_VERIF_MAX 0x08
 /*
 ** AST function to assign token
 */
@@ -40,6 +41,13 @@ typedef struct s_parsefile	t_parsefile;
 typedef struct s_parseline	t_parseline;
 typedef struct s_token		t_token;
 typedef struct s_op			t_op;
+typedef struct s_op_ft		t_op_ft;
+
+struct s_op_ft
+{
+	unsigned	val;
+	void		(*retrieve)(t_env *, t_parseline *, t_vtx *);
+};
 
 struct	s_op
 {
@@ -68,8 +76,10 @@ struct	s_parseline
 
 struct	s_parsefile
 {
-	int			nvertex;
-	int			nsector;
+	unsigned	nvertex;
+	unsigned	nsector;
+	unsigned	nline;
+	unsigned	pos;
 	t_parseline	*first;
 };
 
@@ -78,7 +88,6 @@ enum e_op_next
 	SPACE,
 	TAB,
 	INT,
-	MINUS,
 	POINT,
 	NEND,
 	NNONE,
@@ -105,8 +114,9 @@ enum e_op_first
 t_token		*new_token(char c, unsigned pos);
 t_parseline	*new_line(unsigned nline, unsigned absolute);
 
-int			reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct);
+int			reader(int fd, t_parsefile *file);
 int			parser(t_env *env, char *filename);
+int			lexer(t_parsefile *file);
 void		print_line(t_parseline *line);
 void		print_file(t_parsefile *file);
 int			free_file(t_parsefile *file);

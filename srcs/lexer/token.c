@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:31:55 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 17:35:31 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:36:43 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ unsigned	token_count_until(t_token *start, unsigned type, unsigned until)
 	iter = start;
 	while (iter)
 	{
-		if (iter->type == (1U << until))
+		if (iter->type == until)
 			break;
-		if (iter->type == (1U << type) &&
-			(iter->next && iter->next->type != (1U << type)))
+		if (iter->type == type &&
+			(iter->next && iter->next->type != type))
 			count++;
 		iter = iter->next;
 	}
@@ -38,10 +38,12 @@ unsigned	token_count(t_parseline *line, unsigned type)
 
 	iter = line->first;
 	count = 0;
+	if (iter && iter->next)
+		iter = iter->next;
 	while (iter)
 	{
-		if (iter->type == (1U << type) &&
-			(iter->next && iter->next->type != (1U << type)))
+		if (iter->type == type &&
+			(iter->next && iter->next->type != type))
 			count++;
 		iter = iter->next;
 	}
@@ -54,10 +56,9 @@ int		verify_token_next(int iter, char c, unsigned which)
 		{(1U << SPACE), "Space", &is_spc, 1},
 		{(1U << TAB), "Tabulation", &is_tab, 1},
 		{(1U << INT), "Integer", &is_dgt, 1},
-		{(1U << MINUS), "Minus", &is_min, 1},
 		{(1U << POINT), "Point", &is_ptn, 1},
 		{(1U << NEND), "End", &is_end, 1},
-		{(1U << NNONE), "None", NULL, 1}};
+		{(1U << NNONE), "None", &no_op_int, 1}};
 
 	if (which == TOKEN_VERIF)
 		return (op_next[iter].verify(c));
@@ -68,21 +69,23 @@ int		verify_token_next(int iter, char c, unsigned which)
 int		verify_token_first(int iter, char c, unsigned which)
 {
 	const t_op	op_first[TOKEN_FRST_MAX] = {
-		{(1U << SECTOR), "Sector", &is_sec, 10},
+		{(1U << SECTOR), "Sector", &is_sec, 100},
 		{(1U << VERTEX), "Vertex", &is_vtx, 2},
 		{(1U << PLAYER), "Player", &is_plr, 4},
 		{(1U << OBJECT), "Object", &is_obj, 5},
-		{(1U << SKYBOX), "Skybox Texture", &is_sky, 3},
+		{(1U << SKYBOX), "Skybox Texture", &is_sky, 1},
 		{(1U << ENTITY), "Entity", &is_ent, 4},
 		{(1U << COMMNT), "Comment", &is_cmt, 100},
 		{(1U << TXTURE), "Texture", &is_txt, 3},
-		{(1U << MUSIC), "Music", &is_mus, 3},
+		{(1U << MUSIC), "Music", &is_mus, 1},
 		{(1U << END), "End", &is_end, 1},
 		{(1U << NONE), "None", &no_op_int, 0},
 		{(1U << ERROR), "Error", &no_op_int, 0}};
 
 	if (which == TOKEN_VERIF)
 		return (op_first[iter].verify(c));
+	else if (which == TOKEN_VERIF_MAX)
+		return (op_first[iter].max_token);
 	else
 		return (op_first[iter].val);
 }
@@ -106,7 +109,7 @@ t_token	*new_token(char c, unsigned pos)
 	}
 	new = ft_memalloc(sizeof(t_token));
 	new->next = NULL;
-	new->type = funct(iter, c, TOKEN_VALUE);
+	new->type = iter;
 	new->pos = pos;
 	new->value = c;
 	return (new);

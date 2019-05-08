@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:09:19 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:17:08 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:55:53 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,41 +21,32 @@ int		set_new_line(t_parseline **line, unsigned *nline, unsigned *pos)
 	return (1);
 }
 
-int		reader(int fd, t_parsefile *file, unsigned *nvtx, unsigned *nsct)
+int		reader(int fd, t_parsefile *file)
 {
 	char		buffer[2];
 	t_parseline	*line;
 	t_token		*iter;
-	unsigned	nline;
-	unsigned	pos;
 
 	line = file->first;
-	nline = 0;
-	pos = 0;
 	while (read(fd, buffer, 1) > 0)
 	{
 		if (line->first == NULL)
 		{
-			line->first = new_token(*buffer, pos);
+			line->first = new_token(*buffer, file->pos++);
 			iter = line->first;
-			if (line->first->type == (1U << SECTOR))
-				line->absolute = *nsct;
-			if (line->first->type == (1U << VERTEX))
-				line->absolute = *nvtx;
-			if (iter->value == 'v')
-				(*nvtx)++;
-			if (iter->value == 's')
-				(*nsct)++;
-			pos++;
+			if (iter->type == SECTOR || iter->type == VERTEX)
+				line->absolute = (iter->type == SECTOR
+				? file->nsector++ : file->nvertex++);
 		}
 		else
 		{
-			iter->next = new_token(*buffer, pos);
+			iter->next = new_token(*buffer, file->pos++);
 			iter = iter->next;
-			pos++;
 		}
 		if (iter->value == '\n')
-			set_new_line(&line, &nline, &pos);
+			set_new_line(&line, &file->nline, &file->pos);
 	}
+	if (!line->first)
+		line->first = new_token('\n', file->pos);
 	return (1);
 }
