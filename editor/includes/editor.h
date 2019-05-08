@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 18:08:14 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:25:22 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ t_vtx		*target_vertex(t_pos pos, t_env *env);
 t_w_vtx		*target_edge(t_pos pos, t_env *env);
 t_sct		*target_sector(t_pos pos, t_env *env);
 t_object	*target_object(t_pos pos, t_env *env);
-int			onsegment(t_pos p, t_pos q, t_pos r);
 
 void		click_obj_del(t_env *env);
 void		click_vtx_del(t_env *env);

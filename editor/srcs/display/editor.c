@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 18:09:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:36:27 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,4 @@ void			editor(t_env *env)
 	display_mode_btn(get_element(E_B_MODE_MOVE, env), env);
 	display_mode_btn(get_element(E_B_MODE_DRAW, env), env);
 	display_mode_btn(get_element(E_B_MODE_ELEM, env), env);
-	// display nb element TO REMOVE
-	rect = (SDL_Rect){30, 150, 0, 20};
-	ui_make_string(rect, "Nb sectors : ", C_WHITE, env->data);
-	rect = (SDL_Rect){170, 150, 0, 20};
-	ui_make_nbrstring(rect, env->nb_sct, C_WHITE, env->data);
-	rect = (SDL_Rect){30, 180, 0, 20};
-	ui_make_string(rect, "Nb vertex : ", C_WHITE, env->data);
-	rect = (SDL_Rect){170, 180, 0, 20};
-	ui_make_nbrstring(rect, env->nb_vtx, C_WHITE, env->data);
-	// display nb frames TO REMOVE
-	rect = (SDL_Rect){300, 20, 0, 20};
-	ui_make_nbrstring(rect, env->data->nb_frames, C_WHITE, env->data);
 }

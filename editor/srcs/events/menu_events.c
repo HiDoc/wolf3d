@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:51:09 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:59:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:24:26 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	keydown_event(t_env *env)
 			key += 7;
 		else if (scancode == SCN_CODE_SPACE)
 			key = "_";
-		else if (scancode >= SCN_CODE_ALPHA_MIN && scancode <= SCN_CODE_ALPHA_MAX)
+		else if (scancode >= SCN_CODE_ALPHA_MIN
+		&& scancode <= SCN_CODE_ALPHA_MAX)
 			*key += 32;
 		if ((scancode >= SCN_CODE_KP_MIN && scancode <= SCN_CODE_KP_MAX)
 		|| (scancode >= SCN_CODE_ALPHA_MIN && scancode <= SCN_CODE_ALPHA_MAX)
@@ -42,7 +43,7 @@ static int	keydown_event(t_env *env)
 
 int			menu_events(t_env *env)
 {
-	t_pos	m = env->data->mouse;
+	const t_pos		m = env->data->mouse;
 
 	if (env->data->sdl.event.type == SDL_MOUSEBUTTONDOWN)
 	{

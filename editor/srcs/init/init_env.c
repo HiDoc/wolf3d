@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:10:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:30:21 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ static void		init_editor(t_env *env)
 	env->editor.display_fc = display_selection;
 }
 
-void		init_env(t_env *env, t_data *data)
+void			init_env(t_env *env, t_data *data)
 {
 	ft_bzero(env, sizeof(t_env));
 	env->data = data;

@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:53:34 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 18:20:13 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int				draw_mode(t_env *env)
 				create_w_vertex(env->editor.vtx_hover, env);
 			}
 		}
-		// click on object button
 		wall_txtr = env->editor.dropdown[DD_WALLTX].start;
 		while (wall_txtr)
 		{

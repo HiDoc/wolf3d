@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 22:51:52 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:09:07 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:33:12 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		min(int a, int b)
 	return (a < b ? a : b);
 }
 
-int				onsegment(t_pos p, t_pos q, t_pos r)
+static int		onsegment(t_pos p, t_pos q, t_pos r)
 {
 	if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x)
 	&& q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y))

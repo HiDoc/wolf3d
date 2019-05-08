@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/05/08 18:07:55 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/08 18:19:47 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,8 +102,10 @@ SRC_NAME 	=	main.c \
 				click_obj_panel.c \
 				click_vtx_panel.c \
 				click_sct_panel.c \
+				click_sct_panel2.c \
 				click_edg_panel.c \
 				click_msc_panel.c \
+				click_msc_panel2.c \
 				export_map.c \
 				export_sectors.c \
 				export_objects.c \
