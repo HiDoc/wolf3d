@@ -6,6 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/05/08 21:35:34 by sgalasso         ###   ########.fr       */
 /*   Updated: 2019/05/08 19:11:39 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -82,5 +83,4 @@ void		ld_img(t_env *env)
 	init_consumable(env);
 	init_character(&env->player);
 	env->engine.player.sprite = ui_img("bullet/", 0, 0);
-	env->skybox.sb = load_image("rsrc/skybox/bluesky+0.jpg");
 }
