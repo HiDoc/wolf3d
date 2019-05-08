@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 01:00:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:56:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int print_hud(t_env *env)
 	{
 		last = clock();
 		print_wpn_hud(env, player->inventory.current);
-		printf("wpn : %ld\n", clock() - last);
+		//printf("wpn : %ld\n", clock() - last);
 	}
 
 	last = clock();
@@ -145,19 +145,19 @@ int print_hud(t_env *env)
 	bloc = &env->hud.faces[index];
 	if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
 		doom_error_exit("Doom_nukem: blit error on print_hud");
-	printf("head : %ld\n", clock() - last);
+	//printf("head : %ld\n", clock() - last);
 
 	last = clock();
 	draw_hp_bars(env, &env->hud.bar[0], player->max_health, player->health);
 	draw_hp_bars(env, &env->hud.bar[1], player->max_shield, player->shield);
-	printf("hp : %ld\n", clock() - last);
+	//printf("hp : %ld\n", clock() - last);
 
 	last = clock();
 	print_pad(env);
-	printf("pad : %ld\n", clock() - last);
+	//printf("pad : %ld\n", clock() - last);
 
 	last = clock();
 	print_cross(env);
-	printf("cross : %ld\n", clock() - last);
+	//printf("cross : %ld\n", clock() - last);
 	return (1);
 }
