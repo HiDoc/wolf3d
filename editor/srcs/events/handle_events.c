@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:59:36 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 15:24:13 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 12:11:42 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,10 @@ int				handle_events(t_env *env)
 		if (ui_mouseenter(m.x, m.y, get_element(E_B_SAVE, env)->rect))
 		{
 			if (env->editor.drawing)
-			{
 				display_error_msg("There is an open sector", env);
-				return (1);
-			}
-			// button save
-			/*if (edge_overlap())
-				display_error_msg("Export failed, edges are overlapping", env);
-			else *//*if (sector_overlap(env))
-				display_error_msg("Export failed, sectors are overlapping", env);
 			else if (!refresh_object_sct(env))
 				display_error_msg("Export failed, object out of sector", env);
-			else */if (!env->editor.onespawn)
+			else if (!env->editor.onespawn)
 				display_error_msg("Export failed, no player spawn", env);
 			else
 			{
@@ -123,6 +115,7 @@ int				handle_events(t_env *env)
 			}
 			get_element(E_B_MODE_SELECT, env)->clicked = 1;
 			env->editor.mode = select_mode;
+			env->editor.display_fc = display_selection;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_DRAW, env)->rect))
@@ -134,6 +127,7 @@ int				handle_events(t_env *env)
 			}
 			get_element(E_B_MODE_DRAW, env)->clicked = 1;
 			env->editor.mode = draw_mode;
+			env->editor.display_fc = display_drawing;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_MOVE, env)->rect))
@@ -145,6 +139,7 @@ int				handle_events(t_env *env)
 			}
 			get_element(E_B_MODE_MOVE, env)->clicked = 1;
 			env->editor.mode = move_mode;
+			env->editor.display_fc = 0;
 			return (1);
 		}
 		else if (ui_mouseenter(m.x, m.y, get_element(E_B_MODE_ELEM, env)->rect))
@@ -156,6 +151,7 @@ int				handle_events(t_env *env)
 			}
 			get_element(E_B_MODE_ELEM, env)->clicked = 1;
 			env->editor.mode = elem_mode;
+			env->editor.display_fc = display_element;
 			return (1);
 		}
 	}

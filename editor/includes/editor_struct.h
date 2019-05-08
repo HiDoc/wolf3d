@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 18:25:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 21:01:18 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 11:39:37 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ struct					s_editor
 	time_t			timestamp;
 	char			*error_msg;
 	t_dropdown		dropdown[12];
+	void			(*display_fc)(t_env *);
 	int				(*mode)(t_env *);
 	int				mouse_drag;
 	t_pos			new_pos;

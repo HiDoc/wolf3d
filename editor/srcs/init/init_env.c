@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:24:28 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 22:35:54 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 11:41:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void		init_editor_elems(t_env *env)
 	create_element(E_B_SAVE, BUTTON, EDITOR, rect, env);
 	rect = (SDL_Rect){600, 20, 50, 50};
 	create_element(E_B_MODE_SELECT, BUTTON, EDITOR, rect, env);
-	get_element(E_B_MODE_SELECT, env)->color = C_GREEN;
+	get_element(E_B_MODE_SELECT, env)->clicked = 1;
 	get_element(E_B_MODE_SELECT, env)->image =
 		ui_load_image("ressources/images/icons/cursor.png");
 	rect = (SDL_Rect){650, 20, 50, 50};
@@ -294,6 +294,7 @@ static void		init_editor(t_env *env)
 	load_dd_list("ressources/objects/specials", DD_SPEC, 0, env);
 	env->editor.grid_scale = 5;
 	env->editor.mode = select_mode;
+	env->editor.display_fc = display_selection;
 }
 
 void		init_env(t_env *env, t_data *data)

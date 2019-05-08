@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 22:32:33 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 12:07:00 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ static void		display_spaces(t_env *env)
 	sct = env->editor.sct_start;
 	while (sct)
 	{
-		if (sector_in_rect(sct, get_element(E_R_RECT, env)->rect, env)
-		&& sct != env->editor.sct_hover)
+		rect = get_element(E_R_RECT, env)->rect;
+		if (sector_in_rect(sct, rect, env) && sct != env->editor.sct_hover)
 			display_sector(sct, env);
 		sct = sct->next;
 	}

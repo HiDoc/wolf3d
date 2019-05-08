@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 11:58:03 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 22:30:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 11:45:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ void			editor(t_env *env)
 		return ;
 	}
 	display_interface(env);
-	if (env->editor.mode == select_mode)
-		display_selection(env);
-	else if (env->editor.mode == draw_mode)
-		display_drawing(env);
-	else if (env->editor.mode == elem_mode)
-		display_element(env);
+	if (env->editor.display_fc)
+		env->editor.display_fc(env);
 	display_button(E_B_SAVE, "SAVE", env);
 	rect = (SDL_Rect){20, 65, 0, 25};
 	ui_make_string(rect, env->map_name, C_WHITE, env->data);

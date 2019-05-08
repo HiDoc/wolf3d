@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 17:13:09 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 12:16:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,7 @@ void		export_map(t_env *env);
 float		pointside(t_pos p, t_pos p0, t_pos p1);
 t_pos		get_edge_center(t_pos a, t_pos b);
 float		pythagore(t_pos p1, t_pos p2);
-int			sector_overlap(t_env *env);
 int			point_in_rect(t_pos pos, SDL_Rect rect);
-int			poscmp(t_pos a, t_pos b);
 
 void		display_updown(int id_up, int id_down, t_env *env);
 void		display_labeled_input(int id, char *str, t_env *env);
@@ -151,7 +149,6 @@ int			input_add(int elem, char *key, t_env *env);
 int			input_del(int elem, t_env *env);
 int			ft_strchri(char *str, char c);
 t_elem		*get_element(int id, t_env *env);
-char		*ft_zstrjoin(char *s1, char *s2);
 int			vertex_in_sector(t_sct *sector, t_pos pos);
 
 #endif
