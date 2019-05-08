@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 19:48:10 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 20:04:37 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:17:43 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	rdr_del(void **ap)
 {
-	SDL_Renderer      *renderer;
+	SDL_Renderer	*renderer;
 
 	renderer = (SDL_Renderer *)(*ap);
 	if (ap && *ap)

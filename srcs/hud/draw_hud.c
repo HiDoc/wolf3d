@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 16:15:20 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:57:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 	-1, *env->player.inventory.current->ammo_magazine});
 }
 
-static void	check_object_stack(t_env *env, t_wrap_inv *pack, t_ixy ref)
+static void	check_object_stack(t_env *e, t_wrap_inv *pack, t_ixy ref)
 {
-	t_bloc	*bloc;
+	t_bloc	*b;
 
-	bloc = &env->hud.objects[ref.y];
+	b = &e->hud.objects[ref.y];
 	if ((ref.y != 0 && pack[ref.y - 1].is_full)
 		|| (ref.y == 0 && check_object_type(pack, ref.x, 6) > -1))
 	{
-		if ((SDL_BlitScaled(bloc->bg_fill, NULL,
-				env->sdl.surface, &bloc->rect)) < 0)
+		if ((SDL_BlitScaled(b->bg_fill, NULL,
+				e->sdl.surface, &b->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-		if ((SDL_BlitScaled(env->world.objects[ref.x].sprite, NULL,
-				env->sdl.surface, &bloc->rect)) < 0)
+		if ((SDL_BlitScaled(e->world.objects[ref.x].sprite, NULL,
+				e->sdl.surface, &b->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
 	}
 	else
 	{
-		if ((SDL_BlitScaled(bloc->bg_empty, NULL, env->sdl.surface, &bloc->rect)) < 0)
+		if ((SDL_BlitScaled(b->bg_empty, NULL, e->sdl.surface, &b->rect)) < 0)
 			doom_error_exit("Doom_nukem: blit error on check_object_stack");
 	}
 }
@@ -114,8 +114,6 @@ int			print_hud(t_env *env)
 	index = (h > 50) ? (int)(h / 50) - 1 : 0;
 	bloc = &env->hud.faces[index];
 	draw_img(env, bloc->sprite, bloc);
-	// if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
-	// 	doom_error_exit("Doom_nukem: blit error on print_hud");
 	draw_hp_bars(env, &env->hud.bar[0], player->max_health, player->health);
 	draw_hp_bars(env, &env->hud.bar[1], player->max_shield, player->shield);
 	print_pad(env);

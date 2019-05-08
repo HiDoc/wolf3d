@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_menu.c                                        :+:      :+:    :+:   */
+/*   time_to_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:46 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 22:36:46 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 12:39:46 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void convert_time(int *hour,int *min,int *sec, Uint32 timems)
+void	convert_time(int *hour, int *min, int *sec, Uint32 timems)
 {
 	timems /= 1000;
 	*sec = timems % 60;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:23:15 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/07 16:07:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:39:20 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ void	init_env(int ac, char **av, t_env *env)
 	initialisation_cursor();
 
 	init_rsrc(env, -1);
-	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
+	init_enemies(env, (t_brain){0, 0, 0, 0, 0, 0, 0, 0, {0, 0}}, -1);
 	printf("time enemies: %u\n", SDL_GetTicks());
 }

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:31:30 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 23:04:44 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:32:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,22 @@ void		bot_status(t_env *env, t_vtx player,
 	where = (t_vtx){e->player.where.x, e->player.where.y};
 	if (!env->player.actions.is_invisible && !e->a.is_dying && !e->a.is_shot)
 	{
-		e->a.is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
-		&& keycodes[SDL_SCANCODE_LSHIFT]);
-		e->a.has_detected = (dist_vertex(player, where) < e->brain.dist_detect
-		&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
+		if (!e->a.is_alerted)
+			e->a.is_alerted = (dist_vertex(player, where) < e->brain.dist_alert
+				&& keycodes[SDL_SCANCODE_LSHIFT]);
+		if (!e->a.has_detected)
+			e->a.has_detected = (dist_vertex(player, where) < e->brain.dis_detec
+			&& !keycodes[SDL_SCANCODE_LCTRL] && !keycodes[SDL_SCANCODE_RCTRL]);
 		e->a.close_seen = (dist_vertex(player, where) < e->brain.dist_close);
-		// if (e->a.is_alerted)
-		// {
-			if (dist_vertex(player, where) > e->brain.dist_player)
-			{
-				bot_move(env, player, e, e->brain.velocity);
-				e->a.is_moving = 1;
-				e->a.is_shooting = 0;
-			e->a.is_shooting = 1;
-			}
-		// }
-		// if (e->a.has_detected || e->a.close_seen)
+		// printf("dist en pl %f\n", dist_vertex(player, where));
+		if ((e->a.is_alerted || e->a.has_detected)
+			&& dist_vertex(player, where) > e->brain.dist_player)
+		{
+			bot_move(env, player, e, e->brain.velocity);
+			e->a.is_moving = 1;
+			e->a.is_shooting = 0;
+		}
+		e->a.is_shooting = e->a.has_detected || e->a.close_seen;
 	}
 	else
 		e->a.is_shooting = 0;

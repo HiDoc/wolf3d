@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 20:32:27 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 23:03:21 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:06:33 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DOOM_F_GAMEPLAY_H
 
 int			god_mod(t_env *env);
+void		gameover(t_env *e);
 
 int			access_object(t_env *env, t_sector *sector);
 int			pick_object(t_env *env, t_wrap_sect *obj);
@@ -63,9 +64,12 @@ void		bot_action(t_env *env, t_sector *sector);
 t_player	bot_angle(t_player e, t_player src);
 t_vtx		bot_orientation(t_player *bot, t_vctr p_where, float speed);
 void		bot_check_friend(t_wrap_enmy *enemy, t_wrap_enmy *next);
-int			pl_new_kill(t_env *env, t_player *p, t_character *player);
+void		pl_new_kill(t_env *env, t_player *p, t_character *player);
 void		player_bullet(t_env *env, t_character *p, int damage);
 void		enemies_frames(t_env *env, t_sector *sector);
+void		bot_life(t_env *e, t_wrap_enmy *en, int damage, int wpn);
+void		check_isimpact(t_env *e, t_impact *b, float vel, int damage);
+void		impact_bot(t_env *e, t_impact *shot, t_sector *sector, int damage);
 
 int			init_doors_images(t_env *env);
 int			door_neighbors(t_engine *e, t_vtx *vertex, int n);

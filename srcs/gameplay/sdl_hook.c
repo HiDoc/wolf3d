@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:52 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 22:43:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 12:32:13 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sdl_keyhook_menu(t_env *e, SDL_Event ev, const Uint8 *k)
 	}
 }
 
-int	sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
+int		sdl_keyhook_inventory(t_env *env, SDL_Event ev, const Uint8 *keycodes)
 {
 	t_uinv	*ui;
 	int		*k;

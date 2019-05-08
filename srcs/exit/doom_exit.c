@@ -6,23 +6,11 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:43:01 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 20:10:58 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:17:29 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-/*void	fds_del(void **ap)
-{
-	int	*fd;
-
-	fd = (int *)(*ap);
-	if (ap && *ap)
-	{
-		close(*fd);
-		fd = 0;
-	}
-}*/
 
 void	doom_release(void)
 {

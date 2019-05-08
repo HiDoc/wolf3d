@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 16:17:28 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 15:26:36 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:54:37 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	sound_player_life(t_env *e, t_sd_stat *s)
 		Mix_HaltChannel(CHAN_LOWLIFE);
 	(s->dead) ? play_chunk(-1, e->sound.p_sound[P_DEATH], 0) : 0;
 	s->dead = 0;
-	(s->hit > 2 && !s->dead)
-		? play_chunk(-1, e->sound.p_sound[P_HIT], 0) : 0;
+	if (s->hit > 2 && !s->dead)
+		play_chunk(-1, e->sound.p_sound[P_HIT], 0);
 	(s->hit > 2) ? s->hit = 0 : 0;
 }
 
@@ -34,7 +34,7 @@ void		sd_stat_player(t_engine *e, t_vision *v, t_sd_stat *s)
 	(s->o_veloc && !e->player.velocity.z) ? s->jump = 3 : 0;
 	s->move = (!s->duck && !s->jump
 	&& dist_vertex((t_vtx){e->player.origin.x, e->player.origin.y},
-	(t_vtx){e->player.where.x, e->player.where.y})) ? 1 : 0;
+	(t_vtx){e->player.where.x, e->player.where.y}));
 	(s->move && s->run) ? s->move = 0 : 0;
 }
 
@@ -73,8 +73,6 @@ void		sound_player(t_env *e, t_sd_stat *s)
 	(s->medkit) ? play_chunk(-1, e->sound.p_sound[P_HEALTH], 0) : 0;
 	s->medkit = 0;
 	wpn = e->player.inventory.current;
-	(s->shootin) ? play_chunk(-1, e->sound.shot[wpn->ref], 0) : 0;
-	s->shootin = 0;
 	if (wpn->ref != FIST)
 		(s->loadin) ? play_chunk(-1, e->sound.reload[wpn->ref], 0) : 0;
 	s->loadin = 0;

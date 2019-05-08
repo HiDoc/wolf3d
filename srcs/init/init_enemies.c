@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:27:29 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/05 13:11:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:39:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,22 @@ void				init_enemies(t_env *env, t_brain b, int i)
 	e = env->world.enemies;
 	while (++i < WORLD_NB_ENEMIES)
 		env->world.enemies[i].ref = ref[i];
-	b = (t_brain){100, 0, 5, 0, 5, 700, 100, 70, 0.15f, {10, 0}};
+	b = (t_brain){150, 5, 0, 5, 3000, 2000, 300, 0.15f, {10, 0}};
 	enemy_set("enemies/monster+0", &e[MONSTER], b);
-	b = (t_brain){100, 0, 100, 0, 100, 700, 100, 70, 0.1f, {10, 0}};
+	b = (t_brain){150, 100, 0, 3000, 2000, 300, 70, 0.1f, {10, 0}};
 	enemy_set("enemies/soldier+1", &e[SOLDIER], b);
-	b = (t_brain){200, 0, 150, 0, 100, 700, 500, 100, 0.1f, {12, 0}};
+	b = (t_brain){200, 150, 0, 3000, 2000, 500, 100, 0.1f, {12, 0}};
 	enemy_set("enemies/roger+2", &e[ROGER], b);
-	b = (t_brain){70, 0, 5, 0, 3, 800, 800, 500, 0.25f, {10, 0}};
+	b = (t_brain){70, 5, 0, 3, 800, 800, 500, 0.25f, {10, 0}};
 	enemy_set("enemies/lostsoul+3", &e[LOSTSOUL], b);
-	b = (t_brain){250, 0, 100, 0, 20, 900, 700, 400, 0.2f, {10, 0}};
+	b = (t_brain){250, 100, 0, 20, 900, 700, 400, 0.2f, {10, 0}};
 	enemy_set("enemies/painelemental+4", &e[PAIN_ELEM], b);
-	b = (t_brain){400, 0, 5, 0, 7, 1000, 400, 100, 0.1f, {15, 0}};
+	b = (t_brain){400, 5, 0, 7, 1000, 400, 100, 0.1f, {15, 0}};
 	enemy_set("enemies/pinkboy+5", &e[PINKBOY], b);
-	b = (t_brain){3000, 0, 300, 0, 200, 700, 700, 300, 0.05f, {20, 0}};
+	b = (t_brain){3000, 300, 0, 200, 700, 700, 300, 0.05f, {20, 0}};
 	enemy_set("enemies/-cyberdemon+6", &e[CYBERDEMON], b);
-	b = (t_brain){1000, 0, 200, 0, 100, 600, 300, 300, 0.1f, {20, 0}};
+	b = (t_brain){1000, 200, 0, 100, 600, 300, 300, 0.1f, {20, 0}};
 	enemy_set("enemies/boss+7", &e[BOSS], b);
-	b = (t_brain){1000, 0, 200, 0, 50, 600, 300, 200, 0.2f, {10, 0}};
+	b = (t_brain){1000, 200, 0, 50, 600, 300, 200, 0.2f, {10, 0}};
 	enemy_set("enemies/boss+7/midlife", &e[BOSS_MIDL], b);
 }

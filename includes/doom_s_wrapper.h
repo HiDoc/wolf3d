@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 14:01:35 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/05 18:30:29 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:09:01 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ struct						s_actions
 struct						s_brain
 {
 	int			health;
-	int			shield;
 	int			scop;
 	float		yaw;
 	float		dist_player; /* bot dist limit from player */
 	float		dist_alert; /* player running */
-	float		dist_detect; /* player normal status */
+	float		dis_detec; /* player normal status */
 	float		dist_close; /* player ducked */
 	float		velocity;
 	t_l_float	size; /* sprite size */

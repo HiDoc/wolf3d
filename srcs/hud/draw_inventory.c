@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:17:54 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/06 23:58:35 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:02:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void		fill_icon(t_env *env, int iter)
 {
-	t_bloc	*bloc;
+	t_bloc	*b;
 
-	bloc = &env->hud.inventory.icons[iter];
-	draw_img(env, bloc->sprite, bloc);
-	ui_icon_data(env, (t_vtx){bloc->rect.x + W / 15, bloc->rect.y + H / 60}, iter);
+	b = &env->hud.inventory.icons[iter];
+	draw_img(env, b->sprite, b);
+	ui_icon_data(env, (t_vtx){b->rect.x + W / 15, b->rect.y + H / 60}, iter);
 }
 
 static void		fill_wpn(t_env *env, int iter)
@@ -65,18 +65,16 @@ static void		fill_bloc(t_env *env, int i)
 {
 	t_bloc		*b;
 	t_bloc		fill;
-	SDL_Rect	rect;
 
 	b = &env->hud.inventory.objects[i];
 	if (env->player.inventory.objects[i].is_full)
 	{
 		draw_img(env, b->bg_fill, b);
-		rect = (SDL_Rect){b->rect.x + b->rect.w / 16,
-		b->rect.y + b->rect.w / 16,
-		b->rect.w - b->rect.w / 10,
-		b->rect.w - b->rect.w / 10};
 		ft_bzero(&fill, sizeof(t_bloc));
-		fill.rect = rect;
+		fill.rect = (SDL_Rect){b->rect.x + b->rect.w / 16,
+			b->rect.y + b->rect.w / 16,
+			b->rect.w - b->rect.w / 10,
+			b->rect.w - b->rect.w / 10};
 		draw_img(env, b->sprite, &fill);
 		fill.rect = b->cross.rect;
 		ui_put_data(env, (t_font){WHITE, S_CROSS, env->hud.font.text,
@@ -91,7 +89,7 @@ static void		fill_bloc(t_env *env, int i)
 		draw_img(env, b->bg_empty, b);
 }
 
-void		print_inventory(t_env *env)
+void			print_inventory(t_env *env)
 {
 	t_bloc	*bloc;
 	int		iter;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:56:37 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 02:30:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 13:11:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,66 +24,7 @@ static void		current_sprite(t_bloc *bloc, char *file, int i)
 	lt_release((void**)&sprite);
 }
 
-// static void	thread_current_sprite(t_bloc *child, char *path, int line, int size)
-// {
-// 	int	i;
-
-// 	i = line;
-// 	while (i < size)
-// 	{
-// 		current_sprite(&child[i], path, i);
-// 		i += NB_THREAD_IMG;
-// 	}
-// }
-
-// static void		set_thread(t_weapon *mother, t_bloc *child, char *path, int size)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < NB_THREAD_IMG)
-// 	{
-// 		mother->threads[i].mother = mother;
-// 		mother->threads[i].child = child;
-// 		mother->threads[i].path = path;
-// 		mother->threads[i].size = size;
-// 		mother->threads[i].nb = i;
-// 		i++;
-// 	}
-// }
-
-// static void		*launch_thread(void *arg)
-// {
-// 	t_thread	*tmp;
-
-// 	tmp = (t_thread *)arg;
-// 	thread_current_sprite(tmp->child, tmp->path, tmp->nb, tmp->size);
-// 	pthread_exit(NULL);
-// }
-
-// static void		init_thread(t_weapon *mother, t_bloc *child, char *path, int size)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	set_thread(mother, child, path, size);
-// 	while (i < NB_THREAD_IMG)
-// 	{
-// 		if (pthread_create(&mother->threads[i].th, NULL,
-// 		launch_thread, &mother->threads[i]))
-// 			doom_error_exit("Doom_nukem error on pthread_create");
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < NB_THREAD_IMG)
-// 	{
-// 		if (pthread_join(mother->threads[i].th, NULL))
-// 			doom_error_exit("Doom_nukem error on pthread_join");
-// 		i++;
-// 	}
-// }
-
-static t_bloc *weapon_fill(char *path, int size)
+static t_bloc	*weapon_fill(char *path, int size)
 {
 	t_bloc	*weapons;
 	int		i;
@@ -92,11 +33,10 @@ static t_bloc *weapon_fill(char *path, int size)
 	i = -1;
 	while (++i < size)
 		current_sprite(&weapons[i], path, i);
-	// init_thread(mother, weapons, path, size);
 	return (weapons);
 }
 
-static void     weapon_sprites(t_weapon *weapon, char *name)
+static void		weapon_sprites(t_weapon *weapon, char *name)
 {
 	char	*r_path;
 	char	*s_path;
