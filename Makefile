@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/08 22:37:25 by fmadura           #+#    #+#              #
-#    Updated: 2019/05/08 23:23:33 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/08 23:37:48 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -149,6 +149,7 @@ SRC_NAME 	= main.c \
 			struct_drawline.c \
 			struct_hud_img.c \
 			struct_oline.c \
+			struct_cwall.c \
 			render_wall.c \
 			time_to_str.c \
 			transformation.c \
