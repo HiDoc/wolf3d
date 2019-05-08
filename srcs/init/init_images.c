@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:23:47 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 02:27:33 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:35:34 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,6 @@ static void	init_character(t_character *new)
 	new->max_shield = 200;
 }
 
-static void	init_skybox_img(t_env *env)
-{
-	env->skybox.sb = load_image("rsrc/skybox/bluesky+0.jpg");
-}
-
 void		load_images(t_env *env)
 {
 	init_pack_img(env->world.surfaces.walls, "walls/", WORLD_NB_WALLS, 1);
@@ -86,6 +81,5 @@ void		load_images(t_env *env)
 	init_pack_img(env->world.surfaces.img_menu, "menu/", NB_IMG_MENU, 0);
 	init_consumable(env);
 	init_character(&env->player);
-	init_skybox_img(env);
 	env->engine.player.sprite = ui_img("bullet/", 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 16:07:41 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 20:26:50 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 21:32:28 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static int      point_in_circle(t_vtx vtx, t_circle circle)
 {
 	return (sqrt(pow(vtx.x - circle.x, 2) + pow(vtx.y - circle.y, 2))
-	< circle.radius);
+		< circle.radius);
 }
 
 SDL_Surface     *rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
-		SDL_Surface *dst, t_vtx origin, t_env *env)
+		SDL_Surface *dst, t_vtx origin, t_circle circle, t_env *env)
 {
 	const t_player  plr = env->engine.player;
 	const t_vtx     c = {src_rect.w / 2, src_rect.h / 2};
@@ -29,11 +29,6 @@ SDL_Surface     *rotate_surface(SDL_Rect src_rect, SDL_Surface *src,
 	Uint32          color;
 	const float     angle = -plr.angle;
 	t_vtx			vtx;
-	t_circle		circle;
-
-	circle = (t_circle){
-	(MINIMAP_SIZE) / 2 + origin.x, (MINIMAP_SIZE) / 2 + origin.y,
-	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	y = 0;
 	while (y < src_rect.h)
@@ -73,29 +68,20 @@ static t_edge		rotate_edge(t_player player, t_edge v)
 	const float psin = -player.anglesin;
 	t_edge      edge;
 
-	edge.v1 = (t_vtx){
-		v.v1.x * psin - v.v1.y * pcos,
-			v.v1.x * pcos + v.v1.y * psin};
-
-	edge.v2 = (t_vtx){
-		v.v2.x * psin - v.v2.y * pcos,
-			v.v2.x * pcos + v.v2.y * psin};
-
+	edge.v1 = (t_vtx){v.v1.x * psin - v.v1.y * pcos,
+		v.v1.x * pcos + v.v1.y * psin};
+	edge.v2 = (t_vtx){v.v2.x * psin - v.v2.y * pcos,
+		v.v2.x * pcos + v.v2.y * psin};
 	return (edge);
 }
 
-static void			draw_objects(SDL_Surface *surface, t_engine *engine, t_env *env)
+static void			draw_objects(SDL_Surface *surface, t_engine *engine,
+					t_circle circle)
 {
-	const t_minimap     *minimap = &(env->engine.minimap);
 	t_wrap_sect		*obj;
 	SDL_Rect		rect;
 	t_edge			edge;
 	unsigned int	i;
-	t_circle		circle;
-
-	circle = (t_circle){
-	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
-	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	i = 0;
 	while (i < engine->nsectors)
@@ -103,23 +89,13 @@ static void			draw_objects(SDL_Surface *surface, t_engine *engine, t_env *env)
 		obj = engine->sectors[i].head_object;
 		while (obj)
 		{
-			// translation
 			edge = translate_edge(engine->player.where, obj->vertex, obj->vertex);
-
-			// rotation
 			edge = rotate_edge(engine->player, edge);
-
-			// scale
 			rect = (SDL_Rect){
-				edge.v1.x * COEF_MINIMAP, edge.v1.y * COEF_MINIMAP,
-					10, 10};
-
-			// origin
+				edge.v1.x * COEF_MINIMAP, edge.v1.y * COEF_MINIMAP,10, 10};
 			rect = (SDL_Rect){
 				rect.x + engine->minimap.origin.x + MINIMAP_SIZE / 2 - 5,
-					rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5,
-					10, 10};
-	
+				rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5,10, 10};
 			if (point_in_circle((t_vtx){rect.x, rect.y}, circle))
 				ui_draw_rect(surface, rect, C_GREEN);
 			obj = obj->next;
@@ -128,19 +104,14 @@ static void			draw_objects(SDL_Surface *surface, t_engine *engine, t_env *env)
 	}
 }
 
-static void			draw_entities(SDL_Surface *surface, t_engine *engine, t_env *env)
+static void			draw_entities(SDL_Surface *surface, t_engine *engine,
+					t_circle circle)
 {
-	const t_minimap     *minimap = &(env->engine.minimap);
 	t_wrap_enmy		*enemy;
 	SDL_Rect		rect;
 	t_edge			edge;
 	unsigned int	i;
 	t_vtx			enmy_where;
-	t_circle		circle;
-
-	circle = (t_circle){
-	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
-	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	i = 0;
 	while (i < engine->nsectors)
@@ -149,24 +120,13 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine, t_env *env)
 		while (enemy)
 		{
 			enmy_where = (t_vtx){enemy->player.where.x, enemy->player.where.y};
-			// translation
-			edge = translate_edge(engine->player.where,
-					enmy_where, enmy_where);
-
-			// rotation
+			edge = translate_edge(engine->player.where, enmy_where, enmy_where);
 			edge = rotate_edge(engine->player, edge);
-
-			// scale
 			rect = (SDL_Rect){
-				edge.v1.x * COEF_MINIMAP, edge.v1.y * COEF_MINIMAP,
-					10, 10};
-
-			// origin
+				edge.v1.x * COEF_MINIMAP, edge.v1.y * COEF_MINIMAP, 10, 10};
 			rect = (SDL_Rect){
 				rect.x + engine->minimap.origin.x + MINIMAP_SIZE / 2 - 5,
-					rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5,
-					10, 10};
-
+				rect.y + engine->minimap.origin.y + MINIMAP_SIZE / 2 - 5, 10, 10};
 			if (point_in_circle((t_vtx){rect.x, rect.y}, circle))
 				ui_draw_rect(surface, rect, C_RED);
 			enemy = enemy->next;
@@ -177,35 +137,28 @@ static void			draw_entities(SDL_Surface *surface, t_engine *engine, t_env *env)
 
 static void			draw_compass(SDL_Surface *surface, t_env *env)
 {
-	t_circle	circle;
-	t_vtx       vtx;
-	float       start;
-	float       size;
-	int         i;
+	const t_player		*player = &env->engine.player;
+	const t_minimap		*minimap = &env->engine.minimap;
+	t_circle			circle;
+	t_vtx       		vtx;
+	int         		i;
 
 	i = 0;
 	while (i < 16)
 	{
-		vtx = (t_vtx){
-			env->engine.minimap.origin.x + MINIMAP_SIZE / 2,
-				env->engine.minimap.origin.y + MINIMAP_SIZE / 2};
-
-		start = MINIMAP_SIZE / 2 - 15;
-		size = MINIMAP_SIZE / 2 - 7;
-
+		vtx.x = minimap->origin.x + MINIMAP_SIZE / 2;
+		vtx.y = minimap->origin.y + MINIMAP_SIZE / 2;
 		circle = (t_circle){
-			vtx.x + cos(i * (M_PI / 8) - env->engine.player.angle) * size,
-			vtx.y + sin(i * (M_PI / 8) -  env->engine.player.angle) * size,
+			vtx.x + cos(i * (M_PI / 8) - player->angle) * MINIMAP_SIZE / 2 - 7,
+			vtx.y + sin(i * (M_PI / 8) - player->angle) * MINIMAP_SIZE / 2 - 7,
 			6, C_WHITE};
-
-		if (i == 0)
-			ui_draw_full_circle(surface, circle);
-
 		if (i != 0)
 		{
-			ui_draw_vector(surface, vtx,
-			i * (M_PI / 8)  - env->engine.player.angle, start, size, C_WHITE);
+			ui_draw_vector(surface, vtx, i * (M_PI / 8) - player->angle,
+			MINIMAP_SIZE / 2 - 15, MINIMAP_SIZE / 2 - 7, C_WHITE);
 		}
+		else
+			ui_draw_full_circle(surface, circle);
 		i++;
 	}
 }
@@ -213,21 +166,23 @@ static void			draw_compass(SDL_Surface *surface, t_env *env)
 void		ui_minimap(t_env *env)
 {
 	const t_minimap		*minimap = &(env->engine.minimap);
+	t_circle		circle;
+
+	circle = (t_circle){
+	(MINIMAP_SIZE) / 2 + minimap->origin.x, (MINIMAP_SIZE) / 2 + minimap->origin.y,
+	(MINIMAP_SIZE - 15) / 2, 0x0C0A15E0};
 
 	SDL_Rect src_rect = (SDL_Rect){
 		(env->engine.player.where.x * COEF_MINIMAP),
-			(env->engine.player.where.y * COEF_MINIMAP),
-			MINIMAP_SIZE, MINIMAP_SIZE};
-
+		(env->engine.player.where.y * COEF_MINIMAP),
+		MINIMAP_SIZE, MINIMAP_SIZE};
 	if ((SDL_BlitScaled(minimap->background, 0, env->sdl.surface,
-			&((SDL_Rect){minimap->origin.x, minimap->origin.y,
-			MINIMAP_SIZE, MINIMAP_SIZE}))) < 0)
-		doom_error_exit("Doom_nukem: Blit error on ui_minimap");
-
+		&((SDL_Rect){minimap->origin.x, minimap->origin.y,
+		MINIMAP_SIZE, MINIMAP_SIZE}))) < 0)
+			doom_error_exit("Doom_nukem: Blit error on ui_minimap");
 	env->sdl.surface = rotate_surface(src_rect,
-	minimap->surface, env->sdl.surface, minimap->origin, env);
-
-	draw_objects(env->sdl.surface, &(env->engine), env);
-	draw_entities(env->sdl.surface, &(env->engine), env);
+	minimap->surface, env->sdl.surface, minimap->origin, circle, env);
+	draw_objects(env->sdl.surface, &(env->engine), circle);
+	draw_entities(env->sdl.surface, &(env->engine), circle);
 	draw_compass(env->sdl.surface, env);
 }

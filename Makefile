@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 16:21:49 by jsauron           #+#    #+#              #
-#    Updated: 2019/05/08 18:09:45 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/08 21:39:07 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,6 @@ SRC_NAME 	= main.c \
 			chk_del.c \
 			crs_del.c \
 			dir_del.c \
-			display_skybox.c \
 			draw.c \
 			draw_hud.c 	\
 			draw_inventory.c \
