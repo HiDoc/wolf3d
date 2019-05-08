@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_edge.c                                      :+:      :+:    :+:   */
+/*   ttf_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/26 10:47:39 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:57:40 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/05/07 20:48:17 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/05/07 20:48:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void			delete_edge(t_w_vtx *w_vtx, t_env *env)
+void		ttf_del(void **ap)
 {
-	(w_vtx && w_vtx->next) ? delete_vertex(w_vtx->next->vtx, env) : 0;
-	(w_vtx) ? delete_vertex(w_vtx->vtx, env) : 0;
+	TTF_Font		*font;
+
+	font = (TTF_Font *)(*ap);
+	if (ap && *ap)
+	{
+		TTF_CloseFont(font);
+		font = 0;
+	}
 }

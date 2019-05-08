@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:10:00 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/07 20:41:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:33:35 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ static int				sdl_render(t_env *e)
 	}
 	else
 	{
-		// si retire alors segv + a laisser avant dfs sinon segv <3
 		enemies_frames(e, &e->engine.sectors[e->engine.player.sector]);
 		dfs(e);
 		handle_weapon(e);
 		handle_gems(e);
-		if (!e->god_mod) // perte de fps : check why
+		if (!e->god_mod)
 			bot_action(e, &e->engine.sectors[e->engine.player.sector]);
 		player_bullet(e, &e->player, *e->player.inventory.current->damage);
 		e->hud.is_txt ? ui_draw_msg(e, &e->hud.is_txt, &e->time.tframe) : 0;

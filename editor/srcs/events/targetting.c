@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:57:49 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/01 13:49:37 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:59:57 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 			{
 				i = fabs(pointside(pos, vtx_transform(w_vtx->vtx->pos, env),
 				vtx_transform(w_vtx->next->vtx->pos, env)));
-				if (i < (40 * env->grid_scale))
+				if (i < (40 * env->editor.grid_scale))
 				{
 					env->editor.edg_hover = w_vtx;
 					return (w_vtx);
@@ -69,7 +69,7 @@ t_w_vtx		*target_edge(t_pos pos, t_env *env)
 		{
 			i = fabs(pointside(pos, vtx_transform(w_vtx->vtx->pos, env),
 			vtx_transform(sct->w_vtx_start->vtx->pos, env)));
-			if (i < (50 * env->grid_scale))
+			if (i < (50 * env->editor.grid_scale))
 			{
 				env->editor.edg_hover = w_vtx;
 				return (w_vtx);

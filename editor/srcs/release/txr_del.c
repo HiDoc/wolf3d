@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_edge.c                                      :+:      :+:    :+:   */
+/*   txr_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/26 10:47:39 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 13:57:40 by sgalasso         ###   ########.fr       */
+/*   Created: 2019/05/07 20:47:23 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/05/07 20:47:29 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
 
-void			delete_edge(t_w_vtx *w_vtx, t_env *env)
+void		txr_del(void **ap)
 {
-	(w_vtx && w_vtx->next) ? delete_vertex(w_vtx->next->vtx, env) : 0;
-	(w_vtx) ? delete_vertex(w_vtx->vtx, env) : 0;
+	SDL_Texture		*texture;
+
+	texture = (SDL_Texture *)(*ap);
+	if (ap && *ap)
+	{
+		SDL_DestroyTexture(texture);
+		texture = 0;
+	}
 }
