@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 16:03:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/06 13:25:43 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:28:44 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	vertex_of_sector(t_vtx *vtx, t_sct *sct)
 	return (0);
 }
 
-int			draw_mode(t_env *env)
+int				draw_mode(t_env *env)
 {
 	SDL_Rect			rect = get_element(E_R_RECT, env)->rect;
 	const t_pos			m = env->data->mouse;
@@ -81,9 +81,12 @@ int			draw_mode(t_env *env)
 		{
 			if (ui_mouseenter(m.x, m.y, wall_txtr->rect))
 			{
-				env->editor.dropdown[DD_WALLTX].current->clicked = 0;
-				env->editor.dropdown[DD_WALLTX].current = wall_txtr;
-				wall_txtr->clicked = 1;
+				if (wall_txtr->visible == 1)
+				{
+					env->editor.dropdown[DD_WALLTX].current->clicked = 0;
+					env->editor.dropdown[DD_WALLTX].current = wall_txtr;
+					wall_txtr->clicked = 1;
+				}
 			}
 			wall_txtr = wall_txtr->next;
 		}
