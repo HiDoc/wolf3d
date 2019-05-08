@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:15:06 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 13:43:55 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:36:47 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ static void		display_objects(t_env *env)
 			if (obj->dd == DD_SPEC && env->editor.spawn_set == 2)
 			{
 				ui_draw_vector(env->data->surface, pos,
-				env->editor.spawn_dir, 10, C_WHITE);
+				env->editor.spawn_dir, 10);
 			}
 		}
 		obj = obj->next;

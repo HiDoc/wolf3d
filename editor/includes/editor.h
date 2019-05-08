@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:58:34 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/08 14:29:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:46:56 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,15 @@ void		click_msc_music(t_env *env);
 void		click_msc_sbtx(t_env *env);
 void		click_msc_music_btn(t_env *env);
 void		click_msc_sbtx_btn(t_env *env);
+
+/*
+**	export/
+*/
+
+void		export_map(t_env *env);
+void		export_sectors(int fd, t_env *env);
+void		export_objects(int fd, t_pos min, t_env *env);
+void		export_vertex(int fd, t_pos min, t_env *env);
 
 /*
 **	utils/

@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/05/08 14:31:58 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/08 16:45:03 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS 		=	-Wall -Wextra -Werror -g -fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \
-	:srcs/utils:./srcs/init:./srcs/create_delete:./srcs/release:./srcs/events/click_functions
+	:srcs/utils:./srcs/init:./srcs/create_delete:./srcs/release\
+	:./srcs/events/click_functions:./srcs/export
 OBJ_PATH 	=	objs/
 INC_PATH	=	includes/ \
 				libft/includes/
@@ -80,7 +81,6 @@ SRC_NAME 	=	main.c \
 				display_element.c \
 				menu_events.c \
 				get_element.c \
-				export_map.c \
 				init_env.c \
 				create_object.c \
 				create_vertex.c \
@@ -104,6 +104,10 @@ SRC_NAME 	=	main.c \
 				click_sct_panel.c \
 				click_edg_panel.c \
 				click_msc_panel.c \
+				export_map.c \
+				export_sectors.c \
+				export_objects.c \
+				export_vertex.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ \

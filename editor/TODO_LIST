@@ -9,6 +9,7 @@ TODO : dev/null dev/random /dev/zero
 TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
 TODO : lifetimer les fd, dr etc et release avec close() etc...
 
+TODO : close fd -> lifetime release
 TODO : check if iswpn is respected
 TODO : check si fonctions non utilisee
 TODO : beta testing
