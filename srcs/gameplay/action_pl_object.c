@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 22:16:24 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 20:49:55 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:20:57 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			access_object(t_env *env, t_sector *sector)
 	return (0);
 }
 
-int			pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
+int			pick_gem(t_env *env, t_wrap_sect *obj)
 {
 	int	ref;
 
@@ -47,12 +47,11 @@ int			pick_gem(t_env *env, t_wrap_sect *obj, t_sector *sector)
 	}
 	env->player.inventory.gems[ref].nb_stack++;
 	obj->is_picked = 1;
-	sector->nb_objects--;
 	env->engine.player.sound.pick = 2;
 	return (NEW_ITEM);
 }
 
-static int	csmble_to_inventory(t_env *e, t_wrap_sect *obj, t_sector *sector)
+static int	csmble_to_inventory(t_env *e, t_wrap_sect *obj)
 {
 	t_uinv	*inv;
 	int		index;
@@ -72,7 +71,6 @@ static int	csmble_to_inventory(t_env *e, t_wrap_sect *obj, t_sector *sector)
 		else
 			e->player.inventory.objects[index].nb_stack++;
 		obj->is_picked = 1;
-		sector->nb_objects--;
 		e->engine.player.sound.pick = 1;
 		return (1);
 	}
@@ -82,12 +80,10 @@ static int	csmble_to_inventory(t_env *e, t_wrap_sect *obj, t_sector *sector)
 int			pick_object(t_env *env, t_wrap_sect *obj)
 {
 	int			i;
-	t_sector	*sector;
 	t_inventory	*inv;
 
 	i = 0;
 	inv = &env->player.inventory;
-	sector = &env->engine.sectors[env->engine.player.sector];
 	if (((i = check_object_type(inv->objects, obj->ref, 6)) > -1)
 	&& !obj->is_wpn)
 	{
@@ -95,14 +91,13 @@ int			pick_object(t_env *env, t_wrap_sect *obj)
 			return (FULL_STACK);
 		inv->objects[i].nb_stack++;
 		obj->is_picked = 1;
-		sector->nb_objects--;
 		env->engine.player.sound.pick = 1;
 		return (NEW_ITEM);
 	}
-	else if (csmble_to_inventory(env, obj, sector))
+	else if (csmble_to_inventory(env, obj))
 		return (NEW_ITEM);
 	else if (obj->ref >= WORLD_NB_CSMBLE && !obj->is_wpn)
-		return (pick_gem(env, obj, sector));
+		return (pick_gem(env, obj));
 	!obj->is_wpn ? env->engine.player.sound.nope = 1 : 0;
 	return (!obj->is_wpn ? FULL_INV : pick_weapon(env, obj));
 }

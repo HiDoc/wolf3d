@@ -6,16 +6,16 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:48:04 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 22:38:41 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 17:46:08 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "doom.h"
+#include "doom.h"
 
 void	getsizebloc_n_draw(t_env *e, t_font d, t_bloc *b, int l)
 {
 	t_vtx		n_size;
-	SDL_Rect		f;
+	SDL_Rect	f;
 	SDL_Surface	*tmp;
 
 	tmp = make_string((t_font){d.color, d.str, d.font, {0, 0}, 0, -1, -1});
@@ -46,12 +46,7 @@ void	render_menu(t_env *e, t_bloc *b, const char **s, int limit)
 	i = -1;
 	while (++i < limit)
 	{
-		if (limit == NB_OPT_MENU && !i)
-			p = ft_strljoin(ft_itoa(st->msc_vol), (char*)s[i]);
-		else if (limit != NB_OPT_MENU || (st->cur == i && st->key_change))
-			p = ft_strdup(s[i]);
-		else
-			p = ft_strjoin(s[i], (char*)SDL_GetScancodeName(e->engine.keys[i]));
+		p = which_str_menu(e, limit, s[i], i);
 		d = (t_font){st->cur == i ? M_GOLD : M_WHITE,
 		p, e->hud.font.quantify, (t_vtx){b[i].rect.x, b[i].rect.y}, 0, -1, -1};
 		getsizebloc_n_draw(e, d, &b[i], limit);
@@ -65,7 +60,7 @@ void	render_menu(t_env *e, t_bloc *b, const char **s, int limit)
 
 void	draw_saves(t_env *e, t_bloc *b)
 {
-	t_bloc 		*cur;
+	t_bloc		*cur;
 	SDL_Rect	r;
 	t_bloc		f;
 	int			i;
@@ -75,7 +70,7 @@ void	draw_saves(t_env *e, t_bloc *b)
 	i = e->menu.status.start;
 	while (cur && ++i < e->menu.status.end)
 	{
-		ui_put_data(e, (t_font){
+		put_data(e, (t_font){
 			i == (e->menu.status.cur + e->menu.status.start)
 			? GOLD : M_WHITE, cur->name, e->hud.font.quantify,
 			(t_vtx){r.x, r.y}, W / 60, -1, -1});
@@ -94,7 +89,7 @@ void	draw_games(t_env *e)
 
 	i = -1;
 	r = (SDL_Rect){W / 10, H / 20, W / 60, 0};
-	ui_put_data(e, (t_font){
+	put_data(e, (t_font){
 		(e->menu.status.cur == e->nb_games)
 		? GOLD : M_WHITE, e->menu.new_game.name, e->hud.font.quantify,
 		(t_vtx){r.x, r.y}, r.w, -1, -1});
@@ -103,7 +98,7 @@ void	draw_games(t_env *e)
 	{
 		while (e->games[++i] && i < e->nb_games)
 		{
-			ui_put_data(e, (t_font){
+			put_data(e, (t_font){
 				i == (e->menu.status.cur)
 				? GOLD : M_WHITE, e->games[i], e->hud.font.quantify,
 				(t_vtx){r.x, r.y}, r.w, -1, -1});

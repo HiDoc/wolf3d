@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 19:21:14 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/07 00:12:40 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:49:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		draw_scaled_string(SDL_Surface *dst,
 	}
 }
 
-void		ui_put_data(t_env *env, t_font data)
+void		put_data(t_env *env, t_font data)
 {
 	SDL_Surface	*surface;
 	surface = str_join_text(data);

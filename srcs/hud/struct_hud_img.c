@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:02:07 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 20:26:04 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:52:21 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void		draw_img(t_env *env, SDL_Surface *img, t_bloc *bloc)
 {
 	int			i;
 	int			j;
-	Uint32 		color;
-	const float ratiox = img->w / (float)bloc->rect.w;
-	const float ratioy = img->h / (float)bloc->rect.h;
+	Uint32		color;
+	const float	ratiox = img->w / (float)bloc->rect.w;
+	const float	ratioy = img->h / (float)bloc->rect.h;
 
 	i = bloc->limit.v1.x;
 	while (i < bloc->rect.w - bloc->limit.v2.x
@@ -89,4 +89,3 @@ SDL_Surface	*ui_img(char *file, int i, int variable)
 	lt_release((void**)&path);
 	return (new);
 }
-

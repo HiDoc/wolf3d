@@ -6,47 +6,25 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/08 16:39:07 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 22:06:00 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
+void		print_wpn_hud(t_env *env, t_wrap_wpn *wpn)
 {
 	t_bloc	*bloc;
 
 	bloc = &env->hud.hud_wpn[wpn->ref];
 	if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
 		doom_error_exit("Doom_nukem: blit error on check_object_stack");
-	ui_put_data(env, (t_font){GOLD, "", env->hud.font.number,
+	put_data(env, (t_font){GOLD, "", env->hud.font.number,
 	(t_vtx){W - W / 7, H / 1.3}, W / 40,
 	*env->player.inventory.current->ammo_current, -1});
-	ui_put_data(env, (t_font){GOLD, "/", env->hud.font.number,
+	put_data(env, (t_font){GOLD, "/", env->hud.font.number,
 	(t_vtx){W - W / 8.5, H / 1.22}, W / 40,
 	-1, *env->player.inventory.current->ammo_magazine});
-}
-
-static void	check_object_stack(t_env *e, t_wrap_inv *pack, t_ixy ref)
-{
-	t_bloc	*b;
-
-	b = &e->hud.objects[ref.y];
-	if ((ref.y != 0 && pack[ref.y - 1].is_full)
-		|| (ref.y == 0 && check_object_type(pack, ref.x, 6) > -1))
-	{
-		if ((SDL_BlitScaled(b->bg_fill, NULL,
-				e->sdl.surface, &b->rect)) < 0)
-			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-		if ((SDL_BlitScaled(e->world.objects[ref.x].sprite, NULL,
-				e->sdl.surface, &b->rect)) < 0)
-			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-	}
-	else
-	{
-		if ((SDL_BlitScaled(b->bg_empty, NULL, e->sdl.surface, &b->rect)) < 0)
-			doom_error_exit("Doom_nukem: blit error on check_object_stack");
-	}
 }
 
 void		print_pad(t_env *env)
@@ -56,11 +34,6 @@ void		print_pad(t_env *env)
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){7, 2});
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){8, 3});
 	check_object_stack(env, env->player.inventory.gems, (t_ixy){9, 4});
-}
-
-float		size_bar(int tmax, int datamax, int data)
-{
-	return ((tmax - tmax / 2.8) / datamax * data + tmax / 2.8);
 }
 
 void		draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
@@ -104,7 +77,6 @@ int			print_hud(t_env *env)
 	int			index;
 
 	player = &env->player;
-
 	h = player->max_health;
 	while (h > player->health)
 		h -= 50;

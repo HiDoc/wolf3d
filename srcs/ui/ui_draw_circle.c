@@ -6,17 +6,26 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:46:38 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/03/11 18:59:26 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:00:39 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-//
-//// TO RECODE BCOZ IT IS FROM THE NET !!!
-//
+static void		set_circ_pixel(SDL_Surface *surface,
+				t_circle circ, int x, int y)
+{
+	setpixel(surface, circ.x + x, circ.y + y, circ.color);
+	setpixel(surface, circ.x + y, circ.y + x, circ.color);
+	setpixel(surface, circ.x - y, circ.y + x, circ.color);
+	setpixel(surface, circ.x - x, circ.y + y, circ.color);
+	setpixel(surface, circ.x - x, circ.y - y, circ.color);
+	setpixel(surface, circ.x - y, circ.y - x, circ.color);
+	setpixel(surface, circ.x + y, circ.y - x, circ.color);
+	setpixel(surface, circ.x + x, circ.y - y, circ.color);
+}
 
-void	ui_draw_circle(SDL_Surface *surface, t_circle circ)
+void			ui_draw_circle(SDL_Surface *surface, t_circle circ)
 {
 	float x = circ.radius - 1;
 	float y = 0;
@@ -26,15 +35,7 @@ void	ui_draw_circle(SDL_Surface *surface, t_circle circ)
 
 	while (x >= y)
 	{
-		setpixel(surface, circ.x + x, circ.y + y, circ.color);
-		setpixel(surface, circ.x + y, circ.y + x, circ.color);
-		setpixel(surface, circ.x - y, circ.y + x, circ.color);
-		setpixel(surface, circ.x - x, circ.y + y, circ.color);
-		setpixel(surface, circ.x - x, circ.y - y, circ.color);
-		setpixel(surface, circ.x - y, circ.y - x, circ.color);
-		setpixel(surface, circ.x + y, circ.y - x, circ.color);
-		setpixel(surface, circ.x + x, circ.y - y, circ.color);
-
+		set_circ_pixel(surface, circ, x, y);
 		if (err <= 0)
 		{
 			y++;

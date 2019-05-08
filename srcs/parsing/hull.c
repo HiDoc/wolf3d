@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hull.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 17:55:01 by fmadura           #+#    #+#             */
-/*   Updated: 2019/03/22 13:16:02 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:17:49 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int			insert_sct(t_engine *e, t_sector *curr, t_chain *chain)
 	new->ceil = curr->ceil;
 	new->floor = curr->floor;
 	new->head_object = NULL;
-	new->nb_objects = 0;
 	new->npoints = 3;
 	remove_vertex(&e->sectors[chain->a], chain);
 	return (1);

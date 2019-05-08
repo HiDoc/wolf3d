@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:54:47 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 02:26:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:52:56 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void	chunks_pack(char *name, Mix_Chunk **pack, int limit)
 	}
 }
 
-void	init_sounds(t_env *e)
+void	ld_sound(t_env *e)
 {
 	t_sound		*s;
 	const char	*names[SD_AMBIANCE] = {"menu+", "first_room+", "gameover+",
 	"inspace+", "cyberdmroom+", "bossroom+", "deadroom+", "metallic+", "drama+",
 	"stress_undrgrd+", "underwater+", "stressaction+", "loadinpage+", "dark+",
-	"tension+", "epicloop+", "cavewater+", "cinematik+", "actionloop+", "factory+"};
+	"tension+", "epicloop+", "cavewater+", "cinematik+", "actionloop+",
+	"factory+"};
 
 	s = &e->sound;
 	ft_bzero(s, sizeof(t_sound));
@@ -82,4 +83,3 @@ void	init_sounds(t_env *e)
 	chunks_pack("enemies/death/", s->e_death, WORLD_NB_ENEMIES);
 	Mix_AllocateChannels(32);
 }
-

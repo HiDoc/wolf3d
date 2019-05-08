@@ -6,14 +6,14 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 18:30:51 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/19 14:16:50 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 18:02:28 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_F_SOUND_H
 # define DOOM_F_SOUND_H
 
-void			init_sounds(t_env *e);
+void			ld_sound(t_env *e);
 void			set_msc_menu(t_env *e, t_status *s);
 void			menu_btn_sound(t_env *e, const Uint8 *k);
 void			sd_stat_player(t_engine *e, t_vision *v, t_sd_stat *s);

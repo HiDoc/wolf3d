@@ -6,7 +6,7 @@
 #    By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/08 22:37:25 by fmadura           #+#    #+#              #
-#    Updated: 2019/05/08 23:01:29 by fmadura          ###   ########.fr        #
+#    Updated: 2019/05/08 23:23:33 by fmadura          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,11 +86,12 @@ SRC_NAME 	= main.c \
 			chk_del.c \
 			crs_del.c \
 			dir_del.c \
-			display_skybox.c \
 			draw.c \
-			draw_hud.c 	\
+			draw_hud.c \
+			draw_hud_utils.c \
 			draw_inventory.c \
 			draw_menu.c \
+			draw_menu_utils.c \
 			edge.c \
 			enemies_frames.c \
 			function.c \
@@ -102,15 +103,17 @@ SRC_NAME 	= main.c \
 			hud_draw_stats.c \
 			hull.c \
 			init.c \
-			init_hud.c \
 			init_fonts.c \
+			init_hud.c \
 			init_images.c \
+			init_inventory.c \
 			init_enemies.c \
 			init_menu.c \
 			init_menu2.c \
 			init_minimap.c \
-			init_weapons.c \
 			init_sound.c \
+			init_rsrc.c \
+			init_weapons.c \
 			inter_display.c \
 			inter_loop.c \
 			load_worlds.c \
@@ -159,6 +162,7 @@ SRC_NAME 	= main.c \
 			ui_draw_string.c \
 			ui_draw_vector.c \
 			ui_minimap.c \
+			ui_utils_minimap.c \
 			utils.c \
 			utils_color.c \
 			utils_edge.c \

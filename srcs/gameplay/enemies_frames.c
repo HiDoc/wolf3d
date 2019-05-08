@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 23:01:29 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 23:02:11 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 20:23:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	enemies_frames(t_env *env, t_sector *sector)
 		if (!enemy->a.is_alive && !enemy->a.is_dying)
 			enemy->sprite = e->death[e->time_death - 1];
 		else if (enemy->a.is_dying)
-			bot_is_dying(env, e, enemy, sector);
+			bot_is_dying(env, e, enemy);
 		else if (enemy->a.is_shooting)
 			bot_is_shootin(e, enemy);
 		else

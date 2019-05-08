@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:37:42 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 02:26:08 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:10:42 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	mainmenu_blocs(t_env *env, t_bloc *data)
 	fill_menu(env, &data[1], &r, H / 10);
 	fill_menu(env, &data[2], &r, H / 10);
 	fill_menu(env, &data[3], &r, H / 10);
-
 }
 
 static void	ingame_blocs(t_env *e, t_bloc *data)
@@ -68,7 +67,7 @@ static void	loadgame_blocs(t_env *e, t_bloc **b)
 	(*b)->next = NULL;
 }
 
-void		init_blocs_menu(t_env *env)
+void		init_bl_menu(t_env *env)
 {
 	t_menu		*menu;
 	SDL_Rect	r;
@@ -87,4 +86,3 @@ void		init_blocs_menu(t_env *env)
 	options_blocs(env, menu->options_menu);
 	newgame_blocs(env, &menu->new_game);
 }
-

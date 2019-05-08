@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/07 16:26:24 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:49:05 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void	print_infos_door(t_env *env, t_sector *sector)
 		front_player = &sector[index].door;
 		if ((door == 1 || (!env->stats.data[I_KTOGO] && door == 2))
 				&& !front_player->is_open && !front_player->is_opening)
-			ui_put_data(env, (t_font){
+			put_data(env, (t_font){
 				WHITE, string[0], env->hud.font.text, pos, W / 40, -1, -1});
 		else if (door == 2)
-			ui_put_data(env, (t_font){
+			put_data(env, (t_font){
 				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
 	}
 }
