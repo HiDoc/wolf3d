@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 21:56:11 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/08 15:56:00 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:37:48 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	draw_hp_bars(t_env *env, t_bloc *bloc, int max, int data)
 	if (data < max)
 		bloc->limit.v2.x = bloc->rect.w - size_bar(bloc->rect.w, max, data);
 	draw_img(env, bloc->sprite, bloc);
-	/*if ((SDL_BlitScaled(bloc->sprite, NULL, env->sdl.surface, &bloc->rect)) < 0)
-		doom_error_exit("Doom_nukem: blit error on put_gun");*/
 	bloc->limit.v2.x = 0;
 }
 
