@@ -88,13 +88,13 @@ int main(void) {
 		SDL_WINDOW_SHOWN
 	);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-	FILE *file = fopen("/Users/fmadura/doom/srcs/tga/large_ol.tga", "rb");
-	if (file)
+	int fd = open("/Users/fmadura/doom/srcs/tga/large_ol.tga", O_RDONLY);
+	if (fd > -1)
 	{
 		t_tga *image;
 		image = malloc(sizeof(t_tga));
 		bzero(image, sizeof(t_tga));
-		read_tga_image(file, image);
+		printf("%d\n", read_tga_image(fd, image));
 		print_tga_data(image);
 		surface = SDL_CreateRGBSurfaceFrom((void *)image->data, image->meta.width,
             image->meta.height, image->meta.pixel_depth, image->meta.width * image->meta.pixel_depth / 8,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 16:33:45 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:52:23 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 */
 void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 {
-	const float	floor = e->sectors[e->player.sector].floor;
-	const float	ceil = e->sectors[e->player.sector].ceil;
+	float		floor;
+	float		ceil;
 	t_player	*plr;
 	float		nextz;
 	t_vtx		bezier;
 
+	ceil = e->sectors[e->player.sector].ceil;
+	floor = e->sectors[e->player.sector].floor;
 	plr = &e->player;
 	plr->velocity.z -= gravity;
 	bezier = bezier_curve(
@@ -89,12 +91,13 @@ void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 /*
 ** Verify is player is not in a wall
 */
-// TODO: Change collision
+
 int		sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
 {
-	const t_vtx	b = diff_vertex(wall.v2, wall.v1);
+	t_vtx		b;
 	float		scale;
 
+	b = (t_vtx)diff_vertex(wall.v2, wall.v1);
 	scale = (dest->x * b.x + b.y * dest->y) / (b.x * b.x + b.y * b.y);
 	dest->x = b.x * scale;
 	dest->y = b.y * scale;
@@ -105,14 +108,17 @@ int		sector_collision(t_vtx player, t_vtx *dest, t_edge wall)
 ** Collision detection.
 ** Check if the player is crossing an edge and if this edge has a neighbour
 */
+
 void	collision(t_vision *v, t_engine *e, t_sector *sect)
 {
-	const t_vtx		player = {e->player.where.x, e->player.where.y};
-	const t_vtx		*vert = sect->vertex;
+	t_vtx			player;
+	t_vtx			*vert;
 	t_vtx			dest;
 	t_edge			wall;
 	int				s;
 
+	player = (t_vtx){e->player.where.x, e->player.where.y};
+	*vert = sect->vertex;
 	s = -1;
 	dest = (t_vtx){e->player.velocity.x, e->player.velocity.y};
 	while (++s < (int)sect->npoints)
@@ -141,6 +147,7 @@ void	collision(t_vision *v, t_engine *e, t_sector *sect)
 /*
 **Vertical collision detection and horizontal collision detection
 */
+
 void	player_move(t_engine *e, t_vision *v, const Uint8 *keycodes)
 {
 	int	x;

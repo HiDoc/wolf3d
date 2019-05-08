@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:37:38 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 19:33:11 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 19:24:54 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ struct s_encode
 
 struct s_meta
 {
-	uint32_t	extension_offset;
-    uint32_t	developer_offset;
+	uint32_t	ext_offset;
+    uint32_t	dev_offset;
 
     uint16_t	c_map_length;
     uint16_t	x_offset;
@@ -82,13 +82,13 @@ struct s_tga
     t_meta	meta;
 };
 
-int		read_tga_image(FILE *file, t_tga *image);
-int     read_encoded(t_tga *image, FILE *file);
-int     read_unencoded(t_tga *image, FILE *file);
-int		read_colormap(t_tga *image, FILE *file);
-int		tga_header(t_tga *image, FILE *file);
-uint8_t	tga_footer(t_tga *image, FILE *file);
-uint8_t tga_id_field(t_tga *image, FILE *file);
+int		read_tga_image(int fd, t_tga *image);
+int     read_encoded(t_tga *image, int fd);
+int     read_unencoded(t_tga *image, int fd);
+int		read_colormap(t_tga *image, int fd);
+int		tga_header(t_tga *image, int fd);
+uint8_t	tga_footer(t_tga *image, int fd);
+uint8_t tga_id_field(t_tga *image, int fd);
 
 
 #endif

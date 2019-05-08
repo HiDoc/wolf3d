@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tga_image->c                                        :+:      :+:    :+:   */
+/*   tga_image.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/04 14:07:41 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/04 18:34:40 by fmadura          ###   ########.fr       */
+/*   Created: 2019/05/08 19:25:56 by fmadura           #+#    #+#             */
+/*   Updated: 2019/05/08 19:25:58 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga.h"
 
-int		read_tga_image(FILE *file, t_tga *image)
+int		read_tga_image(int fd, t_tga *image)
 {
-	if (!file)
+	if (fd < 0)
 		return (0);
-	tga_footer(image, file);
-	tga_header(image, file);
-	if (image->meta.id_length && tga_id_field(image, file) == 0)
+	tga_footer(image, fd);
+	tga_header(image, fd);
+	if (image->meta.id_length && tga_id_field(image, fd) == 0)
 		return (0);
 	if (image->meta.image_type == TGA_COLOR_MAPPED)
-		read_colormap(image, file);
+		read_colormap(image, fd);
 	if (image->meta.image_type == TGA_ENCODED_TRUECOLOR
 		|| image->meta.image_type == TGA_ENCODED_MONOCHROME)
-		read_encoded(image, file);
+		read_encoded(image, fd);
 	else if (image->meta.image_type == TGA_TRUECOLOR
 		|| image->meta.image_type == TGA_MONOCHROME
 		|| image->meta.image_type == TGA_COLOR_MAPPED)
-		read_unencoded(image, file);
+		read_unencoded(image, fd);
 	else
 		return (0);
 	return (1);
