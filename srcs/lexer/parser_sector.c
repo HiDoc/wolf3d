@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:04:31 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 17:14:34 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 18:15:11 by fmadura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	fill_sector_values(t_sector *sect, unsigned value, unsigned count)
 	else if (count == 5)
 		sect->has_skybox = value;
 	else if (count == 6)
+	{
 		sect->type = value;
+		if (sect->type == SECT_DOOR || sect->type == SECT_ENDLEVEL)
+			sect->is_door = (sect->type == SECT_ENDLEVEL ? 2 : 1);
+	}
 }
 
 t_token		*fill_sector_textures(t_sector *sect, t_token *iter)

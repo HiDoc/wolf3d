@@ -6,11 +6,20 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:29:05 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 22:23:56 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 02:16:50 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	underscore_off_name(char *name, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+		name[i] == '_' ? name[i] = ' ' : 0;
+}
 
 void		load_fonts(t_env *env)
 {

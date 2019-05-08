@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:41:58 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/04/24 20:58:28 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:29:01 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void		player_move(t_engine *e, t_vision *v, const Uint8 *keycodes);
 
 int			sector_collision(t_vtx player, t_vtx *dest, t_edge wall);
 
-int			keyboard_movement(t_engine *engine, t_vision *v, const Uint8 *keycodes);
+int			keyboard_movement(t_engine *engine, t_vision *v,
+			const Uint8 *keycode);
 int			sdl_mouse(t_engine *e, t_vision *v);
 void		player_set(t_engine *e, t_vtx d);
 

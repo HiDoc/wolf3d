@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 14:16:03 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/01 15:53:53 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/08 16:33:45 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 	e->player.sound.run = (speed == SPEED_RUN) ? 1 : 0;
 	velocity = &e->player.velocity;
 	move_vec = (t_vtx){0.f, 0.f};
-	velocity->z += (float)(v->ground && keyb[SDL_SCANCODE_SPACE]);
-	v->ground = !keyb[SDL_SCANCODE_SPACE];
+
+	if (keyb[SDL_SCANCODE_SPACE] && v->ground)
+	{
+		v->ground = 0;
+		velocity->z += 1.0;
+	}
 	v->ducking = (keyb[SDL_SCANCODE_LCTRL] || keyb[SDL_SCANCODE_RCTRL]);
 	if (keyb[e->keys[I_OUP]])
 		move_vec = add_vertex(move_vec, (t_vtx){cos_move, sin_move});
@@ -55,14 +59,16 @@ int		keyboard_movement(t_engine *e, t_vision *v, const Uint8 *keyb)
 void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 {
 	const float	floor = e->sectors[e->player.sector].floor;
+	const float	ceil = e->sectors[e->player.sector].ceil;
 	t_player	*plr;
 	float		nextz;
 	t_vtx		bezier;
 
 	plr = &e->player;
 	plr->velocity.z -= gravity;
-	bezier = bezier_curve((t_edge){(t_vtx){0, EYEHEIGHT},
-		(t_vtx){20, EYEHEIGHT}}, (t_vtx){0, 40}, 1 - (plr->velocity.z + 0.12f));
+	bezier = bezier_curve(
+		(t_edge){(t_vtx){0, EYEHEIGHT}, (t_vtx){20, EYEHEIGHT}},
+		(t_vtx){0, 40}, 1 - (plr->velocity.z + 0.12f));
 	nextz = (plr->velocity.z < 0) ? plr->where.z + plr->velocity.z : bezier.y;
 	if (plr->velocity.z < 0 && nextz < (floor + v->eyeheight))
 	{
@@ -71,8 +77,8 @@ void	handle_gravity(t_vision *v, t_engine *e, float gravity)
 		v->falling = 0;
 		v->ground = 1;
 	}
-	else if (plr->velocity.z > 0 && nextz > floor + v->eyeheight * 2)
-		plr->where.z = floor + v->eyeheight * 2;
+	if (plr->where.z > ceil || nextz > ceil)
+		plr->where.z = ceil;
 	if (v->falling)
 	{
 		plr->where.z = bezier.y;

@@ -6,7 +6,7 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:54:47 by abaille           #+#    #+#             */
-/*   Updated: 2019/04/21 14:18:52 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 02:26:53 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	chunks_pack(char *name, Mix_Chunk **pack, int limit)
 {
 	int			i;
 	char		*file;
+	char		*prefix;
 	const char	*wav = ".wav";
 	const char	*rsrc = "./rsrc/sound/";
-	char		*prefix;
 
 	i = -1;
 	while (++i < limit)
@@ -59,7 +59,7 @@ void	chunks_pack(char *name, Mix_Chunk **pack, int limit)
 
 void	init_sounds(t_env *e)
 {
-	t_sound	*s;
+	t_sound		*s;
 	const char	*names[SD_AMBIANCE] = {"menu+", "first_room+", "gameover+",
 	"inspace+", "cyberdmroom+", "bossroom+", "deadroom+", "metallic+", "drama+",
 	"stress_undrgrd+", "underwater+", "stressaction+", "loadinpage+", "dark+",
@@ -83,24 +83,3 @@ void	init_sounds(t_env *e)
 	Mix_AllocateChannels(32);
 }
 
-// // Mix_Music *Mix_LoadMUS(const char *file)
-
-// int Mix_FadeOutChannel(int channel, int ms)
-
-// int Mix_VolumeChunk(Mix_Chunk *chunk, int volume)
-
-// // Mix_Chunk *Mix_LoadWAV(char *file)
-
-// int Mix_FadeInChannel(int channel, Mix_Chunk *chunk, int loops, int ms) // -1 to infinite
-
-// int play_chunk(int channel, Mix_Chunk *chunk, int loops)
-
-// // void Mix_Pause(int channel) // -1 pour all chanels
-
-// // void Mix_Resume(int channel) // idem
-
-// int Mix_SetDistance(int channel, Uint8 distance)
-
-// int Mix_VolumeMusic(int volume)
-
-// int Mix_FadeInMusic(Mix_Music *music, int loops, int ms)

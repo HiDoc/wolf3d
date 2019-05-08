@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_strings.c                                     :+:      :+:    :+:   */
+/*   ttf_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 22:01:46 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/04 13:29:54 by abaille          ###   ########.fr       */
+/*   Created: 2019/05/07 20:48:17 by sgalasso          #+#    #+#             */
+/*   Updated: 2019/05/07 20:48:20 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "editor.h"
 
-void	underscore_off_name(char *name, int size)
+void		ttf_del(void **ap)
 {
-	int	i;
+	TTF_Font		*font;
 
-	i = -1;
-	while (++i < size)
-		name[i] == '_' ? name[i] = ' ' : 0;
+	font = (TTF_Font *)(*ap);
+	if (ap && *ap)
+	{
+		TTF_CloseFont(font);
+		font = 0;
+	}
 }

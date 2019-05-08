@@ -6,33 +6,31 @@
 /*   By: abaille <abaille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 19:07:36 by abaille           #+#    #+#             */
-/*   Updated: 2019/05/05 12:46:12 by abaille          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:26:24 by abaille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int	door_neighbors(t_engine *e, t_vtx *vertex, int n)
+int		door_neighbors(t_engine *e, t_vtx *v, int n)
 {
-	t_sector	*sect;
 	int			i;
 	int			j;
 
 	i = -1;
 	while (++i < (int)e->nsectors)
 	{
-		sect = &e->sectors[i];
 		j = -1;
-		if (sect->is_door)
+		if (e->sectors[i].is_door)
 		{
-			while (++j < (int)sect->npoints)
+			while (++j < (int)e->sectors[i].npoints)
 			{
-				if (equal_vertex(vertex[n], sect->vertex[j]))
+				if (equal_vertex(v[n], e->sectors[i].vertex[j]))
 				{
 					j = -1;
-					while (++j < (int)sect->npoints)
+					while (++j < (int)e->sectors[i].npoints)
 					{
-						if (equal_vertex(vertex[n + 1], sect->vertex[j]))
+						if (equal_vertex(v[n + 1], e->sectors[i].vertex[j]))
 							return (1);
 					}
 				}
@@ -42,7 +40,7 @@ int	door_neighbors(t_engine *e, t_vtx *vertex, int n)
 	return (0);
 }
 
-int	select_door(t_engine *e)
+int		select_door(t_engine *e)
 {
 	int			i;
 	int			s;
@@ -53,17 +51,20 @@ int	select_door(t_engine *e)
 	{
 		sect = &e->sectors[i];
 		s = -1;
-		while (++s < (int)sect->npoints)
+		if (sect->is_door)
 		{
-			if (dist_vertex((t_vtx){e->player.where.x, e->player.where.y},
-			sect->vertex[s]) < 5 && sect->is_door)
-				return (i);
+			while (++s < (int)sect->npoints)
+			{
+				if (dist_vertex((t_vtx){e->player.where.x, e->player.where.y},
+				sect->vertex[s]) < 5)
+					return (i);
+			}
 		}
 	}
 	return (-1);
 }
 
-int		open_door(t_env *e)
+int		access_door(t_env *e)
 {
 	int			index;
 	t_sector	*sector;
@@ -79,7 +80,6 @@ int		open_door(t_env *e)
 		}
 		else
 			e->sound.state.open = 2;
-
 	}
 	return (1);
 }
@@ -89,18 +89,21 @@ void	print_infos_door(t_env *env, t_sector *sector)
 	int			index;
 	t_door		*front_player;
 	t_vtx		pos;
+	int			door;
 	const char	*string[2] = {STR_DOOR_0, STR_DOOR_1};
 
 	if ((index = select_door(&env->engine)) > -1)
 	{
+		door = sector[index].is_door;
 		pos = (t_vtx){W / 2, H / 2};
 		front_player = &sector[index].door;
-		if (sector[index].is_door == 2)
-			ui_put_data(env, (t_font){
-				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
-		else if (!front_player->is_open && !front_player->is_opening)
+		if ((door == 1 || (!env->stats.data[I_KTOGO] && door == 2))
+				&& !front_player->is_open && !front_player->is_opening)
 			ui_put_data(env, (t_font){
 				WHITE, string[0], env->hud.font.text, pos, W / 40, -1, -1});
+		else if (door == 2)
+			ui_put_data(env, (t_font){
+				WHITE, string[1], env->hud.font.text, pos, W / 40, -1, -1});
 	}
 }
 
@@ -126,8 +129,7 @@ void	handle_doors(t_env *env)
 			{
 				sector[i].door.is_open = !sector[i].door.is_open;
 				sector[i].door.is_opening = 0;
-				if (sector[i].is_door == 2)
-					env->finish = 1;
+				(sector[i].is_door == 2) ? env->finish = 1 : 0;
 			}
 		}
 	}

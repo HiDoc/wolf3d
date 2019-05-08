@@ -6,7 +6,7 @@
 #    By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/14 15:53:53 by sgalasso          #+#    #+#              #
-#    Updated: 2019/05/05 17:14:43 by sgalasso         ###   ########.fr        #
+#    Updated: 2019/05/08 14:31:58 by sgalasso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS 		=	-Wall -Wextra -Werror -g -fsanitize=address
 
 ID_UN 		=	$(shell id -un)
 VPATH       =	./srcs:./srcs/ui_functions:./srcs/display:srcs/events \
-				:srcs/utils:./srcs/init:./srcs/create_delete
+	:srcs/utils:./srcs/init:./srcs/create_delete:./srcs/release:./srcs/events/click_functions
 OBJ_PATH 	=	objs/
 INC_PATH	=	includes/ \
 				libft/includes/
@@ -82,7 +82,6 @@ SRC_NAME 	=	main.c \
 				get_element.c \
 				export_map.c \
 				init_env.c \
-				release_functions.c \
 				create_object.c \
 				create_vertex.c \
 				create_w_vertex.c \
@@ -92,6 +91,19 @@ SRC_NAME 	=	main.c \
 				delete_vertex.c \
 				delete_w_vertex.c \
 				delete_edge.c \
+				crs_del.c \
+				dir_del.c \
+				msc_del.c \
+				rdr_del.c \
+				srf_del.c \
+				ttf_del.c \
+				txr_del.c \
+				wdw_del.c \
+				click_obj_panel.c \
+				click_vtx_panel.c \
+				click_sct_panel.c \
+				click_edg_panel.c \
+				click_msc_panel.c \
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 LSDL2		=	-L/Users/$(ID_UN)/.brew/lib/ \
