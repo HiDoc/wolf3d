@@ -6,7 +6,7 @@
 /*   By: fmadura <fmadura@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:50:20 by fmadura           #+#    #+#             */
-/*   Updated: 2019/05/08 19:49:46 by fmadura          ###   ########.fr       */
+/*   Updated: 2019/05/08 21:34:09 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void		render_wall(t_env *env, t_raycast ctn, int *ytop, int *ybottom)
 
 	equal = ctn.x == ctn.x1 || ctn.x == ctn.x2;
 	y_coord_curr = wonder_wall(ctn, ctn.p, ytop, ybottom);
-	display_skybox((t_drawline){(void *)&ctn, *ytop, y_coord_curr.ceil - 1,
-	0x111111 , 0x222222, 0x111111}, env);
 	render_floor((t_drawline){(void *)&ctn, y_coord_curr.floor + 1, *ybottom,
 		0x0000FF, 0x0000AA, 0x0000FF}, env);
 	if (ctn.neighbor >= 0)
