@@ -1,31 +1,15 @@
-# aide fmadura
-BUG : hovering : curseur sur la ligne des sommets d'un secteur, \
-	  fonction math/intersect_vtx truc
-BUG : fix edge hover
-BUG : sctedg_intersect de sector overlap : sensibilite rapprochement trop eleve
-# aide tblaudez
-BUG : makefile recompile pas la libft
-# apres fix inputs
+
+BUG : crash si fichier dd ne contiens pas +
 BUG : taille du nom des object depasse du carre
 
-TOCHECK : si export quand un secteur n'est pas encore clos
-PROTEC : proteger toutes les entrees parsing dossier (si existant, null, etc...)
-PROTEC : lifetimer les fd, dr etc et release avec close() etc...
-TOCHECK : coherence mouse mode (ex: change mouse mode while drawing)
-TOCHECK : coherence du sct_current dans le programme
-TOCHECK : il se passe quoi si deux sct overlap et object a la fois dans les 2 ?
-TOCHECK : pertinance de garder enum e_type
-PROTEC : set min edge size for split edge
+TODO : check logique, conditions de fin etc...
 
-TODO : changement de mode / check comportement programme
-TODO : grid : limite left / bot
-TODO : empecher export si edge du meme sct overlap
-TODO : faire fonctionner edge size
+TODO : check leak
+TODO : dev/null dev/random /dev/zero
+TODO : proteger toutes les entrees parsing dossier (si existant, null, etc...)
+TODO : lifetimer les fd, dr etc et release avec close() etc...
 
-TODO : refactor events
-TODO : clean t_elem
-
-TOCHECK : si memory push et release est bien dynamique partout
-
+TODO : check if iswpn is respected
+TODO : check si fonctions non utilisee
 TODO : beta testing
 TODO : norme : total norme

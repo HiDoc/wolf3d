@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 21:07:44 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 16:08:41 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:01:52 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		bresenham_tab(int *tab, t_pos p1, t_pos p2)
 	tab[4] = (tab[0] > tab[2] ? tab[0] : -tab[2]) / 2;
 }
 
-void		ui_make_line(SDL_Surface *surface, t_vec vec, Uint32 color)
+void			ui_make_line(SDL_Surface *surface, t_vec vec, Uint32 color)
 {
 	int e2;
 	int tab[5];

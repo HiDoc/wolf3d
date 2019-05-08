@@ -6,7 +6,7 @@
 /*   By: sgalasso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:48:56 by sgalasso          #+#    #+#             */
-/*   Updated: 2019/05/03 17:22:06 by sgalasso         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:52:41 by sgalasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int				shared_vtx(t_vtx *vtx, t_sct *current)
 **	Return 0 if an object is not in a sector
 */
 
-int			refresh_object_sct(t_env *env)
+int				refresh_object_sct(t_env *env)
 {
 	t_object	*obj;
 	int			ret;
@@ -95,32 +95,30 @@ int			refresh_object_sct(t_env *env)
 	return (ret);
 }
 
-t_pos		vtx_transform(t_pos pos, t_env *env)
+t_pos			vtx_transform(t_pos pos, t_env *env)
 {
-	const SDL_Rect  rect = get_element(E_R_RECT, env)->rect;
-	t_pos           newpos;
+	const SDL_Rect	rect = get_element(E_R_RECT, env)->rect;
+	t_pos			newpos;
 	t_pos			translate;
 	t_pos			origin;
 
 	origin.x = rect.x + 425;
 	origin.y = rect.y + 340;
-
 	translate.x = env->editor.grid_translate.x + env->editor.grid_mouse_var.x;
 	translate.y = env->editor.grid_translate.y + env->editor.grid_mouse_var.y;
-
-	newpos.x = origin.x + (pos.x + translate.x) * env->grid_scale;
-	newpos.y = origin.y + (pos.y + translate.y) * env->grid_scale;
+	newpos.x = origin.x + (pos.x + translate.x) * env->editor.grid_scale;
+	newpos.y = origin.y + (pos.y + translate.y) * env->editor.grid_scale;
 	return (newpos);
 }
 
-t_w_vtx		*w_vtx_lst_end(t_w_vtx *lst)
+t_w_vtx			*w_vtx_lst_end(t_w_vtx *lst)
 {
 	while (lst && lst->next)
 		lst = lst->next;
 	return (lst);
 }
 
-t_sct		*sct_lst_end(t_sct *lst)
+t_sct			*sct_lst_end(t_sct *lst)
 {
 	while (lst && lst->next)
 		lst = lst->next;
@@ -148,11 +146,28 @@ void			sync_sct_minmax(t_env *env)
 	}
 }
 
+static char		*ft_zstrjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		size;
+
+	size = 0;
+	if (!s1 && !s2)
+		return (0);
+	(s1) ? size = ft_strlen(s1) : 0;
+	(s2) ? size += ft_strlen(s2) : 0;
+	if (!(str = (char *)ft_memalloc(sizeof(char) * (size + 1))))
+		return (0);
+	(s1) ? str = ft_strcat(str, s1) : 0;
+	(s2) ? str = ft_strcat(str, s2) : 0;
+	return (str);
+}
+
 /*
 ** return : 1 if string not empty, 0 if str is empty
 */
 
-int		input_add(int elem, char *key, t_env *env)
+int				input_add(int elem, char *key, t_env *env)
 {
 	char *tmp;
 
@@ -172,7 +187,7 @@ int		input_add(int elem, char *key, t_env *env)
 ** return : 1 if last char has been deleted, 0 if str is now empty
 */
 
-int		input_del(int elem, t_env *env)
+int				input_del(int elem, t_env *env)
 {
 	int		newsize;
 
@@ -191,7 +206,7 @@ int		input_del(int elem, t_env *env)
 	return (1);
 }
 
-int		ft_strchri(char *str, char c)
+int				ft_strchri(char *str, char c)
 {
 	int count;
 
@@ -203,21 +218,4 @@ int		ft_strchri(char *str, char c)
 		count++;
 	}
 	return (-1);
-}
-
-char	*ft_zstrjoin(char *s1, char *s2)
-{
-	char	*str;
-	int		size;
-
-	size = 0;
-	if (!s1 && !s2)
-		return (0);
-	(s1) ? size = ft_strlen(s1) : 0;
-	(s2) ? size += ft_strlen(s2) : 0;
-	if (!(str = (char *)ft_memalloc(sizeof(char) * (size + 1))))
-		return (0);
-	(s1) ? str = ft_strcat(str, s1) : 0;
-	(s2) ? str = ft_strcat(str, s2) : 0;
-	return (str);
 }
